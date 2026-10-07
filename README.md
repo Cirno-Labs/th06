@@ -15,6 +15,17 @@ Nothing has been decompiled yet. The first target is the freely distributed
 trial (0.13), which is used to bring up the toolchain and workflow before
 moving to the retail 1.02h build.
 
+Initial Ghidra analysis of the trial finds 1229 functions. Those from
+`0x446ead` onwards are the statically linked MSVC CRT, identified by
+Ghidra's function ID. The 857 functions in `0x401000`–`0x446ead`
+(about 232 KB) are game code, plus whatever compiler helpers and D3DX8
+code is mixed in. For example, `0x401000` is MSVC's
+`vector constructor iterator`.
+
+```sh
+tools/ghidra/analyze.sh   # writes build/functions_trial013.csv
+```
+
 ## Targets
 
 | Build | Date | `.text` | Notes |

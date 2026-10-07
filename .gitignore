@@ -1,0 +1,8 @@
+# Game files are never committed. Bring your own copy.
+/orig/*
+!/orig/README.md
+!/orig/*.sha1
+
+/build/
+/.wine/
+__pycache__/

@@ -246,7 +246,7 @@ address,size,name,symbol
 0x00421b50,59,MidiDevice::Close,?Close@MidiDevice@@QAEHXZ
 0x00421b90,78,MidiDevice::SendLongMsg,?SendLongMsg@MidiDevice@@QAEHPAUmidihdr_tag@@@Z
 0x00421be0,67,MidiDevice::SendShortMsg,?SendShortMsg@MidiDevice@@QAEHEEE@Z
-0x00421c30,48,Func421c30,
+0x00421c30,48,MmTimer::MmTimer,??0MmTimer@@QAE@XZ
 0x00421c60,41,Func421c60,
 0x00421c90,115,Func421c90,
 0x00421d10,61,Func421d10,

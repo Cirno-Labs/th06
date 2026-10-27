@@ -43,6 +43,8 @@ public:
 class MmTimer
 {
 public:
+    MmTimer();
+
     // Called on every tick when the timer was started without a callback
     // of its own. Empty here; the linker folded it with another empty
     // function at 0x423330.

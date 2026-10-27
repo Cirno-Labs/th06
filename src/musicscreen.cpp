@@ -112,3 +112,48 @@ again:
     g_SpriteEngine->Step(&screen->unk_0024);
     return 1;
 }
+
+int MusicScreen::OnDraw(MusicScreen *screen)
+{
+    char arrow[2] = {0x7f, 0};
+    D3DXVECTOR3 pos;
+    int i;
+
+    g_SpriteEngine->ClearTexture();
+    g_SpriteEngine->Func435300(0, 0, 0, 0, 0);
+    g_SpriteEngine->Draw(&screen->unk_0024);
+    for (i = screen->listTop; i < screen->listTop + 10; i++)
+    {
+        if (screen->cursor != i)
+        {
+            screen->titles[i].color = 0xe0808080;
+            g_AsciiText.color = 0xe0808080;
+        }
+        else
+        {
+            screen->titles[i].color = 0xffffffff;
+            g_AsciiText.color = 0xffffffff;
+        }
+        screen->titles[i].pos.x = 93.0f;
+        screen->titles[i].pos.y = 104.0f + (i + 1 - screen->listTop) * 18 - 20.0f;
+        screen->titles[i].pos.z = 0.0f;
+        g_SpriteEngine->Draw(&screen->titles[i]);
+        // The number left of the title, and the arrow left of that.
+        pos = screen->titles[i].pos;
+        pos.x -= 60.0f;
+        if (screen->cursor == i)
+        {
+            g_AsciiText.AddString(&pos, arrow);
+        }
+        pos.x += 15.0f;
+        g_AsciiText.AddFormat(&pos, "%2d.", i + 1);
+    }
+    // Has no effect, but the original increments here.
+    i++;
+    for (i = 0; i < 0x10; i++)
+    {
+        g_SpriteEngine->Draw(&screen->comment[i]);
+    }
+    g_AsciiText.color = 0xffffffff;
+    return 1;
+}

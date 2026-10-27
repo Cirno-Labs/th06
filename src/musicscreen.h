@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "ascii.h"
 #include "sprite.h"
 #include "unsorted.h"
 
@@ -27,6 +28,9 @@ public:
     // handler and counts its frames. Returns 0 while a handler asks to
     // stop, otherwise 1.
     static int OnUpdate(MusicScreen *screen);
+    // The draw chain element's callback: draws the list, with the tune
+    // under the cursor highlighted, and the comment. Returns 1.
+    static int OnDraw(MusicScreen *screen);
     // In state 0, waits 8 frames before moving to state 1. Returns 0.
     int UpdateIntro();
     // State 1: the list of tunes. Returns nonzero to stop.

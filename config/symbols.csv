@@ -9,8 +9,8 @@ address,size,name,symbol
 0x00401410,185,Func401410,
 0x004014d0,46,Func4014d0,
 0x00401500,35,Func401500,
-0x00401530,277,Func401530,
-0x00401650,90,Func401650,
+0x00401530,277,AsciiText::AddString,?AddString@AsciiText@@QAEXPAUD3DXVECTOR3@@PAD@Z
+0x00401650,90,AsciiText::AddFormat,?AddFormat@AsciiText@@QAAXPAUD3DXVECTOR3@@PADZZ
 0x004016b0,641,Func4016b0,
 0x00401940,284,Func401940,
 0x00401a60,286,Func401a60,
@@ -298,7 +298,7 @@ address,size,name,symbol
 0x0042523a,222,Func42523a,
 0x00425318,197,Func425318,
 0x004253dd,125,MusicScreen::OnUpdate,?OnUpdate@MusicScreen@@SAHPAV1@@Z
-0x0042545a,498,Func42545a,
+0x0042545a,498,MusicScreen::OnDraw,?OnDraw@MusicScreen@@SAHPAV1@@Z
 0x0042564c,1867,Func42564c,
 0x00425d97,108,Func425d97,
 0x00425e10,488,Func425e10,
@@ -403,7 +403,7 @@ address,size,name,symbol
 0x00432430,151,Func432430,
 0x004324d0,598,Func4324d0,
 0x00432730,915,Func432730,
-0x00432ad0,431,Func432ad0,
+0x00432ad0,431,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00432c80,60,Func432c80,
 0x00432cc0,727,Func432cc0,
 0x00432fa0,431,Func432fa0,
@@ -416,7 +416,7 @@ address,size,name,symbol
 0x00434e20,482,Func434e20,
 0x00435010,603,Func435010,
 0x00435270,143,Func435270,
-0x00435300,445,Func435300,
+0x00435300,445,SpriteEngine::Func435300,?Func435300@SpriteEngine@@QAEXHHHHH@Z
 0x004354c0,424,Func4354c0,
 0x00435670,237,Func435670,
 0x0043575d,66,Func43575d,
@@ -1535,6 +1535,7 @@ address,size,name,symbol
 0x0046b564,4,MmTimer::`vftable',??_7MmTimer@@6B@
 0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
 0x0047a630,4,__security_cookie,___security_cookie
+0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A
 0x0069d904,,g_Buttons,?g_Buttons@@3GA
 0x0069d908,,g_PrevButtons,?g_PrevButtons@@3GA
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A

@@ -171,8 +171,17 @@ public:
     int Draw(Sprite *sprite);
     int Func432cc0(Sprite *sprite);
     // Like StartScript, after zeroing the position and unk_0e4 and
-    // setting unk_10c and unk_10d to 15. Defined in the stage's file.
-    void Func4051b0(Sprite *vm, int script);
+    // setting unk_10c and unk_10d to 15. Inline, but not expanded: its
+    // copy is the stage file's.
+    void Func4051b0(Sprite *vm, int script)
+    {
+        vm->scriptIndex = script;
+        vm->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        vm->unk_0e4 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        vm->unk_10d = 15;
+        vm->unk_10c = 15;
+        this->SetScript(vm, this->scripts[script]);
+    }
     int Func433150(Sprite *sprite);
     int Func433590(Sprite *sprite);
     // Frees the ANM file loaded into `slot` and clears its scripts.

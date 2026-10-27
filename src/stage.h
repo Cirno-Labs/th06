@@ -9,6 +9,37 @@
 #include "sprite.h"
 #include "timer.h"
 
+// A run of quads in the stage data, ended by one with a negative type.
+struct StageQuad
+{
+    short type;
+    // The offset of the next quad.
+    short size;
+    short script;
+    // Set by Stage::Load: the quad's Sprite in Stage::sprites.
+    short spriteIndex;
+};
+
+// An object of the stage data: its quads start at +0x1c.
+struct StageObject
+{
+    BYTE unk_00[0x3];
+    BYTE unk_03;
+    DWORD unk_04[0x6];
+    StageQuad quads[1];
+};
+
+// The start of the stage data file.
+struct StageData
+{
+    short objectCount;
+    short quadCount;
+    // Offsets from the start of the file.
+    int unk_04;
+    int unk_08;
+    // Then, at 0x490, the objects' offsets.
+};
+
 // Runs the stage's background, the global at 0x487b10. Its loader logs
 // "ステージデータが見つかりません" ("stage data not found").
 class Stage
@@ -43,8 +74,13 @@ public:
     // One Sprite per object sprite in the data, malloc'd.
     Sprite *sprites;
     // The stage data file, as loaded.
-    void *data;
-    DWORD unk_008[0x5];
+    StageData *data;
+    int quadCount;
+    int objectCount;
+    // In `data`: the objects, and the header's two offsets as pointers.
+    StageObject **objects;
+    void *unk_014;
+    void *unk_018;
     Timer unk_01c;
     int unk_028;
     Timer timer;

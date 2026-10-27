@@ -134,12 +134,45 @@ int Stage::OnDraw2(Stage *stage)
     return 1;
 }
 
-void SpriteEngine::Func4051b0(Sprite *vm, int script)
+int Stage::Load(char *anmPath, char *dataPath)
 {
-    vm->scriptIndex = script;
-    vm->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-    vm->unk_0e4 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-    vm->unk_10d = 15;
-    vm->unk_10c = 15;
-    this->SetScript(vm, this->scripts[script]);
+    int count;
+    int i;
+    StageObject *ob;
+    StageQuad *quad;
+
+    if (g_SpriteEngine->LoadAnm(4, anmPath, 0x300) != 0)
+    {
+        return -1;
+    }
+    this->data = (StageData *)Func41e290(dataPath, 0);
+    if (this->data == NULL)
+    {
+        Func41e4d0(&g_Unknown69d998, "ステージデータが見つかりません。データが壊れています\n");
+        return -1;
+    }
+    this->objectCount = this->data->objectCount;
+    this->quadCount = this->data->quadCount;
+    this->unk_014 = (void *)(this->data->unk_04 + (int)this->data);
+    this->unk_018 = (void *)(this->data->unk_08 + (int)this->data);
+    this->objects = (StageObject **)((char *)this->data + 0x490);
+    for (i = 0; i < this->objectCount; i++)
+    {
+        this->objects[i] = (StageObject *)((int)this->objects[i] + (int)this->data);
+    }
+    this->sprites = (Sprite *)MemAlloc(this->quadCount * sizeof(Sprite));
+    for (i = 0, count = 0; i < this->objectCount; i++)
+    {
+        ob = this->objects[i];
+        ob->unk_03 = 1;
+        quad = ob->quads;
+        while (quad->type >= 0)
+        {
+            g_SpriteEngine->Func4051b0(&this->sprites[count], quad->script + 0x300);
+            quad->spriteIndex = count;
+            count++;
+            quad = (StageQuad *)((char *)quad + quad->size);
+        }
+    }
+    return 0;
 }

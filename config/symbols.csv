@@ -129,7 +129,7 @@ address,size,name,symbol
 0x00414340,21,BulletManager::ClearAllToItems,?ClearAllToItems@BulletManager@@QAEXXZ
 0x00414360,607,BulletManager::ClearAllWithBonus,?ClearAllWithBonus@BulletManager@@QAEHHH@Z
 0x004145c0,165,BulletManager::FirePattern,?FirePattern@BulletManager@@QAEHPAUBulletShooter@@@Z
-0x00414670,635,Func414670,
+0x00414670,635,BulletManager::SpawnLaser,?SpawnLaser@BulletManager@@QAEPAULaser@@PAUBulletShooter@@@Z
 0x004148f0,211,BulletManager::RegisterChain,?RegisterChain@BulletManager@@SAHH@Z
 0x004149d0,6928,BulletManager::OnUpdate,?OnUpdate@BulletManager@@SAHPAV1@@Z
 0x00416500,1607,BulletManager::OnDraw,?OnDraw@BulletManager@@SAHPAV1@@Z

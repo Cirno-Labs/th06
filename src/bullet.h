@@ -98,11 +98,19 @@ struct Laser
     float angle;
     float startOffset;
     float endOffset;
-    DWORD unk_238[0x7];
+    float unk_238;
+    float width;
+    float speed;
+    int unk_244;
+    int unk_248;
+    int unk_24c;
+    int unk_250;
     int unk_254;
     int active;
     Timer timer;
-    DWORD unk_268;
+    // BulletShooter::flags and color.
+    WORD flags;
+    short color;
     // 2 and up: ending.
     BYTE state;
     BYTE unk_26d[0x3];
@@ -128,6 +136,9 @@ public:
     // Fires `shooter`'s pattern, aimed at the player, until no bullet is
     // free, and plays its sound with flag 0x200. Returns 0.
     int FirePattern(BulletShooter *shooter);
+    // Starts a laser from `shooter` in a free slot: exFloats give its
+    // start and end offsets and width, exInts its timings. Returns it.
+    Laser *SpawnLaser(BulletShooter *shooter);
     // ClearAll(1).
     void ClearAllToItems();
     // Like ClearAll, but each bullet scores a bonus, from 2000 up by 10

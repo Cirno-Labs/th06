@@ -24,6 +24,10 @@ public:
     static int OnDraw(Stage *stage);
     // Draws one layer of the background.
     void DrawLayer(int layer);
+    // Draws layers 2 and 3 under the same conditions as OnDraw, with a
+    // rectangle fading in over unk_084's 60 frames while unk_080 is 1,
+    // then unk_088 while unk_080 is set, and leaves the fog at 1000 to
+    // 2000. Returns 1.
     static int OnDraw2(Stage *stage);
     // Resets, loads the files g_StageFiles gives for the stage and sets
     // the fog up. Returns 0, or -1 if loading fails.
@@ -58,7 +62,9 @@ public:
     char fogColorChanged;
     char unk_07d[0x3];
     int unk_080;
-    DWORD unk_084[0x89];
+    int unk_084;
+    Sprite unk_088;
+    DWORD unk_198[0x44];
     BYTE unk_2a8;
     BYTE unk_2a9[0x3];
     D3DXVECTOR3 unk_2ac;

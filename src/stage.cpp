@@ -94,3 +94,42 @@ int Stage::OnDraw(Stage *stage)
     }
     return 1;
 }
+
+int Stage::OnDraw2(Stage *stage)
+{
+    float fog;
+    int opacity;
+    float area[4];
+
+    if (stage->unk_080 <= 1 && !g_Gui.Func4172d3())
+    {
+        stage->DrawLayer(2);
+        stage->DrawLayer(3);
+        if (stage->unk_080 == 1)
+        {
+            area[0] = 32.0f;
+            area[1] = 16.0f;
+            area[2] = 416.0f;
+            area[3] = 464.0f;
+            opacity = stage->unk_084 * 0xff / 60;
+            Func42f8b0(area, opacity << 24);
+        }
+    }
+    if (stage->unk_080 >= 1)
+    {
+        if (stage->unk_084 <= g_Unknown6c6d18.cfg.frameSkip)
+        {
+            g_SpriteEngine->StartScript(&stage->unk_088, 0x2b3);
+        }
+        g_SpriteEngine->Func432cc0(&stage->unk_088);
+    }
+    g_Unknown6c6d18.viewport.MinZ = 0.0f;
+    g_Unknown6c6d18.viewport.MaxZ = 0.5f;
+    Func41c28c(0);
+    g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+    fog = 1000.0f;
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&fog);
+    fog = 2000.0f;
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&fog);
+    return 1;
+}

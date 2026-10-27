@@ -368,6 +368,10 @@ public:
     ID3DXFont *font;
 };
 
+// Fills `rect` (x, y, width and height) with `color`.
+void Func42f8b0(float *rect, D3DCOLOR color);
+void Func41c28c(int unk);
+
 // Clears the high bit of every key's state, so no key reads as held.
 void ResetKeyboard();
 

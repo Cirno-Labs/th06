@@ -168,6 +168,7 @@ public:
     int Step(Sprite *vm);
     // Draws a sprite if it is shown.
     int Draw(Sprite *sprite);
+    int Func432cc0(Sprite *sprite);
     int Func433150(Sprite *sprite);
     int Func433590(Sprite *sprite);
     // Frees the ANM file loaded into `slot` and clears its scripts.

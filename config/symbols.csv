@@ -3,7 +3,7 @@ address,size,name,symbol
 0x004010e0,87,Func4010e0,
 0x00401140,257,Func401140,
 0x00401250,59,Func401250,
-0x00401290,39,Func401290,
+0x00401290,39,AsciiText::OnDraw2,?OnDraw2@AsciiText@@SAHPAV1@@Z
 0x004012c0,213,AsciiText::RegisterChain,?RegisterChain@AsciiText@@SAHXZ
 0x004013a0,110,Func4013a0,
 0x00401410,185,Func401410,
@@ -18,8 +18,8 @@ address,size,name,symbol
 0x00402740,294,Func402740,
 0x00402870,1998,Func402870,
 0x00403060,380,Func403060,
-0x004031e0,460,Func4031e0,
-0x004033b0,460,Func4033b0,
+0x004031e0,460,AsciiText::Func4031e0,?Func4031e0@AsciiText@@QAEXXZ
+0x004033b0,460,AsciiText::Func4033b0,?Func4033b0@AsciiText@@QAEXXZ
 0x00403580,238,Sprite::Initialize,?Initialize@Sprite@@QAEXXZ
 0x00403670,167,Func403670,
 0x00403720,104,Func403720,
@@ -1557,6 +1557,7 @@ address,size,name,symbol
 0x0069d918,,g_Chain,?g_Chain@@3VChain@@A
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A
+0x006c7114,,g_Unknown6c7114,?g_Unknown6c7114@@3EA
 0x006d3f50,,g_Unknown6d3f50,?g_Unknown6d3f50@@3VUnknown6d3f50@@A
 0x006d457c,,g_Unknown6d457c,?g_Unknown6d457c@@3PAVUnknown6d457c@@A
 0x006d4588,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A

@@ -2,6 +2,19 @@
 
 #include "ascii.h"
 
+int AsciiText::OnDraw2(AsciiText *text)
+{
+    if (g_Unknown6c7114)
+    {
+        text->Func4031e0();
+    }
+    else
+    {
+        text->Func4033b0();
+    }
+    return 1;
+}
+
 int AsciiText::DeletedCallback(AsciiText *text)
 {
     g_SpriteEngine->ReleaseAnm(1);

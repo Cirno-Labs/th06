@@ -18,3 +18,17 @@ struct ListNode
 
 // Frees every node after `head`.
 void FreeListNodes(ListNode *head);
+
+// "score.dat" as loaded: a 0x14-byte header, then chunks ("TH6K", ...).
+struct ScoreDat
+{
+    DWORD unk_00[0x3];
+    // The list of the score entries read from the chunks; set up when
+    // the file is loaded.
+    ListNode *scores;
+    DWORD unk_10;
+};
+ASSERT_SIZE(ScoreDat, 0x14);
+
+// Frees `dat` and its list.
+void ReleaseScoreDat(ScoreDat *dat);

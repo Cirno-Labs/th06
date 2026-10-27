@@ -17,3 +17,10 @@ void FreeListNodes(ListNode *head)
         head = next;
     }
 }
+
+void ReleaseScoreDat(ScoreDat *dat)
+{
+    FreeListNodes(dat->scores);
+    MemFree(dat->scores);
+    free(dat);
+}

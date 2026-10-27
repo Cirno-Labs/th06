@@ -53,6 +53,11 @@ public:
     Chain();
     ~Chain();
 
+    // Runs the update chain's callbacks in order, removing the elements
+    // whose callback returns 0. A callback returns 2 to run again, 3, 4 or
+    // 5 to stop with 1, 0 or -1, and 6 to start over. Returns how many
+    // ran.
+    int RunCalcChain();
     // Allocates an element that runs `callback`.
     ChainElem *CreateElem(ChainCallback callback);
     // Inserts `elem` into the update chain by priority and calls its

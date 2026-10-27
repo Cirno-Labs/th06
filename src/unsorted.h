@@ -431,7 +431,8 @@ struct GuiImpl
     WORD unk_217e;
     DWORD unk_2180[0xef];
     int unk_253c;
-    DWORD unk_2540[0x1a6];
+    DWORD unk_2540[0x1a5];
+    DWORD unk_2bd4;
     BYTE unk_2bd8;
     BYTE unk_2bd9[0x3];
     DWORD unk_2bdc[0x1a];
@@ -459,6 +460,8 @@ public:
     void Func41732c();
     // Returns impl->unk_2bd8.
     BOOL Func417344();
+    // Whether impl->unk_2bd4 is 0 and impl->unk_253c is not negative.
+    BOOL Func419572();
     // Whether impl->unk_253c is not negative.
     BOOL Func4195a2();
 

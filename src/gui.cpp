@@ -18,6 +18,15 @@ BOOL Gui::Func417344()
     return this->impl->unk_2bd8;
 }
 
+BOOL Gui::Func419572()
+{
+    if (this->impl->unk_2bd4 > 0)
+    {
+        return FALSE;
+    }
+    return this->impl->unk_253c >= 0;
+}
+
 BOOL Gui::Func4195a2()
 {
     return this->impl->unk_253c >= 0;

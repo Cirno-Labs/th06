@@ -27,6 +27,19 @@ int AsciiText::OnDraw2(AsciiText *text)
     return 1;
 }
 
+void AsciiText::Initialize()
+{
+    memset(this, 0, sizeof(AsciiText));
+    this->color = 0xffffffff;
+    this->scaleX = 1.0f;
+    this->scaleY = 1.0f;
+    this->unk_0110.flags |= 0x300;
+    g_SpriteEngine->InitSprite(&this->unk_0110, 0);
+    g_SpriteEngine->InitSprite(&this->unk_0000, 0x20);
+    this->unk_0110.pos.z = 0.1f;
+    this->unk_6234 = 0;
+}
+
 int AsciiText::DeletedCallback(AsciiText *text)
 {
     g_SpriteEngine->ReleaseAnm(1);

@@ -8,6 +8,18 @@
 #include "common.h"
 #include "sprite.h"
 
+// A string queued by AsciiText::AddString.
+struct AsciiString
+{
+    char text[0x40];
+    D3DXVECTOR3 pos;
+    D3DCOLOR color;
+    float scaleX;
+    float scaleY;
+    unsigned char unk_58[0x8];
+};
+ASSERT_SIZE(AsciiString, 0x60);
+
 // A part of AsciiText, twice: at 0x6244 and 0x69bc. Constructed at
 // 0x4010e0; AsciiText::OnDraw runs Func402740 on the first and
 // Func403060 on the second, so they may be two types whose identical
@@ -38,6 +50,9 @@ public:
     static int OnDraw(AsciiText *text);
     // Draws the queued strings.
     void DrawStrings();
+    // Zeroes everything, then sets the color to white, the scale to 1
+    // and the two sprites up.
+    void Initialize();
     void Func4031e0();
     void Func4033b0();
 
@@ -54,15 +69,23 @@ public:
     // Like AddString, for a printf-style text of up to 512 bytes.
     void AddFormat(D3DXVECTOR3 *pos, char *fmt, ...);
 
-    unsigned char unk_0000[0x6220];
+    Sprite unk_0000;
+    Sprite unk_0110;
+    AsciiString strings[0x100];
     // How many strings are queued.
     int stringCount;
-    // The color of the strings queued next.
+    // The color, and the scale, of the strings queued next.
     D3DCOLOR color;
-    unsigned char unk_6228[0x1c];
+    float scaleX;
+    float scaleY;
+    unsigned char unk_6230[0x4];
+    int unk_6234;
+    unsigned char unk_6238[0xc];
     Unknown4010e0 unk_6244;
     Unknown4010e0 unk_69bc;
+    unsigned char unk_7134[0x5078];
 };
+ASSERT_SIZE(AsciiText, 0xc1ac);
 extern AsciiText g_AsciiText;
 
 extern BYTE g_Unknown6c7114;

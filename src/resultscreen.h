@@ -54,6 +54,9 @@ public:
     // Frees the entries of the high score list for `difficulty` and
     // `shot` (0 to 4 and 0 to 3).
     void ReleaseScores(int difficulty, int shot);
+    // Inserts `entry` into the high score list for `difficulty` and
+    // `shot`.
+    void AddScore(Hscr *entry, int difficulty, int shot);
 
     DWORD unk_0000[0xeac];
     ListNode scores[5][4];

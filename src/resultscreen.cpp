@@ -48,6 +48,11 @@ void ReleaseScoreDat(ScoreDat *dat)
     free(dat);
 }
 
+void ResultScreen::AddScore(Hscr *entry, int difficulty, int shot)
+{
+    InsertScore(&this->scores[difficulty][shot], entry);
+}
+
 void ResultScreen::ReleaseScores(int difficulty, int shot)
 {
     FreeListNodes(&this->scores[difficulty][shot]);

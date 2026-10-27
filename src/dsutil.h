@@ -45,6 +45,8 @@ public:
     int loopEnd;
 };
 ASSERT_SIZE(CWaveFile, 0x98);
+class CStreamingSound;
+
 // Owns the DirectSound object.
 class CSoundManager
 {
@@ -54,6 +56,10 @@ public:
 
     HRESULT Initialize(HWND hWnd, DWORD dwCoopLevel, DWORD dwPrimaryChannels, DWORD dwPrimaryFreq, DWORD dwPrimaryBitRate);
     HRESULT SetPrimaryBufferFormat(DWORD dwPrimaryChannels, DWORD dwPrimaryFreq, DWORD dwPrimaryBitRate);
+    // The game's buffer also has a volume control, global focus and
+    // software mixing.
+    HRESULT CreateStreaming(CStreamingSound **ppStreamingSound, LPTSTR strWaveFileName, DWORD dwCreationFlags,
+                            GUID guid3DAlgorithm, DWORD dwNotifyCount, DWORD dwNotifySize, HANDLE hNotifyEvent);
 
     LPDIRECTSOUND8 m_pDS;
 };

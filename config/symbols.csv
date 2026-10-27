@@ -445,7 +445,7 @@ address,size,name,symbol
 0x0043a7d0,44,CSoundManager::~CSoundManager,??1CSoundManager@@QAE@XZ
 0x0043a800,142,CSoundManager::Initialize,?Initialize@CSoundManager@@QAEJPAUHWND__@@KKKK@Z
 0x0043a890,301,CSoundManager::SetPrimaryBufferFormat,?SetPrimaryBufferFormat@CSoundManager@@QAEJKKK@Z
-0x0043a9c0,715,Func43a9c0,
+0x0043a9c0,715,CSoundManager::CreateStreaming,?CreateStreaming@CSoundManager@@QAEJPAPAVCStreamingSound@@PADKU_GUID@@KKPAX@Z
 0x0043ac90,211,CSound::CSound,??0CSound@@QAE@PAPAUIDirectSoundBuffer@@KKPAVCWaveFile@@@Z
 0x0043ad70,46,CSound::`scalar deleting destructor',??_GCSound@@UAEPAXI@Z
 0x0043ada0,241,CSound::~CSound,??1CSound@@UAE@XZ
@@ -1543,6 +1543,7 @@ address,size,name,symbol
 0x0046c69c,4,CStreamingSound::`vftable',??_7CStreamingSound@@6B@
 0x0046cdfc,,c_dfDIJoystick2,_c_dfDIJoystick2
 0x0046d004,,c_dfDIKeyboard,_c_dfDIKeyboard
+0x0046fe10,,IID_IDirectSoundNotify,_IID_IDirectSoundNotify
 0x0046fe20,,GUID_SysKeyboard,_GUID_SysKeyboard
 0x0046fec0,,IID_IDirectInput8A,_IID_IDirectInput8A
 0x004760e0,,g_StageFiles,?g_StageFiles@@3PAUStageFiles@@A

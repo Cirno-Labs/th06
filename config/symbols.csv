@@ -193,7 +193,7 @@ address,size,name,symbol
 0x0041cd40,160,Chain::CreateElem,?CreateElem@Chain@@QAEPAUChainElem@@P6AHPAX@Z@Z
 0x0041cde0,380,Chain::Remove,?Remove@Chain@@QAEXPAUChainElem@@@Z
 0x0041cf60,85,Func41cf60,
-0x0041cfc0,1472,Func41cfc0,
+0x0041cfc0,1472,Func41cfc0,?Func41cfc0@@YAGG@Z
 0x0041d580,127,Func41d580,
 0x0041d600,117,Func41d600,
 0x0041d680,414,Func41d680,

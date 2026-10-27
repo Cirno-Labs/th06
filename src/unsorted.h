@@ -287,6 +287,8 @@ extern WORD g_ButtonRepeat;
 // How many frames the buttons have been held unchanged, kept between 30
 // and 38 once it reaches 30.
 extern WORD g_ButtonFrames;
+// Adds the joystick's buttons to `buttons` and returns them.
+WORD Func41cfc0(WORD buttons);
 // Reads the keyboard and the joystick into button bits.
 WORD ReadButtons();
 

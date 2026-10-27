@@ -241,7 +241,7 @@ address,size,name,symbol
 0x004219d0,104,Func4219d0,
 0x00421a40,94,Func421a40,
 0x00421aa0,33,MidiDevice::MidiDevice,??0MidiDevice@@QAE@XZ
-0x00421ad0,19,Func421ad0,
+0x00421ad0,19,MidiDevice::~MidiDevice,??1MidiDevice@@QAE@XZ
 0x00421af0,89,Func421af0,
 0x00421b50,59,MidiDevice::Close,?Close@MidiDevice@@QAEHXZ
 0x00421b90,78,Func421b90,

@@ -104,7 +104,7 @@ address,size,name,symbol
 0x00410b10,620,Func410b10,
 0x00410d80,172,Func410d80,
 0x00410e30,859,EnemyManager::Initialize,?Initialize@EnemyManager@@QAEXXZ
-0x00411190,170,Func411190,
+0x00411190,170,EnemyManager::EnemyManager,??0EnemyManager@@QAE@XZ
 0x00411240,327,Enemy::Enemy,??0Enemy@@QAE@XZ
 0x00411390,290,Func411390,
 0x004114c0,110,ReleaseEnemyEffects,?ReleaseEnemyEffects@@YAXPAUEnemy@@@Z

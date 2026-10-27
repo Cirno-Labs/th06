@@ -352,7 +352,7 @@ address,size,name,symbol
 0x0042b7dc,45,ReleaseScoreDat,?ReleaseScoreDat@@YAXPAUScoreDat@@@Z
 0x0042b809,1060,Func42b809,
 0x0042bc2d,46,Func42bc2d,
-0x0042bc5b,42,Func42bc5b,
+0x0042bc5b,42,ResultScreen::ReleaseScores,?ReleaseScores@ResultScreen@@QAEXHH@Z
 0x0042bc85,1615,Func42bc85,
 0x0042c2d4,3536,Func42c2d4,
 0x0042d0a4,235,Func42d0a4,

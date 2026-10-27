@@ -32,3 +32,17 @@ ASSERT_SIZE(ScoreDat, 0x14);
 
 // Frees `dat` and its list.
 void ReleaseScoreDat(ScoreDat *dat);
+
+// The result screen's scene object (0x56b0 bytes, set up by Func42d773).
+class ResultScreen
+{
+public:
+    // Frees the entries of the high score list for `difficulty` and
+    // `shot` (0 to 4 and 0 to 3).
+    void ReleaseScores(int difficulty, int shot);
+
+    DWORD unk_0000[0xeac];
+    ListNode scores[5][4];
+    DWORD unk_3ba0[0x6c4];
+};
+ASSERT_SIZE(ResultScreen, 0x56b0);

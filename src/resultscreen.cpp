@@ -24,3 +24,8 @@ void ReleaseScoreDat(ScoreDat *dat)
     MemFree(dat->scores);
     free(dat);
 }
+
+void ResultScreen::ReleaseScores(int difficulty, int shot)
+{
+    FreeListNodes(&this->scores[difficulty][shot]);
+}

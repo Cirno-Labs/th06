@@ -16,3 +16,8 @@ int FireShotType2(Player *player, PlayerBullet *bullet, int index, int frame)
 {
     return FireShot(player, bullet, index, frame, &g_ShotTable2);
 }
+
+int FireShotType3(Player *player, PlayerBullet *bullet, int index, int frame)
+{
+    return FireShot(player, bullet, index, frame, &g_ShotTable3);
+}

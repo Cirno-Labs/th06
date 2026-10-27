@@ -307,7 +307,7 @@ address,size,name,symbol
 0x00426100,795,FireShot,?FireShot@@YAHPAVPlayer@@PAUPlayerBullet@@HHPAUShotTable@@@Z
 0x00426420,34,FireShotType1,?FireShotType1@@YAHPAVPlayer@@PAUPlayerBullet@@HH@Z
 0x00426450,34,FireShotType2,?FireShotType2@@YAHPAVPlayer@@PAUPlayerBullet@@HH@Z
-0x00426480,34,Func426480,
+0x00426480,34,FireShotType3,?FireShotType3@@YAHPAVPlayer@@PAUPlayerBullet@@HH@Z
 0x004264b0,1917,Func4264b0,
 0x00426c40,432,Func426c40,
 0x00426df0,477,Func426df0,
@@ -1548,6 +1548,7 @@ address,size,name,symbol
 0x00476f78,,g_ShotTable0,?g_ShotTable0@@3UShotTable@@A
 0x00477770,,g_ShotTable1,?g_ShotTable1@@3UShotTable@@A
 0x00477ed8,,g_ShotTable2,?g_ShotTable2@@3UShotTable@@A
+0x00478468,,g_ShotTable3,?g_ShotTable3@@3UShotTable@@A
 0x0047a630,4,__security_cookie,___security_cookie
 0x0047b8e0,,g_AsciiDrawChain,?g_AsciiDrawChain@@3UChainElem@@A
 0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A

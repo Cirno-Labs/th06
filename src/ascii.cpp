@@ -113,6 +113,32 @@ void AsciiText::RemoveChain()
     g_Chain.Remove(&g_AsciiDrawChain);
 }
 
+void AsciiText::AddString(D3DXVECTOR3 *pos, char *text)
+{
+    AsciiString *str;
+
+    if (this->stringCount >= 0x100)
+    {
+        return;
+    }
+    str = &this->strings[this->stringCount];
+    this->stringCount++;
+    strcpy(str->text, text);
+    str->pos = *pos;
+    str->color = this->color;
+    str->scaleX = this->scaleX;
+    str->scaleY = this->scaleY;
+    str->unk_5c = this->unk_6230;
+    if (g_Unknown6c6d18.HasFlag0Or8())
+    {
+        str->unk_58 = this->unk_6234;
+    }
+    else
+    {
+        str->unk_58 = 0;
+    }
+}
+
 void AsciiText::AddFormat(D3DXVECTOR3 *pos, char *fmt, ...)
 {
     char buf[0x200];

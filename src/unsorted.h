@@ -54,6 +54,87 @@ public:
 };
 ASSERT_SIZE(DatArchive, 0x14);
 
+// The pad buttons assigned to the game's actions.
+struct ControllerMapping
+{
+    short unk_00[9];
+};
+ASSERT_SIZE(ControllerMapping, 0x12);
+// The mapping in effect, at 0x4765a0, kept in step with the config's.
+extern ControllerMapping g_ControllerMapping;
+
+// GameConfig's option bits; each logs a message when LoadConfig finds
+// it set.
+struct GameConfigFlags
+{
+    // Set whenever the configuration is loaded or reset.
+    unsigned int unk0 : 1;
+    // "頂点バッファの使用を抑制します"
+    unsigned int noVertexBuffer : 1;
+    // "16Bit のテクスチャの使用を強制します"
+    unsigned int force16BitTextures : 1;
+    // "バックバッファの消去を強制します"
+    unsigned int clearBackBuffer : 1;
+    // "ゲーム周りのアイテムの描画を抑制します"; also clears the back
+    // buffer.
+    unsigned int noFrameItems : 1;
+    // "グーローシェーディングを抑制します"
+    unsigned int noGouraudShading : 1;
+    // "デプステストを抑制します"
+    unsigned int noDepthTest : 1;
+    // "６０フレーム強制モードにします"
+    unsigned int force60Fps : 1;
+    // "テクスチャの色合成を抑制します", and LoadConfig also logs
+    // "ウィンドウモードで起動します" for it.
+    unsigned int noColorBlending : 1;
+    // "リファレンスラスタライザを強制します"
+    unsigned int referenceRasterizer : 1;
+    // "フォグの使用を抑制します"
+    unsigned int noFog : 1;
+    // "パッド、キーボードの入力に DirectInput を使用しません"
+    unsigned int noDirectInput : 1;
+    unsigned int unk12 : 20;
+};
+
+// The configuration file's contents. The comments give LoadConfig's
+// default and the largest value it accepts.
+struct GameConfig
+{
+    ControllerMapping controllerMapping;
+    unsigned char unk_12[0x2];
+    // 0x102; LoadConfig resets a file with another.
+    int version;
+    // 2, at most 4.
+    BYTE unk_18;
+    // 3, at most 3.
+    BYTE unk_19;
+    // 0xff, at most 1.
+    BYTE unk_1a;
+    // How music is played: 1 is wave, 2 is MIDI. LoadConfig picks 1 if
+    // "bgm/th06_01.wav" opens, otherwise 2 after logging "wave データが
+    // 無いので、midi にします" ("no wave data, switching to MIDI").
+    BYTE musicMode;
+    // 1, at most 1.
+    BYTE unk_1c;
+    // 1, at most 4.
+    BYTE unk_1d;
+    // 0, at most 1.
+    BYTE unk_1e;
+    // Frames skipped per frame drawn: DrawFps counts 1 + this a frame.
+    // 0, at most 2.
+    BYTE frameSkip;
+    // 600 each.
+    short unk_20;
+    short unk_22;
+    unsigned char unk_24[0x10];
+    GameConfigFlags flags;
+};
+ASSERT_SIZE(GameConfig, 0x38);
+
+// Writes `size` bytes of `data` to the file at `path`. Returns nonzero on
+// failure.
+int Func41e460(char *path, void *data, int size);
+
 // The global at 0x6c6d18: the window, settings and game speed. Larger
 // than its known fields.
 class Unknown6c6d18
@@ -69,6 +150,17 @@ public:
     // Plays the MIDI file loaded into a slot from the start, in MIDI mode.
     // Returns 0 in MIDI mode, otherwise 1.
     int PlayMidi(int slot);
+    // Whether option bit 0 or 8 (noColorBlending) is set. Inline; the
+    // operands are evaluated right to left.
+    int HasFlag0Or8()
+    {
+        return this->cfg.flags.noColorBlending | this->cfg.flags.unk0;
+    }
+
+    // Loads the configuration from `path`, resetting it to the defaults
+    // if the file is missing or invalid, logs the options in effect and
+    // writes it back. Returns 0, or -1 if writing fails.
+    int LoadConfig(char *path);
     // Stops the music. Returns -1 if the music mode is neither wave (1)
     // nor MIDI (2), otherwise 0.
     int StopMusic();
@@ -122,20 +214,8 @@ public:
     // What the device was created with; AddedCallback resets the device
     // with them when presenting fails.
     D3DPRESENT_PARAMETERS presentParams;
-    unsigned char unk_114[0x1b];
-    // How music is played: 1 is wave, 2 is MIDI. Set to 2 after logging
-    // "wave データが無いので、midi にします" ("no wave data, switching to
-    // MIDI").
-    BYTE musicMode;
-    unsigned char unk_130[0x3];
-    // Frames skipped per frame drawn: DrawFps counts 1 + this a frame.
-    BYTE frameSkip;
-    unsigned char unk_134[0x14];
-    // Option flags, a bitfield.
-    unsigned int unk_148_0 : 11;
-    // Turns DirectInput off.
-    unsigned int noDirectInput : 1;
-    unsigned int unk_148_12 : 20;
+    // Loaded from and saved to "東方紅魔郷.cfg" by LoadConfig.
+    GameConfig cfg;
     unsigned char unk_14c[0x38];
     // Counts OnUpdate's calls.
     int frames;
@@ -153,7 +233,9 @@ public:
     int unk_198;
     // DrawFps shows the frame rate while it is 0.
     int unk_19c;
-    unsigned char unk_1a0[0x8];
+    // Cleared by LoadConfig when the 60 frame mode is forced.
+    int unk_1a0;
+    unsigned char unk_1a4[0x4];
     // The part of a frame a Timer advances per frame while the game runs
     // slower than full speed.
     float frameAdvance;

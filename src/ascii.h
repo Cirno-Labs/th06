@@ -16,7 +16,8 @@ struct AsciiString
     D3DCOLOR color;
     float scaleX;
     float scaleY;
-    unsigned char unk_58[0x8];
+    int unk_58;
+    int unk_5c;
 };
 ASSERT_SIZE(AsciiString, 0x60);
 
@@ -112,7 +113,7 @@ public:
     D3DCOLOR color;
     float scaleX;
     float scaleY;
-    unsigned char unk_6230[0x4];
+    int unk_6230;
     int unk_6234;
     unsigned char unk_6238[0xc];
     Unknown4010e0 unk_6244;

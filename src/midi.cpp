@@ -191,7 +191,7 @@ MidiPlayer::~MidiPlayer()
 
 int MidiPlayer::LoadFile(int slot, char *path)
 {
-    if (g_Unknown6c6d18.musicMode != 2)
+    if (g_Unknown6c6d18.cfg.musicMode != 2)
     {
         return 0;
     }

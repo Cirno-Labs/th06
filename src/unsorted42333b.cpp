@@ -282,7 +282,7 @@ int InitDirectInput(Unknown6c6d18 *game)
 {
     HINSTANCE hInst = (HINSTANCE)GetWindowLongA(game->hwnd, GWL_HINSTANCE);
 
-    if (game->noDirectInput)
+    if (game->cfg.flags.noDirectInput)
     {
         return -1;
     }
@@ -444,7 +444,7 @@ void DrawFps()
     D3DXVECTOR3 pos;
 
     now = timeGetTime();
-    frames += 1 + g_Unknown6c6d18.frameSkip;
+    frames += 1 + g_Unknown6c6d18.cfg.frameSkip;
     if (now - lastTime >= 500)
     {
         duration = (now - lastTime) / 1000.0f;
@@ -604,7 +604,7 @@ int Unknown6c6d18::LoadArchive(int index, char *path)
 
 int Unknown6c6d18::LoadMidi(int slot, char *path)
 {
-    if (g_Unknown6c6d18.musicMode == 2)
+    if (g_Unknown6c6d18.cfg.musicMode == 2)
     {
         if (g_Unknown6c6d18.midi != NULL)
         {
@@ -617,7 +617,7 @@ int Unknown6c6d18::LoadMidi(int slot, char *path)
 
 int Unknown6c6d18::PlayMidi(int slot)
 {
-    if (g_Unknown6c6d18.musicMode == 2)
+    if (g_Unknown6c6d18.cfg.musicMode == 2)
     {
         if (g_Unknown6c6d18.midi != NULL)
         {
@@ -633,10 +633,10 @@ int Unknown6c6d18::PlayMidi(int slot)
 
 int Unknown6c6d18::LoadMusic(char *path)
 {
-    if (g_Unknown6c6d18.musicMode == 2)
+    if (g_Unknown6c6d18.cfg.musicMode == 2)
     {
     }
-    else if (g_Unknown6c6d18.musicMode == 1)
+    else if (g_Unknown6c6d18.cfg.musicMode == 1)
     {
     }
     else
@@ -648,14 +648,14 @@ int Unknown6c6d18::LoadMusic(char *path)
 
 int Unknown6c6d18::StopMusic()
 {
-    if (g_Unknown6c6d18.musicMode == 2)
+    if (g_Unknown6c6d18.cfg.musicMode == 2)
     {
         if (g_Unknown6c6d18.midi != NULL)
         {
             g_Unknown6c6d18.midi->Stop();
         }
     }
-    else if (g_Unknown6c6d18.musicMode == 1)
+    else if (g_Unknown6c6d18.cfg.musicMode == 1)
     {
         g_Unknown6d3f50.StopBgm();
     }
@@ -674,14 +674,14 @@ int Unknown6c6d18::FadeOutMusic(float seconds)
     int unused2;
     int unused3;
 
-    if (g_Unknown6c6d18.musicMode == 2)
+    if (g_Unknown6c6d18.cfg.musicMode == 2)
     {
         if (g_Unknown6c6d18.midi != NULL)
         {
             g_Unknown6c6d18.midi->FadeOut(1000.0f * seconds);
         }
     }
-    else if (g_Unknown6c6d18.musicMode == 1)
+    else if (g_Unknown6c6d18.cfg.musicMode == 1)
     {
         // The wave fade counts frames, so it is stretched while the
         // game runs slow.

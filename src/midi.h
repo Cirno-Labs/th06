@@ -86,6 +86,9 @@ public:
 
     virtual void OnTimer();
 
+    // Frees the MIDI file loaded into a slot.
+    void UnloadFile(int slot);
+
     void *unk_010[0x20];
     int unk_090;
     // MIDI files loaded by 0x421ff0, freed by 0x422070.

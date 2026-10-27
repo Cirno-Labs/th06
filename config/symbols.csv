@@ -256,7 +256,7 @@ address,size,name,symbol
 0x00421df0,341,MidiPlayer::MidiPlayer,??0MidiPlayer@@QAE@XZ
 0x00421f50,147,Func421f50,
 0x00421ff0,121,Func421ff0,
-0x00422070,60,Func422070,
+0x00422070,60,MidiPlayer::UnloadFile,?UnloadFile@MidiPlayer@@QAEXH@Z
 0x004220b0,131,Func4220b0,
 0x00422140,561,Func422140,
 0x00422380,58,Func422380,
@@ -948,7 +948,7 @@ address,size,name,symbol
 0x0045ba37,41,report_failure,
 0x0045ba68,14,__security_check_cookie,
 0x0045ba78,117,Func45ba78,
-0x0045baed,104,_free,
+0x0045baed,104,_free,_free
 0x0045bb40,9,Func45bb40,
 0x0045bb5e,111,__heap_alloc,
 0x0045bbd0,9,Func45bbd0,

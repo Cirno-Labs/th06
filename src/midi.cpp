@@ -170,3 +170,9 @@ MidiPlayer::MidiPlayer()
     }
     this->unk_090 = 0;
 }
+
+void MidiPlayer::UnloadFile(int slot)
+{
+    MemFree(this->fileData[slot]);
+    this->fileData[slot] = NULL;
+}

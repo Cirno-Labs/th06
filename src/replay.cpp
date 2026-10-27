@@ -4,6 +4,47 @@
 #include "gamemanager.h"
 #include "unsorted.h"
 
+int ValidateReplay(void *data, int size)
+{
+    int i;
+    ReplayHeader *file = (ReplayHeader *)data;
+    BYTE b;
+    BYTE *bytes;
+    int sum;
+    BYTE *ptr2;
+
+    if (file == NULL)
+    {
+        return -1;
+    }
+    if (*(DWORD *)file->magic != *(DWORD *)"T6RP")
+    {
+        return -1;
+    }
+    bytes = (BYTE *)file + 0xf;
+    b = file->key;
+    for (i = 0; i < size - 0xf; i++, bytes++)
+    {
+        *bytes -= b;
+        b += 7;
+    }
+    ptr2 = &file->key;
+    sum = 0x3f000318;
+    for (i = 0; i < size - 0xe; i++, ptr2++)
+    {
+        sum += *ptr2;
+    }
+    if (sum != file->checksum)
+    {
+        return -1;
+    }
+    if (file->version != 0x102)
+    {
+        return -1;
+    }
+    return 0;
+}
+
 int ReplayManager::RecordOnUpdate(ReplayManager *replay)
 {
     WORD input;
@@ -229,7 +270,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     if (replay->data == NULL)
     {
         replay->data = (ReplayHeader *)Func41e290(replay->path, !g_GameManager.unk_1824);
-        if (Func42a140(replay->data, g_FileSize) != 0)
+        if (ValidateReplay(replay->data, g_FileSize) != 0)
         {
             return -1;
         }

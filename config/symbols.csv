@@ -331,7 +331,7 @@ address,size,name,symbol
 0x00429c50,1118,Player::AddedCallback,?AddedCallback@Player@@SAHPAV1@@Z
 0x0042a0b0,36,Player::DeletedCallback,?DeletedCallback@Player@@SAHPAV1@@Z
 0x0042a0e0,85,Player::RemoveChain,?RemoveChain@Player@@SAXXZ
-0x0042a140,256,Func42a140,?Func42a140@@YAHPAUReplayHeader@@H@Z
+0x0042a140,256,ValidateReplay,?ValidateReplay@@YAHPAXH@Z
 0x0042a240,552,ReplayManager::RegisterChain,?RegisterChain@ReplayManager@@SAHHPAD@Z
 0x0042a470,151,ReplayManager::RecordOnUpdate,?RecordOnUpdate@ReplayManager@@SAHPAV1@@Z
 0x0042a510,81,ReplayManager::PlayOnUpdate2,?PlayOnUpdate2@ReplayManager@@SAHPAV1@@Z

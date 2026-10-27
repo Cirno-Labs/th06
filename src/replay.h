@@ -15,9 +15,9 @@ struct ReplayFrame
     WORD unk_06;
 };
 
-// Checks a loaded replay of `size` bytes. Returns nonzero if it is not
-// valid.
-int Func42a140(struct ReplayHeader *data, int size);
+// Decrypts a loaded replay of `size` bytes in place and checks its
+// magic, checksum and version. Returns 0, or -1 if it is not valid.
+int ValidateReplay(void *data, int size);
 
 // One stage of a replay: the game's state at its start, then the
 // entries.
@@ -42,7 +42,12 @@ struct ReplayHeader
     WORD version;
     BYTE shotType;
     BYTE difficulty;
-    BYTE unk_08[0x11];
+    // 0x3f000318 plus the bytes from `key` on.
+    int checksum;
+    BYTE unk_0c[0x2];
+    // The bytes after it are stored minus key, key + 7, key + 14, ...
+    BYTE key;
+    BYTE unk_0f[0xa];
     char name[0x17];
     // Indexed by stage; malloc'd, 0x69780 bytes each.
     ReplayStage *stages[8];

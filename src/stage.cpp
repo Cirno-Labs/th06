@@ -1,6 +1,7 @@
 // The file with Stage, from 0x403810.
 
 #include "stage.h"
+#include "unsorted.h"
 
 void Stage::RemoveChain()
 {
@@ -47,5 +48,32 @@ int Stage::DeletedCallback(Stage *stage)
         MemFree(stage->data);
         stage->data = NULL;
     }
+    return 0;
+}
+
+int Stage::AddedCallback(Stage *stage)
+{
+    stage->unk_01c.Set(0);
+    stage->unk_028 = 0;
+    stage->unk_03c.x = 0.0f;
+    stage->unk_03c.y = 0.0f;
+    stage->unk_03c.z = 0.0f;
+    stage->unk_080 = 0;
+    stage->unk_06c = 0;
+    if (stage->Load(g_StageFiles[g_GameManager.stage].anmPath, g_StageFiles[g_GameManager.stage].dataPath) != 0)
+    {
+        return -1;
+    }
+    stage->fogColor = 0xff000000;
+    stage->fogNear = 200.0f;
+    stage->fogFar = 500.0f;
+    stage->unk_2b8 = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+    stage->unk_2ac = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+    stage->unk_2c4 = 1;
+    stage->unk_2c8.Set(0);
+    stage->unk_2a8 = 0;
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fogColor);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fogNear);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fogFar);
     return 0;
 }

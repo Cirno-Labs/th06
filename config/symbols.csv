@@ -31,7 +31,7 @@ address,size,name,symbol
 0x004044c0,286,Stage::RegisterChain,?RegisterChain@Stage@@SAHH@Z
 0x004045e0,102,Stage::DeletedCallback,?DeletedCallback@Stage@@SAHPAV1@@Z
 0x00404650,50,Stage::RemoveChain,?RemoveChain@Stage@@SAXXZ
-0x00404690,449,Func404690,
+0x00404690,449,Stage::Load,?Load@Stage@@QAEHPAD0@Z
 0x00404860,257,Func404860,
 0x00404970,2109,Func404970,
 0x004051b0,169,Func4051b0,
@@ -1541,6 +1541,7 @@ address,size,name,symbol
 0x0046d004,,c_dfDIKeyboard,_c_dfDIKeyboard
 0x0046fe20,,GUID_SysKeyboard,_GUID_SysKeyboard
 0x0046fec0,,IID_IDirectInput8A,_IID_IDirectInput8A
+0x004760e0,,g_StageFiles,?g_StageFiles@@3PAUStageFiles@@A
 0x00476358,,g_Unknown476358,?g_Unknown476358@@3PAKA
 0x004763c8,,g_Unknown4763c8,?g_Unknown4763c8@@3PAKA
 0x00476438,,g_Unknown476438,?g_Unknown476438@@3PAKA

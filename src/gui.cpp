@@ -35,6 +35,15 @@ int Gui::OnUpdate(Gui *gui)
     return 1;
 }
 
+void Gui::FreeMsgFile()
+{
+    if (this->impl->msgFile != NULL)
+    {
+        MemFree(this->impl->msgFile);
+        this->impl->msgFile = NULL;
+    }
+}
+
 void Gui::StartMsg(int index)
 {
     this->impl->Func41878b(index);

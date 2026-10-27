@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">36.94% (174)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">56.90% (268)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">37.15% (175)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">56.69% (267)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="275.96" height="6" x="0" y="0" class="named"/>
-<rect width="45.99" height="6" x="275.96" y="0" class="decompiled"/>
-<rect width="425.04" height="6" x="321.96" y="0" class="todo"/>
+<rect width="277.55" height="6" x="0" y="0" class="named"/>
+<rect width="45.99" height="6" x="277.55" y="0" class="decompiled"/>
+<rect width="423.46" height="6" x="323.54" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -220,7 +220,7 @@
 <rect width="12" height="12" x="735" y="30" class="todo"><title>0x00417bfd Func417bfd (300 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="45" class="todo"><title>0x00417d29 Gui::Func417d29 (2364 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="45" class="todo"><title>0x00418665 Func418665 (197 bytes)</title></rect>
-<rect width="12" height="12" x="30" y="45" class="todo"><title>0x0041872a Func41872a (62 bytes)</title></rect>
+<rect width="12" height="12" x="30" y="45" class="named"><title>0x0041872a Gui::FreeMsgFile (62 bytes)</title></rect>
 <rect width="12" height="12" x="45" y="45" class="named"><title>0x00418768 Gui::StartMsg (35 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="45" class="todo"><title>0x0041878b GuiImpl::Func41878b (318 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="45" class="todo"><title>0x004188c9 GuiImpl::Func4188c9 (2027 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">13.79%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">83.54%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">13.81%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">83.51%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="103" height="6" x="0" y="0" class="named"/>
-<rect width="19.98" height="6" x="103" y="0" class="decompiled"/>
-<rect width="624.02" height="6" x="122.98" y="0" class="todo"/>
+<rect width="103.20" height="6" x="0" y="0" class="named"/>
+<rect width="19.98" height="6" x="103.20" y="0" class="decompiled"/>
+<rect width="623.83" height="6" x="123.17" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -944,7 +944,7 @@
 <rect width="2.32" height="2.89" x="734.29" y="109.90" class="decompiled"><title>0x004172d3 Gui::Func4172d3 (65 bytes)</title></rect>
 <rect width="2.24" height="2.89" x="739.61" y="109.90" class="todo"><title>0x0040b380 Func40b380 (64 bytes)</title></rect>
 <rect width="2.16" height="2.89" x="744.84" y="109.90" class="named"><title>0x00423da0 EnumJoysticksCallback (63 bytes)</title></rect>
-<rect width="2.46" height="2.48" x="712.44" y="115.79" class="todo"><title>0x0041872a Func41872a (62 bytes)</title></rect>
+<rect width="2.46" height="2.48" x="712.44" y="115.79" class="named"><title>0x0041872a Gui::FreeMsgFile (62 bytes)</title></rect>
 <rect width="2.46" height="2.39" x="712.44" y="121.27" class="named"><title>0x00421d10 MmTimer::Stop (61 bytes)</title></rect>
 <rect width="2.46" height="2.30" x="712.44" y="126.66" class="named"><title>0x0041e945 GdiSurface::GdiSurface (60 bytes)</title></rect>
 <rect width="2.46" height="2.30" x="712.44" y="131.96" class="named"><title>0x00422070 MidiPlayer::UnloadFile (60 bytes)</title></rect>

@@ -421,11 +421,18 @@ void DebugPrint2(const char *fmt, ...);
 
 
 
+// A loaded message file ("data/msg1.dat", ...): a count, then the
+// offsets of its scripts, made pointers once loaded.
+struct MsgFile
+{
+    int count;
+};
+
 // The bulk of Gui, allocated by its added callback (0x2c44 bytes,
 // constructed at 0x41b34b).
 struct GuiImpl
 {
-    // Starts script `index` of the table at +0x2534.
+    // Starts script `index` of msgFile.
     void Func41878b(int index);
     void Func4188c9();
 
@@ -437,7 +444,9 @@ struct GuiImpl
     WORD unk_217e;
     DWORD unk_2180[0xa9];
     Sprite unk_2424;
-    DWORD unk_2534[0x2];
+    // The message file loaded.
+    MsgFile *msgFile;
+    DWORD unk_2538;
     int unk_253c;
     DWORD unk_2540[0x1a5];
     DWORD unk_2bd4;
@@ -480,6 +489,8 @@ public:
     BOOL Func419572();
     // Whether impl->unk_253c is not negative.
     BOOL Func4195a2();
+    // Frees impl->msgFile, if there is one.
+    void FreeMsgFile();
     void Func4195bf();
 
     DWORD unk_00;

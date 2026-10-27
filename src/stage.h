@@ -19,7 +19,11 @@ public:
     // or -1 if adding fails.
     static int RegisterChain(int stage);
     static int OnUpdate(Stage *stage);
+    // Sets the fog, then draws layers 0 and 1 unless unk_080 is above 1
+    // or g_Gui.Func4172d3() is set. Returns 1.
     static int OnDraw(Stage *stage);
+    // Draws one layer of the background.
+    void DrawLayer(int layer);
     static int OnDraw2(Stage *stage);
     // Resets, loads the files g_StageFiles gives for the stage and sets
     // the fog up. Returns 0, or -1 if loading fails.
@@ -49,7 +53,10 @@ public:
     D3DCOLOR fogColor;
     DWORD unk_054[0x6];
     int unk_06c;
-    DWORD unk_070[0x4];
+    DWORD unk_070[0x3];
+    // Makes OnDraw set the fog color again.
+    char fogColorChanged;
+    char unk_07d[0x3];
     int unk_080;
     DWORD unk_084[0x89];
     BYTE unk_2a8;

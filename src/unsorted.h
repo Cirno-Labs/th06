@@ -459,6 +459,7 @@ public:
     // Runs impl->Func41878b(`index`) and sets
     // g_Unknown6c6d18.unk_198 to 3.
     void StartMsg(int index);
+    BOOL Func4172d3();
     // Sets impl->unk_206e.
     void Func417314();
     // Sets impl->unk_217e.

@@ -33,7 +33,7 @@ address,size,name,symbol
 0x00404650,50,Stage::RemoveChain,?RemoveChain@Stage@@SAXXZ
 0x00404690,449,Stage::Load,?Load@Stage@@QAEHPAD0@Z
 0x00404860,257,Func404860,
-0x00404970,2109,Func404970,
+0x00404970,2109,Stage::DrawLayer,?DrawLayer@Stage@@QAEXH@Z
 0x004051b0,169,Func4051b0,
 0x00405260,2468,Func405260,
 0x00405c10,1040,Func405c10,
@@ -138,7 +138,7 @@ address,size,name,symbol
 0x00416d60,1289,BulletManager::AddedCallback,?AddedCallback@BulletManager@@SAHPAV1@@Z
 0x00417270,49,BulletManager::DeletedCallback,?DeletedCallback@BulletManager@@SAHPAV1@@Z
 0x004172b0,35,BulletManager::RemoveChain,?RemoveChain@BulletManager@@SAXXZ
-0x004172d3,65,Func4172d3,
+0x004172d3,65,Gui::Func4172d3,?Func4172d3@Gui@@QAEHXZ
 0x00417314,24,Gui::Func417314,?Func417314@Gui@@QAEXXZ
 0x0041732c,24,Gui::Func41732c,?Func41732c@Gui@@QAEXXZ
 0x00417344,22,Gui::Func417344,?Func417344@Gui@@QAEHXZ

@@ -77,3 +77,20 @@ int Stage::AddedCallback(Stage *stage)
     g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fogFar);
     return 0;
 }
+
+int Stage::OnDraw(Stage *stage)
+{
+    if (stage->fogColorChanged)
+    {
+        stage->fogColorChanged = 0;
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fogColor);
+    }
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fogNear);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fogFar);
+    if (stage->unk_080 <= 1 && !g_Gui.Func4172d3())
+    {
+        stage->DrawLayer(0);
+        stage->DrawLayer(1);
+    }
+    return 1;
+}

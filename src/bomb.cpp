@@ -204,3 +204,72 @@ void DimPlayAreaForBomb(Player *player)
     }
     Func42f8b0(area, alpha << 24);
 }
+
+void UpdateReimuBBomb(Player *player)
+{
+    int i;
+    Sprite *sprite;
+    D3DXVECTOR3 unused;
+
+    if (player->bombTimer >= player->bombDuration)
+    {
+        g_Gui.Func417314();
+        player->unk_75c8 = 0;
+        return;
+    }
+    if (player->bombTimer.HasTicked() && player->bombTimer == 0)
+    {
+        g_Unknown69e268.Func420130();
+        g_Gui.Func417acd(0x4a3, "夢符「封魔陣」");
+        player->bombDuration = 140;
+        player->unk_75b4.Set(200);
+        for (sprite = player->bombSprites, i = 0; i < 4; i++, sprite++)
+        {
+            g_SpriteEngine->Func4051b0(sprite, i + 0x489);
+        }
+        g_Unknown6d3f50.Func4311e0(6, 0);
+        player->bombPos[0].x = player->position.x;
+        player->bombPos[0].y = 224.0f;
+        player->bombPos[0].z = 0.42f;
+        player->bombPos[1].x = 192.0f;
+        player->bombPos[1].y = player->position.y;
+        player->bombPos[1].z = 0.415f;
+        player->bombPos[2].x = player->position.x;
+        player->bombPos[2].y = 224.0f;
+        player->bombPos[2].z = 0.41f;
+        player->bombPos[3].x = 192.0f;
+        player->bombPos[3].y = player->position.y;
+        player->bombPos[3].z = 0.405f;
+        ScreenEffect::Func42fd30(1, 60, 2, 6, 0);
+    }
+    else
+    {
+        if (player->bombTimer == 60)
+        {
+            ScreenEffect::Func42fd30(1, 80, 20, 0, 0);
+        }
+        player->bulletClearAreas[0][2] = 62.0f;
+        player->bulletClearAreas[0][3] = 448.0f;
+        player->bulletClearAreas[1][2] = 384.0f;
+        player->bulletClearAreas[1][3] = 62.0f;
+        player->bulletClearAreas[2][2] = 62.0f;
+        player->bulletClearAreas[2][3] = 448.0f;
+        player->bulletClearAreas[3][2] = 384.0f;
+        player->bulletClearAreas[3][3] = 62.0f;
+        for (i = 0; i < 4; i++)
+        {
+            g_SpriteEngine->Step(&player->bombSprites[i]);
+            if (player->bombTimer.HasTicked() && player->bombTimer.AsFrames() % 2 != 0)
+            {
+                player->bulletClearAreas[i][0] = player->bombPos[i].x + player->bombSprites[i].unk_0e4.x;
+                player->bulletClearAreas[i][1] = player->bombPos[i].y + player->bombSprites[i].unk_0e4.y;
+                player->bombHitSize[i].x = player->bulletClearAreas[i][2];
+                player->bombHitSize[i].y = player->bulletClearAreas[i][3];
+                player->bombHitPos[i] = player->bombPos[i] + player->bombSprites[i].unk_0e4;
+                player->bombHitDamage[i] = 8;
+            }
+        }
+    }
+    player->unk_09e0 = 3;
+    player->bombTimer.Tick();
+}

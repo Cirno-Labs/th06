@@ -108,6 +108,11 @@ void DrawReimuABomb(Player *player);
 // Darkens the play area while a bomb runs: to alpha 176 over its first
 // 60 frames, and back over its last 60.
 void DimPlayAreaForBomb(Player *player);
+// Reimu B's bomb update callback: ends the bomb after its duration;
+// otherwise starts it (the spell card name, 140 frames) with two
+// vertical and two horizontal pillars through the player, then on every
+// other frame keeps their hitboxes and bullet clearing on them.
+void UpdateReimuBBomb(Player *player);
 extern Player g_Player;
 // A shot type's shots by power level: entries of a count, the power
 // they last up to and their data.

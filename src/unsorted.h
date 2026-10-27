@@ -74,8 +74,16 @@ public:
     // nor MIDI, otherwise 0.
     int PlayMusic(char *path);
 
-    // The draw chain callback registered with the game's main update
-    // callback (priority 0xe): resets the cached device state and draws
+    // Resets the scene and adds the game's main elements to the chains:
+    // OnUpdate at priority 0 with its added and deleted callbacks, and
+    // OnDraw at 0xe. Returns 0, or -1 if adding fails.
+    static int RegisterChain();
+    // The main update chain callback and its added and deleted
+    // callbacks.
+    static int OnUpdate(Unknown6c6d18 *arg);
+    static int AddedCallback(Unknown6c6d18 *arg);
+    static int DeletedCallback(Unknown6c6d18 *arg);
+    // The draw chain callback: resets the cached device state and draws
     // the frame rate. Returns 1.
     static int OnDraw(Unknown6c6d18 *arg);
 
@@ -94,10 +102,12 @@ public:
     // "wave データが無いので、midi にします" ("no wave data, switching to
     // MIDI").
     BYTE musicMode;
-    unsigned char unk_130[0x5c];
+    unsigned char unk_130[0x54];
+    int unk_184;
+    int unk_188;
     // The scene the game is in or switches to: many places set it (1
     // through 10), and the main loop's callbacks compare it with 3. The
-    // music screen sets it to 1 to leave.
+    // music screen sets it to 1 to leave; RegisterChain to -1.
     int scene;
     unsigned char unk_190[0x18];
     // The part of a frame a Timer advances per frame while the game runs

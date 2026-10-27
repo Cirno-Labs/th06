@@ -269,14 +269,14 @@ address,size,name,symbol
 0x00422900,2047,MidiPlayer::ProcessEvent,?ProcessEvent@MidiPlayer@@QAEXPAUMidiTrack@@@Z
 0x00423260,206,MidiPlayer::SendVolume,?SendVolume@MidiPlayer@@QAEXH@Z
 0x00423330,11,SpriteEngine::~SpriteEngine,??1SpriteEngine@@QAE@XZ ?OnTimer@MmTimer@@UAEXXZ
-0x0042333b,1098,Func42333b,
+0x0042333b,1098,Unknown6c6d18::OnUpdate,?OnUpdate@Unknown6c6d18@@SAHPAV1@@Z
 0x00423785,124,Unknown6c6d18::OnDraw,?OnDraw@Unknown6c6d18@@SAHPAV1@@Z
 0x00423801,106,EnumAxesCallback,?EnumAxesCallback@@YGHPBUDIDEVICEOBJECTINSTANCEA@@PAX@Z
-0x0042386b,159,Func42386b,
-0x0042390a,522,Func42390a,
+0x0042386b,159,Unknown6c6d18::RegisterChain,?RegisterChain@Unknown6c6d18@@SAHXZ
+0x0042390a,522,Unknown6c6d18::AddedCallback,?AddedCallback@Unknown6c6d18@@SAHPAV1@@Z
 0x00423b14,652,Func423b14,
 0x00423da0,63,EnumJoysticksCallback,?EnumJoysticksCallback@@YGHPBUDIDEVICEINSTANCEA@@PAX@Z
-0x00423ddf,352,Func423ddf,
+0x00423ddf,352,Unknown6c6d18::DeletedCallback,?DeletedCallback@Unknown6c6d18@@SAHPAV1@@Z
 0x00423f3f,433,DrawFps,?DrawFps@@YAXXZ
 0x004240f0,55,SpriteEngine::ReleaseVertexBuffer,?ReleaseVertexBuffer@SpriteEngine@@QAEXXZ
 0x00424127,30,Timer::Initialize,?Initialize@Timer@@QAEXXZ

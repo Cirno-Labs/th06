@@ -2,8 +2,31 @@
 // The file starting at 0x42333b, up to 0x425e03. Built with /Os: its
 // functions are laid out without alignment.
 
+#include "chain.h"
 #include "timer.h"
 #include "unsorted.h"
+
+int Unknown6c6d18::RegisterChain()
+{
+    Unknown6c6d18 *game = &g_Unknown6c6d18;
+    ChainElem *elem;
+
+    game->unk_188 = 0;
+    game->scene = -1;
+    game->unk_184 = 0;
+    elem = g_Chain.CreateElem((ChainCallback)Unknown6c6d18::OnUpdate);
+    elem->arg = game;
+    elem->addedCallback = (ChainCallback)Unknown6c6d18::AddedCallback;
+    elem->deletedCallback = (ChainCallback)Unknown6c6d18::DeletedCallback;
+    if (g_Chain.AddToCalcChain(elem, 0) != 0)
+    {
+        return -1;
+    }
+    elem = g_Chain.CreateElem((ChainCallback)Unknown6c6d18::OnDraw);
+    elem->arg = game;
+    g_Chain.AddToDrawChain(elem, 0xe);
+    return 0;
+}
 
 int Unknown6c6d18::OnDraw(Unknown6c6d18 *arg)
 {

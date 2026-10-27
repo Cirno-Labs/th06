@@ -40,7 +40,8 @@ struct ChainElem
     ChainCallback deletedCallback;
     ChainElem *prev;
     ChainElem *next;
-    // Points to the element itself.
+    // Points to the element itself; in ReleaseList's copy of a list, to
+    // the element copied.
     ChainElem *self;
     void *arg;
 };

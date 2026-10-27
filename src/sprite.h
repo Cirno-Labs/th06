@@ -169,6 +169,10 @@ public:
     int Step(Sprite *vm);
     // Draws a sprite if it is shown.
     int Draw(Sprite *sprite);
+    // Rotates (`x`, `y`) by the angle with sine `sine` and cosine
+    // `cosine`, clockwise on screen, then moves it by (`cx`, `cy`); stores
+    // the result in out[0] and out[1].
+    void RotatePoint(float *out, float sine, float cosine, float x, float y, float cx, float cy);
     int Func432cc0(Sprite *sprite);
     // Like StartScript, after zeroing the position and unk_0e4 and
     // setting unk_10c and unk_10d to 15. Inline, but not expanded: its

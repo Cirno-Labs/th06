@@ -258,3 +258,20 @@ void ScriptMoveAngle(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->moveTimer.Set(enemy->moveDuration);
     enemy->flags.moveMode = 2;
 }
+
+void ScriptMovePos(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    EnemyMovePosArgs *args;
+    D3DXVECTOR3 target;
+
+    args = &instr->args.movePos;
+    target.x = *ResolveFloatOperand(enemy, &args->x, NULL);
+    target.y = *ResolveFloatOperand(enemy, &args->y, NULL);
+    target.z = *ResolveFloatOperand(enemy, &args->z, NULL);
+    enemy->moveDelta = target - enemy->pos;
+    enemy->moveStart = enemy->pos;
+    enemy->moveDuration = args->duration;
+    enemy->moveTimer.Set(enemy->moveDuration);
+    enemy->flags.moveMode = 2;
+    enemy->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+}

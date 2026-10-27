@@ -49,7 +49,7 @@ address,size,name,symbol
 0x00407440,84,EnemyScripts::StartSub,?StartSub@EnemyScripts@@QAEHPAUEnemyScriptState@@F@Z
 0x004074a0,13572,Func4074a0,
 0x0040abe0,291,ScriptMoveAngle,?ScriptMoveAngle@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x0040ad10,358,Func40ad10,
+0x0040ad10,358,ScriptMovePos,?ScriptMovePos@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040ae80,300,Func40ae80,
 0x0040afb0,876,ResolveOperand,?ResolveOperand@@YAPAHPAUEnemy@@PAH1@Z
 0x0040b380,64,ResolveFloatOperand,?ResolveFloatOperand@@YAPAMPAUEnemy@@PAMPAH@Z

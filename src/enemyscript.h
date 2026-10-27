@@ -33,6 +33,15 @@ struct EnemyMoveAngleArgs
     float speed;
 };
 
+// Arguments: moves to a position over a time, slowing down.
+struct EnemyMovePosArgs
+{
+    int duration;
+    float x;
+    float y;
+    float z;
+};
+
 // One instruction of an enemy script.
 struct EnemyScriptInstr
 {
@@ -44,6 +53,7 @@ struct EnemyScriptInstr
     DWORD unk_08;
     union {
         EnemyMoveAngleArgs moveAngle;
+        EnemyMovePosArgs movePos;
     } args;
 };
 
@@ -99,6 +109,9 @@ void ScriptSet(Enemy *enemy, int dst, int *src);
 // Moves `enemy` at instr's angle (an operand) and speed over its
 // duration, slowing down to a stop: moveMode 2.
 void ScriptMoveAngle(Enemy *enemy, EnemyScriptInstr *instr);
+// Moves `enemy` to instr's position (operands) over its duration,
+// slowing down to a stop: moveMode 2.
+void ScriptMovePos(Enemy *enemy, EnemyScriptInstr *instr);
 
 // Where ResolveOperand computes its read-only values.
 extern int g_Unknown487e44;

@@ -203,7 +203,7 @@ address,size,name,symbol
 0x0041e210,75,Func41e210,
 0x0041e260,48,Func41e260,
 0x0041e290,456,Func41e290,?Func41e290@@YAPAXPADH@Z
-0x0041e460,99,Func41e460,
+0x0041e460,99,Func41e460,?Func41e460@@YAHPADPAXH@Z
 0x0041e4d0,331,Func41e4d0,?Func41e4d0@@YAHPAVUnknown69d998@@PBDZZ
 0x0041e620,341,Func41e620,?Func41e620@@YAHPAVUnknown69d998@@PBDZZ
 0x0041e780,99,Func41e780,
@@ -285,7 +285,7 @@ address,size,name,symbol
 0x00424285,110,Unknown6c6d18::TickTimer,?TickTimer@Unknown6c6d18@@QAEXPAHPAM@Z
 0x004242f3,130,Unknown6c6d18::ReleaseArchive,?ReleaseArchive@Unknown6c6d18@@QAEXH@Z
 0x00424375,728,Unknown6c6d18::LoadArchive,?LoadArchive@Unknown6c6d18@@QAEHHPAD@Z
-0x0042464d,1119,Func42464d,
+0x0042464d,1119,Unknown6c6d18::LoadConfig,?LoadConfig@Unknown6c6d18@@QAEHPAD@Z
 0x00424aac,56,Unknown6c6d18::LoadMidi,?LoadMidi@Unknown6c6d18@@QAEHHPAD@Z
 0x00424ae4,75,Unknown6c6d18::PlayMidi,?PlayMidi@Unknown6c6d18@@QAEHH@Z
 0x00424b2f,46,Unknown6c6d18::LoadMusic,?LoadMusic@Unknown6c6d18@@QAEHPAD@Z
@@ -993,7 +993,7 @@ address,size,name,symbol
 0x0045c4c4,9,Func45c4c4,
 0x0045c4cd,149,Func45c4cd,
 0x0045c562,76,__fclose_lk,
-0x0045c5ae,70,_fclose,
+0x0045c5ae,70,_fclose,_fclose
 0x0045c5f7,8,Func45c5f7,
 0x0045c5ff,233,__fread_lk,
 0x0045c6e8,66,_fread,
@@ -1006,7 +1006,7 @@ address,size,name,symbol
 0x0045c9a5,10,Func45c9a5,
 0x0045c9af,82,__fsopen,
 0x0045ca01,10,Func45ca01,
-0x0045ca0b,19,Func45ca0b,
+0x0045ca0b,19,_fopen,_fopen
 0x0045ca20,45,_strrchr,
 0x0045ca4d,263,__fwrite_lk,
 0x0045cb54,66,_fwrite,
@@ -1541,6 +1541,7 @@ address,size,name,symbol
 0x0046d004,,c_dfDIKeyboard,_c_dfDIKeyboard
 0x0046fe20,,GUID_SysKeyboard,_GUID_SysKeyboard
 0x0046fec0,,IID_IDirectInput8A,_IID_IDirectInput8A
+0x004765a0,,g_ControllerMapping,?g_ControllerMapping@@3UControllerMapping@@A
 0x0047a630,4,__security_cookie,___security_cookie
 0x0047b8e0,,g_AsciiDrawChain,?g_AsciiDrawChain@@3UChainElem@@A
 0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A

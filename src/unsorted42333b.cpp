@@ -602,6 +602,123 @@ int Unknown6c6d18::LoadArchive(int index, char *path)
     return 0;
 }
 
+// Sets the configuration's defaults; the option flags are left alone.
+#define SET_DEFAULT_CONFIG() \
+{ \
+    FILE *wav; \
+ \
+    g_Unknown6c6d18.cfg.unk_18 = 2; \
+    g_Unknown6c6d18.cfg.unk_19 = 3; \
+    g_Unknown6c6d18.cfg.unk_1a = 0xff; \
+    g_Unknown6c6d18.cfg.version = 0x102; \
+    g_Unknown6c6d18.cfg.unk_20 = 600; \
+    g_Unknown6c6d18.cfg.unk_22 = 600; \
+    wav = fopen("bgm/th06_01.wav", "rb"); \
+    if (wav != NULL) \
+    { \
+        g_Unknown6c6d18.cfg.musicMode = 1; \
+        fclose(wav); \
+    } \
+    else \
+    { \
+        g_Unknown6c6d18.cfg.musicMode = 2; \
+        DebugPrint2("wave データが無いので、midi にします\n"); \
+    } \
+    g_Unknown6c6d18.cfg.unk_1c = 1; \
+    g_Unknown6c6d18.cfg.unk_1d = 1; \
+    g_Unknown6c6d18.cfg.unk_1e = 0; \
+    g_Unknown6c6d18.cfg.frameSkip = 0; \
+    g_Unknown6c6d18.cfg.controllerMapping = g_ControllerMapping; \
+}
+
+int Unknown6c6d18::LoadConfig(char *path)
+{
+    GameConfig *file;
+
+    memset(&g_Unknown6c6d18.cfg, 0, sizeof(GameConfig));
+    g_Unknown6c6d18.cfg.flags.unk0 = 1;
+    file = (GameConfig *)Func41e290(path, 1);
+    if (file == NULL)
+    {
+        SET_DEFAULT_CONFIG();
+        Func41e4d0(&g_Unknown69d998, "コンフィグデータが見つからないので初期化しました\n");
+    }
+    else
+    {
+        g_Unknown6c6d18.cfg = *file;
+        if (g_Unknown6c6d18.cfg.unk_18 >= 5 || g_Unknown6c6d18.cfg.unk_19 >= 4 ||
+            g_Unknown6c6d18.cfg.unk_1a >= 2 || g_Unknown6c6d18.cfg.musicMode >= 3 ||
+            g_Unknown6c6d18.cfg.unk_1d >= 5 || g_Unknown6c6d18.cfg.unk_1c >= 2 ||
+            g_Unknown6c6d18.cfg.unk_1e >= 2 || g_Unknown6c6d18.cfg.frameSkip >= 3 ||
+            g_Unknown6c6d18.cfg.version != 0x102 || g_FileSize != sizeof(GameConfig))
+        {
+            SET_DEFAULT_CONFIG();
+            memset(&g_Unknown6c6d18.cfg.flags, 0, sizeof(GameConfigFlags));
+            g_Unknown6c6d18.cfg.flags.unk0 = 1;
+            Func41e4d0(&g_Unknown69d998, "コンフィグデータが破壊されていたので再初期化しました\n");
+        }
+        g_ControllerMapping = g_Unknown6c6d18.cfg.controllerMapping;
+        free(file);
+    }
+    if (this->cfg.flags.noVertexBuffer)
+    {
+        Func41e4d0(&g_Unknown69d998, "頂点バッファの使用を抑制します\n");
+    }
+    if (this->cfg.flags.noFog)
+    {
+        Func41e4d0(&g_Unknown69d998, "フォグの使用を抑制します\n");
+    }
+    if (this->cfg.flags.force16BitTextures)
+    {
+        Func41e4d0(&g_Unknown69d998, "16Bit のテクスチャの使用を強制します\n");
+    }
+    if (this->ClearsBackBuffer())
+    {
+        Func41e4d0(&g_Unknown69d998, "バックバッファの消去を強制します\n");
+    }
+    if (this->cfg.flags.noFrameItems)
+    {
+        Func41e4d0(&g_Unknown69d998, "ゲーム周りのアイテムの描画を抑制します\n");
+    }
+    if (this->cfg.flags.noGouraudShading)
+    {
+        Func41e4d0(&g_Unknown69d998, "グーローシェーディングを抑制します\n");
+    }
+    if (this->cfg.flags.noDepthTest)
+    {
+        Func41e4d0(&g_Unknown69d998, "デプステストを抑制します\n");
+    }
+    if (this->cfg.flags.force60Fps)
+    {
+        Func41e4d0(&g_Unknown69d998, "６０フレーム強制モードにします\n");
+        this->unk_1a0 = 0;
+    }
+    if (this->cfg.flags.noColorBlending)
+    {
+        // Sic: the message ends in "n", not a line break.
+        Func41e4d0(&g_Unknown69d998, "テクスチャの色合成を抑制しますn");
+    }
+    if (this->cfg.flags.noColorBlending)
+    {
+        Func41e4d0(&g_Unknown69d998, "ウィンドウモードで起動します\n");
+    }
+    if (this->cfg.flags.referenceRasterizer)
+    {
+        Func41e4d0(&g_Unknown69d998, "リファレンスラスタライザを強制します\n");
+    }
+    if (this->cfg.flags.noDirectInput)
+    {
+        Func41e4d0(&g_Unknown69d998, "パッド、キーボードの入力に DirectInput を使用しません\n");
+    }
+    if (Func41e460(path, &g_Unknown6c6d18.cfg, sizeof(GameConfig)) != 0)
+    {
+        Func41e620(&g_Unknown69d998, "ファイルが書き出せません %s\n", path);
+        Func41e620(&g_Unknown69d998, "フォルダが書込み禁止属性になっているか、ディスクがいっぱいいっぱいになってませんか？\n");
+        return -1;
+    }
+    return 0;
+}
+
 int Unknown6c6d18::LoadMidi(int slot, char *path)
 {
     if (g_Unknown6c6d18.cfg.musicMode == 2)

@@ -150,6 +150,12 @@ public:
     // Plays the MIDI file loaded into a slot from the start, in MIDI mode.
     // Returns 0 in MIDI mode, otherwise 1.
     int PlayMidi(int slot);
+    // Whether the back buffer is cleared every frame: forced, or because
+    // the items around the game are not drawn.
+    int ClearsBackBuffer()
+    {
+        return this->cfg.flags.clearBackBuffer | this->cfg.flags.noFrameItems;
+    }
     // Whether option bit 0 or 8 (noColorBlending) is set. Inline; the
     // operands are evaluated right to left.
     int HasFlag0Or8()

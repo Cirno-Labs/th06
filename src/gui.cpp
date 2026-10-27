@@ -17,3 +17,8 @@ BOOL Gui::Func417344()
 {
     return this->impl->unk_2bd8;
 }
+
+BOOL Gui::Func4195a2()
+{
+    return this->impl->unk_253c >= 0;
+}

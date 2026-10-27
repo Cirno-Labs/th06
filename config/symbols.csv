@@ -220,8 +220,8 @@ address,size,name,symbol
 0x0041ec22,80,Func41ec22,
 0x0041ec72,671,Func41ec72,
 0x0041ef11,247,Func41ef11,
-0x0041f008,35,Func41f008,?Func41f008@@YAXXZ
-0x0041f02b,37,Func41f02b,?Func41f02b@@YAXXZ
+0x0041f008,35,CreateTextSurface,?CreateTextSurface@@YAXXZ
+0x0041f02b,37,Func41f02b,?ReleaseTextSurface@@YAXXZ
 0x0041f050,480,Func41f050,
 0x0041f230,90,Func41f230,
 0x0041f290,517,Func41f290,
@@ -1584,6 +1584,7 @@ address,size,name,symbol
 0x0069d914,,g_FileSize,?g_FileSize@@3HA
 0x0069d918,,g_Chain,?g_Chain@@3VChain@@A
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
+0x0069e230,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A
 0x006c7114,,g_Unknown6c7114,?g_Unknown6c7114@@3EA
 0x006c7115,,g_Unknown6c7115,?g_Unknown6c7115@@3EA

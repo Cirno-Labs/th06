@@ -341,7 +341,12 @@ int Func42d773(int unk);
 int Func4107b0();
 int Func43a338(int unk);
 
-void Func41f008();
+// The 640 by 64 surface text is drawn on with GDI before it is copied
+// into a texture.
+extern IDirect3DSurface8 *g_TextSurface;
+
+// Creates g_TextSurface.
+void CreateTextSurface();
 
 // Returns `a + b`, brought back into -pi to pi by whole turns (at most
 // 18 each way).
@@ -378,8 +383,8 @@ void ResetKeyboard();
 void DrawFps();
 
 void Func42ab30(int unk1, char *unk2);
-// Releases the COM object at 0x69e230, if there is one.
-void Func41f02b();
+// Releases g_TextSurface, if there is one.
+void ReleaseTextSurface();
 
 // IDirectInput8::EnumDevices's callback for joysticks, from the DirectX
 // 8 SDK's Joystick sample: creates a device for the first joystick that

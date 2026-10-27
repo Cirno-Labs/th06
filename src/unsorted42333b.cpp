@@ -269,7 +269,7 @@ int Unknown6c6d18::AddedCallback(Unknown6c6d18 *arg)
     }
     arg->unk_198 = 0;
     g_SpriteEngine->Func431660();
-    Func41f008();
+    CreateTextSurface();
     arg->ReleaseArchive(0);
     if (g_Unknown6c6d18.LoadArchive(1, "紅魔郷MD.dat") != 0)
     {
@@ -405,7 +405,7 @@ int Unknown6c6d18::DeletedCallback(Unknown6c6d18 *arg)
         arg->midi = NULL;
     }
     Func42ab30(0, NULL);
-    Func41f02b();
+    ReleaseTextSurface();
     if (arg->keyboard)
     {
         arg->keyboard->Unacquire();

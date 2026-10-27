@@ -8,3 +8,8 @@ Unknown41e981::~Unknown41e981()
 {
     this->Func41e992();
 }
+
+void CreateTextSurface()
+{
+    g_Unknown6c6d18.d3dDevice->CreateImageSurface(640, 64, D3DFMT_A1R5G5B5, &g_TextSurface);
+}

@@ -341,6 +341,9 @@ int Func42d773(int unk);
 int Func4107b0();
 int Func43a338(int unk);
 
+// Releases ANMs 21 to 27.
+void Func43a70a();
+
 // The 640 by 64 surface text is drawn on with GDI before it is copied
 // into a texture.
 extern IDirect3DSurface8 *g_TextSurface;

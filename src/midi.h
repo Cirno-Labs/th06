@@ -108,8 +108,11 @@ public:
     // Loads a MIDI file into a slot, stopping playback first. Returns -1
     // on failure, 0 otherwise or if the game doesn't play MIDI.
     int LoadFile(int slot, char *path);
-    // Stops playback and closes the device.
+    // Stops playback and closes the device. Returns -1 if nothing is
+    // loaded, otherwise 0.
     int Stop();
+    // Unprepares and frees a header from `headers`.
+    int ReleaseHeader(LPMIDIHDR header);
     // Frees the MIDI file loaded into a slot.
     void UnloadFile(int slot);
     // Parses the file in a slot into tracks.
@@ -125,7 +128,8 @@ public:
     // Starts fading the music out over `duration` ms. Returns 0.
     int FadeOut(int duration);
 
-    void *unk_010[0x20];
+    // Long messages being sent; released by ReleaseHeader.
+    LPMIDIHDR headers[0x20];
     int unk_090;
     // MIDI files loaded by 0x421ff0, freed by 0x422070.
     void *fileData[0x20];

@@ -263,7 +263,7 @@ address,size,name,symbol
 0x004223c0,207,MidiPlayer::Rewind,?Rewind@MidiPlayer@@QAEXXZ
 0x00422490,68,MidiPlayer::Play,?Play@MidiPlayer@@QAEHXZ
 0x004224e0,124,MidiPlayer::Stop,?Stop@MidiPlayer@@QAEHXZ
-0x00422560,199,Func422560,
+0x00422560,199,MidiPlayer::ReleaseHeader,?ReleaseHeader@MidiPlayer@@QAEHPAUmidihdr_tag@@@Z
 0x00422630,79,MidiPlayer::FadeOut,?FadeOut@MidiPlayer@@QAEHH@Z
 0x00422680,635,MidiPlayer::OnTimer,?OnTimer@MidiPlayer@@UAEXXZ
 0x00422900,2047,Func422900,

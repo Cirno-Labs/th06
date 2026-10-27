@@ -166,7 +166,7 @@ MidiPlayer::MidiPlayer()
     }
     for (j = 0; j < 0x20; j++)
     {
-        this->unk_010[j] = NULL;
+        this->headers[j] = NULL;
     }
     this->unk_090 = 0;
 }
@@ -244,5 +244,26 @@ int MidiPlayer::FadeOut(int duration)
     this->unk_2e8 = 0;
     this->unk_2dc = 0;
     this->unk_2e0 = 1;
+    return 0;
+}
+
+int MidiPlayer::Stop()
+{
+    int i;
+
+    if (this->tracks == NULL)
+    {
+        return -1;
+    }
+    for (i = 0; i < 0x20; i++)
+    {
+        // Indexes with unk_090, not i, in the original.
+        if (this->headers[this->unk_090] != NULL)
+        {
+            this->ReleaseHeader(this->headers[this->unk_090]);
+        }
+    }
+    MmTimer::Stop();
+    this->device.Close();
     return 0;
 }

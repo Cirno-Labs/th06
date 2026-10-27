@@ -27,11 +27,19 @@ public:
     // Queues sound effect `sound`, unless it is already queued or three
     // are. `unused` is not used.
     void QueueSound(int sound, int unused);
+    // Plays the queued sound effects from the start, if sound effects
+    // are on, and empties the queue.
+    void PlayQueuedSounds();
 
-    unsigned char unk_000[0x408];
+    unsigned char unk_000[0x208];
+    // Each sound effect's own buffer.
+    IDirectSoundBuffer *sounds[0x20];
+    unsigned char unk_288[0x180];
     // Set from g_SoundInfos[].unk_6 when a sound is queued.
     int unk_408[0x20];
-    unsigned char unk_488[0x198];
+    unsigned char unk_488[0x188];
+    int unk_610;
+    unsigned char unk_614[0xc];
     // The sound effects to play, or -1.
     int queue[3];
     // The wave music playing; NULL when stopped.
@@ -130,8 +138,8 @@ struct GameConfig
     // "bgm/th06_01.wav" opens, otherwise 2 after logging "wave データが
     // 無いので、midi にします" ("no wave data, switching to MIDI").
     BYTE musicMode;
-    // 1, at most 1.
-    BYTE unk_1c;
+    // Whether sound effects play. 1, at most 1.
+    BYTE playSounds;
     // 1, at most 4.
     BYTE unk_1d;
     // 0, at most 1.

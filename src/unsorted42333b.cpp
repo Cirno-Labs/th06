@@ -624,7 +624,7 @@ int Unknown6c6d18::LoadArchive(int index, char *path)
         g_Unknown6c6d18.cfg.musicMode = 2; \
         DebugPrint2("wave データが無いので、midi にします\n"); \
     } \
-    g_Unknown6c6d18.cfg.unk_1c = 1; \
+    g_Unknown6c6d18.cfg.playSounds = 1; \
     g_Unknown6c6d18.cfg.unk_1d = 1; \
     g_Unknown6c6d18.cfg.unk_1e = 0; \
     g_Unknown6c6d18.cfg.frameSkip = 0; \
@@ -648,7 +648,7 @@ int Unknown6c6d18::LoadConfig(char *path)
         g_Unknown6c6d18.cfg = *file;
         if (g_Unknown6c6d18.cfg.lives >= 5 || g_Unknown6c6d18.cfg.bombs >= 4 ||
             g_Unknown6c6d18.cfg.unk_1a >= 2 || g_Unknown6c6d18.cfg.musicMode >= 3 ||
-            g_Unknown6c6d18.cfg.unk_1d >= 5 || g_Unknown6c6d18.cfg.unk_1c >= 2 ||
+            g_Unknown6c6d18.cfg.unk_1d >= 5 || g_Unknown6c6d18.cfg.playSounds >= 2 ||
             g_Unknown6c6d18.cfg.unk_1e >= 2 || g_Unknown6c6d18.cfg.frameSkip >= 3 ||
             g_Unknown6c6d18.cfg.version != 0x102 || g_FileSize != sizeof(GameConfig))
         {

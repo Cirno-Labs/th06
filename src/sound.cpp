@@ -27,3 +27,34 @@ void Unknown6d3f50::QueueSound(int sound, int unused)
     this->queue[i] = sound;
     this->unk_408[sound] = unk;
 }
+
+void Unknown6d3f50::PlayQueuedSounds()
+{
+    int i;
+    int sound;
+
+    if (!this->unk_610)
+    {
+        return;
+    }
+    if (!g_Unknown6c6d18.cfg.playSounds)
+    {
+        return;
+    }
+    for (i = 0; i < 3; i++)
+    {
+        if (this->queue[i] < 0)
+        {
+            break;
+        }
+        sound = this->queue[i];
+        this->queue[i] = -1;
+        if (this->sounds[sound] == NULL)
+        {
+            continue;
+        }
+        this->sounds[sound]->Stop();
+        this->sounds[sound]->SetCurrentPosition(0);
+        this->sounds[sound]->Play(0, 0, 0);
+    }
+}

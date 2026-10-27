@@ -387,7 +387,7 @@ address,size,name,symbol
 0x00430f80,252,Unknown6d3f50::StopBgm,?StopBgm@Unknown6d3f50@@QAEXXZ
 0x00431080,342,Unknown6d3f50::LoadSounds,?LoadSounds@Unknown6d3f50@@QAEHXZ
 0x004311e0,133,Unknown6d3f50::QueueSound,?QueueSound@Unknown6d3f50@@QAEXHH@Z
-0x00431270,256,Func431270,
+0x00431270,256,Unknown6d3f50::PlayQueuedSounds,?PlayQueuedSounds@Unknown6d3f50@@QAEXXZ
 0x00431370,176,Func431370,
 0x00431420,76,Func431420,
 0x00431470,493,Func431470,

@@ -171,6 +171,12 @@ public:
 ASSERT_SIZE(BulletManager, 0xf5c18);
 extern BulletManager g_BulletManager;
 
+// Draws a bullet with the sprite for its state (spawning effects, fading
+// out), turned along its angle where the sprite asks for it; Func416c50
+// places it in the play area.
+void DrawBullet(Bullet *bullet);
+void Func416c50(Bullet *bullet);
+
 // Two tables; BulletManager::RegisterChain points g_Unknown476438 at the
 // first while option bit 0 is clear, otherwise at the second.
 extern DWORD g_Unknown476358[0x1c];

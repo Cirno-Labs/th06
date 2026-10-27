@@ -471,3 +471,35 @@ int BulletManager::ClearAllWithBonus(int maxBonus, int toItems)
     }
     return totalBonus;
 }
+
+void DrawBullet(Bullet *bullet)
+{
+    Sprite *sprite;
+
+    switch (bullet->state)
+    {
+    case 2:
+        sprite = &bullet->sprites.sprite1;
+        break;
+    case 3:
+        sprite = &bullet->sprites.sprite2;
+        break;
+    case 4:
+        sprite = &bullet->sprites.sprite3;
+        break;
+    case 5:
+        sprite = &bullet->sprites.sprite4;
+        break;
+    default:
+        sprite = &bullet->sprites.sprite0;
+    }
+    sprite->pos.x = bullet->pos.x;
+    sprite->pos.y = bullet->pos.y;
+    sprite->pos.z = 0.0f;
+    sprite->color = sprite->color & 0xff000000 | 0xffffff;
+    if (sprite->unk_088 != 0)
+    {
+        sprite->rotation = 1.5707964f - bullet->angle;
+    }
+    g_SpriteEngine->Func433590(sprite);
+}

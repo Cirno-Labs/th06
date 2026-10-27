@@ -133,7 +133,7 @@ address,size,name,symbol
 0x004148f0,211,BulletManager::RegisterChain,?RegisterChain@BulletManager@@SAHH@Z
 0x004149d0,6928,BulletManager::OnUpdate,?OnUpdate@BulletManager@@SAHPAV1@@Z
 0x00416500,1607,BulletManager::OnDraw,?OnDraw@BulletManager@@SAHPAV1@@Z
-0x00416b50,234,Func416b50,
+0x00416b50,234,DrawBullet,?DrawBullet@@YAXPAUBullet@@@Z
 0x00416c50,244,Func416c50,
 0x00416d60,1289,BulletManager::AddedCallback,?AddedCallback@BulletManager@@SAHPAV1@@Z
 0x00417270,49,BulletManager::DeletedCallback,?DeletedCallback@BulletManager@@SAHPAV1@@Z

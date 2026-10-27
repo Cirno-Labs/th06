@@ -6,3 +6,12 @@
 /build/
 /.wine/
 __pycache__/
+
+# Installation media and archives
+*.iso
+*.ISO
+*.img
+*.zip
+*.lzh
+wget-log*
+/*.exe

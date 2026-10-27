@@ -9,42 +9,44 @@ binary that is byte-for-byte identical to the original executable.
 This repository contains no game code or data. You need your own copy of
 the game, see [`orig/README.md`](orig/README.md).
 
+## Clean room
+
+This is an independent, clean-room implementation. It is written from
+the binary alone: no code, names, struct layouts or function lists are
+taken from other decompilations or ports of Touhou games. Names come from
+our own analysis or, for library code, from the libraries themselves.
+
 ## Status
 
-Nothing has been decompiled yet. The first target is the freely distributed
-trial (0.13), which is used to bring up the toolchain and workflow before
-moving to the retail 1.02h build.
+The toolchain and workflow are up and the first 1.02h function matches.
+The workflow was proven on the 0.13 trial (one function matched and
+hooked) before switching the target to retail 1.02h.
 
-Initial Ghidra analysis of the trial finds 1229 functions. Those from
-`0x446ead` onwards are the statically linked MSVC CRT, identified by
-Ghidra's function ID. The 857 functions in `0x401000`–`0x446ead`
-(about 232 KB) are game code, plus whatever compiler helpers and D3DX8
-code is mixed in. For example, `0x401000` is MSVC's
-`vector constructor iterator`.
+Ghidra finds 1383 functions. The game code is compiled without
+optimization, so its functions start with `push ebp; mov ebp, esp`; the
+statically linked D3DX8 and CRT code is optimized. That puts the game
+code at `0x401000`–`0x43c2f0`: 471 functions, about 238 KB. Ghidra's
+function ID recognizes the CRT from about `0x45b000` on.
 
 ```sh
-tools/ghidra/analyze.sh   # writes build/functions_trial013.csv
+just analyze   # writes build/functions_102h.csv
 ```
 
-## Targets
+## Target
 
-| Build | Date | `.text` | Notes |
-| --- | --- | --- | --- |
-| Trial 0.13 | 2002-08-25 | 0x53cf0 bytes | Bring-up target, free download |
-| Retail 1.02h | 2002-12-01 | TBD | Final target |
+Retail 1.02h, released 2002-12-01:
 
-Trial 0.13 at a glance:
-
-- 32-bit PE, image base `0x400000`, entry point `0x448c06`
-- `.data` is 0x27201c bytes in memory but only 0x7000 on disk, so most of
+- 32-bit PE, image base `0x400000`, entry point `0x45d746`, `.text` is
+  0x68a5f bytes
+- `.data` is 0x2719fc bytes in memory but only 0x6000 on disk, so most of
   it is zero-initialized globals
-- Imports `d3d8`, `DSOUND` (by ordinal), `DINPUT8`, `WINMM`, `GDI32`,
-  `USER32` and `KERNEL32`. Only `Direct3DCreate8` is imported from D3D,
-  so D3DX8 is most likely statically linked.
+- Imports `d3d8`, `DSOUND`, `DINPUT8`, `WINMM`, `GDI32`, `USER32` and
+  `KERNEL32`. Only `Direct3DCreate8` is imported from D3D, so D3DX8 is
+  statically linked.
 
 ## Toolchain
 
-Read from the Rich header of the trial executable (`tools/peinfo.py`):
+Read from the Rich header (`tools/peinfo.py`):
 
 | Tool | Build | Objects | Probably |
 | --- | --- | --- | --- |
@@ -62,34 +64,52 @@ decompiled. The CRT and the SDK libraries are linked as-is.
 
 ## Workflow
 
-Everything runs headless, so it works over SSH:
+Everything runs headless, so it works over SSH. `just` lists the recipes.
 
-1. Analyze the binary with Ghidra in headless mode
-   (`analyzeHeadless`), applying MSVC 7 function signatures so library
-   code is labeled and can be ignored.
-2. Record each game function in [`config/functions.csv`](config/functions.csv)
-   (address, size, name, source file, status).
-3. Write C++ for the function in `src/`, in the style of 2002-era
-   code.
-4. Build with `cl.exe` under Wine in a repo-local `WINEPREFIX`.
-5. Compare the compiled function's bytes against the original and
-   iterate until they match.
+1. Analyze the binary with Ghidra in headless mode (`just analyze`).
+2. Write C++ for a function in `src/`, in the style of 2002-era code.
+3. Record the function and every original function and global it
+   uses in [`config/symbols.csv`](config/symbols.csv): address, size, our
+   name, and the mangled name, which the link error for an unresolved
+   external gives.
+4. Compare (`just compare`): builds with `cl.exe` under Wine and
+   checks each function against the original byte for byte. Calls and
+   global addresses are resolved through `symbols.csv` and compared too;
+   only references to unnamed data such as string literals are masked.
+   `just compare SYMBOL` shows a disassembly diff.
+5. Play (`just run`): runs the original game with the new code hooked
+   in, to check that the code behaves correctly as well as matching.
+
+### Hooking
+
+The decompiled code runs inside the original game. `tools/patch_exe.py` adds
+one import, `th06.dll`, to a copy of the executable. The DLL is
+built from the same objects that `just compare` checks. On load it
+overwrites each decompiled function in the original with a jump to the
+new code.
+
+Calls from new code to functions that are not decompiled yet go through
+generated thunks (`push address; ret`) to the original. Globals are
+absolute symbols at their original addresses. Both are generated from
+`symbols.csv`. The DLL has no C runtime of its own: CRT functions belong
+in `symbols.csv` too, so the game and the new code share one heap.
 
 ## Layout
 
 ```
 orig/     your game files (not tracked) and their checksums
-src/      decompiled source
-config/   function list and match status
-tools/    scripts (header inspection, build, compare)
+src/      decompiled source; src/dll/ is the hook DLL's own code
+config/   symbols.csv: address, size, name and mangled symbol
+tools/    build, compare, exe patcher, Ghidra scripts
+build/    outputs; build/game/ is a runnable copy of the patched game
 ```
 
 ## Requirements
 
-- Wine
-- Visual C++ .NET 2002 (bring your own copy)
-- DirectX 8 SDK
-- Python 3
+- Wine (32-bit), Python 3, [just](https://github.com/casey/just),
+  binutils (`objdump`), 7-Zip
+- Visual C++ .NET 2002, the Windows XP SP2 Platform SDK and the
+  DirectX 8.0 SDK (bring your own copies)
 - Ghidra (for analysis, optional)
 
 ## Legal

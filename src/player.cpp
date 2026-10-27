@@ -106,84 +106,84 @@ int Player::HandleInput()
     case 4:
         if (g_Buttons & 4)
         {
-            deltaX = this->speedFocused;
+            deltaX = this->shotTypeInfo.speedFocused;
         }
         else
         {
-            deltaX = this->speed;
+            deltaX = this->shotTypeInfo.speed;
         }
         break;
     case 3:
         if (g_Buttons & 4)
         {
-            deltaX = -this->speedFocused;
+            deltaX = -this->shotTypeInfo.speedFocused;
         }
         else
         {
-            deltaX = -this->speed;
+            deltaX = -this->shotTypeInfo.speed;
         }
         break;
     case 1:
         if (g_Buttons & 4)
         {
-            deltaY = -this->speedFocused;
+            deltaY = -this->shotTypeInfo.speedFocused;
         }
         else
         {
-            deltaY = -this->speed;
+            deltaY = -this->shotTypeInfo.speed;
         }
         break;
     case 2:
         if (g_Buttons & 4)
         {
-            deltaY = this->speedFocused;
+            deltaY = this->shotTypeInfo.speedFocused;
         }
         else
         {
-            deltaY = this->speed;
+            deltaY = this->shotTypeInfo.speed;
         }
         break;
     case 5:
         if (g_Buttons & 4)
         {
-            deltaX = -this->speedDiagonalFocused;
+            deltaX = -this->shotTypeInfo.speedDiagonalFocused;
         }
         else
         {
-            deltaX = -this->speedDiagonal;
+            deltaX = -this->shotTypeInfo.speedDiagonal;
         }
         deltaY = deltaX;
         break;
     case 7:
         if (g_Buttons & 4)
         {
-            deltaX = -this->speedDiagonalFocused;
+            deltaX = -this->shotTypeInfo.speedDiagonalFocused;
         }
         else
         {
-            deltaX = -this->speedDiagonal;
+            deltaX = -this->shotTypeInfo.speedDiagonal;
         }
         deltaY = -deltaX;
         break;
     case 6:
         if (g_Buttons & 4)
         {
-            deltaX = this->speedDiagonalFocused;
+            deltaX = this->shotTypeInfo.speedDiagonalFocused;
         }
         else
         {
-            deltaX = this->speedDiagonal;
+            deltaX = this->shotTypeInfo.speedDiagonal;
         }
         deltaY = -deltaX;
         break;
     case 8:
         if (g_Buttons & 4)
         {
-            deltaX = this->speedDiagonalFocused;
+            deltaX = this->shotTypeInfo.speedDiagonalFocused;
         }
         else
         {
-            deltaX = this->speedDiagonal;
+            deltaX = this->shotTypeInfo.speedDiagonal;
         }
         deltaY = deltaX;
         break;
@@ -723,4 +723,71 @@ void Player::DrawHitBullets(Player *player)
         bullet->sprite.pos.z = 0.4f;
         g_SpriteEngine->Func433590(&bullet->sprite);
     }
+}
+
+int Player::AddedCallback(Player *player)
+{
+    int i;
+    PlayerBullet *bullet;
+
+    switch (g_GameManager.character)
+    {
+    case 0:
+        if ((g_Unknown6c6d18.scene != 3) != 0 && g_SpriteEngine->LoadAnm(5, "data/player00.anm", 0x400) != 0)
+        {
+            return -1;
+        }
+        g_SpriteEngine->StartScript(&player->sprite, 0x400);
+        break;
+    case 1:
+        if ((g_Unknown6c6d18.scene != 3) != 0 && g_SpriteEngine->LoadAnm(5, "data/player01.anm", 0x400) != 0)
+        {
+            return -1;
+        }
+        g_SpriteEngine->StartScript(&player->sprite, 0x400);
+        break;
+    }
+    player->position.x = g_GameManager.arena[2] / 2.0f;
+    player->position.y = g_GameManager.arena[3] - 64.0f;
+    player->position.z = 0.49f;
+    player->optionPos[0].z = 0.49f;
+    player->optionPos[1].z = 0.49f;
+    for (i = 0; i < 32; i++)
+    {
+        player->bombHitSize[i].x = 0.0f;
+    }
+    player->hitboxSize.x = 1.25f;
+    player->hitboxSize.y = 1.25f;
+    player->hitboxSize.z = 5.0f;
+    player->grazeSize.x = 12.0f;
+    player->grazeSize.y = 12.0f;
+    player->grazeSize.z = 5.0f;
+    player->direction = 0;
+    player->shotTypeInfo = g_ShotTypes[g_GameManager.character * 2 + g_GameManager.shotType];
+    player->shotTypeInfo.speedDiagonal = player->shotTypeInfo.speed / sqrtf(2.0f);
+    player->shotTypeInfo.speedDiagonalFocused = player->shotTypeInfo.speedFocused / sqrtf(2.0f);
+    player->fire = player->shotTypeInfo.fire;
+    player->fireFocused = player->shotTypeInfo.fireFocused;
+    player->unk_09e0 = 1;
+    player->unk_75b4.Set(120);
+    player->optionState = 0;
+    g_SpriteEngine->StartScript(&player->optionSprites[0], 0x480);
+    g_SpriteEngine->StartScript(&player->optionSprites[1], 0x481);
+    bullet = player->bullets;
+    for (i = 0; i < 0x50; i++, bullet++)
+    {
+        bullet->state = 0;
+    }
+    player->fireTimer.Set(-1);
+    player->bombUpdate = g_Bombs[g_GameManager.character * 2 + g_GameManager.shotType].update;
+    player->bombDraw = g_Bombs[g_GameManager.character * 2 + g_GameManager.shotType].draw;
+    player->bombing = 0;
+    for (i = 0; i < 2; i++)
+    {
+        player->laserTimers[i].Set(0);
+    }
+    player->moveScaleY = 1.0f;
+    player->moveScaleX = 1.0f;
+    player->unk_09d8 = 8;
+    return 0;
 }

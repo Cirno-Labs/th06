@@ -1554,6 +1554,8 @@ address,size,name,symbol
 0x00476438,,g_Unknown476438,?g_Unknown476438@@3PAKA
 0x004765a0,,g_ControllerMapping,?g_ControllerMapping@@3UControllerMapping@@A
 0x004765b8,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
+0x00476708,,g_Bombs,?g_Bombs@@3PAUBombInfo@@A
+0x00476728,,g_ShotTypes,?g_ShotTypes@@3PAUShotTypeInfo@@A
 0x00476f78,,g_ShotTable0,?g_ShotTable0@@3UShotTable@@A
 0x00477770,,g_ShotTable1,?g_ShotTable1@@3UShotTable@@A
 0x00477ed8,,g_ShotTable2,?g_ShotTable2@@3UShotTable@@A

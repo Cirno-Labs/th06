@@ -35,6 +35,30 @@ struct PlayerBullet
 };
 ASSERT_SIZE(PlayerBullet, 0x158);
 
+class Player;
+
+// A shot type's movement speeds (straight, straight focused, diagonal,
+// diagonal focused) and its fire functions, unfocused and focused.
+// They fill `bullet` with shot `index` and return 0, or 1 for the
+// frame's last shot; -1 skips the shot, keeping `bullet`, and -2 stops.
+struct ShotTypeInfo
+{
+    float speed;
+    float speedFocused;
+    float speedDiagonal;
+    float speedDiagonalFocused;
+    int (*fire)(Player *player, PlayerBullet *bullet, int index, int frame);
+    int (*fireFocused)(Player *player, PlayerBullet *bullet, int index, int frame);
+};
+ASSERT_SIZE(ShotTypeInfo, 0x18);
+
+// A shot type's bomb callbacks.
+struct BombInfo
+{
+    void (*update)(Player *player);
+    void (*draw)(Player *player);
+};
+
 // The player, the global at 0x6ca628. Its added callback loads
 // "data/player00.anm" or "player01.anm".
 class Player
@@ -73,7 +97,10 @@ public:
     static int OnDraw2(Player *player);
     // Draws the player's bullets of type 2.
     static void DrawHitBullets(Player *player);
-    // Loads the player's sprites.
+    // Loads the character's sprites ("data/player00.anm" or
+    // "player01.anm", unless the scene is 3) and sets the player up at
+    // the bottom of the play area, respawning, with the shot type's
+    // speeds, fire functions and bomb. Returns 0, or -1 if loading fails.
     static int AddedCallback(Player *player);
     // Frees the player's sprites, unless the scene is 3. Returns 0.
     static int DeletedCallback(Player *player);
@@ -128,13 +155,9 @@ public:
     DWORD unk_09e4;
     // Clocks the options sliding in and out.
     Timer optionTimer;
-    // Movement speeds: straight, straight focused, diagonal, diagonal
-    // focused.
-    float speed;
-    float speedFocused;
-    float speedDiagonal;
-    float speedDiagonalFocused;
-    DWORD unk_0a04[0x2];
+    // The shot type's, from g_ShotTypes; AddedCallback works out the
+    // diagonal speeds.
+    ShotTypeInfo shotTypeInfo;
     // The direction held: 0 none, 1 up, 2 down, 3 left, 4 right, 5 up
     // left, 6 up right, 7 down left, 8 down right.
     int direction;
@@ -154,9 +177,7 @@ public:
     // Counts the death and respawn; the invulnerability counts down
     // (set to 360 frames when a bomb starts).
     Timer unk_75b4;
-    // The shot type's fire functions, unfocused and focused. They fill
-    // `bullet` with shot `index` and return 0, or 1 for the frame's last
-    // shot; -1 skips the shot, keeping `bullet`, and -2 stops.
+    // Copies of shotTypeInfo's.
     int (*fire)(Player *player, PlayerBullet *bullet, int index, int frame);
     int (*fireFocused)(Player *player, PlayerBullet *bullet, int index, int frame);
     // Whether a bomb runs; cleared when it ends.
@@ -229,12 +250,15 @@ struct ShotTable;
 // Fires shot `index` of a shot type for `frame` at the current power.
 int FireShot(Player *player, PlayerBullet *bullet, int index, int frame, ShotTable *table);
 
-// The four shot types' fire functions, in the per-shot-type table at
-// 0x476728 that also holds their movement speeds.
+// The four shot types' fire functions, in g_ShotTypes.
 int FireShotType0(Player *player, PlayerBullet *bullet, int index, int frame);
 int FireShotType1(Player *player, PlayerBullet *bullet, int index, int frame);
 int FireShotType2(Player *player, PlayerBullet *bullet, int index, int frame);
 int FireShotType3(Player *player, PlayerBullet *bullet, int index, int frame);
+
+// By character * 2 + shot type.
+extern ShotTypeInfo g_ShotTypes[4];
+extern BombInfo g_Bombs[4];
 
 // Their shot tables.
 extern ShotTable g_ShotTable0;

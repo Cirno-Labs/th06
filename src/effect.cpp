@@ -42,3 +42,55 @@ void EffectManager::RemoveChain()
     g_Chain.Remove(&g_EffectCalcChain);
     g_Chain.Remove(&g_EffectDrawChain);
 }
+
+int EffectManager::AddedCallback(EffectManager *mgr)
+{
+    mgr->Reset();
+    switch (g_Stage)
+    {
+    case 0:
+    case 1:
+        if (g_SpriteEngine->LoadAnm(0xb, "data/eff01.anm", 0x2b3) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 2:
+        if (g_SpriteEngine->LoadAnm(0xb, "data/eff02.anm", 0x2b3) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 3:
+        if (g_SpriteEngine->LoadAnm(0xb, "data/eff03.anm", 0x2b3) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 4:
+        if (g_SpriteEngine->LoadAnm(0xb, "data/eff04.anm", 0x2b3) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 5:
+        if (g_SpriteEngine->LoadAnm(0xb, "data/eff05.anm", 0x2b3) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 6:
+        if (g_SpriteEngine->LoadAnm(0xb, "data/eff05.anm", 0x2b3) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 7:
+        if (g_SpriteEngine->LoadAnm(0xb, "data/eff04.anm", 0x2b3) != 0)
+        {
+            return -1;
+        }
+        break;
+    }
+    return 0;
+}

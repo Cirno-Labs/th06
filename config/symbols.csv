@@ -1554,6 +1554,7 @@ address,size,name,symbol
 0x0069d4bf,,g_Unknown69d4bf,?g_Unknown69d4bf@@3EA
 0x0069d4c0,,g_Unknown69d4c0,?g_Unknown69d4c0@@3EA
 0x0069d4c1,,g_Unknown69d4c1,?g_Unknown69d4c1@@3EA
+0x0069d6d4,,g_Stage,?g_Stage@@3HA
 0x0069d6dc,,g_Unknown69d6dc,?g_Unknown69d6dc@@3PAMA
 0x0069d8f8,,g_Rng,?g_Rng@@3VRng@@A
 0x0069d900,,g_Archives,?g_Archives@@3PAPAVDatArchive@@A

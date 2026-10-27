@@ -33,7 +33,9 @@ public:
     static int RegisterChain();
     static int OnUpdate(EffectManager *mgr);
     static int OnDraw(EffectManager *mgr);
-    // Loads the stage's effect sprites. Returns 0, or -1 on failure.
+    // Resets and loads the stage's effect sprites: data/eff01.anm to
+    // eff05.anm, stage 6 reusing eff05 and stage 7 eff04. Returns 0, or
+    // -1 on failure.
     static int AddedCallback(EffectManager *mgr);
     // Frees the effect sprites. Returns 0.
     static int DeletedCallback(EffectManager *mgr);
@@ -45,6 +47,9 @@ public:
 };
 ASSERT_SIZE(EffectManager, 0x2f984);
 extern EffectManager g_EffectManager;
+
+// The stage being played, at 0x69d6d4: 1 to 6, 7 for the extra stage.
+extern int g_Stage;
 
 // EffectManager's statically allocated chain elements.
 extern ChainElem g_EffectCalcChain;

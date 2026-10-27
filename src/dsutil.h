@@ -95,6 +95,8 @@ public:
     // Stops the buffer and returns 1 when the fade ends, otherwise 0.
     int UpdateFade();
 
+    HRESULT Reset();
+
     DWORD m_dwLastPlayPos;
     DWORD m_dwPlayProgress;
     DWORD m_dwNotifySize;

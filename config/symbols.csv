@@ -461,7 +461,7 @@ address,size,name,symbol
 0x0043b4b0,28,CStreamingSound::~CStreamingSound,??1CStreamingSound@@UAE@XZ
 0x0043b4d0,143,CStreamingSound::UpdateFade,?UpdateFade@CStreamingSound@@QAEHXZ
 0x0043b560,887,Func43b560,
-0x0043b8e0,194,Func43b8e0,
+0x0043b8e0,194,CStreamingSound::Reset,?Reset@CStreamingSound@@QAEJXZ
 0x0043b9b0,82,CWaveFile::CWaveFile,??0CWaveFile@@QAE@XZ
 0x0043ba10,70,CWaveFile::~CWaveFile,??1CWaveFile@@QAE@XZ
 0x0043ba60,384,Func43ba60,

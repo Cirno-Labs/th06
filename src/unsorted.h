@@ -21,6 +21,10 @@ public:
     int Initialize(HWND hwnd);
     // Releases the sounds, the wave music and DirectSound. Returns 0.
     int Release();
+    // Loads the wave file at `path` as the streaming wave music, after
+    // stopping what plays, and starts the thread that streams it.
+    // Returns 0 or -1.
+    int LoadBgm(char *path);
     // Stops the wave music: ends the notification thread and releases
     // the stream ("stop BGM").
     void StopBgm();
@@ -66,6 +70,9 @@ public:
     HANDLE notifyEvent;
 };
 extern Unknown6d3f50 g_Unknown6d3f50;
+
+// The thread LoadBgm starts, with the main window.
+DWORD WINAPI Func431370(LPVOID hwnd);
 
 // Each sound effect's sound buffer and volume.
 struct SoundInfo

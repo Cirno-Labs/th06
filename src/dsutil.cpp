@@ -11,8 +11,6 @@
 // From the SDK's dxerr8.h, as in a release build.
 #define DXTRACE_ERR(str, hr) (hr)
 
-#define WAVEFILE_READ 1
-
 CSoundManager::CSoundManager()
 {
     m_pDS = NULL;

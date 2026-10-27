@@ -9,6 +9,8 @@
 
 #include "common.h"
 
+#define WAVEFILE_READ 1
+
 // Reads a wave file.
 class CWaveFile
 {

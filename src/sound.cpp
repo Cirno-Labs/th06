@@ -5,6 +5,18 @@
 
 char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size);
 
+// Spins until `ms` milliseconds have passed, or the clock wraps.
+#define WAIT_FOR(ms)                                                                                                   \
+    {                                                                                                                  \
+        DWORD start = timeGetTime();                                                                                   \
+        DWORD now = start;                                                                                             \
+        DWORD delay = ms;                                                                                              \
+        while (now < start + delay && now >= start)                                                                    \
+        {                                                                                                              \
+            now = timeGetTime();                                                                                       \
+        }                                                                                                              \
+    }
+
 int Unknown6d3f50::Initialize(HWND hwnd)
 {
     DSBUFFERDESC params;
@@ -200,6 +212,60 @@ char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size)
         data += *chunkSize + 8;
     }
     return NULL;
+}
+
+int Unknown6d3f50::LoadBgm(char *path)
+{
+    DWORD dwNotifySize;
+    CWaveFile waveFile;
+    HRESULT hr;
+    INT nSamplesPerSec;
+    DWORD nBlockAlign;
+
+    if (!this->manager)
+    {
+        return -1;
+    }
+    if (!g_Unknown6c6d18.cfg.playSounds)
+    {
+        return -1;
+    }
+    if (this->dsound == NULL)
+    {
+        return -1;
+    }
+    this->StopBgm();
+    DebugPrint("load BGM\n");
+    hr = waveFile.Open(path, NULL, WAVEFILE_READ);
+    if (hr < 0)
+    {
+        DebugPrint("error : wav file load error %s\n", path);
+        waveFile.Close();
+        return -1;
+    }
+    if (waveFile.GetSize() == 0)
+    {
+        waveFile.Close();
+        return -1;
+    }
+    WAIT_FOR(100);
+    waveFile.Close();
+    nBlockAlign = waveFile.m_pwfx->nBlockAlign;
+    nSamplesPerSec = waveFile.m_pwfx->nSamplesPerSec;
+    dwNotifySize = nSamplesPerSec * 2 * nBlockAlign / 4;
+    dwNotifySize -= dwNotifySize % nBlockAlign;
+    this->notifyEvent = CreateEventA(NULL, FALSE, FALSE, NULL);
+    this->notifyThread = CreateThread(NULL, 0, Func431370, g_Unknown6c6d18.hwnd, 0, &this->notifyThreadId);
+    hr = this->manager->CreateStreaming(&this->bgm, path, DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GETCURRENTPOSITION2,
+                                        GUID_NULL, 4, dwNotifySize, this->notifyEvent);
+    if (hr < 0)
+    {
+        DebugPrint("error : ストリーミング用サウンドバッファを作成出来ませんでした\n");
+        return -1;
+    }
+    DebugPrint("comp\n");
+    WAIT_FOR(100);
+    return 0;
 }
 
 void Unknown6d3f50::StopBgm()

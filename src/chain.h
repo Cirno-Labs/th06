@@ -49,6 +49,11 @@ public:
     int AddToDrawChain(ChainElem *elem, int priority);
     // Unlinks `elem` from its chain and deletes it.
     void Remove(ChainElem *elem);
+    // Releases the elements of the list that starts at `root`, going
+    // through a copy of the list it allocates.
+    void ReleaseList(ChainElem *root);
+    // Releases both chains.
+    void Release();
 
     ChainElem calcChain;
     ChainElem drawChain;

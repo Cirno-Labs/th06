@@ -188,8 +188,8 @@ address,size,name,symbol
 0x0041c940,205,Chain::AddToDrawChain,?AddToDrawChain@Chain@@QAEHPAUChainElem@@H@Z
 0x0041ca10,157,Func41ca10,
 0x0041cad0,158,Func41cad0,
-0x0041cb90,383,Func41cb90,
-0x0041cd10,38,Func41cd10,
+0x0041cb90,383,Chain::ReleaseList,?ReleaseList@Chain@@QAEXPAUChainElem@@@Z
+0x0041cd10,38,Chain::Release,?Release@Chain@@QAEXXZ
 0x0041cd40,160,Chain::CreateElem,?CreateElem@Chain@@QAEPAUChainElem@@P6AHPAX@Z@Z
 0x0041cde0,380,Chain::Remove,?Remove@Chain@@QAEXPAUChainElem@@@Z
 0x0041cf60,85,Func41cf60,

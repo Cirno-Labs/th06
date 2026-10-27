@@ -344,6 +344,10 @@ void Func41c269();
 int Func43a338(int unk);
 void Func41f008();
 
+// Returns `a + b`, brought back into -pi to pi by whole turns (at most
+// 18 each way).
+float AddNormalizeAngle(float a, float b);
+
 // Counts frames and draws the frame rate ("%.02ffps"), updated every
 // half second, at the bottom right.
 void DrawFps();

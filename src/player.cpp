@@ -68,6 +68,26 @@ int Player::RegisterChain(BYTE unk)
 
 int Player::OnDraw2(Player *player)
 {
-    Player::Func429bb0(player);
+    Player::DrawHitBullets(player);
     return 1;
+}
+
+void Player::DrawHitBullets(Player *player)
+{
+    PlayerBullet *bullet = player->bullets;
+    int i;
+
+    for (i = 0; i < 0x50; i++, bullet++)
+    {
+        if (bullet->type != 2)
+        {
+            continue;
+        }
+        if (bullet->sprite.unk_088 != 0)
+        {
+            bullet->sprite.rotation = 1.5707964f - AddNormalizeAngle(bullet->angle, 3.1415927f);
+        }
+        bullet->sprite.pos.z = 0.4f;
+        g_SpriteEngine->Func433590(&bullet->sprite);
+    }
 }

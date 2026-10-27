@@ -56,7 +56,10 @@ public:
 
     // The gaps are DWORDs, not bytes: a byte array would make /GS put a
     // security cookie in functions with a Sprite local.
-    DWORD unk_000[0x6];
+    DWORD unk_000[0x2];
+    // Turns the sprite (through SpriteEngine::Func433590).
+    float rotation;
+    DWORD unk_00c[0x3];
     // SpriteEngine::Draw scales the sprite's height and width by these.
     float scaleY;
     float scaleX;
@@ -67,7 +70,12 @@ public:
     // SpriteEngine::Draw skips the sprite while it is 0.
     D3DCOLOR color;
     SpriteFlags flags;
-    DWORD unk_084[0x3];
+    short unk_084;
+    short unk_086;
+    short unk_088;
+    short unk_08a;
+    short unk_08c;
+    short unk_08e;
     D3DXVECTOR3 pos;
     DWORD unk_09c[0x2];
     Timer unk_0a4;

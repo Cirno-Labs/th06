@@ -6,9 +6,23 @@
 
 #include "chain.h"
 #include "common.h"
+#include "sprite.h"
 #include "timer.h"
 
-struct PlayerBullet;
+// One of the player's bullets.
+struct PlayerBullet
+{
+    Sprite sprite;
+    DWORD unk_110[0xb];
+    // The direction it flies in.
+    float angle;
+    DWORD unk_140[0x3];
+    short unk_14c;
+    // 2 for those DrawHitBullets draws.
+    short type;
+    DWORD unk_150[0x2];
+};
+ASSERT_SIZE(PlayerBullet, 0x158);
 
 // The player, the global at 0x6ca628. Its added callback loads
 // "data/player00.anm" or "player01.anm".
@@ -21,10 +35,10 @@ public:
     static int RegisterChain(BYTE unk);
     static int OnUpdate(Player *player);
     static int OnDraw(Player *player);
-    // Runs Func429bb0. Returns 1.
+    // Runs DrawHitBullets. Returns 1.
     static int OnDraw2(Player *player);
     // Draws the player's bullets of type 2.
-    static void Func429bb0(Player *player);
+    static void DrawHitBullets(Player *player);
     // Loads the player's sprites.
     static int AddedCallback(Player *player);
     // Frees the player's sprites, unless the scene is 3. Returns 0.
@@ -37,7 +51,9 @@ public:
     // RegisterChain's argument.
     BYTE unk_09e1;
     WORD unk_09e2;
-    DWORD unk_09e4[0x1af4];
+    DWORD unk_09e4[0x11];
+    PlayerBullet bullets[0x50];
+    DWORD unk_75a8[0x3];
     Timer unk_75b4;
     DWORD unk_75c0[0x8c9];
     // The update element and the two draw elements.

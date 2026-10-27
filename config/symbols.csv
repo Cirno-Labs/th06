@@ -209,7 +209,7 @@ address,size,name,symbol
 0x0041e780,99,Rng::GetRandomU16,?GetRandomU16@Rng@@QAEGXZ
 0x0041e7f0,48,Rng::GetRandomU32,?GetRandomU32@Rng@@QAEKXZ
 0x0041e820,46,Rng::GetRandomF32ZeroToOne,?GetRandomF32ZeroToOne@Rng@@QAEMXZ
-0x0041e850,127,Func41e850,
+0x0041e850,127,AddNormalizeAngle,?AddNormalizeAngle@@YAMMM@Z
 0x0041e8d0,111,Func41e8d0,
 0x0041e940,5,DebugPrint,?DebugPrint@@YAXPBDZZ
 0x0041e945,60,Func41e945,
@@ -327,7 +327,7 @@ address,size,name,symbol
 0x00429930,457,Player::OnDraw,?OnDraw@Player@@SAHPAV1@@Z
 0x00429b00,140,Func429b00,
 0x00429b90,22,Player::OnDraw2,?OnDraw2@Player@@SAHPAV1@@Z
-0x00429bb0,153,Player::Func429bb0,?Func429bb0@Player@@SAXPAV1@@Z
+0x00429bb0,153,Player::DrawHitBullets,?DrawHitBullets@Player@@SAXPAV1@@Z
 0x00429c50,1118,Player::AddedCallback,?AddedCallback@Player@@SAHPAV1@@Z
 0x0042a0b0,36,Player::DeletedCallback,?DeletedCallback@Player@@SAHPAV1@@Z
 0x0042a0e0,85,Player::RemoveChain,?RemoveChain@Player@@SAXXZ

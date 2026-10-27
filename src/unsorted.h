@@ -10,6 +10,11 @@
 class Unknown6c6d18
 {
 public:
+    // Advances a frame counter split into whole frames and the fraction
+    // of a frame, like Timer::Add(1). Callers pass a Timer's `current` and
+    // `subFrame` after setting its `previous`: an inlined per-frame tick.
+    void TickTimer(int *frames, float *subFrame);
+
     unsigned char unk_000[0x44];
     // Set from CreateWindowExA's result; MidiDevice::Open has MIDI
     // messages sent to it (CALLBACK_WINDOW).

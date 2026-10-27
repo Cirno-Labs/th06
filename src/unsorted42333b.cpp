@@ -55,3 +55,20 @@ void Timer::Sub(int frames)
         }
     }
 }
+
+void Unknown6c6d18::TickTimer(int *frames, float *subFrame)
+{
+    if (this->gameSpeed <= 0.99f)
+    {
+        *subFrame += this->frameAdvance;
+        if (*subFrame >= 1.0f)
+        {
+            (*frames)++;
+            *subFrame -= 1.0f;
+        }
+    }
+    else
+    {
+        (*frames)++;
+    }
+}

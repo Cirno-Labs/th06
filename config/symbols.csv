@@ -282,7 +282,7 @@ address,size,name,symbol
 0x00424127,30,Timer::Initialize,?Initialize@Timer@@QAEXXZ
 0x00424145,160,Timer::Add,?Add@Timer@@QAEXH@Z
 0x004241e5,160,Timer::Sub,?Sub@Timer@@QAEXH@Z
-0x00424285,110,Func424285,
+0x00424285,110,Unknown6c6d18::TickTimer,?TickTimer@Unknown6c6d18@@QAEXPAHPAM@Z
 0x004242f3,130,Func4242f3,
 0x00424375,728,Func424375,
 0x0042464d,1119,Func42464d,

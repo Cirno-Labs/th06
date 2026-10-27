@@ -16,6 +16,8 @@
 class Unknown6d3f50
 {
 public:
+    // Zeroes everything; no sound is loaded.
+    Unknown6d3f50();
     // Sets up DirectSound for `hwnd` (stereo, 44.1 kHz, 16 bits) and
     // starts a silent looping buffer and a 250 ms timer. Returns 0 or -1.
     int Initialize(HWND hwnd);
@@ -55,9 +57,9 @@ public:
     IDirectSoundBuffer *soundBuffers[0x80];
     // Each sound effect's own buffer.
     IDirectSoundBuffer *sounds[0x80];
-    // Set from g_SoundInfos[].unk_6 when a sound is queued.
-    int unk_408[0x20];
-    unsigned char unk_488[0x180];
+    // Set from g_SoundInfos[].unk_6 when a sound is queued; -1 at
+    // first.
+    int unk_408[0x80];
     // A silent buffer, looping from start-up.
     IDirectSoundBuffer *silence;
     // The window the sound timer posts to.
@@ -77,6 +79,7 @@ public:
     // PlayBgm's `bLoop`.
     BOOL bgmLoop;
 };
+ASSERT_SIZE(Unknown6d3f50, 0x638);
 extern Unknown6d3f50 g_Unknown6d3f50;
 
 // The thread LoadBgm starts, with the main window: streams the wave music

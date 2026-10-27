@@ -389,7 +389,7 @@ address,size,name,symbol
 0x004311e0,133,Unknown6d3f50::QueueSound,?QueueSound@Unknown6d3f50@@QAEXHH@Z
 0x00431270,256,Unknown6d3f50::PlayQueuedSounds,?PlayQueuedSounds@Unknown6d3f50@@QAEXXZ
 0x00431370,176,BgmNotificationProc,?BgmNotificationProc@@YGKPAX@Z
-0x00431420,76,Func431420,
+0x00431420,76,Unknown6d3f50::Unknown6d3f50,??0Unknown6d3f50@@QAE@XZ
 0x00431470,493,Func431470,
 0x00431660,700,SpriteEngine::Func431660,?Func431660@SpriteEngine@@QAEXXZ
 0x00431920,237,Func431920,

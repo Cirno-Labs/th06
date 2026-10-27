@@ -482,3 +482,14 @@ DWORD WINAPI BgmNotificationProc(LPVOID lpParameter)
     }
     return 0;
 }
+
+Unknown6d3f50::Unknown6d3f50()
+{
+    int i;
+
+    memset(this, 0, sizeof(*this));
+    for (i = 0; i < 0x80; i++)
+    {
+        this->unk_408[i] = -1;
+    }
+}

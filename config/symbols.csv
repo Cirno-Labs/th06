@@ -339,7 +339,7 @@ address,size,name,symbol
 0x0042a670,10,Func42a670,?Func42a670@@YAHPAX@Z
 0x0042a680,445,Func42a680,
 0x0042a840,469,Func42a840,
-0x0042aa20,140,Func42aa20,
+0x0042aa20,140,ReplayManager::DeletedCallback,?DeletedCallback@ReplayManager@@SAHPAV1@@Z
 0x0042aab0,123,ReplayManager::EndStage,?EndStage@ReplayManager@@SAXXZ
 0x0042ab30,1449,Func42ab30,?Func42ab30@@YAXHPAD@Z
 0x0042b0d9,423,Func42b0d9,

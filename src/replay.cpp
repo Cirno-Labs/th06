@@ -39,3 +39,19 @@ void ReplayManager::EndStage()
         replay->cursors[g_GameManager.stage] = replay->cursors[0] + 1;
     }
 }
+
+int ReplayManager::DeletedCallback(ReplayManager *replay)
+{
+    g_Chain.Remove(replay->calcChain);
+    replay->calcChain = NULL;
+    if (replay->drawChain != NULL)
+    {
+        g_Chain.Remove(replay->drawChain);
+        replay->drawChain = NULL;
+    }
+    MemFree(g_ReplayManager->data);
+    delete g_ReplayManager;
+    g_ReplayManager = NULL;
+    g_ReplayManager = NULL;
+    return 0;
+}

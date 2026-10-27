@@ -125,6 +125,9 @@ public:
     // `aimAngle` by the aiming modes that use it. Returns 0, or 1 if no
     // bullet is free.
     int SpawnBullet(BulletShooter *shooter, int col, int row, float aimAngle);
+    // Fires `shooter`'s pattern, aimed at the player, until no bullet is
+    // free, and plays its sound with flag 0x200. Returns 0.
+    int FirePattern(BulletShooter *shooter);
     // ClearAll(1).
     void ClearAllToItems();
     // Like ClearAll, but each bullet scores a bonus, from 2000 up by 10

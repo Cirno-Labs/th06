@@ -4,6 +4,7 @@
 #include "bullet.h"
 #include "gamemanager.h"
 #include "item.h"
+#include "player.h"
 #include "unsorted.h"
 
 BulletManager::BulletManager()
@@ -30,6 +31,31 @@ void BulletManager::RemoveChain()
 {
     g_Chain.Remove(&g_BulletCalcChain);
     g_Chain.Remove(&g_BulletDrawChain);
+}
+
+int BulletManager::FirePattern(BulletShooter *shooter)
+{
+    int col;
+    float playerAngle;
+    int row;
+
+    playerAngle = g_Player.AngleFrom(&shooter->pos);
+    for (row = 0; row < shooter->count2; row++)
+    {
+        for (col = 0; col < shooter->count1; col++)
+        {
+            if (this->SpawnBullet(shooter, col, row, playerAngle))
+            {
+                goto done;
+            }
+        }
+    }
+done:
+    if (shooter->flags & 0x200)
+    {
+        g_Unknown6d3f50.Func4311e0(shooter->sound, 0);
+    }
+    return 0;
 }
 
 int BulletManager::RegisterChain(int unk)

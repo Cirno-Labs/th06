@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">24.84% (117)</tspan> · <tspan class="decompiled">6.58% (31)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">68.58% (323)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">25.27% (119)</tspan> · <tspan class="decompiled">6.37% (30)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">68.37% (322)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="185.56" height="6" x="0" y="0" class="named"/>
-<rect width="49.17" height="6" x="185.56" y="0" class="decompiled"/>
-<rect width="512.27" height="6" x="234.73" y="0" class="todo"/>
+<rect width="188.73" height="6" x="0" y="0" class="named"/>
+<rect width="47.58" height="6" x="188.73" y="0" class="decompiled"/>
+<rect width="510.69" height="6" x="236.31" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -401,13 +401,13 @@
 <rect width="12" height="12" x="450" y="90" class="named"><title>0x0042a0b0 Player::DeletedCallback (36 bytes)</title></rect>
 <rect width="12" height="12" x="465" y="90" class="named"><title>0x0042a0e0 Player::RemoveChain (85 bytes)</title></rect>
 <rect width="12" height="12" x="480" y="90" class="todo"><title>0x0042a140 Func42a140 (256 bytes)</title></rect>
-<rect width="12" height="12" x="495" y="90" class="todo"><title>0x0042a240 Func42a240 (552 bytes)</title></rect>
+<rect width="12" height="12" x="495" y="90" class="named"><title>0x0042a240 ReplayManager::RegisterChain (552 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="90" class="named"><title>0x0042a470 ReplayManager::RecordOnUpdate (151 bytes)</title></rect>
-<rect width="12" height="12" x="525" y="90" class="named"><title>0x0042a510 ReplayManager::PlayOnDraw (81 bytes)</title></rect>
+<rect width="12" height="12" x="525" y="90" class="named"><title>0x0042a510 ReplayManager::PlayOnUpdate2 (81 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="90" class="named"><title>0x0042a570 ReplayManager::PlayOnUpdate (242 bytes)</title></rect>
-<rect width="12" height="12" x="555" y="90" class="decompiled"><title>0x0042a670 Func42a670 (10 bytes)</title></rect>
-<rect width="12" height="12" x="570" y="90" class="todo"><title>0x0042a680 Func42a680 (445 bytes)</title></rect>
-<rect width="12" height="12" x="585" y="90" class="todo"><title>0x0042a840 Func42a840 (469 bytes)</title></rect>
+<rect width="12" height="12" x="555" y="90" class="named"><title>0x0042a670 ReplayManager::OnDraw (10 bytes)</title></rect>
+<rect width="12" height="12" x="570" y="90" class="todo"><title>0x0042a680 ReplayManager::RecordAddedCallback (445 bytes)</title></rect>
+<rect width="12" height="12" x="585" y="90" class="todo"><title>0x0042a840 ReplayManager::PlayAddedCallback (469 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="90" class="named"><title>0x0042aa20 ReplayManager::DeletedCallback (140 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="90" class="named"><title>0x0042aab0 ReplayManager::EndStage (123 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="90" class="todo"><title>0x0042ab30 Func42ab30 (1449 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">8.97%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">88.35%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">9.21%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">88.12%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="67.03" height="6" x="0" y="0" class="named"/>
-<rect width="19.98" height="6" x="67.03" y="0" class="decompiled"/>
-<rect width="659.99" height="6" x="87.01" y="0" class="todo"/>
+<rect width="68.80" height="6" x="0" y="0" class="named"/>
+<rect width="19.95" height="6" x="68.80" y="0" class="decompiled"/>
+<rect width="658.25" height="6" x="88.75" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -655,7 +655,7 @@
 <rect width="12.98" height="14.14" x="519.12" y="69.72" class="todo"><title>0x0040d530 Func40d530 (568 bytes)</title></rect>
 <rect width="12.98" height="13.93" x="519.12" y="86.87" class="named"><title>0x00422140 MidiPlayer::ParseFile (561 bytes)</title></rect>
 <rect width="12.98" height="13.78" x="519.12" y="103.80" class="todo"><title>0x0042ffc0 Func42ffc0 (556 bytes)</title></rect>
-<rect width="12.98" height="13.66" x="519.12" y="120.58" class="todo"><title>0x0042a240 Func42a240 (552 bytes)</title></rect>
+<rect width="12.98" height="13.66" x="519.12" y="120.58" class="named"><title>0x0042a240 ReplayManager::RegisterChain (552 bytes)</title></rect>
 <rect width="12.98" height="12.76" x="519.12" y="137.24" class="decompiled"><title>0x0042390a Unknown6c6d18::AddedCallback (522 bytes)</title></rect>
 <rect width="12.59" height="13" x="535.10" y="0" class="todo"><title>0x0041f290 Func41f290 (517 bytes)</title></rect>
 <rect width="12.59" height="12.87" x="535.10" y="16" class="todo"><title>0x0043be70 Func43be70 (513 bytes)</title></rect>
@@ -670,7 +670,7 @@
 <rect width="11.68" height="12.67" x="550.68" y="0" class="todo"><title>0x00426df0 Func426df0 (477 bytes)</title></rect>
 <rect width="11.68" height="12.64" x="550.68" y="15.67" class="todo"><title>0x00434c40 Func434c40 (476 bytes)</title></rect>
 <rect width="11.68" height="12.61" x="550.68" y="31.31" class="todo"><title>0x00424b5d Unknown6c6d18::PlayMusic (475 bytes)</title></rect>
-<rect width="11.68" height="12.41" x="550.68" y="46.92" class="todo"><title>0x0042a840 Func42a840 (469 bytes)</title></rect>
+<rect width="11.68" height="12.41" x="550.68" y="46.92" class="todo"><title>0x0042a840 ReplayManager::PlayAddedCallback (469 bytes)</title></rect>
 <rect width="11.68" height="12.31" x="550.68" y="62.32" class="todo"><title>0x00414160 BulletManager::Func414160 (466 bytes)</title></rect>
 <rect width="11.68" height="12.15" x="550.68" y="77.63" class="todo"><title>0x00430510 Func430510 (461 bytes)</title></rect>
 <rect width="11.68" height="12.11" x="550.68" y="92.78" class="named"><title>0x004031e0 AsciiText::DrawPopups (460 bytes)</title></rect>
@@ -679,7 +679,7 @@
 <rect width="11.68" height="11.98" x="550.68" y="138.02" class="todo"><title>0x0041e290 Func41e290 (456 bytes)</title></rect>
 <rect width="12.22" height="11.23" x="565.36" y="0" class="named"><title>0x00404690 Stage::Load (449 bytes)</title></rect>
 <rect width="12.22" height="11.16" x="565.36" y="14.23" class="todo"><title>0x0041ea63 Func41ea63 (447 bytes)</title></rect>
-<rect width="12.22" height="11.10" x="565.36" y="28.39" class="todo"><title>0x0042a680 Func42a680 (445 bytes)</title></rect>
+<rect width="12.22" height="11.10" x="565.36" y="28.39" class="todo"><title>0x0042a680 ReplayManager::RecordAddedCallback (445 bytes)</title></rect>
 <rect width="12.22" height="11.10" x="565.36" y="42.49" class="todo"><title>0x00435300 SpriteEngine::Func435300 (445 bytes)</title></rect>
 <rect width="12.22" height="11" x="565.36" y="56.59" class="todo"><title>0x00426fd0 Func426fd0 (442 bytes)</title></rect>
 <rect width="12.22" height="10.88" x="565.36" y="70.59" class="todo"><title>0x0040d770 Func40d770 (438 bytes)</title></rect>
@@ -920,7 +920,7 @@
 <rect width="3.50" height="3.30" x="700.25" y="116.51" class="named"><title>0x0042a0e0 Player::RemoveChain (85 bytes)</title></rect>
 <rect width="3.50" height="3.23" x="700.25" y="122.81" class="named"><title>0x00407440 EnemyScripts::StartSub (84 bytes)</title></rect>
 <rect width="3.50" height="3.08" x="700.25" y="129.04" class="todo"><title>0x0043b9b0 Func43b9b0 (82 bytes)</title></rect>
-<rect width="3.50" height="3.01" x="700.25" y="135.12" class="named"><title>0x0042a510 ReplayManager::PlayOnDraw (81 bytes)</title></rect>
+<rect width="3.50" height="3.01" x="700.25" y="135.12" class="named"><title>0x0042a510 ReplayManager::PlayOnUpdate2 (81 bytes)</title></rect>
 <rect width="3.50" height="2.93" x="700.25" y="141.13" class="todo"><title>0x00413560 Func413560 (80 bytes)</title></rect>
 <rect width="3.50" height="2.93" x="700.25" y="147.07" class="todo"><title>0x0041ec22 Func41ec22 (80 bytes)</title></rect>
 <rect width="3.35" height="3" x="706.75" y="103.90" class="named"><title>0x00422630 MidiPlayer::FadeOut (79 bytes)</title></rect>
@@ -1018,7 +1018,7 @@
 <rect width="0.10" height="0.10" x="747.28" y="146.09" class="decompiled"><title>0x0043be50 Unknown43be50::Func43be50 (17 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="744.55" y="149.10" class="named"><title>0x0041b1a4 Gui::AddedCallback (13 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="744.55" y="151.21" class="named"><title>0x00423330 SpriteEngine::~SpriteEngine (11 bytes)</title></rect>
-<rect width="0.10" height="0.10" x="747.52" y="149.10" class="decompiled"><title>0x0042a670 Func42a670 (10 bytes)</title></rect>
+<rect width="0.10" height="0.10" x="747.52" y="149.10" class="named"><title>0x0042a670 ReplayManager::OnDraw (10 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="747.52" y="151.05" class="named"><title>0x0041e940 DebugPrint (5 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="748.76" y="151.05" class="named"><title>0x0042f6c4 DebugPrint2 (5 bytes)</title></rect>
 </g>

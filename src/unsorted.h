@@ -414,10 +414,6 @@ void DebugPrint(const char *fmt, ...);
 // ("%s open ...\n", "Reflesh Rate = %f\n").
 void DebugPrint2(const char *fmt, ...);
 
-// A callback registered with the chain at 0x69d918 by 0x41cd40. Chain
-// callbacks are cdecl, take the element's user pointer and return a
-// status; 1 keeps the element and moves on to the next.
-int Func42a670(void *arg);
 
 
 // The bulk of Gui, allocated by its added callback (0x2c44 bytes,

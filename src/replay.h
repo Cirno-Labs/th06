@@ -20,6 +20,10 @@ struct ReplayFrame
 class ReplayManager
 {
 public:
+    ReplayManager()
+    {
+    }
+
     // Ends the current stage's record with an entry at the current frame
     // and an end marker (frame 9999999), and keeps where it ends.
     static void EndStage();
@@ -32,11 +36,25 @@ public:
     // key repeat as in Unknown6c6d18::OnUpdate) and counts the frame.
     // Returns 1.
     static int PlayOnUpdate(ReplayManager *replay);
-    // The draw callback while playing: while g_GameManager.unk_1821 is
-    // set, g_Gui.Func4195a2() and g_Gui.Func417344() hold, returns 6 on
-    // two frames of every three; otherwise 1.
-    static int PlayOnDraw(ReplayManager *replay);
-    // Removes the chain elements, frees the replay data and deletes the
+    // The second update callback while playing: while
+    // g_GameManager.unk_1821 is set, g_Gui.Func4195a2() and
+    // g_Gui.Func417344() hold, returns 6 on two frames of every three;
+    // otherwise 1.
+    static int PlayOnUpdate2(ReplayManager *replay);
+    // The draw callback; does nothing. Returns 1.
+    static int OnDraw(ReplayManager *replay);
+    // The update element's added callbacks when recording and playing.
+    static int RecordAddedCallback(ReplayManager *replay);
+    static int PlayAddedCallback(ReplayManager *replay);
+
+    // Creates the ReplayManager, recording (`mode` 0) or playing (1) the
+    // replay at `path`, and adds its chain elements; if it exists, runs
+    // the mode's added callback again. Returns 0 (the added callback's
+    // result when playing again), or -1 if adding fails. Does nothing
+    // when recording while the game runs below full speed.
+    static int RegisterChain(int mode, char *path);
+    // Removes the chain elements but the update one, frees the replay
+    // data and deletes the
     // ReplayManager. Returns 0.
     static int DeletedCallback(ReplayManager *replay);
 
@@ -44,13 +62,17 @@ public:
     int frame;
     // The replay data, malloc'd.
     void *data;
-    DWORD unk_08[0x10];
+    // RegisterChain's arguments.
+    int mode;
+    char *path;
+    DWORD unk_10[0xe];
     // [0] is the last entry written; [stage] is where that stage's
     // record ends.
     ReplayFrame *cursors[8];
-    DWORD unk_68;
-    // The update element, and a draw element that may be NULL.
     ChainElem *calcChain;
     ChainElem *drawChain;
+    // The second update element, only when playing.
+    ChainElem *calcChain2;
 };
+ASSERT_SIZE(ReplayManager, 0x74);
 extern ReplayManager *g_ReplayManager;

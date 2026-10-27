@@ -6,7 +6,8 @@
 
 #include "common.h"
 
-// Chain callbacks are cdecl and take the element's `arg`.
+// Chain callbacks are cdecl and take the element's `arg`. They return a
+// status; 1 keeps the element and moves on to the next.
 typedef int (*ChainCallback)(void *arg);
 
 // An element of a chain. Allocated with new by Chain::CreateElem.

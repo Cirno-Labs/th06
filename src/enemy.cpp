@@ -90,6 +90,27 @@ void Enemy::Move()
     this->pos.z += g_Unknown6c6d18.frameAdvance * this->velocity.z;
 }
 
+void MoveEnemyEffects(Enemy *enemy)
+{
+    Effect *eff;
+    int i;
+
+    for (i = 0; i < enemy->effectCount; i++)
+    {
+        eff = enemy->effects[i];
+        if (eff == NULL)
+        {
+            continue;
+        }
+        eff->unk_134 = enemy->pos;
+        if (eff->unk_15c < enemy->unk_ea4)
+        {
+            eff->unk_15c += 0.3f;
+        }
+        eff->unk_160 = AddNormalizeAngle(eff->unk_160, 0.031415928f);
+    }
+}
+
 int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
 {
     EnemyManager *mgr = &g_EnemyManager;

@@ -115,7 +115,7 @@ address,size,name,symbol
 0x00412240,217,Enemy::ClampPos,?ClampPos@Enemy@@QAEXXZ
 0x00412320,192,EnemyManager::RegisterChain,?RegisterChain@EnemyManager@@SAHPAD0@Z
 0x004123e0,2655,EnemyManager::OnUpdate,?OnUpdate@EnemyManager@@SAHPAV1@@Z
-0x00412e50,189,Func412e50,
+0x00412e50,189,MoveEnemyEffects,?MoveEnemyEffects@@YAXPAUEnemy@@@Z
 0x00412f10,772,EnemyManager::OnDraw,?OnDraw@EnemyManager@@SAHPAV1@@Z
 0x00413220,255,EnemyManager::AddedCallback,?AddedCallback@EnemyManager@@SAHPAV1@@Z
 0x00413320,33,EnemyManager::DeletedCallback,?DeletedCallback@EnemyManager@@SAHPAV1@@Z

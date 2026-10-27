@@ -80,6 +80,9 @@ struct Enemy
 };
 ASSERT_SIZE(Enemy, 0xec8);
 
+// Moves the effects following `enemy` with it, widening them up to
+// unk_ea4 and turning them.
+void MoveEnemyEffects(Enemy *enemy);
 // Releases the effects following `enemy`.
 void ReleaseEnemyEffects(Enemy *enemy);
 

@@ -985,7 +985,7 @@ address,size,name,symbol
 0x0045c342,35,__abnormal_termination,
 0x0045c365,9,__NLG_Notify1,
 0x0045c36e,24,Func45c36e,
-0x0045c386,88,Func45c386,
+0x0045c386,88,_sprintf,_sprintf
 0x0045c3e0,31,__EH_prolog,__EH_prolog
 0x0045c3ff,177,_fabs,
 0x0045c4b0,20,Func45c4b0,
@@ -1538,6 +1538,7 @@ address,size,name,symbol
 0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
 0x0047a630,4,__security_cookie,___security_cookie
 0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A
+0x0069d4c1,,g_Unknown69d4c1,?g_Unknown69d4c1@@3EA
 0x0069d904,,g_Buttons,?g_Buttons@@3GA
 0x0069d908,,g_PrevButtons,?g_PrevButtons@@3GA
 0x0069d914,,g_FileSize,?g_FileSize@@3HA

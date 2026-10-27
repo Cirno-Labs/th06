@@ -104,14 +104,20 @@ public:
     // "wave データが無いので、midi にします" ("no wave data, switching to
     // MIDI").
     BYTE musicMode;
-    unsigned char unk_130[0x54];
+    unsigned char unk_130[0x3];
+    // Frames skipped per frame drawn: DrawFps counts 1 + this a frame.
+    BYTE frameSkip;
+    unsigned char unk_134[0x50];
     int unk_184;
     int unk_188;
     // The scene the game is in or switches to: many places set it (1
     // through 10), and the main loop's callbacks compare it with 3. The
     // music screen sets it to 1 to leave; RegisterChain to -1.
     int scene;
-    unsigned char unk_190[0x18];
+    unsigned char unk_190[0xc];
+    // DrawFps shows the frame rate while it is 0.
+    int unk_19c;
+    unsigned char unk_1a0[0x8];
     // The part of a frame a Timer advances per frame while the game runs
     // slower than full speed.
     float frameAdvance;
@@ -120,7 +126,11 @@ public:
     float gameSpeed;
     // Plays music in MIDI mode; may be NULL.
     MidiPlayer *midi;
-    unsigned char unk_1b4[0x8];
+    // While g_Unknown69d4c1 is set, DrawFps adds up every half second
+    // the frames there should have been (unk_1b8) and a share of them
+    // that shrinks as the frame rate drops (unk_1b4).
+    float unk_1b4;
+    float unk_1b8;
     // The open data archives; NULL where none is open.
     DatArchive *archives[0x10];
 };
@@ -134,8 +144,11 @@ extern WORD g_PrevButtons;
 // Whether any of the buttons in `mask` went down this frame.
 #define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_PrevButtons & (mask)))
 
-// Counts frames and draws the frame rate ("%.02ffps").
+// Counts frames and draws the frame rate ("%.02ffps"), updated every
+// half second, at the bottom right.
 void DrawFps();
+// Makes DrawFps measure how far the frame rate falls short.
+extern BYTE g_Unknown69d4c1;
 
 void Func42ab30(int unk1, char *unk2);
 // Releases the COM object at 0x69e230, if there is one.

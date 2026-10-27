@@ -2,6 +2,8 @@
 // The file starting at 0x42333b, up to 0x425e03. Built with /Os: its
 // functions are laid out without alignment.
 
+#include <stdio.h>
+
 #include "chain.h"
 #include "timer.h"
 #include "unsorted.h"
@@ -123,6 +125,57 @@ int Unknown6c6d18::DeletedCallback(Unknown6c6d18 *arg)
         arg->dinput = NULL;
     }
     return 0;
+}
+
+void DrawFps()
+{
+    static DWORD lastTime = timeGetTime();
+    static DWORD frames;
+    static char fpsText[0x100];
+    DWORD now;
+    float target;
+    float fps;
+    float duration;
+    D3DXVECTOR3 pos;
+
+    now = timeGetTime();
+    frames += 1 + g_Unknown6c6d18.frameSkip;
+    if (now - lastTime >= 500)
+    {
+        duration = (now - lastTime) / 1000.0f;
+        fps = frames / duration;
+        lastTime = now;
+        frames = 0;
+        sprintf(fpsText, "%.02ffps", fps);
+        if (g_Unknown69d4c1)
+        {
+            target = 60.0f / g_Unknown6c6d18.gameSpeed;
+            g_Unknown6c6d18.unk_1b8 += target;
+            if (target * 0.9f < fps)
+            {
+                g_Unknown6c6d18.unk_1b4 += target;
+            }
+            else if (target * 0.7f < fps)
+            {
+                g_Unknown6c6d18.unk_1b4 += target * 0.8f;
+            }
+            else if (target * 0.5f < fps)
+            {
+                g_Unknown6c6d18.unk_1b4 += target * 0.6f;
+            }
+            else
+            {
+                g_Unknown6c6d18.unk_1b4 += target * 0.5f;
+            }
+        }
+    }
+    if (g_Unknown6c6d18.unk_19c == 0)
+    {
+        pos.x = 512.0f;
+        pos.y = 464.0f;
+        pos.z = 0.0f;
+        g_AsciiText.AddString(&pos, fpsText);
+    }
 }
 
 void SpriteEngine::ReleaseVertexBuffer()

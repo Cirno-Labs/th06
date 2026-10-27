@@ -18,12 +18,12 @@ struct Item
     D3DXVECTOR3 target;
     Timer timer;
     // Its kind: picks its script, 0x215 + type.
-    BYTE type;
+    char type;
     char active;
     BYTE unk_142;
     // 0 falling, 1 drawn to the player, 2 thrown out by the player's
     // death.
-    BYTE state;
+    char state;
 };
 ASSERT_SIZE(Item, 0x144);
 
@@ -36,6 +36,11 @@ public:
 
     // Drops item `type` at `pos` in `state` into the next free slot.
     void SpawnItem(D3DXVECTOR3 *pos, int type, int state);
+    // Moves the items: those the player dropped fly out over 60 frames,
+    // those in state 1 or at full power above y 128 home in on the
+    // player, others fall; collects those touching the graze box
+    // (scoring, power, bombs, lives) and drops those that fall out.
+    void UpdateItems();
     // Draws every active item to the player (state 1).
     void Func420130();
 
@@ -45,3 +50,8 @@ public:
     int unk_28948;
 };
 extern ItemManager g_ItemManager;
+
+// The score of a power item at full power, by powerItemCombo.
+extern int g_PowerItemBonus[31];
+// The power each level of the shot types starts from.
+extern int g_PowerLevels[];

@@ -143,7 +143,7 @@ address,size,name,symbol
 0x0041732c,24,Gui::Func41732c,?Func41732c@Gui@@QAEXXZ
 0x00417344,22,Gui::Func417344,?Func417344@Gui@@QAEHXZ
 0x0041735a,127,Func41735a,
-0x004173d9,127,Func4173d9,
+0x004173d9,127,Gui::Func4173d9,?Func4173d9@Gui@@QAEXH@Z
 0x00417458,127,Func417458,
 0x004174d7,43,Gui::OnUpdate,?OnUpdate@Gui@@SAHPAV1@@Z
 0x00417502,1483,Func417502,
@@ -225,7 +225,7 @@ address,size,name,symbol
 0x0041f050,480,RenderTextToTexture,?RenderTextToTexture@@YAXHHHHHHKKPADPAUIDirect3DTexture8@@@Z
 0x0041f230,90,ItemManager::ItemManager,??0ItemManager@@QAE@XZ
 0x0041f290,517,ItemManager::SpawnItem,?SpawnItem@ItemManager@@QAEXPAUD3DXVECTOR3@@HH@Z
-0x0041f4a0,3160,Func41f4a0,
+0x0041f4a0,3160,ItemManager::UpdateItems,?UpdateItems@ItemManager@@QAEXXZ
 0x00420130,86,ItemManager::Func420130,?Func420130@ItemManager@@QAEXXZ
 0x00420190,408,Func420190,
 0x00420330,943,Func420330,
@@ -1554,6 +1554,8 @@ address,size,name,symbol
 0x00476438,,g_Unknown476438,?g_Unknown476438@@3PAKA
 0x004765a0,,g_ControllerMapping,?g_ControllerMapping@@3UControllerMapping@@A
 0x004765b8,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
+0x00476660,,g_PowerItemBonus,?g_PowerItemBonus@@3PAHA
+0x004766dc,,g_PowerLevels,?g_PowerLevels@@3PAHA
 0x00476708,,g_Bombs,?g_Bombs@@3PAUBombInfo@@A
 0x00476728,,g_ShotTypes,?g_ShotTypes@@3PAUShotTypeInfo@@A
 0x00476f78,,g_ShotTable0,?g_ShotTable0@@3UShotTable@@A

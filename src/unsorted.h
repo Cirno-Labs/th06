@@ -382,6 +382,20 @@ float AddNormalizeAngle(float a, float b);
 
 // Rotates the 2D vector `in` by `angle` into `out`.
 void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle);
+// Sets vec's x and y to `radius` along `angle`, with one fsincos.
+inline void SinCosScale(D3DXVECTOR3 *vec, float angle, float radius)
+{
+    __asm
+    {
+        mov eax, vec
+        fld angle
+        fsincos
+        fmul radius
+        fstp [eax]
+        fmul radius
+        fstp [eax+4]
+    }
+}
 
 // Text drawn with a D3DX font in "ＭＳ ゴシック". Nothing calls its
 // functions directly.
@@ -487,15 +501,17 @@ ASSERT_SIZE(GuiImpl, 0x2c44);
 // The in-game interface, the global at 0x69bc30: it loads
 // "data/front.anm" and the dialogue portraits ("data/face00a.anm", ...)
 // and draws the stage clear bonus ("Stage Clear", "Graze *   10 = %5d").
-// Gui's flags, a bitfield. The player sets these to 2 when the lives,
-// the bombs, the power and the graze change.
+// Gui's flags, a bitfield. The player and the items set these to 2 when
+// the lives, the bombs, the power, the graze and the point items
+// change.
 struct GuiFlags
 {
     unsigned int livesChanged : 2;
     unsigned int bombsChanged : 2;
     unsigned int powerChanged : 2;
     unsigned int grazeChanged : 2;
-    unsigned int unk8 : 24;
+    unsigned int pointsChanged : 2;
+    unsigned int unk10 : 22;
 };
 
 class Gui
@@ -522,6 +538,8 @@ public:
     void Func417acd(int sprite, char *name);
     // Sets impl->unk_206e.
     void Func417314();
+    // Called when the power reaches its maximum.
+    void Func4173d9(int unk);
     // Sets impl->unk_217e.
     void Func41732c();
     // Returns impl->unk_2bd8.

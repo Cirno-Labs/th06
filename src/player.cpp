@@ -806,7 +806,7 @@ int Player::OnUpdate(Player *player)
             player->unk_09d8--;
             if (player->unk_09d8 == 0)
             {
-                g_GameManager.unk_1819 = 0;
+                g_GameManager.powerItemCombo = 0;
                 if (g_GameManager.lives > 0)
                 {
                     g_ItemManager.SpawnItem(&player->position, 2, 2);

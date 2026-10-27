@@ -65,10 +65,12 @@ public:
     // What FireShot compares the shot tables' levels with.
     WORD power;
     WORD unk_1812;
-    WORD unk_1814;
-    WORD unk_1816;
+    // Point items collected.
+    WORD pointItems;
+    WORD pointItemsTotal;
     BYTE unk_1818;
-    BYTE unk_1819;
+    // Power items collected in a row at full power, up to 30.
+    char powerItemCombo;
     // Lives and bombs left.
     char lives;
     char bombs;

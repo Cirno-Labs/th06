@@ -191,7 +191,7 @@ address,size,name,symbol
 0x0041cb90,383,Func41cb90,
 0x0041cd10,38,Func41cd10,
 0x0041cd40,160,Chain::CreateElem,?CreateElem@Chain@@QAEPAUChainElem@@P6AHPAX@Z@Z
-0x0041cde0,380,Func41cde0,
+0x0041cde0,380,Chain::Remove,?Remove@Chain@@QAEXPAUChainElem@@@Z
 0x0041cf60,85,Func41cf60,
 0x0041cfc0,1472,Func41cfc0,
 0x0041d580,127,Func41d580,
@@ -396,7 +396,7 @@ address,size,name,symbol
 0x00431a10,863,Func431a10,
 0x00431d70,66,Func431d70,
 0x00431dc0,624,Func431dc0,
-0x00432030,418,Func432030,
+0x00432030,418,SpriteEngine::ReleaseAnm,?ReleaseAnm@SpriteEngine@@QAEXH@Z
 0x004321e0,125,Func4321e0,
 0x00432260,315,Func432260,
 0x004323a0,144,Func4323a0,
@@ -415,7 +415,7 @@ address,size,name,symbol
 0x00434c40,476,Func434c40,
 0x00434e20,482,Func434e20,
 0x00435010,603,Func435010,
-0x00435270,143,Func435270,
+0x00435270,143,SpriteEngine::ReleaseSurface,?ReleaseSurface@SpriteEngine@@QAEXH@Z
 0x00435300,445,SpriteEngine::Func435300,?Func435300@SpriteEngine@@QAEXHHHHH@Z
 0x004354c0,424,Func4354c0,
 0x00435670,237,Func435670,
@@ -966,6 +966,7 @@ address,size,name,symbol
 0x0045be40,10,Func45be40,
 0x0045be60,10,Func45be60,
 0x0045be92,136,_atol,
+0x0045bf1f,5,operator delete,??3@YAXPAX@Z
 0x0045bf24,14,operator_new,
 0x0045bf32,43,_JumpToContinuation,
 0x0045bf62,7,FID_conflict:_CallMemberFunction1,

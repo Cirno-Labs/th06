@@ -57,6 +57,10 @@ public:
     int Step(Sprite *vm);
     // Draws a sprite if it is shown.
     int Draw(Sprite *sprite);
+    // Frees the ANM file loaded into `slot` and clears its scripts.
+    void ReleaseAnm(int slot);
+    // Releases one of the loaded surfaces.
+    void ReleaseSurface(int surface);
     // Copies a rectangle of one of the loaded surfaces to the back buffer.
     void Func435300(int surface, int unk1, int unk2, int unk3, int unk4);
     // Prints a printf-style text with a shadow into the sprite's texture

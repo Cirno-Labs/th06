@@ -177,3 +177,16 @@ int MusicScreen::OnDraw(MusicScreen *screen)
     g_AsciiText.color = 0xffffffff;
     return 1;
 }
+
+int MusicScreen::DeletedCallback(MusicScreen *screen)
+{
+    delete screen->tunes;
+    screen->tunes = NULL;
+    g_SpriteEngine->ReleaseSurface(0);
+    g_SpriteEngine->ReleaseAnm(0x29);
+    g_SpriteEngine->ReleaseAnm(0x2a);
+    g_SpriteEngine->ReleaseAnm(0x2b);
+    g_Chain.Remove(screen->drawChain);
+    screen->drawChain = NULL;
+    return 0;
+}

@@ -3,6 +3,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <string.h>
 
 // Fails to compile unless sizeof(type) == size. Generates no code.
 #define ASSERT_SIZE(type, size) typedef char assert_size_##type[sizeof(type) == (size) ? 1 : -1]
@@ -12,4 +13,10 @@
 inline void MemFree(void *p)
 {
     free(p);
+}
+
+// Like MemFree: every malloc() goes through a temporary.
+inline void *MemAlloc(size_t size)
+{
+    return malloc(size);
 }

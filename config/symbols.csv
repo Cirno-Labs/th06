@@ -258,7 +258,7 @@ address,size,name,symbol
 0x00421ff0,121,MidiPlayer::LoadFile,?LoadFile@MidiPlayer@@QAEHHPAD@Z
 0x00422070,60,MidiPlayer::UnloadFile,?UnloadFile@MidiPlayer@@QAEXH@Z
 0x004220b0,131,MidiPlayer::FreeTracks,?FreeTracks@MidiPlayer@@QAEXXZ
-0x00422140,561,MidiPlayer::ParseFile,?ParseFile@MidiPlayer@@QAEXH@Z
+0x00422140,561,MidiPlayer::ParseFile,?ParseFile@MidiPlayer@@QAEHH@Z
 0x00422380,58,MidiPlayer::Load,?Load@MidiPlayer@@QAEHPAD@Z
 0x004223c0,207,MidiPlayer::Rewind,?Rewind@MidiPlayer@@QAEXXZ
 0x00422490,68,MidiPlayer::Play,?Play@MidiPlayer@@QAEHXZ
@@ -953,7 +953,7 @@ address,size,name,symbol
 0x0045bb5e,111,__heap_alloc,
 0x0045bbd0,9,Func45bbd0,
 0x0045bbd9,44,__nh_malloc,
-0x0045bc05,18,_malloc,
+0x0045bc05,18,_malloc,_malloc
 0x0045bc20,20,Func45bc20,
 0x0045bc34,9,Func45bc34,
 0x0045bc3d,157,Func45bc3d,

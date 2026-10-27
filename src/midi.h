@@ -18,6 +18,31 @@ union MidiShortMsg
 // Swaps the bytes of a big-endian 16-bit value from a MIDI file.
 WORD SwapBytes16(WORD value);
 
+// Swaps the bytes of a big-endian 32-bit value from a MIDI file. Inline:
+// ParseFile has its body, not a call.
+inline DWORD SwapBytes32(DWORD value)
+{
+    union
+    {
+        DWORD dword;
+        BYTE bytes[4];
+    } swapped;
+
+    swapped.bytes[0] = ((BYTE *)&value)[3];
+    swapped.bytes[1] = ((BYTE *)&value)[2];
+    swapped.bytes[2] = ((BYTE *)&value)[1];
+    swapped.bytes[3] = ((BYTE *)&value)[0];
+    return swapped.dword;
+}
+
+// The header of a chunk in a MIDI file ("MThd", "MTrk").
+struct MidiChunk
+{
+    char id[4];
+    // Big-endian.
+    DWORD length;
+};
+
 // Reads a MIDI variable-length quantity (7 bits per byte, high bit set on
 // all but the last) and advances the cursor past it.
 DWORD ReadVarLen(BYTE **cursor);
@@ -85,7 +110,9 @@ struct MidiTrack
     int active;
     // Delta time of the next event, read by ReadVarLen.
     DWORD delta;
-    unsigned char unk_08[0x8];
+    // The length of `data`.
+    DWORD length;
+    unsigned char unk_0c[0x4];
     // The track's event data.
     BYTE *data;
     // Read position in `data`.
@@ -127,8 +154,9 @@ public:
     int ReleaseHeader(LPMIDIHDR header);
     // Frees the MIDI file loaded into a slot.
     void UnloadFile(int slot);
-    // Parses the file in a slot into tracks.
-    void ParseFile(int slot);
+    // Parses the file in a slot into tracks. Returns -1 if the slot is
+    // empty, otherwise 0.
+    int ParseFile(int slot);
     // Frees the parsed tracks.
     void FreeTracks();
     // Loads and parses a MIDI file through the scratch slot 31. Returns -1
@@ -152,8 +180,10 @@ public:
     void *fileData[0x20];
     // The number of entries in `tracks`.
     int trackCount;
-    unsigned char unk_118[0x4];
-    int unk_11c;
+    // From the file header: the format and the time division.
+    int format;
+    int division;
+    // Set to 1000000 by ParseFile.
     int unk_120;
     unsigned char unk_124[0x4];
     __int64 unk_128;

@@ -125,6 +125,9 @@ void DrawReimuBBomb(Player *player);
 // flying out from the player, then moves them, keeping their hitboxes
 // and bullet clearing on them two frames in three.
 void UpdateMarisaABomb(Player *player);
+// Marisa A's bomb draw callback: dims the play area and draws each star
+// three times, shrinking along its trail.
+void DrawMarisaABomb(Player *player);
 // Marisa B's bomb update callback: ends the bomb after its duration,
 // restoring the player's speed; otherwise starts it (the spell card
 // name, 300 frames) slowing the player, then keeps a beam's hitbox and

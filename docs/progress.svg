@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">34.61% (163)</tspan> · <tspan class="decompiled">6.37% (30)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">59.02% (278)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">34.82% (164)</tspan> · <tspan class="decompiled">6.37% (30)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">58.81% (277)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="258.52" height="6" x="0" y="0" class="named"/>
-<rect width="47.58" height="6" x="258.52" y="0" class="decompiled"/>
-<rect width="440.90" height="6" x="306.10" y="0" class="todo"/>
+<rect width="260.10" height="6" x="0" y="0" class="named"/>
+<rect width="47.58" height="6" x="260.10" y="0" class="decompiled"/>
+<rect width="439.32" height="6" x="307.68" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -300,7 +300,7 @@
 <rect width="12" height="12" x="435" y="60" class="todo"><title>0x00420330 Func420330 (943 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="60" class="todo"><title>0x004206e0 Func4206e0 (1126 bytes)</title></rect>
 <rect width="12" height="12" x="465" y="60" class="todo"><title>0x00420b50 Func420b50 (118 bytes)</title></rect>
-<rect width="12" height="12" x="480" y="60" class="todo"><title>0x00420bd0 Func420bd0 (53 bytes)</title></rect>
+<rect width="12" height="12" x="480" y="60" class="named"><title>0x00420bd0 CreateD3d (53 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="60" class="todo"><title>0x00420c10 Func420c10 (295 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="60" class="todo"><title>0x00420d40 Func420d40 (276 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="60" class="todo"><title>0x00420e60 Func420e60 (1458 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">12.81%</tspan> · <tspan class="decompiled">2.68%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">84.51%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">12.83%</tspan> · <tspan class="decompiled">2.68%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">84.48%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="95.70" height="6" x="0" y="0" class="named"/>
-<rect width="20.03" height="6" x="95.70" y="0" class="decompiled"/>
-<rect width="631.26" height="6" x="115.74" y="0" class="todo"/>
+<rect width="95.87" height="6" x="0" y="0" class="named"/>
+<rect width="20.03" height="6" x="95.87" y="0" class="decompiled"/>
+<rect width="631.10" height="6" x="115.90" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -954,7 +954,7 @@
 <rect width="2.73" height="1.88" x="717.89" y="115.79" class="named"><title>0x00422380 MidiPlayer::Load (58 bytes)</title></rect>
 <rect width="2.53" height="1.88" x="723.62" y="115.79" class="decompiled"><title>0x00424aac Unknown6c6d18::LoadMidi (56 bytes)</title></rect>
 <rect width="2.43" height="1.88" x="729.16" y="115.79" class="named"><title>0x004240f0 SpriteEngine::ReleaseVertexBuffer (55 bytes)</title></rect>
-<rect width="2.24" height="1.88" x="734.59" y="115.79" class="todo"><title>0x00420bd0 Func420bd0 (53 bytes)</title></rect>
+<rect width="2.24" height="1.88" x="734.59" y="115.79" class="named"><title>0x00420bd0 CreateD3d (53 bytes)</title></rect>
 <rect width="2.24" height="1.88" x="739.82" y="115.79" class="named"><title>0x0043b200 CSound::GetBuffer (53 bytes)</title></rect>
 <rect width="1.94" height="1.88" x="745.06" y="115.79" class="named"><title>0x00404650 Stage::RemoveChain (50 bytes)</title></rect>
 <rect width="1.71" height="2.12" x="717.89" y="120.67" class="named"><title>0x00407400 EnemyScripts::Release (50 bytes)</title></rect>

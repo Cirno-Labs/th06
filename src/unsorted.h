@@ -203,7 +203,9 @@ public:
     // the frame rate. Returns 1.
     static int OnDraw(Unknown6c6d18 *arg);
 
-    unsigned char unk_000[0x8];
+    unsigned char unk_000[0x4];
+    // Created by Direct3DCreate8 (CreateD3d).
+    IDirect3D8 *d3d;
     IDirect3DDevice8 *d3dDevice;
     // Created by DirectInput8Create.
     IDirectInput8 *dinput;
@@ -326,6 +328,9 @@ extern DatArchive **g_Archives;
 // 0, or -1 if DirectInput is off or the keyboard fails.
 int InitDirectInput(Unknown6c6d18 *game);
 
+
+// Creates g_Unknown6c6d18.d3d. Returns 0, or 1 after logging an error.
+int CreateD3d();
 
 // Scene set-up functions Unknown6c6d18::OnUpdate calls. They return
 // nonzero on failure.

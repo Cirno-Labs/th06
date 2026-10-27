@@ -21,3 +21,8 @@ int Func42a670(void *arg)
 Unknown423330::~Unknown423330()
 {
 }
+
+int Func41b1a4(Unknown417d29 *arg)
+{
+    return arg->Func417d29();
+}

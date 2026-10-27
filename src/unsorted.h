@@ -25,6 +25,16 @@ public:
     ~Unknown423330();
 };
 
+class Unknown417d29
+{
+public:
+    int Func417d29();
+};
+
+// The main callback of the chain element at 0x69bc80: runs
+// Unknown417d29::Func417d29 on the element's user pointer.
+int Func41b1a4(Unknown417d29 *arg);
+
 class Unknown43be50
 {
 public:

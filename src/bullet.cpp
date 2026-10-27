@@ -503,3 +503,35 @@ void DrawBullet(Bullet *bullet)
     }
     g_SpriteEngine->Func433590(sprite);
 }
+
+void Func416c50(Bullet *bullet)
+{
+    Sprite *sprite;
+
+    switch (bullet->state)
+    {
+    case 2:
+        sprite = &bullet->sprites.sprite1;
+        break;
+    case 3:
+        sprite = &bullet->sprites.sprite2;
+        break;
+    case 4:
+        sprite = &bullet->sprites.sprite3;
+        break;
+    case 5:
+        sprite = &bullet->sprites.sprite4;
+        break;
+    default:
+        sprite = &bullet->sprites.sprite0;
+    }
+    sprite->pos.x = g_GameManager.arena[0] + bullet->pos.x;
+    sprite->pos.y = g_GameManager.arena[1] + bullet->pos.y;
+    sprite->pos.z = 0.0f;
+    sprite->color = sprite->color & 0xff000000 | 0xffffff;
+    if (sprite->unk_088 != 0)
+    {
+        sprite->rotation = 1.5707964f - bullet->angle;
+    }
+    g_SpriteEngine->Func432cc0(sprite);
+}

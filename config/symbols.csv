@@ -344,7 +344,7 @@ address,size,name,symbol
 0x0042ab30,1449,Func42ab30,?Func42ab30@@YAXHPAD@Z
 0x0042b0d9,423,Func42b0d9,
 0x0042b280,294,Func42b280,
-0x0042b3a6,145,Func42b3a6,
+0x0042b3a6,145,InsertScore,?InsertScore@@YAHPAUListNode@@PAUHscr@@@Z
 0x0042b437,47,FreeListNodes,?FreeListNodes@@YAXPAUListNode@@@Z
 0x0042b466,156,Func42b466,
 0x0042b502,348,Func42b502,

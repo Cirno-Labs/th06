@@ -7,17 +7,31 @@
 
 #include "common.h"
 
+// A high score chunk of the score file ("HSCR").
+struct Hscr
+{
+    DWORD magic;
+    WORD size;
+    WORD unk_06;
+    BYTE version;
+    BYTE unk_09[0x3];
+    DWORD score;
+};
+
 // A node of the score file's lists. Each list starts with a head node
 // whose `data` is NULL; the entries after it are sorted.
 struct ListNode
 {
     ListNode *prev;
     ListNode *next;
-    void *data;
+    Hscr *data;
 };
 
 // Frees every node after `head`.
 void FreeListNodes(ListNode *head);
+// Links `entry` in after `head`, before the first entry whose score is no
+// higher. Returns its rank, from 0.
+int InsertScore(ListNode *head, Hscr *entry);
 
 // "score.dat" as loaded: a 0x14-byte header, then chunks ("TH6K", ...).
 struct ScoreDat

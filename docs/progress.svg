@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.50% (252)</tspan> · <tspan class="decompiled">6.58% (31)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">39.92% (188)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.93% (254)</tspan> · <tspan class="decompiled">6.58% (31)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">39.49% (186)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="399.67" height="6" x="0" y="0" class="named"/>
-<rect width="49.17" height="6" x="399.67" y="0" class="decompiled"/>
-<rect width="298.17" height="6" x="448.83" y="0" class="todo"/>
+<rect width="402.84" height="6" x="0" y="0" class="named"/>
+<rect width="49.17" height="6" x="402.84" y="0" class="decompiled"/>
+<rect width="294.99" height="6" x="452.01" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -120,7 +120,7 @@
 <rect width="12" height="12" x="735" y="0" class="todo"><title>0x0040abe0 Func40abe0 (291 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="15" class="todo"><title>0x0040ad10 Func40ad10 (358 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="15" class="todo"><title>0x0040ae80 Func40ae80 (300 bytes)</title></rect>
-<rect width="12" height="12" x="30" y="15" class="todo"><title>0x0040afb0 Func40afb0 (876 bytes)</title></rect>
+<rect width="12" height="12" x="30" y="15" class="named"><title>0x0040afb0 ResolveOperand (876 bytes)</title></rect>
 <rect width="12" height="12" x="45" y="15" class="todo"><title>0x0040b380 Func40b380 (64 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="15" class="todo"><title>0x0040b3c0 Func40b3c0 (88 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="15" class="todo"><title>0x0040b420 Func40b420 (161 bytes)</title></rect>
@@ -129,7 +129,7 @@
 <rect width="12" height="12" x="120" y="15" class="todo"><title>0x0040b650 Func40b650 (164 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="15" class="todo"><title>0x0040b700 Func40b700 (202 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="15" class="todo"><title>0x0040b7d0 Func40b7d0 (190 bytes)</title></rect>
-<rect width="12" height="12" x="165" y="15" class="todo"><title>0x0040b890 Func40b890 (74 bytes)</title></rect>
+<rect width="12" height="12" x="165" y="15" class="named"><title>0x0040b890 D3DXVec3Length (74 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="15" class="todo"><title>0x0040b8e0 Func40b8e0 (414 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="15" class="todo"><title>0x0040ba80 Func40ba80 (244 bytes)</title></rect>
 <rect width="12" height="12" x="210" y="15" class="todo"><title>0x0040bb80 Func40bb80 (1396 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">34.75%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">62.42%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">35.15%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">62.02%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="259.60" height="6" x="0" y="0" class="named"/>
-<rect width="21.16" height="6" x="259.60" y="0" class="decompiled"/>
-<rect width="466.24" height="6" x="280.76" y="0" class="todo"/>
+<rect width="262.58" height="6" x="0" y="0" class="named"/>
+<rect width="21.16" height="6" x="262.58" y="0" class="decompiled"/>
+<rect width="463.26" height="6" x="283.74" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -618,7 +618,7 @@
 <rect width="16.42" height="19.72" x="443.86" y="0" class="todo"><title>0x00432730 Func432730 (915 bytes)</title></rect>
 <rect width="16.42" height="19.57" x="443.86" y="22.72" class="named"><title>0x00424ead MusicScreen::UpdateList (909 bytes)</title></rect>
 <rect width="16.42" height="19.03" x="443.86" y="45.30" class="named"><title>0x0043b560 CStreamingSound::HandleWaveStreamNotification (887 bytes)</title></rect>
-<rect width="16.42" height="18.75" x="443.86" y="67.32" class="todo"><title>0x0040afb0 Func40afb0 (876 bytes)</title></rect>
+<rect width="16.42" height="18.75" x="443.86" y="67.32" class="named"><title>0x0040afb0 ResolveOperand (876 bytes)</title></rect>
 <rect width="16.42" height="18.43" x="443.86" y="89.08" class="todo"><title>0x00431a10 Func431a10 (863 bytes)</title></rect>
 <rect width="16.42" height="18.33" x="443.86" y="110.51" class="todo"><title>0x00410e30 EnemyManager::Initialize (859 bytes)</title></rect>
 <rect width="16.42" height="18.16" x="443.86" y="131.84" class="named"><title>0x00406b10 DrawMarisaABomb (852 bytes)</title></rect>
@@ -932,7 +932,7 @@
 <rect width="3.03" height="3" x="743.97" y="103.90" class="decompiled"><title>0x0041e210 Unknown41e150::Draw (75 bytes)</title></rect>
 <rect width="2.68" height="3.36" x="706.75" y="109.90" class="decompiled"><title>0x00424ae4 Unknown6c6d18::PlayMidi (75 bytes)</title></rect>
 <rect width="2.68" height="3.36" x="706.75" y="116.26" class="named"><title>0x00430220 ScreenEffect::DeletedCallback (75 bytes)</title></rect>
-<rect width="2.68" height="3.28" x="706.75" y="122.62" class="todo"><title>0x0040b890 Func40b890 (74 bytes)</title></rect>
+<rect width="2.68" height="3.28" x="706.75" y="122.62" class="named"><title>0x0040b890 D3DXVec3Length (74 bytes)</title></rect>
 <rect width="2.68" height="3.28" x="706.75" y="128.90" class="decompiled"><title>0x00424d38 Unknown6c6d18::StopMusic (74 bytes)</title></rect>
 <rect width="2.68" height="3.02" x="706.75" y="135.18" class="named"><title>0x0042ff70 ScreenEffect::OnDrawPlayArea (71 bytes)</title></rect>
 <rect width="2.68" height="2.94" x="706.75" y="141.21" class="named"><title>0x0043ba10 CWaveFile::~CWaveFile (70 bytes)</title></rect>

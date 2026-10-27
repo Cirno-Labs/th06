@@ -8,17 +8,9 @@
 #include "bullet.h"
 #include "common.h"
 #include "effect.h"
+#include "enemyscript.h"
 #include "sprite.h"
 #include "timer.h"
-
-// A context of an enemy's script, with its clock.
-struct EnemyContext
-{
-    DWORD unk_00;
-    Timer timer;
-    DWORD unk_10[0xf];
-};
-ASSERT_SIZE(EnemyContext, 0x4c);
 
 // Enemy's flags, in bytes.
 struct EnemyFlags
@@ -49,15 +41,18 @@ struct Enemy
 
     Sprite sprite;
     Sprite sprites[8];
-    EnemyContext ctx;
-    EnemyContext savedCtx[8];
+    EnemyScriptState ctx;
+    // Contexts saved by calls.
+    EnemyScriptState savedCtx[8];
     DWORD unk_c3c[0xc];
     D3DXVECTOR3 pos;
     DWORD unk_c78[0x3];
     D3DXVECTOR3 velocity;
     DWORD unk_c90[0xd];
     Timer unk_cc4;
-    DWORD unk_cd0[0x8];
+    DWORD unk_cd0[0x5];
+    int unk_ce4;
+    DWORD unk_ce8[0x2];
     Timer unk_cf0;
     DWORD unk_cfc;
     BulletShooter shooter;

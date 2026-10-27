@@ -51,7 +51,7 @@ address,size,name,symbol
 0x0040abe0,291,Func40abe0,
 0x0040ad10,358,Func40ad10,
 0x0040ae80,300,Func40ae80,
-0x0040afb0,876,Func40afb0,
+0x0040afb0,876,ResolveOperand,?ResolveOperand@@YAPAHPAUEnemy@@PAH1@Z
 0x0040b380,64,Func40b380,
 0x0040b3c0,88,Func40b3c0,
 0x0040b420,161,Func40b420,
@@ -60,7 +60,7 @@ address,size,name,symbol
 0x0040b650,164,Func40b650,
 0x0040b700,202,Func40b700,
 0x0040b7d0,190,Func40b7d0,
-0x0040b890,74,Func40b890,
+0x0040b890,74,D3DXVec3Length,?D3DXVec3Length@@YAMPBUD3DXVECTOR3@@@Z
 0x0040b8e0,414,Func40b8e0,
 0x0040ba80,244,Func40ba80,
 0x0040bb80,1396,Func40bb80,
@@ -1574,6 +1574,9 @@ address,size,name,symbol
 0x00487b10,,g_Stage,?g_Stage@@3VStage@@A
 0x00487e04,,g_StageDrawChain2,?g_StageDrawChain2@@3UChainElem@@A
 0x00487e24,,g_StageCalcChain,?g_StageCalcChain@@3UChainElem@@A
+0x00487e44,,g_Unknown487e44,?g_Unknown487e44@@3HA
+0x00487e48,,g_Unknown487e48,?g_Unknown487e48@@3MA
+0x00487e4c,,g_Unknown487e4c,?g_Unknown487e4c@@3MA
 0x00487e50,,g_EnemyScripts,?g_EnemyScripts@@3VEnemyScripts@@A
 0x00487fe0,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x004b7964,,g_EffectCalcChain,?g_EffectCalcChain@@3UChainElem@@A

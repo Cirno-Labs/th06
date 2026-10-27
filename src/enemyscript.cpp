@@ -1,6 +1,9 @@
 // The file with EnemyScripts, from 0x407340.
 
+#include "enemy.h"
 #include "enemyscript.h"
+#include "gamemanager.h"
+#include "player.h"
 #include "unsorted.h"
 
 int EnemyScripts::Load(char *path)
@@ -38,4 +41,172 @@ int EnemyScripts::StartSub(EnemyScriptState *state, short sub)
     state->timer.Set(0);
     state->sub = sub;
     return 0;
+}
+
+int *ResolveOperand(Enemy *enemy, int *operand, int *type)
+{
+    if (type != NULL)
+    {
+        *type = 3;
+    }
+    switch (*operand)
+    {
+    case -10001:
+        if (type != NULL)
+        {
+            *type = 0;
+        }
+        return &enemy->ctx.intVars[0];
+    case -10002:
+        if (type != NULL)
+        {
+            *type = 0;
+        }
+        return &enemy->ctx.intVars[1];
+    case -10003:
+        if (type != NULL)
+        {
+            *type = 0;
+        }
+        return &enemy->ctx.intVars[2];
+    case -10004:
+        if (type != NULL)
+        {
+            *type = 0;
+        }
+        return &enemy->ctx.intVars[3];
+    case -10005:
+        if (type != NULL)
+        {
+            *type = 1;
+        }
+        return (int *)&enemy->ctx.floatVars[0];
+    case -10006:
+        if (type != NULL)
+        {
+            *type = 1;
+        }
+        return (int *)&enemy->ctx.floatVars[1];
+    case -10007:
+        if (type != NULL)
+        {
+            *type = 1;
+        }
+        return (int *)&enemy->ctx.floatVars[2];
+    case -10008:
+        if (type != NULL)
+        {
+            *type = 1;
+        }
+        return (int *)&enemy->ctx.floatVars[3];
+    case -10009:
+        if (type != NULL)
+        {
+            *type = 0;
+        }
+        return &enemy->ctx.intVars2[0];
+    case -10010:
+        if (type != NULL)
+        {
+            *type = 0;
+        }
+        return &enemy->ctx.intVars2[1];
+    case -10011:
+        if (type != NULL)
+        {
+            *type = 0;
+        }
+        return &enemy->ctx.intVars2[2];
+    case -10012:
+        if (type != NULL)
+        {
+            *type = 0;
+        }
+        return &enemy->ctx.intVars2[3];
+    case -10013:
+        if (type != NULL)
+        {
+            *type = 2;
+        }
+        return &g_GameManager.difficulty;
+    case -10014:
+        if (type != NULL)
+        {
+            *type = 2;
+        }
+        return &g_GameManager.rank;
+    case -10015:
+        if (type != NULL)
+        {
+            *type = 1;
+        }
+        return (int *)&enemy->pos.x;
+    case -10016:
+        if (type != NULL)
+        {
+            *type = 1;
+        }
+        return (int *)&enemy->pos.y;
+    case -10017:
+        if (type != NULL)
+        {
+            *type = 1;
+        }
+        return (int *)&enemy->pos.z;
+    case -10018:
+        if (type != NULL)
+        {
+            *type = 2;
+        }
+        return (int *)&g_Player.position.x;
+    case -10019:
+        if (type != NULL)
+        {
+            *type = 2;
+        }
+        return (int *)&g_Player.position.y;
+    case -10020:
+        if (type != NULL)
+        {
+            *type = 2;
+        }
+        return (int *)&g_Player.position.z;
+    case -10021:
+        g_Unknown487e4c = g_Player.AngleFrom(&enemy->pos);
+        if (type != NULL)
+        {
+            *type = 2;
+        }
+        return (int *)&g_Unknown487e4c;
+    case -10022:
+        if (type != NULL)
+        {
+            *type = 0;
+        }
+        return &enemy->unk_cf0.current;
+    case -10023:
+    {
+        D3DXVECTOR3 diff = g_Player.position - enemy->pos;
+        g_Unknown487e48 = D3DXVec3Length(&diff);
+        if (type != NULL)
+        {
+            *type = 2;
+        }
+        return (int *)&g_Unknown487e48;
+    }
+    case -10024:
+        if (type != NULL)
+        {
+            *type = 0;
+        }
+        return &enemy->unk_ce4;
+    case -10025:
+        g_Unknown487e44 = g_GameManager.character * 2 + g_GameManager.shotType;
+        if (type != NULL)
+        {
+            *type = 0;
+        }
+        return &g_Unknown487e44;
+    }
+    return operand;
 }

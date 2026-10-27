@@ -13,7 +13,13 @@ struct EnemyScriptState
     // The next instruction.
     void *code;
     Timer timer;
-    DWORD unk_10[0xe];
+    DWORD unk_10;
+    // The script's variables (operands -10001 to -10012): ints, floats,
+    // and ints again.
+    int intVars[4];
+    float floatVars[4];
+    int intVars2[4];
+    DWORD unk_44;
     // The subroutine running.
     short sub;
     short unk_4a;
@@ -51,3 +57,18 @@ public:
     void *unk_08;
 };
 extern EnemyScripts g_EnemyScripts;
+
+struct Enemy;
+
+// Resolves script operand *operand for `enemy`: one of the variables
+// -10001 to -10025 (the context's, the enemy's and player's positions,
+// difficulty, rank, the angle and distance to the player, the shot
+// type, ...) or else the value itself. Sets *type, if given, to 0 for
+// an int variable, 1 for a float variable, 2 for a read-only value and
+// 3 for the immediate. Returns where the value is.
+int *ResolveOperand(Enemy *enemy, int *operand, int *type);
+
+// Where ResolveOperand computes its read-only values.
+extern int g_Unknown487e44;
+extern float g_Unknown487e48;
+extern float g_Unknown487e4c;

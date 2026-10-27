@@ -15,6 +15,9 @@ public:
     // Zeroes the manager and sets the play area to (32, 16), 384 by 448.
     GameManager();
 
+    // Whether a `width` by `height` rectangle centred on (x, y) touches
+    // the play area.
+    BOOL Func41b5e1(float x, float y, float width, float height);
     // Adds `amount` hundredths to the rank, up to maxRank.
     void AddSubRank(int amount);
     // Takes `amount` hundredths from the rank, down to minRank.

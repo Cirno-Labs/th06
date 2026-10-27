@@ -168,7 +168,7 @@ address,size,name,symbol
 0x0041b4c4,200,Func41b4c4,
 0x0041b58c,35,Gui::RemoveChain,?RemoveChain@Gui@@SAXXZ
 0x0041b5af,50,Timer::NextTick,?NextTick@Timer@@QAEHXZ
-0x0041b5e1,130,Func41b5e1,
+0x0041b5e1,130,GameManager::Func41b5e1,?Func41b5e1@GameManager@@QAEHMMMM@Z
 0x0041b663,999,GameManager::OnUpdate,?OnUpdate@GameManager@@SAHPAV1@@Z
 0x0041ba4a,32,GameManager::OnDraw,?OnDraw@GameManager@@SAHPAV1@@Z
 0x0041ba6a,152,GameManager::RegisterChain,?RegisterChain@GameManager@@SAHXZ
@@ -321,7 +321,7 @@ address,size,name,symbol
 0x00428700,122,Func428700,
 0x00428780,309,Player::RegisterChain,?RegisterChain@Player@@SAHE@Z
 0x004288c0,2282,Player::OnUpdate,?OnUpdate@Player@@SAHPAV1@@Z
-0x004291b0,1371,Player::Func4291b0,?Func4291b0@Player@@SAXPAV1@@Z
+0x004291b0,1371,Player::UpdateBullets,?UpdateBullets@Player@@SAXPAV1@@Z
 0x00429710,268,Player::Func429710,?Func429710@Player@@SAHPAV1@@Z
 0x00429820,270,Func429820,
 0x00429930,457,Player::OnDraw,?OnDraw@Player@@SAHPAV1@@Z

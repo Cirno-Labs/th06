@@ -13,14 +13,25 @@
 struct PlayerBullet
 {
     Sprite sprite;
-    DWORD unk_110[0xb];
+    D3DXVECTOR3 pos;
+    D3DXVECTOR3 size;
+    // A laser's z is its x offset from its option.
+    D3DXVECTOR3 velocity;
+    DWORD unk_134;
+    float speed;
     // The direction it flies in.
     float angle;
-    DWORD unk_140[0x3];
+    Timer timer;
     short unk_14c;
-    // 2 for those DrawHitBullets draws.
+    // 0 unused, 1 flying, 2 hit (drawn by DrawHitBullets).
+    short state;
+    // How it moves: 1 homing on unk_0a1c, 2 accelerating up, 3 a laser
+    // kept on an option.
     short type;
-    DWORD unk_150[0x2];
+    // A laser's: its entry in laserTimers, and its option, from 1.
+    short laserIndex;
+    short option;
+    short unk_156;
 };
 ASSERT_SIZE(PlayerBullet, 0x158);
 
@@ -45,7 +56,11 @@ public:
     // in while focusing; fires while button 1 is held. Returns 0.
     int HandleInput();
     static void Func428630(Player *player);
-    static void Func4291b0(Player *player);
+    // Moves the player's bullets: homing ones steer like Reimu A's orbs,
+    // others speed up to 10, rising ones accelerate, lasers stay on
+    // their option, stretched to the top. Ends those that leave the
+    // play area or whose script ends.
+    static void UpdateBullets(Player *player);
     static int Func429710(Player *player);
     static int OnDraw(Player *player);
     // Runs DrawHitBullets. Returns 1.
@@ -85,7 +100,8 @@ public:
     // Areas that cancel bullets, as centre x and y, width and height;
     // unused while the width is a sentinel.
     float bulletClearAreas[16][4];
-    DWORD unk_09b8[0x6];
+    // Clock the lasers; counted down while nonzero.
+    Timer laserTimers[2];
     // Scale the player's movement: 0.3 during Marisa B's bomb, else 1.
     float moveScaleX;
     float moveScaleY;

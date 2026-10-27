@@ -516,7 +516,7 @@ int Player::OnUpdate(Player *player)
         player->HandleInput();
     }
     g_SpriteEngine->Step(&player->sprite);
-    Player::Func4291b0(player);
+    Player::UpdateBullets(player);
     if (player->optionState)
     {
         g_SpriteEngine->Step(&player->optionSprites[0]);
@@ -525,6 +525,104 @@ int Player::OnUpdate(Player *player)
     player->unk_0a1c = D3DXVECTOR3(-999.0f, -999.0f, 0.0f);
     Player::Func429710(player);
     return 1;
+}
+
+void Player::UpdateBullets(Player *player)
+{
+    float x;
+    float y;
+    int i;
+    float len;
+    PlayerBullet *bullet;
+
+    for (i = 0; i < 2; i++)
+    {
+        if (player->laserTimers[i].AsFrames() != 0)
+        {
+            player->laserTimers[i].Sub(1);
+        }
+    }
+    bullet = player->bullets;
+    for (i = 0; i < 0x50; i++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        switch (bullet->type)
+        {
+        case 1:
+            if (bullet->state == 1)
+            {
+                if (player->unk_0a1c.x > -100.0f && bullet->timer.AsFrames() < 40 && bullet->timer.HasTicked())
+                {
+                    x = player->unk_0a1c.x - bullet->pos.x;
+                    y = player->unk_0a1c.y - bullet->pos.y;
+                    len = sqrtf(x * x + y * y) / (bullet->speed / 4.0f);
+                    if (len < 1.0f)
+                    {
+                        len = 1.0f;
+                    }
+                    x = x / len + bullet->velocity.x;
+                    y = y / len + bullet->velocity.y;
+                    len = sqrtf(x * x + y * y);
+                    bullet->speed = (len > 10.0f) ? 10.0f : len;
+                    if (bullet->speed < 1.0f)
+                    {
+                        bullet->speed = 1.0f;
+                    }
+                    bullet->velocity.x = x * bullet->speed / len;
+                    bullet->velocity.y = y * bullet->speed / len;
+                }
+                else if (bullet->speed < 10.0f)
+                {
+                    bullet->speed += 0.33333334f;
+                    x = bullet->velocity.x;
+                    y = bullet->velocity.y;
+                    len = sqrtf(x * x + y * y);
+                    bullet->velocity.x = x * bullet->speed / len;
+                    bullet->velocity.y = y * bullet->speed / len;
+                }
+            }
+            break;
+        case 2:
+            if (bullet->state == 1)
+            {
+                bullet->velocity.y -= 0.3f;
+            }
+            break;
+        case 3:
+            if (player->laserTimers[bullet->laserIndex] == 70)
+            {
+                bullet->sprite.unk_08a = 1;
+            }
+            else if (player->laserTimers[bullet->laserIndex] == 1)
+            {
+                bullet->sprite.unk_08a = 1;
+            }
+            bullet->pos = player->optionPos[bullet->option - 1];
+            bullet->pos.x += bullet->velocity.z;
+            bullet->pos.y /= 2.0f;
+            bullet->pos.z = 0.44f;
+            bullet->sprite.scaleY = bullet->pos.y * 2.0f / 14.0f;
+            bullet->size.y = bullet->pos.y * 2.0f;
+            break;
+        }
+        bullet->sprite.pos.x = bullet->pos[0] += g_Unknown6c6d18.frameAdvance * bullet->velocity.x;
+        bullet->sprite.pos.y = bullet->pos[1] += g_Unknown6c6d18.frameAdvance * bullet->velocity.y;
+        bullet->sprite.pos.z = bullet->pos.z;
+        if (bullet->type != 3 &&
+            !g_GameManager.Func41b5e1(bullet->pos.x, bullet->pos.y, bullet->sprite.spriteData->width,
+                                      bullet->sprite.spriteData->height))
+        {
+            bullet->state = 0;
+        }
+        if (g_SpriteEngine->Step(&bullet->sprite))
+        {
+            bullet->state = 0;
+        }
+        bullet->timer.Tick();
+    }
 }
 
 int Player::OnDraw2(Player *player)
@@ -540,7 +638,7 @@ void Player::DrawHitBullets(Player *player)
 
     for (i = 0; i < 0x50; i++, bullet++)
     {
-        if (bullet->type != 2)
+        if (bullet->state != 2)
         {
             continue;
         }

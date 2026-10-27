@@ -426,7 +426,10 @@ struct GuiImpl
     DWORD unk_0000[0x81b];
     WORD unk_206c;
     WORD unk_206e;
-    DWORD unk_2070[0x2f5];
+    DWORD unk_2070[0x43];
+    WORD unk_217c;
+    WORD unk_217e;
+    DWORD unk_2180[0x2b1];
 };
 ASSERT_SIZE(GuiImpl, 0x2c44);
 
@@ -447,6 +450,8 @@ public:
 
     // Sets impl->unk_206e.
     void Func417314();
+    // Sets impl->unk_217e.
+    void Func41732c();
 
     DWORD unk_00;
     GuiImpl *impl;

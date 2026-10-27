@@ -140,7 +140,7 @@ address,size,name,symbol
 0x004172b0,35,BulletManager::RemoveChain,?RemoveChain@BulletManager@@SAXXZ
 0x004172d3,65,Func4172d3,
 0x00417314,24,Gui::Func417314,?Func417314@Gui@@QAEXXZ
-0x0041732c,24,Func41732c,
+0x0041732c,24,Gui::Func41732c,?Func41732c@Gui@@QAEXXZ
 0x00417344,22,Func417344,
 0x0041735a,127,Func41735a,
 0x004173d9,127,Func4173d9,

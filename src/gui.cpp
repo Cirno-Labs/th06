@@ -7,3 +7,8 @@ void Gui::Func417314()
 {
     this->impl->unk_206e = 1;
 }
+
+void Gui::Func41732c()
+{
+    this->impl->unk_217e = 1;
+}

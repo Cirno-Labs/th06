@@ -117,6 +117,8 @@ public:
     void UnloadFile(int slot);
     // Parses the file in a slot into tracks.
     void ParseFile(int slot);
+    // Frees the parsed tracks.
+    void FreeTracks();
     // Loads and parses a MIDI file through the scratch slot 31. Returns -1
     // if it cannot be loaded, otherwise 0.
     int Load(char *path);

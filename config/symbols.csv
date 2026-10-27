@@ -257,7 +257,7 @@ address,size,name,symbol
 0x00421f50,147,Func421f50,
 0x00421ff0,121,MidiPlayer::LoadFile,?LoadFile@MidiPlayer@@QAEHHPAD@Z
 0x00422070,60,MidiPlayer::UnloadFile,?UnloadFile@MidiPlayer@@QAEXH@Z
-0x004220b0,131,Func4220b0,
+0x004220b0,131,MidiPlayer::FreeTracks,?FreeTracks@MidiPlayer@@QAEXXZ
 0x00422140,561,MidiPlayer::ParseFile,?ParseFile@MidiPlayer@@QAEXH@Z
 0x00422380,58,MidiPlayer::Load,?Load@MidiPlayer@@QAEHPAD@Z
 0x004223c0,207,MidiPlayer::Rewind,?Rewind@MidiPlayer@@QAEXXZ

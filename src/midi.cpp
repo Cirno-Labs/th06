@@ -267,3 +267,16 @@ int MidiPlayer::Stop()
     this->device.Close();
     return 0;
 }
+
+void MidiPlayer::FreeTracks()
+{
+    int i;
+
+    for (i = 0; i < this->trackCount; i++)
+    {
+        MemFree(this->tracks[i].data);
+    }
+    MemFree(this->tracks);
+    this->tracks = NULL;
+    this->trackCount = 0;
+}

@@ -3,6 +3,7 @@
 #pragma once
 
 #include <windows.h>
+#include <d3d8.h>
 
 #include "chain.h"
 #include "common.h"
@@ -17,6 +18,9 @@ public:
     // The update element's deleted callback: removes the draw element
     // and deletes the effect. Returns 0.
     static int DeletedCallback(ScreenEffect *effect);
+    // Type 2's draw callback: covers the play area in `color` at `alpha`.
+    // Returns 1.
+    static int OnDrawPlayArea(ScreenEffect *effect);
 
     int type;
     ChainElem *calcElem;
@@ -24,7 +28,7 @@ public:
     DWORD unk_0c;
     int alpha;
     int unk_14;
-    int unk_18;
+    D3DCOLOR color;
     int unk_1c;
     int unk_20;
     Timer timer;

@@ -54,6 +54,10 @@ public:
     void ClearAll(int toItems);
     // ClearAll(1).
     void ClearAllToItems();
+    // Like ClearAll, but each bullet scores a bonus, from 2000 up by 10
+    // per bullet to `maxBonus`, shown as a popup, and the total is shown
+    // through g_Gui.Func41735a. Returns the total.
+    int ClearAllWithBonus(int maxBonus, int toItems);
 
     // Resets, remembers `unk`, picks g_Unknown476438's table by option
     // bit 0, and adds the update element (priority 0xb) and the draw

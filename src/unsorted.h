@@ -554,6 +554,8 @@ public:
     void Func417314();
     // Called when the power reaches its maximum.
     void Func4173d9(int unk);
+    // Shows the bonus for bullets cleared.
+    void Func41735a(int bonus);
     // Sets impl->unk_217e.
     void Func41732c();
     // Returns impl->unk_2bd8.

@@ -1,6 +1,6 @@
 address,size,name,symbol
 0x00401000,224,Func401000,
-0x004010e0,87,Func4010e0,
+0x004010e0,87,Unknown4010e0::Unknown4010e0,??0Unknown4010e0@@QAE@XZ
 0x00401140,257,AsciiText::OnUpdate,?OnUpdate@AsciiText@@SAHPAV1@@Z
 0x00401250,59,AsciiText::OnDraw,?OnDraw@AsciiText@@SAHPAV1@@Z
 0x00401290,39,AsciiText::OnDraw2,?OnDraw2@AsciiText@@SAHPAV1@@Z

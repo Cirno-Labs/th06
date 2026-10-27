@@ -6,6 +6,10 @@
 #include "ascii.h"
 #include "unsorted.h"
 
+Unknown4010e0::Unknown4010e0()
+{
+}
+
 int AsciiText::OnUpdate(AsciiText *text)
 {
     int i;

@@ -28,12 +28,16 @@ ASSERT_SIZE(AsciiString, 0x60);
 class Unknown4010e0
 {
 public:
+    Unknown4010e0();
+
     void Func401b80();
     void Func402740();
     void Func402870();
     void Func403060();
 
-    unsigned char unk_000[0x778];
+    unsigned char unk_000[0x8];
+    Sprite unk_008[6];
+    Sprite unk_668;
 };
 ASSERT_SIZE(Unknown4010e0, 0x778);
 

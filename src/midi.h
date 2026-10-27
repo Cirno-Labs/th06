@@ -119,6 +119,8 @@ public:
     // Plays the loaded tracks on the MIDI mapper, ticking every 1 ms.
     // Returns -1 if nothing is loaded, otherwise 0.
     int Play();
+    // Starts fading the music out over `duration` ms. Returns 0.
+    int FadeOut(int duration);
 
     void *unk_010[0x20];
     int unk_090;
@@ -143,7 +145,11 @@ public:
     int unk_2d4;
     int unk_2d8;
     int unk_2dc;
+    // Set while fading out.
     int unk_2e0;
-    unsigned char unk_2e4[0x1c];
+    // In ms, set by FadeOut.
+    int fadeDuration;
+    int unk_2e8;
+    unsigned char unk_2ec[0x14];
 };
 ASSERT_SIZE(MidiPlayer, 0x300);

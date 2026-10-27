@@ -264,7 +264,7 @@ address,size,name,symbol
 0x00422490,68,MidiPlayer::Play,?Play@MidiPlayer@@QAEHXZ
 0x004224e0,124,Func4224e0,
 0x00422560,199,Func422560,
-0x00422630,79,Func422630,
+0x00422630,79,MidiPlayer::FadeOut,?FadeOut@MidiPlayer@@QAEHH@Z
 0x00422680,635,MidiPlayer::OnTimer,?OnTimer@MidiPlayer@@UAEXXZ
 0x00422900,2047,Func422900,
 0x00423260,206,Func423260,

@@ -87,11 +87,11 @@ address,size,name,symbol
 0x0040ec10,416,Func40ec10,
 0x0040edb0,416,Func40edb0,
 0x0040ef50,430,Func40ef50,
-0x0040f100,230,Func40f100,
-0x0040f1f0,129,Func40f1f0,
-0x0040f280,300,Func40f280,
-0x0040f3d0,20,Func40f3d0,
-0x0040f3f0,165,Func40f3f0,
+0x0040f100,230,EffectManager::OnUpdate,?OnUpdate@EffectManager@@SAHPAV1@@Z
+0x0040f1f0,129,EffectManager::OnDraw,?OnDraw@EffectManager@@SAHPAV1@@Z
+0x0040f280,300,EffectManager::AddedCallback,?AddedCallback@EffectManager@@SAHPAV1@@Z
+0x0040f3d0,20,EffectManager::DeletedCallback,?DeletedCallback@EffectManager@@SAHPAV1@@Z
+0x0040f3f0,165,EffectManager::RegisterChain,?RegisterChain@EffectManager@@SAHXZ
 0x0040f4a0,35,Func40f4a0,
 0x0040f4d0,115,Func40f4d0,
 0x0040f550,596,Func40f550,
@@ -1548,6 +1548,8 @@ address,size,name,symbol
 0x00487aac,,g_AsciiCalcChain,?g_AsciiCalcChain@@3UChainElem@@A
 0x00487acc,,g_AsciiDrawChain2,?g_AsciiDrawChain2@@3UChainElem@@A
 0x00487fe0,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
+0x004b7964,,g_EffectCalcChain,?g_EffectCalcChain@@3UChainElem@@A
+0x004b7984,,g_EffectDrawChain,?g_EffectDrawChain@@3UChainElem@@A
 0x0069d4b8,,g_Unknown69d4b8,?g_Unknown69d4b8@@3EA
 0x0069d4bf,,g_Unknown69d4bf,?g_Unknown69d4bf@@3EA
 0x0069d4c0,,g_Unknown69d4c0,?g_Unknown69d4c0@@3EA

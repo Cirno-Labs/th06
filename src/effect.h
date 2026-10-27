@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "chain.h"
 #include "common.h"
 #include "sprite.h"
 #include "timer.h"
@@ -27,8 +28,21 @@ public:
     // Zeroes everything.
     void Reset();
 
+    // Resets and adds the update element (priority 10) and the draw
+    // element (priority 8). Returns 0, or -1 if adding fails.
+    static int RegisterChain();
+    static int OnUpdate(EffectManager *mgr);
+    static int OnDraw(EffectManager *mgr);
+    // Loads the stage's effect sprites. Returns 0, or -1 on failure.
+    static int AddedCallback(EffectManager *mgr);
+    static int DeletedCallback(EffectManager *mgr);
+
     DWORD unk_00000[0x2];
     Effect effects[0x201];
 };
 ASSERT_SIZE(EffectManager, 0x2f984);
 extern EffectManager g_EffectManager;
+
+// EffectManager's statically allocated chain elements.
+extern ChainElem g_EffectCalcChain;
+extern ChainElem g_EffectDrawChain;

@@ -13,7 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OBJ = "build/obj"
 SJIS = "build/src"  # src/ converted to Shift-JIS
 DLL = "build/th06.dll"
-CFLAGS = ["/Od", "/Ob1", "/G5", "/GX", "/Op"]
+CFLAGS = ["/Od", "/Ob1", "/G5", "/GX", "/Op", "/Oi", "/GS"]
 GLUE_PREFIX = "dll_"  # objects from src/dll/, the DLL's own code
 TIMEOUT = 60  # cl spins forever after a fatal error
 
@@ -72,16 +72,19 @@ def compile_all():
         if os.path.exists(obj) and os.path.getmtime(obj) > max(os.path.getmtime(src), headers):
             continue
         print("cl", src)
-        tool("cl", "/c", *CFLAGS, *file_flags(src), "/I" + win(SJIS), "/Fo" + win(obj),
+        tool("cl", "/c", *file_flags(src), "/I" + win(SJIS), "/Fo" + win(obj),
              win(os.path.join(SJIS, rel)))
     return objs
 
 
 def file_flags(src):
-    """Extra flags for one file, from a `// cflags: ...` first line."""
+    """The flags for one file: CFLAGS, changed by a `// cflags: ...` first
+    line. `/X` adds a flag, `-/X` removes a default one."""
     with open(src) as f:
         first = f.readline()
-    return first.split(":", 1)[1].split() if first.startswith("// cflags:") else []
+    changes = first.split(":", 1)[1].split() if first.startswith("// cflags:") else []
+    flags = [f for f in CFLAGS if "-" + f not in changes]
+    return flags + [c for c in changes if not c.startswith("-")]
 
 
 def write_hooks(objs, symbols):

@@ -1,3 +1,7 @@
+// cflags: -/GS
+// The hook installer runs from DllMain and links no CRT, so no security
+// cookies.
+
 // Entry point of th06.dll. The patched executable imports Init() from
 // this DLL, so Windows loads it before the game starts. DllMain then
 // redirects each original function that has been decompiled to the new

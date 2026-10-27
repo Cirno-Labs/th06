@@ -946,7 +946,7 @@ address,size,name,symbol
 0x0045b9c9,23,Func45b9c9,
 0x0045b9e0,87,Func45b9e0,
 0x0045ba37,41,report_failure,
-0x0045ba68,14,__security_check_cookie,
+0x0045ba68,14,__security_check_cookie,@__security_check_cookie@4
 0x0045ba78,117,__ftol2,__ftol2
 0x0045baed,104,_free,_free
 0x0045bb40,9,Func45bb40,
@@ -1534,6 +1534,7 @@ address,size,name,symbol
 0x0046a270,4,Direct3DCreate8,__imp__Direct3DCreate8@4
 0x0046b564,4,MmTimer::`vftable',??_7MmTimer@@6B@
 0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
+0x0047a630,4,__security_cookie,___security_cookie
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
 0x006c6d5c,4,g_Hwnd6c6d5c,?g_Hwnd6c6d5c@@3PAUHWND__@@A
 0x006c6e47,1,g_MusicMode,?g_MusicMode@@3EA

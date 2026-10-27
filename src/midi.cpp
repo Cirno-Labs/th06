@@ -187,3 +187,15 @@ int MidiPlayer::Load(char *path)
     this->UnloadFile(0x1f);
     return 0;
 }
+
+int MidiPlayer::Play()
+{
+    if (this->tracks == NULL)
+    {
+        return -1;
+    }
+    this->Rewind();
+    this->device.Open(MIDI_MAPPER);
+    this->Start(1, NULL, 0);
+    return 0;
+}

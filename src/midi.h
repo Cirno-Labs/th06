@@ -95,6 +95,11 @@ public:
     // Loads and parses a MIDI file through the scratch slot 31. Returns -1
     // if it cannot be loaded, otherwise 0.
     int Load(char *path);
+    // Rewinds the tracks.
+    void Rewind();
+    // Plays the loaded tracks on the MIDI mapper, ticking every 1 ms.
+    // Returns -1 if nothing is loaded, otherwise 0.
+    int Play();
 
     void *unk_010[0x20];
     int unk_090;

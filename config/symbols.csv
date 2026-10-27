@@ -260,8 +260,8 @@ address,size,name,symbol
 0x004220b0,131,Func4220b0,
 0x00422140,561,MidiPlayer::ParseFile,?ParseFile@MidiPlayer@@QAEXH@Z
 0x00422380,58,MidiPlayer::Load,?Load@MidiPlayer@@QAEHPAD@Z
-0x004223c0,207,Func4223c0,
-0x00422490,68,Func422490,
+0x004223c0,207,MidiPlayer::Rewind,?Rewind@MidiPlayer@@QAEXXZ
+0x00422490,68,MidiPlayer::Play,?Play@MidiPlayer@@QAEHXZ
 0x004224e0,124,Func4224e0,
 0x00422560,199,Func422560,
 0x00422630,79,Func422630,

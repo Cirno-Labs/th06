@@ -11,6 +11,11 @@
 // A tune in the music screen's list.
 struct MusicTune
 {
+    MusicTune()
+    {
+        memset(this, 0, sizeof(MusicTune));
+    }
+
     // The MIDI file; Unknown6c6d18::PlayMusic finds the wave files from it.
     char path[0x40];
     char title[0x22];
@@ -35,8 +40,12 @@ public:
     // Sets up the music screen, a static constructed on first use, and
     // adds it to the chains. Returns 0, or -1 if adding fails.
     static int RegisterChain();
-    // The update chain element's added and deleted callbacks.
+    // The update chain element's added callback: loads the screen's
+    // images and data/musiccmt.txt, the list of tunes, and sets up the
+    // title and comment sprites. Returns 0, or -1 on failure.
     static int AddedCallback(MusicScreen *screen);
+    // The update chain element's deleted callback: frees what
+    // AddedCallback loaded and removes the draw chain element.
     static int DeletedCallback(MusicScreen *screen);
 
     // The update chain element's callback: runs the current state's

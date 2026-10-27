@@ -89,6 +89,8 @@ extern WORD g_PrevButtons;
 
 // Loads a whole file into a malloc'd buffer; NULL on failure.
 void *Func41e290(char *path, int unk);
+// The size of the file Func41e290 loaded last.
+extern int g_FileSize;
 
 // The object error messages go to, e.g. "error : MIDI File が読み込めない".
 class Unknown69d998;

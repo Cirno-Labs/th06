@@ -20,7 +20,7 @@ address,size,name,symbol
 0x00403060,380,Func403060,
 0x004031e0,460,Func4031e0,
 0x004033b0,460,Func4033b0,
-0x00403580,238,Func403580,
+0x00403580,238,Sprite::Initialize,?Initialize@Sprite@@QAEXXZ
 0x00403670,167,Func403670,
 0x00403720,104,Func403720,
 0x00403790,114,Func403790,
@@ -395,12 +395,12 @@ address,size,name,symbol
 0x00431920,237,Func431920,
 0x00431a10,863,Func431a10,
 0x00431d70,66,Func431d70,
-0x00431dc0,624,Func431dc0,
+0x00431dc0,624,SpriteEngine::LoadAnm,?LoadAnm@SpriteEngine@@QAEHHPADH@Z
 0x00432030,418,SpriteEngine::ReleaseAnm,?ReleaseAnm@SpriteEngine@@QAEXH@Z
 0x004321e0,125,Func4321e0,
 0x00432260,315,Func432260,
-0x004323a0,144,Func4323a0,
-0x00432430,151,Func432430,
+0x004323a0,144,SpriteEngine::SetSprite,?SetSprite@SpriteEngine@@QAEHPAVSprite@@H@Z
+0x00432430,151,SpriteEngine::SetScript,?SetScript@SpriteEngine@@QAEXPAVSprite@@PAX@Z
 0x004324d0,598,Func4324d0,
 0x00432730,915,Func432730,
 0x00432ad0,431,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
@@ -414,7 +414,7 @@ address,size,name,symbol
 0x00434b60,219,SpriteEngine::RenderText,?RenderText@SpriteEngine@@QAAXPAVSprite@@KKPADZZ
 0x00434c40,476,Func434c40,
 0x00434e20,482,Func434e20,
-0x00435010,603,Func435010,
+0x00435010,603,SpriteEngine::LoadSurface,?LoadSurface@SpriteEngine@@QAEHHPAD@Z
 0x00435270,143,SpriteEngine::ReleaseSurface,?ReleaseSurface@SpriteEngine@@QAEXH@Z
 0x00435300,445,SpriteEngine::Func435300,?Func435300@SpriteEngine@@QAEXHHHHH@Z
 0x004354c0,424,Func4354c0,
@@ -967,7 +967,7 @@ address,size,name,symbol
 0x0045be60,10,Func45be60,
 0x0045be92,136,_atol,
 0x0045bf1f,5,operator delete,??3@YAXPAX@Z
-0x0045bf24,14,operator_new,
+0x0045bf24,14,operator new,??2@YAPAXI@Z
 0x0045bf32,43,_JumpToContinuation,
 0x0045bf62,7,FID_conflict:_CallMemberFunction1,
 0x0045bf69,82,_UnwindNestedFrames,
@@ -1539,6 +1539,7 @@ address,size,name,symbol
 0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A
 0x0069d904,,g_Buttons,?g_Buttons@@3GA
 0x0069d908,,g_PrevButtons,?g_PrevButtons@@3GA
+0x0069d914,,g_FileSize,?g_FileSize@@3HA
 0x0069d918,,g_Chain,?g_Chain@@3VChain@@A
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A

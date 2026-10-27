@@ -71,6 +71,8 @@ int *ResolveOperand(Enemy *enemy, int *operand, int *type);
 // Resolves a float operand: a variable when *operand, as an int, names
 // one, else *operand itself.
 float *ResolveFloatOperand(Enemy *enemy, float *operand, int *type);
+// Sets variable `dst` to the value of operand *src.
+void ScriptSet(Enemy *enemy, int dst, int *src);
 
 // Where ResolveOperand computes its read-only values.
 extern int g_Unknown487e44;

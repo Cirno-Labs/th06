@@ -224,3 +224,21 @@ float *ResolveFloatOperand(Enemy *enemy, float *operand, int *type)
     }
     return (float *)ptr;
 }
+
+void ScriptSet(Enemy *enemy, int dst, int *src)
+{
+    int *dstPtr;
+    int *rhs;
+    int t;
+
+    rhs = ResolveOperand(enemy, src, NULL);
+    dstPtr = ResolveOperand(enemy, &dst, &t);
+    if (t == 0)
+    {
+        *dstPtr = *rhs;
+    }
+    else if (t == 1)
+    {
+        *(float *)dstPtr = *(float *)rhs;
+    }
+}

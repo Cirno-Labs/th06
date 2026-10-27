@@ -53,7 +53,7 @@ address,size,name,symbol
 0x0040ae80,300,Func40ae80,
 0x0040afb0,876,ResolveOperand,?ResolveOperand@@YAPAHPAUEnemy@@PAH1@Z
 0x0040b380,64,ResolveFloatOperand,?ResolveFloatOperand@@YAPAMPAUEnemy@@PAMPAH@Z
-0x0040b3c0,88,Func40b3c0,
+0x0040b3c0,88,ScriptSet,?ScriptSet@@YAXPAUEnemy@@HPAH@Z
 0x0040b420,161,Func40b420,
 0x0040b4d0,161,Func40b4d0,
 0x0040b580,204,Func40b580,

@@ -5,6 +5,7 @@
 
 #include <windows.h>
 
+#include "dsutil.h"
 #include "midi.h"
 
 // The global at 0x6c6d18 plays wave music through it.
@@ -17,6 +18,10 @@ public:
     // Fades the wave music out over `seconds`, counted in frames at 60
     // per second.
     void FadeOutBgm(float seconds);
+
+    unsigned char unk_000[0x62c];
+    // The wave music playing; NULL when stopped.
+    CStreamingSound *bgm;
 };
 extern Unknown6d3f50 g_Unknown6d3f50;
 

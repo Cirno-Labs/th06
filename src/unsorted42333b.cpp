@@ -160,3 +160,14 @@ int Unknown6c6d18::FadeOutMusic(float seconds)
     }
     return 0;
 }
+
+void Unknown6d3f50::FadeOutBgm(float seconds)
+{
+    if (this->bgm != NULL)
+    {
+        CStreamingSound *bgm = this->bgm;
+        bgm->fading = 1;
+        bgm->fadeFrames = seconds * 60.0f;
+        bgm->fadeTotal = bgm->fadeFrames;
+    }
+}

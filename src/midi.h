@@ -96,6 +96,17 @@ struct MidiTrack
 };
 ASSERT_SIZE(MidiTrack, 0x20);
 
+// The state of one of the 16 MIDI channels. Size from the stride of
+// MidiPlayer::channels.
+struct MidiChannel
+{
+    unsigned char unk_00[0x15];
+    // Channel volume (controller 7) before scaling.
+    BYTE volume;
+    unsigned char unk_16;
+};
+ASSERT_SIZE(MidiChannel, 0x17);
+
 // Plays MIDI files on a MidiDevice, driven by its own timer. Allocated with
 // operator new(0x300).
 class MidiPlayer : public MmTimer
@@ -130,6 +141,9 @@ public:
     int Play();
     // Starts fading the music out over `duration` ms. Returns 0.
     int FadeOut(int duration);
+    // Sends every channel's volume, scaled and offset by `offset`, unless
+    // unk_2d4 is set.
+    void SendVolume(int offset);
 
     // Long messages being sent; released by ReleaseHeader.
     LPMIDIHDR headers[0x20];
@@ -147,9 +161,11 @@ public:
     // Parsed tracks, `trackCount` of them.
     MidiTrack *tracks;
     MidiDevice device;
-    unsigned char unk_144[0x180];
+    unsigned char unk_144[0x10];
+    MidiChannel channels[0x10];
     BYTE unk_2c4;
-    float unk_2c8;
+    // Scales every channel's volume; 1.0 after Rewind.
+    float volumeScale;
     int unk_2cc;
     int unk_2d0;
     int unk_2d4;

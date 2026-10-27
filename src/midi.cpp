@@ -153,7 +153,7 @@ MidiPlayer::MidiPlayer()
     this->unk_120 = 0;
     this->trackCount = 0;
     this->unk_2c4 = 0;
-    this->unk_2c8 = 0.0f;
+    this->volumeScale = 0.0f;
     this->unk_2cc = 0;
     this->unk_2d0 = 0;
     this->unk_2d4 = 0;
@@ -235,7 +235,7 @@ void MidiPlayer::Rewind()
     MidiTrack *track;
 
     track = this->tracks;
-    this->unk_2c8 = 1.0f;
+    this->volumeScale = 1.0f;
     this->unk_2dc = 0;
     this->unk_2e0 = 0;
     this->unk_128 = 0;
@@ -251,7 +251,7 @@ void MidiPlayer::Rewind()
 
 int MidiPlayer::FadeOut(int duration)
 {
-    this->unk_2c8 = 0.0f;
+    this->volumeScale = 0.0f;
     this->fadeDuration = duration;
     this->unk_2e8 = 0;
     this->unk_2dc = 0;
@@ -324,4 +324,34 @@ found:
     MemFree(header->lpData);
     MemFree(header);
     return 0;
+}
+
+void MidiPlayer::SendVolume(int offset)
+{
+    int cc;
+    int i;
+    int chStatus;
+    int data2;
+    int volume;
+
+    if (this->unk_2d4 != 0)
+    {
+        return;
+    }
+    cc = 7;
+    for (i = 0; i < 0x10; i++)
+    {
+        chStatus = (i + 0xb0) & 0xff;
+        volume = (int)(this->channels[i].volume * this->volumeScale) + offset;
+        if (volume < 0)
+        {
+            volume = 0;
+        }
+        else if (volume > 0x7f)
+        {
+            volume = 0x7f;
+        }
+        data2 = volume & 0xff;
+        this->device.SendShortMsg(chStatus, cc, data2);
+    }
 }

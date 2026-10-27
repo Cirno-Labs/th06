@@ -1542,7 +1542,10 @@ address,size,name,symbol
 0x0046fe20,,GUID_SysKeyboard,_GUID_SysKeyboard
 0x0046fec0,,IID_IDirectInput8A,_IID_IDirectInput8A
 0x0047a630,4,__security_cookie,___security_cookie
+0x0047b8e0,,g_AsciiDrawChain,?g_AsciiDrawChain@@3UChainElem@@A
 0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A
+0x00487aac,,g_AsciiCalcChain,?g_AsciiCalcChain@@3UChainElem@@A
+0x00487acc,,g_AsciiDrawChain2,?g_AsciiDrawChain2@@3UChainElem@@A
 0x0069d4c1,,g_Unknown69d4c1,?g_Unknown69d4c1@@3EA
 0x0069d8f8,,g_Rng,?g_Rng@@3VRng@@A
 0x0069d900,,g_Archives,?g_Archives@@3PAPAVDatArchive@@A

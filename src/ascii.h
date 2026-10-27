@@ -4,6 +4,7 @@
 
 #include <d3dx8.h>
 
+#include "chain.h"
 #include "common.h"
 
 // Queues strings to draw in the ASCII font, the global at 0x47b900. Its
@@ -14,7 +15,8 @@ public:
     // Adds AsciiText's update and draw chain elements. Returns 0, or -1
     // if adding fails.
     static int RegisterChain();
-    // Removes AsciiText's two chain elements.
+    // Removes AsciiText's update element and its first draw element;
+    // the second draw element stays.
     static void RemoveChain();
 
     // Queues a string at `pos` in the current color. Up to 256 strings
@@ -28,3 +30,9 @@ public:
     D3DCOLOR color;
 };
 extern AsciiText g_AsciiText;
+
+// AsciiText's chain elements, statically allocated: the update element,
+// and draw elements at priorities 0xf and 10.
+extern ChainElem g_AsciiCalcChain;
+extern ChainElem g_AsciiDrawChain;
+extern ChainElem g_AsciiDrawChain2;

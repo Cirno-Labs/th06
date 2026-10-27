@@ -6,6 +6,7 @@
 
 #include "chain.h"
 #include "common.h"
+#include "sprite.h"
 
 // Queues strings to draw in the ASCII font, the global at 0x47b900. Its
 // code starts at 0x401000 and loads "data/ascii.anm".
@@ -15,6 +16,9 @@ public:
     // Adds AsciiText's update and draw chain elements. Returns 0, or -1
     // if adding fails.
     static int RegisterChain();
+    // The update element's deleted callback: frees the ANM files the
+    // added callback loaded. Returns 0.
+    static int DeletedCallback(AsciiText *text);
     // Removes AsciiText's update element and its first draw element;
     // the second draw element stays.
     static void RemoveChain();

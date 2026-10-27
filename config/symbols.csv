@@ -7,7 +7,7 @@ address,size,name,symbol
 0x004012c0,213,AsciiText::RegisterChain,?RegisterChain@AsciiText@@SAHXZ
 0x004013a0,110,Func4013a0,
 0x00401410,185,Func401410,
-0x004014d0,46,Func4014d0,
+0x004014d0,46,AsciiText::DeletedCallback,?DeletedCallback@AsciiText@@SAHPAV1@@Z
 0x00401500,35,AsciiText::RemoveChain,?RemoveChain@AsciiText@@SAXXZ
 0x00401530,277,AsciiText::AddString,?AddString@AsciiText@@QAEXPAUD3DXVECTOR3@@PAD@Z
 0x00401650,90,AsciiText::AddFormat,?AddFormat@AsciiText@@QAAXPAUD3DXVECTOR3@@PADZZ

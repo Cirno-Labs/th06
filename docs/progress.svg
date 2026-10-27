@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">10.19% (48)</tspan> · <tspan class="decompiled">3.82% (18)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">85.99% (405)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">10.40% (49)</tspan> · <tspan class="decompiled">3.82% (18)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">85.77% (404)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="76.13" height="6" x="0" y="0" class="named"/>
-<rect width="28.55" height="6" x="76.13" y="0" class="decompiled"/>
-<rect width="642.32" height="6" x="104.68" y="0" class="todo"/>
+<rect width="77.71" height="6" x="0" y="0" class="named"/>
+<rect width="28.55" height="6" x="77.71" y="0" class="decompiled"/>
+<rect width="640.74" height="6" x="106.26" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -76,7 +76,7 @@
 <rect width="12" height="12" x="75" y="0" class="todo"><title>0x004012c0 AsciiText::RegisterChain (213 bytes)</title></rect>
 <rect width="12" height="12" x="90" y="0" class="todo"><title>0x004013a0 Func4013a0 (110 bytes)</title></rect>
 <rect width="12" height="12" x="105" y="0" class="todo"><title>0x00401410 Func401410 (185 bytes)</title></rect>
-<rect width="12" height="12" x="120" y="0" class="todo"><title>0x004014d0 Func4014d0 (46 bytes)</title></rect>
+<rect width="12" height="12" x="120" y="0" class="named"><title>0x004014d0 AsciiText::DeletedCallback (46 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="0" class="named"><title>0x00401500 AsciiText::RemoveChain (35 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="0" class="todo"><title>0x00401530 AsciiText::AddString (277 bytes)</title></rect>
 <rect width="12" height="12" x="165" y="0" class="todo"><title>0x00401650 AsciiText::AddFormat (90 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">4.79%</tspan> · <tspan class="decompiled">1.60%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">93.61%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">4.81%</tspan> · <tspan class="decompiled">1.60%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">93.59%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="35.79" height="6" x="0" y="0" class="named"/>
-<rect width="11.93" height="6" x="35.79" y="0" class="decompiled"/>
-<rect width="699.28" height="6" x="47.72" y="0" class="todo"/>
+<rect width="35.94" height="6" x="0" y="0" class="named"/>
+<rect width="11.93" height="6" x="35.94" y="0" class="decompiled"/>
+<rect width="699.13" height="6" x="47.87" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -967,7 +967,7 @@
 <rect width="1.96" height="1.66" x="717.89" y="125.79" class="todo"><title>0x004301f0 Func4301f0 (48 bytes)</title></rect>
 <rect width="1.96" height="1.57" x="717.89" y="130.46" class="todo"><title>0x0042b437 Func42b437 (47 bytes)</title></rect>
 <rect width="1.96" height="1.57" x="717.89" y="135.02" class="todo"><title>0x0043c2c0 Func43c2c0 (47 bytes)</title></rect>
-<rect width="1.96" height="1.47" x="717.89" y="139.59" class="todo"><title>0x004014d0 Func4014d0 (46 bytes)</title></rect>
+<rect width="1.96" height="1.47" x="717.89" y="139.59" class="named"><title>0x004014d0 AsciiText::DeletedCallback (46 bytes)</title></rect>
 <rect width="1.96" height="1.47" x="717.89" y="144.06" class="todo"><title>0x0041e820 Func41e820 (46 bytes)</title></rect>
 <rect width="1.96" height="1.47" x="717.89" y="148.53" class="decompiled"><title>0x00424b2f Unknown6c6d18::LoadMusic (46 bytes)</title></rect>
 <rect width="1.61" height="1.82" x="722.86" y="125.79" class="todo"><title>0x0042bc2d Func42bc2d (46 bytes)</title></rect>

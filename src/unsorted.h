@@ -395,7 +395,7 @@ public:
     ID3DXFont *font;
 };
 
-// Fills `rect` (x, y, width and height) with `color`.
+// Fills `rect` (left, top, right and bottom) with `color`.
 void Func42f8b0(float *rect, D3DCOLOR color);
 void Func41c28c(int unk);
 

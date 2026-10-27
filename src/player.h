@@ -55,13 +55,21 @@ public:
     PlayerBullet bullets[0x50];
     DWORD unk_75a8[0x3];
     Timer unk_75b4;
-    DWORD unk_75c0[0x8c9];
+    DWORD unk_75c0[0x3];
+    // The bomb running: its length in frames, and its clock.
+    int bombDuration;
+    Timer bombTimer;
+    DWORD unk_75dc[0x8c2];
     // The update element and the two draw elements.
     ChainElem *calcChain;
     ChainElem *drawChain;
     ChainElem *drawChain2;
 };
 ASSERT_SIZE(Player, 0x98f0);
+
+// Darkens the play area while a bomb runs: to alpha 176 over its first
+// 60 frames, and back over its last 60.
+void DimPlayAreaForBomb(Player *player);
 extern Player g_Player;
 // A shot type's shots by power level: entries of a count, the power
 // they last up to and their data.

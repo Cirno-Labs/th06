@@ -37,7 +37,7 @@ address,size,name,symbol
 0x004051b0,169,SpriteEngine::Func4051b0,?Func4051b0@SpriteEngine@@QAEXPAVSprite@@H@Z
 0x00405260,2468,Func405260,
 0x00405c10,1040,Func405c10,
-0x00406020,311,Func406020,
+0x00406020,311,DimPlayAreaForBomb,?DimPlayAreaForBomb@@YAXPAVPlayer@@@Z
 0x00406160,1149,Func406160,
 0x004065e0,272,Func4065e0,
 0x004066f0,1041,Func4066f0,

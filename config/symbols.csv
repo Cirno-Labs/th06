@@ -293,7 +293,7 @@ address,size,name,symbol
 0x00424d38,74,Unknown6c6d18::StopMusic,?StopMusic@Unknown6c6d18@@QAEHXZ
 0x00424d82,191,Unknown6c6d18::FadeOutMusic,?FadeOutMusic@Unknown6c6d18@@QAEHM@Z
 0x00424e41,78,Unknown6d3f50::FadeOutBgm,?FadeOutBgm@Unknown6d3f50@@QAEXM@Z
-0x00424e8f,30,Func424e8f,
+0x00424e8f,30,MusicScreen::UpdateIntro,?UpdateIntro@MusicScreen@@QAEHXZ
 0x00424ead,909,Func424ead,
 0x0042523a,222,Func42523a,
 0x00425318,197,Func425318,

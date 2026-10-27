@@ -501,8 +501,8 @@ public:
     GdiSurface();
     ~GdiSurface();
     // Selects the old object back into `hdc`, then deletes the DC and the
-    // bitmap.
-    void Func41e992();
+    // bitmap. Returns whether there was a DC.
+    bool Release();
 
     int format;
     int width;

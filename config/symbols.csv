@@ -214,7 +214,7 @@ address,size,name,symbol
 0x0041e940,5,DebugPrint,?DebugPrint@@YAXPBDZZ
 0x0041e945,60,GdiSurface::GdiSurface,??0GdiSurface@@QAE@XZ
 0x0041e981,17,GdiSurface::~GdiSurface,??1GdiSurface@@QAE@XZ
-0x0041e992,114,GdiSurface::Func41e992,?Func41e992@GdiSurface@@QAEXXZ
+0x0041e992,114,GdiSurface::Release,?Release@GdiSurface@@QAE_NXZ
 0x0041ea04,95,Func41ea04,
 0x0041ea63,447,Func41ea63,
 0x0041ec22,80,Func41ec22,

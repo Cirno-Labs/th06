@@ -57,12 +57,16 @@ public:
     int HandleInput();
     // Starts fireTimer unless it runs.
     static void StartFiring(Player *player);
+    // Fires the shot type's shots for the frame of fireTimer.
+    static void Func429820(Player *player, int frame);
     // Moves the player's bullets: homing ones steer like Reimu A's orbs,
     // others speed up to 10, rising ones accelerate, lasers stay on
     // their option, stretched to the top. Ends those that leave the
     // play area or whose script ends.
     static void UpdateBullets(Player *player);
-    static int Func429710(Player *player);
+    // Runs fireTimer: fires on each new frame, except during Marisa B's
+    // bomb, and stops it after 30 frames or on dying. Returns 0.
+    static int UpdateFiring(Player *player);
     static int OnDraw(Player *player);
     // Runs DrawHitBullets. Returns 1.
     static int OnDraw2(Player *player);

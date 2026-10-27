@@ -531,7 +531,7 @@ int Player::OnUpdate(Player *player)
         g_SpriteEngine->Step(&player->optionSprites[1]);
     }
     player->unk_0a1c = D3DXVECTOR3(-999.0f, -999.0f, 0.0f);
-    Player::Func429710(player);
+    Player::UpdateFiring(player);
     return 1;
 }
 
@@ -631,6 +631,25 @@ void Player::UpdateBullets(Player *player)
         }
         bullet->timer.Tick();
     }
+}
+
+int Player::UpdateFiring(Player *player)
+{
+    if (player->fireTimer.AsFrames() < 0)
+    {
+        return 0;
+    }
+    if (player->fireTimer.HasTicked() &&
+        (!g_Player.bombing || g_GameManager.character != 1 || g_GameManager.shotType != 1))
+    {
+        Player::Func429820(player, player->fireTimer.AsFrames());
+    }
+    player->fireTimer.Tick();
+    if (player->fireTimer.AsFrames() >= 30 || player->unk_09e0 == 2 || player->unk_09e0 == 1)
+    {
+        player->fireTimer.Set(-1);
+    }
+    return 0;
 }
 
 int Player::OnDraw2(Player *player)

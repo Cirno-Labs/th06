@@ -4,6 +4,7 @@
 
 #include <windows.h>
 
+#include "chain.h"
 #include "common.h"
 
 struct PlayerBullet;
@@ -15,8 +16,14 @@ class Player
 public:
     // Frees the player's sprites, unless the scene is 3. Returns 0.
     static int DeletedCallback(Player *player);
+    // Removes the player's three chain elements.
+    static void RemoveChain();
 
-    DWORD unk_0000[0x263c];
+    DWORD unk_0000[0x2639];
+    // The update element and the two draw elements.
+    ChainElem *calcChain;
+    ChainElem *drawChain;
+    ChainElem *drawChain2;
 };
 ASSERT_SIZE(Player, 0x98f0);
 extern Player g_Player;

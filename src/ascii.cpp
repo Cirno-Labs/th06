@@ -191,3 +191,41 @@ void AsciiText::AddPopup(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
     popup->pos = *pos;
     this->nextPopup++;
 }
+
+void AsciiText::AddPopup2(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
+{
+    AsciiPopup *popup;
+    int n;
+
+    if (this->nextPopup2 >= 3)
+    {
+        this->nextPopup2 = 0;
+    }
+    popup = &this->popups[this->nextPopup2 + 0x200];
+    popup->active = 1;
+    n = 0;
+    if (value >= 0)
+    {
+        while (value != 0)
+        {
+            popup->digits[n] = value % 10;
+            n++;
+            value /= 10;
+        }
+    }
+    else
+    {
+        popup->digits[n] = 10;
+        n++;
+    }
+    if (n == 0)
+    {
+        popup->digits[n] = 0;
+        n++;
+    }
+    popup->digitCount = n;
+    popup->color = color;
+    popup->timer.Set(0);
+    popup->pos = *pos;
+    this->nextPopup2++;
+}

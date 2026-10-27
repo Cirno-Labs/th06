@@ -42,8 +42,8 @@ public:
 ASSERT_SIZE(Unknown4010e0, 0x778);
 
 // A number rising from where something scored, one of AsciiText's
-// 0x203 (AddPopup uses 0x200). OnUpdate moves it up and retires it after
-// 60 frames.
+// 0x203: AddPopup uses 0x200 of them, AddPopup2 the other 3. OnUpdate
+// moves it up and retires it after 60 frames.
 struct AsciiPopup
 {
     // Least significant first; 10 stands for a minus sign.
@@ -112,6 +112,9 @@ public:
     // Shows `value` rising from `pos` in `color` for 60 frames. Negative
     // values show as a minus sign.
     void AddPopup(D3DXVECTOR3 *pos, int value, D3DCOLOR color);
+    // Like AddPopup, but in the last three popups, kept apart from
+    // AddPopup's.
+    void AddPopup2(D3DXVECTOR3 *pos, int value, D3DCOLOR color);
 
     Sprite unk_0000;
     Sprite unk_0110;
@@ -126,7 +129,9 @@ public:
     int unk_6234;
     // The popup AddPopup uses next.
     int nextPopup;
-    unsigned char unk_623c[0x8];
+    // The one of the last three popups AddPopup2 uses next.
+    int nextPopup2;
+    unsigned char unk_6240[0x4];
     Unknown4010e0 unk_6244;
     Unknown4010e0 unk_69bc;
     AsciiPopup popups[0x203];

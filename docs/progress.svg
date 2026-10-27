@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">20.81% (98)</tspan> · <tspan class="decompiled">4.88% (23)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">74.31% (350)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">20.81% (98)</tspan> · <tspan class="decompiled">5.10% (24)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">74.10% (349)</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="155.43" height="6" x="0" y="0" class="named"/>
-<rect width="36.48" height="6" x="155.43" y="0" class="decompiled"/>
-<rect width="555.10" height="6" x="191.90" y="0" class="todo"/>
+<rect width="38.06" height="6" x="155.43" y="0" class="decompiled"/>
+<rect width="553.51" height="6" x="193.49" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -270,7 +270,7 @@
 <rect width="12" height="12" x="735" y="45" class="named"><title>0x0041e0c0 ResetKeyboard (133 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="60" class="decompiled"><title>0x0041e150 Unknown41e150::Create (192 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="60" class="todo"><title>0x0041e210 Func41e210 (75 bytes)</title></rect>
-<rect width="12" height="12" x="30" y="60" class="todo"><title>0x0041e260 Func41e260 (48 bytes)</title></rect>
+<rect width="12" height="12" x="30" y="60" class="decompiled"><title>0x0041e260 Unknown41e150::Release (48 bytes)</title></rect>
 <rect width="12" height="12" x="45" y="60" class="todo"><title>0x0041e290 Func41e290 (456 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="60" class="todo"><title>0x0041e460 Func41e460 (99 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="60" class="todo"><title>0x0041e4d0 Func41e4d0 (331 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">7.70%</tspan> · <tspan class="decompiled">2.47%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">89.83%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">7.70%</tspan> · <tspan class="decompiled">2.49%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">89.81%</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="57.55" height="6" x="0" y="0" class="named"/>
-<rect width="18.44" height="6" x="57.55" y="0" class="decompiled"/>
-<rect width="671.02" height="6" x="75.98" y="0" class="todo"/>
+<rect width="18.59" height="6" x="57.55" y="0" class="decompiled"/>
+<rect width="670.87" height="6" x="76.13" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -961,7 +961,7 @@
 <rect width="1.71" height="2.12" x="722.60" y="120.67" class="todo"><title>0x0041b5af Func41b5af (50 bytes)</title></rect>
 <rect width="1.61" height="2.12" x="727.31" y="120.67" class="named"><title>0x00417270 BulletManager::DeletedCallback (49 bytes)</title></rect>
 <rect width="1.52" height="2.12" x="731.92" y="120.67" class="todo"><title>0x00419572 Func419572 (48 bytes)</title></rect>
-<rect width="1.52" height="2.12" x="736.44" y="120.67" class="todo"><title>0x0041e260 Func41e260 (48 bytes)</title></rect>
+<rect width="1.52" height="2.12" x="736.44" y="120.67" class="decompiled"><title>0x0041e260 Unknown41e150::Release (48 bytes)</title></rect>
 <rect width="1.52" height="2.12" x="740.96" y="120.67" class="named"><title>0x0041e7f0 Rng::GetRandomU32 (48 bytes)</title></rect>
 <rect width="1.52" height="2.12" x="745.48" y="120.67" class="named"><title>0x00421c30 MmTimer::MmTimer (48 bytes)</title></rect>
 <rect width="1.96" height="1.66" x="717.89" y="125.79" class="todo"><title>0x004301f0 Func4301f0 (48 bytes)</title></rect>

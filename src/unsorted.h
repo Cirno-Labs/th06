@@ -358,6 +358,8 @@ class Unknown41e150
 public:
     // Creates the font at `width` by `height`.
     void Create(IDirect3DDevice8 *device, int width, int height);
+    // Releases the font, if there is one.
+    void Release();
 
     DWORD unk_0;
     ID3DXFont *font;

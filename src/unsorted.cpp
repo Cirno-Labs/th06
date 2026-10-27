@@ -107,3 +107,12 @@ void Unknown41e150::Create(IDirect3DDevice8 *device, int width, int height)
     SelectObject(dc, oldFont);
     DeleteObject(font);
 }
+
+void Unknown41e150::Release()
+{
+    if (this->font != NULL)
+    {
+        this->font->Release();
+        this->font = NULL;
+    }
+}

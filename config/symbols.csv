@@ -201,7 +201,7 @@ address,size,name,symbol
 0x0041e0c0,133,ResetKeyboard,?ResetKeyboard@@YAXXZ
 0x0041e150,192,Unknown41e150::Create,?Create@Unknown41e150@@QAEXPAUIDirect3DDevice8@@HH@Z
 0x0041e210,75,Func41e210,
-0x0041e260,48,Func41e260,
+0x0041e260,48,Unknown41e150::Release,?Release@Unknown41e150@@QAEXXZ
 0x0041e290,456,Func41e290,?Func41e290@@YAPAXPADH@Z
 0x0041e460,99,Func41e460,?Func41e460@@YAHPADPAXH@Z
 0x0041e4d0,331,Func41e4d0,?Func41e4d0@@YAHPAVUnknown69d998@@PBDZZ

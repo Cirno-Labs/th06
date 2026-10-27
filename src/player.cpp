@@ -211,6 +211,54 @@ int Player::TouchesGrazeBox(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     return 1;
 }
 
+int Player::CheckLaserHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, D3DXVECTOR3 *origin, float angle, int canGraze)
+{
+    D3DXVECTOR3 boxMin;
+    D3DXVECTOR3 start;
+    D3DXVECTOR3 end;
+    D3DXVECTOR3 boxMax;
+
+    // The hitbox, turned into the laser's frame.
+    start = this->position - *origin;
+    Rotate2D(&end, &start, angle);
+    end.z = 0.0f;
+    start = end + *origin;
+    boxMin = start - this->hitboxSize;
+    boxMax = start + this->hitboxSize;
+    start = *pos - *size / 2.0f;
+    end = *size / 2.0f + *pos;
+    if (!(boxMin.x > end.x || boxMax.x < start.x || boxMin.y > end.y || boxMax.y < start.y))
+    {
+        goto hit;
+    }
+    if (!canGraze)
+    {
+        return 0;
+    }
+    start.x -= 48.0f;
+    start.y -= 48.0f;
+    end.x += 48.0f;
+    end.y += 48.0f;
+    if (boxMin.x > end.x || boxMax.x < start.x || boxMin.y > end.y || boxMax.y < start.y)
+    {
+        return 0;
+    }
+    if (this->unk_09e0 == 2 || this->unk_09e0 == 1)
+    {
+        return 0;
+    }
+    this->Graze(&this->position);
+    return 2;
+
+hit:
+    if (this->unk_09e0 != 0)
+    {
+        return 0;
+    }
+    this->Die();
+    return 1;
+}
+
 void Player::Graze(D3DXVECTOR3 *pos)
 {
     D3DXVECTOR3 mid;

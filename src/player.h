@@ -94,6 +94,11 @@ public:
     // Whether a `size` box centred on `pos` touches the graze box while
     // the player is alive and not respawning.
     int TouchesGrazeBox(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
+    // Tests a laser, a `size` box centred on `pos` turned by `angle`
+    // around `origin`: returns 1 if it touches the hitbox, killing the
+    // player unless it is dying or invulnerable; else, with `canGraze`,
+    // 2 if it comes within 48 of it, grazing it while alive; else 0.
+    int CheckLaserHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, D3DXVECTOR3 *origin, float angle, int canGraze);
     // Grazes a bullet at `pos`: counts it (unless bombing), bursts an
     // effect between it and the player, scores 500 and raises the rank.
     void Graze(D3DXVECTOR3 *pos);

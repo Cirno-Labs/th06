@@ -85,3 +85,19 @@ int Unknown6c6d18::LoadMidi(int slot, char *path)
     }
     return 1;
 }
+
+int Unknown6c6d18::PlayMidi(int slot)
+{
+    if (g_Unknown6c6d18.musicMode == 2)
+    {
+        if (g_Unknown6c6d18.midi != NULL)
+        {
+            MidiPlayer *midi = g_Unknown6c6d18.midi;
+            midi->Stop();
+            midi->ParseFile(slot);
+            midi->Play();
+        }
+        return 0;
+    }
+    return 1;
+}

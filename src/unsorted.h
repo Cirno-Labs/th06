@@ -19,6 +19,9 @@ public:
     // Loads a MIDI file into a slot of `midi` in MIDI mode. Returns 0 in
     // MIDI mode, otherwise 1.
     int LoadMidi(int slot, char *path);
+    // Plays the MIDI file loaded into a slot from the start, in MIDI mode.
+    // Returns 0 in MIDI mode, otherwise 1.
+    int PlayMidi(int slot);
 
     unsigned char unk_000[0x44];
     // Set from CreateWindowExA's result; MidiDevice::Open has MIDI

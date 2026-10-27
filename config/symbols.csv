@@ -287,7 +287,7 @@ address,size,name,symbol
 0x00424375,728,Func424375,
 0x0042464d,1119,Func42464d,
 0x00424aac,56,Unknown6c6d18::LoadMidi,?LoadMidi@Unknown6c6d18@@QAEHHPAD@Z
-0x00424ae4,75,Func424ae4,
+0x00424ae4,75,Unknown6c6d18::PlayMidi,?PlayMidi@Unknown6c6d18@@QAEHH@Z
 0x00424b2f,46,Func424b2f,
 0x00424b5d,475,Func424b5d,
 0x00424d38,74,Func424d38,

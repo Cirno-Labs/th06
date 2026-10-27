@@ -41,6 +41,12 @@ struct EnemyFlags
 // One enemy (0xec8 bytes).
 struct Enemy
 {
+    // Inline, but too large to expand: callers call the copy at 0x411240
+    // and still reserve its inlines' slots.
+    Enemy()
+    {
+    }
+
     Sprite sprite;
     Sprite sprites[8];
     EnemyContext ctx;
@@ -90,6 +96,9 @@ void ReleaseEnemyEffects(Enemy *enemy);
 class EnemyManager
 {
 public:
+    // Constructs the members and initializes.
+    EnemyManager();
+
     // Sets everything up for a stage.
     void Initialize();
 
@@ -111,8 +120,10 @@ public:
     // The stage's two enemy sprite files.
     char *anmPath;
     char *anmPath2;
-    DWORD unk_00008[0x3b2];
-    DWORD unk_00ed0[0x3b5ba];
+    // The template new enemies start from, and the enemies.
+    Enemy enemyTemplate;
+    Enemy enemies[0x101];
+    DWORD unk_ee598[0x8];
     // Below 3 and below 8.
     WORD unk_ee5b8;
     WORD unk_ee5ba;
@@ -123,7 +134,7 @@ public:
     int unk_ee5d4;
     DWORD unk_ee5d8;
     int unk_ee5dc;
-    DWORD unk_ee5e0[0x3];
+    Timer unk_ee5e0;
 };
 ASSERT_SIZE(EnemyManager, 0xee5ec);
 extern EnemyManager g_EnemyManager;

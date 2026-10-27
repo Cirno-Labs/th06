@@ -17,6 +17,11 @@ void EnemyManager::RemoveChain()
     g_Chain.Remove(&g_EnemyDrawChain);
 }
 
+EnemyManager::EnemyManager()
+{
+    this->Initialize();
+}
+
 void ReleaseEnemyEffects(Enemy *enemy)
 {
     int i;
@@ -137,7 +142,7 @@ int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
 
 int EnemyManager::AddedCallback(EnemyManager *mgr)
 {
-    DWORD *unused = mgr->unk_00ed0;
+    Enemy *unused = mgr->enemies;
 
     if (mgr->anmPath != NULL && g_SpriteEngine->LoadAnm(8, mgr->anmPath, 0x100) != 0)
     {

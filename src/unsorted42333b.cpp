@@ -33,3 +33,25 @@ void Timer::Add(int frames)
         }
     }
 }
+
+void Timer::Sub(int frames)
+{
+    if (g_Unknown6c6d18.gameSpeed > 0.99f)
+    {
+        this->current -= frames;
+    }
+    else if (frames < 0)
+    {
+        this->Add(-frames);
+    }
+    else
+    {
+        this->previous = this->current;
+        this->subFrame -= g_Unknown6c6d18.frameAdvance * frames;
+        while (this->subFrame < 0.0f)
+        {
+            this->current--;
+            this->subFrame += 1.0f;
+        }
+    }
+}

@@ -472,3 +472,76 @@ HRESULT CWaveFile::Open(LPTSTR strFileName, WAVEFORMATEX *pwfx, DWORD dwFlags)
 
     return hr;
 }
+
+HRESULT CWaveFile::ReadMMIO()
+{
+    MMCKINFO ckIn; // chunk info. for general use.
+    PCMWAVEFORMAT pcmWaveFormat; // Temp PCM structure to load in.
+
+    m_pwfx = NULL;
+
+    if ((0 != mmioDescend(m_hmmio, &m_ckRiff, NULL, 0)))
+        return DXTRACE_ERR(TEXT("mmioDescend"), E_FAIL);
+
+    // Check to make sure this is a valid wave file
+    if ((m_ckRiff.ckid != FOURCC_RIFF) || (m_ckRiff.fccType != mmioFOURCC('W', 'A', 'V', 'E')))
+        return DXTRACE_ERR(TEXT("mmioFOURCC"), E_FAIL);
+
+    // Search the input file for for the 'fmt ' chunk.
+    ckIn.ckid = mmioFOURCC('f', 'm', 't', ' ');
+    if (0 != mmioDescend(m_hmmio, &ckIn, &m_ckRiff, MMIO_FINDCHUNK))
+        return DXTRACE_ERR(TEXT("mmioDescend"), E_FAIL);
+
+    // Expect the 'fmt' chunk to be at least as large as <PCMWAVEFORMAT>;
+    // if there are extra parameters at the end, we'll ignore them
+    if (ckIn.cksize < (LONG)sizeof(PCMWAVEFORMAT))
+        return DXTRACE_ERR(TEXT("sizeof(PCMWAVEFORMAT)"), E_FAIL);
+
+    // Read the 'fmt ' chunk into <pcmWaveFormat>.
+    if (mmioRead(m_hmmio, (HPSTR)&pcmWaveFormat, sizeof(pcmWaveFormat)) != sizeof(pcmWaveFormat))
+        return DXTRACE_ERR(TEXT("mmioRead"), E_FAIL);
+
+    // Allocate the waveformatex, but if its not pcm format, read the next
+    // word, and thats how many extra bytes to allocate.
+    if (pcmWaveFormat.wf.wFormatTag == WAVE_FORMAT_PCM)
+    {
+        m_pwfx = (WAVEFORMATEX *)new CHAR[sizeof(WAVEFORMATEX)];
+        if (NULL == m_pwfx)
+            return DXTRACE_ERR(TEXT("m_pwfx"), E_FAIL);
+
+        // Copy the bytes from the pcm structure to the waveformatex structure
+        memcpy(m_pwfx, &pcmWaveFormat, sizeof(pcmWaveFormat));
+        m_pwfx->cbSize = 0;
+    }
+    else
+    {
+        // Read in length of extra bytes.
+        WORD cbExtraBytes = 0L;
+        if (mmioRead(m_hmmio, (CHAR *)&cbExtraBytes, sizeof(WORD)) != sizeof(WORD))
+            return DXTRACE_ERR(TEXT("mmioRead"), E_FAIL);
+
+        m_pwfx = (WAVEFORMATEX *)new CHAR[sizeof(WAVEFORMATEX) + cbExtraBytes];
+        if (NULL == m_pwfx)
+            return DXTRACE_ERR(TEXT("new"), E_FAIL);
+
+        // Copy the bytes from the pcm structure to the waveformatex structure
+        memcpy(m_pwfx, &pcmWaveFormat, sizeof(pcmWaveFormat));
+        m_pwfx->cbSize = cbExtraBytes;
+
+        // Now, read those extra bytes into the structure, if cbExtraAlloc != 0.
+        if (mmioRead(m_hmmio, (CHAR *)(((BYTE *)&(m_pwfx->cbSize)) + sizeof(WORD)), cbExtraBytes) != cbExtraBytes)
+        {
+            SAFE_DELETE(m_pwfx);
+            return DXTRACE_ERR(TEXT("mmioRead"), E_FAIL);
+        }
+    }
+
+    // Ascend the input file out of the 'fmt ' chunk.
+    if (0 != mmioAscend(m_hmmio, &ckIn, 0))
+    {
+        SAFE_DELETE(m_pwfx);
+        return DXTRACE_ERR(TEXT("mmioAscend"), E_FAIL);
+    }
+
+    return S_OK;
+}

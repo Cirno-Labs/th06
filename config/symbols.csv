@@ -32,7 +32,7 @@ address,size,name,symbol
 0x004045e0,102,Stage::DeletedCallback,?DeletedCallback@Stage@@SAHPAV1@@Z
 0x00404650,50,Stage::RemoveChain,?RemoveChain@Stage@@SAXXZ
 0x00404690,449,Stage::Load,?Load@Stage@@QAEHPAD0@Z
-0x00404860,257,Func404860,
+0x00404860,257,Stage::Func404860,?Func404860@Stage@@QAEXXZ
 0x00404970,2109,Stage::DrawLayer,?DrawLayer@Stage@@QAEHH@Z
 0x004051b0,169,SpriteEngine::Func4051b0,?Func4051b0@SpriteEngine@@QAEXPAVSprite@@H@Z
 0x00405260,2468,Func405260,

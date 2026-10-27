@@ -53,29 +53,202 @@ int Stage::DeletedCallback(Stage *stage)
 
 int Stage::AddedCallback(Stage *stage)
 {
-    stage->unk_01c.Set(0);
-    stage->unk_028 = 0;
-    stage->unk_03c.x = 0.0f;
-    stage->unk_03c.y = 0.0f;
-    stage->unk_03c.z = 0.0f;
+    stage->scriptTime.Set(0);
+    stage->scriptIndex = 0;
+    stage->cameraPos.x = 0.0f;
+    stage->cameraPos.y = 0.0f;
+    stage->cameraPos.z = 0.0f;
     stage->unk_080 = 0;
-    stage->unk_06c = 0;
+    stage->fogFadeFrames = 0;
     if (stage->Load(g_StageFiles[g_GameManager.stage].anmPath, g_StageFiles[g_GameManager.stage].dataPath) != 0)
     {
         return -1;
     }
-    stage->fogColor = 0xff000000;
-    stage->fogNear = 200.0f;
-    stage->fogFar = 500.0f;
-    stage->unk_2b8 = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
-    stage->unk_2ac = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
-    stage->unk_2c4 = 1;
-    stage->unk_2c8.Set(0);
+    stage->fog.color = 0xff000000;
+    stage->fog.nearPlane = 200.0f;
+    stage->fog.farPlane = 500.0f;
+    stage->offsetTo = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+    stage->offsetFrom = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+    stage->offsetFadeFrames = 1;
+    stage->offsetFadeTime.Set(0);
     stage->unk_2a8 = 0;
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fogColor);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fogNear);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fogFar);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
     return 0;
+}
+
+int Stage::OnUpdate(Stage *stage)
+{
+    float keyT;
+    StageInstr *cmd;
+    D3DXVECTOR3 tmpVec;
+    float camRatio;
+    float fogT;
+    int j;
+
+    if (stage->data == NULL)
+    {
+        return 1;
+    }
+    if (g_GameManager.unk_002c)
+    {
+        ((BYTE *)&stage->unk_088.color)[3] = 0x60;
+        ((BYTE *)&stage->unk_088.color)[2] = 0x80;
+        ((BYTE *)&stage->unk_088.color)[1] = 0x30;
+        ((BYTE *)&stage->unk_088.color)[0] = 0x30;
+        return 1;
+    }
+    for (;;)
+    {
+        cmd = &stage->script[stage->scriptIndex];
+        switch (cmd->opcode)
+        {
+        case 0:
+            if (cmd->frame == -1)
+            {
+                stage->keyPos = cmd->args;
+                stage->cameraPos.x = stage->keyPos.x;
+                stage->cameraPos.y = stage->keyPos.y;
+                stage->cameraPos.z = stage->keyPos.z;
+            }
+            else if (stage->scriptTime >= cmd->frame)
+            {
+                tmpVec = cmd->args;
+                stage->cameraPos.x = tmpVec.x;
+                stage->cameraPos.y = tmpVec.y;
+                stage->cameraPos.z = tmpVec.z;
+                stage->keyPos = tmpVec;
+                stage->keyFrame = cmd->frame;
+                stage->scriptIndex++;
+                cmd++;
+                while (cmd->opcode != 0)
+                {
+                    cmd++;
+                }
+                stage->nextKeyFrame = cmd->frame;
+                stage->nextKeyPos = cmd->args;
+            }
+            break;
+        case 1:
+            if (stage->scriptTime >= cmd->frame)
+            {
+                stage->fog.color = *(D3DCOLOR *)&cmd->args.x;
+                stage->fog.nearPlane = cmd->args.y;
+                stage->fog.farPlane = cmd->args.z;
+                if (stage->fogFadeFrames == 0)
+                {
+                    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
+                    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
+                    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
+                }
+                stage->scriptIndex++;
+                stage->fogTarget = stage->fog;
+                continue;
+            }
+            break;
+        case 4:
+            if (stage->scriptTime >= cmd->frame)
+            {
+                stage->fogStart = stage->fog;
+                stage->fogFadeFrames = *(int *)&cmd->args.x;
+                stage->fogFadeTime.Set(0);
+                stage->scriptIndex++;
+                continue;
+            }
+            break;
+        case 2:
+            if (stage->scriptTime >= cmd->frame)
+            {
+                stage->offsetFrom = stage->offsetTo;
+                stage->offsetTo = cmd->args;
+                stage->scriptIndex++;
+                continue;
+            }
+            break;
+        case 3:
+            if (stage->scriptTime >= cmd->frame)
+            {
+                stage->offsetFadeFrames = *(int *)&cmd->args.x;
+                stage->offsetFadeTime.Set(0);
+                stage->scriptIndex++;
+                continue;
+            }
+            break;
+        case 5:
+            if (stage->unk_2a8)
+            {
+                stage->scriptIndex++;
+                stage->unk_2a8 = 0;
+                continue;
+            }
+            break;
+        }
+        break;
+    }
+    if (cmd->frame != -1)
+    {
+        keyT = (stage->scriptTime.AsFloat() - stage->keyFrame) / (stage->nextKeyFrame - stage->keyFrame);
+        tmpVec = stage->nextKeyPos;
+        stage->cameraPos.x = (tmpVec.x - stage->keyPos.x) * keyT + stage->keyPos.x;
+        stage->cameraPos.y = (tmpVec.y - stage->keyPos.y) * keyT + stage->keyPos.y;
+        stage->cameraPos.z = (tmpVec.z - stage->keyPos.z) * keyT + stage->keyPos.z;
+    }
+    if (stage->offsetFadeFrames != 0)
+    {
+        if (stage->offsetFadeTime < stage->offsetFadeFrames)
+        {
+            stage->offsetFadeTime.Tick();
+        }
+        else
+        {
+            stage->offsetFadeTime.Set(stage->offsetFadeFrames);
+        }
+        tmpVec = stage->offsetTo - stage->offsetFrom;
+        camRatio = stage->offsetFadeTime.AsFloat() / stage->offsetFadeFrames;
+        g_Camera.offsetX = tmpVec.x * camRatio + stage->offsetFrom.x;
+        g_Camera.offsetY = tmpVec.y * camRatio + stage->offsetFrom.y;
+        g_Camera.zoom = tmpVec.z * camRatio + stage->offsetFrom.z;
+    }
+    if (stage->fogFadeFrames != 0)
+    {
+        stage->fogFadeTime.Tick();
+        fogT = stage->fogFadeTime.AsFloat() / stage->fogFadeFrames;
+        if (fogT >= 1.0f)
+        {
+            fogT = 1.0f;
+        }
+        for (j = 0; j < 4; j++)
+        {
+            ((BYTE *)&stage->fog.color)[j] =
+                ((float)((BYTE *)&stage->fogTarget.color)[j] - (float)((BYTE *)&stage->fogStart.color)[j]) * fogT +
+                (float)((BYTE *)&stage->fogStart.color)[j];
+        }
+        stage->fog.nearPlane = (stage->fogTarget.nearPlane - stage->fogStart.nearPlane) * fogT + stage->fogStart.nearPlane;
+        stage->fog.farPlane = (stage->fogTarget.farPlane - stage->fogStart.farPlane) * fogT + stage->fogStart.farPlane;
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
+        if (stage->fogFadeTime >= stage->fogFadeFrames)
+        {
+            stage->fogFadeFrames = 0;
+        }
+    }
+    if (cmd->opcode != 5)
+    {
+        stage->scriptTime.Tick();
+    }
+    stage->Func404860();
+    if (stage->unk_080 >= 1)
+    {
+        if (stage->unk_084 == 60)
+        {
+            stage->unk_080++;
+        }
+        stage->unk_084++;
+        g_SpriteEngine->Step(&stage->unk_088);
+    }
+    return 1;
 }
 
 int Stage::OnDraw(Stage *stage)
@@ -83,10 +256,10 @@ int Stage::OnDraw(Stage *stage)
     if (stage->fogColorChanged)
     {
         stage->fogColorChanged = 0;
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fogColor);
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
     }
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fogNear);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fogFar);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
     if (stage->unk_080 <= 1 && !g_Gui.Func4172d3())
     {
         stage->DrawLayer(0);
@@ -154,7 +327,7 @@ int Stage::Load(char *anmPath, char *dataPath)
     this->objectCount = this->data->objectCount;
     this->quadCount = this->data->quadCount;
     this->instances = (StageInstance *)(this->data->unk_04 + (int)this->data);
-    this->unk_018 = (void *)(this->data->unk_08 + (int)this->data);
+    this->script = (StageInstr *)(this->data->unk_08 + (int)this->data);
     this->objects = (StageObject **)((char *)this->data + 0x490);
     for (i = 0; i < this->objectCount; i++)
     {
@@ -211,9 +384,9 @@ int Stage::DrawLayer(int layer)
         {
             quadData = objData->quads;
             mode = 0;
-            mat._41 = objData->pos.x + placement->pos.x - this->unk_03c.x;
-            mat._42 = -(objData->pos.y + placement->pos.y - this->unk_03c.y);
-            mat._43 = objData->pos.z + placement->pos.z - this->unk_03c.z + objData->size.z;
+            mat._41 = objData->pos.x + placement->pos.x - this->cameraPos.x;
+            mat._42 = -(objData->pos.y + placement->pos.y - this->cameraPos.y);
+            mat._43 = objData->pos.z + placement->pos.z - this->cameraPos.z + objData->size.z;
             D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
                             &g_Unknown6c6d18.viewMatrix, &mat);
             if (IN_VIEWPORT_Y(scrPos))
@@ -241,9 +414,9 @@ int Stage::DrawLayer(int layer)
             {
                 goto render;
             }
-            mat._41 = objData->pos.x + placement->pos.x - this->unk_03c.x + objData->size.x;
-            mat._42 = -(objData->pos.y + placement->pos.y - this->unk_03c.y);
-            mat._43 = objData->pos.z + placement->pos.z - this->unk_03c.z + objData->size.z;
+            mat._41 = objData->pos.x + placement->pos.x - this->cameraPos.x + objData->size.x;
+            mat._42 = -(objData->pos.y + placement->pos.y - this->cameraPos.y);
+            mat._43 = objData->pos.z + placement->pos.z - this->cameraPos.z + objData->size.z;
             D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
                             &g_Unknown6c6d18.viewMatrix, &mat);
             if (IN_VIEWPORT_Y(scrPos))
@@ -281,9 +454,9 @@ int Stage::DrawLayer(int layer)
                 switch (quadData->type)
                 {
                 case 0:
-                    spr->pos.x = quadData->pos.x + placement->pos.x - this->unk_03c.x;
-                    spr->pos.y = quadData->pos.y + placement->pos.y - this->unk_03c.y;
-                    spr->pos.z = quadData->pos.z + placement->pos.z - this->unk_03c.z;
+                    spr->pos.x = quadData->pos.x + placement->pos.x - this->cameraPos.x;
+                    spr->pos.y = quadData->pos.y + placement->pos.y - this->cameraPos.y;
+                    spr->pos.z = quadData->pos.z + placement->pos.z - this->cameraPos.z;
                     if (quadData->width != 0.0f)
                     {
                         spr->scaleX = quadData->width / spr->spriteData->width;

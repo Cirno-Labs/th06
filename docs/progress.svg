@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">42.46% (200)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">51.38% (242)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">42.68% (201)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">51.17% (241)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="317.20" height="6" x="0" y="0" class="named"/>
-<rect width="45.99" height="6" x="317.20" y="0" class="decompiled"/>
-<rect width="383.81" height="6" x="363.19" y="0" class="todo"/>
+<rect width="318.78" height="6" x="0" y="0" class="named"/>
+<rect width="45.99" height="6" x="318.78" y="0" class="decompiled"/>
+<rect width="382.22" height="6" x="364.78" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -93,7 +93,7 @@
 <rect width="12" height="12" x="330" y="0" class="named"><title>0x00403670 D3DXMatrixIdentity (167 bytes)</title></rect>
 <rect width="12" height="12" x="345" y="0" class="named"><title>0x00403720 Sprite::Sprite (104 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="0" class="todo"><title>0x00403790 Func403790 (114 bytes)</title></rect>
-<rect width="12" height="12" x="375" y="0" class="todo"><title>0x00403810 Stage::OnUpdate (2204 bytes)</title></rect>
+<rect width="12" height="12" x="375" y="0" class="named"><title>0x00403810 Stage::OnUpdate (2204 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="0" class="named"><title>0x004040d0 Stage::OnDraw (162 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="0" class="named"><title>0x00404180 Stage::OnDraw2 (384 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="0" class="named"><title>0x00404300 Stage::AddedCallback (436 bytes)</title></rect>
@@ -101,7 +101,7 @@
 <rect width="12" height="12" x="450" y="0" class="named"><title>0x004045e0 Stage::DeletedCallback (102 bytes)</title></rect>
 <rect width="12" height="12" x="465" y="0" class="named"><title>0x00404650 Stage::RemoveChain (50 bytes)</title></rect>
 <rect width="12" height="12" x="480" y="0" class="named"><title>0x00404690 Stage::Load (449 bytes)</title></rect>
-<rect width="12" height="12" x="495" y="0" class="todo"><title>0x00404860 Func404860 (257 bytes)</title></rect>
+<rect width="12" height="12" x="495" y="0" class="todo"><title>0x00404860 Stage::Func404860 (257 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="0" class="named"><title>0x00404970 Stage::DrawLayer (2109 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="0" class="decompiled"><title>0x004051b0 SpriteEngine::Func4051b0 (169 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="0" class="todo"><title>0x00405260 Func405260 (2468 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">17.84%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">79.49%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">18.76%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">78.56%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="133.23" height="6" x="0" y="0" class="named"/>
-<rect width="19.98" height="6" x="133.23" y="0" class="decompiled"/>
-<rect width="593.79" height="6" x="153.21" y="0" class="todo"/>
+<rect width="140.15" height="6" x="0" y="0" class="named"/>
+<rect width="19.98" height="6" x="140.15" y="0" class="decompiled"/>
+<rect width="586.87" height="6" x="160.13" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -568,7 +568,7 @@
 <rect width="28.54" height="34.75" x="196.51" y="79.10" class="todo"><title>0x00405260 Func405260 (2468 bytes)</title></rect>
 <rect width="28.54" height="33.15" x="196.51" y="116.85" class="todo"><title>0x00417d29 Gui::Func417d29 (2364 bytes)</title></rect>
 <rect width="31.33" height="29.06" x="228.05" y="0" class="todo"><title>0x004288c0 Player::OnUpdate (2282 bytes)</title></rect>
-<rect width="31.33" height="27.97" x="228.05" y="32.06" class="todo"><title>0x00403810 Stage::OnUpdate (2204 bytes)</title></rect>
+<rect width="31.33" height="27.97" x="228.05" y="32.06" class="named"><title>0x00403810 Stage::OnUpdate (2204 bytes)</title></rect>
 <rect width="31.33" height="27.85" x="228.05" y="63.03" class="named"><title>0x0041d820 ReadButtons (2196 bytes)</title></rect>
 <rect width="31.33" height="26.63" x="228.05" y="93.88" class="named"><title>0x00404970 Stage::DrawLayer (2109 bytes)</title></rect>
 <rect width="31.33" height="26.49" x="228.05" y="123.51" class="todo"><title>0x00411530 Func411530 (2099 bytes)</title></rect>
@@ -759,7 +759,7 @@
 <rect width="7.98" height="8.60" x="653.90" y="24.95" class="todo"><title>0x0042f5bc Func42f5bc (264 bytes)</title></rect>
 <rect width="7.77" height="8.60" x="664.88" y="24.95" class="todo"><title>0x0042d18f Func42d18f (259 bytes)</title></rect>
 <rect width="7.69" height="8.60" x="675.65" y="24.95" class="named"><title>0x00401140 AsciiText::OnUpdate (257 bytes)</title></rect>
-<rect width="7.69" height="8.60" x="686.33" y="24.95" class="todo"><title>0x00404860 Func404860 (257 bytes)</title></rect>
+<rect width="7.69" height="8.60" x="686.33" y="24.95" class="todo"><title>0x00404860 Stage::Func404860 (257 bytes)</title></rect>
 <rect width="7.65" height="8.60" x="697.02" y="24.95" class="named"><title>0x0042a140 ValidateReplay (256 bytes)</title></rect>
 <rect width="7.65" height="8.60" x="707.67" y="24.95" class="todo"><title>0x00431270 Func431270 (256 bytes)</title></rect>
 <rect width="7.60" height="8.60" x="718.31" y="24.95" class="named"><title>0x00413220 EnemyManager::AddedCallback (255 bytes)</title></rect>

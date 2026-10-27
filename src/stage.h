@@ -25,6 +25,27 @@ struct StageQuad
     float height;
 };
 
+// An instruction of the stage script: at `frame`, `opcode` acts on `args`.
+struct StageInstr
+{
+    // -1 for the camera's starting position.
+    int frame;
+    // 0 a camera keyframe, 1 the fog (color, near, far), 2 the camera
+    // offset to fade to, 3 that fade's frames, 4 the fog fade's frames, 5
+    // a wait for Stage::unk_2a8.
+    short opcode;
+    short unk_06;
+    D3DXVECTOR3 args;
+};
+
+// D3DRS_FOGSTART, D3DRS_FOGEND and D3DRS_FOGCOLOR.
+struct StageFog
+{
+    float nearPlane;
+    float farPlane;
+    D3DCOLOR color;
+};
+
 // An object of the stage data: its quads start at +0x1c.
 struct StageObject
 {
@@ -66,6 +87,10 @@ public:
     // (priority 6) and the draw elements (priorities 3 and 4). Returns 0,
     // or -1 if adding fails.
     static int RegisterChain(int stage);
+    // Runs the stage script up to the current frame, moves the camera
+    // between its keyframes and fades the camera offset and the fog.
+    // While g_GameManager.unk_002c is set it only tints unk_088. Returns
+    // 1.
     static int OnUpdate(Stage *stage);
     // Sets the fog, then draws layers 0 and 1 unless unk_080 is above 1
     // or g_Gui.Func4172d3() is set. Returns 1.
@@ -84,6 +109,7 @@ public:
     // Loads the background sprites from `anmPath` and the data from
     // `dataPath`. Returns 0, or -1 on failure.
     int Load(char *anmPath, char *dataPath);
+    void Func404860();
     // Frees the background sprites and the data. Returns 0.
     static int DeletedCallback(Stage *stage);
     // Removes the update element and the two draw elements.
@@ -98,20 +124,22 @@ public:
     // In `data`: the objects, and the header's two offsets as pointers.
     StageObject **objects;
     StageInstance *instances;
-    void *unk_018;
-    Timer unk_01c;
-    int unk_028;
+    // The script, at the header's second offset.
+    StageInstr *script;
+    // The script's clock, and the instruction it is at.
+    Timer scriptTime;
+    int scriptIndex;
     Timer timer;
     // RegisterChain's argument.
     int stage;
-    D3DXVECTOR3 unk_03c;
-    // D3DRS_FOGSTART, D3DRS_FOGEND and D3DRS_FOGCOLOR.
-    float fogNear;
-    float fogFar;
-    D3DCOLOR fogColor;
-    DWORD unk_054[0x6];
-    int unk_06c;
-    DWORD unk_070[0x3];
+    // The camera's position in the stage.
+    D3DXVECTOR3 cameraPos;
+    StageFog fog;
+    // A fog fade over fogFadeFrames, from fogStart to fogTarget.
+    StageFog fogStart;
+    StageFog fogTarget;
+    int fogFadeFrames;
+    Timer fogFadeTime;
     // Makes OnDraw set the fog color again.
     char fogColorChanged;
     char unk_07d[0x3];
@@ -119,13 +147,20 @@ public:
     int unk_084;
     Sprite unk_088;
     DWORD unk_198[0x44];
+    // Lets the script past opcode 5; cleared when it does.
     BYTE unk_2a8;
     BYTE unk_2a9[0x3];
-    D3DXVECTOR3 unk_2ac;
-    D3DXVECTOR3 unk_2b8;
-    int unk_2c4;
-    Timer unk_2c8;
-    DWORD unk_2d4[0x8];
+    // A fade of g_Camera's offset over offsetFadeFrames, from offsetFrom
+    // to offsetTo.
+    D3DXVECTOR3 offsetFrom;
+    D3DXVECTOR3 offsetTo;
+    int offsetFadeFrames;
+    Timer offsetFadeTime;
+    // The camera keyframes cameraPos moves between.
+    D3DXVECTOR3 nextKeyPos;
+    int nextKeyFrame;
+    D3DXVECTOR3 keyPos;
+    int keyFrame;
 };
 ASSERT_SIZE(Stage, 0x2f4);
 extern Stage g_Stage;

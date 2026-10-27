@@ -34,6 +34,20 @@ struct Timer
     // Tick, out of line in the Gui file, returning the new count.
     int NextTick();
 
+    // The count with its fraction.
+    float AsFloat()
+    {
+        return (float)this->current + this->subFrame;
+    }
+    BOOL operator<(int frames)
+    {
+        return this->current < frames;
+    }
+    BOOL operator>=(int frames)
+    {
+        return this->current >= frames;
+    }
+
     // `current` before the last change.
     int previous;
     float subFrame;

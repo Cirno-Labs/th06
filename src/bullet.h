@@ -14,6 +14,9 @@ public:
     // Zeroes everything.
     void Reset();
 
+    // Frees the bullet sprites, unless the scene is 3. Returns 0.
+    static int DeletedCallback(BulletManager *mgr);
+
     DWORD unk_00000[0x3d706];
 };
 ASSERT_SIZE(BulletManager, 0xf5c18);

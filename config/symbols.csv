@@ -136,7 +136,7 @@ address,size,name,symbol
 0x00416b50,234,Func416b50,
 0x00416c50,244,Func416c50,
 0x00416d60,1289,Func416d60,
-0x00417270,49,Func417270,
+0x00417270,49,BulletManager::DeletedCallback,?DeletedCallback@BulletManager@@SAHPAV1@@Z
 0x004172b0,35,Func4172b0,
 0x004172d3,65,Func4172d3,
 0x00417314,24,Func417314,

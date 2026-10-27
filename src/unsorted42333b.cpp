@@ -121,3 +121,42 @@ int Unknown6c6d18::StopMusic()
     }
     return 0;
 }
+
+int Unknown6c6d18::FadeOutMusic(float seconds)
+{
+    // Never used, but the original's frame has room for three dwords
+    // besides `this`.
+    int unused1;
+    int unused2;
+    int unused3;
+
+    if (g_Unknown6c6d18.musicMode == 2)
+    {
+        if (g_Unknown6c6d18.midi != NULL)
+        {
+            g_Unknown6c6d18.midi->FadeOut(1000.0f * seconds);
+        }
+    }
+    else if (g_Unknown6c6d18.musicMode == 1)
+    {
+        // The wave fade counts frames, so it is stretched while the
+        // game runs slow.
+        if (this->frameAdvance == 0.0f)
+        {
+            g_Unknown6d3f50.FadeOutBgm(seconds);
+        }
+        else if (this->frameAdvance > 1.0f)
+        {
+            g_Unknown6d3f50.FadeOutBgm(seconds);
+        }
+        else
+        {
+            g_Unknown6d3f50.FadeOutBgm(seconds / this->frameAdvance);
+        }
+    }
+    else
+    {
+        return -1;
+    }
+    return 0;
+}

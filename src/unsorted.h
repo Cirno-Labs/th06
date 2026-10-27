@@ -14,6 +14,9 @@ public:
     // Stops the wave music: ends the notification thread and releases
     // the stream ("stop BGM").
     void StopBgm();
+    // Fades the wave music out over `seconds`, counted in frames at 60
+    // per second.
+    void FadeOutBgm(float seconds);
 };
 extern Unknown6d3f50 g_Unknown6d3f50;
 
@@ -35,6 +38,9 @@ public:
     // Stops the music. Returns -1 if the music mode is neither wave (1)
     // nor MIDI (2), otherwise 0.
     int StopMusic();
+    // Fades the music out over `seconds`. Returns -1 if the music mode is
+    // neither wave nor MIDI, otherwise 0.
+    int FadeOutMusic(float seconds);
 
     unsigned char unk_000[0x44];
     // Set from CreateWindowExA's result; MidiDevice::Open has MIDI

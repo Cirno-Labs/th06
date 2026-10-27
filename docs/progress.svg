@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">55.20% (260)</tspan> · <tspan class="decompiled">6.58% (31)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">38.22% (180)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">55.41% (261)</tspan> · <tspan class="decompiled">6.58% (31)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">38% (179)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="412.36" height="6" x="0" y="0" class="named"/>
-<rect width="49.17" height="6" x="412.36" y="0" class="decompiled"/>
-<rect width="285.48" height="6" x="461.52" y="0" class="todo"/>
+<rect width="413.94" height="6" x="0" y="0" class="named"/>
+<rect width="49.17" height="6" x="413.94" y="0" class="decompiled"/>
+<rect width="283.89" height="6" x="463.11" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -124,7 +124,7 @@
 <rect width="12" height="12" x="45" y="15" class="named"><title>0x0040b380 ResolveFloatOperand (64 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="15" class="named"><title>0x0040b3c0 ScriptSet (88 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="15" class="named"><title>0x0040b420 ScriptAdd (161 bytes)</title></rect>
-<rect width="12" height="12" x="90" y="15" class="todo"><title>0x0040b4d0 Func40b4d0 (161 bytes)</title></rect>
+<rect width="12" height="12" x="90" y="15" class="named"><title>0x0040b4d0 ScriptSub (161 bytes)</title></rect>
 <rect width="12" height="12" x="105" y="15" class="todo"><title>0x0040b580 Func40b580 (204 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="15" class="todo"><title>0x0040b650 Func40b650 (164 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="15" class="todo"><title>0x0040b700 Func40b700 (202 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">35.68%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">61.49%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">35.75%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">61.42%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="266.54" height="6" x="0" y="0" class="named"/>
-<rect width="21.16" height="6" x="266.54" y="0" class="decompiled"/>
-<rect width="459.30" height="6" x="287.70" y="0" class="todo"/>
+<rect width="267.05" height="6" x="0" y="0" class="named"/>
+<rect width="21.16" height="6" x="267.05" y="0" class="decompiled"/>
+<rect width="458.79" height="6" x="288.21" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -831,7 +831,7 @@
 <rect width="5.89" height="5.85" x="661.88" y="74.45" class="named"><title>0x0043b090 CSound::RestoreBuffer (163 bytes)</title></rect>
 <rect width="5.89" height="5.79" x="661.88" y="83.30" class="named"><title>0x004040d0 Stage::OnDraw (162 bytes)</title></rect>
 <rect width="5.89" height="5.74" x="661.88" y="92.09" class="named"><title>0x0040b420 ScriptAdd (161 bytes)</title></rect>
-<rect width="5.89" height="5.74" x="661.88" y="100.83" class="todo"><title>0x0040b4d0 Func40b4d0 (161 bytes)</title></rect>
+<rect width="5.89" height="5.74" x="661.88" y="100.83" class="named"><title>0x0040b4d0 ScriptSub (161 bytes)</title></rect>
 <rect width="5.89" height="5.74" x="661.88" y="109.57" class="todo"><title>0x0041b1b1 Func41b1b1 (161 bytes)</title></rect>
 <rect width="5.89" height="5.69" x="661.88" y="118.31" class="named"><title>0x0041cd40 Chain::CreateElem (160 bytes)</title></rect>
 <rect width="5.89" height="5.69" x="661.88" y="127" class="named"><title>0x00424145 Timer::Add (160 bytes)</title></rect>

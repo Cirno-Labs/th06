@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">57.32% (270)</tspan> · <tspan class="decompiled">7.86% (37)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">34.82% (164)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">57.32% (270)</tspan> · <tspan class="decompiled">8.07% (38)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">34.61% (163)</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="428.22" height="6" x="0" y="0" class="named"/>
-<rect width="58.68" height="6" x="428.22" y="0" class="decompiled"/>
-<rect width="260.10" height="6" x="486.90" y="0" class="todo"/>
+<rect width="60.27" height="6" x="428.22" y="0" class="decompiled"/>
+<rect width="258.52" height="6" x="488.48" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -453,7 +453,7 @@
 <rect width="12" height="12" x="480" y="105" class="todo"><title>0x00430a50 Func430a50 (949 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="105" class="todo"><title>0x00430e10 Func430e10 (173 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="105" class="todo"><title>0x00430ec0 Func430ec0 (190 bytes)</title></rect>
-<rect width="12" height="12" x="525" y="105" class="todo"><title>0x00430f80 Unknown6d3f50::StopBgm (252 bytes)</title></rect>
+<rect width="12" height="12" x="525" y="105" class="decompiled"><title>0x00430f80 Unknown6d3f50::StopBgm (252 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="105" class="decompiled"><title>0x00431080 Unknown6d3f50::LoadSounds (342 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="105" class="decompiled"><title>0x004311e0 Unknown6d3f50::QueueSound (133 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="105" class="decompiled"><title>0x00431270 Unknown6d3f50::PlayQueuedSounds (256 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">36.51%</tspan> · <tspan class="decompiled">3.65%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">59.84%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">36.51%</tspan> · <tspan class="decompiled">3.75%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">59.73%</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="272.76" height="6" x="0" y="0" class="named"/>
-<rect width="27.26" height="6" x="272.76" y="0" class="decompiled"/>
-<rect width="446.98" height="6" x="300.02" y="0" class="todo"/>
+<rect width="28.05" height="6" x="272.76" y="0" class="decompiled"/>
+<rect width="446.19" height="6" x="300.81" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -764,7 +764,7 @@
 <rect width="7.65" height="8.60" x="707.67" y="24.95" class="decompiled"><title>0x00431270 Unknown6d3f50::PlayQueuedSounds (256 bytes)</title></rect>
 <rect width="7.60" height="8.60" x="718.31" y="24.95" class="named"><title>0x00413220 EnemyManager::AddedCallback (255 bytes)</title></rect>
 <rect width="7.60" height="8.60" x="728.92" y="24.95" class="todo"><title>0x004377a3 Func4377a3 (255 bytes)</title></rect>
-<rect width="7.48" height="8.60" x="739.52" y="24.95" class="todo"><title>0x00430f80 Unknown6d3f50::StopBgm (252 bytes)</title></rect>
+<rect width="7.48" height="8.60" x="739.52" y="24.95" class="decompiled"><title>0x00430f80 Unknown6d3f50::StopBgm (252 bytes)</title></rect>
 <rect width="8.04" height="7.88" x="631.53" y="36.55" class="todo"><title>0x0041b252 Func41b252 (249 bytes)</title></rect>
 <rect width="8.04" height="7.79" x="631.53" y="47.42" class="named"><title>0x0041ef11 GdiSurface::CopyToSurface (247 bytes)</title></rect>
 <rect width="8.04" height="7.70" x="631.53" y="58.21" class="todo"><title>0x004107b0 Func4107b0 (245 bytes)</title></rect>

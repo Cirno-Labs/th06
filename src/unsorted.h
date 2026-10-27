@@ -45,11 +45,16 @@ public:
     int unk_408[0x20];
     unsigned char unk_488[0x188];
     int unk_610;
-    unsigned char unk_614[0xc];
+    // The thread streaming the wave music and its ID.
+    DWORD notifyThreadId;
+    HANDLE notifyThread;
+    DWORD unk_61c;
     // The sound effects to play, or -1.
     int queue[3];
     // The wave music playing; NULL when stopped.
     CStreamingSound *bgm;
+    // Signalled as the wave music plays.
+    HANDLE notifyEvent;
 };
 extern Unknown6d3f50 g_Unknown6d3f50;
 

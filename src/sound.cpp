@@ -107,6 +107,30 @@ char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size)
     return NULL;
 }
 
+void Unknown6d3f50::StopBgm()
+{
+    if (this->bgm != NULL)
+    {
+        this->bgm->Stop();
+        if (this->notifyThread != NULL)
+        {
+            PostThreadMessageA(this->notifyThreadId, WM_QUIT, 0, 0);
+            DebugPrint("stop m_dwNotifyThreadID\n");
+            WaitForSingleObject(this->notifyThread, INFINITE);
+            DebugPrint("comp\n");
+            CloseHandle(this->notifyThread);
+            CloseHandle(this->notifyEvent);
+            this->notifyThread = NULL;
+        }
+        if (this->bgm != NULL)
+        {
+            delete this->bgm;
+            this->bgm = NULL;
+        }
+        DebugPrint("stop BGM\n");
+    }
+}
+
 int Unknown6d3f50::LoadSounds()
 {
     int i;

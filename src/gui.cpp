@@ -12,3 +12,8 @@ void Gui::Func41732c()
 {
     this->impl->unk_217e = 1;
 }
+
+BOOL Gui::Func417344()
+{
+    return this->impl->unk_2bd8;
+}

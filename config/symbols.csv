@@ -227,7 +227,7 @@ address,size,name,symbol
 0x0041f290,517,ItemManager::SpawnItem,?SpawnItem@ItemManager@@QAEXPAUD3DXVECTOR3@@HH@Z
 0x0041f4a0,3160,ItemManager::UpdateItems,?UpdateItems@ItemManager@@QAEXXZ
 0x00420130,86,ItemManager::CollectAll,?CollectAll@ItemManager@@QAEXXZ
-0x00420190,408,Func420190,
+0x00420190,408,ItemManager::DrawItems,?DrawItems@ItemManager@@QAEXXZ
 0x00420330,943,Func420330,
 0x004206e0,1126,Func4206e0,
 0x00420b50,118,Func420b50,

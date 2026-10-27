@@ -20,7 +20,9 @@ struct Item
     // Its kind: picks its script, 0x215 + type.
     char type;
     char active;
-    BYTE unk_142;
+    // Set while it shows its own sprite; clear while above the top of
+    // the play area, where it shows as a fading marker.
+    char onScreen;
     // 0 falling, 1 drawn to the player, 2 thrown out by the player's
     // death.
     char state;
@@ -43,6 +45,9 @@ public:
     void UpdateItems();
     // Draws every active item to the player (state 1).
     void CollectAll();
+    // Draws the items; those above the top as markers at its edge,
+    // fading out with the distance.
+    void DrawItems();
 
     Item items[0x201];
     // Where SpawnItem looks for a free slot first.

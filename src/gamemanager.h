@@ -17,6 +17,8 @@ public:
 
     // Adds `amount` hundredths to the rank, up to maxRank.
     void AddSubRank(int amount);
+    // Takes `amount` hundredths from the rank, down to minRank.
+    void SubSubRank(int amount);
 
     // Adds the update element (priority 4) and the draw element
     // (priority 2). Returns 0, or -1 if adding fails.

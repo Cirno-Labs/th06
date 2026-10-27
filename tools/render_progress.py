@@ -13,6 +13,12 @@ config/symbols.csv, limited to the game code; their status from the build:
 - todo:        everything else
 
 Run it after a build (`just progress` does both).
+
+    render_progress.py --from-svg OLD [--root DIR] [OUTPUT]
+
+renders without a build instead: whether each function was built and
+matched comes from OLD, an earlier rendering, and the names from DIR's
+config/symbols.csv. tools/rename.py uses it to redraw past commits.
 """
 import csv
 import html
@@ -51,22 +57,37 @@ class Symbol:
     status: SymbolStatus
 
 
-def collect_functions() -> list[Symbol]:
-    with open(os.path.join(ROOT, "config/symbols.csv")) as f:
+def built_from_svg(path: str) -> dict[int, bool | None]:
+    """Whether each function an earlier rendering shows matched: True,
+    False when it did not, None when it was not built."""
+    with open(path) as f:
+        svg = f.read()
+    built: dict[int, bool | None] = {}
+    for status, address in re.findall(r'class="(\w+)"><title>(0x[0-9a-f]+) ', svg):
+        built[int(address, 16)] = {"todo": None, "nonmatching": False}.get(status, True)
+    return built
+
+
+def collect_functions(root: str = ROOT, built_svg: dict[int, bool | None] | None = None) -> list[Symbol]:
+    with open(os.path.join(root, "config/symbols.csv")) as f:
         rows = [r for r in csv.DictReader(f) if int(r["address"], 16) < GAME_END]
-    built = {name: same for name, same, *_ in compare.results(compare.read_symbols())}
+    if built_svg is None:
+        built = {name: same for name, same, *_ in compare.results(compare.read_symbols())}
     functions = []
     for row in rows:
-        symbols = [s for s in row["symbol"].split() if s in built]
-        if symbols:
-            if not all(built[s] for s in symbols):
-                status = SymbolStatus.NONMATCHING
-            elif PLACEHOLDER.search(row["name"]):
-                status = SymbolStatus.DECOMPILED
-            else:
-                status = SymbolStatus.NAMED
+        if built_svg is None:
+            symbols = [s for s in row["symbol"].split() if s in built]
+            same = all(built[s] for s in symbols) if symbols else None
         else:
+            same = built_svg.get(int(row["address"], 16))
+        if same is None:
             status = SymbolStatus.TODO
+        elif not same:
+            status = SymbolStatus.NONMATCHING
+        elif PLACEHOLDER.search(row["name"]):
+            status = SymbolStatus.DECOMPILED
+        else:
+            status = SymbolStatus.NAMED
         functions.append(Symbol(
             signature=f"{row['address']} {row['name']} ({row['size'] or 0} bytes)",
             offset=int(row["address"], 16),
@@ -729,9 +750,17 @@ class ProgressSVG(Container):
 
 
 def main() -> None:
-    output = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "docs/progress.svg")
-    os.makedirs(os.path.dirname(output), exist_ok=True)
-    functions = collect_functions()
+    args = sys.argv[1:]
+    root, built_svg = ROOT, None
+    while args[:1] in (["--from-svg"], ["--root"]):
+        if args[0] == "--from-svg":
+            built_svg = built_from_svg(args[1])
+        else:
+            root = args[1]
+        args = args[2:]
+    output = args[0] if args else os.path.join(root, "docs/progress.svg")
+    os.makedirs(os.path.dirname(os.path.abspath(output)), exist_ok=True)
+    functions = collect_functions(root, built_svg)
     with open(output, "w") as handle:
         print(ProgressSVG(functions).render(), file=handle)
     done = [f for f in functions if f.status in (SymbolStatus.NAMED, SymbolStatus.DECOMPILED)]

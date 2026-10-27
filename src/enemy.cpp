@@ -76,6 +76,20 @@ void Enemy::ClampPos()
     }
 }
 
+void Enemy::Move()
+{
+    if (!this->flags.mirrored)
+    {
+        this->pos.x += g_Unknown6c6d18.frameAdvance * this->velocity.x;
+    }
+    else
+    {
+        this->pos.x -= g_Unknown6c6d18.frameAdvance * this->velocity.x;
+    }
+    this->pos.y += g_Unknown6c6d18.frameAdvance * this->velocity.y;
+    this->pos.z += g_Unknown6c6d18.frameAdvance * this->velocity.z;
+}
+
 int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
 {
     EnemyManager *mgr = &g_EnemyManager;

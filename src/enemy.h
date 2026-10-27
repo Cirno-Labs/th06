@@ -75,6 +75,8 @@ struct Enemy
     void Func4121b0();
     // Keeps the position within the bounds, with flags.clampPos.
     void ClampPos();
+    // Moves by the velocity, mirrored with flags.mirrored.
+    void Move();
 };
 ASSERT_SIZE(Enemy, 0xec8);
 

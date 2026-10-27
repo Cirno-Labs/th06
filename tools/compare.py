@@ -21,12 +21,15 @@ LABEL = 6  # IMAGE_SYM_CLASS_LABEL
 def compiled_functions(symbols):
     """Yields (name, bytes, mask) for each function src/ defines."""
     # Objects of the current sources only: a renamed file leaves its old
-    # object behind.
+    # object behind. They are read in link order: of an inline function
+    # several objects define, the linker keeps the first copy.
+    seen = set()
     for _, path in build.sources():
         obj = coff.Object(os.path.join(ROOT, path))
         for sym in obj.externals():
-            if sym.section <= 0 or sym.name not in symbols:
+            if sym.section <= 0 or sym.name not in symbols or sym.name in seen:
                 continue
+            seen.add(sym.name)
             sec = obj.sections[sym.section - 1]
             # Labels (storage class 6) are case targets inside a function;
             # a switch's jump table starts at a static symbol after it.

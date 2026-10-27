@@ -22,7 +22,7 @@ address,size,name,symbol
 0x004033b0,460,AsciiText::DrawPopups2,?DrawPopups2@AsciiText@@QAEXXZ
 0x00403580,238,Sprite::Initialize,?Initialize@Sprite@@QAEXXZ
 0x00403670,167,Func403670,
-0x00403720,104,Func403720,
+0x00403720,104,Sprite::Sprite,??0Sprite@@QAE@XZ
 0x00403790,114,Func403790,
 0x00403810,2204,Func403810,
 0x004040d0,162,Func4040d0,

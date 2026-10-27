@@ -351,6 +351,9 @@ float AddNormalizeAngle(float a, float b);
 // Rotates the 2D vector `in` by `angle` into `out`.
 void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle);
 
+// Clears the high bit of every key's state, so no key reads as held.
+void ResetKeyboard();
+
 // Counts frames and draws the frame rate ("%.02ffps"), updated every
 // half second, at the bottom right.
 void DrawFps();

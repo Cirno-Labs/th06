@@ -71,3 +71,16 @@ void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle)
     out->x = c * in->x + s * in->y;
     out->y = c * in->y - s * in->x;
 }
+
+void ResetKeyboard()
+{
+    BYTE keyState[0x100];
+    int i;
+
+    GetKeyboardState(keyState);
+    for (i = 0; i < 0x100; i++)
+    {
+        keyState[i] &= 0x7f;
+    }
+    SetKeyboardState(keyState);
+}

@@ -198,7 +198,7 @@ address,size,name,symbol
 0x0041d600,117,Func41d600,
 0x0041d680,414,Func41d680,
 0x0041d820,2196,ReadButtons,?ReadButtons@@YAGXZ
-0x0041e0c0,133,Func41e0c0,
+0x0041e0c0,133,ResetKeyboard,?ResetKeyboard@@YAXXZ
 0x0041e150,192,Func41e150,
 0x0041e210,75,Func41e210,
 0x0041e260,48,Func41e260,

@@ -208,3 +208,67 @@ ChainElem *Chain::CreateElem(ChainCallback callback)
     elem->allocated = 1;
     return elem;
 }
+
+void Chain::Remove(ChainElem *elem)
+{
+    BOOL isDraw = FALSE;
+    ChainElem *cur;
+    ChainCallback callback;
+
+    if (elem == NULL)
+    {
+        return;
+    }
+    cur = &this->calcChain;
+    while (cur != NULL)
+    {
+        if (cur == elem)
+        {
+            goto found;
+        }
+        cur = cur->next;
+    }
+    isDraw = TRUE;
+    cur = &this->drawChain;
+    while (cur != NULL)
+    {
+        if (cur == elem)
+        {
+            goto found;
+        }
+        cur = cur->next;
+    }
+    return;
+
+found:
+    if (!isDraw)
+    {
+        DebugPrint("calc cut Chain (Pri = %d)\n", elem->priority);
+    }
+    else
+    {
+        DebugPrint("draw cut Chain (Pri = %d)\n", elem->priority);
+    }
+    if (elem->prev != NULL)
+    {
+        elem->callback = NULL;
+        elem->prev->next = elem->next;
+        if (elem->next != NULL)
+        {
+            elem->next->prev = elem->prev;
+        }
+        elem->prev = NULL;
+        elem->next = NULL;
+        if (elem->allocated)
+        {
+            delete elem;
+            elem = NULL;
+        }
+        else if (elem->deletedCallback != NULL)
+        {
+            callback = elem->deletedCallback;
+            elem->deletedCallback = NULL;
+            callback(elem->arg);
+        }
+    }
+}

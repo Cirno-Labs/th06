@@ -38,6 +38,45 @@ Chain::Chain()
     this->unk_44 = 0;
 }
 
+int Chain::AddToCalcChain(ChainElem *elem, int priority)
+{
+    ChainElem *cur = &this->calcChain;
+
+    DebugPrint("add calc chain (pri = %d)\n", priority);
+    elem->priority = priority;
+    while (cur->next != NULL)
+    {
+        if (cur->priority > priority)
+        {
+            break;
+        }
+        cur = cur->next;
+    }
+    if (cur->priority > priority)
+    {
+        elem->next = cur;
+        elem->prev = cur->prev;
+        if (elem->prev != NULL)
+        {
+            elem->prev->next = elem;
+        }
+        cur->prev = elem;
+    }
+    else
+    {
+        elem->next = NULL;
+        elem->prev = cur;
+        cur->next = elem;
+    }
+    if (elem->addedCallback != NULL)
+    {
+        int result = elem->addedCallback(elem->arg);
+        elem->addedCallback = NULL;
+        return result;
+    }
+    return 0;
+}
+
 int Chain::AddToDrawChain(ChainElem *elem, int priority)
 {
     ChainElem *cur = &this->drawChain;

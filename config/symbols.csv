@@ -443,8 +443,8 @@ address,size,name,symbol
 0x0043a736,112,Func43a736,
 0x0043a7b0,23,CSoundManager::CSoundManager,??0CSoundManager@@QAE@XZ
 0x0043a7d0,44,CSoundManager::~CSoundManager,??1CSoundManager@@QAE@XZ
-0x0043a800,142,Func43a800,
-0x0043a890,301,Func43a890,
+0x0043a800,142,CSoundManager::Initialize,?Initialize@CSoundManager@@QAEJPAUHWND__@@KKKK@Z
+0x0043a890,301,CSoundManager::SetPrimaryBufferFormat,?SetPrimaryBufferFormat@CSoundManager@@QAEJKKK@Z
 0x0043a9c0,715,Func43a9c0,
 0x0043ac90,211,Func43ac90,
 0x0043ad70,46,Func43ad70,
@@ -500,6 +500,7 @@ address,size,name,symbol
 0x0043d030,40,Func43d030,
 0x0043d130,40,Func43d130,
 0x0043eba0,6,DirectInput8Create,_DirectInput8Create@20
+0x0043eba6,6,DirectSoundCreate8,_DirectSoundCreate8@12
 0x0043ebb2,153,Func43ebb2,
 0x0043ec4b,227,Func43ec4b,
 0x0043ed2e,109,Func43ed2e,
@@ -1386,6 +1387,7 @@ address,size,name,symbol
 0x00469a40,15,Func469a40,
 0x00469a50,15,Func469a50,
 0x0046a000,4,DirectInput8Create,__imp__DirectInput8Create@20
+0x0046a008,4,DirectSoundCreate8,__imp__DirectSoundCreate8@12
 0x0046a010,4,SetBkColor,__imp__SetBkColor@8
 0x0046a014,4,CreateFontIndirectA,__imp__CreateFontIndirectA@4
 0x0046a018,4,GetObjectA,__imp__GetObjectA@12

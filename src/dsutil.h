@@ -18,6 +18,9 @@ public:
     CSoundManager();
     ~CSoundManager();
 
+    HRESULT Initialize(HWND hWnd, DWORD dwCoopLevel, DWORD dwPrimaryChannels, DWORD dwPrimaryFreq, DWORD dwPrimaryBitRate);
+    HRESULT SetPrimaryBufferFormat(DWORD dwPrimaryChannels, DWORD dwPrimaryFreq, DWORD dwPrimaryBitRate);
+
     LPDIRECTSOUND8 m_pDS;
 };
 

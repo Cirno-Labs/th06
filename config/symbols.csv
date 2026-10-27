@@ -268,7 +268,7 @@ address,size,name,symbol
 0x00422680,635,Func422680,
 0x00422900,2047,Func422900,
 0x00423260,206,Func423260,
-0x00423330,11,Unknown423330::~Unknown423330,??1Unknown423330@@QAE@XZ
+0x00423330,11,Unknown423330::~Unknown423330,??1Unknown423330@@QAE@XZ ?OnTimer@MmTimer@@UAEXXZ
 0x0042333b,1098,Func42333b,
 0x00423785,124,Func423785,
 0x00423801,106,Func423801,
@@ -1532,4 +1532,5 @@ address,size,name,symbol
 0x0046a264,4,midiOutGetNumDevs,__imp__midiOutGetNumDevs@0
 0x0046a268,4,mmioAdvance,__imp__mmioAdvance@12
 0x0046a270,4,Direct3DCreate8,__imp__Direct3DCreate8@4
+0x0046b564,4,MmTimer::`vftable',??_7MmTimer@@6B@
 0x006c6d5c,4,g_Hwnd6c6d5c,?g_Hwnd6c6d5c@@3PAUHWND__@@A

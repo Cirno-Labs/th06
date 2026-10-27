@@ -38,3 +38,16 @@ public:
     HMIDIOUT handle;
     UINT deviceId;
 };
+
+// A periodic WinMM multimedia timer. By default the timer calls OnTimer.
+class MmTimer
+{
+public:
+    // Called on every tick when the timer was started without a callback
+    // of its own. Empty here; the linker folded it with another empty
+    // function at 0x423330.
+    virtual void OnTimer();
+
+    UINT timerId;
+    TIMECAPS caps;
+};

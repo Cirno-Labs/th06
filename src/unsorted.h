@@ -3,6 +3,12 @@
 
 #pragma once
 
+#include <windows.h>
+
+// Set from CreateWindowExA's result; MidiDevice::Open has MIDI messages
+// sent to it (CALLBACK_WINDOW).
+extern HWND g_Hwnd6c6d5c;
+
 // Logs a printf-style message. Compiled out in the release build: the body
 // is empty, but callers still pass format strings such as
 // "add calc chain (pri = %d)\n".

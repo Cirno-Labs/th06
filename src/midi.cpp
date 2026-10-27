@@ -177,6 +177,18 @@ void MidiPlayer::UnloadFile(int slot)
     this->fileData[slot] = NULL;
 }
 
+MidiPlayer::~MidiPlayer()
+{
+    int i;
+
+    this->Stop();
+    this->FreeTracks();
+    for (i = 0; i < 0x20; i++)
+    {
+        this->UnloadFile(i);
+    }
+}
+
 int MidiPlayer::LoadFile(int slot, char *path)
 {
     if (g_MusicMode != 2)

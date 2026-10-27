@@ -254,7 +254,7 @@ address,size,name,symbol
 0x00421d70,24,SwapBytes16,?SwapBytes16@@YAGG@Z
 0x00421d90,85,ReadVarLen,?ReadVarLen@@YAKPAPAE@Z
 0x00421df0,341,MidiPlayer::MidiPlayer,??0MidiPlayer@@QAE@XZ
-0x00421f50,147,Func421f50,
+0x00421f50,147,MidiPlayer::~MidiPlayer,??1MidiPlayer@@QAE@XZ
 0x00421ff0,121,MidiPlayer::LoadFile,?LoadFile@MidiPlayer@@QAEHHPAD@Z
 0x00422070,60,MidiPlayer::UnloadFile,?UnloadFile@MidiPlayer@@QAEXH@Z
 0x004220b0,131,MidiPlayer::FreeTracks,?FreeTracks@MidiPlayer@@QAEXXZ

@@ -6,6 +6,7 @@
 
 #include "chain.h"
 #include "common.h"
+#include "timer.h"
 
 struct PlayerBullet;
 
@@ -14,12 +15,28 @@ struct PlayerBullet;
 class Player
 {
 public:
+    // Zeroes the player, remembers `unk` and adds the update element
+    // (priority 7) and two draw elements (priorities 5 and 7). Returns
+    // 0, or -1 if adding fails.
+    static int RegisterChain(BYTE unk);
+    static int OnUpdate(Player *player);
+    static int OnDraw(Player *player);
+    static int OnDraw2(Player *player);
+    // Loads the player's sprites.
+    static int AddedCallback(Player *player);
     // Frees the player's sprites, unless the scene is 3. Returns 0.
     static int DeletedCallback(Player *player);
     // Removes the player's three chain elements.
     static void RemoveChain();
 
-    DWORD unk_0000[0x2639];
+    DWORD unk_0000[0x278];
+    BYTE unk_09e0;
+    // RegisterChain's argument.
+    BYTE unk_09e1;
+    WORD unk_09e2;
+    DWORD unk_09e4[0x1af4];
+    Timer unk_75b4;
+    DWORD unk_75c0[0x8c9];
     // The update element and the two draw elements.
     ChainElem *calcChain;
     ChainElem *drawChain;

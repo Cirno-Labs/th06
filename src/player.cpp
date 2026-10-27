@@ -41,3 +41,27 @@ void Player::RemoveChain()
     g_Chain.Remove(g_Player.drawChain2);
     g_Player.drawChain2 = NULL;
 }
+
+int Player::RegisterChain(BYTE unk)
+{
+    Player *player = &g_Player;
+
+    memset(player, 0, sizeof(Player));
+    player->unk_75b4.Set(0);
+    player->unk_09e1 = unk;
+    player->calcChain = g_Chain.CreateElem((ChainCallback)Player::OnUpdate);
+    player->drawChain = g_Chain.CreateElem((ChainCallback)Player::OnDraw);
+    player->drawChain2 = g_Chain.CreateElem((ChainCallback)Player::OnDraw2);
+    player->calcChain->arg = player;
+    player->drawChain->arg = player;
+    player->drawChain2->arg = player;
+    player->calcChain->addedCallback = (ChainCallback)Player::AddedCallback;
+    player->calcChain->deletedCallback = (ChainCallback)Player::DeletedCallback;
+    if (g_Chain.AddToCalcChain(player->calcChain, 7) != 0)
+    {
+        return -1;
+    }
+    g_Chain.AddToDrawChain(player->drawChain, 5);
+    g_Chain.AddToDrawChain(player->drawChain2, 7);
+    return 0;
+}

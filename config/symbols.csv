@@ -92,7 +92,7 @@ address,size,name,symbol
 0x0040f280,300,EffectManager::AddedCallback,?AddedCallback@EffectManager@@SAHPAV1@@Z
 0x0040f3d0,20,EffectManager::DeletedCallback,?DeletedCallback@EffectManager@@SAHPAV1@@Z
 0x0040f3f0,165,EffectManager::RegisterChain,?RegisterChain@EffectManager@@SAHXZ
-0x0040f4a0,35,Func40f4a0,
+0x0040f4a0,35,EffectManager::RemoveChain,?RemoveChain@EffectManager@@SAXXZ
 0x0040f4d0,115,Func40f4d0,
 0x0040f550,596,Func40f550,
 0x0040f7c0,3619,Func40f7c0,

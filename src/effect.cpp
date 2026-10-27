@@ -36,3 +36,9 @@ int EffectManager::DeletedCallback(EffectManager *mgr)
     g_SpriteEngine->ReleaseAnm(0xb);
     return 0;
 }
+
+void EffectManager::RemoveChain()
+{
+    g_Chain.Remove(&g_EffectCalcChain);
+    g_Chain.Remove(&g_EffectDrawChain);
+}

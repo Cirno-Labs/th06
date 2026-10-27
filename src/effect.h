@@ -53,6 +53,8 @@ public:
     static int DeletedCallback(EffectManager *mgr);
     // Removes the two chain elements.
     static void RemoveChain();
+    // Starts effect `type` at `pos`.
+    Effect *Func40ef50(int type, D3DXVECTOR3 *pos, int unk, D3DCOLOR color);
 
     DWORD unk_00000;
     // How many effects were active this frame.

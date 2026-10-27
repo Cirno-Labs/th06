@@ -39,6 +39,20 @@ struct Timer
     {
         return (float)this->current + this->subFrame;
     }
+    // The count without its fraction.
+    int AsFrames()
+    {
+        return this->current;
+    }
+    // Whether the count changed since the last Tick or Set.
+    BOOL HasTicked()
+    {
+        return this->current != this->previous;
+    }
+    BOOL operator==(int frames)
+    {
+        return this->current == frames;
+    }
     BOOL operator<(int frames)
     {
         return this->current < frames;

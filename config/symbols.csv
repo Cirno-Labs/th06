@@ -35,7 +35,7 @@ address,size,name,symbol
 0x00404860,257,Stage::StepObjects,?StepObjects@Stage@@QAEHXZ
 0x00404970,2109,Stage::DrawLayer,?DrawLayer@Stage@@QAEHH@Z
 0x004051b0,169,SpriteEngine::Func4051b0,?Func4051b0@SpriteEngine@@QAEXPAVSprite@@H@Z
-0x00405260,2468,Func405260,
+0x00405260,2468,UpdateReimuABomb,?UpdateReimuABomb@@YAXPAVPlayer@@@Z
 0x00405c10,1040,DrawReimuABomb,?DrawReimuABomb@@YAXPAVPlayer@@@Z
 0x00406020,311,DimPlayAreaForBomb,?DimPlayAreaForBomb@@YAXPAVPlayer@@@Z
 0x00406160,1149,Func406160,
@@ -86,7 +86,7 @@ address,size,name,symbol
 0x0040e920,737,Func40e920,
 0x0040ec10,416,Func40ec10,
 0x0040edb0,416,Func40edb0,
-0x0040ef50,430,Func40ef50,
+0x0040ef50,430,EffectManager::Func40ef50,?Func40ef50@EffectManager@@QAEPAUEffect@@HPAUD3DXVECTOR3@@HK@Z
 0x0040f100,230,EffectManager::OnUpdate,?OnUpdate@EffectManager@@SAHPAV1@@Z
 0x0040f1f0,129,EffectManager::OnDraw,?OnDraw@EffectManager@@SAHPAV1@@Z
 0x0040f280,300,EffectManager::AddedCallback,?AddedCallback@EffectManager@@SAHPAV1@@Z
@@ -147,7 +147,7 @@ address,size,name,symbol
 0x00417458,127,Func417458,
 0x004174d7,43,Gui::OnUpdate,?OnUpdate@Gui@@SAHPAV1@@Z
 0x00417502,1483,Func417502,
-0x00417acd,304,Func417acd,
+0x00417acd,304,Gui::Func417acd,?Func417acd@Gui@@QAEXHPAD@Z
 0x00417bfd,300,Func417bfd,
 0x00417d29,2364,Gui::Func417d29,?Func417d29@Gui@@QAEHXZ
 0x00418665,197,Func418665,
@@ -226,7 +226,7 @@ address,size,name,symbol
 0x0041f230,90,Func41f230,
 0x0041f290,517,Func41f290,
 0x0041f4a0,3160,Func41f4a0,
-0x00420130,86,Func420130,
+0x00420130,86,Unknown69e268::Func420130,?Func420130@Unknown69e268@@QAEXXZ
 0x00420190,408,Func420190,
 0x00420330,943,Func420330,
 0x004206e0,1126,Func4206e0,
@@ -371,7 +371,7 @@ address,size,name,symbol
 0x0042f800,174,Func42f800,
 0x0042f8b0,968,Func42f8b0,?Func42f8b0@@YAXPAMK@Z
 0x0042fc80,168,Func42fc80,
-0x0042fd30,428,Func42fd30,
+0x0042fd30,428,ScreenEffect::Func42fd30,?Func42fd30@ScreenEffect@@SAPAV1@HHHHH@Z
 0x0042fee0,136,Func42fee0,
 0x0042ff70,71,ScreenEffect::OnDrawPlayArea,?OnDrawPlayArea@ScreenEffect@@SAHPAV1@@Z
 0x0042ffc0,556,Func42ffc0,
@@ -386,7 +386,7 @@ address,size,name,symbol
 0x00430ec0,190,Func430ec0,
 0x00430f80,252,Unknown6d3f50::StopBgm,?StopBgm@Unknown6d3f50@@QAEXXZ
 0x00431080,342,Unknown6d3f50::LoadSounds,?LoadSounds@Unknown6d3f50@@QAEHXZ
-0x004311e0,133,Func4311e0,
+0x004311e0,133,Unknown6d3f50::Func4311e0,?Func4311e0@Unknown6d3f50@@QAEXHH@Z
 0x00431270,256,Func431270,
 0x00431370,176,Func431370,
 0x00431420,76,Func431420,
@@ -1597,6 +1597,7 @@ address,size,name,symbol
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
 0x0069e1b0,,g_PadButtons,?g_PadButtons@@3PAEA
 0x0069e230,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
+0x0069e268,,g_Unknown69e268,?g_Unknown69e268@@3VUnknown69e268@@A
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A
 0x006c7114,,g_Unknown6c7114,?g_Unknown6c7114@@3EA
 0x006c7115,,g_Unknown6c7115,?g_Unknown6c7115@@3EA

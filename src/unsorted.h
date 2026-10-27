@@ -24,12 +24,24 @@ public:
     void FadeOutBgm(float seconds);
     // Loads the sound effects ("data/wav/plst00.wav", ...).
     int LoadSounds();
+    // Queues sound effect `sound`, unless it is already queued or three
+    // are.
+    void Func4311e0(int sound, int unk);
 
     unsigned char unk_000[0x62c];
     // The wave music playing; NULL when stopped.
     CStreamingSound *bgm;
 };
 extern Unknown6d3f50 g_Unknown6d3f50;
+
+// The global at 0x69e268: 0x200 entries of 0x144 bytes.
+class Unknown69e268
+{
+public:
+    // Sets byte 0x143 of each entry whose byte 0x141 is set.
+    void Func420130();
+};
+extern Unknown69e268 g_Unknown69e268;
 
 // One of the game's data archives (紅魔郷*.DAT). Its code, from
 // 0x43c8d0, is built with optimization like the libraries after the
@@ -249,7 +261,7 @@ public:
     int unk_1a0;
     unsigned char unk_1a4[0x4];
     // The part of a frame a Timer advances per frame while the game runs
-    // slower than full speed.
+    // slower than full speed. Movement per frame is scaled by it too.
     float frameAdvance;
     // 1.0 at full speed; at 0.99 or below, Timers count fractions of
     // frames.
@@ -503,6 +515,8 @@ public:
     void StartMsg(int index);
     // Whether impl->unk_2424 shows a sprite and has flag 13.
     BOOL Func4172d3();
+    // Shows spell card `name` with sprite `sprite`.
+    void Func417acd(int sprite, char *name);
     // Sets impl->unk_206e.
     void Func417314();
     // Sets impl->unk_217e.

@@ -46,27 +46,48 @@ public:
     // Removes the player's three chain elements.
     static void RemoveChain();
 
-    DWORD unk_0000[0x278];
+    DWORD unk_0000[0x110];
+    D3DXVECTOR3 position;
+    DWORD unk_044c[0x1b];
+    // The bomb's hitboxes against enemies: centres, sizes, the damage
+    // each deals and the hits each has scored.
+    D3DXVECTOR3 bombHitPos[32];
+    D3DXVECTOR3 bombHitSize[32];
+    int bombHitDamage[32];
+    int bombHitCount[32];
+    // Areas that cancel bullets, as centre x and y, width and height;
+    // unused while the width is a sentinel.
+    float bulletClearAreas[16][4];
+    DWORD unk_09b8[0xa];
+    // 3 while a bomb runs.
     BYTE unk_09e0;
     // RegisterChain's argument.
     BYTE unk_09e1;
     WORD unk_09e2;
-    DWORD unk_09e4[0x11];
+    DWORD unk_09e4[0xe];
+    // What Reimu A's orbs home in on; x is -100 or less when there is
+    // nothing.
+    D3DXVECTOR3 unk_0a1c;
     PlayerBullet bullets[0x50];
     DWORD unk_75a8[0x3];
+    // Set to 360 frames when a bomb starts.
     Timer unk_75b4;
-    DWORD unk_75c0[0x3];
+    DWORD unk_75c0[0x2];
+    // Cleared when the bomb ends.
+    int unk_75c8;
     // The bomb running: its length in frames, and its clock.
     int bombDuration;
     Timer bombTimer;
     DWORD unk_75dc[0x2];
-    // Per-bomb state for up to 8 of a bomb's parts (Reimu's orbs, ...):
-    // whether each is live, its position and its four sprites.
+    // Per-bomb state for up to 8 of a bomb's parts (Reimu A's orbs,
+    // ...): whether each is live (Reimu A: 1 flying, then counting up to
+    // 30 after it bursts), its speed, position and velocity, and four
+    // sprites each.
     int bombActive[8];
-    DWORD unk_7604[0x8];
+    float bombSpeed[8];
     D3DXVECTOR3 bombPos[8];
-    D3DXVECTOR3 unk_7684[8];
-    Sprite bombSprites[8][4];
+    D3DXVECTOR3 bombVelocity[8];
+    Sprite bombSprites[32];
     // The update element and the two draw elements.
     ChainElem *calcChain;
     ChainElem *drawChain;
@@ -74,6 +95,13 @@ public:
 };
 ASSERT_SIZE(Player, 0x98f0);
 
+// Reimu A's bomb update callback: ends the bomb after its duration;
+// otherwise starts it (the spell card name, 300 frames), launches an orb
+// every 16 frames from frame 76 to 172, steers the live orbs towards
+// unk_0a1c or the player, keeping their hitboxes and bullet clearing
+// on them, and bursts each after 100 hits or in the bomb's last 30
+// frames.
+void UpdateReimuABomb(Player *player);
 // Reimu A's bomb draw callback: dims the play area and draws each live
 // orb's four sprites at its position.
 void DrawReimuABomb(Player *player);

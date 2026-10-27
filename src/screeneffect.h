@@ -13,6 +13,8 @@
 class ScreenEffect
 {
 public:
+    // Creates an effect of `type` with its chain elements.
+    static ScreenEffect *Func42fd30(int type, int a, int b, int c, int d);
     // The update element's added callback: restarts `timer`. Returns 0.
     static int AddedCallback(ScreenEffect *effect);
     // The update element's deleted callback: removes the draw element

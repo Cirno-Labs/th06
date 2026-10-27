@@ -54,6 +54,10 @@ public:
     // function at 0x423330.
     virtual void OnTimer();
 
+    // The timeSetEvent callback used when Start gets none: calls OnTimer
+    // on the timer passed as user data.
+    static void CALLBACK DefaultCallback(UINT id, UINT msg, DWORD_PTR user, DWORD_PTR dw1, DWORD_PTR dw2);
+
     UINT timerId;
     TIMECAPS caps;
 };

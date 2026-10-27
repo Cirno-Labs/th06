@@ -94,3 +94,9 @@ int MmTimer::Stop()
 void MmTimer::OnTimer()
 {
 }
+
+void CALLBACK MmTimer::DefaultCallback(UINT id, UINT msg, DWORD_PTR user, DWORD_PTR dw1, DWORD_PTR dw2)
+{
+    MmTimer *timer = (MmTimer *)user;
+    timer->OnTimer();
+}

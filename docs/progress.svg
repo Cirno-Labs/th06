@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">45.44% (214)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">48.41% (228)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">45.65% (215)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">48.20% (227)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="339.40" height="6" x="0" y="0" class="named"/>
-<rect width="45.99" height="6" x="339.40" y="0" class="decompiled"/>
-<rect width="361.61" height="6" x="385.39" y="0" class="todo"/>
+<rect width="340.99" height="6" x="0" y="0" class="named"/>
+<rect width="45.99" height="6" x="340.99" y="0" class="decompiled"/>
+<rect width="360.02" height="6" x="386.98" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -385,7 +385,7 @@
 <rect width="12" height="12" x="210" y="90" class="todo"><title>0x00427630 Func427630 (313 bytes)</title></rect>
 <rect width="12" height="12" x="225" y="90" class="todo"><title>0x00427770 Func427770 (230 bytes)</title></rect>
 <rect width="12" height="12" x="240" y="90" class="named"><title>0x00427860 Player::HandleInput (3482 bytes)</title></rect>
-<rect width="12" height="12" x="255" y="90" class="todo"><title>0x00428630 Player::Func428630 (69 bytes)</title></rect>
+<rect width="12" height="12" x="255" y="90" class="named"><title>0x00428630 Player::StartFiring (69 bytes)</title></rect>
 <rect width="12" height="12" x="270" y="90" class="todo"><title>0x00428680 Func428680 (122 bytes)</title></rect>
 <rect width="12" height="12" x="285" y="90" class="todo"><title>0x00428700 Func428700 (122 bytes)</title></rect>
 <rect width="12" height="12" x="300" y="90" class="named"><title>0x00428780 Player::RegisterChain (309 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">25.38%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">71.95%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">25.41%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">71.92%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="189.59" height="6" x="0" y="0" class="named"/>
-<rect width="19.98" height="6" x="189.59" y="0" class="decompiled"/>
-<rect width="537.44" height="6" x="209.56" y="0" class="todo"/>
+<rect width="189.80" height="6" x="0" y="0" class="named"/>
+<rect width="19.98" height="6" x="189.80" y="0" class="decompiled"/>
+<rect width="537.22" height="6" x="209.78" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -936,7 +936,7 @@
 <rect width="2.68" height="3.28" x="706.75" y="128.90" class="decompiled"><title>0x00424d38 Unknown6c6d18::StopMusic (74 bytes)</title></rect>
 <rect width="2.68" height="3.02" x="706.75" y="135.18" class="named"><title>0x0042ff70 ScreenEffect::OnDrawPlayArea (71 bytes)</title></rect>
 <rect width="2.68" height="2.94" x="706.75" y="141.21" class="named"><title>0x0043ba10 CWaveFile::~CWaveFile (70 bytes)</title></rect>
-<rect width="2.68" height="2.85" x="706.75" y="147.15" class="todo"><title>0x00428630 Player::Func428630 (69 bytes)</title></rect>
+<rect width="2.68" height="2.85" x="706.75" y="147.15" class="named"><title>0x00428630 Player::StartFiring (69 bytes)</title></rect>
 <rect width="2.56" height="2.89" x="712.44" y="109.90" class="named"><title>0x00422490 MidiPlayer::Play (68 bytes)</title></rect>
 <rect width="2.48" height="2.89" x="718" y="109.90" class="named"><title>0x00421be0 MidiDevice::SendShortMsg (67 bytes)</title></rect>
 <rect width="2.40" height="2.89" x="723.48" y="109.90" class="named"><title>0x00431d70 SpriteEngine::CreateTexture (66 bytes)</title></rect>

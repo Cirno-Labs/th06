@@ -316,7 +316,7 @@ address,size,name,symbol
 0x00427630,313,Func427630,
 0x00427770,230,Func427770,
 0x00427860,3482,Player::HandleInput,?HandleInput@Player@@QAEHXZ
-0x00428630,69,Player::Func428630,?Func428630@Player@@SAXPAV1@@Z
+0x00428630,69,Player::StartFiring,?StartFiring@Player@@SAXPAV1@@Z
 0x00428680,122,Func428680,
 0x00428700,122,Func428700,
 0x00428780,309,Player::RegisterChain,?RegisterChain@Player@@SAHE@Z

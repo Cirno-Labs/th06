@@ -55,7 +55,8 @@ public:
     // banking script; moves the hitboxes and the options, sliding them
     // in while focusing; fires while button 1 is held. Returns 0.
     int HandleInput();
-    static void Func428630(Player *player);
+    // Starts fireTimer unless it runs.
+    static void StartFiring(Player *player);
     // Moves the player's bullets: homing ones steer like Reimu A's orbs,
     // others speed up to 10, rising ones accelerate, lasers stay on
     // their option, stretched to the top. Ends those that leave the
@@ -142,13 +143,15 @@ public:
     // nothing.
     D3DXVECTOR3 unk_0a1c;
     PlayerBullet bullets[0x50];
-    DWORD unk_75a8[0x3];
+    // Runs while firing: -1 when idle, set going by StartFiring and
+    // stopped after 30 frames.
+    Timer fireTimer;
     // Counts the death and respawn; the invulnerability counts down
     // (set to 360 frames when a bomb starts).
     Timer unk_75b4;
     DWORD unk_75c0[0x2];
     // Whether a bomb runs; cleared when it ends.
-    int unk_75c8;
+    int bombing;
     // The bomb running: its length in frames, and its clock.
     int bombDuration;
     Timer bombTimer;

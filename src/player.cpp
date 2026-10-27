@@ -311,10 +311,18 @@ int Player::HandleInput()
     this->optionPos[1].y += sideY;
     if ((g_Buttons & 1) && !g_Gui.Func4195a2())
     {
-        Player::Func428630(this);
+        Player::StartFiring(this);
     }
     this->prevButtons = g_Buttons;
     return 0;
+}
+
+void Player::StartFiring(Player *player)
+{
+    if (player->fireTimer.AsFrames() < 0)
+    {
+        player->fireTimer.Set(0);
+    }
 }
 
 int Player::RegisterChain(BYTE unk)
@@ -359,7 +367,7 @@ int Player::OnUpdate(Player *player)
     {
         player->bulletClearAreas[i][2] = 0.0f;
     }
-    if (player->unk_75c8 != 0)
+    if (player->bombing != 0)
     {
         player->bombUpdate(player);
     }
@@ -369,7 +377,7 @@ int Player::OnUpdate(Player *player)
         g_GameManager.bombsUsed++;
         g_GameManager.bombs--;
         g_Gui.flags.bombsChanged = 2;
-        player->unk_75c8 = 1;
+        player->bombing = 1;
         player->bombTimer.Set(0);
         player->bombDuration = 999;
         player->bombUpdate(player);

@@ -493,6 +493,21 @@ extern Gui g_Gui;
 extern ChainElem g_GuiCalcChain;
 extern ChainElem g_GuiDrawChain;
 
+// How a D3DFORMAT's pixels are laid out, for a DIB section.
+struct FormatInfo
+{
+    // A D3DFORMAT; -1 ends the table.
+    int format;
+    int bitCount;
+    DWORD alphaMask;
+    DWORD redMask;
+    DWORD greenMask;
+    DWORD blueMask;
+};
+// The formats GdiSurface supports: X8R8G8B8, A8R8G8B8, X1R5G5B5, R5G6B5,
+// A1R5G5B5 and A4R4G4B4.
+extern FormatInfo g_FormatInfos[];
+
 // A GDI DIB section text is drawn into before it is copied to a Direct3D
 // surface; `format` is the D3DFORMAT its pixels follow.
 class GdiSurface
@@ -503,6 +518,9 @@ public:
     // Selects the old object back into `hdc`, then deletes the DC and the
     // bitmap. Returns whether there was a DC.
     bool Release();
+    // The entry of g_FormatInfos for `format`, or the end of the table
+    // when it is missing; NULL for -1.
+    FormatInfo *FindFormat(int format);
 
     int format;
     int width;

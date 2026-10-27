@@ -3,6 +3,11 @@
 
 #include "musicscreen.h"
 
+MusicScreen::MusicScreen()
+{
+    memset(this, 0, sizeof(MusicScreen));
+}
+
 int MusicScreen::UpdateIntro()
 {
     if (this->stateFrames >= 8)
@@ -109,7 +114,7 @@ again:
     {
         screen->stateFrames++;
     }
-    g_SpriteEngine->Step(&screen->unk_0024);
+    g_SpriteEngine->Step(&screen->unk_0024[0]);
     return 1;
 }
 
@@ -121,7 +126,7 @@ int MusicScreen::OnDraw(MusicScreen *screen)
 
     g_SpriteEngine->ClearTexture();
     g_SpriteEngine->Func435300(0, 0, 0, 0, 0);
-    g_SpriteEngine->Draw(&screen->unk_0024);
+    g_SpriteEngine->Draw(&screen->unk_0024[0]);
     for (i = screen->listTop; i < screen->listTop + 10; i++)
     {
         if (screen->cursor != i)

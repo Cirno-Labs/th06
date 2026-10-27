@@ -24,6 +24,9 @@ ASSERT_SIZE(MusicTune, 0x272);
 class MusicScreen
 {
 public:
+    // Constructs the Sprites, then zeroes the whole screen.
+    MusicScreen();
+
     // The update chain element's callback: runs the current state's
     // handler and counts its frames. Returns 0 while a handler asks to
     // stop, otherwise 1.
@@ -48,7 +51,8 @@ public:
     int listTop;
     int tuneCount;
     MusicTune *tunes;
-    Sprite unk_0024;
+    // An array of one: it is constructed in a loop.
+    Sprite unk_0024[1];
     // One per tune in the list.
     Sprite titles[0x20];
     // Presumably the lines of the selected tune's comment.

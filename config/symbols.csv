@@ -296,7 +296,7 @@ address,size,name,symbol
 0x00424e8f,30,MusicScreen::UpdateIntro,?UpdateIntro@MusicScreen@@QAEHXZ
 0x00424ead,909,MusicScreen::UpdateList,?UpdateList@MusicScreen@@QAEHXZ
 0x0042523a,222,Func42523a,
-0x00425318,197,Func425318,
+0x00425318,197,MusicScreen::MusicScreen,??0MusicScreen@@QAE@XZ
 0x004253dd,125,MusicScreen::OnUpdate,?OnUpdate@MusicScreen@@SAHPAV1@@Z
 0x0042545a,498,MusicScreen::OnDraw,?OnDraw@MusicScreen@@SAHPAV1@@Z
 0x0042564c,1867,Func42564c,

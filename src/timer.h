@@ -8,6 +8,11 @@
 // in fractions: `subFrame` carries the part of a frame not yet counted.
 struct Timer
 {
+    Timer()
+    {
+        this->Initialize();
+    }
+
     // Starts counting from 0.
     void Initialize();
     // Advances by `frames` frames, or by the matching fraction of them

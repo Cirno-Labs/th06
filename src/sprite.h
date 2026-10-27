@@ -5,22 +5,36 @@
 #include <d3dx8.h>
 
 #include "common.h"
+#include "timer.h"
 
-// The state of one sprite's animation script. Constructed at 0x403720,
-// which sets up its Timers.
+// The state of one sprite's animation script.
 class Sprite
 {
 public:
-    Sprite();
+    // Inline, but too large to expand: callers call the copy at 0x403720,
+    // and arrays of Sprites still reserve its inlined Timers' slots.
+    Sprite()
+    {
+        this->unk_0b0 = -1;
+    }
 
-    unsigned char unk_000[0x7c];
+    unsigned char unk_000[0x30];
+    Timer unk_030;
+    unsigned char unk_03c[0x40];
     // SpriteEngine::Draw skips the sprite while it is 0.
     D3DCOLOR color;
     // Bit 1 shows the sprite.
     DWORD flags;
     unsigned char unk_084[0xc];
     D3DXVECTOR3 pos;
-    unsigned char unk_09c[0x74];
+    unsigned char unk_09c[0x8];
+    Timer unk_0a4;
+    short unk_0b0;
+    unsigned char unk_0b2[0x3e];
+    Timer unk_0f0;
+    unsigned char unk_0fc[0x4];
+    Timer unk_100;
+    unsigned char unk_10c[0x4];
 };
 ASSERT_SIZE(Sprite, 0x110);
 

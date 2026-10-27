@@ -53,7 +53,7 @@ int BulletManager::FirePattern(BulletShooter *shooter)
 done:
     if (shooter->flags & 0x200)
     {
-        g_Unknown6d3f50.Func4311e0(shooter->sound, 0);
+        g_Unknown6d3f50.QueueSound(shooter->sound, 0);
     }
     return 0;
 }

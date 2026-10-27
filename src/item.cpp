@@ -172,7 +172,7 @@ void ItemManager::UpdateItems()
                     if (level != prevLevel)
                     {
                         g_AsciiText.AddPopup(&entry->pos, -1, 0xff80c0ff);
-                        g_Unknown6d3f50.Func4311e0(0x1f, 0);
+                        g_Unknown6d3f50.QueueSound(0x1f, 0);
                     }
                     else
                     {
@@ -254,7 +254,7 @@ void ItemManager::UpdateItems()
                     if (level != prevLevel)
                     {
                         g_AsciiText.AddPopup(&entry->pos, -1, 0xff80c0ff);
-                        g_Unknown6d3f50.Func4311e0(0x1f, 0);
+                        g_Unknown6d3f50.QueueSound(0x1f, 0);
                     }
                     else
                     {
@@ -277,14 +277,14 @@ void ItemManager::UpdateItems()
                     g_Gui.flags.livesChanged = 2;
                 }
                 g_GameManager.AddSubRank(200);
-                g_Unknown6d3f50.Func4311e0(0x1c, 0);
+                g_Unknown6d3f50.QueueSound(0x1c, 0);
                 break;
             case 4:
                 if (g_GameManager.power < 128)
                 {
                     g_BulletManager.ClearAllToItems();
                     g_Gui.ShowFullPowerPopup(0);
-                    g_Unknown6d3f50.Func4311e0(0x1f, 0);
+                    g_Unknown6d3f50.QueueSound(0x1f, 0);
                     g_AsciiText.AddPopup(&entry->pos, -1, 0xff80c0ff);
                 }
                 g_GameManager.power = 128;
@@ -311,7 +311,7 @@ void ItemManager::UpdateItems()
     }
     if (any)
     {
-        g_Unknown6d3f50.Func4311e0(0x15, 0);
+        g_Unknown6d3f50.QueueSound(0x15, 0);
     }
 }
 

@@ -68,7 +68,7 @@ int FireShot(Player *player, PlayerBullet *bullet, int index, int frame, ShotTab
         bullet->damage = sd->damage;
         if (sd->sound >= 0)
         {
-            g_Unknown6d3f50.Func4311e0(sd->sound, 0);
+            g_Unknown6d3f50.QueueSound(sd->sound, 0);
         }
         return index >= table->count - 1;
     }
@@ -411,7 +411,7 @@ void Player::Graze(D3DXVECTOR3 *pos)
     g_GameManager.AddScore(500);
     g_GameManager.AddSubRank(6);
     g_Gui.flags.grazeChanged = 2;
-    g_Unknown6d3f50.Func4311e0(0x1e, 0);
+    g_Unknown6d3f50.QueueSound(0x1e, 0);
 }
 
 void Player::Die()
@@ -423,7 +423,7 @@ void Player::Die()
     g_EffectManager.SpawnEffect(6, &this->position, 16, 0xffffffff);
     this->unk_09e0 = 2;
     this->unk_75b4.Set(0);
-    g_Unknown6d3f50.Func4311e0(4, 0);
+    g_Unknown6d3f50.QueueSound(4, 0);
     g_GameManager.deaths++;
     for (i = 0; i < 2; i++)
     {

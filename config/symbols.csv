@@ -386,7 +386,7 @@ address,size,name,symbol
 0x00430ec0,190,Func430ec0,
 0x00430f80,252,Unknown6d3f50::StopBgm,?StopBgm@Unknown6d3f50@@QAEXXZ
 0x00431080,342,Unknown6d3f50::LoadSounds,?LoadSounds@Unknown6d3f50@@QAEHXZ
-0x004311e0,133,Unknown6d3f50::Func4311e0,?Func4311e0@Unknown6d3f50@@QAEXHH@Z
+0x004311e0,133,Unknown6d3f50::QueueSound,?QueueSound@Unknown6d3f50@@QAEXHH@Z
 0x00431270,256,Func431270,
 0x00431370,176,Func431370,
 0x00431420,76,Func431420,
@@ -1566,6 +1566,7 @@ address,size,name,symbol
 0x00477770,,g_ShotTable1,?g_ShotTable1@@3UShotTable@@A
 0x00477ed8,,g_ShotTable2,?g_ShotTable2@@3UShotTable@@A
 0x00478468,,g_ShotTable3,?g_ShotTable3@@3UShotTable@@A
+0x00478528,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A
 0x0047a630,4,__security_cookie,___security_cookie
 0x0047b8e0,,g_AsciiDrawChain,?g_AsciiDrawChain@@3UChainElem@@A
 0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A

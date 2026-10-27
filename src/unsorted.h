@@ -25,14 +25,28 @@ public:
     // Loads the sound effects ("data/wav/plst00.wav", ...).
     int LoadSounds();
     // Queues sound effect `sound`, unless it is already queued or three
-    // are.
-    void Func4311e0(int sound, int unk);
+    // are. `unused` is not used.
+    void QueueSound(int sound, int unused);
 
-    unsigned char unk_000[0x62c];
+    unsigned char unk_000[0x408];
+    // Set from g_SoundInfos[].unk_6 when a sound is queued.
+    int unk_408[0x20];
+    unsigned char unk_488[0x198];
+    // The sound effects to play, or -1.
+    int queue[3];
     // The wave music playing; NULL when stopped.
     CStreamingSound *bgm;
 };
 extern Unknown6d3f50 g_Unknown6d3f50;
+
+// Each sound effect's sound buffer and volume.
+struct SoundInfo
+{
+    int buffer;
+    short volume;
+    short unk_6;
+};
+extern SoundInfo g_SoundInfos[];
 
 // One of the game's data archives (紅魔郷*.DAT). Its code, from
 // 0x43c8d0, is built with optimization like the libraries after the

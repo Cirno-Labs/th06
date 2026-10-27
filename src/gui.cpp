@@ -66,7 +66,7 @@ void Gui::Func417bfd(int sprite, char *text)
     g_SpriteEngine->StartScript(&this->impl->unk_20f4, 0x707);
     g_SpriteEngine->Func434c40(&this->impl->unk_20f4, 0xfff0f0, 0, text);
     this->unk_0c = strlen(text) * 15 / 2.0f + 16.0f;
-    g_Unknown6d3f50.Func4311e0(14, 0);
+    g_Unknown6d3f50.QueueSound(14, 0);
 }
 
 void Gui::FreeMsgFile()

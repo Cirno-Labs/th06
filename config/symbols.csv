@@ -379,7 +379,7 @@ address,size,name,symbol
 0x00430220,75,ScreenEffect::DeletedCallback,?DeletedCallback@ScreenEffect@@SAHPAV1@@Z
 0x00430270,669,Func430270,
 0x00430510,461,Func430510,
-0x004306e0,784,Func4306e0,
+0x004306e0,784,Unknown6d3f50::LoadSound,?LoadSound@Unknown6d3f50@@QAEHHPAD@Z
 0x004309f0,87,FindRiffChunk,?FindRiffChunk@@YAPADPAD0PAHI@Z
 0x00430a50,949,Func430a50,
 0x00430e10,173,Func430e10,

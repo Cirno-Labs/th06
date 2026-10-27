@@ -24,6 +24,9 @@ public:
     void FadeOutBgm(float seconds);
     // Loads the sound effects ("data/wav/plst00.wav", ...).
     int LoadSounds();
+    // Loads the wave file at `path` into soundBuffers[`index`]. Returns
+    // 0, also when there is no sound, or -1 on failure.
+    int LoadSound(int index, char *path);
     // Queues sound effect `sound`, unless it is already queued or three
     // are. `unused` is not used.
     void QueueSound(int sound, int unused);
@@ -31,7 +34,10 @@ public:
     // are on, and empties the queue.
     void PlayQueuedSounds();
 
-    unsigned char unk_000[0x208];
+    IDirectSound8 *dsound;
+    DWORD unk_004;
+    // The loaded sound files' buffers.
+    IDirectSoundBuffer *soundBuffers[0x80];
     // Each sound effect's own buffer.
     IDirectSoundBuffer *sounds[0x20];
     unsigned char unk_288[0x180];

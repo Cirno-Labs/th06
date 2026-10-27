@@ -104,6 +104,11 @@ extern WORD g_PrevButtons;
 // works, unless there already is one.
 BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE *pdidInstance, VOID *pContext);
 
+// IDirectInputDevice8::EnumObjects's callback for the joystick's axes,
+// from the same sample without its dialog updates: sets each axis's
+// range to -1000 to 1000.
+BOOL CALLBACK EnumAxesCallback(const DIDEVICEOBJECTINSTANCE *pdidoi, VOID *pContext);
+
 // Loads a whole file into a malloc'd buffer; NULL on failure.
 void *Func41e290(char *path, int unk);
 // The size of the file Func41e290 loaded last.

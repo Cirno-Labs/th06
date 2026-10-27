@@ -46,6 +46,11 @@ public:
     MmTimer();
     ~MmTimer();
 
+    // Starts a periodic timer event every `delay` ms at the finest
+    // resolution, calling `callback` with `user`, or OnTimer if there is no
+    // callback. Returns the timer ID, 0 on failure.
+    UINT Start(UINT delay, LPTIMECALLBACK callback, DWORD_PTR user);
+
     // Kills the timer event, if any, and ends the timer period. Returns 1.
     int Stop();
 

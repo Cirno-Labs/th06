@@ -16,6 +16,8 @@ public:
     CWaveFile();
     ~CWaveFile();
 
+    // Closes a file opened for reading; the game drops the SDK's writing.
+    HRESULT Close();
     DWORD GetSize();
     // The SDK's, with a flag of the game's.
     HRESULT ResetFile(bool unk);

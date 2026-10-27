@@ -469,7 +469,7 @@ address,size,name,symbol
 0x0043be50,17,CWaveFile::GetSize,?GetSize@CWaveFile@@QAEKXZ
 0x0043be70,513,CWaveFile::ResetFile,?ResetFile@CWaveFile@@QAEJ_N@Z
 0x0043c080,569,CWaveFile::Read,?Read@CWaveFile@@QAEJPAEKPAK@Z
-0x0043c2c0,47,Func43c2c0,
+0x0043c2c0,47,CWaveFile::Close,?Close@CWaveFile@@QAEJXZ
 0x0043c2f0,19,Func43c2f0,
 0x0043c310,95,Func43c310,
 0x0043c380,64,Func43c380,

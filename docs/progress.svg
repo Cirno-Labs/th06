@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">30.79% (145)</tspan> · <tspan class="decompiled">6.37% (30)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">62.85% (296)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">31% (146)</tspan> · <tspan class="decompiled">6.37% (30)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">62.63% (295)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="229.97" height="6" x="0" y="0" class="named"/>
-<rect width="47.58" height="6" x="229.97" y="0" class="decompiled"/>
-<rect width="469.45" height="6" x="277.55" y="0" class="todo"/>
+<rect width="231.55" height="6" x="0" y="0" class="named"/>
+<rect width="47.58" height="6" x="231.55" y="0" class="decompiled"/>
+<rect width="467.87" height="6" x="279.13" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -538,16 +538,16 @@
 <rect width="12" height="12" x="255" y="135" class="named"><title>0x0043be50 CWaveFile::GetSize (17 bytes)</title></rect>
 <rect width="12" height="12" x="270" y="135" class="todo"><title>0x0043be70 CWaveFile::ResetFile (513 bytes)</title></rect>
 <rect width="12" height="12" x="285" y="135" class="todo"><title>0x0043c080 CWaveFile::Read (569 bytes)</title></rect>
-<rect width="12" height="12" x="300" y="135" class="todo"><title>0x0043c2c0 Func43c2c0 (47 bytes)</title></rect>
+<rect width="12" height="12" x="300" y="135" class="named"><title>0x0043c2c0 CWaveFile::Close (47 bytes)</title></rect>
 </g>
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">10.91%</tspan> · <tspan class="decompiled">2.68%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">86.41%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">10.93%</tspan> · <tspan class="decompiled">2.68%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">86.39%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="81.50" height="6" x="0" y="0" class="named"/>
-<rect width="20.03" height="6" x="81.50" y="0" class="decompiled"/>
-<rect width="645.47" height="6" x="101.53" y="0" class="todo"/>
+<rect width="81.64" height="6" x="0" y="0" class="named"/>
+<rect width="20.03" height="6" x="81.64" y="0" class="decompiled"/>
+<rect width="645.32" height="6" x="101.68" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -966,7 +966,7 @@
 <rect width="1.52" height="2.12" x="745.48" y="120.67" class="named"><title>0x00421c30 MmTimer::MmTimer (48 bytes)</title></rect>
 <rect width="1.96" height="1.66" x="717.89" y="125.79" class="todo"><title>0x004301f0 Func4301f0 (48 bytes)</title></rect>
 <rect width="1.96" height="1.57" x="717.89" y="130.46" class="todo"><title>0x0042b437 Func42b437 (47 bytes)</title></rect>
-<rect width="1.96" height="1.57" x="717.89" y="135.02" class="todo"><title>0x0043c2c0 Func43c2c0 (47 bytes)</title></rect>
+<rect width="1.96" height="1.57" x="717.89" y="135.02" class="named"><title>0x0043c2c0 CWaveFile::Close (47 bytes)</title></rect>
 <rect width="1.96" height="1.47" x="717.89" y="139.59" class="named"><title>0x004014d0 AsciiText::DeletedCallback (46 bytes)</title></rect>
 <rect width="1.96" height="1.47" x="717.89" y="144.06" class="named"><title>0x0041e820 Rng::GetRandomF32ZeroToOne (46 bytes)</title></rect>
 <rect width="1.96" height="1.47" x="717.89" y="148.53" class="decompiled"><title>0x00424b2f Unknown6c6d18::LoadMusic (46 bytes)</title></rect>

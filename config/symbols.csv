@@ -452,7 +452,7 @@ address,size,name,symbol
 0x0043aea0,485,CSound::FillBufferWithSound,?FillBufferWithSound@CSound@@QAEJPAUIDirectSoundBuffer@@H@Z
 0x0043b090,163,CSound::RestoreBuffer,?RestoreBuffer@CSound@@QAEJPAUIDirectSoundBuffer@@PAH@Z
 0x0043b140,182,CSound::GetFreeBuffer,?GetFreeBuffer@CSound@@QAEPAUIDirectSoundBuffer@@XZ
-0x0043b200,53,Func43b200,
+0x0043b200,53,CSound::GetBuffer,?GetBuffer@CSound@@QAEPAUIDirectSoundBuffer@@K@Z
 0x0043b240,182,Func43b240,
 0x0043b300,164,Func43b300,
 0x0043b3b0,110,Func43b3b0,

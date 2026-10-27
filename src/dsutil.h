@@ -45,6 +45,7 @@ public:
     HRESULT FillBufferWithSound(LPDIRECTSOUNDBUFFER pDSB, BOOL bRepeatWavIfBufferLarger);
     HRESULT RestoreBuffer(LPDIRECTSOUNDBUFFER pDSB, BOOL *pbWasRestored);
     LPDIRECTSOUNDBUFFER GetFreeBuffer();
+    LPDIRECTSOUNDBUFFER GetBuffer(DWORD dwIndex);
 
     LPDIRECTSOUNDBUFFER *m_apDSBuffer;
     DWORD m_dwDSBufferSize;

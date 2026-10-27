@@ -23,7 +23,7 @@ struct PlayerBullet
     // The direction it flies in.
     float angle;
     Timer timer;
-    short unk_14c;
+    short damage;
     // 0 unused, 1 flying, 2 hit (drawn by DrawHitBullets).
     short state;
     // How it moves: 1 homing on unk_0a1c, 2 accelerating up, 3 a laser
@@ -82,6 +82,12 @@ public:
     int HandleInput();
     // Starts fireTimer unless it runs.
     static void StartFiring(Player *player);
+    // The damage the player's bullets and bomb deal to a `size` box
+    // centred on `pos` (an enemy's): flying bullets that touch it hit,
+    // dealing their damage (a third, at least 1, while bombing) and
+    // stopping; rising ones keep going, weakened. Sets *hitByBomb, if
+    // given, when the bomb touches it.
+    int CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb);
     // Tests a `size` box centred on `pos` (an enemy bullet's): returns 2
     // if it touches a bullet-clearing area, else 1 if it touches the
     // hitbox, killing the player unless it is dying or invulnerable,
@@ -185,7 +191,9 @@ public:
     char optionState;
     // Set while focusing (button 4).
     char focused;
-    DWORD unk_09e4;
+    // Counts hits on enemies, to burst an effect every few.
+    BYTE hitCounter;
+    BYTE unk_09e5[0x3];
     // Clocks the options sliding in and out.
     Timer optionTimer;
     // The shot type's, from g_ShotTypes; AddedCallback works out the
@@ -290,7 +298,7 @@ struct ShotData
     float sizeY;
     float angle;
     float speed;
-    short unk_1c;
+    short damage;
     // 0 for the player, else the option, from 1.
     BYTE option;
     // PlayerBullet::type.

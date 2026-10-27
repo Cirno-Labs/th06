@@ -60,7 +60,7 @@ int FireShot(Player *player, PlayerBullet *bullet, int index, int frame, ShotTab
         bullet->velocity.y = sinf(sd->angle) * sd->speed;
         bullet->timer.Set(0);
         bullet->type = sd->type;
-        bullet->unk_14c = sd->unk_1c;
+        bullet->damage = sd->damage;
         if (sd->sound >= 0)
         {
             g_Unknown6d3f50.Func4311e0(sd->sound, 0);
@@ -106,6 +106,133 @@ void Player::RemoveChain()
     g_Player.drawChain = NULL;
     g_Chain.Remove(g_Player.drawChain2);
     g_Player.drawChain2 = NULL;
+}
+
+// The corners of a `size` box centred on `pos`.
+inline void GetBox(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, D3DXVECTOR3 &min, D3DXVECTOR3 &max)
+{
+    min.x = pos->x - size->x / 2.0f;
+    min.y = pos->y - size->y / 2.0f;
+    max.x = size->x / 2.0f + pos->x;
+    max.y = size->y / 2.0f + pos->y;
+}
+
+int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
+{
+    PlayerBullet *cur;
+    int idx;
+    // The enemy's box, and the box of the cur or bomb part tested.
+    D3DXVECTOR3 eMin;
+    D3DXVECTOR3 eMax;
+    D3DXVECTOR3 targetLo;
+    D3DXVECTOR3 targetHi;
+    int damage;
+
+    damage = 0;
+    GetBox(pos, size, eMin, eMax);
+    cur = this->bullets;
+    if (hitByBomb != NULL)
+    {
+        *hitByBomb = 0;
+    }
+    for (idx = 0; idx < 0x50; idx++, cur++)
+    {
+        if (cur->state == 0 || (cur->state != 1 && cur->type != 2))
+        {
+            continue;
+        }
+        GetBox(&cur->pos, &cur->size, targetLo, targetHi);
+        if (targetLo.y > eMax.y || targetLo.x > eMax.x || targetHi.y < eMin.y || targetHi.x < eMin.x)
+        {
+            continue;
+        }
+        if (!this->bombing)
+        {
+            damage += cur->damage;
+        }
+        else
+        {
+            damage += (cur->damage / 3 != 0) ? cur->damage / 3 : 1;
+        }
+        if (cur->type == 2)
+        {
+            cur->damage = cur->damage / 4;
+            if (cur->damage == 0)
+            {
+                cur->damage = 1;
+            }
+            switch (cur->sprite.scriptIndex)
+            {
+            case 0x441:
+                cur->size.x = 32.0f;
+                cur->size.y = 32.0f;
+                break;
+            case 0x442:
+                cur->size.x = 42.0f;
+                cur->size.y = 42.0f;
+                break;
+            case 0x443:
+                cur->size.x = 48.0f;
+                cur->size.y = 48.0f;
+                break;
+            case 0x444:
+                cur->size.x = 48.0f;
+                cur->size.y = 48.0f;
+                break;
+            }
+            if (cur->timer.AsFrames() % 6 == 0)
+            {
+                g_EffectManager.Func40ef50(5, &cur->pos, 1, 0xffffffff);
+            }
+        }
+        if (cur->type != 3)
+        {
+            if (cur->state == 1)
+            {
+                g_SpriteEngine->StartScript(&cur->sprite, cur->sprite.scriptIndex + 0x20);
+                g_EffectManager.Func40ef50(5, &cur->pos, 1, 0xffffffff);
+                cur->pos.z = 0.1f;
+            }
+            cur->state = 2;
+            cur->velocity.x /= 8.0f;
+            cur->velocity.y /= 8.0f;
+        }
+        else
+        {
+            this->hitCounter++;
+            if (this->hitCounter % 8 == 0)
+            {
+                targetLo = *pos;
+                targetLo.x = cur->pos.x;
+                g_EffectManager.Func40ef50(5, &targetLo, 1, 0xffffffff);
+            }
+        }
+    }
+    for (idx = 0; idx < 32; idx++)
+    {
+        if (this->bombHitSize[idx].x <= 0.0f)
+        {
+            continue;
+        }
+        targetLo = this->bombHitPos[idx] - this->bombHitSize[idx] / 2.0f;
+        targetHi = this->bombHitSize[idx] / 2.0f + this->bombHitPos[idx];
+        if (targetLo.x > eMax.x || targetHi.x < eMin.x || targetLo.y > eMax.y || targetHi.y < eMin.y)
+        {
+            continue;
+        }
+        damage += this->bombHitDamage[idx];
+        this->bombHitCount[idx] += this->bombHitDamage[idx];
+        this->hitCounter++;
+        if (this->hitCounter % 4 == 0)
+        {
+            g_EffectManager.Func40ef50(3, pos, 1, 0xffffffff);
+        }
+        if (this->bombing && hitByBomb != NULL)
+        {
+            *hitByBomb = 1;
+        }
+    }
+    return damage;
 }
 
 int Player::CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)

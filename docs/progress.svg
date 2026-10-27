@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">48.62% (229)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">45.22% (213)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">48.83% (230)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">45.01% (212)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="363.19" height="6" x="0" y="0" class="named"/>
-<rect width="45.99" height="6" x="363.19" y="0" class="decompiled"/>
-<rect width="337.82" height="6" x="409.18" y="0" class="todo"/>
+<rect width="364.78" height="6" x="0" y="0" class="named"/>
+<rect width="45.99" height="6" x="364.78" y="0" class="decompiled"/>
+<rect width="336.23" height="6" x="410.77" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -377,7 +377,7 @@
 <rect width="12" height="12" x="90" y="90" class="named"><title>0x00426420 FireShotType1 (34 bytes)</title></rect>
 <rect width="12" height="12" x="105" y="90" class="named"><title>0x00426450 FireShotType2 (34 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="90" class="named"><title>0x00426480 FireShotType3 (34 bytes)</title></rect>
-<rect width="12" height="12" x="135" y="90" class="todo"><title>0x004264b0 Func4264b0 (1917 bytes)</title></rect>
+<rect width="12" height="12" x="135" y="90" class="named"><title>0x004264b0 Player::CalcDamage (1917 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="90" class="named"><title>0x00426c40 Player::CheckHit (432 bytes)</title></rect>
 <rect width="12" height="12" x="165" y="90" class="named"><title>0x00426df0 Player::CheckGraze (477 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="90" class="named"><title>0x00426fd0 Player::TouchesGrazeBox (442 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">28.08%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">69.24%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">28.89%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">68.44%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="209.79" height="6" x="0" y="0" class="named"/>
-<rect width="19.98" height="6" x="209.79" y="0" class="decompiled"/>
-<rect width="517.23" height="6" x="229.77" y="0" class="todo"/>
+<rect width="215.81" height="6" x="0" y="0" class="named"/>
+<rect width="19.98" height="6" x="215.81" y="0" class="decompiled"/>
+<rect width="511.21" height="6" x="235.79" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -576,7 +576,7 @@
 <rect width="28.79" height="28.06" x="262.38" y="31.77" class="named"><title>0x00422900 MidiPlayer::ProcessEvent (2047 bytes)</title></rect>
 <rect width="28.79" height="27.76" x="262.38" y="62.84" class="todo"><title>0x004188c9 GuiImpl::Func4188c9 (2027 bytes)</title></rect>
 <rect width="28.79" height="27.32" x="262.38" y="93.59" class="todo"><title>0x00402870 Unknown4010e0::Func402870 (1998 bytes)</title></rect>
-<rect width="28.79" height="26.09" x="262.38" y="123.91" class="todo"><title>0x004264b0 Func4264b0 (1917 bytes)</title></rect>
+<rect width="28.79" height="26.09" x="262.38" y="123.91" class="named"><title>0x004264b0 Player::CalcDamage (1917 bytes)</title></rect>
 <rect width="24.40" height="29.86" x="294.16" y="0" class="named"><title>0x0042564c MusicScreen::AddedCallback (1867 bytes)</title></rect>
 <rect width="24.40" height="28.35" x="294.16" y="32.86" class="todo"><title>0x0041bb02 GameManager::AddedCallback (1781 bytes)</title></rect>
 <rect width="24.40" height="27.87" x="294.16" y="64.21" class="todo"><title>0x004195bf Gui::Func4195bf (1754 bytes)</title></rect>

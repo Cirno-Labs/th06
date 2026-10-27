@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">57.11% (269)</tspan> · <tspan class="decompiled">7.43% (35)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">35.46% (167)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">57.32% (270)</tspan> · <tspan class="decompiled">7.43% (35)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">35.24% (166)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="426.63" height="6" x="0" y="0" class="named"/>
-<rect width="55.51" height="6" x="426.63" y="0" class="decompiled"/>
-<rect width="264.86" height="6" x="482.14" y="0" class="todo"/>
+<rect width="428.22" height="6" x="0" y="0" class="named"/>
+<rect width="55.51" height="6" x="428.22" y="0" class="decompiled"/>
+<rect width="263.27" height="6" x="483.73" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -449,7 +449,7 @@
 <rect width="12" height="12" x="420" y="105" class="todo"><title>0x00430270 Func430270 (669 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="105" class="todo"><title>0x00430510 Func430510 (461 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="105" class="todo"><title>0x004306e0 Func4306e0 (784 bytes)</title></rect>
-<rect width="12" height="12" x="465" y="105" class="todo"><title>0x004309f0 Func4309f0 (87 bytes)</title></rect>
+<rect width="12" height="12" x="465" y="105" class="named"><title>0x004309f0 FindRiffChunk (87 bytes)</title></rect>
 <rect width="12" height="12" x="480" y="105" class="todo"><title>0x00430a50 Func430a50 (949 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="105" class="todo"><title>0x00430e10 Func430e10 (173 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="105" class="todo"><title>0x00430ec0 Func430ec0 (190 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">36.48%</tspan> · <tspan class="decompiled">3.18%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">60.35%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">36.51%</tspan> · <tspan class="decompiled">3.18%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">60.31%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="272.49" height="6" x="0" y="0" class="named"/>
-<rect width="23.72" height="6" x="272.49" y="0" class="decompiled"/>
-<rect width="450.79" height="6" x="296.21" y="0" class="todo"/>
+<rect width="272.76" height="6" x="0" y="0" class="named"/>
+<rect width="23.72" height="6" x="272.76" y="0" class="decompiled"/>
+<rect width="450.51" height="6" x="296.49" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -911,7 +911,7 @@
 <rect width="3.33" height="3.78" x="706.66" y="97.12" class="named"><title>0x00421af0 MidiDevice::Open (89 bytes)</title></rect>
 <rect width="3.26" height="3.78" x="712.99" y="97.12" class="named"><title>0x0040b3c0 ScriptSet (88 bytes)</title></rect>
 <rect width="3.19" height="3.78" x="719.25" y="97.12" class="decompiled"><title>0x004010e0 Unknown4010e0::Unknown4010e0 (87 bytes)</title></rect>
-<rect width="3.19" height="3.78" x="725.45" y="97.12" class="todo"><title>0x004309f0 Func4309f0 (87 bytes)</title></rect>
+<rect width="3.19" height="3.78" x="725.45" y="97.12" class="named"><title>0x004309f0 FindRiffChunk (87 bytes)</title></rect>
 <rect width="3.12" height="3.78" x="731.64" y="97.12" class="named"><title>0x0041c676 GameManager::GameManager (86 bytes)</title></rect>
 <rect width="3.12" height="3.78" x="737.76" y="97.12" class="named"><title>0x0041c790 ChainElem::~ChainElem (86 bytes)</title></rect>
 <rect width="3.12" height="3.78" x="743.88" y="97.12" class="named"><title>0x00420130 ItemManager::CollectAll (86 bytes)</title></rect>

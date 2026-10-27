@@ -380,7 +380,7 @@ address,size,name,symbol
 0x00430270,669,Func430270,
 0x00430510,461,Func430510,
 0x004306e0,784,Func4306e0,
-0x004309f0,87,Func4309f0,
+0x004309f0,87,FindRiffChunk,?FindRiffChunk@@YAPADPAD0PAHI@Z
 0x00430a50,949,Func430a50,
 0x00430e10,173,Func430e10,
 0x00430ec0,190,Func430ec0,
@@ -1025,7 +1025,7 @@ address,size,name,symbol
 0x0045d490,7,Func45d490,
 0x0045d4a0,232,Func45d4a0,
 0x0045d588,44,Func45d588,
-0x0045d5c0,57,_strncmp,
+0x0045d5c0,57,_strncmp,_strncmp
 0x0045d5f9,156,Func45d5f9,
 0x0045d695,34,_rand,_rand
 0x0045d6c0,61,__chkstk,

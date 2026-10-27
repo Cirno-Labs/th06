@@ -101,7 +101,8 @@ public:
     IDirectInputDevice8 *keyboard;
     // The first joystick found; NULL without one.
     IDirectInputDevice8 *joystick;
-    unsigned char unk_018[0x2c];
+    // The joystick's capabilities.
+    DIDEVCAPS joystickCaps;
     // Set from CreateWindowExA's result; MidiDevice::Open has MIDI
     // messages sent to it (CALLBACK_WINDOW).
     HWND hwnd;
@@ -117,7 +118,13 @@ public:
     unsigned char unk_130[0x3];
     // Frames skipped per frame drawn: DrawFps counts 1 + this a frame.
     BYTE frameSkip;
-    unsigned char unk_134[0x50];
+    unsigned char unk_134[0x14];
+    // Option flags, a bitfield.
+    unsigned int unk_148_0 : 11;
+    // Turns DirectInput off.
+    unsigned int noDirectInput : 1;
+    unsigned int unk_148_12 : 20;
+    unsigned char unk_14c[0x38];
     int unk_184;
     int unk_188;
     // The scene the game is in or switches to: many places set it (1
@@ -177,7 +184,10 @@ extern Rng g_Rng;
 // Points at Unknown6c6d18::archives.
 extern DatArchive **g_Archives;
 
-int Func423b14(Unknown6c6d18 *game);
+// Sets up DirectInput like the DirectX 8 SDK's Keyboard and Joystick
+// samples: the keyboard, then the first joystick found, if any. Returns
+// 0, or -1 if DirectInput is off or the keyboard fails.
+int InitDirectInput(Unknown6c6d18 *game);
 void Func41f008();
 
 // Counts frames and draws the frame rate ("%.02ffps"), updated every

@@ -274,7 +274,7 @@ address,size,name,symbol
 0x00423801,106,EnumAxesCallback,?EnumAxesCallback@@YGHPBUDIDEVICEOBJECTINSTANCEA@@PAX@Z
 0x0042386b,159,Unknown6c6d18::RegisterChain,?RegisterChain@Unknown6c6d18@@SAHXZ
 0x0042390a,522,Unknown6c6d18::AddedCallback,?AddedCallback@Unknown6c6d18@@SAHPAV1@@Z
-0x00423b14,652,Func423b14,?Func423b14@@YAHPAVUnknown6c6d18@@@Z
+0x00423b14,652,InitDirectInput,?InitDirectInput@@YAHPAVUnknown6c6d18@@@Z
 0x00423da0,63,EnumJoysticksCallback,?EnumJoysticksCallback@@YGHPBUDIDEVICEINSTANCEA@@PAX@Z
 0x00423ddf,352,Unknown6c6d18::DeletedCallback,?DeletedCallback@Unknown6c6d18@@SAHPAV1@@Z
 0x00423f3f,433,DrawFps,?DrawFps@@YAXXZ
@@ -499,6 +499,7 @@ address,size,name,symbol
 0x0043cfb0,52,Func43cfb0,
 0x0043d030,40,Func43d030,
 0x0043d130,40,Func43d130,
+0x0043eba0,6,DirectInput8Create,_DirectInput8Create@20
 0x0043ebb2,153,Func43ebb2,
 0x0043ec4b,227,Func43ec4b,
 0x0043ed2e,109,Func43ed2e,
@@ -1536,6 +1537,10 @@ address,size,name,symbol
 0x0046a270,4,Direct3DCreate8,__imp__Direct3DCreate8@4
 0x0046b564,4,MmTimer::`vftable',??_7MmTimer@@6B@
 0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
+0x0046cdfc,,c_dfDIJoystick2,_c_dfDIJoystick2
+0x0046d004,,c_dfDIKeyboard,_c_dfDIKeyboard
+0x0046fe20,,GUID_SysKeyboard,_GUID_SysKeyboard
+0x0046fec0,,IID_IDirectInput8A,_IID_IDirectInput8A
 0x0047a630,4,__security_cookie,___security_cookie
 0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A
 0x0069d4c1,,g_Unknown69d4c1,?g_Unknown69d4c1@@3EA

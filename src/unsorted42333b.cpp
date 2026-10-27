@@ -69,7 +69,7 @@ int Unknown6c6d18::AddedCallback(Unknown6c6d18 *arg)
     }
     g_SpriteEngine->ReleaseSurface(0);
     arg->unk_400 = timeGetTime();
-    Func423b14(arg);
+    InitDirectInput(arg);
     arg->midi = new MidiPlayer();
     g_Rng.SetSeed(timeGetTime());
     g_Unknown6d3f50.LoadSounds();
@@ -89,6 +89,75 @@ int Unknown6c6d18::AddedCallback(Unknown6c6d18 *arg)
     if (g_Unknown6c6d18.LoadArchive(1, "紅魔郷MD.dat") != 0)
     {
         return -1;
+    }
+    return 0;
+}
+
+int InitDirectInput(Unknown6c6d18 *game)
+{
+    HINSTANCE hInst = (HINSTANCE)GetWindowLongA(game->hwnd, GWL_HINSTANCE);
+
+    if (game->noDirectInput)
+    {
+        return -1;
+    }
+    if (FAILED(DirectInput8Create(hInst, DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID **)&game->dinput, NULL)))
+    {
+        game->dinput = NULL;
+        Func41e4d0(&g_Unknown69d998, "DirectInput が使用できません\n");
+        return -1;
+    }
+    if (FAILED(game->dinput->CreateDevice(GUID_SysKeyboard, &game->keyboard, NULL)))
+    {
+        if (game->dinput)
+        {
+            game->dinput->Release();
+            game->dinput = NULL;
+        }
+        Func41e4d0(&g_Unknown69d998, "DirectInput が使用できません\n");
+        return -1;
+    }
+    if (FAILED(game->keyboard->SetDataFormat(&c_dfDIKeyboard)))
+    {
+        if (game->keyboard)
+        {
+            game->keyboard->Release();
+            game->keyboard = NULL;
+        }
+        if (game->dinput)
+        {
+            game->dinput->Release();
+            game->dinput = NULL;
+        }
+        Func41e4d0(&g_Unknown69d998, "DirectInput SetDataFormat が使用できません\n");
+        return -1;
+    }
+    if (FAILED(game->keyboard->SetCooperativeLevel(game->hwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND | DISCL_NOWINKEY)))
+    {
+        if (game->keyboard)
+        {
+            game->keyboard->Release();
+            game->keyboard = NULL;
+        }
+        if (game->dinput)
+        {
+            game->dinput->Release();
+            game->dinput = NULL;
+        }
+        Func41e4d0(&g_Unknown69d998, "DirectInput SetCooperativeLevel が使用できません\n");
+        return -1;
+    }
+    game->keyboard->Acquire();
+    Func41e4d0(&g_Unknown69d998, "DirectInput は正常に初期化されました\n");
+    game->dinput->EnumDevices(DI8DEVCLASS_GAMECTRL, EnumJoysticksCallback, NULL, DIEDFL_ATTACHEDONLY);
+    if (game->joystick)
+    {
+        game->joystick->SetDataFormat(&c_dfDIJoystick2);
+        game->joystick->SetCooperativeLevel(game->hwnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
+        g_Unknown6c6d18.joystickCaps.dwSize = sizeof(DIDEVCAPS);
+        game->joystick->GetCapabilities(&g_Unknown6c6d18.joystickCaps);
+        game->joystick->EnumObjects(EnumAxesCallback, NULL, DIDFT_ALL);
+        Func41e4d0(&g_Unknown69d998, "有効なパッドを発見しました\n");
     }
     return 0;
 }

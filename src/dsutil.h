@@ -13,15 +13,32 @@
 class CWaveFile
 {
 public:
+    CWaveFile();
     ~CWaveFile();
 
+    DWORD GetSize();
     // The SDK's, with a flag of the game's.
     HRESULT ResetFile(bool unk);
     HRESULT Read(BYTE *pBuffer, DWORD dwSizeToRead, DWORD *pdwSizeRead);
 
     WAVEFORMATEX *m_pwfx;
+    HMMIO m_hmmio;
+    MMCKINFO m_ck;
+    MMCKINFO m_ckRiff;
+    DWORD m_dwSize;
+    MMIOINFO m_mmioinfoOut;
+    DWORD m_dwFlags;
+    BOOL m_bIsReadingFromMemory;
+    BYTE *m_pbData;
+    BYTE *m_pbDataCur;
+    ULONG m_ulDataSize;
+    // Not in the SDK. ResetFile skips unk_90 bytes of the data when its
+    // flag is set and, when unk_94 is positive, takes it as the data's
+    // size.
+    int unk_90;
+    int unk_94;
 };
-
+ASSERT_SIZE(CWaveFile, 0x98);
 // Owns the DirectSound object.
 class CSoundManager
 {

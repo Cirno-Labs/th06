@@ -345,3 +345,18 @@ int CStreamingSound::UpdateFade()
     }
     return 0;
 }
+
+CWaveFile::CWaveFile()
+{
+    m_pwfx = NULL;
+    m_hmmio = NULL;
+    m_dwSize = 0;
+    m_bIsReadingFromMemory = FALSE;
+    this->unk_94 = 0;
+    this->unk_90 = 0;
+}
+
+DWORD CWaveFile::GetSize()
+{
+    return m_dwSize;
+}

@@ -497,11 +497,3 @@ public:
     void Func41e992();
 };
 
-class Unknown43be50
-{
-public:
-    int Func43be50();
-
-    unsigned char unk_00[0x30];
-    int field_30;
-};

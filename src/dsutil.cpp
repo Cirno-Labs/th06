@@ -2,6 +2,7 @@
 // builds it.
 
 #include "dsutil.h"
+#include "unsorted.h"
 
 // From the SDK's dxutil.h.
 #define SAFE_DELETE(p) { if(p) { delete (p); (p)=NULL; } }
@@ -277,4 +278,23 @@ HRESULT CSound::Play(DWORD dwPriority, DWORD dwFlags)
     this->fadeFrames = 0;
     this->fadeTotal = 0;
     return pDSB->Play(0, dwPriority, dwFlags);
+}
+
+HRESULT CSound::Stop()
+{
+    if (m_apDSBuffer == NULL)
+        return CO_E_NOTINITIALIZED;
+
+    HRESULT hr = 0;
+
+    DebugPrint("CSound::Stop ");
+    for (DWORD i = 0; i < m_dwNumBuffers; i++)
+    {
+        DebugPrint("%d ", i);
+        hr |= m_apDSBuffer[i]->Stop();
+    }
+    DebugPrint("\n");
+    this->fading = 0;
+
+    return hr;
 }

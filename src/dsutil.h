@@ -49,6 +49,8 @@ public:
 
     // Also stops any fade.
     HRESULT Play(DWORD dwPriority, DWORD dwFlags);
+    // Also stops a fade, and logs the buffers it stops.
+    HRESULT Stop();
     HRESULT Reset();
 
     LPDIRECTSOUNDBUFFER *m_apDSBuffer;

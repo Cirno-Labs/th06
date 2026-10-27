@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">46.50% (219)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">47.35% (223)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">46.71% (220)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">47.13% (222)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="347.33" height="6" x="0" y="0" class="named"/>
-<rect width="45.99" height="6" x="347.33" y="0" class="decompiled"/>
-<rect width="353.68" height="6" x="393.32" y="0" class="todo"/>
+<rect width="348.92" height="6" x="0" y="0" class="named"/>
+<rect width="45.99" height="6" x="348.92" y="0" class="decompiled"/>
+<rect width="352.09" height="6" x="394.91" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -393,7 +393,7 @@
 <rect width="12" height="12" x="330" y="90" class="named"><title>0x004291b0 Player::UpdateBullets (1371 bytes)</title></rect>
 <rect width="12" height="12" x="345" y="90" class="named"><title>0x00429710 Player::UpdateFiring (268 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="90" class="named"><title>0x00429820 Player::FireShots (270 bytes)</title></rect>
-<rect width="12" height="12" x="375" y="90" class="todo"><title>0x00429930 Player::OnDraw (457 bytes)</title></rect>
+<rect width="12" height="12" x="375" y="90" class="named"><title>0x00429930 Player::OnDraw (457 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="90" class="named"><title>0x00429b00 Player::DrawBullets (140 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="90" class="named"><title>0x00429b90 Player::OnDraw2 (22 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="90" class="named"><title>0x00429bb0 Player::DrawHitBullets (153 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">26.16%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">71.16%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">26.36%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">70.97%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="195.44" height="6" x="0" y="0" class="named"/>
-<rect width="19.98" height="6" x="195.44" y="0" class="decompiled"/>
-<rect width="531.58" height="6" x="215.42" y="0" class="todo"/>
+<rect width="196.88" height="6" x="0" y="0" class="named"/>
+<rect width="19.98" height="6" x="196.88" y="0" class="decompiled"/>
+<rect width="530.15" height="6" x="216.85" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -675,7 +675,7 @@
 <rect width="11.68" height="12.15" x="550.68" y="77.63" class="todo"><title>0x00430510 Func430510 (461 bytes)</title></rect>
 <rect width="11.68" height="12.11" x="550.68" y="92.78" class="named"><title>0x004031e0 AsciiText::DrawPopups (460 bytes)</title></rect>
 <rect width="11.68" height="12.11" x="550.68" y="107.89" class="named"><title>0x004033b0 AsciiText::DrawPopups2 (460 bytes)</title></rect>
-<rect width="11.68" height="12.01" x="550.68" y="123" class="todo"><title>0x00429930 Player::OnDraw (457 bytes)</title></rect>
+<rect width="11.68" height="12.01" x="550.68" y="123" class="named"><title>0x00429930 Player::OnDraw (457 bytes)</title></rect>
 <rect width="11.68" height="11.98" x="550.68" y="138.02" class="todo"><title>0x0041e290 Func41e290 (456 bytes)</title></rect>
 <rect width="12.22" height="11.23" x="565.36" y="0" class="named"><title>0x00404690 Stage::Load (449 bytes)</title></rect>
 <rect width="12.22" height="11.16" x="565.36" y="14.23" class="named"><title>0x0041ea63 GdiSurface::CreateInFormat (447 bytes)</title></rect>

@@ -705,6 +705,36 @@ int Player::OnDraw2(Player *player)
     return 1;
 }
 
+int Player::OnDraw(Player *player)
+{
+    Player::DrawBullets(player);
+    if (player->bombing && player->bombDraw != NULL)
+    {
+        player->bombDraw(player);
+    }
+    player->sprite.pos.x = g_GameManager.arena[0] + player->position.x;
+    player->sprite.pos.y = g_GameManager.arena[1] + player->position.y;
+    player->sprite.pos.z = 0.49f;
+    if (!g_GameManager.unk_1820)
+    {
+        g_SpriteEngine->Draw(&player->sprite);
+        if (player->optionState && (player->unk_09e0 == 0 || player->unk_09e0 == 3))
+        {
+            player->optionSprites[0].pos = player->optionPos[0];
+            player->optionSprites[1].pos = player->optionPos[1];
+            player->optionSprites[0].pos[0] += g_GameManager.arena[0];
+            player->optionSprites[0].pos[1] += g_GameManager.arena[1];
+            player->optionSprites[1].pos[0] += g_GameManager.arena[0];
+            player->optionSprites[1].pos[1] += g_GameManager.arena[1];
+            player->optionSprites[0].pos.z = 0.491f;
+            player->optionSprites[1].pos.z = 0.491f;
+            g_SpriteEngine->Func432cc0(&player->optionSprites[0]);
+            g_SpriteEngine->Func432cc0(&player->optionSprites[1]);
+        }
+    }
+    return 1;
+}
+
 void Player::DrawBullets(Player *player)
 {
     PlayerBullet *bullet = player->bullets;

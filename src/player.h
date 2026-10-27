@@ -92,6 +92,9 @@ public:
     // Runs fireTimer: fires on each new frame, except during Marisa B's
     // bomb, and stops it after 30 frames or on dying. Returns 0.
     static int UpdateFiring(Player *player);
+    // The draw element's callback: draws the flying bullets, the bomb,
+    // and unless the game is over (g_GameManager.unk_1820) the player
+    // and, while alive, its options. Returns 1.
     static int OnDraw(Player *player);
     // Runs DrawHitBullets. Returns 1.
     static int OnDraw2(Player *player);

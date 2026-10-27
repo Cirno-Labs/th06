@@ -3,6 +3,11 @@
 
 #pragma once
 
+// Logs a printf-style message. Compiled out in the release build: the body
+// is empty, but callers still pass format strings such as
+// "add calc chain (pri = %d)\n".
+void DebugPrint(const char *fmt, ...);
+
 class Unknown43be50
 {
 public:

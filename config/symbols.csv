@@ -211,7 +211,7 @@ address,size,name,symbol
 0x0041e820,46,Func41e820,
 0x0041e850,127,Func41e850,
 0x0041e8d0,111,Func41e8d0,
-0x0041e940,5,Func41e940,
+0x0041e940,5,DebugPrint,?DebugPrint@@YAXPBDZZ
 0x0041e945,60,Func41e945,
 0x0041e981,17,Func41e981,
 0x0041e992,114,Func41e992,

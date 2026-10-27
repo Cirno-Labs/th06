@@ -130,6 +130,9 @@ void ScriptAdd(Enemy *enemy, int dst, int *a, int *b);
 void ScriptSub(Enemy *enemy, int dst, int *a, int *b);
 // Sets variable `dst` to operand *a times operand *b, like ScriptAdd.
 void ScriptMul(Enemy *enemy, int dst, int *a, int *b);
+// Sets variable `dst` to operand *a divided by operand *b, like
+// ScriptAdd.
+void ScriptDiv(Enemy *enemy, int dst, int *a, int *b);
 
 // Where ResolveOperand computes its read-only values.
 extern int g_Unknown487e44;

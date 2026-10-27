@@ -57,7 +57,7 @@ address,size,name,symbol
 0x0040b420,161,ScriptAdd,?ScriptAdd@@YAXPAUEnemy@@HPAH1@Z
 0x0040b4d0,161,ScriptSub,?ScriptSub@@YAXPAUEnemy@@HPAH1@Z
 0x0040b580,204,ScriptMul,?ScriptMul@@YAXPAUEnemy@@HPAH1@Z
-0x0040b650,164,Func40b650,
+0x0040b650,164,ScriptDiv,?ScriptDiv@@YAXPAUEnemy@@HPAH1@Z
 0x0040b700,202,Func40b700,
 0x0040b7d0,190,Func40b7d0,
 0x0040b890,74,D3DXVec3Length,?D3DXVec3Length@@YAMPBUD3DXVECTOR3@@@Z

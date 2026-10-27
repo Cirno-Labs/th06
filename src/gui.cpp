@@ -24,6 +24,14 @@ BOOL Gui::Func417344()
     return this->impl->unk_2bd8;
 }
 
+void Gui::ShowBonusPopup(int bonus)
+{
+    this->impl->bonusPopup.pos = D3DXVECTOR3(416.0f, 32.0f, 0.0f);
+    this->impl->bonusPopup.shown = 1;
+    this->impl->bonusPopup.timer.Set(0);
+    this->impl->bonusPopup.value = bonus;
+}
+
 int Gui::OnUpdate(Gui *gui)
 {
     if (g_GameManager.unk_002c)

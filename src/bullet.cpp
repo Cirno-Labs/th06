@@ -467,7 +467,7 @@ int BulletManager::ClearAllWithBonus(int maxBonus, int toItems)
     g_GameManager.score += totalBonus;
     if (totalBonus != 0)
     {
-        g_Gui.Func41735a(totalBonus);
+        g_Gui.ShowBonusPopup(totalBonus);
     }
     return totalBonus;
 }

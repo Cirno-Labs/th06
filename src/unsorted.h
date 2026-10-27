@@ -484,6 +484,15 @@ struct MsgFile
     int count;
 };
 
+// A message Gui shows for a while at a fixed place, with a number.
+struct GuiPopup
+{
+    D3DXVECTOR3 pos;
+    int value;
+    int shown;
+    Timer timer;
+};
+
 // The bulk of Gui, allocated by its added callback (0x2c44 bytes,
 // constructed at 0x41b34b).
 struct GuiImpl
@@ -508,7 +517,11 @@ struct GuiImpl
     DWORD unk_2bd4;
     BYTE unk_2bd8;
     BYTE unk_2bd9[0x3];
-    DWORD unk_2bdc[0x1a];
+    DWORD unk_2bdc[0x2];
+    // The bonus for bullets cleared, the full power message and one more.
+    GuiPopup bonusPopup;
+    GuiPopup fullPowerPopup;
+    GuiPopup unk_2c24;
 };
 ASSERT_SIZE(GuiImpl, 0x2c44);
 
@@ -554,8 +567,8 @@ public:
     void Func417314();
     // Called when the power reaches its maximum.
     void Func4173d9(int unk);
-    // Shows the bonus for bullets cleared.
-    void Func41735a(int bonus);
+    // Shows `bonus` in bonusPopup, the bonus for bullets cleared.
+    void ShowBonusPopup(int bonus);
     // Sets impl->unk_217e.
     void Func41732c();
     // Returns impl->unk_2bd8.

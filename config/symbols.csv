@@ -457,7 +457,7 @@ address,size,name,symbol
 0x0043b300,164,CSound::Stop,?Stop@CSound@@QAEJXZ
 0x0043b3b0,110,CSound::Reset,?Reset@CSound@@QAEJXZ
 0x0043b420,96,CStreamingSound::CStreamingSound,??0CStreamingSound@@QAE@PAUIDirectSoundBuffer@@KPAVCWaveFile@@K@Z
-0x0043b480,46,Func43b480,
+0x0043b480,46,CStreamingSound::`scalar deleting destructor',??_GCStreamingSound@@UAEPAXI@Z
 0x0043b4b0,28,CStreamingSound::~CStreamingSound,??1CStreamingSound@@UAE@XZ
 0x0043b4d0,143,Unknown6d457c::Func43b4d0,?Func43b4d0@Unknown6d457c@@QAEHXZ
 0x0043b560,887,Func43b560,

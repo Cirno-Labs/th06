@@ -30,3 +30,9 @@ int EffectManager::RegisterChain()
     g_Chain.AddToDrawChain(&g_EffectDrawChain, 8);
     return 0;
 }
+
+int EffectManager::DeletedCallback(EffectManager *mgr)
+{
+    g_SpriteEngine->ReleaseAnm(0xb);
+    return 0;
+}

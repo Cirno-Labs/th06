@@ -35,7 +35,10 @@ public:
     static int OnDraw(EffectManager *mgr);
     // Loads the stage's effect sprites. Returns 0, or -1 on failure.
     static int AddedCallback(EffectManager *mgr);
+    // Frees the effect sprites. Returns 0.
     static int DeletedCallback(EffectManager *mgr);
+    // Removes the two chain elements.
+    static void RemoveChain();
 
     DWORD unk_00000[0x2];
     Effect effects[0x201];

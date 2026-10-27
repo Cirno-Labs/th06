@@ -1,6 +1,7 @@
 // The chains, from 0x41c6d0.
 
 #include "chain.h"
+#include "unsorted.h"
 
 Chain::~Chain()
 {
@@ -35,6 +36,43 @@ Chain::Chain()
 {
     this->midiOutDevs = midiOutGetNumDevs();
     this->unk_44 = 0;
+}
+
+int Chain::AddToDrawChain(ChainElem *elem, int priority)
+{
+    ChainElem *cur = &this->drawChain;
+
+    DebugPrint("add draw chain (pri = %d)\n", priority);
+    elem->priority = priority;
+    while (cur->next != NULL)
+    {
+        if (cur->priority > priority)
+        {
+            break;
+        }
+        cur = cur->next;
+    }
+    if (cur->priority > priority)
+    {
+        elem->next = cur;
+        elem->prev = cur->prev;
+        if (elem->prev != NULL)
+        {
+            elem->prev->next = elem;
+        }
+        cur->prev = elem;
+    }
+    else
+    {
+        elem->next = NULL;
+        elem->prev = cur;
+        cur->next = elem;
+    }
+    if (elem->addedCallback != NULL)
+    {
+        return elem->addedCallback(elem->arg);
+    }
+    return 0;
 }
 
 int Chain::RunCalcChain()

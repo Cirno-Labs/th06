@@ -249,7 +249,7 @@ address,size,name,symbol
 0x00421c30,48,MmTimer::MmTimer,??0MmTimer@@QAE@XZ
 0x00421c60,41,Func421c60,
 0x00421c90,115,Func421c90,
-0x00421d10,61,Func421d10,
+0x00421d10,61,MmTimer::Stop,?Stop@MmTimer@@QAEHXZ
 0x00421d50,26,Func421d50,
 0x00421d70,24,Func421d70,
 0x00421d90,85,Func421d90,

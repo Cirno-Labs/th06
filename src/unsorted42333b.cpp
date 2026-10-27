@@ -83,7 +83,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
             case 4:
                 return 4;
             case 2:
-                if (Func41ba6a() != 0)
+                if (GameManager::RegisterChain() != 0)
                 {
                     return 4;
                 }
@@ -141,7 +141,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
                 break;
             case 3:
                 Func41c269();
-                if (Func41ba6a() != 0)
+                if (GameManager::RegisterChain() != 0)
                 {
                     return 4;
                 }

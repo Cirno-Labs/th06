@@ -169,11 +169,11 @@ address,size,name,symbol
 0x0041b58c,35,Gui::RemoveChain,?RemoveChain@Gui@@SAXXZ
 0x0041b5af,50,Func41b5af,
 0x0041b5e1,130,Func41b5e1,
-0x0041b663,999,Func41b663,
+0x0041b663,999,GameManager::OnUpdate,?OnUpdate@GameManager@@SAHPAV1@@Z
 0x0041ba4a,32,GameManager::OnDraw,?OnDraw@GameManager@@SAHPAV1@@Z
-0x0041ba6a,152,Func41ba6a,?Func41ba6a@@YAHXZ
-0x0041bb02,1781,Func41bb02,
-0x0041c1f7,114,Func41c1f7,
+0x0041ba6a,152,GameManager::RegisterChain,?RegisterChain@GameManager@@SAHXZ
+0x0041bb02,1781,GameManager::AddedCallback,?AddedCallback@GameManager@@SAHPAV1@@Z
+0x0041c1f7,114,GameManager::DeletedCallback,?DeletedCallback@GameManager@@SAHPAV1@@Z
 0x0041c269,35,Func41c269,?Func41c269@@YAXXZ
 0x0041c28c,359,Func41c28c,
 0x0041c3f3,395,Func41c3f3,
@@ -1568,6 +1568,8 @@ address,size,name,symbol
 0x0069bc5c,,g_GuiDrawChain,?g_GuiDrawChain@@3UChainElem@@A
 0x0069bc7c,,g_GuiCalcChain,?g_GuiCalcChain@@3UChainElem@@A
 0x0069bca0,,g_GameManager,?g_GameManager@@3VGameManager@@A
+0x0069d720,,g_GameManagerCalcChain,?g_GameManagerCalcChain@@3UChainElem@@A
+0x0069d740,,g_GameManagerDrawChain,?g_GameManagerDrawChain@@3UChainElem@@A
 0x0069d8f8,,g_Rng,?g_Rng@@3VRng@@A
 0x0069d900,,g_Archives,?g_Archives@@3PAPAVDatArchive@@A
 0x0069d904,,g_Buttons,?g_Buttons@@3GA

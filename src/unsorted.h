@@ -337,7 +337,6 @@ extern Unknown6d457c *g_Unknown6d457c;
 
 // Scene set-up and tear-down functions Unknown6c6d18::OnUpdate calls.
 // The non-void ones return nonzero on failure.
-int Func41ba6a();
 int Func42d773(int unk);
 int Func4107b0();
 void Func41c269();

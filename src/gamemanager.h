@@ -12,8 +12,15 @@
 class GameManager
 {
 public:
-    // The draw element's callback (the element at 0x69d740): sets
-    // unk_181f to 2 while it is set. Returns 1.
+    // Adds the update element (priority 4) and the draw element
+    // (priority 2). Returns 0, or -1 if adding fails.
+    static int RegisterChain();
+    static int OnUpdate(GameManager *mgr);
+    // Loads the scores and sets the game up.
+    static int AddedCallback(GameManager *mgr);
+    static int DeletedCallback(GameManager *mgr);
+    // The draw element's callback: sets unk_181f to 2 while it is set.
+    // Returns 1.
     static int OnDraw(GameManager *mgr);
 
     DWORD unk_0000[0x606];
@@ -33,3 +40,7 @@ public:
     float arena[4];
 };
 extern GameManager g_GameManager;
+
+// GameManager's statically allocated chain elements.
+extern ChainElem g_GameManagerCalcChain;
+extern ChainElem g_GameManagerDrawChain;

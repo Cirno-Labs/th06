@@ -611,8 +611,8 @@ int Unknown6c6d18::LoadArchive(int index, char *path)
     g_Unknown6c6d18.cfg.unk_19 = 3; \
     g_Unknown6c6d18.cfg.unk_1a = 0xff; \
     g_Unknown6c6d18.cfg.version = 0x102; \
-    g_Unknown6c6d18.cfg.unk_20 = 600; \
-    g_Unknown6c6d18.cfg.unk_22 = 600; \
+    g_Unknown6c6d18.cfg.padThresholdX = 600; \
+    g_Unknown6c6d18.cfg.padThresholdY = 600; \
     wav = fopen("bgm/th06_01.wav", "rb"); \
     if (wav != NULL) \
     { \

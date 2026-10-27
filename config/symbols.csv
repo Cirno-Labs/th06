@@ -193,7 +193,7 @@ address,size,name,symbol
 0x0041cd40,160,Chain::CreateElem,?CreateElem@Chain@@QAEPAUChainElem@@P6AHPAX@Z@Z
 0x0041cde0,380,Chain::Remove,?Remove@Chain@@QAEXPAUChainElem@@@Z
 0x0041cf60,85,Func41cf60,
-0x0041cfc0,1472,Func41cfc0,?Func41cfc0@@YAGG@Z
+0x0041cfc0,1472,ReadJoystick,?ReadJoystick@@YAGG@Z
 0x0041d580,127,SetButtonFromDirectInput,?SetButtonFromDirectInput@@YAHPAGFGPAE@Z
 0x0041d600,117,SetButtonFromJoystick,?SetButtonFromJoystick@@YAHPAGFGK@Z
 0x0041d680,414,Func41d680,
@@ -1584,6 +1584,8 @@ address,size,name,symbol
 0x0069d6fc,,g_Camera,?g_Camera@@3UCamera@@A
 0x0069d720,,g_GameManagerCalcChain,?g_GameManagerCalcChain@@3UChainElem@@A
 0x0069d740,,g_GameManagerDrawChain,?g_GameManagerDrawChain@@3UChainElem@@A
+0x0069d760,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
+0x0069d8f4,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA
 0x0069d8f8,,g_Rng,?g_Rng@@3VRng@@A
 0x0069d900,,g_Archives,?g_Archives@@3PAPAVDatArchive@@A
 0x0069d904,,g_Buttons,?g_Buttons@@3GA

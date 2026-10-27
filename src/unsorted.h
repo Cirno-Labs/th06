@@ -123,9 +123,10 @@ struct GameConfig
     // Frames skipped per frame drawn: DrawFps counts 1 + this a frame.
     // 0, at most 2.
     BYTE frameSkip;
-    // 600 each.
-    short unk_20;
-    short unk_22;
+    // How far a DirectInput pad axis (-1000 to 1000) goes before it
+    // counts as a direction. 600 each.
+    short padThresholdX;
+    short padThresholdY;
     unsigned char unk_24[0x10];
     GameConfigFlags flags;
 };
@@ -292,8 +293,15 @@ extern WORD g_ButtonFrames;
 int SetButtonFromDirectInput(WORD *buttons, short button, WORD bit, BYTE *rgbButtons);
 // Like SetButtonFromDirectInput, for joyGetPosEx's dwButtons.
 int SetButtonFromJoystick(WORD *buttons, short button, WORD bit, DWORD joyButtons);
-// Adds the joystick's buttons to `buttons` and returns them.
-WORD Func41cfc0(WORD buttons);
+// The joystick's capabilities, from joyGetDevCaps.
+extern JOYCAPSA g_JoyCaps;
+// How many frames the shot button has been held, up to 16, when shooting
+// and focusing share a pad button: focus counts from 8.
+extern WORD g_ShotHeldFrames;
+// Adds the joystick's buttons and directions to `buttons` and returns
+// them: through DirectInput when there is a device, otherwise through
+// joyGetPosEx.
+WORD ReadJoystick(WORD buttons);
 // Reads the keyboard and the joystick into button bits.
 WORD ReadButtons();
 

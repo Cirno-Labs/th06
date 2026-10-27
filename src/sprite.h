@@ -13,8 +13,8 @@ struct SpriteData
     // Negative when unused.
     int unk_00;
     DWORD unk_04[0xa];
-    float width;
     float height;
+    float width;
     DWORD unk_34;
 };
 ASSERT_SIZE(SpriteData, 0x38);
@@ -57,9 +57,9 @@ public:
     // The gaps are DWORDs, not bytes: a byte array would make /GS put a
     // security cookie in functions with a Sprite local.
     DWORD unk_000[0x6];
-    // SpriteEngine::Draw scales the sprite's width and height by these.
-    float scaleX;
+    // SpriteEngine::Draw scales the sprite's height and width by these.
     float scaleY;
+    float scaleX;
     DWORD unk_020[0x4];
     Timer unk_030;
     // Set to the identity by Initialize.

@@ -56,7 +56,7 @@ void Unknown4010e0::Func403060()
         if (this->unk_000 == 1 || this->unk_000 == 2)
         {
             this->unk_008[4] = this->unk_008[1];
-            this->unk_008[4].pos.x += 8.0f * this->unk_008[4].scaleY;
+            this->unk_008[4].pos.x += 8.0f * this->unk_008[4].scaleX;
             this->unk_008[4].spriteData = &g_SpriteEngine->sprites[0x1e - g_Unknown69d4b8];
             g_SpriteEngine->Draw(&this->unk_008[4]);
         }
@@ -121,6 +121,76 @@ int AsciiText::RegisterChain()
     g_AsciiDrawChain2.arg = text;
     g_Chain.AddToDrawChain(&g_AsciiDrawChain2, 10);
     return 0;
+}
+
+void AsciiText::DrawStrings()
+{
+    float advance;
+    int idx;
+    AsciiString *string;
+    BYTE *c;
+    int clipped = 1;
+    D3DXVECTOR3 pos;
+
+    string = this->strings;
+    this->unk_0000.flags.unk0 = 1;
+    this->unk_0000.flags.unk8 = 3;
+    for (idx = 0; idx < this->stringCount; idx++, string++)
+    {
+        this->unk_0000.pos = string->pos;
+        c = (BYTE *)string->text;
+        this->unk_0000.scaleX = string->scaleX;
+        this->unk_0000.scaleY = string->scaleY;
+        advance = 14.0f * string->scaleX;
+        if (clipped != string->unk_5c)
+        {
+            clipped = string->unk_5c;
+            if (clipped != 0)
+            {
+                g_Unknown6c6d18.viewport.X = g_Unknown69d6dc[0];
+                g_Unknown6c6d18.viewport.Y = g_Unknown69d6dc[1];
+                g_Unknown6c6d18.viewport.Width = g_Unknown69d6dc[2];
+                g_Unknown6c6d18.viewport.Height = g_Unknown69d6dc[3];
+                g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+            }
+            else
+            {
+                g_Unknown6c6d18.viewport.X = 0;
+                g_Unknown6c6d18.viewport.Y = 0;
+                g_Unknown6c6d18.viewport.Width = 640;
+                g_Unknown6c6d18.viewport.Height = 480;
+                g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+            }
+        }
+        while (*c != 0)
+        {
+            if (*c == '\n')
+            {
+                this->unk_0000.pos.y += 16.0f * string->scaleY;
+                this->unk_0000.pos.x = string->pos.x;
+            }
+            else if (*c == ' ')
+            {
+                this->unk_0000.pos.x += advance;
+            }
+            else
+            {
+                if (string->unk_58 == 0)
+                {
+                    this->unk_0000.spriteData = &g_SpriteEngine->sprites[*c - 0x15];
+                    this->unk_0000.color = string->color;
+                }
+                else
+                {
+                    this->unk_0000.spriteData = &g_SpriteEngine->sprites[*c + 0x61];
+                    this->unk_0000.color = 0xffffffff;
+                }
+                g_SpriteEngine->Draw(&this->unk_0000);
+                this->unk_0000.pos.x += advance;
+            }
+            c++;
+        }
+    }
 }
 
 int AsciiText::OnDraw(AsciiText *text)

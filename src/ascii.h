@@ -83,7 +83,11 @@ public:
     // The first draw element's callback (priority 0xf): draws the queued
     // strings and empties the queue. Returns 1.
     static int OnDraw(AsciiText *text);
-    // Draws the queued strings.
+    // Draws the queued strings with unk_0000, glyph by glyph: 14 pixels
+    // a glyph and 16 a line, times the string's scale. Strings with
+    // unk_5c set are drawn inside the viewport given by g_Unknown69d6dc,
+    // the others in the whole 640x480 screen; those with unk_58 set use
+    // the second glyph set, in white.
     void DrawStrings();
     // The update element's callback: moves the active popups along, unless g_Unknown69d4bf or g_Unknown69d4c0 is set;
     // then it updates the matching part. Returns 1.

@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">12.95% (61)</tspan> · <tspan class="decompiled">4.67% (22)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">82.38% (388)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">13.16% (62)</tspan> · <tspan class="decompiled">4.67% (22)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">82.17% (387)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="96.75" height="6" x="0" y="0" class="named"/>
-<rect width="34.89" height="6" x="96.75" y="0" class="decompiled"/>
-<rect width="615.36" height="6" x="131.64" y="0" class="todo"/>
+<rect width="98.33" height="6" x="0" y="0" class="named"/>
+<rect width="34.89" height="6" x="98.33" y="0" class="decompiled"/>
+<rect width="613.78" height="6" x="133.22" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -80,7 +80,7 @@
 <rect width="12" height="12" x="135" y="0" class="named"><title>0x00401500 AsciiText::RemoveChain (35 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="0" class="named"><title>0x00401530 AsciiText::AddString (277 bytes)</title></rect>
 <rect width="12" height="12" x="165" y="0" class="named"><title>0x00401650 AsciiText::AddFormat (90 bytes)</title></rect>
-<rect width="12" height="12" x="180" y="0" class="todo"><title>0x004016b0 AsciiText::DrawStrings (641 bytes)</title></rect>
+<rect width="12" height="12" x="180" y="0" class="named"><title>0x004016b0 AsciiText::DrawStrings (641 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="0" class="named"><title>0x00401940 AsciiText::AddPopup (284 bytes)</title></rect>
 <rect width="12" height="12" x="210" y="0" class="named"><title>0x00401a60 AsciiText::AddPopup2 (286 bytes)</title></rect>
 <rect width="12" height="12" x="225" y="0" class="todo"><title>0x00401b80 Unknown4010e0::Func401b80 (2973 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">5.95%</tspan> · <tspan class="decompiled">2.39%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">91.66%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">6.22%</tspan> · <tspan class="decompiled">2.39%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">91.39%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="44.48" height="6" x="0" y="0" class="named"/>
-<rect width="17.83" height="6" x="44.48" y="0" class="decompiled"/>
-<rect width="684.69" height="6" x="62.31" y="0" class="todo"/>
+<rect width="46.49" height="6" x="0" y="0" class="named"/>
+<rect width="17.83" height="6" x="46.49" y="0" class="decompiled"/>
+<rect width="682.68" height="6" x="64.32" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -636,7 +636,7 @@
 <rect width="16.02" height="14.02" x="482.81" y="54" class="todo"><title>0x0041ec72 Func41ec72 (671 bytes)</title></rect>
 <rect width="16.02" height="13.97" x="482.81" y="71.02" class="todo"><title>0x00430270 Func430270 (669 bytes)</title></rect>
 <rect width="16.02" height="13.54" x="482.81" y="87.99" class="named"><title>0x00423b14 InitDirectInput (652 bytes)</title></rect>
-<rect width="16.02" height="13.26" x="482.81" y="104.53" class="todo"><title>0x004016b0 AsciiText::DrawStrings (641 bytes)</title></rect>
+<rect width="16.02" height="13.26" x="482.81" y="104.53" class="named"><title>0x004016b0 AsciiText::DrawStrings (641 bytes)</title></rect>
 <rect width="16.02" height="13.11" x="482.81" y="120.79" class="todo"><title>0x00414670 Func414670 (635 bytes)</title></rect>
 <rect width="16.02" height="13.11" x="482.81" y="136.89" class="named"><title>0x00422680 MidiPlayer::OnTimer (635 bytes)</title></rect>
 <rect width="14.29" height="14.41" x="501.83" y="0" class="todo"><title>0x00431dc0 SpriteEngine::LoadAnm (624 bytes)</title></rect>

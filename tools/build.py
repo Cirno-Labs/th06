@@ -13,7 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OBJ = "build/obj"
 SJIS = "build/src"  # src/ converted to Shift-JIS
 DLL = "build/th06.dll"
-CFLAGS = ["/Od", "/Ob1", "/G5", "/GX"]
+CFLAGS = ["/Od", "/Ob1", "/G5", "/GX", "/Op"]
 GLUE_PREFIX = "dll_"  # objects from src/dll/, the DLL's own code
 TIMEOUT = 60  # cl spins forever after a fatal error
 

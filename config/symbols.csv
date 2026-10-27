@@ -460,7 +460,7 @@ address,size,name,symbol
 0x0043b480,46,CStreamingSound::`scalar deleting destructor',??_GCStreamingSound@@UAEPAXI@Z
 0x0043b4b0,28,CStreamingSound::~CStreamingSound,??1CStreamingSound@@UAE@XZ
 0x0043b4d0,143,CStreamingSound::UpdateFade,?UpdateFade@CStreamingSound@@QAEHXZ
-0x0043b560,887,Func43b560,
+0x0043b560,887,CStreamingSound::HandleWaveStreamNotification,?HandleWaveStreamNotification@CStreamingSound@@QAEJH@Z
 0x0043b8e0,194,CStreamingSound::Reset,?Reset@CStreamingSound@@QAEJXZ
 0x0043b9b0,82,CWaveFile::CWaveFile,??0CWaveFile@@QAE@XZ
 0x0043ba10,70,CWaveFile::~CWaveFile,??1CWaveFile@@QAE@XZ

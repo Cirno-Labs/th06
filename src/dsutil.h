@@ -105,6 +105,8 @@ public:
     // Stops the buffer and returns 1 when the fade ends, otherwise 0.
     int UpdateFade();
 
+    // The game logs each failure.
+    HRESULT HandleWaveStreamNotification(BOOL bLoopedPlay);
     HRESULT Reset();
 
     DWORD m_dwLastPlayPos;

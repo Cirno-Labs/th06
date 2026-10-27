@@ -12,7 +12,7 @@ import coff
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OBJ = "build/obj"
 DLL = "build/th06.dll"
-CFLAGS = ["/Od"]
+CFLAGS = ["/Od", "/Ob1"]
 TIMEOUT = 60  # cl spins forever after a fatal error
 
 ENV = dict(

@@ -335,15 +335,15 @@ public:
 };
 extern Unknown6d457c *g_Unknown6d457c;
 
-// Scene set-up and tear-down functions Unknown6c6d18::OnUpdate calls.
-// The non-void ones return nonzero on failure.
+// Scene set-up functions Unknown6c6d18::OnUpdate calls. They return
+// nonzero on failure.
 int Func42d773(int unk);
 int Func4107b0();
-void Func41c269();
-// Remove chain elements of classes not decompiled yet.
+int Func43a338(int unk);
+
+// They remove the chain elements of classes not decompiled yet.
 void Func404650();
 void Func42aab0();
-int Func43a338(int unk);
 void Func41f008();
 
 // Returns `a + b`, brought back into -pi to pi by whole turns (at most

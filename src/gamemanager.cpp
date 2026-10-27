@@ -56,3 +56,9 @@ int GameManager::DeletedCallback(GameManager *mgr)
     g_AsciiText.Initialize();
     return 0;
 }
+
+void GameManager::RemoveChain()
+{
+    g_Chain.Remove(&g_GameManagerCalcChain);
+    g_Chain.Remove(&g_GameManagerDrawChain);
+}

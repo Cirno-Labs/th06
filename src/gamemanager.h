@@ -21,6 +21,8 @@ public:
     // Stops the music unless unk_1824 is set, removes the game's chain
     // elements and resets the ASCII text. Returns 0.
     static int DeletedCallback(GameManager *mgr);
+    // Removes the two chain elements.
+    static void RemoveChain();
     // The draw element's callback: sets unk_181f to 2 while it is set.
     // Returns 1.
     static int OnDraw(GameManager *mgr);

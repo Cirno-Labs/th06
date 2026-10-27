@@ -174,7 +174,7 @@ address,size,name,symbol
 0x0041ba6a,152,GameManager::RegisterChain,?RegisterChain@GameManager@@SAHXZ
 0x0041bb02,1781,GameManager::AddedCallback,?AddedCallback@GameManager@@SAHPAV1@@Z
 0x0041c1f7,114,GameManager::DeletedCallback,?DeletedCallback@GameManager@@SAHPAV1@@Z
-0x0041c269,35,Func41c269,?Func41c269@@YAXXZ
+0x0041c269,35,GameManager::RemoveChain,?RemoveChain@GameManager@@SAXXZ
 0x0041c28c,359,Func41c28c,
 0x0041c3f3,395,Func41c3f3,
 0x0041c57e,124,Func41c57e,

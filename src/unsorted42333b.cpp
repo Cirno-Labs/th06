@@ -103,7 +103,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
                 }
                 break;
             case 10:
-                Func41c269();
+                GameManager::RemoveChain();
                 if (Func4107b0() != 0)
                 {
                     return 4;
@@ -128,19 +128,19 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
                 return 4;
             case 1:
             toTitle:
-                Func41c269();
+                GameManager::RemoveChain();
                 arg->scene = 0;
                 Func42ab30(0, NULL);
                 goto title;
             case 7:
-                Func41c269();
+                GameManager::RemoveChain();
                 if (Func42d773(1) != 0)
                 {
                     return 4;
                 }
                 break;
             case 3:
-                Func41c269();
+                GameManager::RemoveChain();
                 if (GameManager::RegisterChain() != 0)
                 {
                     return 4;
@@ -152,7 +152,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
                 arg->scene = 2;
                 break;
             case 8:
-                Func41c269();
+                GameManager::RemoveChain();
                 arg->scene = 0;
                 Func42ab30(0, NULL);
                 arg->scene = 1;
@@ -163,7 +163,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
                 }
                 break;
             case 10:
-                Func41c269();
+                GameManager::RemoveChain();
                 if (Func4107b0() != 0)
                 {
                     return 4;

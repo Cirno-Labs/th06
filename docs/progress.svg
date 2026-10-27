@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">49.68% (234)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">44.16% (208)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">49.89% (235)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">43.95% (207)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="371.12" height="6" x="0" y="0" class="named"/>
-<rect width="45.99" height="6" x="371.12" y="0" class="decompiled"/>
-<rect width="329.89" height="6" x="417.11" y="0" class="todo"/>
+<rect width="372.71" height="6" x="0" y="0" class="named"/>
+<rect width="45.99" height="6" x="372.71" y="0" class="decompiled"/>
+<rect width="328.30" height="6" x="418.70" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -295,7 +295,7 @@
 <rect width="12" height="12" x="360" y="60" class="named"><title>0x0041f230 ItemManager::ItemManager (90 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="60" class="named"><title>0x0041f290 ItemManager::SpawnItem (517 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="60" class="named"><title>0x0041f4a0 ItemManager::UpdateItems (3160 bytes)</title></rect>
-<rect width="12" height="12" x="405" y="60" class="todo"><title>0x00420130 ItemManager::Func420130 (86 bytes)</title></rect>
+<rect width="12" height="12" x="405" y="60" class="named"><title>0x00420130 ItemManager::CollectAll (86 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="60" class="todo"><title>0x00420190 Func420190 (408 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="60" class="todo"><title>0x00420330 Func420330 (943 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="60" class="todo"><title>0x004206e0 Func4206e0 (1126 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">30.56%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">66.77%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">30.59%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">66.73%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="228.25" height="6" x="0" y="0" class="named"/>
-<rect width="19.98" height="6" x="228.25" y="0" class="decompiled"/>
-<rect width="498.78" height="6" x="248.22" y="0" class="todo"/>
+<rect width="228.52" height="6" x="0" y="0" class="named"/>
+<rect width="19.98" height="6" x="228.52" y="0" class="decompiled"/>
+<rect width="498.51" height="6" x="248.49" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -914,7 +914,7 @@
 <rect width="3.19" height="3.78" x="725.45" y="97.12" class="todo"><title>0x004309f0 Func4309f0 (87 bytes)</title></rect>
 <rect width="3.12" height="3.78" x="731.64" y="97.12" class="named"><title>0x0041c676 GameManager::GameManager (86 bytes)</title></rect>
 <rect width="3.12" height="3.78" x="737.76" y="97.12" class="named"><title>0x0041c790 ChainElem::~ChainElem (86 bytes)</title></rect>
-<rect width="3.12" height="3.78" x="743.88" y="97.12" class="todo"><title>0x00420130 ItemManager::Func420130 (86 bytes)</title></rect>
+<rect width="3.12" height="3.78" x="743.88" y="97.12" class="named"><title>0x00420130 ItemManager::CollectAll (86 bytes)</title></rect>
 <rect width="3.50" height="3.30" x="700.25" y="103.90" class="named"><title>0x0041cf60 InitJoystick (85 bytes)</title></rect>
 <rect width="3.50" height="3.30" x="700.25" y="110.20" class="named"><title>0x00421d90 ReadVarLen (85 bytes)</title></rect>
 <rect width="3.50" height="3.30" x="700.25" y="116.51" class="named"><title>0x0042a0e0 Player::RemoveChain (85 bytes)</title></rect>

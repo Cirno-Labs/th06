@@ -314,3 +314,18 @@ void ItemManager::UpdateItems()
         g_Unknown6d3f50.Func4311e0(0x15, 0);
     }
 }
+
+void ItemManager::CollectAll()
+{
+    Item *entry = this->items;
+    int i;
+
+    for (i = 0; i < 0x200; i++, entry++)
+    {
+        if (!entry->active)
+        {
+            continue;
+        }
+        entry->state = 1;
+    }
+}

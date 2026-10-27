@@ -42,7 +42,7 @@ public:
     // (scoring, power, bombs, lives) and drops those that fall out.
     void UpdateItems();
     // Draws every active item to the player (state 1).
-    void Func420130();
+    void CollectAll();
 
     Item items[0x201];
     // Where SpawnItem looks for a free slot first.

@@ -278,7 +278,7 @@ address,size,name,symbol
 0x00423da0,63,Func423da0,
 0x00423ddf,352,Func423ddf,
 0x00423f3f,433,Func423f3f,
-0x004240f0,55,Func4240f0,
+0x004240f0,55,SpriteEngine::ReleaseVertexBuffer,?ReleaseVertexBuffer@SpriteEngine@@QAEXXZ
 0x00424127,30,Timer::Initialize,?Initialize@Timer@@QAEXXZ
 0x00424145,160,Timer::Add,?Add@Timer@@QAEXH@Z
 0x004241e5,160,Timer::Sub,?Sub@Timer@@QAEXH@Z

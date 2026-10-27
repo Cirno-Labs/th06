@@ -5,6 +5,15 @@
 #include "timer.h"
 #include "unsorted.h"
 
+void SpriteEngine::ReleaseVertexBuffer()
+{
+    if (this->vertexBuffer != NULL)
+    {
+        this->vertexBuffer->Release();
+        this->vertexBuffer = NULL;
+    }
+}
+
 void Timer::Initialize()
 {
     this->current = 0;

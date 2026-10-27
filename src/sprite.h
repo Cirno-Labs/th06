@@ -86,6 +86,9 @@ public:
         this->SetSprite(vm, sprite);
     }
 
+    // Releases the vertex buffer, if there is one.
+    void ReleaseVertexBuffer();
+
     // Runs a sprite's script for one frame.
     int Step(Sprite *vm);
     // Draws a sprite if it is shown.
@@ -106,5 +109,9 @@ public:
     unsigned char unk_1e934[0x2784];
     // The texture last set on the device (IDirect3DDevice8::SetTexture).
     IDirect3DTexture8 *currentTexture;
+    unsigned char unk_210bc[0x8];
+    // Created with IDirect3DDevice8::CreateVertexBuffer and set as the
+    // stream source.
+    IDirect3DVertexBuffer8 *vertexBuffer;
 };
 extern SpriteEngine *g_SpriteEngine;

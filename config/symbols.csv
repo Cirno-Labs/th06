@@ -21,7 +21,7 @@ address,size,name,symbol
 0x004031e0,460,AsciiText::DrawPopups,?DrawPopups@AsciiText@@QAEXXZ
 0x004033b0,460,AsciiText::DrawPopups2,?DrawPopups2@AsciiText@@QAEXXZ
 0x00403580,238,Sprite::Initialize,?Initialize@Sprite@@QAEXXZ
-0x00403670,167,Func403670,
+0x00403670,167,D3DXMatrixIdentity,?D3DXMatrixIdentity@@YAPAUD3DXMATRIX@@PAU1@@Z
 0x00403720,104,Sprite::Sprite,??0Sprite@@QAE@XZ
 0x00403790,114,Func403790,
 0x00403810,2204,Stage::OnUpdate,?OnUpdate@Stage@@SAHPAV1@@Z
@@ -33,7 +33,7 @@ address,size,name,symbol
 0x00404650,50,Stage::RemoveChain,?RemoveChain@Stage@@SAXXZ
 0x00404690,449,Stage::Load,?Load@Stage@@QAEHPAD0@Z
 0x00404860,257,Func404860,
-0x00404970,2109,Stage::DrawLayer,?DrawLayer@Stage@@QAEXH@Z
+0x00404970,2109,Stage::DrawLayer,?DrawLayer@Stage@@QAEHH@Z
 0x004051b0,169,SpriteEngine::Func4051b0,?Func4051b0@SpriteEngine@@QAEXPAVSprite@@H@Z
 0x00405260,2468,Func405260,
 0x00405c10,1040,Func405c10,
@@ -406,7 +406,7 @@ address,size,name,symbol
 0x00432ad0,431,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00432c80,60,SpriteEngine::RotatePoint,?RotatePoint@SpriteEngine@@QAEXPAMMMMMMM@Z
 0x00432cc0,727,SpriteEngine::Func432cc0,?Func432cc0@SpriteEngine@@QAEHPAVSprite@@@Z
-0x00432fa0,431,Func432fa0,
+0x00432fa0,431,SpriteEngine::Func432fa0,?Func432fa0@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00433150,1086,SpriteEngine::Func433150,?Func433150@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00433590,975,SpriteEngine::Func433590,?Func433590@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00433960,4355,SpriteEngine::Step,?Step@SpriteEngine@@QAEHPAVSprite@@@Z
@@ -513,7 +513,7 @@ address,size,name,symbol
 0x0043f082,76,Func43f082,
 0x0043f0ce,167,Func43f0ce,
 0x0043f175,208,Func43f175,
-0x0043f245,253,Func43f245,
+0x0043f245,253,D3DXVec3Project,_D3DXVec3Project@24
 0x0043f362,511,Func43f362,
 0x0043f561,262,D3DXMatrixLookAtLH,_D3DXMatrixLookAtLH@16
 0x0043f667,116,Func43f667,

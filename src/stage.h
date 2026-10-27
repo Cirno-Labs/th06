@@ -18,15 +18,32 @@ struct StageQuad
     short script;
     // Set by Stage::Load: the quad's Sprite in Stage::sprites.
     short spriteIndex;
+    // Type 0's position in the object, and size; a size of 0 keeps the
+    // sprite's.
+    D3DXVECTOR3 pos;
+    float width;
+    float height;
 };
 
 // An object of the stage data: its quads start at +0x1c.
 struct StageObject
 {
-    BYTE unk_00[0x3];
+    BYTE unk_00[0x2];
+    // The background layer (0 to 3) it is drawn on.
+    char layer;
     BYTE unk_03;
-    DWORD unk_04[0x6];
+    D3DXVECTOR3 pos;
+    // The bounding box DrawLayer tests against the viewport.
+    D3DXVECTOR3 size;
     StageQuad quads[1];
+};
+
+// A placement of an object; a negative `id` ends the list.
+struct StageInstance
+{
+    short id;
+    short unk_02;
+    D3DXVECTOR3 pos;
 };
 
 // The start of the stage data file.
@@ -53,8 +70,9 @@ public:
     // Sets the fog, then draws layers 0 and 1 unless unk_080 is above 1
     // or g_Gui.Func4172d3() is set. Returns 1.
     static int OnDraw(Stage *stage);
-    // Draws one layer of the background.
-    void DrawLayer(int layer);
+    // Draws the objects on `layer` whose bounding box shows on screen,
+    // relative to the camera at unk_03c. Returns 0.
+    int DrawLayer(int layer);
     // Draws layers 2 and 3 under the same conditions as OnDraw, with a
     // rectangle fading in over unk_084's 60 frames while unk_080 is 1,
     // then unk_088 while unk_080 is set, and leaves the fog at 1000 to
@@ -79,7 +97,7 @@ public:
     int objectCount;
     // In `data`: the objects, and the header's two offsets as pointers.
     StageObject **objects;
-    void *unk_014;
+    StageInstance *instances;
     void *unk_018;
     Timer unk_01c;
     int unk_028;

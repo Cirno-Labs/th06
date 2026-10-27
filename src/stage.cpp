@@ -153,7 +153,7 @@ int Stage::Load(char *anmPath, char *dataPath)
     }
     this->objectCount = this->data->objectCount;
     this->quadCount = this->data->quadCount;
-    this->unk_014 = (void *)(this->data->unk_04 + (int)this->data);
+    this->instances = (StageInstance *)(this->data->unk_04 + (int)this->data);
     this->unk_018 = (void *)(this->data->unk_08 + (int)this->data);
     this->objects = (StageObject **)((char *)this->data + 0x490);
     for (i = 0; i < this->objectCount; i++)
@@ -173,6 +173,162 @@ int Stage::Load(char *anmPath, char *dataPath)
             count++;
             quad = (StageQuad *)((char *)quad + quad->size);
         }
+    }
+    return 0;
+}
+
+// Whether the projected point shows on screen vertically.
+#define IN_VIEWPORT_Y(v)                                                                                    \
+    ((v).y >= (float)g_Unknown6c6d18.viewport.Y &&                                                          \
+     (v).y <= (float)(g_Unknown6c6d18.viewport.Y + g_Unknown6c6d18.viewport.Height))
+
+int Stage::DrawLayer(int layer)
+{
+    StageInstance *placement;
+    int objCount;
+    int rendered;
+    D3DXVECTOR3 objOrigin;
+    D3DXMATRIX mat;
+    D3DXVECTOR3 scrPos;
+    D3DXVECTOR3 screenRight;
+    StageObject *objData;
+    StageQuad *quadData;
+    Sprite *spr;
+    // Set to 0 for each object, never read.
+    int mode;
+
+    placement = this->instances;
+    objCount = 0;
+    rendered = 0;
+    objOrigin.x = 0.0f;
+    objOrigin.y = 0.0f;
+    objOrigin.z = 0.0f;
+    D3DXMatrixIdentity(&mat);
+    while (placement->id >= 0)
+    {
+        objData = this->objects[placement->id];
+        if (objData->layer == layer)
+        {
+            quadData = objData->quads;
+            mode = 0;
+            mat._41 = objData->pos.x + placement->pos.x - this->unk_03c.x;
+            mat._42 = -(objData->pos.y + placement->pos.y - this->unk_03c.y);
+            mat._43 = objData->pos.z + placement->pos.z - this->unk_03c.z + objData->size.z;
+            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
+                            &g_Unknown6c6d18.viewMatrix, &mat);
+            if (IN_VIEWPORT_Y(scrPos))
+            {
+                goto render;
+            }
+            mat._42 -= objData->size.y;
+            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
+                            &g_Unknown6c6d18.viewMatrix, &mat);
+            if (IN_VIEWPORT_Y(scrPos))
+            {
+                goto render;
+            }
+            mat._43 -= objData->size.z;
+            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
+                            &g_Unknown6c6d18.viewMatrix, &mat);
+            if (IN_VIEWPORT_Y(scrPos))
+            {
+                goto render;
+            }
+            mat._42 += objData->size.y;
+            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
+                            &g_Unknown6c6d18.viewMatrix, &mat);
+            if (IN_VIEWPORT_Y(scrPos))
+            {
+                goto render;
+            }
+            mat._41 = objData->pos.x + placement->pos.x - this->unk_03c.x + objData->size.x;
+            mat._42 = -(objData->pos.y + placement->pos.y - this->unk_03c.y);
+            mat._43 = objData->pos.z + placement->pos.z - this->unk_03c.z + objData->size.z;
+            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
+                            &g_Unknown6c6d18.viewMatrix, &mat);
+            if (IN_VIEWPORT_Y(scrPos))
+            {
+                goto render;
+            }
+            mat._42 -= objData->size.y;
+            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
+                            &g_Unknown6c6d18.viewMatrix, &mat);
+            if (IN_VIEWPORT_Y(scrPos))
+            {
+                goto render;
+            }
+            mat._43 -= objData->size.z;
+            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
+                            &g_Unknown6c6d18.viewMatrix, &mat);
+            if (IN_VIEWPORT_Y(scrPos))
+            {
+                goto render;
+            }
+            mat._42 += objData->size.y;
+            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
+                            &g_Unknown6c6d18.viewMatrix, &mat);
+            if (IN_VIEWPORT_Y(scrPos))
+            {
+                goto render;
+            }
+            goto next;
+
+        render:
+            rendered = 1;
+            while (quadData->type >= 0)
+            {
+                spr = &this->sprites[quadData->spriteIndex];
+                switch (quadData->type)
+                {
+                case 0:
+                    spr->pos.x = quadData->pos.x + placement->pos.x - this->unk_03c.x;
+                    spr->pos.y = quadData->pos.y + placement->pos.y - this->unk_03c.y;
+                    spr->pos.z = quadData->pos.z + placement->pos.z - this->unk_03c.z;
+                    if (quadData->width != 0.0f)
+                    {
+                        spr->scaleX = quadData->width / spr->spriteData->width;
+                    }
+                    if (quadData->height != 0.0f)
+                    {
+                        spr->scaleY = quadData->height / spr->spriteData->height;
+                    }
+                    if (spr->unk_088 == 2)
+                    {
+                        float width;
+
+                        if (quadData->width != 0.0f)
+                        {
+                            width = quadData->width;
+                        }
+                        else
+                        {
+                            width = spr->spriteData->width;
+                        }
+                        mat._41 = spr->pos.x;
+                        mat._42 = -spr->pos.y;
+                        mat._43 = spr->pos.z;
+                        D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport,
+                                        &g_Unknown6c6d18.projectionMatrix, &g_Unknown6c6d18.viewMatrix, &mat);
+                        mat._41 += width * spr->scaleX;
+                        D3DXVec3Project(&screenRight, &objOrigin, &g_Unknown6c6d18.viewport,
+                                        &g_Unknown6c6d18.projectionMatrix, &g_Unknown6c6d18.viewMatrix, &mat);
+                        spr->scaleX = (screenRight.x - scrPos.x) / width;
+                        spr->scaleY = spr->scaleX;
+                        spr->pos = scrPos;
+                        g_SpriteEngine->Func432fa0(spr);
+                    }
+                    else
+                    {
+                        g_SpriteEngine->Func433150(spr);
+                    }
+                    break;
+                }
+                quadData = (StageQuad *)((char *)quadData + quadData->size);
+            }
+            objCount++;
+        }
+    next:
+        placement++;
     }
     return 0;
 }

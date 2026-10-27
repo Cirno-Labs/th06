@@ -179,7 +179,7 @@ address,size,name,symbol
 0x0041c3f3,395,Func41c3f3,
 0x0041c57e,124,Func41c57e,
 0x0041c5fa,124,Func41c5fa,
-0x0041c676,86,Func41c676,
+0x0041c676,86,GameManager::GameManager,??0GameManager@@QAE@XZ
 0x0041c6d0,75,Chain::~Chain,??1Chain@@QAE@XZ
 0x0041c720,97,ChainElem::ChainElem,??0ChainElem@@QAE@XZ
 0x0041c790,86,ChainElem::~ChainElem,??1ChainElem@@QAE@XZ

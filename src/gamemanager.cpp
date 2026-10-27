@@ -64,3 +64,12 @@ void GameManager::RemoveChain()
     g_Chain.Remove(&g_GameManagerCalcChain);
     g_Chain.Remove(&g_GameManagerDrawChain);
 }
+
+GameManager::GameManager()
+{
+    memset(this, 0, sizeof(GameManager));
+    this->arena[0] = 32.0f;
+    this->arena[1] = 16.0f;
+    this->arena[2] = 384.0f;
+    this->arena[3] = 448.0f;
+}

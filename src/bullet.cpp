@@ -472,6 +472,156 @@ int BulletManager::ClearAllWithBonus(int maxBonus, int toItems)
     return totalBonus;
 }
 
+int BulletManager::OnDraw(BulletManager *mgr)
+{
+    int i;
+    float s;
+    Laser *laser;
+    float len;
+    float ca;
+    Bullet *blt;
+    Bullet *bullet2;
+
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+    laser = mgr->lasers;
+    for (i = 0; i < 0x40; i++, laser++)
+    {
+        if (!laser->active)
+        {
+            continue;
+        }
+        SinCos(&s, &ca, laser->angle);
+        len = (laser->endOffset - laser->startOffset) / 2.0f + laser->startOffset;
+        laser->sprite0.pos.x = ca * len + laser->pos.x;
+        laser->sprite0.pos.y = s * len + laser->pos.y;
+        laser->sprite0.pos.z = 0.0f;
+        laser->color = laser->color & 0xff000000 | 0xffffff;
+        g_SpriteEngine->Func433150(&laser->sprite0);
+        if (laser->startOffset < 16.0f || laser->speed == 0.0f)
+        {
+            laser->sprite1.pos.x = ca * laser->startOffset + laser->pos.x;
+            laser->sprite1.pos.y = s * laser->startOffset + laser->pos.y;
+            laser->sprite1.pos.z = 0.0f;
+            laser->sprite1.color = laser->sprite0.color;
+            laser->sprite1.flags.colorOp = 1;
+            laser->sprite1.color = laser->sprite1.color & 0xffffff | 0xff000000;
+            laser->sprite1.scaleX = laser->width / 10.0f * ((16.0f - laser->startOffset) / 16.0f);
+            laser->sprite1.scaleY = laser->sprite1.scaleX;
+            if (laser->sprite1.scaleY < 0.0f)
+            {
+                laser->sprite1.scaleX = laser->width / 10.0f;
+                laser->sprite1.scaleY = laser->sprite1.scaleX;
+            }
+            g_SpriteEngine->Func433150(&laser->sprite1);
+        }
+    }
+    g_ItemManager.DrawItems();
+    if (g_Unknown6c7114)
+    {
+        blt = mgr->bullets;
+        for (i = 0; i < 0x280; i++, blt++)
+        {
+            if (blt->state == 0)
+            {
+                continue;
+            }
+            if (blt->sprites.height > 16)
+            {
+                DrawBullet(blt);
+            }
+        }
+        blt = mgr->bullets;
+        for (i = 0; i < 0x280; i++, blt++)
+        {
+            if (blt->state == 0)
+            {
+                continue;
+            }
+            if (blt->sprites.height == 16 && (blt->sprites.sprite0.scriptIndex == 0x201 || blt->sprites.sprite0.scriptIndex == 0x203))
+            {
+                DrawBullet(blt);
+            }
+        }
+        blt = mgr->bullets;
+        for (i = 0; i < 0x280; i++, blt++)
+        {
+            if (blt->state == 0)
+            {
+                continue;
+            }
+            if (blt->sprites.height == 16 && blt->sprites.sprite0.scriptIndex != 0x201 && blt->sprites.sprite0.scriptIndex != 0x203)
+            {
+                DrawBullet(blt);
+            }
+        }
+        blt = mgr->bullets;
+        for (i = 0; i < 0x280; i++, blt++)
+        {
+            if (blt->state == 0)
+            {
+                continue;
+            }
+            if (blt->sprites.height == 8)
+            {
+                DrawBullet(blt);
+            }
+        }
+    }
+    else
+    {
+        bullet2 = mgr->bullets;
+        for (i = 0; i < 0x280; i++, bullet2++)
+        {
+            if (bullet2->state == 0)
+            {
+                continue;
+            }
+            if (bullet2->sprites.height > 16)
+            {
+                Func416c50(bullet2);
+            }
+        }
+        bullet2 = mgr->bullets;
+        for (i = 0; i < 0x280; i++, bullet2++)
+        {
+            if (bullet2->state == 0)
+            {
+                continue;
+            }
+            if (bullet2->sprites.height == 16 && (bullet2->sprites.sprite0.scriptIndex == 0x201 || bullet2->sprites.sprite0.scriptIndex == 0x203))
+            {
+                Func416c50(bullet2);
+            }
+        }
+        bullet2 = mgr->bullets;
+        for (i = 0; i < 0x280; i++, bullet2++)
+        {
+            if (bullet2->state == 0)
+            {
+                continue;
+            }
+            if (bullet2->sprites.height == 16 && bullet2->sprites.sprite0.scriptIndex != 0x201 && bullet2->sprites.sprite0.scriptIndex != 0x203)
+            {
+                Func416c50(bullet2);
+            }
+        }
+        bullet2 = mgr->bullets;
+        for (i = 0; i < 0x280; i++, bullet2++)
+        {
+            if (bullet2->state == 0)
+            {
+                continue;
+            }
+            if (bullet2->sprites.height == 8)
+            {
+                Func416c50(bullet2);
+            }
+        }
+    }
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+    return 1;
+}
+
 void DrawBullet(Bullet *bullet)
 {
     Sprite *sprite;

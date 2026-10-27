@@ -273,3 +273,57 @@ void UpdateReimuBBomb(Player *player)
     player->unk_09e0 = 3;
     player->bombTimer.Tick();
 }
+
+void UpdateMarisaABomb(Player *player)
+{
+    int i;
+    Sprite *sprite;
+    D3DXVECTOR3 unused;
+    float theta;
+
+    if (player->bombTimer >= player->bombDuration)
+    {
+        g_Gui.Func417314();
+        player->unk_75c8 = 0;
+        return;
+    }
+    if (player->bombTimer.HasTicked() && player->bombTimer == 0)
+    {
+        g_Unknown69e268.Func420130();
+        g_Gui.Func417acd(0x4a3, "魔符「スターダストレヴァリエ」");
+        player->bombDuration = 250;
+        player->unk_75b4.Set(300);
+        for (sprite = player->bombSprites, i = 0; i < 8; i++, sprite++)
+        {
+            g_SpriteEngine->Func4051b0(sprite, i % 3 + 0x405);
+            player->bombPos[i] = player->position;
+            theta = (float)i * 6.2831855f / 8.0f;
+            player->bombVelocity[i].x = cosf(theta) * 2.0f;
+            player->bombVelocity[i].y = sinf(theta) * 2.0f;
+            player->bombVelocity[i].z = 0.0f;
+        }
+        g_Unknown6d3f50.Func4311e0(6, 0);
+        ScreenEffect::Func42fd30(1, 120, 4, 1, 0);
+    }
+    else
+    {
+        for (i = 0; i < 8; i++)
+        {
+            player->bombPos[i] += player->bombVelocity[i] * g_Unknown6c6d18.frameAdvance;
+            if (player->bombTimer.HasTicked() && player->bombTimer.AsFrames() % 3 != 0)
+            {
+                player->bulletClearAreas[i][0] = player->bombPos[i].x;
+                player->bulletClearAreas[i][1] = player->bombPos[i].y;
+                player->bulletClearAreas[i][2] = 128.0f;
+                player->bulletClearAreas[i][3] = 128.0f;
+                player->bombHitSize[i].x = 128.0f;
+                player->bombHitSize[i].y = 128.0f;
+                player->bombHitPos[i] = player->bombPos[i];
+                player->bombHitDamage[i] = 8;
+            }
+            g_SpriteEngine->Step(&player->bombSprites[i]);
+        }
+    }
+    player->unk_09e0 = 3;
+    player->bombTimer.Tick();
+}

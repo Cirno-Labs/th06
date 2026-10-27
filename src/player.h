@@ -113,6 +113,11 @@ void DimPlayAreaForBomb(Player *player);
 // vertical and two horizontal pillars through the player, then on every
 // other frame keeps their hitboxes and bullet clearing on them.
 void UpdateReimuBBomb(Player *player);
+// Marisa A's bomb update callback: ends the bomb after its duration;
+// otherwise starts it (the spell card name, 250 frames) with eight stars
+// flying out from the player, then moves them, keeping their hitboxes
+// and bullet clearing on them two frames in three.
+void UpdateMarisaABomb(Player *player);
 extern Player g_Player;
 // A shot type's shots by power level: entries of a count, the power
 // they last up to and their data.

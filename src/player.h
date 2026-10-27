@@ -16,6 +16,8 @@ int FireShot(Player *player, PlayerBullet *bullet, int index, int frame, ShotTab
 // The four shot types' fire functions, in the per-shot-type table at
 // 0x476728 that also holds their movement speeds.
 int FireShotType0(Player *player, PlayerBullet *bullet, int index, int frame);
+int FireShotType1(Player *player, PlayerBullet *bullet, int index, int frame);
 
 // Their shot tables.
 extern ShotTable g_ShotTable0;
+extern ShotTable g_ShotTable1;

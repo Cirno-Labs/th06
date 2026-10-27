@@ -3,6 +3,7 @@
 
 #include "effect.h"
 #include "gamemanager.h"
+#include "item.h"
 #include "player.h"
 #include "screeneffect.h"
 #include "sprite.h"
@@ -33,7 +34,7 @@ void UpdateReimuABomb(Player *player)
         {
             player->bomb.partActive[i] = 0;
         }
-        g_Unknown69e268.Func420130();
+        g_ItemManager.Func420130();
         g_EffectManager.Func40ef50(0xc, &player->position, 1, 0xff4040ff);
         player->bulletClearAreas[8][0] = player->position.x;
         player->bulletClearAreas[8][1] = player->position.y;
@@ -219,7 +220,7 @@ void UpdateReimuBBomb(Player *player)
     }
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
-        g_Unknown69e268.Func420130();
+        g_ItemManager.Func420130();
         g_Gui.Func417acd(0x4a3, "夢符「封魔陣」");
         player->bomb.duration = 140;
         player->unk_75b4.Set(200);
@@ -305,7 +306,7 @@ void UpdateMarisaABomb(Player *player)
     }
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
-        g_Unknown69e268.Func420130();
+        g_ItemManager.Func420130();
         g_Gui.Func417acd(0x4a3, "魔符「スターダストレヴァリエ」");
         player->bomb.duration = 250;
         player->unk_75b4.Set(300);
@@ -398,7 +399,7 @@ void UpdateMarisaBBomb(Player *player)
     }
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
-        g_Unknown69e268.Func420130();
+        g_ItemManager.Func420130();
         g_Gui.Func417acd(0x4a1, "恋符「マスタースパーク」");
         player->bomb.duration = 300;
         player->unk_75b4.Set(360);

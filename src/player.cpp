@@ -4,6 +4,7 @@
 #include "effect.h"
 #include "enemy.h"
 #include "gamemanager.h"
+#include "item.h"
 #include "player.h"
 #include "unsorted.h"
 
@@ -808,12 +809,12 @@ int Player::OnUpdate(Player *player)
                 g_GameManager.unk_1819 = 0;
                 if (g_GameManager.lives > 0)
                 {
-                    g_Unknown69e268.Func41f290(&player->position, 2, 2);
-                    g_Unknown69e268.Func41f290(&player->position, 0, 2);
-                    g_Unknown69e268.Func41f290(&player->position, 0, 2);
-                    g_Unknown69e268.Func41f290(&player->position, 0, 2);
-                    g_Unknown69e268.Func41f290(&player->position, 0, 2);
-                    g_Unknown69e268.Func41f290(&player->position, 0, 2);
+                    g_ItemManager.Func41f290(&player->position, 2, 2);
+                    g_ItemManager.Func41f290(&player->position, 0, 2);
+                    g_ItemManager.Func41f290(&player->position, 0, 2);
+                    g_ItemManager.Func41f290(&player->position, 0, 2);
+                    g_ItemManager.Func41f290(&player->position, 0, 2);
+                    g_ItemManager.Func41f290(&player->position, 0, 2);
                     if (g_GameManager.power <= 16)
                     {
                         g_GameManager.power = 0;
@@ -826,11 +827,11 @@ int Player::OnUpdate(Player *player)
                 }
                 else
                 {
-                    g_Unknown69e268.Func41f290(&player->position, 4, 2);
-                    g_Unknown69e268.Func41f290(&player->position, 4, 2);
-                    g_Unknown69e268.Func41f290(&player->position, 4, 2);
-                    g_Unknown69e268.Func41f290(&player->position, 4, 2);
-                    g_Unknown69e268.Func41f290(&player->position, 4, 2);
+                    g_ItemManager.Func41f290(&player->position, 4, 2);
+                    g_ItemManager.Func41f290(&player->position, 4, 2);
+                    g_ItemManager.Func41f290(&player->position, 4, 2);
+                    g_ItemManager.Func41f290(&player->position, 4, 2);
+                    g_ItemManager.Func41f290(&player->position, 4, 2);
                     g_GameManager.power = 0;
                     g_Gui.flags.powerChanged = 2;
                     g_GameManager.unk_181c = 0xff;

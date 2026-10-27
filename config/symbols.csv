@@ -223,10 +223,10 @@ address,size,name,symbol
 0x0041f008,35,CreateTextSurface,?CreateTextSurface@@YAXXZ
 0x0041f02b,37,ReleaseTextSurface,?ReleaseTextSurface@@YAXXZ
 0x0041f050,480,RenderTextToTexture,?RenderTextToTexture@@YAXHHHHHHKKPADPAUIDirect3DTexture8@@@Z
-0x0041f230,90,Func41f230,
-0x0041f290,517,Unknown69e268::Func41f290,?Func41f290@Unknown69e268@@QAEXPAUD3DXVECTOR3@@HH@Z
+0x0041f230,90,ItemManager::ItemManager,??0ItemManager@@QAE@XZ
+0x0041f290,517,ItemManager::Func41f290,?Func41f290@ItemManager@@QAEXPAUD3DXVECTOR3@@HH@Z
 0x0041f4a0,3160,Func41f4a0,
-0x00420130,86,Unknown69e268::Func420130,?Func420130@Unknown69e268@@QAEXXZ
+0x00420130,86,ItemManager::Func420130,?Func420130@ItemManager@@QAEXXZ
 0x00420190,408,Func420190,
 0x00420330,943,Func420330,
 0x004206e0,1126,Func4206e0,
@@ -1599,7 +1599,7 @@ address,size,name,symbol
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
 0x0069e1b0,,g_PadButtons,?g_PadButtons@@3PAEA
 0x0069e230,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
-0x0069e268,,g_Unknown69e268,?g_Unknown69e268@@3VUnknown69e268@@A
+0x0069e268,,g_ItemManager,?g_ItemManager@@3VItemManager@@A
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A
 0x006c7114,,g_Unknown6c7114,?g_Unknown6c7114@@3EA
 0x006c7115,,g_Unknown6c7115,?g_Unknown6c7115@@3EA

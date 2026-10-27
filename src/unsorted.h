@@ -34,17 +34,6 @@ public:
 };
 extern Unknown6d3f50 g_Unknown6d3f50;
 
-// The global at 0x69e268: 0x200 entries of 0x144 bytes.
-class Unknown69e268
-{
-public:
-    // Sets byte 0x143 of each entry whose byte 0x141 is set.
-    void Func420130();
-    // Drops item `type` at `pos`.
-    void Func41f290(D3DXVECTOR3 *pos, int type, int unk);
-};
-extern Unknown69e268 g_Unknown69e268;
-
 // One of the game's data archives (紅魔郷*.DAT). Its code, from
 // 0x43c8d0, is built with optimization like the libraries after the
 // game's code.

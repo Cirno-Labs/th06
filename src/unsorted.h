@@ -567,6 +567,8 @@ public:
     void Func417314();
     // Shows fullPowerPopup, when the power reaches its maximum.
     void ShowFullPowerPopup(int unk);
+    // Shows `value` in unk_2c24, from enemy scripts.
+    void Func417458(int value);
     // Shows `bonus` in bonusPopup, the bonus for bullets cleared.
     void ShowBonusPopup(int bonus);
     // Sets impl->unk_217e.

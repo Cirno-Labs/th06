@@ -40,6 +40,14 @@ void Gui::ShowFullPowerPopup(int unk)
     this->impl->fullPowerPopup.value = unk;
 }
 
+void Gui::Func417458(int value)
+{
+    this->impl->unk_2c24.pos = D3DXVECTOR3(224.0f, 16.0f, 0.0f);
+    this->impl->unk_2c24.shown = 1;
+    this->impl->unk_2c24.timer.Set(0);
+    this->impl->unk_2c24.value = value;
+}
+
 int Gui::OnUpdate(Gui *gui)
 {
     if (g_GameManager.unk_002c)

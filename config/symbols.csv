@@ -144,7 +144,7 @@ address,size,name,symbol
 0x00417344,22,Gui::Func417344,?Func417344@Gui@@QAEHXZ
 0x0041735a,127,Gui::ShowBonusPopup,?ShowBonusPopup@Gui@@QAEXH@Z
 0x004173d9,127,Gui::ShowFullPowerPopup,?ShowFullPowerPopup@Gui@@QAEXH@Z
-0x00417458,127,Func417458,
+0x00417458,127,Gui::Func417458,?Func417458@Gui@@QAEXH@Z
 0x004174d7,43,Gui::OnUpdate,?OnUpdate@Gui@@SAHPAV1@@Z
 0x00417502,1483,Func417502,
 0x00417acd,304,Gui::Func417acd,?Func417acd@Gui@@QAEXHPAD@Z

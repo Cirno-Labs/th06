@@ -2,10 +2,24 @@
 
 #pragma once
 
+#include <windows.h>
+
 #include "common.h"
 
-class Player;
 struct PlayerBullet;
+
+// The player, the global at 0x6ca628. Its added callback loads
+// "data/player00.anm" or "player01.anm".
+class Player
+{
+public:
+    // Frees the player's sprites, unless the scene is 3. Returns 0.
+    static int DeletedCallback(Player *player);
+
+    DWORD unk_0000[0x263c];
+};
+ASSERT_SIZE(Player, 0x98f0);
+extern Player g_Player;
 // A shot type's shots by power level: entries of a count, the power
 // they last up to and their data.
 struct ShotTable;

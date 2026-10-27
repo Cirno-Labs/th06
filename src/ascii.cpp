@@ -2,6 +2,15 @@
 
 #include "ascii.h"
 
+int AsciiText::OnDraw(AsciiText *text)
+{
+    text->DrawStrings();
+    text->stringCount = 0;
+    text->unk_6244.Func402740();
+    text->unk_69bc.Func403060();
+    return 1;
+}
+
 int AsciiText::OnDraw2(AsciiText *text)
 {
     if (g_Unknown6c7114)

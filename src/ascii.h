@@ -8,6 +8,20 @@
 #include "common.h"
 #include "sprite.h"
 
+// A part of AsciiText, twice: at 0x6244 and 0x69bc. Constructed at
+// 0x4010e0; AsciiText::OnDraw runs Func402740 on the first and
+// Func403060 on the second, so they may be two types whose identical
+// constructors were folded.
+class Unknown4010e0
+{
+public:
+    void Func402740();
+    void Func403060();
+
+    unsigned char unk_000[0x778];
+};
+ASSERT_SIZE(Unknown4010e0, 0x778);
+
 // Queues strings to draw in the ASCII font, the global at 0x47b900. Its
 // code starts at 0x401000 and loads "data/ascii.anm".
 class AsciiText
@@ -19,6 +33,11 @@ public:
     // The second draw element's callback (priority 10): runs Func4031e0
     // while g_Unknown6c7114 is set, otherwise Func4033b0. Returns 1.
     static int OnDraw2(AsciiText *text);
+    // The first draw element's callback (priority 0xf): draws the queued
+    // strings and empties the queue. Returns 1.
+    static int OnDraw(AsciiText *text);
+    // Draws the queued strings.
+    void DrawStrings();
     void Func4031e0();
     void Func4033b0();
 
@@ -35,9 +54,14 @@ public:
     // Like AddString, for a printf-style text of up to 512 bytes.
     void AddFormat(D3DXVECTOR3 *pos, char *fmt, ...);
 
-    unsigned char unk_0000[0x6224];
+    unsigned char unk_0000[0x6220];
+    // How many strings are queued.
+    int stringCount;
     // The color of the strings queued next.
     D3DCOLOR color;
+    unsigned char unk_6228[0x1c];
+    Unknown4010e0 unk_6244;
+    Unknown4010e0 unk_69bc;
 };
 extern AsciiText g_AsciiText;
 

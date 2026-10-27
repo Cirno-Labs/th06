@@ -946,7 +946,7 @@ address,size,name,symbol
 0x0045b97f,18,_atexit,
 0x0045b991,56,Func45b991,
 0x0045b9c9,23,Func45b9c9,
-0x0045b9e0,87,Func45b9e0,
+0x0045b9e0,87,_vsprintf,_vsprintf
 0x0045ba37,41,report_failure,
 0x0045ba68,14,__security_check_cookie,@__security_check_cookie@4
 0x0045ba78,117,__ftol2,__ftol2

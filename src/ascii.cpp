@@ -1,5 +1,8 @@
 // The file starting at 0x401000: text in the ASCII font.
 
+#include <stdarg.h>
+#include <stdio.h>
+
 #include "ascii.h"
 
 int AsciiText::OnDraw(AsciiText *text)
@@ -36,4 +39,15 @@ void AsciiText::RemoveChain()
 {
     g_Chain.Remove(&g_AsciiCalcChain);
     g_Chain.Remove(&g_AsciiDrawChain);
+}
+
+void AsciiText::AddFormat(D3DXVECTOR3 *pos, char *fmt, ...)
+{
+    char buf[0x200];
+    va_list args;
+
+    va_start(args, fmt);
+    vsprintf(buf, fmt, args);
+    this->AddString(pos, buf);
+    va_end(args);
 }

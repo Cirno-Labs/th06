@@ -526,6 +526,27 @@ public:
     // The entry of g_FormatInfos for `format`, or the end of the table
     // when it is missing; NULL for -1.
     FormatInfo *FindFormat(int format);
+    // Copies the pixels into `surface` when it has the same format.
+    // Returns false when there is no bitmap or the surface can't be
+    // locked.
+    bool CopyToSurface(IDirect3DSurface8 *surface);
+
+    bool IsCreated()
+    {
+        return this->bitmap != NULL;
+    }
+    int GetWidth()
+    {
+        return this->width;
+    }
+    int GetHeight()
+    {
+        return this->height;
+    }
+    int GetFormat()
+    {
+        return this->format;
+    }
 
     int format;
     int width;

@@ -403,3 +403,23 @@ void ScriptMod(Enemy *enemy, int dst, int *a, int *b)
         *(float *)res = fmodf(*(float *)x, *(float *)y);
     }
 }
+
+void ScriptAngle(Enemy *enemy, int dst, float *fromX, float *fromY, float *toX, float *toY)
+{
+    float *resPtr;
+    int dstType;
+    float *x1;
+    float *y1;
+    float *x2;
+    float *by;
+
+    resPtr = (float *)ResolveOperand(enemy, &dst, &dstType);
+    if (dstType == 1)
+    {
+        x1 = ResolveFloatOperand(enemy, fromX, NULL);
+        y1 = ResolveFloatOperand(enemy, fromY, NULL);
+        x2 = ResolveFloatOperand(enemy, toX, NULL);
+        by = ResolveFloatOperand(enemy, toY, NULL);
+        *resPtr = atan2f(*by - *y1, *x2 - *x1);
+    }
+}

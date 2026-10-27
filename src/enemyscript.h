@@ -136,6 +136,9 @@ void ScriptDiv(Enemy *enemy, int dst, int *a, int *b);
 // Sets variable `dst` to operand *a modulo operand *b, like ScriptAdd
 // (fmod for floats).
 void ScriptMod(Enemy *enemy, int dst, int *a, int *b);
+// Sets float variable `dst` to the angle from point (*x1, *y1) to
+// point (*x2, *y2), all float operands.
+void ScriptAngle(Enemy *enemy, int dst, float *x1, float *y1, float *x2, float *y2);
 
 // Where ResolveOperand computes its read-only values.
 extern int g_Unknown487e44;

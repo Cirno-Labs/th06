@@ -10,8 +10,14 @@
 class MusicScreen
 {
 public:
+    // The update chain element's callback: runs the current state's
+    // handler and counts its frames. Returns 0 while a handler asks to
+    // stop, otherwise 1.
+    static int OnUpdate(MusicScreen *screen);
     // In state 0, waits 8 frames before moving to state 1. Returns 0.
     int UpdateIntro();
+    // State 1: the list of tunes. Returns nonzero to stop.
+    int UpdateList();
 
     unsigned char unk_0000[0x8];
     // Frames spent in `state`.

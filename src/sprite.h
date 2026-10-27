@@ -14,3 +14,16 @@ public:
     unsigned char unk_000[0x110];
 };
 ASSERT_SIZE(Sprite, 0x110);
+
+// Runs and draws Sprites.
+class SpriteEngine
+{
+public:
+    // Empty, and defined out of line: `delete` calls it, then operator
+    // delete.
+    ~SpriteEngine();
+
+    // Runs a sprite's script for one frame.
+    int Step(Sprite *vm);
+};
+extern SpriteEngine *g_SpriteEngine;

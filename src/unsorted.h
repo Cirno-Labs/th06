@@ -5,6 +5,7 @@
 
 #include <windows.h>
 
+#include "sprite.h"
 #include "dsutil.h"
 #include "midi.h"
 
@@ -92,13 +93,6 @@ void DebugPrint2(const char *fmt, ...);
 // status; 1 keeps the element and moves on to the next.
 int Func42a670(void *arg);
 
-// The object behind the pointer at 0x6d4588. Its destructor is empty and
-// defined out of line: `delete` calls it, then operator delete.
-class Unknown423330
-{
-public:
-    ~Unknown423330();
-};
 
 class Unknown417d29
 {

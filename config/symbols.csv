@@ -268,7 +268,7 @@ address,size,name,symbol
 0x00422680,635,MidiPlayer::OnTimer,?OnTimer@MidiPlayer@@UAEXXZ
 0x00422900,2047,MidiPlayer::ProcessEvent,?ProcessEvent@MidiPlayer@@QAEXPAUMidiTrack@@@Z
 0x00423260,206,MidiPlayer::SendVolume,?SendVolume@MidiPlayer@@QAEXH@Z
-0x00423330,11,Unknown423330::~Unknown423330,??1Unknown423330@@QAE@XZ ?OnTimer@MmTimer@@UAEXXZ
+0x00423330,11,SpriteEngine::~SpriteEngine,??1SpriteEngine@@QAE@XZ ?OnTimer@MmTimer@@UAEXXZ
 0x0042333b,1098,Func42333b,
 0x00423785,124,Func423785,
 0x00423801,106,Func423801,
@@ -294,10 +294,10 @@ address,size,name,symbol
 0x00424d82,191,Unknown6c6d18::FadeOutMusic,?FadeOutMusic@Unknown6c6d18@@QAEHM@Z
 0x00424e41,78,Unknown6d3f50::FadeOutBgm,?FadeOutBgm@Unknown6d3f50@@QAEXM@Z
 0x00424e8f,30,MusicScreen::UpdateIntro,?UpdateIntro@MusicScreen@@QAEHXZ
-0x00424ead,909,Func424ead,
+0x00424ead,909,MusicScreen::UpdateList,?UpdateList@MusicScreen@@QAEHXZ
 0x0042523a,222,Func42523a,
 0x00425318,197,Func425318,
-0x004253dd,125,Func4253dd,
+0x004253dd,125,MusicScreen::OnUpdate,?OnUpdate@MusicScreen@@SAHPAV1@@Z
 0x0042545a,498,Func42545a,
 0x0042564c,1867,Func42564c,
 0x00425d97,108,Func425d97,
@@ -409,7 +409,7 @@ address,size,name,symbol
 0x00432fa0,431,Func432fa0,
 0x00433150,1086,Func433150,
 0x00433590,975,Func433590,
-0x00433960,4355,Func433960,
+0x00433960,4355,SpriteEngine::Step,?Step@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00434af0,97,Func434af0,
 0x00434b60,219,Func434b60,
 0x00434c40,476,Func434c40,
@@ -1538,3 +1538,4 @@ address,size,name,symbol
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A
 0x006d3f50,,g_Unknown6d3f50,?g_Unknown6d3f50@@3VUnknown6d3f50@@A
+0x006d4588,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A

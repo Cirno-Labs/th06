@@ -131,6 +131,17 @@ void Unknown6c6d18::TickTimer(int *frames, float *subFrame)
     }
 }
 
+void Unknown6c6d18::ReleaseArchive(int index)
+{
+    if (this->archives[index] == NULL)
+    {
+        return;
+    }
+    this->archives[index]->Release();
+    delete this->archives[index];
+    this->archives[index] = NULL;
+}
+
 int Unknown6c6d18::LoadMidi(int slot, char *path)
 {
     if (g_Unknown6c6d18.musicMode == 2)

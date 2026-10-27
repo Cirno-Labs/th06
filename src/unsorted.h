@@ -28,6 +28,19 @@ public:
 };
 extern Unknown6d3f50 g_Unknown6d3f50;
 
+// One of the game's data archives (紅魔郷*.DAT). Its code, from
+// 0x43c8d0, is built with optimization like the libraries after the
+// game's code.
+class DatArchive
+{
+public:
+    // Calls Release.
+    ~DatArchive();
+
+    // Closes the archive and frees its entry table. Returns 1.
+    int Release();
+};
+
 // The global at 0x6c6d18: the window, settings and game speed. Larger
 // than its known fields.
 class Unknown6c6d18
@@ -46,6 +59,8 @@ public:
     // Stops the music. Returns -1 if the music mode is neither wave (1)
     // nor MIDI (2), otherwise 0.
     int StopMusic();
+    // Closes and deletes archive `index`, if it is open.
+    void ReleaseArchive(int index);
     // Fades the music out over `seconds`. Returns -1 if the music mode is
     // neither wave nor MIDI, otherwise 0.
     int FadeOutMusic(float seconds);
@@ -93,6 +108,9 @@ public:
     float gameSpeed;
     // Plays music in MIDI mode; may be NULL.
     MidiPlayer *midi;
+    unsigned char unk_1b4[0x8];
+    // The open data archives; NULL where none is open.
+    DatArchive *archives[0x10];
 };
 extern Unknown6c6d18 g_Unknown6c6d18;
 

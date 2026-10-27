@@ -283,7 +283,7 @@ address,size,name,symbol
 0x00424145,160,Timer::Add,?Add@Timer@@QAEXH@Z
 0x004241e5,160,Timer::Sub,?Sub@Timer@@QAEXH@Z
 0x00424285,110,Unknown6c6d18::TickTimer,?TickTimer@Unknown6c6d18@@QAEXPAHPAM@Z
-0x004242f3,130,Func4242f3,
+0x004242f3,130,Unknown6c6d18::ReleaseArchive,?ReleaseArchive@Unknown6c6d18@@QAEXH@Z
 0x00424375,728,Func424375,
 0x0042464d,1119,Func42464d,
 0x00424aac,56,Unknown6c6d18::LoadMidi,?LoadMidi@Unknown6c6d18@@QAEHHPAD@Z
@@ -485,10 +485,11 @@ address,size,name,symbol
 0x0043c750,30,Func43c750,
 0x0043c770,19,Func43c770,
 0x0043c790,305,Func43c790,
-0x0043c8d0,78,Func43c8d0,
+0x0043c8d0,78,DatArchive::Release,?Release@DatArchive@@QAEHXZ
 0x0043c920,100,Func43c920,
 0x0043c990,37,Func43c990,
 0x0043c9c0,189,Func43c9c0,
+0x0043ca80,5,DatArchive::~DatArchive,??1DatArchive@@QAE@XZ
 0x0043ca90,165,Func43ca90,
 0x0043cb40,753,Func43cb40,
 0x0043ce40,23,Func43ce40,

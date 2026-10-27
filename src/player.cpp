@@ -11,6 +11,68 @@ int FireShotType0(Player *player, PlayerBullet *bullet, int index, int frame)
     return FireShot(player, bullet, index, frame, &g_ShotTable0);
 }
 
+int FireShot(Player *player, PlayerBullet *bullet, int index, int frame, ShotTable *table)
+{
+    ShotData *sd;
+    int laser;
+    D3DXVECTOR3 unused;
+
+    while (g_GameManager.power >= table->maxPower)
+    {
+        table++;
+    }
+    sd = &table->shots[index];
+    if (sd->type == 3)
+    {
+        laser = sd->phase;
+        if (player->laserTimers[laser].AsFrames() == 0)
+        {
+            player->laserTimers[laser].Set(sd->interval);
+            bullet->laserIndex = laser;
+            bullet->option = sd->option;
+            bullet->velocity.z = sd->offsetX;
+            bullet->unk_134 = sd->offsetY;
+            goto fire;
+        }
+    }
+    else if (frame % sd->interval == sd->phase)
+    {
+    fire:
+        g_SpriteEngine->StartScript(&bullet->sprite, sd->script);
+        if (sd->option == 0)
+        {
+            bullet->pos = player->position;
+        }
+        else
+        {
+            bullet->pos = player->optionPos[sd->option - 1];
+        }
+        bullet->pos[0] += sd->offsetX;
+        bullet->pos[1] += sd->offsetY;
+        bullet->pos.z = 0.495f;
+        bullet->size.x = sd->sizeX;
+        bullet->size.y = sd->sizeY;
+        bullet->size.z = 1.0f;
+        bullet->angle = sd->angle;
+        bullet->speed = sd->speed;
+        bullet->velocity.x = cosf(sd->angle) * sd->speed;
+        bullet->velocity.y = sinf(sd->angle) * sd->speed;
+        bullet->timer.Set(0);
+        bullet->type = sd->type;
+        bullet->unk_14c = sd->unk_1c;
+        if (sd->sound >= 0)
+        {
+            g_Unknown6d3f50.Func4311e0(sd->sound, 0);
+        }
+        return index >= table->count - 1;
+    }
+    if (index >= table->count - 1)
+    {
+        return -2;
+    }
+    return -1;
+}
+
 int FireShotType1(Player *player, PlayerBullet *bullet, int index, int frame)
 {
     return FireShot(player, bullet, index, frame, &g_ShotTable1);

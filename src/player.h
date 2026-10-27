@@ -15,9 +15,10 @@ struct PlayerBullet
     Sprite sprite;
     D3DXVECTOR3 pos;
     D3DXVECTOR3 size;
-    // A laser's z is its x offset from its option.
+    // A laser keeps its offset from its option in velocity.z and
+    // unk_134.
     D3DXVECTOR3 velocity;
-    DWORD unk_134;
+    float unk_134;
     float speed;
     // The direction it flies in.
     float angle;
@@ -248,11 +249,43 @@ void UpdateMarisaBBomb(Player *player);
 // direction.
 void DrawMarisaBBomb(Player *player);
 extern Player g_Player;
+// One shot of a shot type's power level.
+struct ShotData
+{
+    // Fired on frames where frame % interval is phase; a laser instead
+    // runs laserTimers[phase] for `interval` frames.
+    short interval;
+    short phase;
+    // Where it starts, from the player or its option.
+    float offsetX;
+    float offsetY;
+    float sizeX;
+    float sizeY;
+    float angle;
+    float speed;
+    short unk_1c;
+    // 0 for the player, else the option, from 1.
+    BYTE option;
+    // PlayerBullet::type.
+    BYTE type;
+    // Its script, and its sound or -1.
+    short script;
+    short sound;
+};
+ASSERT_SIZE(ShotData, 0x24);
+
 // A shot type's shots by power level: entries of a count, the power
 // they last up to and their data.
-struct ShotTable;
+struct ShotTable
+{
+    int count;
+    int maxPower;
+    ShotData *shots;
+};
 
-// Fires shot `index` of a shot type for `frame` at the current power.
+// Fires shot `index` of a shot type's table for the current power into
+// `bullet`, if it fires on `frame`. Returns 0, or 1 for the level's last
+// shot; when it does not fire, -1, or -2 for the last.
 int FireShot(Player *player, PlayerBullet *bullet, int index, int frame, ShotTable *table);
 
 // The four shot types' fire functions, in g_ShotTypes.

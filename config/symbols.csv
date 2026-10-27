@@ -251,7 +251,7 @@ address,size,name,symbol
 0x00421c90,115,MmTimer::Start,?Start@MmTimer@@QAEIIP6GXIIKKK@ZK@Z
 0x00421d10,61,MmTimer::Stop,?Stop@MmTimer@@QAEHXZ
 0x00421d50,26,MmTimer::DefaultCallback,?DefaultCallback@MmTimer@@SGXIIKKK@Z
-0x00421d70,24,Func421d70,
+0x00421d70,24,SwapBytes16,?SwapBytes16@@YAGG@Z
 0x00421d90,85,Func421d90,
 0x00421df0,341,Func421df0,
 0x00421f50,147,Func421f50,

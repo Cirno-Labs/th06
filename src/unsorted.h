@@ -419,15 +419,25 @@ void DebugPrint2(const char *fmt, ...);
 int Func42a670(void *arg);
 
 
-class Unknown417d29
+// The in-game interface, the global at 0x69bc30: it loads
+// "data/front.anm" and the dialogue portraits ("data/face00a.anm", ...)
+// and draws the stage clear bonus ("Stage Clear", "Graze *   10 = %5d").
+class Gui
 {
 public:
+    // Loads the interface's sprites.
     int Func417d29();
+
+    // The update element's added callback (the element at 0x69bc7c):
+    // runs Func417d29.
+    static int AddedCallback(Gui *gui);
+    // Removes the update element and the draw element.
+    static void RemoveChain();
 };
 
-// The main callback of the chain element at 0x69bc80: runs
-// Unknown417d29::Func417d29 on the element's user pointer.
-int Func41b1a4(Unknown417d29 *arg);
+// Gui's statically allocated chain elements.
+extern ChainElem g_GuiCalcChain;
+extern ChainElem g_GuiDrawChain;
 
 // Holds GDI objects: 0x41e992 selects the old object back into the DC at
 // +0x14, then deletes the DC and the object at +0x1c.

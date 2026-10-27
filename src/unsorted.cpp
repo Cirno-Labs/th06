@@ -24,9 +24,15 @@ SpriteEngine::~SpriteEngine()
 {
 }
 
-int Func41b1a4(Unknown417d29 *arg)
+int Gui::AddedCallback(Gui *gui)
 {
-    return arg->Func417d29();
+    return gui->Func417d29();
+}
+
+void Gui::RemoveChain()
+{
+    g_Chain.Remove(&g_GuiCalcChain);
+    g_Chain.Remove(&g_GuiDrawChain);
 }
 
 DWORD Rng::GetRandomU32()

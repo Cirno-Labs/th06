@@ -149,7 +149,7 @@ address,size,name,symbol
 0x00417502,1483,Func417502,
 0x00417acd,304,Func417acd,
 0x00417bfd,300,Func417bfd,
-0x00417d29,2364,Unknown417d29::Func417d29,?Func417d29@Unknown417d29@@QAEHXZ
+0x00417d29,2364,Gui::Func417d29,?Func417d29@Gui@@QAEHXZ
 0x00418665,197,Func418665,
 0x0041872a,62,Func41872a,
 0x00418768,35,Func418768,
@@ -161,12 +161,12 @@ address,size,name,symbol
 0x004195bf,1754,Func4195bf,
 0x00419c99,4442,Func419c99,
 0x0041adf3,945,Func41adf3,
-0x0041b1a4,13,Func41b1a4,?Func41b1a4@@YAHPAVUnknown417d29@@@Z
+0x0041b1a4,13,Gui::AddedCallback,?AddedCallback@Gui@@SAHPAV1@@Z
 0x0041b1b1,161,Func41b1b1,
 0x0041b252,249,Func41b252,
 0x0041b34b,377,Func41b34b,
 0x0041b4c4,200,Func41b4c4,
-0x0041b58c,35,Func41b58c,
+0x0041b58c,35,Gui::RemoveChain,?RemoveChain@Gui@@SAXXZ
 0x0041b5af,50,Func41b5af,
 0x0041b5e1,130,Func41b5e1,
 0x0041b663,999,Func41b663,
@@ -1564,6 +1564,8 @@ address,size,name,symbol
 0x005a5fd8,,g_BulletDrawChain,?g_BulletDrawChain@@3UChainElem@@A
 0x005a5ff8,,g_BulletManager,?g_BulletManager@@3VBulletManager@@A
 0x0069bc10,,g_BulletCalcChain,?g_BulletCalcChain@@3UChainElem@@A
+0x0069bc5c,,g_GuiDrawChain,?g_GuiDrawChain@@3UChainElem@@A
+0x0069bc7c,,g_GuiCalcChain,?g_GuiCalcChain@@3UChainElem@@A
 0x0069d4b8,,g_Unknown69d4b8,?g_Unknown69d4b8@@3EA
 0x0069d4bf,,g_Unknown69d4bf,?g_Unknown69d4bf@@3EA
 0x0069d4c0,,g_Unknown69d4c0,?g_Unknown69d4c0@@3EA

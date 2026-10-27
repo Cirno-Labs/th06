@@ -317,7 +317,7 @@ address,size,name,symbol
 0x00427770,230,Player::Die,?Die@Player@@QAEXXZ
 0x00427860,3482,Player::HandleInput,?HandleInput@Player@@QAEHXZ
 0x00428630,69,Player::StartFiring,?StartFiring@Player@@SAXPAV1@@Z
-0x00428680,122,Func428680,
+0x00428680,122,Player::AngleTo,?AngleTo@Player@@QAEMPAUD3DXVECTOR3@@@Z
 0x00428700,122,Func428700,
 0x00428780,309,Player::RegisterChain,?RegisterChain@Player@@SAHE@Z
 0x004288c0,2282,Player::OnUpdate,?OnUpdate@Player@@SAHPAV1@@Z
@@ -967,7 +967,7 @@ address,size,name,symbol
 0x0045bd90,20,__CIcos,__CIcos
 0x0045bda4,9,_cos,_cos
 0x0045bdad,145,Func45bdad,
-0x0045be40,10,Func45be40,
+0x0045be40,10,_atan2,_atan2
 0x0045be60,10,Func45be60,
 0x0045be92,136,_atol,
 0x0045bf1f,5,operator delete,??3@YAXPAX@Z

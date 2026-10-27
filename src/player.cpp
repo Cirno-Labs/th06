@@ -579,6 +579,20 @@ void Player::StartFiring(Player *player)
     }
 }
 
+float Player::AngleTo(D3DXVECTOR3 *pos)
+{
+    float x;
+    float y;
+
+    x = pos->x - this->position.x;
+    y = pos->y - this->position.y;
+    if (y == 0.0f && x == 0.0f)
+    {
+        return 1.5707964f;
+    }
+    return atan2f(y, x);
+}
+
 int Player::RegisterChain(BYTE unk)
 {
     Player *player = &g_Player;

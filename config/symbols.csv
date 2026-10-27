@@ -375,7 +375,7 @@ address,size,name,symbol
 0x0042fee0,136,Func42fee0,
 0x0042ff70,71,Func42ff70,
 0x0042ffc0,556,Func42ffc0,
-0x004301f0,48,Func4301f0,
+0x004301f0,48,ScreenEffect::AddedCallback,?AddedCallback@ScreenEffect@@SAHPAV1@@Z
 0x00430220,75,Func430220,
 0x00430270,669,Func430270,
 0x00430510,461,Func430510,

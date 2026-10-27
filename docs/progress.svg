@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">33.76% (159)</tspan> · <tspan class="decompiled">6.37% (30)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">59.87% (282)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">33.97% (160)</tspan> · <tspan class="decompiled">6.37% (30)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">59.66% (281)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="252.17" height="6" x="0" y="0" class="named"/>
-<rect width="47.58" height="6" x="252.17" y="0" class="decompiled"/>
-<rect width="447.25" height="6" x="299.75" y="0" class="todo"/>
+<rect width="253.76" height="6" x="0" y="0" class="named"/>
+<rect width="47.58" height="6" x="253.76" y="0" class="decompiled"/>
+<rect width="445.66" height="6" x="301.34" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -444,7 +444,7 @@
 <rect width="12" height="12" x="345" y="105" class="todo"><title>0x0042fee0 Func42fee0 (136 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="105" class="todo"><title>0x0042ff70 Func42ff70 (71 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="105" class="todo"><title>0x0042ffc0 Func42ffc0 (556 bytes)</title></rect>
-<rect width="12" height="12" x="390" y="105" class="todo"><title>0x004301f0 Func4301f0 (48 bytes)</title></rect>
+<rect width="12" height="12" x="390" y="105" class="named"><title>0x004301f0 ScreenEffect::AddedCallback (48 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="105" class="todo"><title>0x00430220 Func430220 (75 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="105" class="todo"><title>0x00430270 Func430270 (669 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="105" class="todo"><title>0x00430510 Func430510 (461 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">12.71%</tspan> · <tspan class="decompiled">2.68%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">84.61%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">12.73%</tspan> · <tspan class="decompiled">2.68%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">84.59%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="94.94" height="6" x="0" y="0" class="named"/>
-<rect width="20.03" height="6" x="94.94" y="0" class="decompiled"/>
-<rect width="632.03" height="6" x="114.97" y="0" class="todo"/>
+<rect width="95.09" height="6" x="0" y="0" class="named"/>
+<rect width="20.03" height="6" x="95.09" y="0" class="decompiled"/>
+<rect width="631.88" height="6" x="115.12" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -964,7 +964,7 @@
 <rect width="1.52" height="2.12" x="736.44" y="120.67" class="decompiled"><title>0x0041e260 Unknown41e150::Release (48 bytes)</title></rect>
 <rect width="1.52" height="2.12" x="740.96" y="120.67" class="named"><title>0x0041e7f0 Rng::GetRandomU32 (48 bytes)</title></rect>
 <rect width="1.52" height="2.12" x="745.48" y="120.67" class="named"><title>0x00421c30 MmTimer::MmTimer (48 bytes)</title></rect>
-<rect width="1.96" height="1.66" x="717.89" y="125.79" class="todo"><title>0x004301f0 Func4301f0 (48 bytes)</title></rect>
+<rect width="1.96" height="1.66" x="717.89" y="125.79" class="named"><title>0x004301f0 ScreenEffect::AddedCallback (48 bytes)</title></rect>
 <rect width="1.96" height="1.57" x="717.89" y="130.46" class="named"><title>0x0042b437 FreeListNodes (47 bytes)</title></rect>
 <rect width="1.96" height="1.57" x="717.89" y="135.02" class="named"><title>0x0043c2c0 CWaveFile::Close (47 bytes)</title></rect>
 <rect width="1.96" height="1.47" x="717.89" y="139.59" class="named"><title>0x004014d0 AsciiText::DeletedCallback (46 bytes)</title></rect>

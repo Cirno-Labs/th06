@@ -210,3 +210,17 @@ int *ResolveOperand(Enemy *enemy, int *operand, int *type)
     }
     return operand;
 }
+
+float *ResolveFloatOperand(Enemy *enemy, float *operand, int *type)
+{
+    int *ptr;
+    int val;
+
+    val = *operand;
+    ptr = ResolveOperand(enemy, &val, type);
+    if (ptr == &val)
+    {
+        return operand;
+    }
+    return (float *)ptr;
+}

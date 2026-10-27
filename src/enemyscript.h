@@ -68,6 +68,10 @@ struct Enemy;
 // 3 for the immediate. Returns where the value is.
 int *ResolveOperand(Enemy *enemy, int *operand, int *type);
 
+// Resolves a float operand: a variable when *operand, as an int, names
+// one, else *operand itself.
+float *ResolveFloatOperand(Enemy *enemy, float *operand, int *type);
+
 // Where ResolveOperand computes its read-only values.
 extern int g_Unknown487e44;
 extern float g_Unknown487e48;

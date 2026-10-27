@@ -32,6 +32,14 @@ void Gui::ShowBonusPopup(int bonus)
     this->impl->bonusPopup.value = bonus;
 }
 
+void Gui::ShowFullPowerPopup(int unk)
+{
+    this->impl->fullPowerPopup.pos = D3DXVECTOR3(416.0f, 232.0f, 0.0f);
+    this->impl->fullPowerPopup.shown = 1;
+    this->impl->fullPowerPopup.timer.Set(0);
+    this->impl->fullPowerPopup.value = unk;
+}
+
 int Gui::OnUpdate(Gui *gui)
 {
     if (g_GameManager.unk_002c)

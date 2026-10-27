@@ -143,7 +143,7 @@ address,size,name,symbol
 0x0041732c,24,Gui::Func41732c,?Func41732c@Gui@@QAEXXZ
 0x00417344,22,Gui::Func417344,?Func417344@Gui@@QAEHXZ
 0x0041735a,127,Gui::ShowBonusPopup,?ShowBonusPopup@Gui@@QAEXH@Z
-0x004173d9,127,Gui::Func4173d9,?Func4173d9@Gui@@QAEXH@Z
+0x004173d9,127,Gui::ShowFullPowerPopup,?ShowFullPowerPopup@Gui@@QAEXH@Z
 0x00417458,127,Func417458,
 0x004174d7,43,Gui::OnUpdate,?OnUpdate@Gui@@SAHPAV1@@Z
 0x00417502,1483,Func417502,

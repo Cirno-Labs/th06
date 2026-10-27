@@ -565,8 +565,8 @@ public:
     void Func417acd(int sprite, char *name);
     // Sets impl->unk_206e.
     void Func417314();
-    // Called when the power reaches its maximum.
-    void Func4173d9(int unk);
+    // Shows fullPowerPopup, when the power reaches its maximum.
+    void ShowFullPowerPopup(int unk);
     // Shows `bonus` in bonusPopup, the bonus for bullets cleared.
     void ShowBonusPopup(int bonus);
     // Sets impl->unk_217e.

@@ -161,7 +161,7 @@ void ItemManager::UpdateItems()
                     {
                         g_GameManager.power = 128;
                         g_BulletManager.ClearAllToItems();
-                        g_Gui.Func4173d9(0);
+                        g_Gui.ShowFullPowerPopup(0);
                     }
                     g_GameManager.AddScore(10);
                     g_Gui.flags.powerChanged = 2;
@@ -243,7 +243,7 @@ void ItemManager::UpdateItems()
                     {
                         g_GameManager.power = 128;
                         g_BulletManager.ClearAllToItems();
-                        g_Gui.Func4173d9(0);
+                        g_Gui.ShowFullPowerPopup(0);
                     }
                     g_Gui.flags.powerChanged = 2;
                     g_GameManager.AddScore(10);
@@ -283,7 +283,7 @@ void ItemManager::UpdateItems()
                 if (g_GameManager.power < 128)
                 {
                     g_BulletManager.ClearAllToItems();
-                    g_Gui.Func4173d9(0);
+                    g_Gui.ShowFullPowerPopup(0);
                     g_Unknown6d3f50.Func4311e0(0x1f, 0);
                     g_AsciiText.AddPopup(&entry->pos, -1, 0xff80c0ff);
                 }

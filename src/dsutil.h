@@ -72,6 +72,10 @@ public:
     CStreamingSound(LPDIRECTSOUNDBUFFER pDSBuffer, DWORD dwDSBufferSize, CWaveFile *pWaveFile, DWORD dwNotifySize);
     ~CStreamingSound();
 
+    // Not in the SDK: steps a fade begun with `fading`, run once a frame.
+    // Stops the buffer and returns 1 when the fade ends, otherwise 0.
+    int UpdateFade();
+
     DWORD m_dwLastPlayPos;
     DWORD m_dwPlayProgress;
     DWORD m_dwNotifySize;

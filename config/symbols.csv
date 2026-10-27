@@ -459,7 +459,7 @@ address,size,name,symbol
 0x0043b420,96,CStreamingSound::CStreamingSound,??0CStreamingSound@@QAE@PAUIDirectSoundBuffer@@KPAVCWaveFile@@K@Z
 0x0043b480,46,CStreamingSound::`scalar deleting destructor',??_GCStreamingSound@@UAEPAXI@Z
 0x0043b4b0,28,CStreamingSound::~CStreamingSound,??1CStreamingSound@@UAE@XZ
-0x0043b4d0,143,Unknown6d457c::Func43b4d0,?Func43b4d0@Unknown6d457c@@QAEHXZ
+0x0043b4d0,143,CStreamingSound::UpdateFade,?UpdateFade@CStreamingSound@@QAEHXZ
 0x0043b560,887,Func43b560,
 0x0043b8e0,194,Func43b8e0,
 0x0043b9b0,82,Func43b9b0,
@@ -1595,5 +1595,4 @@ address,size,name,symbol
 0x006ca628,,g_Player,?g_Player@@3VPlayer@@A
 0x006d3f18,,g_ReplayManager,?g_ReplayManager@@3PAVReplayManager@@A
 0x006d3f50,,g_Unknown6d3f50,?g_Unknown6d3f50@@3VUnknown6d3f50@@A
-0x006d457c,,g_Unknown6d457c,?g_Unknown6d457c@@3PAVUnknown6d457c@@A
 0x006d4588,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A

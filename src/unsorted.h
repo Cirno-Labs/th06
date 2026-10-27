@@ -326,14 +326,6 @@ extern DatArchive **g_Archives;
 // 0, or -1 if DirectInput is off or the keyboard fails.
 int InitDirectInput(Unknown6c6d18 *game);
 
-// The object at 0x6d457c, run first in Unknown6c6d18::OnUpdate when it
-// exists.
-class Unknown6d457c
-{
-public:
-    int Func43b4d0();
-};
-extern Unknown6d457c *g_Unknown6d457c;
 
 // Scene set-up functions Unknown6c6d18::OnUpdate calls. They return
 // nonzero on failure.

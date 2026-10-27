@@ -37,9 +37,9 @@ int Unknown6c6d18::RegisterChain()
 // for scene 5, otherwise 1.
 int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
 {
-    if (g_Unknown6d457c != NULL)
+    if (g_Unknown6d3f50.bgm != NULL)
     {
-        g_Unknown6d457c->Func43b4d0();
+        g_Unknown6d3f50.bgm->UpdateFade();
     }
     g_PrevButtons = g_Buttons;
     g_Buttons = ReadButtons();

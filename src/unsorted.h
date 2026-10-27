@@ -61,6 +61,8 @@ struct SoundInfo
     short unk_6;
 };
 extern SoundInfo g_SoundInfos[];
+// The sound files LoadSounds loads, by index.
+extern char *g_SoundPaths[];
 
 // One of the game's data archives (紅魔郷*.DAT). Its code, from
 // 0x43c8d0, is built with optimization like the libraries after the

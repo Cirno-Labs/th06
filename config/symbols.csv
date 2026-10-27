@@ -1567,6 +1567,7 @@ address,size,name,symbol
 0x00477ed8,,g_ShotTable2,?g_ShotTable2@@3UShotTable@@A
 0x00478468,,g_ShotTable3,?g_ShotTable3@@3UShotTable@@A
 0x00478528,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A
+0x00478628,,g_SoundPaths,?g_SoundPaths@@3PAPADA
 0x0047a630,4,__security_cookie,___security_cookie
 0x0047b8e0,,g_AsciiDrawChain,?g_AsciiDrawChain@@3UChainElem@@A
 0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A

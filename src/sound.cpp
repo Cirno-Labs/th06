@@ -107,6 +107,39 @@ char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size)
     return NULL;
 }
 
+int Unknown6d3f50::LoadSounds()
+{
+    int i;
+
+    if (!this->unk_610)
+    {
+        return -1;
+    }
+    if (this->dsound == NULL)
+    {
+        return 0;
+    }
+    for (i = 0; i < 3; i++)
+    {
+        this->queue[i] = -1;
+    }
+    for (i = 0; i < 0x1a; i++)
+    {
+        if (this->LoadSound(i, g_SoundPaths[i]) != 0)
+        {
+            Func41e4d0(&g_Unknown69d998, "error : Sound ファイルが読み込めない データを確認 %s\n", g_SoundPaths[i]);
+            return -1;
+        }
+    }
+    for (i = 0; i < ARRAY_SIZE(this->sounds); i++)
+    {
+        this->dsound->DuplicateSoundBuffer(this->soundBuffers[g_SoundInfos[i].buffer], &this->sounds[i]);
+        this->sounds[i]->SetCurrentPosition(0);
+        this->sounds[i]->SetVolume(g_SoundInfos[i].volume);
+    }
+    return 0;
+}
+
 void Unknown6d3f50::QueueSound(int sound, int unused)
 {
     int i;

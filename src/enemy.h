@@ -73,6 +73,8 @@ struct Enemy
     Timer unk_ebc;
 
     void Func4121b0();
+    // Keeps the position within the bounds, with flags.clampPos.
+    void ClampPos();
 };
 ASSERT_SIZE(Enemy, 0xec8);
 

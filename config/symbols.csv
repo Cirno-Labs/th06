@@ -56,7 +56,7 @@ address,size,name,symbol
 0x0040b3c0,88,ScriptSet,?ScriptSet@@YAXPAUEnemy@@HPAH@Z
 0x0040b420,161,ScriptAdd,?ScriptAdd@@YAXPAUEnemy@@HPAH1@Z
 0x0040b4d0,161,ScriptSub,?ScriptSub@@YAXPAUEnemy@@HPAH1@Z
-0x0040b580,204,Func40b580,
+0x0040b580,204,ScriptMul,?ScriptMul@@YAXPAUEnemy@@HPAH1@Z
 0x0040b650,164,Func40b650,
 0x0040b700,202,Func40b700,
 0x0040b7d0,190,Func40b7d0,

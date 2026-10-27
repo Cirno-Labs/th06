@@ -128,6 +128,8 @@ void ScriptMoveTime(Enemy *enemy, EnemyScriptInstr *instr);
 void ScriptAdd(Enemy *enemy, int dst, int *a, int *b);
 // Sets variable `dst` to operand *a minus operand *b, like ScriptAdd.
 void ScriptSub(Enemy *enemy, int dst, int *a, int *b);
+// Sets variable `dst` to operand *a times operand *b, like ScriptAdd.
+void ScriptMul(Enemy *enemy, int dst, int *a, int *b);
 
 // Where ResolveOperand computes its read-only values.
 extern int g_Unknown487e44;

@@ -335,3 +335,27 @@ void ScriptSub(Enemy *enemy, int dst, int *a, int *b)
         *(float *)res = *(float *)x - *(float *)y;
     }
 }
+
+void ScriptMul(Enemy *enemy, int dst, int *a, int *b)
+{
+    int *res;
+    int *x;
+    int *y;
+    int t;
+
+    x = ResolveOperand(enemy, a, NULL);
+    y = ResolveOperand(enemy, b, NULL);
+    res = ResolveOperand(enemy, &dst, &t);
+    if (t == 0)
+    {
+        x = ResolveOperand(enemy, a, NULL);
+        y = ResolveOperand(enemy, b, NULL);
+        *res = *x * *y;
+    }
+    else if (t == 1)
+    {
+        x = (int *)ResolveFloatOperand(enemy, (float *)a, NULL);
+        y = (int *)ResolveFloatOperand(enemy, (float *)b, NULL);
+        *(float *)res = *(float *)x * *(float *)y;
+    }
+}

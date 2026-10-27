@@ -4,7 +4,7 @@ address,size,name,symbol
 0x00401140,257,Func401140,
 0x00401250,59,Func401250,
 0x00401290,39,Func401290,
-0x004012c0,213,Func4012c0,
+0x004012c0,213,AsciiText::RegisterChain,?RegisterChain@AsciiText@@SAHXZ
 0x004013a0,110,Func4013a0,
 0x00401410,185,Func401410,
 0x004014d0,46,Func4014d0,
@@ -220,7 +220,7 @@ address,size,name,symbol
 0x0041ec22,80,Func41ec22,
 0x0041ec72,671,Func41ec72,
 0x0041ef11,247,Func41ef11,
-0x0041f008,35,Func41f008,
+0x0041f008,35,Func41f008,?Func41f008@@YAXXZ
 0x0041f02b,37,Func41f02b,?Func41f02b@@YAXXZ
 0x0041f050,480,Func41f050,
 0x0041f230,90,Func41f230,
@@ -274,7 +274,7 @@ address,size,name,symbol
 0x00423801,106,EnumAxesCallback,?EnumAxesCallback@@YGHPBUDIDEVICEOBJECTINSTANCEA@@PAX@Z
 0x0042386b,159,Unknown6c6d18::RegisterChain,?RegisterChain@Unknown6c6d18@@SAHXZ
 0x0042390a,522,Unknown6c6d18::AddedCallback,?AddedCallback@Unknown6c6d18@@SAHPAV1@@Z
-0x00423b14,652,Func423b14,
+0x00423b14,652,Func423b14,?Func423b14@@YAHPAVUnknown6c6d18@@@Z
 0x00423da0,63,EnumJoysticksCallback,?EnumJoysticksCallback@@YGHPBUDIDEVICEINSTANCEA@@PAX@Z
 0x00423ddf,352,Unknown6c6d18::DeletedCallback,?DeletedCallback@Unknown6c6d18@@SAHPAV1@@Z
 0x00423f3f,433,DrawFps,?DrawFps@@YAXXZ
@@ -284,7 +284,7 @@ address,size,name,symbol
 0x004241e5,160,Timer::Sub,?Sub@Timer@@QAEXH@Z
 0x00424285,110,Unknown6c6d18::TickTimer,?TickTimer@Unknown6c6d18@@QAEXPAHPAM@Z
 0x004242f3,130,Unknown6c6d18::ReleaseArchive,?ReleaseArchive@Unknown6c6d18@@QAEXH@Z
-0x00424375,728,Func424375,
+0x00424375,728,Unknown6c6d18::LoadArchive,?LoadArchive@Unknown6c6d18@@QAEHHPAD@Z
 0x0042464d,1119,Func42464d,
 0x00424aac,56,Unknown6c6d18::LoadMidi,?LoadMidi@Unknown6c6d18@@QAEHHPAD@Z
 0x00424ae4,75,Unknown6c6d18::PlayMidi,?PlayMidi@Unknown6c6d18@@QAEHH@Z
@@ -385,13 +385,13 @@ address,size,name,symbol
 0x00430e10,173,Func430e10,
 0x00430ec0,190,Func430ec0,
 0x00430f80,252,Unknown6d3f50::StopBgm,?StopBgm@Unknown6d3f50@@QAEXXZ
-0x00431080,342,Func431080,
+0x00431080,342,Unknown6d3f50::LoadSounds,?LoadSounds@Unknown6d3f50@@QAEHXZ
 0x004311e0,133,Func4311e0,
 0x00431270,256,Func431270,
 0x00431370,176,Func431370,
 0x00431420,76,Func431420,
 0x00431470,493,Func431470,
-0x00431660,700,Func431660,
+0x00431660,700,SpriteEngine::Func431660,?Func431660@SpriteEngine@@QAEXXZ
 0x00431920,237,Func431920,
 0x00431a10,863,Func431a10,
 0x00431d70,66,Func431d70,
@@ -1539,6 +1539,8 @@ address,size,name,symbol
 0x0047a630,4,__security_cookie,___security_cookie
 0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A
 0x0069d4c1,,g_Unknown69d4c1,?g_Unknown69d4c1@@3EA
+0x0069d8f8,,g_Rng,?g_Rng@@3VRng@@A
+0x0069d900,,g_Archives,?g_Archives@@3PAPAVDatArchive@@A
 0x0069d904,,g_Buttons,?g_Buttons@@3GA
 0x0069d908,,g_PrevButtons,?g_PrevButtons@@3GA
 0x0069d914,,g_FileSize,?g_FileSize@@3HA

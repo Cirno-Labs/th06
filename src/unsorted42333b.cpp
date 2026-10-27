@@ -42,6 +42,57 @@ int Unknown6c6d18::OnDraw(Unknown6c6d18 *arg)
     return 1;
 }
 
+int Unknown6c6d18::AddedCallback(Unknown6c6d18 *arg)
+{
+    int i;
+
+    for (i = 0; i < 0x10; i++)
+    {
+        arg->archives[i] = NULL;
+    }
+    g_Archives = arg->archives;
+    if (arg->LoadArchive(0, "紅魔郷IN.dat") != 0)
+    {
+        return -1;
+    }
+    // Shows the logo for two frames.
+    g_SpriteEngine->LoadSurface(0, "data/title/th06logo.jpg");
+    g_SpriteEngine->Func435300(0, 0, 0, 0, 0);
+    if (FAILED(g_Unknown6c6d18.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+    {
+        g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);
+    }
+    g_SpriteEngine->Func435300(0, 0, 0, 0, 0);
+    if (FAILED(g_Unknown6c6d18.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+    {
+        g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);
+    }
+    g_SpriteEngine->ReleaseSurface(0);
+    arg->unk_400 = timeGetTime();
+    Func423b14(arg);
+    arg->midi = new MidiPlayer();
+    g_Rng.SetSeed(timeGetTime());
+    g_Unknown6d3f50.LoadSounds();
+    if (g_SpriteEngine->LoadAnm(0, "data/text.anm", 0x700) != 0)
+    {
+        return -1;
+    }
+    if (AsciiText::RegisterChain() != 0)
+    {
+        Func41e4d0(&g_Unknown69d998, "error : 文字の初期化に失敗しました\n");
+        return -1;
+    }
+    arg->unk_198 = 0;
+    g_SpriteEngine->Func431660();
+    Func41f008();
+    arg->ReleaseArchive(0);
+    if (g_Unknown6c6d18.LoadArchive(1, "紅魔郷MD.dat") != 0)
+    {
+        return -1;
+    }
+    return 0;
+}
+
 BOOL CALLBACK EnumAxesCallback(const DIDEVICEOBJECTINSTANCE *pdidoi, VOID *pContext)
 {
     HWND hDlg = (HWND)pContext;

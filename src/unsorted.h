@@ -22,6 +22,8 @@ public:
     // Fades the wave music out over `seconds`, counted in frames at 60
     // per second.
     void FadeOutBgm(float seconds);
+    // Loads the sound effects ("data/wav/plst00.wav", ...).
+    int LoadSounds();
 
     unsigned char unk_000[0x62c];
     // The wave music playing; NULL when stopped.
@@ -60,6 +62,9 @@ public:
     // Stops the music. Returns -1 if the music mode is neither wave (1)
     // nor MIDI (2), otherwise 0.
     int StopMusic();
+    // Opens the archive at `path` (such as "紅魔郷IN.dat") as archive
+    // `index`. Returns 0, or -1 on failure.
+    int LoadArchive(int index, char *path);
     // Closes and deletes archive `index`, if it is open.
     void ReleaseArchive(int index);
     // Fades the music out over `seconds`. Returns -1 if the music mode is
@@ -88,7 +93,8 @@ public:
     // the frame rate. Returns 1.
     static int OnDraw(Unknown6c6d18 *arg);
 
-    unsigned char unk_000[0xc];
+    unsigned char unk_000[0x8];
+    IDirect3DDevice8 *d3dDevice;
     // Created by DirectInput8Create.
     IDirectInput8 *dinput;
     // The keyboard's DirectInput device.
@@ -99,7 +105,11 @@ public:
     // Set from CreateWindowExA's result; MidiDevice::Open has MIDI
     // messages sent to it (CALLBACK_WINDOW).
     HWND hwnd;
-    unsigned char unk_048[0xe7];
+    unsigned char unk_048[0x98];
+    // What the device was created with; AddedCallback resets the device
+    // with them when presenting fails.
+    D3DPRESENT_PARAMETERS presentParams;
+    unsigned char unk_114[0x1b];
     // How music is played: 1 is wave, 2 is MIDI. Set to 2 after logging
     // "wave データが無いので、midi にします" ("no wave data, switching to
     // MIDI").
@@ -114,7 +124,8 @@ public:
     // through 10), and the main loop's callbacks compare it with 3. The
     // music screen sets it to 1 to leave; RegisterChain to -1.
     int scene;
-    unsigned char unk_190[0xc];
+    unsigned char unk_190[0x8];
+    int unk_198;
     // DrawFps shows the frame rate while it is 0.
     int unk_19c;
     unsigned char unk_1a0[0x8];
@@ -133,6 +144,9 @@ public:
     float unk_1b8;
     // The open data archives; NULL where none is open.
     DatArchive *archives[0x10];
+    unsigned char unk_1fc[0x204];
+    // timeGetTime() when AddedCallback ran.
+    DWORD unk_400;
 };
 extern Unknown6c6d18 g_Unknown6c6d18;
 
@@ -143,6 +157,28 @@ extern WORD g_PrevButtons;
 
 // Whether any of the buttons in `mask` went down this frame.
 #define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_PrevButtons & (mask)))
+
+// The game's random number generator, at 0x69d8f8.
+class Rng
+{
+public:
+    void SetSeed(WORD seed)
+    {
+        this->seed = seed;
+        this->unk_04 = 0;
+    }
+
+    WORD seed;
+    unsigned char unk_02[0x2];
+    int unk_04;
+};
+extern Rng g_Rng;
+
+// Points at Unknown6c6d18::archives.
+extern DatArchive **g_Archives;
+
+int Func423b14(Unknown6c6d18 *game);
+void Func41f008();
 
 // Counts frames and draws the frame rate ("%.02ffps"), updated every
 // half second, at the bottom right.

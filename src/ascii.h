@@ -11,6 +11,9 @@
 class AsciiText
 {
 public:
+    // Adds AsciiText's update and draw chain elements. Returns 0, or -1
+    // if adding fails.
+    static int RegisterChain();
     // Removes AsciiText's two chain elements.
     static void RemoveChain();
 

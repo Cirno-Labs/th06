@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">41.19% (194)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">52.65% (248)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">41.40% (195)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">52.44% (247)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="307.68" height="6" x="0" y="0" class="named"/>
-<rect width="45.99" height="6" x="307.68" y="0" class="decompiled"/>
-<rect width="393.32" height="6" x="353.68" y="0" class="todo"/>
+<rect width="309.27" height="6" x="0" y="0" class="named"/>
+<rect width="45.99" height="6" x="309.27" y="0" class="decompiled"/>
+<rect width="391.74" height="6" x="355.26" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -264,7 +264,7 @@
 <rect width="12" height="12" x="645" y="45" class="todo"><title>0x0041cf60 Func41cf60 (85 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="45" class="todo"><title>0x0041cfc0 Func41cfc0 (1472 bytes)</title></rect>
 <rect width="12" height="12" x="675" y="45" class="named"><title>0x0041d580 SetButtonFromDirectInput (127 bytes)</title></rect>
-<rect width="12" height="12" x="690" y="45" class="todo"><title>0x0041d600 SetButtonFromJoystick (117 bytes)</title></rect>
+<rect width="12" height="12" x="690" y="45" class="named"><title>0x0041d600 SetButtonFromJoystick (117 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="45" class="todo"><title>0x0041d680 Func41d680 (414 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="45" class="named"><title>0x0041d820 ReadButtons (2196 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="45" class="named"><title>0x0041e0c0 ResetKeyboard (133 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">81.32%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.05%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">81.27%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="119.53" height="6" x="0" y="0" class="named"/>
-<rect width="19.98" height="6" x="119.53" y="0" class="decompiled"/>
-<rect width="607.49" height="6" x="139.51" y="0" class="todo"/>
+<rect width="119.90" height="6" x="0" y="0" class="named"/>
+<rect width="19.98" height="6" x="119.90" y="0" class="decompiled"/>
+<rect width="607.12" height="6" x="139.88" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -879,7 +879,7 @@
 <rect width="4.19" height="5.12" x="679.30" y="105.85" class="named"><title>0x00421ff0 MidiPlayer::LoadFile (121 bytes)</title></rect>
 <rect width="4.19" height="4.91" x="679.30" y="113.97" class="todo"><title>0x00420b50 Func420b50 (118 bytes)</title></rect>
 <rect width="4.19" height="4.85" x="679.30" y="121.88" class="todo"><title>0x0040c100 Func40c100 (117 bytes)</title></rect>
-<rect width="4.19" height="4.85" x="679.30" y="129.73" class="todo"><title>0x0041d600 SetButtonFromJoystick (117 bytes)</title></rect>
+<rect width="4.19" height="4.85" x="679.30" y="129.73" class="named"><title>0x0041d600 SetButtonFromJoystick (117 bytes)</title></rect>
 <rect width="4.19" height="4.71" x="679.30" y="137.57" class="todo"><title>0x0040f4d0 Func40f4d0 (115 bytes)</title></rect>
 <rect width="4.19" height="4.71" x="679.30" y="145.29" class="named"><title>0x00421c90 MmTimer::Start (115 bytes)</title></rect>
 <rect width="4.20" height="4.63" x="686.49" y="89.49" class="todo"><title>0x00403790 Func403790 (114 bytes)</title></rect>

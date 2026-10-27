@@ -22,11 +22,12 @@ struct Effect
     float unk_160;
     Timer timer;
     DWORD unk_170;
-    // Called every frame while set; the effect ends when it returns
+    // From g_EffectInfos. Called every frame while set; the effect ends when it returns
     // anything but 1.
     int (*update)(Effect *effect);
     char active;
-    char unk_179;
+    // The type it was started as.
+    char type;
     // Set to end an effect that followed an enemy.
     char unk_17a;
     char unk_17b;
@@ -62,16 +63,27 @@ public:
     static int DeletedCallback(EffectManager *mgr);
     // Removes the two chain elements.
     static void RemoveChain();
-    // Starts effect `type` at `pos`.
-    Effect *Func40ef50(int type, D3DXVECTOR3 *pos, int unk, D3DCOLOR color);
+    // Starts `count` effects of `type` at `pos` in `color`, in free
+    // slots from the one after `next`. Returns the last effect started,
+    // or effects[0x200] if there were not enough free slots.
+    Effect *SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color);
 
-    DWORD unk_00000;
+    // Where SpawnEffect looks for a free effect next.
+    int next;
     // How many effects were active this frame.
     int activeCount;
     Effect effects[0x201];
 };
 ASSERT_SIZE(EffectManager, 0x2f984);
 extern EffectManager g_EffectManager;
+
+// What each type of effect starts with.
+struct EffectInfo
+{
+    int script;
+    int (*update)(Effect *effect);
+};
+extern EffectInfo g_EffectInfos[];
 
 // EffectManager's statically allocated chain elements.
 extern ChainElem g_EffectCalcChain;

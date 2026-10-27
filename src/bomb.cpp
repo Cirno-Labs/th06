@@ -35,7 +35,7 @@ void UpdateReimuABomb(Player *player)
             player->bomb.partActive[i] = 0;
         }
         g_ItemManager.CollectAll();
-        g_EffectManager.Func40ef50(0xc, &player->position, 1, 0xff4040ff);
+        g_EffectManager.SpawnEffect(0xc, &player->position, 1, 0xff4040ff);
         player->bulletClearAreas[8][0] = player->position.x;
         player->bulletClearAreas[8][1] = player->position.y;
         player->bulletClearAreas[8][2] = 256.0f;
@@ -109,8 +109,8 @@ void UpdateReimuABomb(Player *player)
                 player->bulletClearAreas[i][3] = 48.0f;
                 if (player->bombHitCount[i] >= 100 || player->bomb.timer >= player->bomb.duration - 30)
                 {
-                    g_EffectManager.Func40ef50(6, &player->bomb.partPos[i], 8, 0xffffffff);
-                    g_EffectManager.Func40ef50(0xc, &player->bomb.partPos[i], 1, 0xff4040ff);
+                    g_EffectManager.SpawnEffect(6, &player->bomb.partPos[i], 8, 0xffffffff);
+                    g_EffectManager.SpawnEffect(0xc, &player->bomb.partPos[i], 1, 0xff4040ff);
                     player->bomb.partActive[i] = 2;
                     player->bomb.sprites[i * 4].unk_08a = 1;
                     player->bomb.sprites[i * 4 + 1].unk_08a = 1;

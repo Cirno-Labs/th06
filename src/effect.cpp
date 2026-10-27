@@ -13,6 +13,57 @@ void EffectManager::Reset()
     memset(this, 0, sizeof(EffectManager));
 }
 
+Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
+{
+    Effect *effect;
+    int tries;
+
+    effect = &this->effects[this->next];
+    for (tries = 0; tries < 0x200; tries++)
+    {
+        this->next++;
+        if (this->next >= 0x200)
+        {
+            this->next = 0;
+        }
+        if (effect->active)
+        {
+            if (this->next == 0)
+            {
+                effect = this->effects;
+            }
+            else
+            {
+                effect++;
+            }
+            continue;
+        }
+        effect->active = 1;
+        effect->type = type;
+        effect->pos = *pos;
+        g_SpriteEngine->StartScript(&effect->sprite, g_EffectInfos[type].script);
+        effect->sprite.color = color;
+        effect->update = g_EffectInfos[type].update;
+        effect->timer.Set(0);
+        effect->unk_17a = 0;
+        effect->unk_17b = 0;
+        count--;
+        if (count == 0)
+        {
+            break;
+        }
+        if (this->next == 0)
+        {
+            effect = this->effects;
+        }
+        else
+        {
+            effect++;
+        }
+    }
+    return tries >= 0x200 ? &this->effects[0x200] : effect;
+}
+
 int EffectManager::RegisterChain()
 {
     EffectManager *mgr = &g_EffectManager;

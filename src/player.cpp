@@ -187,7 +187,7 @@ int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
             }
             if (cur->timer.AsFrames() % 6 == 0)
             {
-                g_EffectManager.Func40ef50(5, &cur->pos, 1, 0xffffffff);
+                g_EffectManager.SpawnEffect(5, &cur->pos, 1, 0xffffffff);
             }
         }
         if (cur->type != 3)
@@ -195,7 +195,7 @@ int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
             if (cur->state == 1)
             {
                 g_SpriteEngine->StartScript(&cur->sprite, cur->sprite.scriptIndex + 0x20);
-                g_EffectManager.Func40ef50(5, &cur->pos, 1, 0xffffffff);
+                g_EffectManager.SpawnEffect(5, &cur->pos, 1, 0xffffffff);
                 cur->pos.z = 0.1f;
             }
             cur->state = 2;
@@ -209,7 +209,7 @@ int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
             {
                 targetLo = *pos;
                 targetLo.x = cur->pos.x;
-                g_EffectManager.Func40ef50(5, &targetLo, 1, 0xffffffff);
+                g_EffectManager.SpawnEffect(5, &targetLo, 1, 0xffffffff);
             }
         }
     }
@@ -230,7 +230,7 @@ int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
         this->hitCounter++;
         if (this->hitCounter % 4 == 0)
         {
-            g_EffectManager.Func40ef50(3, pos, 1, 0xffffffff);
+            g_EffectManager.SpawnEffect(3, pos, 1, 0xffffffff);
         }
         if (this->bomb.running && hitByBomb != NULL)
         {
@@ -407,7 +407,7 @@ void Player::Graze(D3DXVECTOR3 *pos)
         }
     }
     mid = (this->position + *pos) / 2.0f;
-    g_EffectManager.Func40ef50(8, &mid, 1, 0xffffffff);
+    g_EffectManager.SpawnEffect(8, &mid, 1, 0xffffffff);
     g_GameManager.AddScore(500);
     g_GameManager.AddSubRank(6);
     g_Gui.flags.grazeChanged = 2;
@@ -419,8 +419,8 @@ void Player::Die()
     int i;
 
     g_EnemyManager.unk_ee5c4 = 0;
-    g_EffectManager.Func40ef50(0xc, &this->position, 1, 0xff4040ff);
-    g_EffectManager.Func40ef50(6, &this->position, 16, 0xffffffff);
+    g_EffectManager.SpawnEffect(0xc, &this->position, 1, 0xff4040ff);
+    g_EffectManager.SpawnEffect(6, &this->position, 16, 0xffffffff);
     this->unk_09e0 = 2;
     this->unk_75b4.Set(0);
     g_Unknown6d3f50.Func4311e0(4, 0);

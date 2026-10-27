@@ -37,9 +37,12 @@ public:
     // Below 3 and below 8.
     WORD unk_ee5b8;
     WORD unk_ee5ba;
-    DWORD unk_ee5bc[0x3];
+    DWORD unk_ee5bc[0x2];
+    int unk_ee5c4;
     int unk_ee5c8;
-    DWORD unk_ee5cc[0x4];
+    DWORD unk_ee5cc[0x2];
+    int unk_ee5d4;
+    DWORD unk_ee5d8;
     int unk_ee5dc;
     DWORD unk_ee5e0[0x3];
 };

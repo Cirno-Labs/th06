@@ -33,7 +33,15 @@ public:
     // (priority 7) and two draw elements (priorities 5 and 7). Returns
     // 0, or -1 if adding fails.
     static int RegisterChain(BYTE unk);
+    // The update element's callback, unless g_GameManager.unk_002c is
+    // set: runs the bomb or starts one (X pressed, bombs left), plays
+    // the death (state 2: drops items, takes a life, respawns at the
+    // bottom) and the respawn (state 1) and the blinking invulnerability
+    // after it (state 3), then moves the player. Returns 1.
     static int OnUpdate(Player *player);
+    int Func427860();
+    static void Func4291b0(Player *player);
+    static int Func429710(Player *player);
     static int OnDraw(Player *player);
     // Runs DrawHitBullets. Returns 1.
     static int OnDraw2(Player *player);
@@ -46,7 +54,10 @@ public:
     // Removes the player's three chain elements.
     static void RemoveChain();
 
-    DWORD unk_0000[0x110];
+    // The player's sprite, and two more stepped while unk_09e2 is set.
+    Sprite sprite;
+    Sprite unk_0110[2];
+    DWORD unk_0330[0x44];
     D3DXVECTOR3 position;
     DWORD unk_044c[0x1b];
     // The bomb's hitboxes against enemies: centres, sizes, the damage
@@ -62,27 +73,38 @@ public:
     // Scale the player's movement: 0.3 during Marisa B's bomb, else 1.
     float moveScaleX;
     float moveScaleY;
-    DWORD unk_09d8[0x2];
-    // 3 while a bomb runs.
-    BYTE unk_09e0;
+    // While the player dies: frames left to bomb, as a deathbomb.
+    int unk_09d8;
+    // Frames left of clearing all bullets after a respawn.
+    int unk_09dc;
+    // 0 normally, 1 respawning, 2 dying, 3 invulnerable (the bombs set
+    // it every frame).
+    char unk_09e0;
     // RegisterChain's argument.
     BYTE unk_09e1;
-    WORD unk_09e2;
-    DWORD unk_09e4[0xe];
+    char unk_09e2;
+    BYTE unk_09e3;
+    DWORD unk_09e4[0xb];
+    DWORD unk_0a10;
+    DWORD unk_0a14;
+    DWORD unk_0a18;
     // What Reimu A's orbs home in on; x is -100 or less when there is
     // nothing.
     D3DXVECTOR3 unk_0a1c;
     PlayerBullet bullets[0x50];
     DWORD unk_75a8[0x3];
-    // Set to 360 frames when a bomb starts.
+    // Counts the death and respawn; the invulnerability counts down
+    // (set to 360 frames when a bomb starts).
     Timer unk_75b4;
     DWORD unk_75c0[0x2];
-    // Cleared when the bomb ends.
+    // Whether a bomb runs; cleared when it ends.
     int unk_75c8;
     // The bomb running: its length in frames, and its clock.
     int bombDuration;
     Timer bombTimer;
-    DWORD unk_75dc[0x2];
+    // The shot type's bomb callbacks.
+    void (*bombUpdate)(Player *player);
+    void (*bombDraw)(Player *player);
     // Per-bomb state for up to 8 of a bomb's parts (Reimu A's orbs,
     // ...): whether each is live (Reimu A: 1 flying, then counting up to
     // 30 after it bursts), its speed, position and velocity, and four

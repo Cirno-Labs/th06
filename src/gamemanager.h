@@ -39,7 +39,10 @@ public:
     int unk_0004;
     DWORD unk_0008[0x2];
     int difficulty;
-    DWORD unk_0014[0x6];
+    DWORD unk_0014[0x4];
+    // Counts the bombs used.
+    int bombsUsed;
+    DWORD unk_0028;
     // Gui::OnUpdate skips the interface's update while it is set.
     char unk_002c;
     BYTE unk_002d[0x3];
@@ -51,8 +54,9 @@ public:
     WORD unk_1816;
     BYTE unk_1818;
     BYTE unk_1819;
-    BYTE unk_181a;
-    BYTE unk_181b;
+    // Lives and bombs left.
+    char lives;
+    char bombs;
     BYTE unk_181c;
     // The replay header keeps character * 2 + shotType.
     BYTE character;
@@ -61,7 +65,8 @@ public:
     BYTE unk_1820;
     // Makes DrawFps measure how far the frame rate falls short.
     BYTE unk_1821;
-    BYTE unk_1822[0x2];
+    BYTE unk_1822;
+    BYTE unk_1823;
     BYTE unk_1824;
     BYTE unk_1825[0x3];
     DWORD unk_1828[0x81];

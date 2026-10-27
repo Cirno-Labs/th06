@@ -247,8 +247,8 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     }
     replay->data->stages[g_GameManager.stage] = (ReplayStage *)MemAlloc(0x69780);
     cur = replay->data->stages[g_GameManager.stage];
-    cur->unk_0a = g_GameManager.unk_181b;
-    cur->unk_09 = g_GameManager.unk_181a;
+    cur->bombs = g_GameManager.bombs;
+    cur->lives = g_GameManager.lives;
     cur->power = g_GameManager.power;
     cur->rank = g_GameManager.rank;
     cur->unk_06 = g_GameManager.unk_1816;
@@ -293,8 +293,8 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     g_GameManager.unk_1816 = cur->unk_06;
     g_Rng.SetSeed(cur->unk_04);
     g_GameManager.rank = cur->rank;
-    g_GameManager.unk_181a = cur->unk_09;
-    g_GameManager.unk_181b = cur->unk_0a;
+    g_GameManager.lives = cur->lives;
+    g_GameManager.bombs = cur->bombs;
     g_GameManager.power = cur->power;
     replay->cursors[0] = cur->frames;
     g_GameManager.unk_1819 = cur->unk_0c;

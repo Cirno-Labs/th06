@@ -607,8 +607,8 @@ int Unknown6c6d18::LoadArchive(int index, char *path)
 { \
     FILE *wav; \
  \
-    g_Unknown6c6d18.cfg.unk_18 = 2; \
-    g_Unknown6c6d18.cfg.unk_19 = 3; \
+    g_Unknown6c6d18.cfg.lives = 2; \
+    g_Unknown6c6d18.cfg.bombs = 3; \
     g_Unknown6c6d18.cfg.unk_1a = 0xff; \
     g_Unknown6c6d18.cfg.version = 0x102; \
     g_Unknown6c6d18.cfg.padThresholdX = 600; \
@@ -646,7 +646,7 @@ int Unknown6c6d18::LoadConfig(char *path)
     else
     {
         g_Unknown6c6d18.cfg = *file;
-        if (g_Unknown6c6d18.cfg.unk_18 >= 5 || g_Unknown6c6d18.cfg.unk_19 >= 4 ||
+        if (g_Unknown6c6d18.cfg.lives >= 5 || g_Unknown6c6d18.cfg.bombs >= 4 ||
             g_Unknown6c6d18.cfg.unk_1a >= 2 || g_Unknown6c6d18.cfg.musicMode >= 3 ||
             g_Unknown6c6d18.cfg.unk_1d >= 5 || g_Unknown6c6d18.cfg.unk_1c >= 2 ||
             g_Unknown6c6d18.cfg.unk_1e >= 2 || g_Unknown6c6d18.cfg.frameSkip >= 3 ||

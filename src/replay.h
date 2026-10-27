@@ -27,8 +27,9 @@ struct ReplayStage
     WORD unk_04;
     WORD unk_06;
     BYTE power;
-    BYTE unk_09;
-    BYTE unk_0a;
+    // The lives and bombs the stage started with.
+    BYTE lives;
+    BYTE bombs;
     // g_GameManager.rank at the start of the stage.
     BYTE rank;
     BYTE unk_0c;

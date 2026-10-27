@@ -40,6 +40,8 @@ class Unknown69e268
 public:
     // Sets byte 0x143 of each entry whose byte 0x141 is set.
     void Func420130();
+    // Drops item `type` at `pos`.
+    void Func41f290(D3DXVECTOR3 *pos, int type, int unk);
 };
 extern Unknown69e268 g_Unknown69e268;
 
@@ -116,10 +118,9 @@ struct GameConfig
     unsigned char unk_12[0x2];
     // 0x102; LoadConfig resets a file with another.
     int version;
-    // 2, at most 4.
-    BYTE unk_18;
-    // 3, at most 3.
-    BYTE unk_19;
+    // The lives and bombs to start with. 2, at most 4; 3, at most 3.
+    BYTE lives;
+    BYTE bombs;
     // 0xff, at most 1.
     BYTE unk_1a;
     // How music is played: 1 is wave, 2 is MIDI. LoadConfig picks 1 if
@@ -240,7 +241,9 @@ public:
     D3DPRESENT_PARAMETERS presentParams;
     // Loaded from and saved to "東方紅魔郷.cfg" by LoadConfig.
     GameConfig cfg;
-    unsigned char unk_14c[0x38];
+    // Another copy of the configuration; Player::OnUpdate refills the
+    // bombs from it.
+    GameConfig unk_14c;
     // Counts OnUpdate's calls.
     int frames;
     // The scene set up; OnUpdate switches it to `scene` when they
@@ -495,6 +498,16 @@ ASSERT_SIZE(GuiImpl, 0x2c44);
 // The in-game interface, the global at 0x69bc30: it loads
 // "data/front.anm" and the dialogue portraits ("data/face00a.anm", ...)
 // and draws the stage clear bonus ("Stage Clear", "Graze *   10 = %5d").
+// Gui's flags, a bitfield. Player::OnUpdate sets these to 2 when the
+// lives, the bombs and the power change.
+struct GuiFlags
+{
+    unsigned int livesChanged : 2;
+    unsigned int bombsChanged : 2;
+    unsigned int powerChanged : 2;
+    unsigned int unk6 : 26;
+};
+
 class Gui
 {
 public:
@@ -531,7 +544,7 @@ public:
     void FreeMsgFile();
     void Func4195bf();
 
-    DWORD unk_00;
+    GuiFlags flags;
     GuiImpl *impl;
     DWORD unk_08[0x9];
 };

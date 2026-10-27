@@ -13,17 +13,17 @@ Unknown4010e0::Unknown4010e0()
 int AsciiText::OnUpdate(AsciiText *text)
 {
     int i;
-    Unknown7134 *entry;
+    AsciiPopup *entry;
 
     if (!g_Unknown69d4bf && !g_Unknown69d4c0)
     {
-        for (entry = text->unk_7134, i = 0; i < 0x203; i++, entry++)
+        for (entry = text->popups, i = 0; i < 0x203; i++, entry++)
         {
             if (!entry->active)
             {
                 continue;
             }
-            entry->unk_0c -= 0.5f * g_Unknown6c6d18.frameAdvance;
+            entry->pos.y -= 0.5f * g_Unknown6c6d18.frameAdvance;
             entry->timer.Tick();
             if ((entry->timer.current > 60) != 0)
             {
@@ -152,4 +152,42 @@ void AsciiText::AddFormat(D3DXVECTOR3 *pos, char *fmt, ...)
     vsprintf(buf, fmt, args);
     this->AddString(pos, buf);
     va_end(args);
+}
+
+void AsciiText::AddPopup(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
+{
+    AsciiPopup *popup;
+    int n;
+
+    if (this->nextPopup >= 0x200)
+    {
+        this->nextPopup = 0;
+    }
+    popup = &this->popups[this->nextPopup];
+    popup->active = 1;
+    n = 0;
+    if (value >= 0)
+    {
+        while (value != 0)
+        {
+            popup->digits[n] = value % 10;
+            n++;
+            value /= 10;
+        }
+    }
+    else
+    {
+        popup->digits[n] = 10;
+        n++;
+    }
+    if (n == 0)
+    {
+        popup->digits[n] = 0;
+        n++;
+    }
+    popup->digitCount = n;
+    popup->color = color;
+    popup->timer.Set(0);
+    popup->pos = *pos;
+    this->nextPopup++;
 }

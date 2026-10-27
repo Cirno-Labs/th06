@@ -12,7 +12,7 @@ address,size,name,symbol
 0x00401530,277,AsciiText::AddString,?AddString@AsciiText@@QAEXPAUD3DXVECTOR3@@PAD@Z
 0x00401650,90,AsciiText::AddFormat,?AddFormat@AsciiText@@QAAXPAUD3DXVECTOR3@@PADZZ
 0x004016b0,641,AsciiText::DrawStrings,?DrawStrings@AsciiText@@QAEXXZ
-0x00401940,284,Func401940,
+0x00401940,284,AsciiText::AddPopup,?AddPopup@AsciiText@@QAEXPAUD3DXVECTOR3@@HK@Z
 0x00401a60,286,Func401a60,
 0x00401b80,2973,Unknown4010e0::Func401b80,?Func401b80@Unknown4010e0@@QAEXXZ
 0x00402740,294,Unknown4010e0::Func402740,?Func402740@Unknown4010e0@@QAEXXZ

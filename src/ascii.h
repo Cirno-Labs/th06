@@ -41,18 +41,21 @@ public:
 };
 ASSERT_SIZE(Unknown4010e0, 0x778);
 
-// One of AsciiText's 0x203 entries that OnUpdate moves up the screen
-// while active, and deactivates after 60 frames.
-struct Unknown7134
+// A number rising from where something scored, one of AsciiText's
+// 0x203 (AddPopup uses 0x200). OnUpdate moves it up and retires it after
+// 60 frames.
+struct AsciiPopup
 {
-    unsigned char unk_00[0xc];
-    float unk_0c;
-    unsigned char unk_10[0x8];
+    // Least significant first; 10 stands for a minus sign.
+    char digits[8];
+    D3DXVECTOR3 pos;
+    D3DCOLOR color;
     Timer timer;
     BYTE active;
-    unsigned char unk_25[0x3];
+    BYTE digitCount;
+    unsigned char unk_26[0x2];
 };
-ASSERT_SIZE(Unknown7134, 0x28);
+ASSERT_SIZE(AsciiPopup, 0x28);
 
 // Queues strings to draw in the ASCII font, the global at 0x47b900. Its
 // code starts at 0x401000 and loads "data/ascii.anm".
@@ -70,8 +73,7 @@ public:
     static int OnDraw(AsciiText *text);
     // Draws the queued strings.
     void DrawStrings();
-    // The update element's callback: moves the active Unknown7134
-    // entries along, unless g_Unknown69d4bf or g_Unknown69d4c0 is set;
+    // The update element's callback: moves the active popups along, unless g_Unknown69d4bf or g_Unknown69d4c0 is set;
     // then it updates the matching part. Returns 1.
     static int OnUpdate(AsciiText *text);
     // The update element's added callback: loads the font's ANM files
@@ -107,6 +109,9 @@ public:
     void AddString(D3DXVECTOR3 *pos, char *text);
     // Like AddString, for a printf-style text of up to 512 bytes.
     void AddFormat(D3DXVECTOR3 *pos, char *fmt, ...);
+    // Shows `value` rising from `pos` in `color` for 60 frames. Negative
+    // values show as a minus sign.
+    void AddPopup(D3DXVECTOR3 *pos, int value, D3DCOLOR color);
 
     Sprite unk_0000;
     Sprite unk_0110;
@@ -119,10 +124,12 @@ public:
     float scaleY;
     int unk_6230;
     int unk_6234;
-    unsigned char unk_6238[0xc];
+    // The popup AddPopup uses next.
+    int nextPopup;
+    unsigned char unk_623c[0x8];
     Unknown4010e0 unk_6244;
     Unknown4010e0 unk_69bc;
-    Unknown7134 unk_7134[0x203];
+    AsciiPopup popups[0x203];
 };
 ASSERT_SIZE(AsciiText, 0xc1ac);
 extern AsciiText g_AsciiText;

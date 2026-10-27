@@ -14,6 +14,12 @@ class CWaveFile
 {
 public:
     ~CWaveFile();
+
+    // The SDK's, with a flag of the game's.
+    HRESULT ResetFile(bool unk);
+    HRESULT Read(BYTE *pBuffer, DWORD dwSizeToRead, DWORD *pdwSizeRead);
+
+    WAVEFORMATEX *m_pwfx;
 };
 
 // Owns the DirectSound object.
@@ -37,6 +43,7 @@ public:
     virtual ~CSound();
 
     HRESULT FillBufferWithSound(LPDIRECTSOUNDBUFFER pDSB, BOOL bRepeatWavIfBufferLarger);
+    HRESULT RestoreBuffer(LPDIRECTSOUNDBUFFER pDSB, BOOL *pbWasRestored);
 
     LPDIRECTSOUNDBUFFER *m_apDSBuffer;
     DWORD m_dwDSBufferSize;

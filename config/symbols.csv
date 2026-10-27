@@ -450,7 +450,7 @@ address,size,name,symbol
 0x0043ad70,46,CSound::`scalar deleting destructor',??_GCSound@@UAEPAXI@Z
 0x0043ada0,241,CSound::~CSound,??1CSound@@UAE@XZ
 0x0043aea0,485,CSound::FillBufferWithSound,?FillBufferWithSound@CSound@@QAEJPAUIDirectSoundBuffer@@H@Z
-0x0043b090,163,Func43b090,
+0x0043b090,163,CSound::RestoreBuffer,?RestoreBuffer@CSound@@QAEJPAUIDirectSoundBuffer@@PAH@Z
 0x0043b140,182,Func43b140,
 0x0043b200,53,Func43b200,
 0x0043b240,182,Func43b240,
@@ -467,8 +467,8 @@ address,size,name,symbol
 0x0043ba60,384,Func43ba60,
 0x0043bc00,577,Func43bc00,
 0x0043be50,17,Unknown43be50::Func43be50,?Func43be50@Unknown43be50@@QAEHXZ
-0x0043be70,513,Func43be70,
-0x0043c080,569,Func43c080,
+0x0043be70,513,CWaveFile::ResetFile,?ResetFile@CWaveFile@@QAEJ_N@Z
+0x0043c080,569,CWaveFile::Read,?Read@CWaveFile@@QAEJPAEKPAK@Z
 0x0043c2c0,47,Func43c2c0,
 0x0043c2f0,19,Func43c2f0,
 0x0043c310,95,Func43c310,

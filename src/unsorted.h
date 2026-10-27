@@ -8,6 +8,10 @@
 // "add calc chain (pri = %d)\n".
 void DebugPrint(const char *fmt, ...);
 
+// A second compiled-out logger, used by file, sound and display code
+// ("%s open ...\n", "Reflesh Rate = %f\n").
+void DebugPrint2(const char *fmt, ...);
+
 class Unknown43be50
 {
 public:

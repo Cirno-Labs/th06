@@ -8,3 +8,7 @@ int Unknown43be50::Func43be50()
 void DebugPrint(const char *fmt, ...)
 {
 }
+
+void DebugPrint2(const char *fmt, ...)
+{
+}

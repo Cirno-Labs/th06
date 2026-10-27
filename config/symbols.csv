@@ -365,7 +365,7 @@ address,size,name,symbol
 0x0042e446,3098,Func42e446,
 0x0042f060,1372,Func42f060,
 0x0042f5bc,264,Func42f5bc,
-0x0042f6c4,5,Func42f6c4,
+0x0042f6c4,5,DebugPrint2,?DebugPrint2@@YAXPBDZZ
 0x0042f6d0,184,Func42f6d0,
 0x0042f790,102,Func42f790,
 0x0042f800,174,Func42f800,

@@ -2,6 +2,7 @@
 
 #include "enemy.h"
 #include "sprite.h"
+#include "unsorted.h"
 
 int EnemyManager::DeletedCallback(EnemyManager *mgr)
 {
@@ -37,5 +38,24 @@ int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
     {
         return -1;
     }
+    return 0;
+}
+
+int EnemyManager::AddedCallback(EnemyManager *mgr)
+{
+    DWORD *unused = mgr->unk_00ed0;
+
+    if (mgr->anmPath != NULL && g_SpriteEngine->LoadAnm(8, mgr->anmPath, 0x100) != 0)
+    {
+        return -1;
+    }
+    if (mgr->anmPath2 != NULL && g_SpriteEngine->LoadAnm(9, mgr->anmPath2, 0x100) != 0)
+    {
+        return -1;
+    }
+    mgr->unk_ee5b8 = g_Rng.GetRandomU16InRange(3);
+    mgr->unk_ee5ba = g_Rng.GetRandomU16InRange(8);
+    mgr->unk_ee5c8 = 0;
+    mgr->unk_ee5dc = 0;
     return 0;
 }

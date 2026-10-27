@@ -296,12 +296,21 @@ public:
     void SetSeed(WORD seed)
     {
         this->seed = seed;
-        this->unk_04 = 0;
+        this->generated = 0;
+    }
+
+    // Advances the generator and returns 16 random bits.
+    WORD GetRandomU16();
+    // A random number below `range`, or 0 if `range` is 0.
+    WORD GetRandomU16InRange(WORD range)
+    {
+        return range != 0 ? this->GetRandomU16() % range : 0;
     }
 
     WORD seed;
-    unsigned char unk_02[0x2];
-    int unk_04;
+    WORD unk_02;
+    // How many numbers were generated since the seed was set.
+    int generated;
 };
 extern Rng g_Rng;
 

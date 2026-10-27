@@ -6,6 +6,7 @@
 
 #include "chain.h"
 #include "common.h"
+#include "sprite.h"
 #include "timer.h"
 
 // Runs the stage's background, the global at 0x487b10. Its loader logs
@@ -22,12 +23,15 @@ public:
     static int OnDraw2(Stage *stage);
     // Loads the stage's background and data.
     static int AddedCallback(Stage *stage);
+    // Frees the background sprites and the data. Returns 0.
     static int DeletedCallback(Stage *stage);
     // Removes the update element and the two draw elements.
     static void RemoveChain();
 
-    DWORD unk_000;
-    DWORD unk_004;
+    // One Sprite per object sprite in the data, malloc'd.
+    Sprite *sprites;
+    // The stage data file, as loaded.
+    void *data;
     DWORD unk_008[0x9];
     Timer timer;
     // RegisterChain's argument.

@@ -14,7 +14,7 @@ int Stage::RegisterChain(int stage)
     Stage *s = &g_Stage;
 
     memset(s, 0, sizeof(Stage));
-    s->unk_004 = 0;
+    s->data = NULL;
     s->timer.Set(0);
     s->stage = stage;
     g_StageCalcChain.SetCallback((ChainCallback)Stage::OnUpdate);
@@ -31,5 +31,21 @@ int Stage::RegisterChain(int stage)
     g_StageDrawChain2.SetCallback((ChainCallback)Stage::OnDraw2);
     g_StageDrawChain2.arg = s;
     g_Chain.AddToDrawChain(&g_StageDrawChain2, 4);
+    return 0;
+}
+
+int Stage::DeletedCallback(Stage *stage)
+{
+    g_SpriteEngine->ReleaseAnm(4);
+    if (stage->sprites != NULL)
+    {
+        MemFree(stage->sprites);
+        stage->sprites = NULL;
+    }
+    if (stage->data != NULL)
+    {
+        MemFree(stage->data);
+        stage->data = NULL;
+    }
     return 0;
 }

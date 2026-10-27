@@ -358,6 +358,8 @@ class Unknown41e150
 public:
     // Creates the font at `width` by `height`.
     void Create(IDirect3DDevice8 *device, int width, int height);
+    // Draws `text` from (`x`, `y`) in `color`.
+    int Draw(char *text, int x, int y, D3DCOLOR color);
     // Releases the font, if there is one.
     void Release();
 

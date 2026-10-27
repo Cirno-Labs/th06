@@ -108,6 +108,17 @@ void Unknown41e150::Create(IDirect3DDevice8 *device, int width, int height)
     DeleteObject(font);
 }
 
+int Unknown41e150::Draw(char *text, int x, int y, D3DCOLOR color)
+{
+    RECT rect;
+
+    rect.left = x;
+    rect.right = 640;
+    rect.top = y;
+    rect.bottom = 480;
+    return this->font->DrawTextA(text, -1, &rect, DT_EXPANDTABS, color);
+}
+
 void Unknown41e150::Release()
 {
     if (this->font != NULL)

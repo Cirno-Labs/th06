@@ -200,7 +200,7 @@ address,size,name,symbol
 0x0041d820,2196,ReadButtons,?ReadButtons@@YAGXZ
 0x0041e0c0,133,ResetKeyboard,?ResetKeyboard@@YAXXZ
 0x0041e150,192,Unknown41e150::Create,?Create@Unknown41e150@@QAEXPAUIDirect3DDevice8@@HH@Z
-0x0041e210,75,Func41e210,
+0x0041e210,75,Unknown41e150::Draw,?Draw@Unknown41e150@@QAEHPADHHK@Z
 0x0041e260,48,Unknown41e150::Release,?Release@Unknown41e150@@QAEXXZ
 0x0041e290,456,Func41e290,?Func41e290@@YAPAXPADH@Z
 0x0041e460,99,Func41e460,?Func41e460@@YAHPADPAXH@Z

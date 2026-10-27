@@ -1,5 +1,5 @@
 // The file from 0x43a7b0: the DirectX 8 SDK's dsutil.cpp, as the game
-// builds it.
+// builds it. CWaveFile::Read's messages call it "zwave.cpp".
 
 #include "dsutil.h"
 #include "unsorted.h"
@@ -625,4 +625,85 @@ HRESULT CWaveFile::ResetFile(bool bLoop)
     }
 
     return S_OK;
+}
+
+HRESULT CWaveFile::Read(BYTE *pBuffer, DWORD dwSizeToRead, DWORD *pdwSizeRead)
+{
+    if (m_bIsReadingFromMemory)
+    {
+        if (m_pbDataCur == NULL)
+            return CO_E_NOTINITIALIZED;
+        if (pdwSizeRead != NULL)
+            *pdwSizeRead = 0;
+
+        if ((BYTE *)(m_pbDataCur + dwSizeToRead) > (BYTE *)(m_pbData + m_ulDataSize))
+        {
+            dwSizeToRead = m_ulDataSize - (DWORD)(m_pbDataCur - m_pbData);
+        }
+
+        CopyMemory(pBuffer, m_pbDataCur, dwSizeToRead);
+
+        if (pdwSizeRead != NULL)
+            *pdwSizeRead = dwSizeToRead;
+
+        return S_OK;
+    }
+    else
+    {
+        MMIOINFO mmioinfoIn; // current status of m_hmmio
+
+        if (m_hmmio == NULL)
+            return CO_E_NOTINITIALIZED;
+        if (pBuffer == NULL || pdwSizeRead == NULL)
+            return E_INVALIDARG;
+
+        if (pdwSizeRead != NULL)
+            *pdwSizeRead = 0;
+
+        if (0 != mmioGetInfo(m_hmmio, &mmioinfoIn, 0))
+        {
+            DebugPrint("error :\t%s(%s)\n", "zwave.cpp", 1060);
+            return E_FAIL;
+        }
+
+        UINT cbDataIn = dwSizeToRead;
+        if (cbDataIn > m_ck.cksize)
+            cbDataIn = m_ck.cksize;
+
+        m_ck.cksize -= cbDataIn;
+
+        for (DWORD cT = 0; cT < cbDataIn; cT++)
+        {
+            // Copy the bytes from the io to the buffer.
+            if (mmioinfoIn.pchNext == mmioinfoIn.pchEndRead)
+            {
+                if (0 != mmioAdvance(m_hmmio, &mmioinfoIn, 0))
+                {
+                    DebugPrint("error :\t%s(%s)\n", "zwave.cpp", 1075);
+                    return E_FAIL;
+                }
+
+                if (mmioinfoIn.pchNext == mmioinfoIn.pchEndRead)
+                {
+                    DebugPrint("error :\t%s(%s)\n", "zwave.cpp", 1079);
+                    return E_FAIL;
+                }
+            }
+
+            // Actual copy.
+            *((BYTE *)pBuffer + cT) = *((BYTE *)mmioinfoIn.pchNext);
+            mmioinfoIn.pchNext++;
+        }
+
+        if (0 != mmioSetInfo(m_hmmio, &mmioinfoIn, 0))
+        {
+            DebugPrint("error :\t%s(%s)\n", "zwave.cpp", 1088);
+            return E_FAIL;
+        }
+
+        if (pdwSizeRead != NULL)
+            *pdwSizeRead = cbDataIn;
+
+        return S_OK;
+    }
 }

@@ -292,3 +292,36 @@ void MidiPlayer::FreeTracks()
     this->tracks = NULL;
     this->trackCount = 0;
 }
+
+int MidiPlayer::ReleaseHeader(LPMIDIHDR header)
+{
+    MMRESULT result;
+
+    if (header == NULL)
+    {
+        DebugPrint("error :\n");
+    }
+    if (this->device.handle == 0)
+    {
+        DebugPrint("error :\n");
+    }
+    for (int i = 0; i < 0x20; i++)
+    {
+        if (this->headers[i] == header)
+        {
+            this->headers[i] = NULL;
+            goto found;
+        }
+    }
+    return -1;
+
+found:
+    result = midiOutUnprepareHeader(this->device.handle, header, sizeof(MIDIHDR));
+    if (result != MMSYSERR_NOERROR)
+    {
+        DebugPrint("error :\n");
+    }
+    MemFree(header->lpData);
+    MemFree(header);
+    return 0;
+}

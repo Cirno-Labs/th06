@@ -7,6 +7,7 @@
 #include "enemy.h"
 #include "enemyscript.h"
 #include "player.h"
+#include "stage.h"
 #include "unsorted.h"
 
 int GameManager::OnDraw(GameManager *mgr)
@@ -44,7 +45,7 @@ int GameManager::DeletedCallback(GameManager *mgr)
     {
         g_Unknown6c6d18.StopMusic();
     }
-    Func404650();
+    Stage::RemoveChain();
     BulletManager::RemoveChain();
     Player::RemoveChain();
     EnemyManager::RemoveChain();

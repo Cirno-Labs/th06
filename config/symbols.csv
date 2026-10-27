@@ -30,7 +30,7 @@ address,size,name,symbol
 0x00404300,436,Func404300,
 0x004044c0,286,Func4044c0,
 0x004045e0,102,Func4045e0,
-0x00404650,50,Func404650,?Func404650@@YAXXZ
+0x00404650,50,Stage::RemoveChain,?RemoveChain@Stage@@SAXXZ
 0x00404690,449,Func404690,
 0x00404860,257,Func404860,
 0x00404970,2109,Func404970,
@@ -1554,6 +1554,10 @@ address,size,name,symbol
 0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A
 0x00487aac,,g_AsciiCalcChain,?g_AsciiCalcChain@@3UChainElem@@A
 0x00487acc,,g_AsciiDrawChain2,?g_AsciiDrawChain2@@3UChainElem@@A
+0x00487af0,,g_StageDrawChain,?g_StageDrawChain@@3UChainElem@@A
+0x00487b10,,g_Stage,?g_Stage@@3VStage@@A
+0x00487e04,,g_StageDrawChain2,?g_StageDrawChain2@@3UChainElem@@A
+0x00487e24,,g_StageCalcChain,?g_StageCalcChain@@3UChainElem@@A
 0x00487e50,,g_EnemyScripts,?g_EnemyScripts@@3VEnemyScripts@@A
 0x00487fe0,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x004b7964,,g_EffectCalcChain,?g_EffectCalcChain@@3UChainElem@@A

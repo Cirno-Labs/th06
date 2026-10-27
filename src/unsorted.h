@@ -341,8 +341,7 @@ int Func42d773(int unk);
 int Func4107b0();
 int Func43a338(int unk);
 
-// They remove the chain elements of classes not decompiled yet.
-void Func404650();
+// It removes the chain elements of a class not decompiled yet.
 void Func42aab0();
 void Func41f008();
 

@@ -18,7 +18,7 @@ our own analysis or, for library code, from the libraries themselves.
 
 ## Status
 
-The toolchain and workflow are up and the first 1.02h function matches.
+The toolchain and workflow are up and decompilation has started.
 The workflow was proven on the 0.13 trial (one function matched and
 hooked) before switching the target to retail 1.02h.
 
@@ -31,6 +31,11 @@ function ID recognizes the CRT from about `0x45b000` on.
 ```sh
 just analyze   # writes build/functions_102h.csv
 ```
+
+![Progress](docs/progress.svg)
+
+`just progress` renders it: every game function, by address and as a
+treemap by size, coloured by whether it is decompiled and matching.
 
 ## Target
 

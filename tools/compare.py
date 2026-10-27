@@ -17,7 +17,7 @@ EXE = "build/th06_102h.exe"
 
 def compiled_functions(symbols):
     """Yields (name, bytes, mask) for each function src/ defines."""
-    for path in sorted(glob.glob("build/obj/*.obj")):
+    for path in sorted(glob.glob(os.path.join(ROOT, "build/obj/*.obj"))):
         if path.endswith("hooks.obj"):
             continue
         obj = coff.Object(path)
@@ -61,18 +61,29 @@ def disasm(code, addr):
     return [l.split("\t", 1)[1] for l in out.splitlines() if l[:2] == "  " and "\t" in l]
 
 
-def main():
-    os.chdir(ROOT)
-    with open("config/symbols.csv") as f:
-        symbols = {r["symbol"]: (int(r["address"], 16), int(r["size"] or 0))
-                   for r in csv.DictReader(f) if r["symbol"]}
-    exe = coff.Image(EXE)
-    show = set(sys.argv[1:])
-    matched = total = matched_bytes = 0
+def read_symbols():
+    with open(os.path.join(ROOT, "config/symbols.csv")) as f:
+        return {r["symbol"]: (int(r["address"], 16), int(r["size"] or 0))
+                for r in csv.DictReader(f) if r["symbol"]}
+
+
+def results(symbols):
+    """Yields (name, same, code, mask, original) for each compiled function."""
+    exe = coff.Image(os.path.join(ROOT, EXE))
     for name, code, mask in compiled_functions(symbols):
         addr, size = symbols[name]
         orig = exe.read(addr, size)
         same = len(code) == size and all(m or a == b for a, b, m in zip(code, orig, mask))
+        yield name, same, code, mask, orig
+
+
+def main():
+    os.chdir(ROOT)
+    symbols = read_symbols()
+    show = set(sys.argv[1:])
+    matched = total = matched_bytes = 0
+    for name, same, code, mask, orig in results(symbols):
+        addr, size = symbols[name]
         total += 1
         matched += same
         matched_bytes += size if same else 0

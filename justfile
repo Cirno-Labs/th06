@@ -37,6 +37,10 @@ analyze: _orig
 decompile *addrs:
     tools/ghidra/decompile.sh {{ addrs }}
 
+# Render docs/progress.svg from symbols.csv and the build
+progress: build _orig
+    python3 tools/render_progress.py
+
 # Remove build outputs (keeps the Ghidra project)
 clean:
     rm -rf build/obj build/game build/th06.*

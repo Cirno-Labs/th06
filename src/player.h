@@ -58,7 +58,11 @@ public:
     // Areas that cancel bullets, as centre x and y, width and height;
     // unused while the width is a sentinel.
     float bulletClearAreas[16][4];
-    DWORD unk_09b8[0xa];
+    DWORD unk_09b8[0x6];
+    // Scale the player's movement: 0.3 during Marisa B's bomb, else 1.
+    float moveScaleX;
+    float moveScaleY;
+    DWORD unk_09d8[0x2];
     // 3 while a bomb runs.
     BYTE unk_09e0;
     // RegisterChain's argument.
@@ -118,6 +122,11 @@ void UpdateReimuBBomb(Player *player);
 // flying out from the player, then moves them, keeping their hitboxes
 // and bullet clearing on them two frames in three.
 void UpdateMarisaABomb(Player *player);
+// Marisa B's bomb update callback: ends the bomb after its duration,
+// restoring the player's speed; otherwise starts it (the spell card
+// name, 300 frames) slowing the player, then keeps a beam's hitbox and
+// bullet clearing above the player three frames in four.
+void UpdateMarisaBBomb(Player *player);
 extern Player g_Player;
 // A shot type's shots by power level: entries of a count, the power
 // they last up to and their data.

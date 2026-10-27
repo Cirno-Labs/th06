@@ -42,7 +42,7 @@ address,size,name,symbol
 0x004065e0,272,Func4065e0,
 0x004066f0,1041,UpdateMarisaABomb,?UpdateMarisaABomb@@YAXPAVPlayer@@@Z
 0x00406b10,852,Func406b10,
-0x00406e70,830,Func406e70,
+0x00406e70,830,UpdateMarisaBBomb,?UpdateMarisaBBomb@@YAXPAVPlayer@@@Z
 0x004071b0,389,Func4071b0,
 0x00407340,178,EnemyScripts::Load,?Load@EnemyScripts@@QAEHPAD@Z
 0x00407400,50,EnemyScripts::Release,?Release@EnemyScripts@@QAEXXZ

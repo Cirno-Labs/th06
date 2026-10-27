@@ -327,3 +327,63 @@ void UpdateMarisaABomb(Player *player)
     player->unk_09e0 = 3;
     player->bombTimer.Tick();
 }
+
+void UpdateMarisaBBomb(Player *player)
+{
+    int i;
+    Sprite *sprite;
+    D3DXVECTOR3 unused;
+
+    if (player->bombTimer >= player->bombDuration)
+    {
+        g_Gui.Func417314();
+        player->unk_75c8 = 0;
+        player->moveScaleY = 1.0f;
+        player->moveScaleX = 1.0f;
+        return;
+    }
+    if (player->bombTimer.HasTicked() && player->bombTimer == 0)
+    {
+        g_Unknown69e268.Func420130();
+        g_Gui.Func417acd(0x4a1, "恋符「マスタースパーク」");
+        player->bombDuration = 300;
+        player->unk_75b4.Set(360);
+        for (sprite = player->bombSprites, i = 0; i < 4; i++, sprite++)
+        {
+            g_SpriteEngine->Func4051b0(sprite, i + 0x408);
+            player->bombPos[i] = player->position;
+        }
+        g_Unknown6d3f50.Func4311e0(0x13, 0);
+        player->moveScaleY = 0.3f;
+        player->moveScaleX = 0.3f;
+    }
+    else
+    {
+        if (player->bombTimer == 60)
+        {
+            ScreenEffect::Func42fd30(1, 60, 1, 7, 0);
+        }
+        else if (player->bombTimer == 120)
+        {
+            ScreenEffect::Func42fd30(1, 200, 24, 0, 0);
+        }
+        if (player->bombTimer.HasTicked() && player->bombTimer.AsFrames() % 4 != 0)
+        {
+            player->bulletClearAreas[0][0] = 192.0f;
+            player->bulletClearAreas[0][1] = player->position.y / 2.0f;
+            player->bulletClearAreas[0][2] = 384.0f;
+            player->bulletClearAreas[0][3] = player->position.y;
+            player->bombHitSize[0].x = 384.0f;
+            player->bombHitSize[0].y = player->position.y;
+            player->bombHitPos[0].x = player->bulletClearAreas[0][0];
+            player->bombHitPos[0].y = player->bulletClearAreas[0][1];
+            player->bombHitDamage[0] = 12;
+        }
+        g_SpriteEngine->Step(&player->bombSprites[0]);
+        g_SpriteEngine->Step(&player->bombSprites[1]);
+        g_SpriteEngine->Step(&player->bombSprites[2]);
+        g_SpriteEngine->Step(&player->bombSprites[3]);
+    }
+    player->unk_09e0 = 3;
+    player->bombTimer.Tick();
+}

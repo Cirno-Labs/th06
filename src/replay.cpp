@@ -170,3 +170,52 @@ int ReplayManager::DeletedCallback(ReplayManager *replay)
     g_ReplayManager = NULL;
     return 0;
 }
+
+int ReplayManager::RecordAddedCallback(ReplayManager *replay)
+{
+    ReplayStage *cur;
+    int idx;
+    ReplayStage *earlier;
+
+    replay->frame = 0;
+    if (replay->data == NULL)
+    {
+        replay->data = new ReplayHeader;
+        *(DWORD *)replay->data->magic = *(DWORD *)"T6RP";
+        replay->data->shotType = g_GameManager.character * 2 + g_GameManager.shotType;
+        replay->data->version = 0x102;
+        replay->data->difficulty = g_GameManager.difficulty;
+        *(DWORD *)replay->data->name = *(DWORD *)"NO NAME";
+        for (idx = 0; idx < 7; idx++)
+        {
+            replay->data->stages[idx + 1] = NULL;
+        }
+    }
+    else
+    {
+        earlier = replay->data->stages[g_GameManager.stage - 1];
+        if (earlier == NULL)
+        {
+            return -1;
+        }
+        earlier->unk_00 = g_GameManager.unk_0004;
+    }
+    if (replay->data->stages[g_GameManager.stage] != NULL)
+    {
+        DebugPrint("error : replay.cpp");
+    }
+    replay->data->stages[g_GameManager.stage] = (ReplayStage *)MemAlloc(0x69780);
+    cur = replay->data->stages[g_GameManager.stage];
+    cur->unk_0a = g_GameManager.unk_181b;
+    cur->unk_09 = g_GameManager.unk_181a;
+    cur->power = g_GameManager.power;
+    cur->unk_0b = g_GameManager.unk_1a70;
+    cur->unk_06 = g_GameManager.unk_1816;
+    cur->unk_04 = g_GameManager.unk_1a2c;
+    cur->unk_0c = g_GameManager.unk_1819;
+    replay->cursors[0] = cur->frames;
+    replay->cursors[0]->frame = 0;
+    replay->cursors[0]->input = 0;
+    replay->unk_44 = 0;
+    return 0;
+}

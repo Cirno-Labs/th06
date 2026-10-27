@@ -27,9 +27,24 @@ public:
     // Returns 1.
     static int OnDraw(GameManager *mgr);
 
-    DWORD unk_0000[0x606];
+    DWORD unk_0000;
+    int unk_0004;
+    DWORD unk_0008[0x2];
+    int difficulty;
+    DWORD unk_0014[0x5ff];
+    // What FireShot compares the shot tables' levels with.
+    WORD power;
+    WORD unk_1812;
+    WORD unk_1814;
+    WORD unk_1816;
     BYTE unk_1818;
-    BYTE unk_1819[0x6];
+    BYTE unk_1819;
+    BYTE unk_181a;
+    BYTE unk_181b;
+    BYTE unk_181c;
+    // The replay header keeps character * 2 + shotType.
+    BYTE character;
+    BYTE shotType;
     BYTE unk_181f;
     BYTE unk_1820;
     // Makes DrawFps measure how far the frame rate falls short.
@@ -37,13 +52,17 @@ public:
     BYTE unk_1822[0x2];
     BYTE unk_1824;
     BYTE unk_1825[0x3];
-    DWORD unk_1828[0x82];
+    DWORD unk_1828[0x81];
+    WORD unk_1a2c;
+    WORD unk_1a2e;
     int unk_1a30;
     // The stage being played: 1 to 6, 7 for the extra stage.
     int stage;
     DWORD unk_1a38;
     // The play area: x, y, width and height.
     float arena[4];
+    DWORD unk_1a4c[0x9];
+    BYTE unk_1a70;
 };
 extern GameManager g_GameManager;
 

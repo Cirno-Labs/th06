@@ -15,6 +15,35 @@ struct ReplayFrame
     WORD unk_06;
 };
 
+// One stage of a replay: the game's state at its start, then the
+// entries.
+struct ReplayStage
+{
+    int unk_00;
+    WORD unk_04;
+    WORD unk_06;
+    BYTE power;
+    BYTE unk_09;
+    BYTE unk_0a;
+    BYTE unk_0b;
+    BYTE unk_0c;
+    BYTE unk_0d[0x3];
+    ReplayFrame frames[1];
+};
+
+// The start of a replay ("T6RP").
+struct ReplayHeader
+{
+    char magic[4];
+    WORD version;
+    BYTE shotType;
+    BYTE difficulty;
+    BYTE unk_08[0x11];
+    char name[0x17];
+    // Indexed by stage; malloc'd, 0x69780 bytes each.
+    ReplayStage *stages[8];
+};
+
 // Records or plays a replay; g_ReplayManager points at it while one is
 // in use.
 class ReplayManager
@@ -60,12 +89,14 @@ public:
 
     // The current frame.
     int frame;
-    // The replay data, malloc'd.
-    void *data;
+    // The replay data.
+    ReplayHeader *data;
     // RegisterChain's arguments.
     int mode;
     char *path;
-    DWORD unk_10[0xe];
+    DWORD unk_10[0xd];
+    WORD unk_44;
+    WORD unk_46;
     // [0] is the last entry written; [stage] is where that stage's
     // record ends.
     ReplayFrame *cursors[8];

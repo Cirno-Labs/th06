@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">25.27% (119)</tspan> · <tspan class="decompiled">6.37% (30)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">68.37% (322)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">25.48% (120)</tspan> · <tspan class="decompiled">6.37% (30)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">68.15% (321)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="188.73" height="6" x="0" y="0" class="named"/>
-<rect width="47.58" height="6" x="188.73" y="0" class="decompiled"/>
-<rect width="510.69" height="6" x="236.31" y="0" class="todo"/>
+<rect width="190.32" height="6" x="0" y="0" class="named"/>
+<rect width="47.58" height="6" x="190.32" y="0" class="decompiled"/>
+<rect width="509.10" height="6" x="237.90" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -406,7 +406,7 @@
 <rect width="12" height="12" x="525" y="90" class="named"><title>0x0042a510 ReplayManager::PlayOnUpdate2 (81 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="90" class="named"><title>0x0042a570 ReplayManager::PlayOnUpdate (242 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="90" class="named"><title>0x0042a670 ReplayManager::OnDraw (10 bytes)</title></rect>
-<rect width="12" height="12" x="570" y="90" class="todo"><title>0x0042a680 ReplayManager::RecordAddedCallback (445 bytes)</title></rect>
+<rect width="12" height="12" x="570" y="90" class="named"><title>0x0042a680 ReplayManager::RecordAddedCallback (445 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="90" class="todo"><title>0x0042a840 ReplayManager::PlayAddedCallback (469 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="90" class="named"><title>0x0042aa20 ReplayManager::DeletedCallback (140 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="90" class="named"><title>0x0042aab0 ReplayManager::EndStage (123 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">9.21%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">88.12%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">9.40%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">87.93%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="68.80" height="6" x="0" y="0" class="named"/>
-<rect width="19.95" height="6" x="68.80" y="0" class="decompiled"/>
-<rect width="658.25" height="6" x="88.75" y="0" class="todo"/>
+<rect width="70.20" height="6" x="0" y="0" class="named"/>
+<rect width="19.95" height="6" x="70.20" y="0" class="decompiled"/>
+<rect width="656.86" height="6" x="90.14" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -679,7 +679,7 @@
 <rect width="11.68" height="11.98" x="550.68" y="138.02" class="todo"><title>0x0041e290 Func41e290 (456 bytes)</title></rect>
 <rect width="12.22" height="11.23" x="565.36" y="0" class="named"><title>0x00404690 Stage::Load (449 bytes)</title></rect>
 <rect width="12.22" height="11.16" x="565.36" y="14.23" class="todo"><title>0x0041ea63 Func41ea63 (447 bytes)</title></rect>
-<rect width="12.22" height="11.10" x="565.36" y="28.39" class="todo"><title>0x0042a680 ReplayManager::RecordAddedCallback (445 bytes)</title></rect>
+<rect width="12.22" height="11.10" x="565.36" y="28.39" class="named"><title>0x0042a680 ReplayManager::RecordAddedCallback (445 bytes)</title></rect>
 <rect width="12.22" height="11.10" x="565.36" y="42.49" class="todo"><title>0x00435300 SpriteEngine::Func435300 (445 bytes)</title></rect>
 <rect width="12.22" height="11" x="565.36" y="56.59" class="todo"><title>0x00426fd0 Func426fd0 (442 bytes)</title></rect>
 <rect width="12.22" height="10.88" x="565.36" y="70.59" class="todo"><title>0x0040d770 Func40d770 (438 bytes)</title></rect>

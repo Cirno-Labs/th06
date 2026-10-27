@@ -518,6 +518,11 @@ public:
     // Selects the old object back into `hdc`, then deletes the DC and the
     // bitmap. Returns whether there was a DC.
     bool Release();
+    // Creates the DIB section in `format`, or failing that in a 32-bit
+    // format with the same channels. Returns whether it was created.
+    bool Create(int width, int height, int format);
+    // Creates the DIB section and its DC, after releasing any old ones.
+    bool CreateInFormat(int width, int height, int format);
     // The entry of g_FormatInfos for `format`, or the end of the table
     // when it is missing; NULL for -1.
     FormatInfo *FindFormat(int format);

@@ -84,6 +84,24 @@ public:
 ASSERT_SIZE(GameManager, 0x1a80);
 extern GameManager g_GameManager;
 
+// The 3D camera the stage backgrounds are seen through (0x69d6fc).
+struct Camera
+{
+    // The camera's distance from the screen plane, set by SetupCamera.
+    float distance;
+    // Moves the point looked at from the center of the viewport.
+    float offsetX;
+    float offsetY;
+    // Scales the camera's distance.
+    float zoom;
+};
+extern Camera g_Camera;
+
+// Looks at the viewport's center from a distance where a 30° field of
+// view covers its height, and sets the view and projection matrices,
+// with the far plane at 10000 + `extraFar`.
+void SetupCamera(float extraFar);
+
 // GameManager's statically allocated chain elements.
 extern ChainElem g_GameManagerCalcChain;
 extern ChainElem g_GameManagerDrawChain;

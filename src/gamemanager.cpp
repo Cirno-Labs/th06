@@ -65,6 +65,32 @@ void GameManager::RemoveChain()
     g_Chain.Remove(&g_GameManagerDrawChain);
 }
 
+void SetupCamera(float extraFar)
+{
+    float midX;
+    float halfHeight;
+    float aspectXY;
+    float fovAngle;
+    float zDist;
+
+    midX = (float)g_Unknown6c6d18.viewport.Width / 2.0f;
+    halfHeight = (float)g_Unknown6c6d18.viewport.Height / 2.0f;
+    aspectXY = (float)g_Unknown6c6d18.viewport.Width / (float)g_Unknown6c6d18.viewport.Height;
+    fovAngle = 0.5235988f;
+    zDist = halfHeight / tanf(fovAngle / 2.0f);
+    // A block of its own: its vectors come after the floats on the stack.
+    {
+        D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
+        D3DXVECTOR3 lookAt(midX + g_Camera.offsetX, -halfHeight + g_Camera.offsetY, 0.0f);
+        D3DXVECTOR3 from(midX, -halfHeight, -zDist * g_Camera.zoom);
+        D3DXMatrixLookAtLH(&g_Unknown6c6d18.viewMatrix, &from, &lookAt, &up);
+        g_Camera.distance = fabsf(zDist);
+        D3DXMatrixPerspectiveFovLH(&g_Unknown6c6d18.projectionMatrix, fovAngle, aspectXY, 100.0f, 10000.0f + extraFar);
+        g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_VIEW, &g_Unknown6c6d18.viewMatrix);
+        g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_Unknown6c6d18.projectionMatrix);
+    }
+}
+
 GameManager::GameManager()
 {
     memset(this, 0, sizeof(GameManager));

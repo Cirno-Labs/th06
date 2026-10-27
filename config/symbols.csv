@@ -176,7 +176,7 @@ address,size,name,symbol
 0x0041c1f7,114,GameManager::DeletedCallback,?DeletedCallback@GameManager@@SAHPAV1@@Z
 0x0041c269,35,GameManager::RemoveChain,?RemoveChain@GameManager@@SAXXZ
 0x0041c28c,359,Func41c28c,?Func41c28c@@YAXH@Z
-0x0041c3f3,395,Func41c3f3,
+0x0041c3f3,395,SetupCamera,?SetupCamera@@YAXM@Z
 0x0041c57e,124,GameManager::AddSubRank,?AddSubRank@GameManager@@QAEXH@Z
 0x0041c5fa,124,GameManager::SubSubRank,?SubSubRank@GameManager@@QAEXH@Z
 0x0041c676,86,GameManager::GameManager,??0GameManager@@QAE@XZ
@@ -509,13 +509,13 @@ address,size,name,symbol
 0x0043ee15,123,Func43ee15,
 0x0043ee90,124,Func43ee90,
 0x0043ef0c,226,Func43ef0c,
-0x0043efee,148,Func43efee,
+0x0043efee,148,D3DXMatrixPerspectiveFovLH,_D3DXMatrixPerspectiveFovLH@20
 0x0043f082,76,Func43f082,
 0x0043f0ce,167,Func43f0ce,
 0x0043f175,208,Func43f175,
 0x0043f245,253,Func43f245,
 0x0043f362,511,Func43f362,
-0x0043f561,262,Func43f561,
+0x0043f561,262,D3DXMatrixLookAtLH,_D3DXMatrixLookAtLH@16
 0x0043f667,116,Func43f667,
 0x0043f6db,106,Func43f6db,
 0x0043f745,51,D3DXCreateFont,_D3DXCreateFont@12
@@ -990,9 +990,9 @@ address,size,name,symbol
 0x0045c36e,24,Func45c36e,
 0x0045c386,88,_sprintf,_sprintf
 0x0045c3e0,31,__EH_prolog,__EH_prolog
-0x0045c3ff,177,_fabs,
+0x0045c3ff,177,_fabs,_fabs
 0x0045c4b0,20,Func45c4b0,
-0x0045c4c4,9,Func45c4c4,
+0x0045c4c4,9,_tan,_tan
 0x0045c4cd,149,Func45c4cd,
 0x0045c562,76,__fclose_lk,
 0x0045c5ae,70,_fclose,_fclose
@@ -1581,6 +1581,7 @@ address,size,name,symbol
 0x0069bc5c,,g_GuiDrawChain,?g_GuiDrawChain@@3UChainElem@@A
 0x0069bc7c,,g_GuiCalcChain,?g_GuiCalcChain@@3UChainElem@@A
 0x0069bca0,,g_GameManager,?g_GameManager@@3VGameManager@@A
+0x0069d6fc,,g_Camera,?g_Camera@@3UCamera@@A
 0x0069d720,,g_GameManagerCalcChain,?g_GameManagerCalcChain@@3UChainElem@@A
 0x0069d740,,g_GameManagerDrawChain,?g_GameManagerDrawChain@@3UChainElem@@A
 0x0069d8f8,,g_Rng,?g_Rng@@3VRng@@A

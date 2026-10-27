@@ -242,3 +242,19 @@ void ScriptSet(Enemy *enemy, int dst, int *src)
         *(float *)dstPtr = *(float *)rhs;
     }
 }
+
+void ScriptMoveAngle(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    EnemyMoveAngleArgs *args;
+    float angle;
+
+    args = &instr->args.moveAngle;
+    angle = *ResolveFloatOperand(enemy, &args->angle, NULL);
+    enemy->moveDelta.x = cosf(angle) * args->speed * (float)args->duration / 2.0f;
+    enemy->moveDelta.y = sinf(angle) * args->speed * (float)args->duration / 2.0f;
+    enemy->moveDelta.z = 0.0f;
+    enemy->moveStart = enemy->pos;
+    enemy->moveDuration = args->duration;
+    enemy->moveTimer.Set(enemy->moveDuration);
+    enemy->flags.moveMode = 2;
+}

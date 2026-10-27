@@ -25,6 +25,28 @@ struct EnemyScriptState
     short unk_4a;
 };
 
+// Arguments: moves at an angle over a time, slowing down.
+struct EnemyMoveAngleArgs
+{
+    int duration;
+    float angle;
+    float speed;
+};
+
+// One instruction of an enemy script.
+struct EnemyScriptInstr
+{
+    // The frame it runs on.
+    int time;
+    short opcode;
+    // The size of the instruction, arguments included.
+    short size;
+    DWORD unk_08;
+    union {
+        EnemyMoveAngleArgs moveAngle;
+    } args;
+};
+
 // The start of an enemy script file.
 struct EnemyScriptHeader
 {
@@ -73,6 +95,10 @@ int *ResolveOperand(Enemy *enemy, int *operand, int *type);
 float *ResolveFloatOperand(Enemy *enemy, float *operand, int *type);
 // Sets variable `dst` to the value of operand *src.
 void ScriptSet(Enemy *enemy, int dst, int *src);
+
+// Moves `enemy` at instr's angle (an operand) and speed over its
+// duration, slowing down to a stop: moveMode 2.
+void ScriptMoveAngle(Enemy *enemy, EnemyScriptInstr *instr);
 
 // Where ResolveOperand computes its read-only values.
 extern int g_Unknown487e44;

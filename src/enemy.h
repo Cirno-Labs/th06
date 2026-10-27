@@ -15,7 +15,10 @@
 // Enemy's flags, in bytes.
 struct EnemyFlags
 {
-    unsigned char unk0 : 6;
+    // How the enemy moves: 1 by angle and speed, 2 towards
+    // moveStart + moveDelta over moveDuration.
+    unsigned char moveMode : 2;
+    unsigned char unk2 : 4;
     // Mirrors the horizontal movement.
     unsigned char mirrored : 1;
     unsigned char unk7 : 1;
@@ -48,9 +51,19 @@ struct Enemy
     D3DXVECTOR3 pos;
     DWORD unk_c78[0x3];
     D3DXVECTOR3 velocity;
-    DWORD unk_c90[0xd];
-    Timer unk_cc4;
-    DWORD unk_cd0[0x5];
+    // Movement with moveMode 1.
+    float angle;
+    float angularVelocity;
+    float speed;
+    float acceleration;
+    DWORD unk_ca0[0x3];
+    // Movement with moveMode 2: from moveStart by moveDelta over
+    // moveDuration frames, counted down by moveTimer.
+    D3DXVECTOR3 moveDelta;
+    D3DXVECTOR3 moveStart;
+    Timer moveTimer;
+    int moveDuration;
+    DWORD unk_cd4[0x4];
     int unk_ce4;
     DWORD unk_ce8[0x2];
     Timer unk_cf0;

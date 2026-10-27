@@ -6,6 +6,19 @@ Chain::~Chain()
 {
 }
 
+ChainElem::~ChainElem()
+{
+    if (this->deletedCallback != NULL)
+    {
+        this->deletedCallback(this->arg);
+    }
+    this->prev = NULL;
+    this->next = NULL;
+    this->callback = NULL;
+    this->addedCallback = NULL;
+    this->deletedCallback = NULL;
+}
+
 void Chain::Release()
 {
     this->ReleaseList(&this->calcChain);

@@ -301,6 +301,8 @@ public:
 
     // Advances the generator and returns 16 random bits.
     WORD GetRandomU16();
+    // 32 random bits, from two GetRandomU16 calls.
+    DWORD GetRandomU32();
     // A random number below `range`, or 0 if `range` is 0.
     WORD GetRandomU16InRange(WORD range)
     {

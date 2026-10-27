@@ -26,3 +26,8 @@ int Func41b1a4(Unknown417d29 *arg)
 {
     return arg->Func417d29();
 }
+
+DWORD Rng::GetRandomU32()
+{
+    return (this->GetRandomU16() << 16) | this->GetRandomU16();
+}

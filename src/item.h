@@ -35,12 +35,12 @@ public:
     ItemManager();
 
     // Drops item `type` at `pos` in `state` into the next free slot.
-    void Func41f290(D3DXVECTOR3 *pos, int type, int state);
+    void SpawnItem(D3DXVECTOR3 *pos, int type, int state);
     // Draws every active item to the player (state 1).
     void Func420130();
 
     Item items[0x201];
-    // Where Func41f290 looks for a free slot first.
+    // Where SpawnItem looks for a free slot first.
     int nextIndex;
     int unk_28948;
 };

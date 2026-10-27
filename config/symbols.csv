@@ -224,7 +224,7 @@ address,size,name,symbol
 0x0041f02b,37,ReleaseTextSurface,?ReleaseTextSurface@@YAXXZ
 0x0041f050,480,RenderTextToTexture,?RenderTextToTexture@@YAXHHHHHHKKPADPAUIDirect3DTexture8@@@Z
 0x0041f230,90,ItemManager::ItemManager,??0ItemManager@@QAE@XZ
-0x0041f290,517,ItemManager::Func41f290,?Func41f290@ItemManager@@QAEXPAUD3DXVECTOR3@@HH@Z
+0x0041f290,517,ItemManager::SpawnItem,?SpawnItem@ItemManager@@QAEXPAUD3DXVECTOR3@@HH@Z
 0x0041f4a0,3160,Func41f4a0,
 0x00420130,86,ItemManager::Func420130,?Func420130@ItemManager@@QAEXXZ
 0x00420190,408,Func420190,

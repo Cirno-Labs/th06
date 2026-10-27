@@ -14,7 +14,7 @@ public:
     // Zeroes everything.
     void Reset();
     // Ends every bullet and laser: with `unk` zero they fade out, with it
-    // nonzero each bullet is replaced by Func41f290(position, 6, 1).
+    // nonzero each bullet is replaced by SpawnItem(position, 6, 1).
     void Func414160(int unk);
     // Func414160(1).
     void ClearAllToItems();

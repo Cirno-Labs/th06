@@ -133,6 +133,9 @@ void ScriptMul(Enemy *enemy, int dst, int *a, int *b);
 // Sets variable `dst` to operand *a divided by operand *b, like
 // ScriptAdd.
 void ScriptDiv(Enemy *enemy, int dst, int *a, int *b);
+// Sets variable `dst` to operand *a modulo operand *b, like ScriptAdd
+// (fmod for floats).
+void ScriptMod(Enemy *enemy, int dst, int *a, int *b);
 
 // Where ResolveOperand computes its read-only values.
 extern int g_Unknown487e44;

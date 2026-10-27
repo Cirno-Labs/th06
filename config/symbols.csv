@@ -58,7 +58,7 @@ address,size,name,symbol
 0x0040b4d0,161,ScriptSub,?ScriptSub@@YAXPAUEnemy@@HPAH1@Z
 0x0040b580,204,ScriptMul,?ScriptMul@@YAXPAUEnemy@@HPAH1@Z
 0x0040b650,164,ScriptDiv,?ScriptDiv@@YAXPAUEnemy@@HPAH1@Z
-0x0040b700,202,Func40b700,
+0x0040b700,202,ScriptMod,?ScriptMod@@YAXPAUEnemy@@HPAH1@Z
 0x0040b7d0,190,Func40b7d0,
 0x0040b890,74,D3DXVec3Length,?D3DXVec3Length@@YAMPBUD3DXVECTOR3@@@Z
 0x0040b8e0,414,Func40b8e0,
@@ -968,7 +968,7 @@ address,size,name,symbol
 0x0045bda4,9,_cos,_cos
 0x0045bdad,145,Func45bdad,
 0x0045be40,10,_atan2,_atan2
-0x0045be60,10,Func45be60,
+0x0045be60,10,_fmod,_fmod
 0x0045be92,136,_atol,
 0x0045bf1f,5,operator delete,??3@YAXPAX@Z
 0x0045bf24,14,operator new,??2@YAPAXI@Z

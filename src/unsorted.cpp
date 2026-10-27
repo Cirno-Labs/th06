@@ -17,3 +17,7 @@ int Func42a670(void *arg)
 {
     return 1;
 }
+
+Unknown423330::~Unknown423330()
+{
+}

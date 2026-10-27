@@ -57,6 +57,49 @@ int Unknown6d3f50::Initialize(HWND hwnd)
     return 0;
 }
 
+int Unknown6d3f50::Release()
+{
+    int i;
+
+    if (!this->manager)
+    {
+        return 0;
+    }
+    for (i = 0; i < 0x80; i++)
+    {
+        if (this->sounds[i] != NULL)
+        {
+            this->sounds[i]->Release();
+            this->sounds[i] = NULL;
+        }
+        if (this->soundBuffers[i] != NULL)
+        {
+            this->soundBuffers[i]->Release();
+            this->soundBuffers[i] = NULL;
+        }
+    }
+    KillTimer(this->hwnd, 1);
+    this->StopBgm();
+    this->dsound = NULL;
+    this->silence->Stop();
+    if (this->silence != NULL)
+    {
+        this->silence->Release();
+        this->silence = NULL;
+    }
+    if (this->bgm != NULL)
+    {
+        delete this->bgm;
+        this->bgm = NULL;
+    }
+    if (this->manager != NULL)
+    {
+        delete this->manager;
+        this->manager = NULL;
+    }
+    return 0;
+}
+
 int Unknown6d3f50::LoadSound(int index, char *path)
 {
     char *cursor;
@@ -207,7 +250,7 @@ int Unknown6d3f50::LoadSounds()
             return -1;
         }
     }
-    for (i = 0; i < ARRAY_SIZE(this->sounds); i++)
+    for (i = 0; i < ARRAY_SIZE(g_SoundInfos); i++)
     {
         this->dsound->DuplicateSoundBuffer(this->soundBuffers[g_SoundInfos[i].buffer], &this->sounds[i]);
         this->sounds[i]->SetCurrentPosition(0);

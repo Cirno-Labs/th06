@@ -19,6 +19,8 @@ public:
     // Sets up DirectSound for `hwnd` (stereo, 44.1 kHz, 16 bits) and
     // starts a silent looping buffer and a 250 ms timer. Returns 0 or -1.
     int Initialize(HWND hwnd);
+    // Releases the sounds, the wave music and DirectSound. Returns 0.
+    int Release();
     // Stops the wave music: ends the notification thread and releases
     // the stream ("stop BGM").
     void StopBgm();
@@ -42,8 +44,7 @@ public:
     // The loaded sound files' buffers.
     IDirectSoundBuffer *soundBuffers[0x80];
     // Each sound effect's own buffer.
-    IDirectSoundBuffer *sounds[0x20];
-    unsigned char unk_288[0x180];
+    IDirectSoundBuffer *sounds[0x80];
     // Set from g_SoundInfos[].unk_6 when a sound is queued.
     int unk_408[0x20];
     unsigned char unk_488[0x180];
@@ -73,7 +74,7 @@ struct SoundInfo
     short volume;
     short unk_6;
 };
-extern SoundInfo g_SoundInfos[];
+extern SoundInfo g_SoundInfos[0x20];
 // The sound files LoadSounds loads, by index.
 extern char *g_SoundPaths[];
 

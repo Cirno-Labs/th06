@@ -153,7 +153,7 @@ MidiPlayer::MidiPlayer()
     this->unk_120 = 0;
     this->trackCount = 0;
     this->unk_2c4 = 0;
-    this->unk_2c8 = 0;
+    this->unk_2c8 = 0.0f;
     this->unk_2cc = 0;
     this->unk_2d0 = 0;
     this->unk_2d4 = 0;
@@ -198,4 +198,24 @@ int MidiPlayer::Play()
     this->device.Open(MIDI_MAPPER);
     this->Start(1, NULL, 0);
     return 0;
+}
+
+void MidiPlayer::Rewind()
+{
+    int i;
+    MidiTrack *track;
+
+    track = this->tracks;
+    this->unk_2c8 = 1.0f;
+    this->unk_2dc = 0;
+    this->unk_2e0 = 0;
+    this->unk_128 = 0;
+    this->unk_130 = 0;
+    for (i = 0; i < this->trackCount; i++, track++)
+    {
+        track->cursor = track->data;
+        track->unk_18 = track->cursor;
+        track->active = 1;
+        track->delta = ReadVarLen(&track->cursor);
+    }
 }

@@ -77,6 +77,25 @@ public:
 };
 ASSERT_SIZE(MmTimer, 0x10);
 
+// One track of a parsed MIDI file. Size from the stride of
+// MidiPlayer::tracks.
+struct MidiTrack
+{
+    // Set when the track is rewound.
+    int active;
+    // Delta time of the next event, read by ReadVarLen.
+    DWORD delta;
+    unsigned char unk_08[0x8];
+    // The track's event data.
+    BYTE *data;
+    // Read position in `data`.
+    BYTE *cursor;
+    // Set to the start of the data on rewind.
+    BYTE *unk_18;
+    unsigned char unk_1c[0x4];
+};
+ASSERT_SIZE(MidiTrack, 0x20);
+
 // Plays MIDI files on a MidiDevice, driven by its own timer. Allocated with
 // operator new(0x300).
 class MidiPlayer : public MmTimer
@@ -110,13 +129,15 @@ public:
     unsigned char unk_118[0x4];
     int unk_11c;
     int unk_120;
-    unsigned char unk_124[0x14];
-    // 0x20-byte track records: the data at +0x10, a read cursor at +0x14.
-    void *tracks;
+    unsigned char unk_124[0x4];
+    __int64 unk_128;
+    __int64 unk_130;
+    // Parsed tracks, `trackCount` of them.
+    MidiTrack *tracks;
     MidiDevice device;
     unsigned char unk_144[0x180];
     BYTE unk_2c4;
-    int unk_2c8;
+    float unk_2c8;
     int unk_2cc;
     int unk_2d0;
     int unk_2d4;

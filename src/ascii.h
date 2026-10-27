@@ -58,7 +58,7 @@ ASSERT_SIZE(Unknown4010e0, 0x778);
 struct AsciiPopup
 {
     // Least significant first; 10 stands for a minus sign.
-    char digits[8];
+    BYTE digits[8];
     D3DXVECTOR3 pos;
     D3DCOLOR color;
     Timer timer;
@@ -76,8 +76,9 @@ public:
     // Adds AsciiText's update and draw chain elements. Returns 0, or -1
     // if adding fails.
     static int RegisterChain();
-    // The second draw element's callback (priority 10): runs Func4031e0
-    // while g_Unknown6c7114 is set, otherwise Func4033b0. Returns 1.
+    // The second draw element's callback (priority 10): draws the
+    // popups with DrawPopups while g_Unknown6c7114 is set, otherwise
+    // with DrawPopups2. Returns 1.
     static int OnDraw2(AsciiText *text);
     // The first draw element's callback (priority 0xf): draws the queued
     // strings and empties the queue. Returns 1.
@@ -105,8 +106,12 @@ public:
         this->unk_0110.pos.z = 0.1f;
         this->unk_6234 = 0;
     }
-    void Func4031e0();
-    void Func4033b0();
+    // Draws the active popups digit by digit with unk_0110, inside the
+    // viewport given by g_Unknown69d6dc, through
+    // SpriteEngine::Func433590.
+    void DrawPopups();
+    // Like DrawPopups, through SpriteEngine::Draw.
+    void DrawPopups2();
 
     // The update element's deleted callback: frees the ANM files the
     // added callback loaded. Returns 0.

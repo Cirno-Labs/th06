@@ -42,7 +42,9 @@ public:
     int unk_0004;
     DWORD unk_0008[0x2];
     int difficulty;
-    DWORD unk_0014[0x4];
+    DWORD unk_0014[0x3];
+    // Counts the player's deaths.
+    int deaths;
     // Counts the bombs used.
     int bombsUsed;
     DWORD unk_0028;

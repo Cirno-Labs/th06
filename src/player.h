@@ -82,6 +82,9 @@ public:
     int HandleInput();
     // Starts fireTimer unless it runs.
     static void StartFiring(Player *player);
+    // Kills the player: bursts effects, starts the death (state 2), plays
+    // sound 4 and counts the death.
+    void Die();
     // Fires the shot type's shots for `frame` of fireTimer into free
     // bullets.
     static void FireShots(Player *player, int frame);

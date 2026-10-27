@@ -1,6 +1,7 @@
 // The file with the player's shots.
 
 #include "bullet.h"
+#include "effect.h"
 #include "enemy.h"
 #include "gamemanager.h"
 #include "player.h"
@@ -105,6 +106,23 @@ void Player::RemoveChain()
     g_Player.drawChain = NULL;
     g_Chain.Remove(g_Player.drawChain2);
     g_Player.drawChain2 = NULL;
+}
+
+void Player::Die()
+{
+    int i;
+
+    g_EnemyManager.unk_ee5c4 = 0;
+    g_EffectManager.Func40ef50(0xc, &this->position, 1, 0xff4040ff);
+    g_EffectManager.Func40ef50(6, &this->position, 16, 0xffffffff);
+    this->unk_09e0 = 2;
+    this->unk_75b4.Set(0);
+    g_Unknown6d3f50.Func4311e0(4, 0);
+    g_GameManager.deaths++;
+    for (i = 0; i < 2; i++)
+    {
+        this->laserTimers[i].Set(2);
+    }
 }
 
 int Player::HandleInput()

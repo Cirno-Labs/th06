@@ -442,7 +442,7 @@ address,size,name,symbol
 0x0043a70a,44,Func43a70a,?Func43a70a@@YAXXZ
 0x0043a736,112,Func43a736,
 0x0043a7b0,23,CSoundManager::CSoundManager,??0CSoundManager@@QAE@XZ
-0x0043a7d0,44,Func43a7d0,
+0x0043a7d0,44,CSoundManager::~CSoundManager,??1CSoundManager@@QAE@XZ
 0x0043a800,142,Func43a800,
 0x0043a890,301,Func43a890,
 0x0043a9c0,715,Func43a9c0,

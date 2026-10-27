@@ -3,7 +3,15 @@
 
 #include "dsutil.h"
 
+// From the SDK's dxutil.h.
+#define SAFE_RELEASE(p) { if(p) { (p)->Release(); (p)=NULL; } }
+
 CSoundManager::CSoundManager()
 {
     m_pDS = NULL;
+}
+
+CSoundManager::~CSoundManager()
+{
+    SAFE_RELEASE(m_pDS);
 }

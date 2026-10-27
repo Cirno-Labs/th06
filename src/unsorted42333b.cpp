@@ -102,6 +102,21 @@ int Unknown6c6d18::PlayMidi(int slot)
     return 1;
 }
 
+int Unknown6c6d18::LoadMusic(char *path)
+{
+    if (g_Unknown6c6d18.musicMode == 2)
+    {
+    }
+    else if (g_Unknown6c6d18.musicMode == 1)
+    {
+    }
+    else
+    {
+        return -1;
+    }
+    return 0;
+}
+
 int Unknown6c6d18::StopMusic()
 {
     if (g_Unknown6c6d18.musicMode == 2)

@@ -47,6 +47,10 @@ public:
     // Fades the music out over `seconds`. Returns -1 if the music mode is
     // neither wave nor MIDI, otherwise 0.
     int FadeOutMusic(float seconds);
+    // Called with a tune's path ("bgm/th06_01.mid") but ignores it: does
+    // nothing in either mode. Returns -1 if the music mode is neither
+    // wave nor MIDI, otherwise 0.
+    int LoadMusic(char *path);
     // Plays the tune at `path`, a MIDI file, from the start. In wave mode
     // it plays the .wav of the same name instead, looping at the point
     // the .pos file gives. Returns -1 if the music mode is neither wave

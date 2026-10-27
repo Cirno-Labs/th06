@@ -28,9 +28,10 @@ game: build _orig
 run: game
     cd build/game && WINEDEBUG=-all,+debugstr wine th06.exe
 
-# Analyze the original with headless Ghidra
+# Analyze the original with headless Ghidra; add new functions to symbols.csv
 analyze: _orig
     tools/ghidra/analyze.sh
+    python3 tools/seed_symbols.py
 
 # Remove build outputs (keeps the Ghidra project)
 clean:

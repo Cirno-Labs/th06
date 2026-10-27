@@ -67,6 +67,9 @@ decompiled. The CRT and the SDK libraries are linked as-is.
 Everything runs headless, so it works over SSH. `just` lists the recipes.
 
 1. Analyze the binary with Ghidra in headless mode (`just analyze`).
+   New functions are added to `config/symbols.csv` with placeholder names
+   (`Func43be50`); CRT functions keep the names Ghidra's function ID
+   gives them.
 2. Write C++ for a function in `src/`, in the style of 2002-era code.
 3. Record the function and every original function and global it
    uses in [`config/symbols.csv`](config/symbols.csv): address, size, our
@@ -100,7 +103,7 @@ in `symbols.csv` too, so the game and the new code share one heap.
 orig/     your game files (not tracked) and their checksums
 src/      decompiled source; src/dll/ is the hook DLL's own code
 config/   symbols.csv: address, size, name and mangled symbol
-tools/    build, compare, exe patcher, Ghidra scripts
+tools/    build, compare, exe patcher, symbol seeding, Ghidra scripts
 build/    outputs; build/game/ is a runnable copy of the patched game
 ```
 

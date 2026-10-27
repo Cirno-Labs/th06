@@ -13,6 +13,8 @@ class EnemyManager
 public:
     // Frees the enemy sprites. Returns 0.
     static int DeletedCallback(EnemyManager *mgr);
+    // Removes the two chain elements.
+    static void RemoveChain();
 
     // The stage's two enemy sprite files.
     char *anmPath;
@@ -21,3 +23,7 @@ public:
 };
 ASSERT_SIZE(EnemyManager, 0xee5ec);
 extern EnemyManager g_EnemyManager;
+
+// EnemyManager's statically allocated chain elements.
+extern ChainElem g_EnemyCalcChain;
+extern ChainElem g_EnemyDrawChain;

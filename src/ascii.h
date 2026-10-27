@@ -37,10 +37,16 @@ public:
     // flag 0.
     void Func402740();
     void Func402870();
+    // Draws, while g_Unknown69d4c0 is set, inside the viewport given
+    // by g_Unknown69d6dc: unk_668 if g_Unknown6c7115 is set and unk_000
+    // is nonzero or unk_004 above 2, then, when unk_000 is 1 or 2, a copy
+    // of sprite 1 as sprite 4, shifted right and showing sprite entry
+    // 0x1e - g_Unknown69d4b8, then those of the first four sprites with
+    // flag 0.
     void Func403060();
 
     int unk_000;
-    unsigned char unk_004[0x4];
+    int unk_004;
     Sprite unk_008[6];
     Sprite unk_668;
 };
@@ -147,6 +153,7 @@ extern AsciiText g_AsciiText;
 extern BYTE g_Unknown6c7114;
 extern BYTE g_Unknown69d4bf;
 extern BYTE g_Unknown6c7115;
+extern BYTE g_Unknown69d4b8;
 // A rectangle: x, y, width and height.
 extern float g_Unknown69d6dc[4];
 extern BYTE g_Unknown69d4c0;

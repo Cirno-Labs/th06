@@ -7,6 +7,18 @@
 #include "common.h"
 #include "timer.h"
 
+// One of SpriteEngine's sprites: a rectangle of a texture.
+struct SpriteData
+{
+    // Negative when unused.
+    int unk_00;
+    DWORD unk_04[0xa];
+    float width;
+    float height;
+    DWORD unk_34;
+};
+ASSERT_SIZE(SpriteData, 0x38);
+
 // Sprite's flags, a bitfield.
 struct SpriteFlags
 {
@@ -44,7 +56,11 @@ public:
 
     // The gaps are DWORDs, not bytes: a byte array would make /GS put a
     // security cookie in functions with a Sprite local.
-    DWORD unk_000[0xc];
+    DWORD unk_000[0x6];
+    // SpriteEngine::Draw scales the sprite's width and height by these.
+    float scaleX;
+    float scaleY;
+    DWORD unk_020[0x4];
     Timer unk_030;
     // Set to the identity by Initialize.
     D3DXMATRIX matrix;
@@ -61,7 +77,10 @@ public:
     // The script SpriteEngine::StartScript started.
     short scriptIndex;
     short unk_0b6;
-    DWORD unk_0b8[0xe];
+    DWORD unk_0b8[0x2];
+    // The entry SetSprite chose.
+    SpriteData *spriteData;
+    DWORD unk_0c4[0xb];
     Timer unk_0f0;
     DWORD unk_0fc;
     Timer unk_100;
@@ -151,7 +170,8 @@ public:
     // (formatted into 64 bytes) and marks the sprite for upload.
     void RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...);
 
-    unsigned char unk_00000[0x1c934];
+    SpriteData sprites[0x800];
+    unsigned char unk_1c000[0x934];
     // The scripts of the loaded ANM files.
     void *scripts[0x800];
     unsigned char unk_1e934[0x2784];

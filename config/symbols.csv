@@ -1547,6 +1547,7 @@ address,size,name,symbol
 0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A
 0x00487aac,,g_AsciiCalcChain,?g_AsciiCalcChain@@3UChainElem@@A
 0x00487acc,,g_AsciiDrawChain2,?g_AsciiDrawChain2@@3UChainElem@@A
+0x0069d4b8,,g_Unknown69d4b8,?g_Unknown69d4b8@@3EA
 0x0069d4bf,,g_Unknown69d4bf,?g_Unknown69d4bf@@3EA
 0x0069d4c0,,g_Unknown69d4c0,?g_Unknown69d4c0@@3EA
 0x0069d4c1,,g_Unknown69d4c1,?g_Unknown69d4c1@@3EA

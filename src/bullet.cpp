@@ -258,9 +258,9 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     cur->color = shooter->color;
     cur->sprites.sprite0 = this->typeSprites[shooter->sprite].sprite0;
     cur->sprites.sprite4 = this->typeSprites[shooter->sprite].sprite4;
-    cur->sprites.unk_550 = this->typeSprites[shooter->sprite].unk_550;
+    cur->sprites.hitboxSize = this->typeSprites[shooter->sprite].hitboxSize;
     cur->sprites.unk_55c = this->typeSprites[shooter->sprite].unk_55c;
-    cur->sprites.unk_55d = this->typeSprites[shooter->sprite].unk_55d;
+    cur->sprites.height = this->typeSprites[shooter->sprite].height;
     if (cur->flags & 2)
     {
         cur->sprites.sprite1 = this->typeSprites[shooter->sprite].sprite1;
@@ -534,4 +534,81 @@ void Func416c50(Bullet *bullet)
         sprite->rotation = 1.5707964f - bullet->angle;
     }
     g_SpriteEngine->Func432cc0(sprite);
+}
+
+int BulletManager::AddedCallback(BulletManager *mgr)
+{
+    int i;
+
+    if ((g_Unknown6c6d18.scene != 3) != 0)
+    {
+        if (g_SpriteEngine->LoadAnm(6, "data/etama3.anm", 0x200) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(7, "data/etama4.anm", 0x29a) != 0)
+        {
+            return -1;
+        }
+    }
+    for (i = 0; i < ARRAY_SIZE(g_BulletTypeScripts); i++)
+    {
+        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite0, g_BulletTypeScripts[i][0]);
+        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite1, g_BulletTypeScripts[i][1]);
+        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite2, g_BulletTypeScripts[i][2]);
+        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite3, g_BulletTypeScripts[i][3]);
+        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite4, g_BulletTypeScripts[i][4]);
+        mgr->typeSprites[i].sprite0.unk_0b2 = mgr->typeSprites[i].sprite0.spriteIndex;
+        mgr->typeSprites[i].height = mgr->typeSprites[i].sprite0.spriteData->height;
+        if (mgr->typeSprites[i].sprite0.spriteData->height <= 8.0f)
+        {
+            mgr->typeSprites[i].hitboxSize.x = 4.0f;
+            mgr->typeSprites[i].hitboxSize.y = 4.0f;
+        }
+        else if (mgr->typeSprites[i].sprite0.spriteData->height <= 16.0f)
+        {
+            switch (g_BulletTypeScripts[i][0])
+            {
+            case 0x202:
+                mgr->typeSprites[i].hitboxSize.x = 4.0f;
+                mgr->typeSprites[i].hitboxSize.y = 4.0f;
+                break;
+            case 0x204:
+                mgr->typeSprites[i].hitboxSize.x = 5.0f;
+                mgr->typeSprites[i].hitboxSize.y = 5.0f;
+                break;
+            case 0x205:
+                mgr->typeSprites[i].hitboxSize.x = 4.0f;
+                mgr->typeSprites[i].hitboxSize.y = 4.0f;
+                break;
+            default:
+                mgr->typeSprites[i].hitboxSize.x = 6.0f;
+                mgr->typeSprites[i].hitboxSize.y = 6.0f;
+            }
+        }
+        else if (mgr->typeSprites[i].sprite0.spriteData->height <= 32.0f)
+        {
+            switch (g_BulletTypeScripts[i][0])
+            {
+            case 0x207:
+                mgr->typeSprites[i].hitboxSize.x = 11.0f;
+                mgr->typeSprites[i].hitboxSize.y = 11.0f;
+                break;
+            case 0x208:
+                mgr->typeSprites[i].hitboxSize.x = 9.0f;
+                mgr->typeSprites[i].hitboxSize.y = 9.0f;
+                break;
+            default:
+                mgr->typeSprites[i].hitboxSize.x = 16.0f;
+                mgr->typeSprites[i].hitboxSize.y = 16.0f;
+            }
+        }
+        else
+        {
+            mgr->typeSprites[i].hitboxSize.x = 32.0f;
+            mgr->typeSprites[i].hitboxSize.y = 32.0f;
+        }
+    }
+    memset(&g_ItemManager, 0, sizeof(ItemManager));
+    return 0;
 }

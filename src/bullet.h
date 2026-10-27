@@ -19,9 +19,10 @@ struct BulletTypeSprites
     Sprite sprite2;
     Sprite sprite3;
     Sprite sprite4;
-    D3DXVECTOR3 unk_550;
+    // The size of the bullet's hitbox, and its sprite's height.
+    D3DXVECTOR3 hitboxSize;
     BYTE unk_55c;
-    BYTE unk_55d;
+    BYTE height;
     BYTE unk_55e[0x2];
 };
 ASSERT_SIZE(BulletTypeSprites, 0x560);
@@ -83,6 +84,9 @@ struct BulletShooter
     int flags;
     int sound;
 };
+
+// The scripts of each bullet type's five sprites.
+extern int g_BulletTypeScripts[10][5];
 
 // Sprite offsets by color, for bullets up to 16 and up to 32 high.
 extern int g_BulletColorOffsets16[16];
@@ -152,7 +156,9 @@ public:
     static int RegisterChain(int unk);
     static int OnUpdate(BulletManager *mgr);
     static int OnDraw(BulletManager *mgr);
-    // Loads the bullet sprites.
+    // Loads the bullet sprites ("data/etama3.anm" and "etama4.anm", unless
+    // the scene is 3), sets up the bullet types' sprites and hitboxes and
+    // clears the items. Returns 0, or -1 if loading fails.
     static int AddedCallback(BulletManager *mgr);
     // Frees the bullet sprites, unless the scene is 3. Returns 0.
     static int DeletedCallback(BulletManager *mgr);

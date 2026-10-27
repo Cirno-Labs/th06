@@ -22,6 +22,10 @@ public:
     // Ends the current stage's record with an entry at the current frame
     // and an end marker (frame 9999999), and keeps where it ends.
     static void EndStage();
+    // The update callback while recording: while
+    // g_GameManager.unk_1821 is set, adds an entry whenever the buttons
+    // (masked with 0x1f7) change, and counts the frame. Returns 1.
+    static int RecordOnUpdate(ReplayManager *replay);
 
     // The current frame.
     int frame;

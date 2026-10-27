@@ -2,6 +2,27 @@
 
 #include "replay.h"
 #include "gamemanager.h"
+#include "unsorted.h"
+
+int ReplayManager::RecordOnUpdate(ReplayManager *replay)
+{
+    WORD input;
+
+    if (!g_GameManager.unk_1821)
+    {
+        return 1;
+    }
+    input = g_Buttons & 0x1f7;
+    if (input != replay->cursors[0]->input)
+    {
+        replay->cursors[0]++;
+        replay->cursors[g_GameManager.stage] = replay->cursors[0] + 1;
+        replay->cursors[0]->frame = replay->frame;
+        replay->cursors[0]->input = input;
+    }
+    replay->frame++;
+    return 1;
+}
 
 void ReplayManager::EndStage()
 {

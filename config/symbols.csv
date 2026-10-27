@@ -137,7 +137,7 @@ address,size,name,symbol
 0x00416c50,244,Func416c50,
 0x00416d60,1289,Func416d60,
 0x00417270,49,BulletManager::DeletedCallback,?DeletedCallback@BulletManager@@SAHPAV1@@Z
-0x004172b0,35,Func4172b0,
+0x004172b0,35,BulletManager::RemoveChain,?RemoveChain@BulletManager@@SAXXZ
 0x004172d3,65,Func4172d3,
 0x00417314,24,Func417314,
 0x0041732c,24,Func41732c,
@@ -1551,7 +1551,9 @@ address,size,name,symbol
 0x00487fe0,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x004b7964,,g_EffectCalcChain,?g_EffectCalcChain@@3UChainElem@@A
 0x004b7984,,g_EffectDrawChain,?g_EffectDrawChain@@3UChainElem@@A
+0x005a5fd8,,g_BulletDrawChain,?g_BulletDrawChain@@3UChainElem@@A
 0x005a5ff8,,g_BulletManager,?g_BulletManager@@3VBulletManager@@A
+0x0069bc10,,g_BulletCalcChain,?g_BulletCalcChain@@3UChainElem@@A
 0x0069d4b8,,g_Unknown69d4b8,?g_Unknown69d4b8@@3EA
 0x0069d4bf,,g_Unknown69d4bf,?g_Unknown69d4bf@@3EA
 0x0069d4c0,,g_Unknown69d4c0,?g_Unknown69d4c0@@3EA

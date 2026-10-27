@@ -16,8 +16,14 @@ public:
 
     // Frees the bullet sprites, unless the scene is 3. Returns 0.
     static int DeletedCallback(BulletManager *mgr);
+    // Removes the two chain elements.
+    static void RemoveChain();
 
     DWORD unk_00000[0x3d706];
 };
 ASSERT_SIZE(BulletManager, 0xf5c18);
 extern BulletManager g_BulletManager;
+
+// BulletManager's statically allocated chain elements.
+extern ChainElem g_BulletCalcChain;
+extern ChainElem g_BulletDrawChain;

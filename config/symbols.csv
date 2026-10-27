@@ -446,10 +446,10 @@ address,size,name,symbol
 0x0043a800,142,CSoundManager::Initialize,?Initialize@CSoundManager@@QAEJPAUHWND__@@KKKK@Z
 0x0043a890,301,CSoundManager::SetPrimaryBufferFormat,?SetPrimaryBufferFormat@CSoundManager@@QAEJKKK@Z
 0x0043a9c0,715,Func43a9c0,
-0x0043ac90,211,Func43ac90,
+0x0043ac90,211,CSound::CSound,??0CSound@@QAE@PAPAUIDirectSoundBuffer@@KKPAVCWaveFile@@@Z
 0x0043ad70,46,CSound::`scalar deleting destructor',??_GCSound@@UAEPAXI@Z
 0x0043ada0,241,CSound::~CSound,??1CSound@@UAE@XZ
-0x0043aea0,485,Func43aea0,
+0x0043aea0,485,CSound::FillBufferWithSound,?FillBufferWithSound@CSound@@QAEJPAUIDirectSoundBuffer@@H@Z
 0x0043b090,163,Func43b090,
 0x0043b140,182,Func43b140,
 0x0043b200,53,Func43b200,

@@ -42,6 +42,13 @@ struct EnemyMovePosArgs
     float z;
 };
 
+// Arguments: moves at the enemy's angle and speed over a time, slowing
+// down.
+struct EnemyMoveTimeArgs
+{
+    int duration;
+};
+
 // One instruction of an enemy script.
 struct EnemyScriptInstr
 {
@@ -54,6 +61,7 @@ struct EnemyScriptInstr
     union {
         EnemyMoveAngleArgs moveAngle;
         EnemyMovePosArgs movePos;
+        EnemyMoveTimeArgs moveTime;
     } args;
 };
 
@@ -112,6 +120,9 @@ void ScriptMoveAngle(Enemy *enemy, EnemyScriptInstr *instr);
 // Moves `enemy` to instr's position (operands) over its duration,
 // slowing down to a stop: moveMode 2.
 void ScriptMovePos(Enemy *enemy, EnemyScriptInstr *instr);
+// Moves `enemy` at its own angle and speed over instr's duration,
+// slowing down to a stop: moveMode 2.
+void ScriptMoveTime(Enemy *enemy, EnemyScriptInstr *instr);
 
 // Where ResolveOperand computes its read-only values.
 extern int g_Unknown487e44;

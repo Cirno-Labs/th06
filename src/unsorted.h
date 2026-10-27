@@ -570,7 +570,10 @@ public:
 
     GuiFlags flags;
     GuiImpl *impl;
-    DWORD unk_08[0x9];
+    DWORD unk_08[0x6];
+    BYTE unk_20;
+    BYTE unk_21[0x3];
+    DWORD unk_24[0x2];
 };
 ASSERT_SIZE(Gui, 0x2c);
 extern Gui g_Gui;

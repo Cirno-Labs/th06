@@ -63,6 +63,11 @@ ASSERT_SIZE(Bullet, 0x5c4);
 // aimed by `aimMode`.
 struct BulletShooter
 {
+    BulletShooter()
+    {
+        memset(this, 0, sizeof(BulletShooter));
+    }
+
     // The bullet type, and its color.
     short sprite;
     short color;
@@ -84,6 +89,7 @@ struct BulletShooter
     int flags;
     int sound;
 };
+ASSERT_SIZE(BulletShooter, 0x54);
 
 // The scripts of each bullet type's five sprites.
 extern int g_BulletTypeScripts[10][5];

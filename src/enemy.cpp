@@ -17,6 +17,22 @@ void EnemyManager::RemoveChain()
     g_Chain.Remove(&g_EnemyDrawChain);
 }
 
+void ReleaseEnemyEffects(Enemy *enemy)
+{
+    int i;
+
+    for (i = 0; i < enemy->effectCount; i++)
+    {
+        if (enemy->effects[i] == NULL)
+        {
+            continue;
+        }
+        enemy->effects[i]->unk_17a = 1;
+        enemy->effects[i] = NULL;
+    }
+    enemy->effectCount = 0;
+}
+
 int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
 {
     EnemyManager *mgr = &g_EnemyManager;

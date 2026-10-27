@@ -20,7 +20,10 @@ struct Effect
     // anything but 1.
     int (*update)(Effect *effect);
     char active;
-    char unk_179[0x3];
+    char unk_179;
+    // Set to end an effect that followed an enemy.
+    char unk_17a;
+    char unk_17b;
 };
 ASSERT_SIZE(Effect, 0x17c);
 

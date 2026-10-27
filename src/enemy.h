@@ -5,7 +5,77 @@
 #include <windows.h>
 
 #include "chain.h"
+#include "bullet.h"
 #include "common.h"
+#include "effect.h"
+#include "sprite.h"
+#include "timer.h"
+
+// A context of an enemy's script, with its clock.
+struct EnemyContext
+{
+    DWORD unk_00;
+    Timer timer;
+    DWORD unk_10[0xf];
+};
+ASSERT_SIZE(EnemyContext, 0x4c);
+
+// Enemy's flags, in bytes.
+struct EnemyFlags
+{
+    unsigned char unk0 : 6;
+    // Mirrors the horizontal movement.
+    unsigned char mirrored : 1;
+    unsigned char unk7 : 1;
+    unsigned char unk8 : 1;
+    unsigned char unk9 : 2;
+    unsigned char unk11 : 1;
+    unsigned char unk12 : 1;
+    unsigned char unk13 : 3;
+    // Keeps the position within lowerBound and upperBound.
+    unsigned char clampPos : 1;
+    unsigned char unk17 : 7;
+    BYTE unk_e53;
+};
+
+// One enemy (0xec8 bytes).
+struct Enemy
+{
+    Sprite sprite;
+    Sprite sprites[8];
+    EnemyContext ctx;
+    EnemyContext savedCtx[8];
+    DWORD unk_c3c[0xc];
+    D3DXVECTOR3 pos;
+    DWORD unk_c78[0x3];
+    D3DXVECTOR3 velocity;
+    DWORD unk_c90[0xd];
+    Timer unk_cc4;
+    DWORD unk_cd0[0x8];
+    Timer unk_cf0;
+    DWORD unk_cfc;
+    BulletShooter shooter;
+    DWORD unk_d54;
+    Timer unk_d58;
+    BulletShooter laserShooter;
+    DWORD unk_db8[0x23];
+    Timer unk_e44;
+    EnemyFlags flags;
+    DWORD unk_e54[0x3];
+    // The bounds of the position, with flags.clampPos.
+    float lowerBound[2];
+    float upperBound[2];
+    // Effects that follow the enemy.
+    Effect *effects[12];
+    int effectCount;
+    float unk_ea4;
+    DWORD unk_ea8[0x5];
+    Timer unk_ebc;
+};
+ASSERT_SIZE(Enemy, 0xec8);
+
+// Releases the effects following `enemy`.
+void ReleaseEnemyEffects(Enemy *enemy);
 
 // Runs the enemies, the global at 0x4b79c8.
 class EnemyManager

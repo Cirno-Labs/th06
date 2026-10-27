@@ -57,8 +57,9 @@ public:
     int HandleInput();
     // Starts fireTimer unless it runs.
     static void StartFiring(Player *player);
-    // Fires the shot type's shots for the frame of fireTimer.
-    static void Func429820(Player *player, int frame);
+    // Fires the shot type's shots for `frame` of fireTimer into free
+    // bullets.
+    static void FireShots(Player *player, int frame);
     // Moves the player's bullets: homing ones steer like Reimu A's orbs,
     // others speed up to 10, rising ones accelerate, lasers stay on
     // their option, stretched to the top. Ends those that leave the
@@ -153,7 +154,11 @@ public:
     // Counts the death and respawn; the invulnerability counts down
     // (set to 360 frames when a bomb starts).
     Timer unk_75b4;
-    DWORD unk_75c0[0x2];
+    // The shot type's fire functions, unfocused and focused. They fill
+    // `bullet` with shot `index` and return 0, or 1 for the frame's last
+    // shot; -1 skips the shot, keeping `bullet`, and -2 stops.
+    int (*fire)(Player *player, PlayerBullet *bullet, int index, int frame);
+    int (*fireFocused)(Player *player, PlayerBullet *bullet, int index, int frame);
     // Whether a bomb runs; cleared when it ends.
     int bombing;
     // The bomb running: its length in frames, and its clock.

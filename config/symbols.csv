@@ -323,7 +323,7 @@ address,size,name,symbol
 0x004288c0,2282,Player::OnUpdate,?OnUpdate@Player@@SAHPAV1@@Z
 0x004291b0,1371,Player::UpdateBullets,?UpdateBullets@Player@@SAXPAV1@@Z
 0x00429710,268,Player::UpdateFiring,?UpdateFiring@Player@@SAHPAV1@@Z
-0x00429820,270,Player::Func429820,?Func429820@Player@@SAXPAV1@H@Z
+0x00429820,270,Player::FireShots,?FireShots@Player@@SAXPAV1@H@Z
 0x00429930,457,Player::OnDraw,?OnDraw@Player@@SAHPAV1@@Z
 0x00429b00,140,Func429b00,
 0x00429b90,22,Player::OnDraw2,?OnDraw2@Player@@SAHPAV1@@Z

@@ -642,7 +642,7 @@ int Player::UpdateFiring(Player *player)
     if (player->fireTimer.HasTicked() &&
         (!g_Player.bombing || g_GameManager.character != 1 || g_GameManager.shotType != 1))
     {
-        Player::Func429820(player, player->fireTimer.AsFrames());
+        Player::FireShots(player, player->fireTimer.AsFrames());
     }
     player->fireTimer.Tick();
     if (player->fireTimer.AsFrames() >= 30 || player->unk_09e0 == 2 || player->unk_09e0 == 1)
@@ -650,6 +650,53 @@ int Player::UpdateFiring(Player *player)
         player->fireTimer.Set(-1);
     }
     return 0;
+}
+
+void Player::FireShots(Player *player, int frame)
+{
+    int shotIndex;
+    int i;
+    PlayerBullet *curBullet;
+    int ret;
+
+    shotIndex = 0;
+    curBullet = player->bullets;
+    for (i = 0; i < 0x50; i++, curBullet++)
+    {
+        if (curBullet->state != 0)
+        {
+            continue;
+        }
+    again:
+        if (!player->focused)
+        {
+            ret = player->fire(player, curBullet, shotIndex, frame);
+        }
+        else
+        {
+            ret = player->fireFocused(player, curBullet, shotIndex, frame);
+        }
+        if (ret >= 0)
+        {
+            curBullet->sprite.pos.x = curBullet->pos.x;
+            curBullet->sprite.pos.y = curBullet->pos.y;
+            curBullet->sprite.pos.z = 0.495f;
+            curBullet->state = 1;
+        }
+        if (ret == -2)
+        {
+            break;
+        }
+        if (ret > 0)
+        {
+            break;
+        }
+        shotIndex++;
+        if (ret == -1)
+        {
+            goto again;
+        }
+    }
 }
 
 int Player::OnDraw2(Player *player)

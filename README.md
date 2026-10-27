@@ -71,6 +71,9 @@ Everything runs headless, so it works over SSH. `just` lists the recipes.
    (`Func43be50`); CRT functions keep the names Ghidra's function ID
    gives them.
 2. Write C++ for a function in `src/`, in the style of 2002-era code.
+   `just decompile [ADDR...]` writes Ghidra's pseudocode to
+   `build/decomp/<address>.c` to read next to the disassembly (all
+   functions take about 80 seconds).
 3. Record the function and every original function and global it
    uses in [`config/symbols.csv`](config/symbols.csv): address, size, our
    name, and the mangled name, which the link error for an unresolved

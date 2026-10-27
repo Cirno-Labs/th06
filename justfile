@@ -33,6 +33,10 @@ analyze: _orig
     tools/ghidra/analyze.sh
     python3 tools/seed_symbols.py
 
+# Decompile ADDRs (default: every function) with Ghidra into build/decomp/
+decompile *addrs:
+    tools/ghidra/decompile.sh {{ addrs }}
+
 # Remove build outputs (keeps the Ghidra project)
 clean:
     rm -rf build/obj build/game build/th06.*

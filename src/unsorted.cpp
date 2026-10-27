@@ -12,3 +12,8 @@ void DebugPrint(const char *fmt, ...)
 void DebugPrint2(const char *fmt, ...)
 {
 }
+
+int Func42a670(void *arg)
+{
+    return 1;
+}

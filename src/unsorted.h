@@ -348,6 +348,9 @@ void Func41f008();
 // 18 each way).
 float AddNormalizeAngle(float a, float b);
 
+// Rotates the 2D vector `in` by `angle` into `out`.
+void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle);
+
 // Counts frames and draws the frame rate ("%.02ffps"), updated every
 // half second, at the bottom right.
 void DrawFps();

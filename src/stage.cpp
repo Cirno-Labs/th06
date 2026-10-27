@@ -133,3 +133,13 @@ int Stage::OnDraw2(Stage *stage)
     g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&fog);
     return 1;
 }
+
+void SpriteEngine::Func4051b0(Sprite *vm, int script)
+{
+    vm->scriptIndex = script;
+    vm->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    vm->unk_0e4 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    vm->unk_10d = 15;
+    vm->unk_10c = 15;
+    this->SetScript(vm, this->scripts[script]);
+}

@@ -89,7 +89,8 @@ public:
     DWORD unk_0b8[0x2];
     // The entry SetSprite chose.
     SpriteData *spriteData;
-    DWORD unk_0c4[0xb];
+    DWORD unk_0c4[0x8];
+    D3DXVECTOR3 unk_0e4;
     Timer unk_0f0;
     DWORD unk_0fc;
     Timer unk_100;
@@ -169,6 +170,9 @@ public:
     // Draws a sprite if it is shown.
     int Draw(Sprite *sprite);
     int Func432cc0(Sprite *sprite);
+    // Like StartScript, after zeroing the position and unk_0e4 and
+    // setting unk_10c and unk_10d to 15. Defined in the stage's file.
+    void Func4051b0(Sprite *vm, int script);
     int Func433150(Sprite *sprite);
     int Func433590(Sprite *sprite);
     // Frees the ANM file loaded into `slot` and clears its scripts.

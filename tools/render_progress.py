@@ -6,9 +6,10 @@
 Functions come from
 config/symbols.csv, limited to the game code; their status from the build:
 
-- decompiled:  defined in src/ and matching the original byte for byte
+- named:       decompiled and matching, with a real name
+- decompiled:  decompiled and matching, still with a placeholder name
+               (any part of the name carries an address: Func42a670)
 - nonmatching: defined in src/, not matching yet
-- known:       not decompiled, but used by decompiled code (has a symbol)
 - todo:        everything else
 
 Run it after a build (`just progress` does both).
@@ -16,6 +17,7 @@ Run it after a build (`just progress` does both).
 import csv
 import html
 import os
+import re
 import sys
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass
@@ -32,10 +34,13 @@ TITLE = "東方紅魔郷 1.02h"
 
 
 class SymbolStatus(StrEnum):
+    NAMED = auto()
     DECOMPILED = auto()
     NONMATCHING = auto()
-    KNOWN = auto()
     TODO = auto()
+
+
+PLACEHOLDER = re.compile(r"[A-Za-z]+[0-9a-f]{6}\b")
 
 
 @dataclass
@@ -54,9 +59,12 @@ def collect_functions() -> list[Symbol]:
     for row in rows:
         symbol = row["symbol"]
         if symbol in built:
-            status = SymbolStatus.DECOMPILED if built[symbol] else SymbolStatus.NONMATCHING
-        elif symbol:
-            status = SymbolStatus.KNOWN
+            if not built[symbol]:
+                status = SymbolStatus.NONMATCHING
+            elif PLACEHOLDER.search(row["name"]):
+                status = SymbolStatus.DECOMPILED
+            else:
+                status = SymbolStatus.NAMED
         else:
             status = SymbolStatus.TODO
         functions.append(Symbol(
@@ -411,10 +419,10 @@ class LegendSection(Container):
         self.children.append(self.title)
 
         captions = {
-            SymbolStatus.DECOMPILED: "Function decompiled and matching",
+            SymbolStatus.NAMED: "Function decompiled, with a known name",
+            SymbolStatus.DECOMPILED: "Function decompiled, without a known name yet",
             SymbolStatus.NONMATCHING: "Function decompiled, not matching yet",
-            SymbolStatus.KNOWN: "Function not yet decompiled, but with a known signature",
-            SymbolStatus.TODO: "Function not yet decompiled, with an unknown signature",
+            SymbolStatus.TODO: "Function not yet decompiled",
         }
 
         y = self.title.size + TEXT_MARGIN
@@ -680,11 +688,11 @@ class ProgressSVG(Container):
             --bg: rgba(255, 255, 255, 0.25);
             --fg: rgba(100, 100, 100, 0.5);
         }}
-        .known {{
+        .decompiled {{
             --bg: rgba(255, 255, 0, 0.25);
             --fg: rgba(250, 150, 0, 0.85);
         }}
-        .decompiled {{
+        .named {{
             --bg: rgba(0, 255, 0, 0.5);
             --fg: rgba(0, 150, 0, 0.85);
         }}
@@ -726,7 +734,7 @@ def main() -> None:
     functions = collect_functions()
     with open(output, "w") as handle:
         print(ProgressSVG(functions).render(), file=handle)
-    done = [f for f in functions if f.status == SymbolStatus.DECOMPILED]
+    done = [f for f in functions if f.status in (SymbolStatus.NAMED, SymbolStatus.DECOMPILED)]
     print(f"{len(done)}/{len(functions)} functions, "
           f"{sum(f.size for f in done)}/{sum(f.size for f in functions)} bytes; wrote {output}")
 

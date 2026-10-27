@@ -112,14 +112,16 @@ struct MidiTrack
     int delta;
     // The length of `data`.
     DWORD length;
-    unsigned char unk_0c[0x4];
+    // The last status byte, for running status.
+    BYTE runningStatus;
     // The track's event data.
     BYTE *data;
     // Read position in `data`.
     BYTE *cursor;
-    // Set to the start of the data on rewind.
-    BYTE *unk_18;
-    unsigned char unk_1c[0x4];
+    // `cursor` and `delta` at the loop start, saved by controller 2 and
+    // restored by controller 4. The start of the data after a rewind.
+    BYTE *loopCursor;
+    int loopDelta;
 };
 ASSERT_SIZE(MidiTrack, 0x20);
 
@@ -127,10 +129,18 @@ ASSERT_SIZE(MidiTrack, 0x20);
 // MidiPlayer::channels.
 struct MidiChannel
 {
-    unsigned char unk_00[0x15];
+    // One bit per note that is on, note n at bit n % 8 of byte n / 8.
+    BYTE notes[0x10];
+    BYTE program;
+    // Controllers 0, 10, 91 and 93.
+    BYTE bank;
+    BYTE pan;
+    BYTE reverb;
+    BYTE chorus;
     // Channel volume (controller 7) before scaling.
     BYTE volume;
-    unsigned char unk_16;
+    // `volume` scaled by volumeScale, as last sent.
+    BYTE scaledVolume;
 };
 ASSERT_SIZE(MidiChannel, 0x17);
 
@@ -178,7 +188,8 @@ public:
 
     // Long messages being sent; released by ReleaseHeader.
     LPMIDIHDR headers[0x20];
-    int unk_090;
+    // The entry of `headers` the next long message goes in.
+    int nextHeader;
     // MIDI files loaded by 0x421ff0, freed by 0x422070.
     void *fileData[0x20];
     // The number of entries in `tracks`.
@@ -186,19 +197,22 @@ public:
     // From the file header: the format and the time division.
     int format;
     int division;
-    // Divides time; 1000000 after ParseFile.
+    // Microseconds per quarter note, from the tempo meta event; 1000000
+    // after ParseFile.
     int tempo;
     unsigned char unk_124[0x4];
     // Timer ticks since the start.
     unsigned __int64 ticks;
-    // Added to the time computed from `ticks`.
-    unsigned __int64 unk_130;
+    // The time, in ms, played at earlier tempos; added to the time computed
+    // from `ticks`, which restart at each tempo change.
+    unsigned __int64 baseTime;
     // Parsed tracks, `trackCount` of them.
     MidiTrack *tracks;
     MidiDevice device;
     unsigned char unk_144[0x10];
     MidiChannel channels[0x10];
-    BYTE unk_2c4;
+    // Added to every note number.
+    char transpose;
     // Scales every channel's volume; 1.0 after Rewind.
     float volumeScale;
     // The volume last sent while fading, volumeScale * 128.
@@ -213,6 +227,9 @@ public:
     int fadeDuration;
     // Ticks of the fade so far.
     int fadeElapsed;
-    unsigned char unk_2ec[0x14];
+    // tempo, ticks and baseTime at the loop start (controller 2).
+    int loopTempo;
+    unsigned __int64 loopTicks;
+    unsigned __int64 loopBaseTime;
 };
 ASSERT_SIZE(MidiPlayer, 0x300);

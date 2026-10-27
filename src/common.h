@@ -15,8 +15,8 @@ inline void MemFree(void *p)
     free(p);
 }
 
-// Like MemFree: every malloc() goes through a temporary.
-inline void *MemAlloc(size_t size)
+// Like MemFree: malloc() through a temporary, even for a constant size.
+inline void *MemAlloc(int size)
 {
     return malloc(size);
 }

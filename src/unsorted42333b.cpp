@@ -1,4 +1,4 @@
-// cflags: /Os -/Oi
+// cflags: /Os
 // The file starting at 0x42333b, up to 0x425e03. Built with /Os: its
 // functions are laid out without alignment.
 

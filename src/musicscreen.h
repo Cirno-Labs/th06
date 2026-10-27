@@ -4,6 +4,19 @@
 #pragma once
 
 #include "sprite.h"
+#include "unsorted.h"
+
+// A tune in the music screen's list.
+struct MusicTune
+{
+    // The MIDI file; Unknown6c6d18::PlayMusic finds the wave files from it.
+    char path[0x40];
+    char title[0x22];
+    // The comment shown for the tune, 8 lines. The screen splits each
+    // line into two 32-byte halves.
+    char comment[8][0x42];
+};
+ASSERT_SIZE(MusicTune, 0x272);
 
 // The music screen, the global at 0x6c71f0. Runs on two chain
 // elements: one updates it each frame, one draws it.
@@ -23,7 +36,14 @@ public:
     // Frames spent in `state`.
     int stateFrames;
     int state;
-    unsigned char unk_0010[0x14];
+    // The tune under the cursor.
+    int cursor;
+    // The tune playing.
+    int playing;
+    // The first tune the list shows; it shows 10.
+    int listTop;
+    int tuneCount;
+    MusicTune *tunes;
     Sprite unk_0024;
     // One per tune in the list.
     Sprite titles[0x20];

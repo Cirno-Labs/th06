@@ -47,6 +47,11 @@ public:
     // Fades the music out over `seconds`. Returns -1 if the music mode is
     // neither wave nor MIDI, otherwise 0.
     int FadeOutMusic(float seconds);
+    // Plays the tune at `path`, a MIDI file, from the start. In wave mode
+    // it plays the .wav of the same name instead, looping at the point
+    // the .pos file gives. Returns -1 if the music mode is neither wave
+    // nor MIDI, otherwise 0.
+    int PlayMusic(char *path);
 
     unsigned char unk_000[0x44];
     // Set from CreateWindowExA's result; MidiDevice::Open has MIDI
@@ -57,7 +62,12 @@ public:
     // "wave データが無いので、midi にします" ("no wave data, switching to
     // MIDI").
     BYTE musicMode;
-    unsigned char unk_130[0x78];
+    unsigned char unk_130[0x5c];
+    // The scene the game is in or switches to: many places set it (1
+    // through 10), and the main loop's callbacks compare it with 3. The
+    // music screen sets it to 1 to leave.
+    int scene;
+    unsigned char unk_190[0x18];
     // The part of a frame a Timer advances per frame while the game runs
     // slower than full speed.
     float frameAdvance;
@@ -68,6 +78,14 @@ public:
     MidiPlayer *midi;
 };
 extern Unknown6c6d18 g_Unknown6c6d18;
+
+// The buttons held this frame and the frame before, as bits: 0x10 up,
+// 0x20 down, 0x1001 select, 0xa cancel.
+extern WORD g_Buttons;
+extern WORD g_PrevButtons;
+
+// Whether any of the buttons in `mask` went down this frame.
+#define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_PrevButtons & (mask)))
 
 // Loads a whole file into a malloc'd buffer; NULL on failure.
 void *Func41e290(char *path, int unk);

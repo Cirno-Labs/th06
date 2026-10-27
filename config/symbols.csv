@@ -289,7 +289,7 @@ address,size,name,symbol
 0x00424aac,56,Unknown6c6d18::LoadMidi,?LoadMidi@Unknown6c6d18@@QAEHHPAD@Z
 0x00424ae4,75,Unknown6c6d18::PlayMidi,?PlayMidi@Unknown6c6d18@@QAEHH@Z
 0x00424b2f,46,Func424b2f,
-0x00424b5d,475,Func424b5d,
+0x00424b5d,475,Unknown6c6d18::PlayMusic,?PlayMusic@Unknown6c6d18@@QAEHPAD@Z
 0x00424d38,74,Unknown6c6d18::StopMusic,?StopMusic@Unknown6c6d18@@QAEHXZ
 0x00424d82,191,Unknown6c6d18::FadeOutMusic,?FadeOutMusic@Unknown6c6d18@@QAEHM@Z
 0x00424e41,78,Unknown6d3f50::FadeOutBgm,?FadeOutBgm@Unknown6d3f50@@QAEXM@Z
@@ -411,7 +411,7 @@ address,size,name,symbol
 0x00433590,975,Func433590,
 0x00433960,4355,SpriteEngine::Step,?Step@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00434af0,97,Func434af0,
-0x00434b60,219,Func434b60,
+0x00434b60,219,SpriteEngine::RenderText,?RenderText@SpriteEngine@@QAAXPAVSprite@@KKPADZZ
 0x00434c40,476,Func434c40,
 0x00434e20,482,Func434e20,
 0x00435010,603,Func435010,
@@ -1535,6 +1535,8 @@ address,size,name,symbol
 0x0046b564,4,MmTimer::`vftable',??_7MmTimer@@6B@
 0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
 0x0047a630,4,__security_cookie,___security_cookie
+0x0069d904,,g_Buttons,?g_Buttons@@3GA
+0x0069d908,,g_PrevButtons,?g_PrevButtons@@3GA
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A
 0x006d3f50,,g_Unknown6d3f50,?g_Unknown6d3f50@@3VUnknown6d3f50@@A

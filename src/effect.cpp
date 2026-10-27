@@ -2,6 +2,11 @@
 
 #include "effect.h"
 
+EffectManager::EffectManager()
+{
+    this->Reset();
+}
+
 void EffectManager::Reset()
 {
     memset(this, 0, sizeof(EffectManager));

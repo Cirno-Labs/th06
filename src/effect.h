@@ -21,6 +21,9 @@ ASSERT_SIZE(Effect, 0x17c);
 class EffectManager
 {
 public:
+    // Constructs the effects, then zeroes everything.
+    EffectManager();
+
     // Zeroes everything.
     void Reset();
 

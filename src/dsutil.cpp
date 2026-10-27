@@ -410,3 +410,65 @@ HRESULT CStreamingSound::Reset()
 
     return m_apDSBuffer[0]->SetCurrentPosition(0L);
 }
+
+HRESULT CWaveFile::Open(LPTSTR strFileName, WAVEFORMATEX *pwfx, DWORD dwFlags)
+{
+    HRESULT hr;
+
+    m_dwFlags = dwFlags;
+    m_bIsReadingFromMemory = FALSE;
+
+    if (m_dwFlags == WAVEFILE_READ)
+    {
+        if (strFileName == NULL)
+            return E_INVALIDARG;
+        SAFE_DELETE_ARRAY(m_pwfx);
+
+        MMIOINFO mmioInfo;
+        ZeroMemory(&mmioInfo, sizeof(mmioInfo));
+        m_hmmio = mmioOpen(strFileName, &mmioInfo, MMIO_ALLOCBUF | MMIO_READ);
+
+        if (NULL == m_hmmio)
+        {
+            switch (mmioInfo.wErrorRet)
+            {
+            case MMIOERR_ACCESSDENIED:
+                DebugPrint("The file is protected and cannot be opened. \n");
+                break;
+            case MMIOERR_INVALIDFILE:
+                DebugPrint("Another failure condition occurred. This is the default error for an open-file failure. \n");
+                break;
+            case MMIOERR_PATHNOTFOUND:
+                DebugPrint("The directory specification is incorrect. \n");
+                break;
+            case MMIOERR_SHARINGVIOLATION:
+                DebugPrint("The file is being used by another application and is unavailable. \n");
+                break;
+            case MMIOERR_TOOMANYOPENFILES:
+                DebugPrint("too Meny Open Files \n");
+                break;
+            }
+            DebugPrint("error : mmioOpen in CWaveFile::Open()\n");
+            return E_FAIL;
+        }
+
+        if (FAILED(hr = ReadMMIO()))
+        {
+            // ReadMMIO will fail if its an not a wave file
+            mmioClose(m_hmmio, 0);
+            DebugPrint("error : ReadOpen in CWaveFile::Open()\n");
+            return E_FAIL;
+        }
+
+        if (FAILED(hr = ResetFile(false)))
+        {
+            DebugPrint("error : ResetFile in CWaveFile::Open()\n");
+            return E_FAIL;
+        }
+
+        // After the reset, the size of the wav file is m_ck.cksize so store it now
+        m_dwSize = m_ck.cksize;
+    }
+
+    return hr;
+}

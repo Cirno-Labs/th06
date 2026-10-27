@@ -464,8 +464,8 @@ address,size,name,symbol
 0x0043b8e0,194,CStreamingSound::Reset,?Reset@CStreamingSound@@QAEJXZ
 0x0043b9b0,82,CWaveFile::CWaveFile,??0CWaveFile@@QAE@XZ
 0x0043ba10,70,CWaveFile::~CWaveFile,??1CWaveFile@@QAE@XZ
-0x0043ba60,384,Func43ba60,
-0x0043bc00,577,Func43bc00,
+0x0043ba60,384,CWaveFile::Open,?Open@CWaveFile@@QAEJPADPAUtWAVEFORMATEX@@K@Z
+0x0043bc00,577,CWaveFile::ReadMMIO,?ReadMMIO@CWaveFile@@QAEJXZ
 0x0043be50,17,CWaveFile::GetSize,?GetSize@CWaveFile@@QAEKXZ
 0x0043be70,513,CWaveFile::ResetFile,?ResetFile@CWaveFile@@QAEJ_N@Z
 0x0043c080,569,CWaveFile::Read,?Read@CWaveFile@@QAEJPAEKPAK@Z

@@ -16,6 +16,10 @@ public:
     CWaveFile();
     ~CWaveFile();
 
+    // Opens `strFileName` for reading; the game drops the SDK's resource
+    // fallback and writing, and logs why mmioOpen fails.
+    HRESULT Open(LPTSTR strFileName, WAVEFORMATEX *pwfx, DWORD dwFlags);
+    HRESULT ReadMMIO();
     // Closes a file opened for reading; the game drops the SDK's writing.
     HRESULT Close();
     DWORD GetSize();

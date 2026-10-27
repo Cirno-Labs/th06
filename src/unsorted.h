@@ -293,6 +293,9 @@ extern WORD g_ButtonFrames;
 int SetButtonFromDirectInput(WORD *buttons, short button, WORD bit, BYTE *rgbButtons);
 // Like SetButtonFromDirectInput, for joyGetPosEx's dwButtons.
 int SetButtonFromJoystick(WORD *buttons, short button, WORD bit, DWORD joyButtons);
+// Reads g_JoyCaps if joystick 1 answers; otherwise logs that there is
+// no pad. Returns 0, or 1 without a pad.
+WORD InitJoystick();
 // The joystick's capabilities, from joyGetDevCaps.
 extern JOYCAPSA g_JoyCaps;
 // How many frames the shot button has been held, up to 16, when shooting

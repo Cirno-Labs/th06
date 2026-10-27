@@ -192,7 +192,7 @@ address,size,name,symbol
 0x0041cd10,38,Chain::Release,?Release@Chain@@QAEXXZ
 0x0041cd40,160,Chain::CreateElem,?CreateElem@Chain@@QAEPAUChainElem@@P6AHPAX@Z@Z
 0x0041cde0,380,Chain::Remove,?Remove@Chain@@QAEXPAUChainElem@@@Z
-0x0041cf60,85,Func41cf60,
+0x0041cf60,85,InitJoystick,?InitJoystick@@YAGXZ
 0x0041cfc0,1472,ReadJoystick,?ReadJoystick@@YAGG@Z
 0x0041d580,127,SetButtonFromDirectInput,?SetButtonFromDirectInput@@YAHPAGFGPAE@Z
 0x0041d600,117,SetButtonFromJoystick,?SetButtonFromJoystick@@YAHPAGFGK@Z

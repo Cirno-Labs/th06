@@ -68,6 +68,21 @@ void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle)
     out->y = c * in->y - s * in->x;
 }
 
+WORD InitJoystick()
+{
+    JOYINFOEX joyInfo;
+
+    joyInfo.dwSize = sizeof(joyInfo);
+    joyInfo.dwFlags = JOY_RETURNALL;
+    if (joyGetPosEx(JOYSTICKID1, &joyInfo) != JOYERR_NOERROR)
+    {
+        Func41e4d0(&g_Unknown69d998, "使えるパッドが存在しないようです、残念\n");
+        return 1;
+    }
+    joyGetDevCapsA(JOYSTICKID1, &g_JoyCaps, sizeof(g_JoyCaps));
+    return 0;
+}
+
 WORD ReadJoystick(WORD buttons)
 {
     JOYINFOEX joyInfo;

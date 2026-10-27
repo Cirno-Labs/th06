@@ -59,7 +59,14 @@ public:
     // The bomb running: its length in frames, and its clock.
     int bombDuration;
     Timer bombTimer;
-    DWORD unk_75dc[0x8c2];
+    DWORD unk_75dc[0x2];
+    // Per-bomb state for up to 8 of a bomb's parts (Reimu's orbs, ...):
+    // whether each is live, its position and its four sprites.
+    int bombActive[8];
+    DWORD unk_7604[0x8];
+    D3DXVECTOR3 bombPos[8];
+    D3DXVECTOR3 unk_7684[8];
+    Sprite bombSprites[8][4];
     // The update element and the two draw elements.
     ChainElem *calcChain;
     ChainElem *drawChain;
@@ -67,6 +74,9 @@ public:
 };
 ASSERT_SIZE(Player, 0x98f0);
 
+// Reimu A's bomb draw callback: dims the play area and draws each live
+// orb's four sprites at its position.
+void DrawReimuABomb(Player *player);
 // Darkens the play area while a bomb runs: to alpha 176 over its first
 // 60 frames, and back over its last 60.
 void DimPlayAreaForBomb(Player *player);

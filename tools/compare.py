@@ -15,6 +15,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EXE = "build/th06_102h.exe"
 
 
+LABEL = 6  # IMAGE_SYM_CLASS_LABEL
+
+
 def compiled_functions(symbols):
     """Yields (name, bytes, mask) for each function src/ defines."""
     for path in sorted(glob.glob(os.path.join(ROOT, "build/obj/*.obj"))):
@@ -25,8 +28,11 @@ def compiled_functions(symbols):
             if sym.section <= 0 or sym.name not in symbols:
                 continue
             sec = obj.sections[sym.section - 1]
+            # Labels (storage class 6) are case targets inside a function;
+            # a switch's jump table starts at a static symbol after it.
             starts = sorted(s.value for s in obj.symbols
-                            if s and s.section == sym.section and s.value > sym.value)
+                            if s and s.section == sym.section and s.value > sym.value
+                            and s.storage != LABEL)
             end = starts[0] if starts else len(sec.data)
             addr = symbols[sym.name][0]
             code = bytearray(sec.data[sym.value:end])

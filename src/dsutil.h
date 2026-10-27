@@ -9,7 +9,12 @@
 
 #include "common.h"
 
-class CWaveFile;
+// Reads a wave file.
+class CWaveFile
+{
+public:
+    ~CWaveFile();
+};
 
 // Owns the DirectSound object.
 class CSoundManager

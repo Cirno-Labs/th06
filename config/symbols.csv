@@ -448,7 +448,7 @@ address,size,name,symbol
 0x0043a9c0,715,Func43a9c0,
 0x0043ac90,211,Func43ac90,
 0x0043ad70,46,Func43ad70,
-0x0043ada0,241,Func43ada0,
+0x0043ada0,241,CSound::~CSound,??1CSound@@UAE@XZ
 0x0043aea0,485,Func43aea0,
 0x0043b090,163,Func43b090,
 0x0043b140,182,Func43b140,
@@ -463,7 +463,7 @@ address,size,name,symbol
 0x0043b560,887,Func43b560,
 0x0043b8e0,194,Func43b8e0,
 0x0043b9b0,82,Func43b9b0,
-0x0043ba10,70,Func43ba10,
+0x0043ba10,70,CWaveFile::~CWaveFile,??1CWaveFile@@QAE@XZ
 0x0043ba60,384,Func43ba60,
 0x0043bc00,577,Func43bc00,
 0x0043be50,17,Unknown43be50::Func43be50,?Func43be50@Unknown43be50@@QAEHXZ
@@ -1539,6 +1539,7 @@ address,size,name,symbol
 0x0046a270,4,Direct3DCreate8,__imp__Direct3DCreate8@4
 0x0046b564,4,MmTimer::`vftable',??_7MmTimer@@6B@
 0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
+0x0046c680,4,CSound::`vftable',??_7CSound@@6B@
 0x0046cdfc,,c_dfDIJoystick2,_c_dfDIJoystick2
 0x0046d004,,c_dfDIKeyboard,_c_dfDIKeyboard
 0x0046fe20,,GUID_SysKeyboard,_GUID_SysKeyboard

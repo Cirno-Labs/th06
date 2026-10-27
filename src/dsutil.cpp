@@ -4,6 +4,8 @@
 #include "dsutil.h"
 
 // From the SDK's dxutil.h.
+#define SAFE_DELETE(p) { if(p) { delete (p); (p)=NULL; } }
+#define SAFE_DELETE_ARRAY(p) { if(p) { delete[] (p); (p)=NULL; } }
 #define SAFE_RELEASE(p) { if(p) { (p)->Release(); (p)=NULL; } }
 // From the SDK's dxerr8.h, as in a release build.
 #define DXTRACE_ERR(str, hr) (hr)
@@ -73,4 +75,15 @@ HRESULT CSoundManager::SetPrimaryBufferFormat(DWORD dwPrimaryChannels, DWORD dwP
     SAFE_RELEASE(pDSBPrimary);
 
     return S_OK;
+}
+
+CSound::~CSound()
+{
+    for (DWORD i = 0; i < m_dwNumBuffers; i++)
+    {
+        SAFE_RELEASE(m_apDSBuffer[i]);
+    }
+
+    SAFE_DELETE_ARRAY(m_apDSBuffer);
+    SAFE_DELETE(m_pWaveFile);
 }

@@ -54,3 +54,10 @@ BOOL Gui::Func4195a2()
 {
     return this->impl->unk_253c >= 0;
 }
+
+int Timer::NextTick()
+{
+    this->previous = this->current;
+    g_Unknown6c6d18.TickTimer(&this->current, &this->subFrame);
+    return this->current;
+}

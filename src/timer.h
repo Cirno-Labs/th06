@@ -31,6 +31,8 @@ struct Timer
     // Advances by one frame through Unknown6c6d18::TickTimer. Inline;
     // defined in unsorted.h.
     void Tick();
+    // Tick, out of line in the Gui file, returning the new count.
+    int NextTick();
 
     // `current` before the last change.
     int previous;

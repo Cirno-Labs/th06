@@ -29,7 +29,8 @@ struct ReplayStage
     BYTE power;
     BYTE unk_09;
     BYTE unk_0a;
-    BYTE unk_0b;
+    // g_GameManager.rank at the start of the stage.
+    BYTE rank;
     BYTE unk_0c;
     BYTE unk_0d[0x3];
     ReplayFrame frames[1];

@@ -177,7 +177,7 @@ address,size,name,symbol
 0x0041c269,35,GameManager::RemoveChain,?RemoveChain@GameManager@@SAXXZ
 0x0041c28c,359,Func41c28c,?Func41c28c@@YAXH@Z
 0x0041c3f3,395,Func41c3f3,
-0x0041c57e,124,Func41c57e,
+0x0041c57e,124,GameManager::AddSubRank,?AddSubRank@GameManager@@QAEXH@Z
 0x0041c5fa,124,Func41c5fa,
 0x0041c676,86,GameManager::GameManager,??0GameManager@@QAE@XZ
 0x0041c6d0,75,Chain::~Chain,??1Chain@@QAE@XZ

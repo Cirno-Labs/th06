@@ -250,7 +250,7 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     cur->unk_0a = g_GameManager.unk_181b;
     cur->unk_09 = g_GameManager.unk_181a;
     cur->power = g_GameManager.power;
-    cur->unk_0b = g_GameManager.unk_1a70;
+    cur->rank = g_GameManager.rank;
     cur->unk_06 = g_GameManager.unk_1816;
     cur->unk_04 = g_GameManager.unk_1a2c;
     cur->unk_0c = g_GameManager.unk_1819;
@@ -292,7 +292,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     g_GameManager.difficulty = replay->data->difficulty;
     g_GameManager.unk_1816 = cur->unk_06;
     g_Rng.SetSeed(cur->unk_04);
-    g_GameManager.unk_1a70 = cur->unk_0b;
+    g_GameManager.rank = cur->rank;
     g_GameManager.unk_181a = cur->unk_09;
     g_GameManager.unk_181b = cur->unk_0a;
     g_GameManager.power = cur->power;

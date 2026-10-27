@@ -73,3 +73,17 @@ GameManager::GameManager()
     this->arena[2] = 384.0f;
     this->arena[3] = 448.0f;
 }
+
+void GameManager::AddSubRank(int amount)
+{
+    this->subRank += amount;
+    while (this->subRank >= 100)
+    {
+        this->rank++;
+        this->subRank -= 100;
+    }
+    if (this->rank > this->maxRank)
+    {
+        this->rank = this->maxRank;
+    }
+}

@@ -15,6 +15,9 @@ public:
     // Zeroes the manager and sets the play area to (32, 16), 384 by 448.
     GameManager();
 
+    // Adds `amount` hundredths to the rank, up to maxRank.
+    void AddSubRank(int amount);
+
     // Adds the update element (priority 4) and the draw element
     // (priority 2). Returns 0, or -1 if adding fails.
     static int RegisterChain();
@@ -69,8 +72,12 @@ public:
     // The play area: x, y, width and height.
     float arena[4];
     DWORD unk_1a4c[0x9];
-    int unk_1a70;
-    DWORD unk_1a74[0x3];
+    // A level from minRank to maxRank, moved in hundredths through
+    // subRank by AddSubRank and SubSubRank.
+    int rank;
+    int maxRank;
+    int minRank;
+    int subRank;
 };
 ASSERT_SIZE(GameManager, 0x1a80);
 extern GameManager g_GameManager;

@@ -244,7 +244,7 @@ address,size,name,symbol
 0x00421ad0,19,MidiDevice::~MidiDevice,??1MidiDevice@@QAE@XZ
 0x00421af0,89,MidiDevice::Open,?Open@MidiDevice@@QAEHI@Z
 0x00421b50,59,MidiDevice::Close,?Close@MidiDevice@@QAEHXZ
-0x00421b90,78,Func421b90,
+0x00421b90,78,MidiDevice::SendLongMsg,?SendLongMsg@MidiDevice@@QAEHPAUmidihdr_tag@@@Z
 0x00421be0,67,Func421be0,
 0x00421c30,48,Func421c30,
 0x00421c60,41,Func421c60,

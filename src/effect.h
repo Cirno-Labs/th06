@@ -11,9 +11,15 @@
 struct Effect
 {
     Sprite sprite;
-    DWORD unk_110[0x15];
+    D3DXVECTOR3 pos;
+    DWORD unk_11c[0x12];
     Timer timer;
-    DWORD unk_170[0x3];
+    DWORD unk_170;
+    // Called every frame while set; the effect ends when it returns
+    // anything but 1.
+    int (*update)(Effect *effect);
+    char active;
+    char unk_179[0x3];
 };
 ASSERT_SIZE(Effect, 0x17c);
 
@@ -32,6 +38,8 @@ public:
     // element (priority 8). Returns 0, or -1 if adding fails.
     static int RegisterChain();
     static int OnUpdate(EffectManager *mgr);
+    // Draws the active effects at their positions (only the first 0x200).
+    // Returns 1.
     static int OnDraw(EffectManager *mgr);
     // Resets and loads the stage's effect sprites: data/eff01.anm to
     // eff05.anm, stage 6 reusing eff05 and stage 7 eff04. Returns 0, or

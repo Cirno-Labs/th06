@@ -94,3 +94,20 @@ int EffectManager::AddedCallback(EffectManager *mgr)
     }
     return 0;
 }
+
+int EffectManager::OnDraw(EffectManager *mgr)
+{
+    Effect *eff = mgr->effects;
+    int i;
+
+    for (i = 0; i < 0x200; i++, eff++)
+    {
+        if (!eff->active)
+        {
+            continue;
+        }
+        eff->sprite.pos = eff->pos;
+        g_SpriteEngine->Func433150(&eff->sprite);
+    }
+    return 1;
+}

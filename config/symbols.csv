@@ -407,7 +407,7 @@ address,size,name,symbol
 0x00432c80,60,Func432c80,
 0x00432cc0,727,Func432cc0,
 0x00432fa0,431,Func432fa0,
-0x00433150,1086,Func433150,
+0x00433150,1086,SpriteEngine::Func433150,?Func433150@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00433590,975,SpriteEngine::Func433590,?Func433590@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00433960,4355,SpriteEngine::Step,?Step@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00434af0,97,Func434af0,

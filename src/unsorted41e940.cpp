@@ -13,3 +13,12 @@ void CreateTextSurface()
 {
     g_Unknown6c6d18.d3dDevice->CreateImageSurface(640, 64, D3DFMT_A1R5G5B5, &g_TextSurface);
 }
+
+void ReleaseTextSurface()
+{
+    if (g_TextSurface != NULL)
+    {
+        g_TextSurface->Release();
+        g_TextSurface = NULL;
+    }
+}

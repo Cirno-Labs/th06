@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">31.85% (150)</tspan> · <tspan class="decompiled">6.37% (30)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">61.78% (291)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">32.06% (151)</tspan> · <tspan class="decompiled">6.37% (30)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">61.57% (290)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="237.90" height="6" x="0" y="0" class="named"/>
-<rect width="47.58" height="6" x="237.90" y="0" class="decompiled"/>
-<rect width="461.52" height="6" x="285.48" y="0" class="todo"/>
+<rect width="239.48" height="6" x="0" y="0" class="named"/>
+<rect width="47.58" height="6" x="239.48" y="0" class="decompiled"/>
+<rect width="459.94" height="6" x="287.06" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -536,18 +536,18 @@
 <rect width="12" height="12" x="225" y="135" class="named"><title>0x0043ba60 CWaveFile::Open (384 bytes)</title></rect>
 <rect width="12" height="12" x="240" y="135" class="named"><title>0x0043bc00 CWaveFile::ReadMMIO (577 bytes)</title></rect>
 <rect width="12" height="12" x="255" y="135" class="named"><title>0x0043be50 CWaveFile::GetSize (17 bytes)</title></rect>
-<rect width="12" height="12" x="270" y="135" class="todo"><title>0x0043be70 CWaveFile::ResetFile (513 bytes)</title></rect>
+<rect width="12" height="12" x="270" y="135" class="named"><title>0x0043be70 CWaveFile::ResetFile (513 bytes)</title></rect>
 <rect width="12" height="12" x="285" y="135" class="todo"><title>0x0043c080 CWaveFile::Read (569 bytes)</title></rect>
 <rect width="12" height="12" x="300" y="135" class="named"><title>0x0043c2c0 CWaveFile::Close (47 bytes)</title></rect>
 </g>
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">11.44%</tspan> · <tspan class="decompiled">2.68%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">85.87%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">11.66%</tspan> · <tspan class="decompiled">2.68%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">85.66%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="85.49" height="6" x="0" y="0" class="named"/>
-<rect width="20.03" height="6" x="85.49" y="0" class="decompiled"/>
-<rect width="641.48" height="6" x="105.52" y="0" class="todo"/>
+<rect width="87.10" height="6" x="0" y="0" class="named"/>
+<rect width="20.03" height="6" x="87.10" y="0" class="decompiled"/>
+<rect width="639.87" height="6" x="107.13" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -658,7 +658,7 @@
 <rect width="12.98" height="13.66" x="519.12" y="120.58" class="named"><title>0x0042a240 ReplayManager::RegisterChain (552 bytes)</title></rect>
 <rect width="12.98" height="12.76" x="519.12" y="137.24" class="decompiled"><title>0x0042390a Unknown6c6d18::AddedCallback (522 bytes)</title></rect>
 <rect width="12.59" height="13" x="535.10" y="0" class="todo"><title>0x0041f290 Func41f290 (517 bytes)</title></rect>
-<rect width="12.59" height="12.87" x="535.10" y="16" class="todo"><title>0x0043be70 CWaveFile::ResetFile (513 bytes)</title></rect>
+<rect width="12.59" height="12.87" x="535.10" y="16" class="named"><title>0x0043be70 CWaveFile::ResetFile (513 bytes)</title></rect>
 <rect width="12.59" height="12.50" x="535.10" y="31.87" class="todo"><title>0x0043a464 Func43a464 (501 bytes)</title></rect>
 <rect width="12.59" height="12.41" x="535.10" y="47.37" class="named"><title>0x0042545a MusicScreen::OnDraw (498 bytes)</title></rect>
 <rect width="12.59" height="12.25" x="535.10" y="62.78" class="todo"><title>0x00431470 Func431470 (493 bytes)</title></rect>

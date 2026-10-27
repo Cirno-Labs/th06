@@ -23,8 +23,9 @@ public:
     // Closes a file opened for reading; the game drops the SDK's writing.
     HRESULT Close();
     DWORD GetSize();
-    // The SDK's, with a flag of the game's.
-    HRESULT ResetFile(bool unk);
+    // Not in the SDK: the reset limits the data to `loopEnd` bytes and,
+    // when `bLoop` is set, skips its first `loopStart` bytes.
+    HRESULT ResetFile(bool bLoop);
     HRESULT Read(BYTE *pBuffer, DWORD dwSizeToRead, DWORD *pdwSizeRead);
 
     WAVEFORMATEX *m_pwfx;
@@ -38,11 +39,10 @@ public:
     BYTE *m_pbData;
     BYTE *m_pbDataCur;
     ULONG m_ulDataSize;
-    // Not in the SDK. ResetFile skips unk_90 bytes of the data when its
-    // flag is set and, when unk_94 is positive, takes it as the data's
-    // size.
-    int unk_90;
-    int unk_94;
+    // Not in the SDK: the loop's start and end in bytes of the data, for
+    // ResetFile. An end of 0 or less plays to the end of the file.
+    int loopStart;
+    int loopEnd;
 };
 ASSERT_SIZE(CWaveFile, 0x98);
 // Owns the DirectSound object.

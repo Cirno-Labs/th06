@@ -354,8 +354,8 @@ CWaveFile::CWaveFile()
     m_hmmio = NULL;
     m_dwSize = 0;
     m_bIsReadingFromMemory = FALSE;
-    this->unk_94 = 0;
-    this->unk_90 = 0;
+    this->loopEnd = 0;
+    this->loopStart = 0;
 }
 
 DWORD CWaveFile::GetSize()
@@ -541,6 +541,87 @@ HRESULT CWaveFile::ReadMMIO()
     {
         SAFE_DELETE(m_pwfx);
         return DXTRACE_ERR(TEXT("mmioAscend"), E_FAIL);
+    }
+
+    return S_OK;
+}
+
+HRESULT CWaveFile::ResetFile(bool bLoop)
+{
+    if (m_bIsReadingFromMemory)
+    {
+        m_pbDataCur = m_pbData;
+    }
+    else
+    {
+        if (m_hmmio == NULL)
+        {
+            DebugPrint("error : m_hmmio\t== NULL in CWaveFile::ResetFile\n");
+            return CO_E_NOTINITIALIZED;
+        }
+
+        if (m_dwFlags == WAVEFILE_READ)
+        {
+            // Seek to the data
+            if (-1 == mmioSeek(m_hmmio, m_ckRiff.dwDataOffset + sizeof(FOURCC), SEEK_SET))
+            {
+                DebugPrint("error : mmioSeek in CWaveFile::ResetFile\n");
+                return E_FAIL;
+            }
+
+            // Search the input file for the 'data' chunk.
+            m_ck.ckid = mmioFOURCC('d', 'a', 't', 'a');
+            MMRESULT mmr = mmioDescend(m_hmmio, &m_ck, &m_ckRiff, MMIO_FINDCHUNK);
+            if (0 != mmr)
+            {
+                DebugPrint("error : mmioDescend in CWaveFile::ResetFile\n");
+                return E_FAIL;
+            }
+
+            if (this->loopEnd > 0)
+            {
+                m_ck.cksize = this->loopEnd;
+            }
+
+            if (bLoop && this->loopStart > 0)
+            {
+                MMIOINFO mmioinfoIn; // current status of m_hmmio
+
+                if (0 != mmioGetInfo(m_hmmio, &mmioinfoIn, 0))
+                {
+                    DebugPrint("error : mmioGetInfo in CWaveFile::ResetFile\n");
+                    return E_FAIL;
+                }
+
+                for (int cT = 0; cT < this->loopStart; cT++)
+                {
+                    if (mmioinfoIn.pchNext == mmioinfoIn.pchEndRead)
+                    {
+                        if (0 != mmioAdvance(m_hmmio, &mmioinfoIn, 0))
+                        {
+                            DebugPrint("error : mmioAdvance in CWaveFile::ResetFile\n");
+                            return E_FAIL;
+                        }
+
+                        if (mmioinfoIn.pchNext == mmioinfoIn.pchEndRead)
+                        {
+                            DebugPrint("error : mmioinfoIn.pchNext == mmioinfoIn.pchEndRead in CWaveFile::ResetFile\n");
+                            return E_FAIL;
+                        }
+                    }
+
+                    mmioinfoIn.pchNext++;
+                }
+
+                m_ck.cksize -= this->loopStart;
+
+                if (0 != mmioSetInfo(m_hmmio, &mmioinfoIn, 0))
+                {
+                    DebugPrint("error : mmioSetInfo in CWaveFile::ResetFile\n");
+                    return E_FAIL;
+                }
+            }
+        }
     }
 
     return S_OK;

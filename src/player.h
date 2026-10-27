@@ -21,7 +21,10 @@ public:
     static int RegisterChain(BYTE unk);
     static int OnUpdate(Player *player);
     static int OnDraw(Player *player);
+    // Runs Func429bb0. Returns 1.
     static int OnDraw2(Player *player);
+    // Draws the player's bullets of type 2.
+    static void Func429bb0(Player *player);
     // Loads the player's sprites.
     static int AddedCallback(Player *player);
     // Frees the player's sprites, unless the scene is 3. Returns 0.

@@ -65,3 +65,9 @@ int Player::RegisterChain(BYTE unk)
     g_Chain.AddToDrawChain(player->drawChain2, 7);
     return 0;
 }
+
+int Player::OnDraw2(Player *player)
+{
+    Player::Func429bb0(player);
+    return 1;
+}

@@ -71,6 +71,8 @@ struct Enemy
     float unk_ea4;
     DWORD unk_ea8[0x5];
     Timer unk_ebc;
+
+    void Func4121b0();
 };
 ASSERT_SIZE(Enemy, 0xec8);
 

@@ -33,6 +33,26 @@ void ReleaseEnemyEffects(Enemy *enemy)
     enemy->effectCount = 0;
 }
 
+void Enemy::Func4121b0()
+{
+    if (this->flags.unk13 == 0)
+    {
+        this->flags.unk7 = 0;
+    }
+    else
+    {
+        this->flags.unk8 = 0;
+    }
+    if (this->flags.unk11)
+    {
+        g_Gui.unk_20 = 0;
+    }
+    if (this->effectCount != 0)
+    {
+        ReleaseEnemyEffects(this);
+    }
+}
+
 int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
 {
     EnemyManager *mgr = &g_EnemyManager;

@@ -199,7 +199,7 @@ address,size,name,symbol
 0x0041d680,414,Func41d680,
 0x0041d820,2196,ReadButtons,?ReadButtons@@YAGXZ
 0x0041e0c0,133,ResetKeyboard,?ResetKeyboard@@YAXXZ
-0x0041e150,192,Func41e150,
+0x0041e150,192,Unknown41e150::Create,?Create@Unknown41e150@@QAEXPAUIDirect3DDevice8@@HH@Z
 0x0041e210,75,Func41e210,
 0x0041e260,48,Func41e260,
 0x0041e290,456,Func41e290,?Func41e290@@YAPAXPADH@Z
@@ -516,7 +516,7 @@ address,size,name,symbol
 0x0043f561,262,Func43f561,
 0x0043f667,116,Func43f667,
 0x0043f6db,106,Func43f6db,
-0x0043f745,51,Func43f745,
+0x0043f745,51,D3DXCreateFont,_D3DXCreateFont@12
 0x0043f778,36,Func43f778,
 0x0043f79c,128,Func43f79c,
 0x0043f81c,994,Func43f81c,

@@ -351,6 +351,18 @@ float AddNormalizeAngle(float a, float b);
 // Rotates the 2D vector `in` by `angle` into `out`.
 void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle);
 
+// Text drawn with a D3DX font in "ＭＳ ゴシック". Nothing calls its
+// functions directly.
+class Unknown41e150
+{
+public:
+    // Creates the font at `width` by `height`.
+    void Create(IDirect3DDevice8 *device, int width, int height);
+
+    DWORD unk_0;
+    ID3DXFont *font;
+};
+
 // Clears the high bit of every key's state, so no key reads as held.
 void ResetKeyboard();
 

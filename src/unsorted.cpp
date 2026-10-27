@@ -84,3 +84,26 @@ void ResetKeyboard()
     }
     SetKeyboardState(keyState);
 }
+
+void Unknown41e150::Create(IDirect3DDevice8 *device, int width, int height)
+{
+    HDC dc = NULL;
+    HFONT font = NULL;
+    HGDIOBJ oldFont = NULL;
+
+    dc = CreateCompatibleDC(NULL);
+    font = CreateFontA(height, width, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS,
+                       CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "ＭＳ ゴシック");
+    if (font == NULL)
+    {
+        return;
+    }
+    oldFont = SelectObject(dc, font);
+    if (FAILED(D3DXCreateFont(device, font, &this->font)))
+    {
+        MessageBoxA(NULL, "D3DXCreateFontIndirect FALSE", "ok", MB_OK);
+        return;
+    }
+    SelectObject(dc, oldFont);
+    DeleteObject(font);
+}

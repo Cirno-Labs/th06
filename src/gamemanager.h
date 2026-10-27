@@ -78,7 +78,9 @@ public:
     DWORD unk_1a38;
     // The play area: x, y, width and height.
     float arena[4];
-    DWORD unk_1a4c[0x9];
+    // Where the player may move: x, y, width and height.
+    float playerArea[4];
+    DWORD unk_1a5c[0x5];
     // A level from minRank to maxRank, moved in hundredths through
     // subRank by AddSubRank and SubSubRank.
     int rank;

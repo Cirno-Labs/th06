@@ -45,6 +45,278 @@ void Player::RemoveChain()
     g_Player.drawChain2 = NULL;
 }
 
+int Player::HandleInput()
+{
+    int previous;
+    float deltaY;
+    float deltaX;
+    float sideY;
+    float sideX;
+    float t;
+
+    deltaX = 0.0f;
+    deltaY = 0.0f;
+    previous = this->direction;
+    this->direction = 0;
+    if (g_Buttons & 0x10)
+    {
+        this->direction = 1;
+        if (g_Buttons & 0x40)
+        {
+            this->direction = 5;
+        }
+        if (g_Buttons & 0x80)
+        {
+            this->direction = 6;
+        }
+    }
+    else if (g_Buttons & 0x20)
+    {
+        this->direction = 2;
+        if (g_Buttons & 0x40)
+        {
+            this->direction = 7;
+        }
+        if (g_Buttons & 0x80)
+        {
+            this->direction = 8;
+        }
+    }
+    else
+    {
+        if (g_Buttons & 0x40)
+        {
+            this->direction = 3;
+        }
+        if (g_Buttons & 0x80)
+        {
+            this->direction = 4;
+        }
+    }
+    if (g_Buttons & 4)
+    {
+        this->focused = 1;
+    }
+    else
+    {
+        this->focused = 0;
+    }
+    switch (this->direction)
+    {
+    case 4:
+        if (g_Buttons & 4)
+        {
+            deltaX = this->speedFocused;
+        }
+        else
+        {
+            deltaX = this->speed;
+        }
+        break;
+    case 3:
+        if (g_Buttons & 4)
+        {
+            deltaX = -this->speedFocused;
+        }
+        else
+        {
+            deltaX = -this->speed;
+        }
+        break;
+    case 1:
+        if (g_Buttons & 4)
+        {
+            deltaY = -this->speedFocused;
+        }
+        else
+        {
+            deltaY = -this->speed;
+        }
+        break;
+    case 2:
+        if (g_Buttons & 4)
+        {
+            deltaY = this->speedFocused;
+        }
+        else
+        {
+            deltaY = this->speed;
+        }
+        break;
+    case 5:
+        if (g_Buttons & 4)
+        {
+            deltaX = -this->speedDiagonalFocused;
+        }
+        else
+        {
+            deltaX = -this->speedDiagonal;
+        }
+        deltaY = deltaX;
+        break;
+    case 7:
+        if (g_Buttons & 4)
+        {
+            deltaX = -this->speedDiagonalFocused;
+        }
+        else
+        {
+            deltaX = -this->speedDiagonal;
+        }
+        deltaY = -deltaX;
+        break;
+    case 6:
+        if (g_Buttons & 4)
+        {
+            deltaX = this->speedDiagonalFocused;
+        }
+        else
+        {
+            deltaX = this->speedDiagonal;
+        }
+        deltaY = -deltaX;
+        break;
+    case 8:
+        if (g_Buttons & 4)
+        {
+            deltaX = this->speedDiagonalFocused;
+        }
+        else
+        {
+            deltaX = this->speedDiagonal;
+        }
+        deltaY = deltaX;
+        break;
+    }
+    if (deltaX < 0.0f && this->velocityX >= 0.0f)
+    {
+        g_SpriteEngine->StartScript(&this->sprite, 0x401);
+    }
+    else if (deltaX == 0.0f && this->velocityX < 0.0f)
+    {
+        g_SpriteEngine->StartScript(&this->sprite, 0x402);
+    }
+    if (deltaX > 0.0f && this->velocityX <= 0.0f)
+    {
+        g_SpriteEngine->StartScript(&this->sprite, 0x403);
+    }
+    else if (deltaX == 0.0f && this->velocityX > 0.0f)
+    {
+        g_SpriteEngine->StartScript(&this->sprite, 0x404);
+    }
+    this->velocityX = deltaX;
+    this->velocityY = deltaY;
+    this->position[0] += deltaX * this->moveScaleX * g_Unknown6c6d18.frameAdvance;
+    this->position[1] += deltaY * this->moveScaleY * g_Unknown6c6d18.frameAdvance;
+    if (this->position.x < g_GameManager.playerArea[0])
+    {
+        this->position.x = g_GameManager.playerArea[0];
+    }
+    else if (g_GameManager.playerArea[0] + g_GameManager.playerArea[2] < this->position.x)
+    {
+        this->position.x = g_GameManager.playerArea[0] + g_GameManager.playerArea[2];
+    }
+    if (this->position.y < g_GameManager.playerArea[1])
+    {
+        this->position.y = g_GameManager.playerArea[1];
+    }
+    else if (g_GameManager.playerArea[1] + g_GameManager.playerArea[3] < this->position.y)
+    {
+        this->position.y = g_GameManager.playerArea[1] + g_GameManager.playerArea[3];
+    }
+    this->hitboxMin = this->position - this->hitboxSize;
+    this->hitboxMax = this->position + this->hitboxSize;
+    this->grazeMin = this->position - this->grazeSize;
+    this->grazeMax = this->position + this->grazeSize;
+    this->optionPos[0] = this->position;
+    this->optionPos[1] = this->position;
+    sideX = sideY = 0.0f;
+    if (g_GameManager.power < 8)
+    {
+        this->optionState = 0;
+    }
+    else if (this->optionState == 0)
+    {
+        this->optionState = 1;
+    }
+    switch (this->optionState)
+    {
+    case 0:
+        this->optionTimer.Set(0);
+        break;
+    case 1:
+        sideX = 24.0f;
+        this->optionTimer.Set(0);
+        if (this->focused)
+        {
+            this->optionState = 2;
+        }
+        else
+        {
+            break;
+        }
+    case 2:
+    slideIn:
+        this->optionTimer.Tick();
+        t = this->optionTimer.AsFloat() / 8.0f;
+        sideY = (1.0f - t) * 32.0f + -32.0f;
+        t = t * t;
+        sideX = -16.0f * t + 24.0f;
+        if (this->optionTimer >= 8)
+        {
+            this->optionState = 3;
+        }
+        if (!this->focused)
+        {
+            this->optionState = 4;
+            this->optionTimer.Set(8 - this->optionTimer.AsFrames());
+            goto slideOut;
+        }
+        break;
+    case 3:
+        sideX = 8.0f;
+        sideY = -32.0f;
+        this->optionTimer.Set(0);
+        if (!this->focused)
+        {
+            this->optionState = 4;
+        }
+        else
+        {
+            break;
+        }
+    case 4:
+    slideOut:
+        this->optionTimer.Tick();
+        t = this->optionTimer.AsFloat() / 8.0f;
+        sideY = 32.0f * t + -32.0f;
+        t = t * t;
+        t = 1.0f - t;
+        sideX = -16.0f * t + 24.0f;
+        if (this->optionTimer >= 8)
+        {
+            this->optionState = 1;
+        }
+        if (this->focused)
+        {
+            this->optionState = 2;
+            this->optionTimer.Set(8 - this->optionTimer.AsFrames());
+            goto slideIn;
+        }
+        break;
+    }
+    this->optionPos[0].x -= sideX;
+    this->optionPos[1].x += sideX;
+    this->optionPos[0].y += sideY;
+    this->optionPos[1].y += sideY;
+    if ((g_Buttons & 1) && !g_Gui.Func4195a2())
+    {
+        Player::Func428630(this);
+    }
+    this->prevButtons = g_Buttons;
+    return 0;
+}
+
 int Player::RegisterChain(BYTE unk)
 {
     Player *player = &g_Player;
@@ -152,8 +424,8 @@ int Player::OnUpdate(Player *player)
             player->sprite.scaleX = 1.0f - 1.0f * progress;
             player->sprite.color = (int)(255.0f - player->unk_75b4.AsFloat() * 255.0f / 30.0f) << 24 | 0xffffff;
             player->sprite.flags.blendMode = 1;
-            player->unk_0a10 = 0;
-            player->unk_0a14 = 0;
+            player->velocityX = 0.0f;
+            player->velocityY = 0.0f;
             if (player->unk_75b4.AsFrames() >= 30)
             {
                 player->unk_09e0 = 1;
@@ -241,14 +513,14 @@ int Player::OnUpdate(Player *player)
     }
     if (player->unk_09e0 != 2 && player->unk_09e0 != 1)
     {
-        player->Func427860();
+        player->HandleInput();
     }
     g_SpriteEngine->Step(&player->sprite);
     Player::Func4291b0(player);
-    if (player->unk_09e2)
+    if (player->optionState)
     {
-        g_SpriteEngine->Step(&player->unk_0110[0]);
-        g_SpriteEngine->Step(&player->unk_0110[1]);
+        g_SpriteEngine->Step(&player->optionSprites[0]);
+        g_SpriteEngine->Step(&player->optionSprites[1]);
     }
     player->unk_0a1c = D3DXVECTOR3(-999.0f, -999.0f, 0.0f);
     Player::Func429710(player);

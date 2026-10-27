@@ -39,7 +39,12 @@ public:
     // bottom) and the respawn (state 1) and the blinking invulnerability
     // after it (state 3), then moves the player. Returns 1.
     static int OnUpdate(Player *player);
-    int Func427860();
+    // Moves the player by the direction held, at the focused speeds
+    // while button 4 is held, within g_GameManager.playerArea; picks the
+    // banking script; moves the hitboxes and the options, sliding them
+    // in while focusing; fires while button 1 is held. Returns 0.
+    int HandleInput();
+    static void Func428630(Player *player);
     static void Func4291b0(Player *player);
     static int Func429710(Player *player);
     static int OnDraw(Player *player);
@@ -54,12 +59,23 @@ public:
     // Removes the player's three chain elements.
     static void RemoveChain();
 
-    // The player's sprite, and two more stepped while unk_09e2 is set.
+    // The player's sprite, and the options' (stepped while optionState
+    // is set).
     Sprite sprite;
-    Sprite unk_0110[2];
+    Sprite optionSprites[2];
     DWORD unk_0330[0x44];
     D3DXVECTOR3 position;
-    DWORD unk_044c[0x1b];
+    DWORD unk_044c[0x3];
+    // The corners of the hitbox and of the graze box, and their half
+    // sizes.
+    D3DXVECTOR3 hitboxMin;
+    D3DXVECTOR3 hitboxMax;
+    D3DXVECTOR3 grazeMin;
+    D3DXVECTOR3 grazeMax;
+    D3DXVECTOR3 hitboxSize;
+    D3DXVECTOR3 grazeSize;
+    // Where the two options are.
+    D3DXVECTOR3 optionPos[2];
     // The bomb's hitboxes against enemies: centres, sizes, the damage
     // each deals and the hits each has scored.
     D3DXVECTOR3 bombHitPos[32];
@@ -82,12 +98,30 @@ public:
     char unk_09e0;
     // RegisterChain's argument.
     BYTE unk_09e1;
-    char unk_09e2;
-    BYTE unk_09e3;
-    DWORD unk_09e4[0xb];
-    DWORD unk_0a10;
-    DWORD unk_0a14;
-    DWORD unk_0a18;
+    // The options: 0 none (power below 8), 1 out, 2 sliding in while
+    // focusing, 3 in, 4 sliding out.
+    char optionState;
+    // Set while focusing (button 4).
+    char focused;
+    DWORD unk_09e4;
+    // Clocks the options sliding in and out.
+    Timer optionTimer;
+    // Movement speeds: straight, straight focused, diagonal, diagonal
+    // focused.
+    float speed;
+    float speedFocused;
+    float speedDiagonal;
+    float speedDiagonalFocused;
+    DWORD unk_0a04[0x2];
+    // The direction held: 0 none, 1 up, 2 down, 3 left, 4 right, 5 up
+    // left, 6 up right, 7 down left, 8 down right.
+    int direction;
+    // The last frame's movement.
+    float velocityX;
+    float velocityY;
+    // The last frame's buttons.
+    WORD prevButtons;
+    WORD unk_0a1a;
     // What Reimu A's orbs home in on; x is -100 or less when there is
     // nothing.
     D3DXVECTOR3 unk_0a1c;

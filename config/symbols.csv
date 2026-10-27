@@ -222,7 +222,7 @@ address,size,name,symbol
 0x0041ef11,247,GdiSurface::CopyToSurface,?CopyToSurface@GdiSurface@@QAE_NPAUIDirect3DSurface8@@@Z
 0x0041f008,35,CreateTextSurface,?CreateTextSurface@@YAXXZ
 0x0041f02b,37,ReleaseTextSurface,?ReleaseTextSurface@@YAXXZ
-0x0041f050,480,Func41f050,
+0x0041f050,480,RenderTextToTexture,?RenderTextToTexture@@YAXHHHHHHKKPADPAUIDirect3DTexture8@@@Z
 0x0041f230,90,Func41f230,
 0x0041f290,517,Func41f290,
 0x0041f4a0,3160,Func41f4a0,
@@ -526,7 +526,7 @@ address,size,name,symbol
 0x0043fe34,40,Func43fe34,
 0x0043fe5c,102,Func43fe5c,
 0x0043fec2,182,Func43fec2,
-0x0043ff78,285,Func43ff78,
+0x0043ff78,285,D3DXLoadSurfaceFromSurface,_D3DXLoadSurfaceFromSurface@32
 0x00440095,305,Func440095,
 0x004401c6,1041,Func4401c6,
 0x004405d7,50,Func4405d7,
@@ -1013,7 +1013,7 @@ address,size,name,symbol
 0x0045ca4d,263,__fwrite_lk,
 0x0045cb54,66,_fwrite,
 0x0045cb96,10,Func45cb96,
-0x0045cba0,139,_strlen,
+0x0045cba0,139,_strlen,_strlen
 0x0045cc30,96,_memset,_memset
 0x0045cc90,672,_memcpy,_memcpy
 0x0045cfd0,672,_memmove,

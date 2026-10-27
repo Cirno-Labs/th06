@@ -576,3 +576,10 @@ public:
     HBITMAP bitmap;
     void *bits;
 };
+ASSERT_SIZE(GdiSurface, 0x24);
+
+// Draws `text` at `x` in "ＭＳ ゴシック" `fontHeight` high, with a shadow
+// unless `shadowColor` is -1, on g_TextSurface at twice the size, then
+// scales `width` by `fontHeight` of it into `texture` at row `y`.
+void RenderTextToTexture(int x, int y, int width, int unk4, int fontHeight, int unk6, COLORREF textColor,
+                         COLORREF shadowColor, char *text, IDirect3DTexture8 *texture);

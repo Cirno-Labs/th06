@@ -11,6 +11,16 @@
 
 class CWaveFile;
 
+// Owns the DirectSound object.
+class CSoundManager
+{
+public:
+    CSoundManager();
+    ~CSoundManager();
+
+    LPDIRECTSOUND8 m_pDS;
+};
+
 // A DirectSound buffer playing a wave file.
 class CSound
 {

@@ -5,6 +5,8 @@
 
 #include <windows.h>
 
+#include "midi.h"
+
 // The global at 0x6c6d18: the window, settings and game speed. Larger
 // than its known fields.
 class Unknown6c6d18
@@ -14,6 +16,9 @@ public:
     // of a frame, like Timer::Add(1). Callers pass a Timer's `current` and
     // `subFrame` after setting its `previous`: an inlined per-frame tick.
     void TickTimer(int *frames, float *subFrame);
+    // Loads a MIDI file into a slot of `midi` in MIDI mode. Returns 0 in
+    // MIDI mode, otherwise 1.
+    int LoadMidi(int slot, char *path);
 
     unsigned char unk_000[0x44];
     // Set from CreateWindowExA's result; MidiDevice::Open has MIDI
@@ -31,6 +36,8 @@ public:
     // 1.0 at full speed; at 0.99 or below, Timers count fractions of
     // frames.
     float gameSpeed;
+    // Plays music in MIDI mode; may be NULL.
+    MidiPlayer *midi;
 };
 extern Unknown6c6d18 g_Unknown6c6d18;
 

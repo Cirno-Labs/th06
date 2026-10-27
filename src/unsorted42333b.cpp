@@ -72,3 +72,16 @@ void Unknown6c6d18::TickTimer(int *frames, float *subFrame)
         (*frames)++;
     }
 }
+
+int Unknown6c6d18::LoadMidi(int slot, char *path)
+{
+    if (g_Unknown6c6d18.musicMode == 2)
+    {
+        if (g_Unknown6c6d18.midi != NULL)
+        {
+            g_Unknown6c6d18.midi->LoadFile(slot, path);
+        }
+        return 0;
+    }
+    return 1;
+}

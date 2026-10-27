@@ -27,7 +27,7 @@ public:
     // Returns 1.
     static int OnDraw(GameManager *mgr);
 
-    DWORD unk_0000;
+    int unk_0000;
     int unk_0004;
     DWORD unk_0008[0x2];
     int difficulty;
@@ -62,7 +62,7 @@ public:
     // The play area: x, y, width and height.
     float arena[4];
     DWORD unk_1a4c[0x9];
-    BYTE unk_1a70;
+    int unk_1a70;
 };
 extern GameManager g_GameManager;
 

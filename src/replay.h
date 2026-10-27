@@ -15,6 +15,10 @@ struct ReplayFrame
     WORD unk_06;
 };
 
+// Checks a loaded replay of `size` bytes. Returns nonzero if it is not
+// valid.
+int Func42a140(struct ReplayHeader *data, int size);
+
 // One stage of a replay: the game's state at its start, then the
 // entries.
 struct ReplayStage

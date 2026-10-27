@@ -219,3 +219,47 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     replay->unk_44 = 0;
     return 0;
 }
+
+int ReplayManager::PlayAddedCallback(ReplayManager *replay)
+{
+    ReplayStage *cur;
+    int idx;
+
+    replay->frame = 0;
+    if (replay->data == NULL)
+    {
+        replay->data = (ReplayHeader *)Func41e290(replay->path, !g_GameManager.unk_1824);
+        if (Func42a140(replay->data, g_FileSize) != 0)
+        {
+            return -1;
+        }
+        for (idx = 0; idx < 7; idx++)
+        {
+            if (replay->data->stages[idx + 1] != NULL)
+            {
+                replay->data->stages[idx + 1] = (ReplayStage *)((int)replay->data->stages[idx + 1] + (int)replay->data);
+            }
+        }
+    }
+    if (replay->data->stages[g_GameManager.stage] == NULL)
+    {
+        return -1;
+    }
+    cur = replay->data->stages[g_GameManager.stage];
+    g_GameManager.character = replay->data->shotType / 2;
+    g_GameManager.shotType = replay->data->shotType % 2;
+    g_GameManager.difficulty = replay->data->difficulty;
+    g_GameManager.unk_1816 = cur->unk_06;
+    g_Rng.SetSeed(cur->unk_04);
+    g_GameManager.unk_1a70 = cur->unk_0b;
+    g_GameManager.unk_181a = cur->unk_09;
+    g_GameManager.unk_181b = cur->unk_0a;
+    g_GameManager.power = cur->power;
+    replay->cursors[0] = cur->frames;
+    g_GameManager.unk_1819 = cur->unk_0c;
+    if (g_GameManager.stage >= 2 && replay->data->stages[g_GameManager.stage - 1] != NULL)
+    {
+        g_GameManager.unk_0000 = g_GameManager.unk_0004 = replay->data->stages[g_GameManager.stage - 1]->unk_00;
+    }
+    return 0;
+}

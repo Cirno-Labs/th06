@@ -8,7 +8,7 @@ address,size,name,symbol
 0x004013a0,110,Func4013a0,
 0x00401410,185,Func401410,
 0x004014d0,46,Func4014d0,
-0x00401500,35,Func401500,
+0x00401500,35,AsciiText::RemoveChain,?RemoveChain@AsciiText@@SAXXZ
 0x00401530,277,AsciiText::AddString,?AddString@AsciiText@@QAEXPAUD3DXVECTOR3@@PAD@Z
 0x00401650,90,AsciiText::AddFormat,?AddFormat@AsciiText@@QAAXPAUD3DXVECTOR3@@PADZZ
 0x004016b0,641,Func4016b0,
@@ -221,7 +221,7 @@ address,size,name,symbol
 0x0041ec72,671,Func41ec72,
 0x0041ef11,247,Func41ef11,
 0x0041f008,35,Func41f008,
-0x0041f02b,37,Func41f02b,
+0x0041f02b,37,Func41f02b,?Func41f02b@@YAXXZ
 0x0041f050,480,Func41f050,
 0x0041f230,90,Func41f230,
 0x0041f290,517,Func41f290,
@@ -341,7 +341,7 @@ address,size,name,symbol
 0x0042a840,469,Func42a840,
 0x0042aa20,140,Func42aa20,
 0x0042aab0,123,Func42aab0,
-0x0042ab30,1449,Func42ab30,
+0x0042ab30,1449,Func42ab30,?Func42ab30@@YAXHPAD@Z
 0x0042b0d9,423,Func42b0d9,
 0x0042b280,294,Func42b280,
 0x0042b3a6,145,Func42b3a6,

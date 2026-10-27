@@ -7,6 +7,7 @@
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 
+#include "ascii.h"
 #include "sprite.h"
 #include "dsutil.h"
 #include "midi.h"
@@ -90,7 +91,8 @@ public:
     unsigned char unk_000[0xc];
     // Created by DirectInput8Create.
     IDirectInput8 *dinput;
-    unsigned char unk_010[0x4];
+    // The keyboard's DirectInput device.
+    IDirectInputDevice8 *keyboard;
     // The first joystick found; NULL without one.
     IDirectInputDevice8 *joystick;
     unsigned char unk_018[0x2c];
@@ -134,6 +136,10 @@ extern WORD g_PrevButtons;
 
 // Counts frames and draws the frame rate ("%.02ffps").
 void DrawFps();
+
+void Func42ab30(int unk1, char *unk2);
+// Releases the COM object at 0x69e230, if there is one.
+void Func41f02b();
 
 // IDirectInput8::EnumDevices's callback for joysticks, from the DirectX
 // 8 SDK's Joystick sample: creates a device for the first joystick that

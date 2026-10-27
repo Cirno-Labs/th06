@@ -11,6 +11,9 @@
 class AsciiText
 {
 public:
+    // Removes AsciiText's two chain elements.
+    static void RemoveChain();
+
     // Queues a string at `pos` in the current color. Up to 256 strings
     // a frame; more are dropped.
     void AddString(D3DXVECTOR3 *pos, char *text);

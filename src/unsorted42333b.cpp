@@ -77,6 +77,54 @@ BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE *pdidInstance, VOID *
     return DIENUM_STOP;
 }
 
+// Ends with the DirectX 8 SDK Joystick sample's FreeDirectInput, for
+// both devices.
+int Unknown6c6d18::DeletedCallback(Unknown6c6d18 *arg)
+{
+    int i;
+
+    g_SpriteEngine->ReleaseVertexBuffer();
+    for (i = 0; i < 0x10; i++)
+    {
+        arg->ReleaseArchive(i);
+    }
+    g_SpriteEngine->ReleaseAnm(0);
+    AsciiText::RemoveChain();
+    g_Unknown6d3f50.StopBgm();
+    if (arg->midi != NULL)
+    {
+        arg->midi->Stop();
+        delete arg->midi;
+        arg->midi = NULL;
+    }
+    Func42ab30(0, NULL);
+    Func41f02b();
+    if (arg->keyboard)
+    {
+        arg->keyboard->Unacquire();
+    }
+    if (arg->keyboard)
+    {
+        arg->keyboard->Release();
+        arg->keyboard = NULL;
+    }
+    if (arg->joystick)
+    {
+        arg->joystick->Unacquire();
+    }
+    if (arg->joystick)
+    {
+        arg->joystick->Release();
+        arg->joystick = NULL;
+    }
+    if (arg->dinput)
+    {
+        arg->dinput->Release();
+        arg->dinput = NULL;
+    }
+    return 0;
+}
+
 void SpriteEngine::ReleaseVertexBuffer()
 {
     if (this->vertexBuffer != NULL)

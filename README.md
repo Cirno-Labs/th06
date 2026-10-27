@@ -89,7 +89,10 @@ Everything runs headless, so it works over SSH. `just` lists the recipes.
    only references to unnamed data such as string literals are masked.
    `just compare SYMBOL` shows a disassembly diff.
 5. Play (`just run`): runs the original game with the new code hooked
-   in, to check that the code behaves correctly as well as matching.
+   in, headless under Xvfb, to check that the code behaves correctly as
+   well as matching. Steps drive it and take screenshots, e.g.
+   `just run wait:12 key:Escape key:z wait:2 shot:menu` writes
+   `build/shots/menu.png`.
 
 ### Hooking
 
@@ -119,6 +122,10 @@ build/    outputs; build/game/ is a runnable copy of the patched game
 
 - Wine (32-bit), Python 3, [just](https://github.com/casey/just),
   binutils (`objdump`), 7-Zip
+- For `just run`: Xvfb, xdotool, ImageMagick, 32-bit Mesa OpenGL
+  (`libgl1-mesa-dri:i386`, `libglx-mesa0:i386`) and the `ja_JP.UTF-8`
+  locale, without which the game can't find its Shift-JIS named data
+  files
 - Visual C++ .NET 2002, the Windows XP SP2 Platform SDK and the
   DirectX 8.0 SDK (bring your own copies)
 - Ghidra (for analysis, optional)

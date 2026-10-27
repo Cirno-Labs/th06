@@ -24,9 +24,10 @@ game: build _orig
     python3 tools/patch_exe.py {{ exe }} build/game/th06.exe
     cp build/th06.dll build/game/
 
-# Run the patched game; the hook log goes to the terminal
-run: game
-    cd build/game && WINEDEBUG=-all,+debugstr wine th06.exe
+# Run the patched game headless with STEPS (wait:S key:K hold:K:S shot:NAME)
+[positional-arguments]
+run *steps: game
+    python3 tools/play.py "$@"
 
 # Analyze the original with headless Ghidra; add new functions to symbols.csv
 analyze: _orig

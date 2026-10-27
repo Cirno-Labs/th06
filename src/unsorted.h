@@ -16,6 +16,9 @@
 class Unknown6d3f50
 {
 public:
+    // Sets up DirectSound for `hwnd` (stereo, 44.1 kHz, 16 bits) and
+    // starts a silent looping buffer and a 250 ms timer. Returns 0 or -1.
+    int Initialize(HWND hwnd);
     // Stops the wave music: ends the notification thread and releases
     // the stream ("stop BGM").
     void StopBgm();
@@ -43,8 +46,13 @@ public:
     unsigned char unk_288[0x180];
     // Set from g_SoundInfos[].unk_6 when a sound is queued.
     int unk_408[0x20];
-    unsigned char unk_488[0x188];
-    int unk_610;
+    unsigned char unk_488[0x180];
+    // A silent buffer, looping from start-up.
+    IDirectSoundBuffer *silence;
+    // The window the sound timer posts to.
+    HWND hwnd;
+    // NULL until Initialize succeeds.
+    CSoundManager *manager;
     // The thread streaming the wave music and its ID.
     DWORD notifyThreadId;
     HANDLE notifyThread;

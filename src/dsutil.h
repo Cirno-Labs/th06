@@ -61,6 +61,11 @@ public:
     HRESULT CreateStreaming(CStreamingSound **ppStreamingSound, LPTSTR strWaveFileName, DWORD dwCreationFlags,
                             GUID guid3DAlgorithm, DWORD dwNotifyCount, DWORD dwNotifySize, HANDLE hNotifyEvent);
 
+    inline LPDIRECTSOUND8 GetDirectSound()
+    {
+        return m_pDS;
+    }
+
     LPDIRECTSOUND8 m_pDS;
 };
 

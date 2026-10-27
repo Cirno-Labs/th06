@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">48.83% (230)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">45.01% (212)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">49.04% (231)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">44.80% (211)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="364.78" height="6" x="0" y="0" class="named"/>
-<rect width="45.99" height="6" x="364.78" y="0" class="decompiled"/>
-<rect width="336.23" height="6" x="410.77" y="0" class="todo"/>
+<rect width="366.36" height="6" x="0" y="0" class="named"/>
+<rect width="45.99" height="6" x="366.36" y="0" class="decompiled"/>
+<rect width="334.64" height="6" x="412.36" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -371,7 +371,7 @@
 <rect width="12" height="12" x="0" y="90" class="named"><title>0x0042564c MusicScreen::AddedCallback (1867 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="90" class="named"><title>0x00425d97 MusicScreen::DeletedCallback (108 bytes)</title></rect>
 <rect width="12" height="12" x="30" y="90" class="todo"><title>0x00425e10 Func425e10 (488 bytes)</title></rect>
-<rect width="12" height="12" x="45" y="90" class="todo"><title>0x00426000 Func426000 (194 bytes)</title></rect>
+<rect width="12" height="12" x="45" y="90" class="named"><title>0x00426000 PlayerBomb::PlayerBomb (194 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="90" class="named"><title>0x004260d0 FireShotType0 (34 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="90" class="named"><title>0x00426100 FireShot (795 bytes)</title></rect>
 <rect width="12" height="12" x="90" y="90" class="named"><title>0x00426420 FireShotType1 (34 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">28.89%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">68.44%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">28.97%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">68.35%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="215.81" height="6" x="0" y="0" class="named"/>
-<rect width="19.98" height="6" x="215.81" y="0" class="decompiled"/>
-<rect width="511.21" height="6" x="235.79" y="0" class="todo"/>
+<rect width="216.42" height="6" x="0" y="0" class="named"/>
+<rect width="19.98" height="6" x="216.42" y="0" class="decompiled"/>
+<rect width="510.60" height="6" x="236.40" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -800,7 +800,7 @@
 <rect width="6.98" height="6.62" x="652.90" y="46.74" class="named"><title>0x00422560 MidiPlayer::ReleaseHeader (199 bytes)</title></rect>
 <rect width="6.88" height="6.62" x="662.88" y="46.74" class="todo"><title>0x00418665 Func418665 (197 bytes)</title></rect>
 <rect width="6.88" height="6.62" x="672.76" y="46.74" class="named"><title>0x00425318 MusicScreen::MusicScreen (197 bytes)</title></rect>
-<rect width="6.73" height="6.62" x="682.64" y="46.74" class="todo"><title>0x00426000 Func426000 (194 bytes)</title></rect>
+<rect width="6.73" height="6.62" x="682.64" y="46.74" class="named"><title>0x00426000 PlayerBomb::PlayerBomb (194 bytes)</title></rect>
 <rect width="6.73" height="6.62" x="692.37" y="46.74" class="named"><title>0x0043b8e0 CStreamingSound::Reset (194 bytes)</title></rect>
 <rect width="6.63" height="6.62" x="702.10" y="46.74" class="named"><title>0x00412320 EnemyManager::RegisterChain (192 bytes)</title></rect>
 <rect width="6.63" height="6.62" x="711.73" y="46.74" class="decompiled"><title>0x0041e150 Unknown41e150::Create (192 bytes)</title></rect>

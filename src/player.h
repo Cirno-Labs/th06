@@ -60,11 +60,45 @@ struct BombInfo
     void (*draw)(Player *player);
 };
 
+// The bomb running and its state.
+struct PlayerBomb
+{
+    // Inline, but too large to expand: Player's constructor calls the
+    // copy at 0x426000 and still reserves its inlines' slots.
+    PlayerBomb()
+    {
+    }
+
+    // Whether a bomb runs; cleared when it ends.
+    int running;
+    // Its length in frames, and its clock.
+    int duration;
+    Timer timer;
+    // The shot type's bomb callbacks.
+    void (*update)(Player *player);
+    void (*draw)(Player *player);
+    // State for up to 8 of a bomb's parts (Reimu A's orbs, ...): whether
+    // each is live (Reimu A: 1 flying, then counting up to 30 after it
+    // bursts), its speed, position and velocity, and four sprites each.
+    int partActive[8];
+    float partSpeed[8];
+    D3DXVECTOR3 partPos[8];
+    D3DXVECTOR3 partVelocity[8];
+    Sprite sprites[32];
+};
+ASSERT_SIZE(PlayerBomb, 0x231c);
+
 // The player, the global at 0x6ca628. Its added callback loads
 // "data/player00.anm" or "player01.anm".
 class Player
 {
 public:
+    // Empty, and defined out of line: constructs the members (0x425e10).
+    // Parked: the original reserves Sprite's inlined Timers' slots for
+    // `sprite` alone, this also for the bullets' sprites (4 more slots
+    // before the bullet loop).
+    Player();
+
     // Zeroes the player, remembers `unk` and adds the update element
     // (priority 7) and two draw elements (priorities 5 and 7). Returns
     // 0, or -1 if adding fails.
@@ -149,8 +183,8 @@ public:
     // The player's sprite, and the options' (stepped while optionState
     // is set).
     Sprite sprite;
-    Sprite optionSprites[2];
-    DWORD unk_0330[0x44];
+    // The third is unused.
+    Sprite optionSprites[3];
     D3DXVECTOR3 position;
     DWORD unk_044c[0x3];
     // The corners of the hitbox and of the graze box, and their half
@@ -221,23 +255,7 @@ public:
     // Copies of shotTypeInfo's.
     int (*fire)(Player *player, PlayerBullet *bullet, int index, int frame);
     int (*fireFocused)(Player *player, PlayerBullet *bullet, int index, int frame);
-    // Whether a bomb runs; cleared when it ends.
-    int bombing;
-    // The bomb running: its length in frames, and its clock.
-    int bombDuration;
-    Timer bombTimer;
-    // The shot type's bomb callbacks.
-    void (*bombUpdate)(Player *player);
-    void (*bombDraw)(Player *player);
-    // Per-bomb state for up to 8 of a bomb's parts (Reimu A's orbs,
-    // ...): whether each is live (Reimu A: 1 flying, then counting up to
-    // 30 after it bursts), its speed, position and velocity, and four
-    // sprites each.
-    int bombActive[8];
-    float bombSpeed[8];
-    D3DXVECTOR3 bombPos[8];
-    D3DXVECTOR3 bombVelocity[8];
-    Sprite bombSprites[32];
+    PlayerBomb bomb;
     // The update element and the two draw elements.
     ChainElem *calcChain;
     ChainElem *drawChain;

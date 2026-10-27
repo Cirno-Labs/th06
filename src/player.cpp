@@ -7,6 +7,10 @@
 #include "player.h"
 #include "unsorted.h"
 
+Player::Player()
+{
+}
+
 int FireShotType0(Player *player, PlayerBullet *bullet, int index, int frame)
 {
     return FireShot(player, bullet, index, frame, &g_ShotTable0);
@@ -146,7 +150,7 @@ int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
         {
             continue;
         }
-        if (!this->bombing)
+        if (!this->bomb.running)
         {
             damage += cur->damage;
         }
@@ -227,7 +231,7 @@ int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
         {
             g_EffectManager.Func40ef50(3, pos, 1, 0xffffffff);
         }
-        if (this->bombing && hitByBomb != NULL)
+        if (this->bomb.running && hitByBomb != NULL)
         {
             *hitByBomb = 1;
         }
@@ -390,7 +394,7 @@ void Player::Graze(D3DXVECTOR3 *pos)
 {
     D3DXVECTOR3 mid;
 
-    if (!g_Player.bombing)
+    if (!g_Player.bomb.running)
     {
         if (g_GameManager.graze < 9999)
         {
@@ -776,20 +780,20 @@ int Player::OnUpdate(Player *player)
     {
         player->bulletClearAreas[i][2] = 0.0f;
     }
-    if (player->bombing != 0)
+    if (player->bomb.running != 0)
     {
-        player->bombUpdate(player);
+        player->bomb.update(player);
     }
     else if (!g_Gui.Func4195a2() && player->unk_09d8 != 0 && g_GameManager.bombs > 0 && WAS_PRESSED(2) &&
-             player->bombUpdate != NULL)
+             player->bomb.update != NULL)
     {
         g_GameManager.bombsUsed++;
         g_GameManager.bombs--;
         g_Gui.flags.bombsChanged = 2;
-        player->bombing = 1;
-        player->bombTimer.Set(0);
-        player->bombDuration = 999;
-        player->bombUpdate(player);
+        player->bomb.running = 1;
+        player->bomb.timer.Set(0);
+        player->bomb.duration = 999;
+        player->bomb.update(player);
         g_EnemyManager.unk_ee5c4 = 0;
         g_GameManager.SubSubRank(200);
         g_EnemyManager.unk_ee5d4 = g_EnemyManager.unk_ee5c8;
@@ -1049,7 +1053,7 @@ int Player::UpdateFiring(Player *player)
         return 0;
     }
     if (player->fireTimer.HasTicked() &&
-        (!g_Player.bombing || g_GameManager.character != 1 || g_GameManager.shotType != 1))
+        (!g_Player.bomb.running || g_GameManager.character != 1 || g_GameManager.shotType != 1))
     {
         Player::FireShots(player, player->fireTimer.AsFrames());
     }
@@ -1117,9 +1121,9 @@ int Player::OnDraw2(Player *player)
 int Player::OnDraw(Player *player)
 {
     Player::DrawBullets(player);
-    if (player->bombing && player->bombDraw != NULL)
+    if (player->bomb.running && player->bomb.draw != NULL)
     {
-        player->bombDraw(player);
+        player->bomb.draw(player);
     }
     player->sprite.pos.x = g_GameManager.arena[0] + player->position.x;
     player->sprite.pos.y = g_GameManager.arena[1] + player->position.y;
@@ -1237,9 +1241,9 @@ int Player::AddedCallback(Player *player)
         bullet->state = 0;
     }
     player->fireTimer.Set(-1);
-    player->bombUpdate = g_Bombs[g_GameManager.character * 2 + g_GameManager.shotType].update;
-    player->bombDraw = g_Bombs[g_GameManager.character * 2 + g_GameManager.shotType].draw;
-    player->bombing = 0;
+    player->bomb.update = g_Bombs[g_GameManager.character * 2 + g_GameManager.shotType].update;
+    player->bomb.draw = g_Bombs[g_GameManager.character * 2 + g_GameManager.shotType].draw;
+    player->bomb.running = 0;
     for (i = 0; i < 2; i++)
     {
         player->laserTimers[i].Set(0);

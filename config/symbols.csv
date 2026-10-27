@@ -290,7 +290,7 @@ address,size,name,symbol
 0x00424ae4,75,Unknown6c6d18::PlayMidi,?PlayMidi@Unknown6c6d18@@QAEHH@Z
 0x00424b2f,46,Func424b2f,
 0x00424b5d,475,Func424b5d,
-0x00424d38,74,Func424d38,
+0x00424d38,74,Unknown6c6d18::StopMusic,?StopMusic@Unknown6c6d18@@QAEHXZ
 0x00424d82,191,Func424d82,
 0x00424e41,78,Func424e41,
 0x00424e8f,30,Func424e8f,
@@ -384,7 +384,7 @@ address,size,name,symbol
 0x00430a50,949,Func430a50,
 0x00430e10,173,Func430e10,
 0x00430ec0,190,Func430ec0,
-0x00430f80,252,Func430f80,
+0x00430f80,252,Unknown6d3f50::StopBgm,?StopBgm@Unknown6d3f50@@QAEXXZ
 0x00431080,342,Func431080,
 0x004311e0,133,Func4311e0,
 0x00431270,256,Func431270,
@@ -1537,3 +1537,4 @@ address,size,name,symbol
 0x0047a630,4,__security_cookie,___security_cookie
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A
+0x006d3f50,,g_Unknown6d3f50,?g_Unknown6d3f50@@3VUnknown6d3f50@@A

@@ -7,6 +7,16 @@
 
 #include "midi.h"
 
+// The global at 0x6c6d18 plays wave music through it.
+class Unknown6d3f50
+{
+public:
+    // Stops the wave music: ends the notification thread and releases
+    // the stream ("stop BGM").
+    void StopBgm();
+};
+extern Unknown6d3f50 g_Unknown6d3f50;
+
 // The global at 0x6c6d18: the window, settings and game speed. Larger
 // than its known fields.
 class Unknown6c6d18
@@ -22,13 +32,16 @@ public:
     // Plays the MIDI file loaded into a slot from the start, in MIDI mode.
     // Returns 0 in MIDI mode, otherwise 1.
     int PlayMidi(int slot);
+    // Stops the music. Returns -1 if the music mode is neither wave (1)
+    // nor MIDI (2), otherwise 0.
+    int StopMusic();
 
     unsigned char unk_000[0x44];
     // Set from CreateWindowExA's result; MidiDevice::Open has MIDI
     // messages sent to it (CALLBACK_WINDOW).
     HWND hwnd;
     unsigned char unk_048[0xe7];
-    // How music is played: 1 or 2, 2 being MIDI. Set to 2 after logging
+    // How music is played: 1 is wave, 2 is MIDI. Set to 2 after logging
     // "wave データが無いので、midi にします" ("no wave data, switching to
     // MIDI").
     BYTE musicMode;

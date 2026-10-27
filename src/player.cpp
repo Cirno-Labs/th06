@@ -150,6 +150,29 @@ int Player::CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     return 1;
 }
 
+void Player::Graze(D3DXVECTOR3 *pos)
+{
+    D3DXVECTOR3 mid;
+
+    if (!g_Player.bombing)
+    {
+        if (g_GameManager.graze < 9999)
+        {
+            g_GameManager.graze++;
+        }
+        if (g_GameManager.grazeTotal < 999999)
+        {
+            g_GameManager.grazeTotal++;
+        }
+    }
+    mid = (this->position + *pos) / 2.0f;
+    g_EffectManager.Func40ef50(8, &mid, 1, 0xffffffff);
+    g_GameManager.AddScore(500);
+    g_GameManager.AddSubRank(6);
+    g_Gui.flags.grazeChanged = 2;
+    g_Unknown6d3f50.Func4311e0(0x1e, 0);
+}
+
 void Player::Die()
 {
     int i;

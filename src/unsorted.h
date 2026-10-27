@@ -498,14 +498,15 @@ ASSERT_SIZE(GuiImpl, 0x2c44);
 // The in-game interface, the global at 0x69bc30: it loads
 // "data/front.anm" and the dialogue portraits ("data/face00a.anm", ...)
 // and draws the stage clear bonus ("Stage Clear", "Graze *   10 = %5d").
-// Gui's flags, a bitfield. Player::OnUpdate sets these to 2 when the
-// lives, the bombs and the power change.
+// Gui's flags, a bitfield. The player sets these to 2 when the lives,
+// the bombs, the power and the graze change.
 struct GuiFlags
 {
     unsigned int livesChanged : 2;
     unsigned int bombsChanged : 2;
     unsigned int powerChanged : 2;
-    unsigned int unk6 : 26;
+    unsigned int grazeChanged : 2;
+    unsigned int unk8 : 24;
 };
 
 class Gui

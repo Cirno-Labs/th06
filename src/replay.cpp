@@ -239,7 +239,7 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
         {
             return -1;
         }
-        earlier->unk_00 = g_GameManager.unk_0004;
+        earlier->unk_00 = g_GameManager.score;
     }
     if (replay->data->stages[g_GameManager.stage] != NULL)
     {
@@ -300,7 +300,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     g_GameManager.unk_1819 = cur->unk_0c;
     if (g_GameManager.stage >= 2 && replay->data->stages[g_GameManager.stage - 1] != NULL)
     {
-        g_GameManager.unk_0000 = g_GameManager.unk_0004 = replay->data->stages[g_GameManager.stage - 1]->unk_00;
+        g_GameManager.unk_0000 = g_GameManager.score = replay->data->stages[g_GameManager.stage - 1]->unk_00;
     }
     return 0;
 }

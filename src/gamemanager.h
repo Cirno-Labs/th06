@@ -18,6 +18,12 @@ public:
     // Whether a `width` by `height` rectangle centred on (x, y) touches
     // the play area.
     BOOL Func41b5e1(float x, float y, float width, float height);
+    // Inline; `points` is an int and `score` unsigned, so even a
+    // constant goes through a temporary.
+    void AddScore(int points)
+    {
+        this->score += points;
+    }
     // Adds `amount` hundredths to the rank, up to maxRank.
     void AddSubRank(int amount);
     // Takes `amount` hundredths from the rank, down to minRank.
@@ -38,11 +44,15 @@ public:
     // Returns 1.
     static int OnDraw(GameManager *mgr);
 
+    // The score shown, and the score, which it counts up to.
     int unk_0000;
-    int unk_0004;
+    unsigned int score;
     DWORD unk_0008[0x2];
     int difficulty;
-    DWORD unk_0014[0x3];
+    // Grazes, up to 9999 and 999999.
+    int graze;
+    int grazeTotal;
+    DWORD unk_001c;
     // Counts the player's deaths.
     int deaths;
     // Counts the bombs used.

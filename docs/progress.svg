@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">47.35% (223)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">46.50% (219)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">47.56% (224)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">46.28% (218)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="353.68" height="6" x="0" y="0" class="named"/>
-<rect width="45.99" height="6" x="353.68" y="0" class="decompiled"/>
-<rect width="347.33" height="6" x="399.67" y="0" class="todo"/>
+<rect width="355.26" height="6" x="0" y="0" class="named"/>
+<rect width="45.99" height="6" x="355.26" y="0" class="decompiled"/>
+<rect width="345.75" height="6" x="401.25" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -382,7 +382,7 @@
 <rect width="12" height="12" x="165" y="90" class="todo"><title>0x00426df0 Func426df0 (477 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="90" class="todo"><title>0x00426fd0 Func426fd0 (442 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="90" class="todo"><title>0x00427190 Func427190 (1180 bytes)</title></rect>
-<rect width="12" height="12" x="210" y="90" class="todo"><title>0x00427630 Func427630 (313 bytes)</title></rect>
+<rect width="12" height="12" x="210" y="90" class="named"><title>0x00427630 Player::Graze (313 bytes)</title></rect>
 <rect width="12" height="12" x="225" y="90" class="named"><title>0x00427770 Player::Die (230 bytes)</title></rect>
 <rect width="12" height="12" x="240" y="90" class="named"><title>0x00427860 Player::HandleInput (3482 bytes)</title></rect>
 <rect width="12" height="12" x="255" y="90" class="named"><title>0x00428630 Player::StartFiring (69 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">26.97%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">70.36%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">27.10%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">70.23%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="201.45" height="6" x="0" y="0" class="named"/>
-<rect width="19.98" height="6" x="201.45" y="0" class="decompiled"/>
-<rect width="525.57" height="6" x="221.43" y="0" class="todo"/>
+<rect width="202.43" height="6" x="0" y="0" class="named"/>
+<rect width="19.98" height="6" x="202.43" y="0" class="decompiled"/>
+<rect width="524.59" height="6" x="222.41" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -725,7 +725,7 @@
 <rect width="8.78" height="10.02" x="608.28" y="26.04" class="todo"><title>0x0041878b GuiImpl::Func41878b (318 bytes)</title></rect>
 <rect width="8.78" height="9.90" x="608.28" y="39.07" class="todo"><title>0x00432260 Func432260 (315 bytes)</title></rect>
 <rect width="8.78" height="9.82" x="608.28" y="51.97" class="todo"><title>0x0040dcc0 Func40dcc0 (313 bytes)</title></rect>
-<rect width="8.78" height="9.82" x="608.28" y="64.78" class="todo"><title>0x00427630 Func427630 (313 bytes)</title></rect>
+<rect width="8.78" height="9.82" x="608.28" y="64.78" class="named"><title>0x00427630 Player::Graze (313 bytes)</title></rect>
 <rect width="8.78" height="9.74" x="608.28" y="77.60" class="named"><title>0x00406020 DimPlayAreaForBomb (311 bytes)</title></rect>
 <rect width="8.78" height="9.70" x="608.28" y="90.34" class="todo"><title>0x0043753c Func43753c (310 bytes)</title></rect>
 <rect width="8.78" height="9.65" x="608.28" y="103.04" class="named"><title>0x00428780 Player::RegisterChain (309 bytes)</title></rect>

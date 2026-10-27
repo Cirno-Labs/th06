@@ -313,7 +313,7 @@ address,size,name,symbol
 0x00426df0,477,Func426df0,
 0x00426fd0,442,Func426fd0,
 0x00427190,1180,Func427190,
-0x00427630,313,Func427630,
+0x00427630,313,Player::Graze,?Graze@Player@@QAEXPAUD3DXVECTOR3@@@Z
 0x00427770,230,Player::Die,?Die@Player@@QAEXXZ
 0x00427860,3482,Player::HandleInput,?HandleInput@Player@@QAEHXZ
 0x00428630,69,Player::StartFiring,?StartFiring@Player@@SAXPAV1@@Z

@@ -87,6 +87,9 @@ public:
     // hitbox, killing the player unless it is dying or invulnerable,
     // else 0.
     int CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
+    // Grazes a bullet at `pos`: counts it (unless bombing), bursts an
+    // effect between it and the player, scores 500 and raises the rank.
+    void Graze(D3DXVECTOR3 *pos);
     // Kills the player: bursts effects, starts the death (state 2), plays
     // sound 4 and counts the death.
     void Die();

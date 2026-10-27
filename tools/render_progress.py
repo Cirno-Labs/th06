@@ -57,9 +57,9 @@ def collect_functions() -> list[Symbol]:
     built = {name: same for name, same, *_ in compare.results(compare.read_symbols())}
     functions = []
     for row in rows:
-        symbol = row["symbol"]
-        if symbol in built:
-            if not built[symbol]:
+        symbols = [s for s in row["symbol"].split() if s in built]
+        if symbols:
+            if not all(built[s] for s in symbols):
                 status = SymbolStatus.NONMATCHING
             elif PLACEHOLDER.search(row["name"]):
                 status = SymbolStatus.DECOMPILED

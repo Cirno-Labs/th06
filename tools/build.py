@@ -1,6 +1,6 @@
 """Compiles src/ with the original compiler and links the hook DLL.
 
-Every symbol in config/symbols.csv that src/ defines is hooked: the DLL
+Every function in config/symbols.csv that src/ defines is hooked: the DLL
 overwrites the original function with a jump to the new one. Every other
 symbol becomes an absolute symbol at its original address, so new code
 calls and reads the original game.
@@ -44,7 +44,7 @@ def tool(name, *args):
 
 def read_symbols():
     with open("config/symbols.csv") as f:
-        return {r["symbol"]: int(r["address"], 16) for r in csv.DictReader(f) if r["symbol"]}
+        return {s: int(r["address"], 16) for r in csv.DictReader(f) for s in r["symbol"].split()}
 
 
 def compile_all():
@@ -75,16 +75,23 @@ def write_hooks(objs, symbols):
     that new code calls gets a thunk instead: push <address>; ret. It
     leaves every register intact, whatever the calling convention.
     """
-    defined, undefined, called, glue = set(), set(), set(), set()
+    defined, code, undefined, called, glue = set(), set(), set(), set(), set()
     for path in objs:
         obj = coff.Object(path)
         for s in obj.externals():
-            (defined if s.section > 0 else undefined).add(s.name)
-            if os.path.basename(path).startswith(GLUE_PREFIX) and s.section <= 0:
-                glue.add(s.name)
+            if s.section <= 0:
+                undefined.add(s.name)
+                if os.path.basename(path).startswith(GLUE_PREFIX):
+                    glue.add(s.name)
+                continue
+            defined.add(s.name)
+            if obj.sections[s.section - 1].flags & coff.CODE:
+                code.add(s.name)
         for sec in obj.sections:
             called.update(obj.symbols[i].name for _, i, t in sec.relocs if t == coff.REL32)
-    hooks = sorted((symbols[n], n) for n in defined & symbols.keys())
+    # Data that src/ defines, such as vtables, is never hooked. Functions
+    # the linker folded into one share an address; one hook covers them.
+    hooks = sorted({symbols[n]: n for n in sorted(code & symbols.keys())}.items())
     # Imports the hook installer itself uses stay real imports: it runs
     # from DllMain and should not rely on the game's import table.
     external = {n: a for n, a in symbols.items()

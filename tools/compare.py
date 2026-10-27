@@ -63,8 +63,8 @@ def disasm(code, addr):
 
 def read_symbols():
     with open(os.path.join(ROOT, "config/symbols.csv")) as f:
-        return {r["symbol"]: (int(r["address"], 16), int(r["size"] or 0))
-                for r in csv.DictReader(f) if r["symbol"]}
+        return {s: (int(r["address"], 16), int(r["size"] or 0))
+                for r in csv.DictReader(f) for s in r["symbol"].split()}
 
 
 def results(symbols):

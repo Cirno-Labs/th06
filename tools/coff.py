@@ -1,6 +1,7 @@
 """Minimal reader and writer for i386 COFF objects and PE images."""
 import struct
 
+CODE = 0x20  # IMAGE_SCN_CNT_CODE
 REL32 = 0x14
 DIR32 = 0x06
 SYM_UNDEFINED = 0

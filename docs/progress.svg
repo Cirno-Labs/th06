@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">3.61% (17)</tspan> · <tspan class="decompiled">1.06% (5)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">95.33% (449)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">3.82% (18)</tspan> · <tspan class="decompiled">1.06% (5)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">95.12% (448)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="26.96" height="6" x="0" y="0" class="named"/>
-<rect width="7.93" height="6" x="26.96" y="0" class="decompiled"/>
-<rect width="712.11" height="6" x="34.89" y="0" class="todo"/>
+<rect width="28.55" height="6" x="0" y="0" class="named"/>
+<rect width="7.93" height="6" x="28.55" y="0" class="decompiled"/>
+<rect width="710.52" height="6" x="36.48" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -324,11 +324,11 @@
 <rect width="12" height="12" x="45" y="75" class="named"><title>0x00421d90 ReadVarLen (85 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="75" class="named"><title>0x00421df0 MidiPlayer::MidiPlayer (341 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="75" class="todo"><title>0x00421f50 Func421f50 (147 bytes)</title></rect>
-<rect width="12" height="12" x="90" y="75" class="todo"><title>0x00421ff0 Func421ff0 (121 bytes)</title></rect>
+<rect width="12" height="12" x="90" y="75" class="todo"><title>0x00421ff0 MidiPlayer::LoadFile (121 bytes)</title></rect>
 <rect width="12" height="12" x="105" y="75" class="named"><title>0x00422070 MidiPlayer::UnloadFile (60 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="75" class="todo"><title>0x004220b0 Func4220b0 (131 bytes)</title></rect>
-<rect width="12" height="12" x="135" y="75" class="todo"><title>0x00422140 Func422140 (561 bytes)</title></rect>
-<rect width="12" height="12" x="150" y="75" class="todo"><title>0x00422380 Func422380 (58 bytes)</title></rect>
+<rect width="12" height="12" x="135" y="75" class="todo"><title>0x00422140 MidiPlayer::ParseFile (561 bytes)</title></rect>
+<rect width="12" height="12" x="150" y="75" class="named"><title>0x00422380 MidiPlayer::Load (58 bytes)</title></rect>
 <rect width="12" height="12" x="165" y="75" class="todo"><title>0x004223c0 Func4223c0 (207 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="75" class="todo"><title>0x00422490 Func422490 (68 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="75" class="todo"><title>0x004224e0 Func4224e0 (124 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">0.49%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">99.49%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">0.51%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">99.46%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="3.63" height="6" x="0" y="0" class="named"/>
-<rect width="0.21" height="6" x="3.63" y="0" class="decompiled"/>
-<rect width="743.16" height="6" x="3.84" y="0" class="todo"/>
+<rect width="3.81" height="6" x="0" y="0" class="named"/>
+<rect width="0.21" height="6" x="3.81" y="0" class="decompiled"/>
+<rect width="742.97" height="6" x="4.03" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -653,7 +653,7 @@
 <rect width="12.98" height="14.36" x="519.12" y="35.19" class="todo"><title>0x00438ef8 Func438ef8 (575 bytes)</title></rect>
 <rect width="12.98" height="14.17" x="519.12" y="52.55" class="todo"><title>0x0043c080 Func43c080 (569 bytes)</title></rect>
 <rect width="12.98" height="14.14" x="519.12" y="69.72" class="todo"><title>0x0040d530 Func40d530 (568 bytes)</title></rect>
-<rect width="12.98" height="13.93" x="519.12" y="86.87" class="todo"><title>0x00422140 Func422140 (561 bytes)</title></rect>
+<rect width="12.98" height="13.93" x="519.12" y="86.87" class="todo"><title>0x00422140 MidiPlayer::ParseFile (561 bytes)</title></rect>
 <rect width="12.98" height="13.78" x="519.12" y="103.80" class="todo"><title>0x0042ffc0 Func42ffc0 (556 bytes)</title></rect>
 <rect width="12.98" height="13.66" x="519.12" y="120.58" class="todo"><title>0x0042a240 Func42a240 (552 bytes)</title></rect>
 <rect width="12.98" height="12.76" x="519.12" y="137.24" class="todo"><title>0x0042390a Func42390a (522 bytes)</title></rect>
@@ -876,7 +876,7 @@
 <rect width="4.75" height="4.65" x="742.25" y="81.83" class="todo"><title>0x0042aab0 Func42aab0 (123 bytes)</title></rect>
 <rect width="4.19" height="5.18" x="679.30" y="89.49" class="todo"><title>0x00428680 Func428680 (122 bytes)</title></rect>
 <rect width="4.19" height="5.18" x="679.30" y="97.67" class="todo"><title>0x00428700 Func428700 (122 bytes)</title></rect>
-<rect width="4.19" height="5.12" x="679.30" y="105.85" class="todo"><title>0x00421ff0 Func421ff0 (121 bytes)</title></rect>
+<rect width="4.19" height="5.12" x="679.30" y="105.85" class="todo"><title>0x00421ff0 MidiPlayer::LoadFile (121 bytes)</title></rect>
 <rect width="4.19" height="4.91" x="679.30" y="113.97" class="todo"><title>0x00420b50 Func420b50 (118 bytes)</title></rect>
 <rect width="4.19" height="4.85" x="679.30" y="121.88" class="todo"><title>0x0040c100 Func40c100 (117 bytes)</title></rect>
 <rect width="4.19" height="4.85" x="679.30" y="129.73" class="todo"><title>0x0041d600 Func41d600 (117 bytes)</title></rect>
@@ -951,7 +951,7 @@
 <rect width="2.46" height="2.30" x="712.44" y="137.27" class="todo"><title>0x00432c80 Func432c80 (60 bytes)</title></rect>
 <rect width="2.46" height="2.21" x="712.44" y="142.57" class="todo"><title>0x00401250 Func401250 (59 bytes)</title></rect>
 <rect width="2.46" height="2.21" x="712.44" y="147.79" class="named"><title>0x00421b50 MidiDevice::Close (59 bytes)</title></rect>
-<rect width="2.73" height="1.88" x="717.89" y="115.79" class="todo"><title>0x00422380 Func422380 (58 bytes)</title></rect>
+<rect width="2.73" height="1.88" x="717.89" y="115.79" class="named"><title>0x00422380 MidiPlayer::Load (58 bytes)</title></rect>
 <rect width="2.53" height="1.88" x="723.62" y="115.79" class="todo"><title>0x00424aac Func424aac (56 bytes)</title></rect>
 <rect width="2.43" height="1.88" x="729.16" y="115.79" class="todo"><title>0x004240f0 Func4240f0 (55 bytes)</title></rect>
 <rect width="2.24" height="1.88" x="734.59" y="115.79" class="todo"><title>0x00420bd0 Func420bd0 (53 bytes)</title></rect>

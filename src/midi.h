@@ -86,8 +86,15 @@ public:
 
     virtual void OnTimer();
 
+    // Loads a MIDI file into a slot; nonzero on failure.
+    int LoadFile(int slot, char *path);
     // Frees the MIDI file loaded into a slot.
     void UnloadFile(int slot);
+    // Parses the file in a slot into tracks.
+    void ParseFile(int slot);
+    // Loads and parses a MIDI file through the scratch slot 31. Returns -1
+    // if it cannot be loaded, otherwise 0.
+    int Load(char *path);
 
     void *unk_010[0x20];
     int unk_090;

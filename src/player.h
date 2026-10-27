@@ -117,6 +117,9 @@ void DimPlayAreaForBomb(Player *player);
 // vertical and two horizontal pillars through the player, then on every
 // other frame keeps their hitboxes and bullet clearing on them.
 void UpdateReimuBBomb(Player *player);
+// Reimu B's bomb draw callback: dims the play area and draws the four
+// pillars at their positions.
+void DrawReimuBBomb(Player *player);
 // Marisa A's bomb update callback: ends the bomb after its duration;
 // otherwise starts it (the spell card name, 250 frames) with eight stars
 // flying out from the player, then moves them, keeping their hitboxes

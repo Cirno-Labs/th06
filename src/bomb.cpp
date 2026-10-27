@@ -274,6 +274,22 @@ void UpdateReimuBBomb(Player *player)
     player->bombTimer.Tick();
 }
 
+void DrawReimuBBomb(Player *player)
+{
+    Sprite *curSprite;
+    int i;
+
+    DimPlayAreaForBomb(player);
+    for (curSprite = player->bombSprites, i = 0; i < 4; i++, curSprite++)
+    {
+        curSprite->pos = player->bombPos[i] + curSprite->unk_0e4;
+        curSprite->pos.x += g_GameManager.arena[0];
+        curSprite->pos.y += g_GameManager.arena[1];
+        curSprite->pos.z = 0.0f;
+        g_SpriteEngine->Func432cc0(curSprite);
+    }
+}
+
 void UpdateMarisaABomb(Player *player)
 {
     int i;

@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">44.16% (208)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">49.68% (234)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">44.37% (209)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">49.47% (233)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="329.89" height="6" x="0" y="0" class="named"/>
-<rect width="45.99" height="6" x="329.89" y="0" class="decompiled"/>
-<rect width="371.12" height="6" x="375.88" y="0" class="todo"/>
+<rect width="331.47" height="6" x="0" y="0" class="named"/>
+<rect width="45.99" height="6" x="331.47" y="0" class="decompiled"/>
+<rect width="369.54" height="6" x="377.46" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -108,7 +108,7 @@
 <rect width="12" height="12" x="555" y="0" class="named"><title>0x00405c10 DrawReimuABomb (1040 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="0" class="named"><title>0x00406020 DimPlayAreaForBomb (311 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="0" class="named"><title>0x00406160 UpdateReimuBBomb (1149 bytes)</title></rect>
-<rect width="12" height="12" x="600" y="0" class="todo"><title>0x004065e0 Func4065e0 (272 bytes)</title></rect>
+<rect width="12" height="12" x="600" y="0" class="named"><title>0x004065e0 DrawReimuBBomb (272 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="0" class="named"><title>0x004066f0 UpdateMarisaABomb (1041 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="0" class="todo"><title>0x00406b10 Func406b10 (852 bytes)</title></rect>
 <rect width="12" height="12" x="645" y="0" class="named"><title>0x00406e70 UpdateMarisaBBomb (830 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">21.74%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">75.58%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">21.86%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">75.47%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="162.43" height="6" x="0" y="0" class="named"/>
-<rect width="19.98" height="6" x="162.43" y="0" class="decompiled"/>
-<rect width="564.59" height="6" x="182.41" y="0" class="todo"/>
+<rect width="163.29" height="6" x="0" y="0" class="named"/>
+<rect width="19.98" height="6" x="163.29" y="0" class="decompiled"/>
+<rect width="563.73" height="6" x="183.27" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -750,7 +750,7 @@
 <rect width="8.47" height="8.61" x="620.06" y="72.59" class="todo"><title>0x0040daa0 Func40daa0 (276 bytes)</title></rect>
 <rect width="8.47" height="8.61" x="620.06" y="84.20" class="todo"><title>0x0040e1b0 Func40e1b0 (276 bytes)</title></rect>
 <rect width="8.47" height="8.61" x="620.06" y="95.81" class="todo"><title>0x00420d40 Func420d40 (276 bytes)</title></rect>
-<rect width="8.47" height="8.44" x="620.06" y="107.41" class="todo"><title>0x004065e0 Func4065e0 (272 bytes)</title></rect>
+<rect width="8.47" height="8.44" x="620.06" y="107.41" class="named"><title>0x004065e0 DrawReimuBBomb (272 bytes)</title></rect>
 <rect width="8.47" height="8.40" x="620.06" y="118.85" class="todo"><title>0x0040e810 Func40e810 (271 bytes)</title></rect>
 <rect width="8.47" height="8.40" x="620.06" y="130.25" class="todo"><title>0x004108b0 Func4108b0 (271 bytes)</title></rect>
 <rect width="8.47" height="8.35" x="620.06" y="141.65" class="todo"><title>0x00413450 Func413450 (270 bytes)</title></rect>

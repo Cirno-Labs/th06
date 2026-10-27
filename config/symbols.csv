@@ -39,7 +39,7 @@ address,size,name,symbol
 0x00405c10,1040,DrawReimuABomb,?DrawReimuABomb@@YAXPAVPlayer@@@Z
 0x00406020,311,DimPlayAreaForBomb,?DimPlayAreaForBomb@@YAXPAVPlayer@@@Z
 0x00406160,1149,UpdateReimuBBomb,?UpdateReimuBBomb@@YAXPAVPlayer@@@Z
-0x004065e0,272,Func4065e0,
+0x004065e0,272,DrawReimuBBomb,?DrawReimuBBomb@@YAXPAVPlayer@@@Z
 0x004066f0,1041,UpdateMarisaABomb,?UpdateMarisaABomb@@YAXPAVPlayer@@@Z
 0x00406b10,852,Func406b10,
 0x00406e70,830,UpdateMarisaBBomb,?UpdateMarisaBBomb@@YAXPAVPlayer@@@Z

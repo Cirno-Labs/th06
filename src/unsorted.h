@@ -530,7 +530,8 @@ public:
     int format;
     int width;
     int height;
-    DWORD unk_0c[0x2];
+    DWORD imageSize;
+    int widthBytes;
     HDC hdc;
     HGDIOBJ oldObject;
     HBITMAP bitmap;

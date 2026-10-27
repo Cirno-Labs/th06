@@ -1014,7 +1014,7 @@ address,size,name,symbol
 0x0045cb54,66,_fwrite,
 0x0045cb96,10,Func45cb96,
 0x0045cba0,139,_strlen,
-0x0045cc30,96,_memset,
+0x0045cc30,96,_memset,_memset
 0x0045cc90,672,_memcpy,
 0x0045cfd0,672,_memmove,
 0x0045d30d,84,FID_conflict:_fwprintf,

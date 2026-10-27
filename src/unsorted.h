@@ -298,6 +298,10 @@ extern JOYCAPSA g_JoyCaps;
 // How many frames the shot button has been held, up to 16, when shooting
 // and focusing share a pad button: focus counts from 8.
 extern WORD g_ShotHeldFrames;
+// The pad's buttons as GetPadButtons last read them: 0x80 when down.
+extern BYTE g_PadButtons[0x80];
+// Reads which pad buttons are down into g_PadButtons and returns it.
+BYTE *GetPadButtons();
 // Adds the joystick's buttons and directions to `buttons` and returns
 // them: through DirectInput when there is a device, otherwise through
 // joyGetPosEx.

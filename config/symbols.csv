@@ -196,7 +196,7 @@ address,size,name,symbol
 0x0041cfc0,1472,ReadJoystick,?ReadJoystick@@YAGG@Z
 0x0041d580,127,SetButtonFromDirectInput,?SetButtonFromDirectInput@@YAHPAGFGPAE@Z
 0x0041d600,117,SetButtonFromJoystick,?SetButtonFromJoystick@@YAHPAGFGK@Z
-0x0041d680,414,Func41d680,
+0x0041d680,414,GetPadButtons,?GetPadButtons@@YAPAEXZ
 0x0041d820,2196,ReadButtons,?ReadButtons@@YAGXZ
 0x0041e0c0,133,ResetKeyboard,?ResetKeyboard@@YAXXZ
 0x0041e150,192,Unknown41e150::Create,?Create@Unknown41e150@@QAEXPAUIDirect3DDevice8@@HH@Z
@@ -1595,6 +1595,7 @@ address,size,name,symbol
 0x0069d914,,g_FileSize,?g_FileSize@@3HA
 0x0069d918,,g_Chain,?g_Chain@@3VChain@@A
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
+0x0069e1b0,,g_PadButtons,?g_PadButtons@@3PAEA
 0x0069e230,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A
 0x006c7114,,g_Unknown6c7114,?g_Unknown6c7114@@3EA

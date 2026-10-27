@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">41.61% (196)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">52.23% (246)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">41.83% (197)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">52.02% (245)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="310.85" height="6" x="0" y="0" class="named"/>
-<rect width="45.99" height="6" x="310.85" y="0" class="decompiled"/>
-<rect width="390.15" height="6" x="356.85" y="0" class="todo"/>
+<rect width="312.44" height="6" x="0" y="0" class="named"/>
+<rect width="45.99" height="6" x="312.44" y="0" class="decompiled"/>
+<rect width="388.57" height="6" x="358.43" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -265,7 +265,7 @@
 <rect width="12" height="12" x="660" y="45" class="named"><title>0x0041cfc0 ReadJoystick (1472 bytes)</title></rect>
 <rect width="12" height="12" x="675" y="45" class="named"><title>0x0041d580 SetButtonFromDirectInput (127 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="45" class="named"><title>0x0041d600 SetButtonFromJoystick (117 bytes)</title></rect>
-<rect width="12" height="12" x="705" y="45" class="todo"><title>0x0041d680 Func41d680 (414 bytes)</title></rect>
+<rect width="12" height="12" x="705" y="45" class="named"><title>0x0041d680 GetPadButtons (414 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="45" class="named"><title>0x0041d820 ReadButtons (2196 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="45" class="named"><title>0x0041e0c0 ResetKeyboard (133 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="60" class="decompiled"><title>0x0041e150 Unknown41e150::Create (192 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.67%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">80.66%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.84%</tspan> · <tspan class="decompiled">2.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">80.48%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="124.52" height="6" x="0" y="0" class="named"/>
-<rect width="19.98" height="6" x="124.52" y="0" class="decompiled"/>
-<rect width="602.50" height="6" x="144.50" y="0" class="todo"/>
+<rect width="125.82" height="6" x="0" y="0" class="named"/>
+<rect width="19.98" height="6" x="125.82" y="0" class="decompiled"/>
+<rect width="601.20" height="6" x="145.80" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 Func4074a0 (13572 bytes)</title></rect>
@@ -696,7 +696,7 @@
 <rect width="11.51" height="10.83" x="580.59" y="70.57" class="todo"><title>0x0040ec10 Func40ec10 (416 bytes)</title></rect>
 <rect width="11.51" height="10.83" x="580.59" y="84.39" class="todo"><title>0x0040edb0 Func40edb0 (416 bytes)</title></rect>
 <rect width="11.51" height="10.76" x="580.59" y="98.22" class="todo"><title>0x0040b8e0 Func40b8e0 (414 bytes)</title></rect>
-<rect width="11.51" height="10.76" x="580.59" y="111.98" class="todo"><title>0x0041d680 Func41d680 (414 bytes)</title></rect>
+<rect width="11.51" height="10.76" x="580.59" y="111.98" class="named"><title>0x0041d680 GetPadButtons (414 bytes)</title></rect>
 <rect width="11.51" height="10.69" x="580.59" y="125.74" class="todo"><title>0x00411da0 Func411da0 (412 bytes)</title></rect>
 <rect width="11.51" height="10.56" x="580.59" y="139.44" class="todo"><title>0x00420190 Func420190 (408 bytes)</title></rect>
 <rect width="10.18" height="11.45" x="595.10" y="0" class="named"><title>0x0041c3f3 SetupCamera (395 bytes)</title></rect>

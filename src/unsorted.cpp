@@ -212,6 +212,65 @@ int SetButtonFromJoystick(WORD *buttons, short button, WORD bit, DWORD joyButton
     return (joyButtons & mask) ? bit : 0;
 }
 
+BYTE *GetPadButtons()
+{
+    JOYINFOEX joyInfo;
+    DWORD mask;
+    DWORD button;
+    HRESULT hr;
+    DIJOYSTATE2 state;
+
+    memset(g_PadButtons, 0, sizeof(g_PadButtons));
+    if (g_Unknown6c6d18.joystick == NULL)
+    {
+        memset(&joyInfo, 0, sizeof(joyInfo));
+        joyInfo.dwSize = sizeof(joyInfo);
+        joyInfo.dwFlags = JOY_RETURNALL;
+        if (joyGetPosEx(JOYSTICKID1, &joyInfo) != JOYERR_NOERROR)
+        {
+            return g_PadButtons;
+        }
+        mask = joyInfo.dwButtons;
+        for (button = 0; button < 32; button++, mask >>= 1)
+        {
+            if (mask & 1)
+            {
+                g_PadButtons[button] = 0x80;
+            }
+        }
+        return g_PadButtons;
+    }
+    else
+    {
+        hr = g_Unknown6c6d18.joystick->Poll();
+        if (FAILED(hr))
+        {
+            int retries = 0;
+
+            DebugPrint("error : DIERR_INPUTLOST\n");
+            hr = g_Unknown6c6d18.joystick->Acquire();
+            while (hr == DIERR_INPUTLOST)
+            {
+                hr = g_Unknown6c6d18.joystick->Acquire();
+                DebugPrint("error : DIERR_INPUTLOST %d\n", retries);
+                retries++;
+                if (retries >= 400)
+                {
+                    return g_PadButtons;
+                }
+            }
+            return g_PadButtons;
+        }
+        g_Unknown6c6d18.joystick->GetDeviceState(sizeof(DIJOYSTATE2), &state);
+        if (FAILED(hr))
+        {
+            return g_PadButtons;
+        }
+        memcpy(g_PadButtons, state.rgbButtons, sizeof(g_PadButtons));
+        return g_PadButtons;
+    }
+}
+
 // Sets `bit` in `buttons` while key `key` of `keyState` is down.
 #define KEY(key, bit) buttons |= ((keyState[key] & 0x80) ? (bit) : 0)
 

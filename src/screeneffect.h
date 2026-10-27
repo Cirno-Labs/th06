@@ -14,6 +14,9 @@ class ScreenEffect
 public:
     // The update element's added callback: restarts `timer`. Returns 0.
     static int AddedCallback(ScreenEffect *effect);
+    // The update element's deleted callback: removes the draw element
+    // and deletes the effect. Returns 0.
+    static int DeletedCallback(ScreenEffect *effect);
 
     int type;
     ChainElem *calcElem;

@@ -243,7 +243,7 @@ address,size,name,symbol
 0x00421aa0,33,MidiDevice::MidiDevice,??0MidiDevice@@QAE@XZ
 0x00421ad0,19,Func421ad0,
 0x00421af0,89,Func421af0,
-0x00421b50,59,Func421b50,
+0x00421b50,59,MidiDevice::Close,?Close@MidiDevice@@QAEHXZ
 0x00421b90,78,Func421b90,
 0x00421be0,67,Func421be0,
 0x00421c30,48,Func421c30,

@@ -199,7 +199,7 @@ int *ResolveOperand(Enemy *enemy, int *operand, int *type)
         {
             *type = 0;
         }
-        return &enemy->unk_ce4;
+        return &enemy->life;
     case -10025:
         g_Unknown487e44 = g_GameManager.character * 2 + g_GameManager.shotType;
         if (type != NULL)

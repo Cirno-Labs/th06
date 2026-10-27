@@ -21,7 +21,8 @@ struct EnemyFlags
     unsigned char unk2 : 4;
     // Mirrors the horizontal movement.
     unsigned char mirrored : 1;
-    unsigned char unk7 : 1;
+    // In use: EnemyManager::Spawn takes the first enemy without it.
+    unsigned char active : 1;
     unsigned char unk8 : 1;
     unsigned char unk9 : 2;
     unsigned char unk11 : 1;
@@ -64,15 +65,22 @@ struct Enemy
     Timer moveTimer;
     int moveDuration;
     DWORD unk_cd4[0x4];
-    int unk_ce4;
-    DWORD unk_ce8[0x2];
+    // Script operand -10024.
+    int life;
+    int maxLife;
+    int score;
     Timer unk_cf0;
-    DWORD unk_cfc;
+    // The sprite's color when spawned.
+    D3DCOLOR color;
     BulletShooter shooter;
     DWORD unk_d54;
     Timer unk_d58;
     BulletShooter laserShooter;
-    DWORD unk_db8[0x23];
+    DWORD unk_db8[0x21];
+    BYTE unk_e3c[0x3];
+    // Passed to EnemyManager::Spawn.
+    char unk_e3f;
+    DWORD unk_e40;
     Timer unk_e44;
     EnemyFlags flags;
     DWORD unk_e54[0x3];
@@ -124,6 +132,12 @@ public:
     static int DeletedCallback(EnemyManager *mgr);
     // Removes the two chain elements.
     static void RemoveChain();
+
+    // Spawns an enemy from the template at `pos`, starting script
+    // subroutine `sub` and running its first frame. `life` and `score`
+    // replace the script's when not negative. Returns the enemy, or the
+    // last one if all are in use.
+    Enemy *Spawn(short sub, D3DXVECTOR3 *pos, short life, char unk_e3f, int score);
 
     // The stage's two enemy sprite files.
     char *anmPath;

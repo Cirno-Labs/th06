@@ -47,7 +47,7 @@ address,size,name,symbol
 0x00407340,178,EnemyScripts::Load,?Load@EnemyScripts@@QAEHPAD@Z
 0x00407400,50,EnemyScripts::Release,?Release@EnemyScripts@@QAEXXZ
 0x00407440,84,EnemyScripts::StartSub,?StartSub@EnemyScripts@@QAEHPAUEnemyScriptState@@F@Z
-0x004074a0,13572,Func4074a0,
+0x004074a0,13572,EnemyScripts::Func4074a0,?Func4074a0@EnemyScripts@@QAEHPAUEnemy@@@Z
 0x0040abe0,291,ScriptMoveAngle,?ScriptMoveAngle@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040ad10,358,ScriptMovePos,?ScriptMovePos@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040ae80,300,ScriptMoveTime,?ScriptMoveTime@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
@@ -106,7 +106,7 @@ address,size,name,symbol
 0x00410e30,859,EnemyManager::Initialize,?Initialize@EnemyManager@@QAEXXZ
 0x00411190,170,EnemyManager::EnemyManager,??0EnemyManager@@QAE@XZ
 0x00411240,327,Enemy::Enemy,??0Enemy@@QAE@XZ
-0x00411390,290,Func411390,
+0x00411390,290,EnemyManager::Spawn,?Spawn@EnemyManager@@QAEPAUEnemy@@FPAUD3DXVECTOR3@@FDH@Z
 0x004114c0,110,ReleaseEnemyEffects,?ReleaseEnemyEffects@@YAXPAUEnemy@@@Z
 0x00411530,2099,Func411530,
 0x00411da0,412,Func411da0,

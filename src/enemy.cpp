@@ -22,6 +22,42 @@ EnemyManager::EnemyManager()
     this->Initialize();
 }
 
+Enemy *EnemyManager::Spawn(short sub, D3DXVECTOR3 *pos, short life, char unk_e3f, int score)
+{
+    Enemy *enemy;
+    int i;
+
+    enemy = this->enemies;
+    for (i = 0; i < 0x100; i++, enemy++)
+    {
+        if (enemy->flags.active)
+        {
+            continue;
+        }
+        *enemy = this->enemyTemplate;
+        if (life >= 0)
+        {
+            enemy->life = life;
+        }
+        enemy->pos = *pos;
+        g_EnemyScripts.StartSub(&enemy->ctx, sub);
+        g_EnemyScripts.Func4074a0(enemy);
+        enemy->color = enemy->sprite.color;
+        enemy->unk_e3f = unk_e3f;
+        if (life >= 0)
+        {
+            enemy->life = life;
+        }
+        if (score >= 0)
+        {
+            enemy->score = score;
+        }
+        enemy->maxLife = enemy->life;
+        break;
+    }
+    return enemy;
+}
+
 void ReleaseEnemyEffects(Enemy *enemy)
 {
     int i;
@@ -42,7 +78,7 @@ void Enemy::Func4121b0()
 {
     if (this->flags.unk13 == 0)
     {
-        this->flags.unk7 = 0;
+        this->flags.active = 0;
     }
     else
     {

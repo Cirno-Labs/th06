@@ -88,6 +88,8 @@ public:
     void Release();
     // Starts subroutine `sub` on `state`. Returns 0.
     int StartSub(EnemyScriptState *state, short sub);
+    // Runs `enemy`'s script for a frame: the interpreter.
+    int Func4074a0(struct Enemy *enemy);
 
     // The file, as loaded.
     EnemyScriptHeader *file;

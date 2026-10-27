@@ -431,7 +431,9 @@ struct GuiImpl
     DWORD unk_2070[0x43];
     WORD unk_217c;
     WORD unk_217e;
-    DWORD unk_2180[0xef];
+    DWORD unk_2180[0xa9];
+    Sprite unk_2424;
+    DWORD unk_2534[0x2];
     int unk_253c;
     DWORD unk_2540[0x1a5];
     DWORD unk_2bd4;
@@ -459,6 +461,7 @@ public:
     // Runs impl->Func41878b(`index`) and sets
     // g_Unknown6c6d18.unk_198 to 3.
     void StartMsg(int index);
+    // Whether impl->unk_2424 shows a sprite and has flag 13.
     BOOL Func4172d3();
     // Sets impl->unk_206e.
     void Func417314();

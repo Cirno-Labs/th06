@@ -37,7 +37,8 @@ struct SpriteFlags
     unsigned int unk10 : 2;
     // Turns D3DRS_ZWRITEENABLE off while drawing.
     unsigned int zWriteDisabled : 1;
-    unsigned int unk13 : 19;
+    unsigned int unk13 : 1;
+    unsigned int unk14 : 18;
 };
 
 // The state of one sprite's animation script.

@@ -3,6 +3,11 @@
 
 #include "unsorted.h"
 
+BOOL Gui::Func4172d3()
+{
+    return this->impl->unk_2424.spriteIndex >= 0 && this->impl->unk_2424.flags.unk13;
+}
+
 void Gui::Func417314()
 {
     this->impl->unk_206e = 1;

@@ -208,7 +208,7 @@ address,size,name,symbol
 0x0041e620,341,Func41e620,?Func41e620@@YAHPAVUnknown69d998@@PBDZZ
 0x0041e780,99,Rng::GetRandomU16,?GetRandomU16@Rng@@QAEGXZ
 0x0041e7f0,48,Rng::GetRandomU32,?GetRandomU32@Rng@@QAEKXZ
-0x0041e820,46,Func41e820,
+0x0041e820,46,Rng::GetRandomF32ZeroToOne,?GetRandomF32ZeroToOne@Rng@@QAEMXZ
 0x0041e850,127,Func41e850,
 0x0041e8d0,111,Func41e8d0,
 0x0041e940,5,DebugPrint,?DebugPrint@@YAXPBDZZ

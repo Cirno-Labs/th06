@@ -303,6 +303,8 @@ public:
     WORD GetRandomU16();
     // 32 random bits, from two GetRandomU16 calls.
     DWORD GetRandomU32();
+    // A random float from 0 up to 1.
+    float GetRandomF32ZeroToOne();
     // A random number below `range`, or 0 if `range` is 0.
     WORD GetRandomU16InRange(WORD range)
     {

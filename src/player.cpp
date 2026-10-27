@@ -906,7 +906,7 @@ int Player::OnUpdate(Player *player)
     if (player->unk_09dc != 0)
     {
         player->unk_09dc--;
-        g_BulletManager.Func414160(0);
+        g_BulletManager.ClearAll(0);
     }
     if (player->unk_09e0 == 3)
     {

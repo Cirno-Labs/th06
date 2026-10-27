@@ -382,6 +382,20 @@ float AddNormalizeAngle(float a, float b);
 
 // Rotates the 2D vector `in` by `angle` into `out`.
 void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle);
+// Sets *sinOut and *cosOut to the sine and cosine of `angle`, with one
+// fsincos.
+inline void SinCos(float *sinOut, float *cosOut, float angle)
+{
+    __asm
+    {
+        fld angle
+        fsincos
+        mov eax, cosOut
+        fstp [eax]
+        mov eax, sinOut
+        fstp [eax]
+    }
+}
 // Sets vec's x and y to `radius` along `angle`, with one fsincos.
 inline void SinCosScale(D3DXVECTOR3 *vec, float angle, float radius)
 {

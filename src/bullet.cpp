@@ -1,6 +1,7 @@
 // The file with BulletManager.
 
 #include "bullet.h"
+#include "item.h"
 #include "unsorted.h"
 
 void BulletManager::Reset()
@@ -52,7 +53,63 @@ int BulletManager::RegisterChain(int unk)
     return 0;
 }
 
+void BulletManager::ClearAll(int toItems)
+{
+    D3DXVECTOR3 p;
+    int i;
+    float s;
+    Bullet *curBullet;
+    Laser *beam;
+    float c;
+    float t;
+
+    curBullet = g_BulletManager.bullets;
+    for (i = 0; i < 0x280; i++, curBullet++)
+    {
+        if (curBullet->state == 0 || curBullet->state == 5)
+        {
+            continue;
+        }
+        if (toItems)
+        {
+            g_ItemManager.SpawnItem(&curBullet->pos, 6, 1);
+            memset(curBullet, 0, sizeof(Bullet));
+        }
+        else
+        {
+            curBullet->state = 5;
+        }
+    }
+    beam = this->lasers;
+    for (i = 0; i < 0x40; i++, beam++)
+    {
+        if (!beam->active)
+        {
+            continue;
+        }
+        if (beam->state < 2)
+        {
+            beam->state = 2;
+            beam->timer.Set(0);
+            if (toItems)
+            {
+                t = beam->startOffset;
+                SinCos(&s, &c, beam->angle);
+                while (beam->endOffset > t)
+                {
+                    p.x = c * t + beam->pos.x;
+                    p.y = s * t + beam->pos.y;
+                    p.z = 0.0f;
+                    g_ItemManager.SpawnItem(&p, 6, 1);
+                    t += 32.0f;
+                }
+            }
+        }
+        beam->unk_254 = 0;
+    }
+}
+
 void BulletManager::ClearAllToItems()
 {
-    this->Func414160(1);
+    this->ClearAll(1);
 }

@@ -218,7 +218,7 @@ address,size,name,symbol
 0x0041ea04,95,GdiSurface::Create,?Create@GdiSurface@@QAE_NHHH@Z
 0x0041ea63,447,GdiSurface::CreateInFormat,?CreateInFormat@GdiSurface@@QAE_NHHH@Z
 0x0041ec22,80,GdiSurface::FindFormat,?FindFormat@GdiSurface@@QAEPAUFormatInfo@@H@Z
-0x0041ec72,671,Func41ec72,
+0x0041ec72,671,GdiSurface::InvertAlpha,?InvertAlpha@GdiSurface@@QAE_NHHHH@Z
 0x0041ef11,247,GdiSurface::CopyToSurface,?CopyToSurface@GdiSurface@@QAE_NPAUIDirect3DSurface8@@@Z
 0x0041f008,35,CreateTextSurface,?CreateTextSurface@@YAXXZ
 0x0041f02b,37,ReleaseTextSurface,?ReleaseTextSurface@@YAXXZ

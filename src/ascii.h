@@ -110,7 +110,8 @@ public:
     // viewport given by g_Unknown69d6dc, through
     // SpriteEngine::Func433590.
     void DrawPopups();
-    // Like DrawPopups, through SpriteEngine::Draw.
+    // Like DrawPopups, but draws the minus sign through
+    // SpriteEngine::Draw.
     void DrawPopups2();
 
     // The update element's deleted callback: frees the ANM files the

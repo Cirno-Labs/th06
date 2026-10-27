@@ -208,6 +208,51 @@ void AsciiText::DrawPopups()
     }
 }
 
+void AsciiText::DrawPopups2()
+{
+    AsciiPopup *p = this->popups;
+    int count;
+    int i;
+    BYTE *digitPtr;
+    D3DXVECTOR3 unused;
+
+    g_Unknown6c6d18.viewport.X = g_Unknown69d6dc[0];
+    g_Unknown6c6d18.viewport.Y = g_Unknown69d6dc[1];
+    g_Unknown6c6d18.viewport.Width = g_Unknown69d6dc[2];
+    g_Unknown6c6d18.viewport.Height = g_Unknown69d6dc[3];
+    g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+    for (i = 0; i < 0x203; i++, p++)
+    {
+        if (!p->active)
+        {
+            continue;
+        }
+        this->unk_0110.pos.x = p->pos.x - (p->digitCount << 2);
+        this->unk_0110.pos.y = p->pos.y;
+        this->unk_0110.color = p->color;
+        digitPtr = p->digits + p->digitCount - 1;
+        for (count = p->digitCount; count > 0; count--)
+        {
+            this->unk_0110.spriteData = &g_SpriteEngine->sprites[*digitPtr];
+            if (*digitPtr >= 10)
+            {
+                // The minus sign, stretched.
+                this->unk_0110.matrix._11 = 0.1875f;
+                this->unk_0110.matrix._22 = 0.03125f;
+                g_SpriteEngine->Draw(&this->unk_0110);
+                this->unk_0110.matrix._11 = 0.03125f;
+                this->unk_0110.matrix._22 = 0.03125f;
+            }
+            else
+            {
+                g_SpriteEngine->Func433590(&this->unk_0110);
+            }
+            this->unk_0110.pos.x += 8.0f;
+            digitPtr--;
+        }
+    }
+}
+
 int AsciiText::DeletedCallback(AsciiText *text)
 {
     g_SpriteEngine->ReleaseAnm(1);

@@ -24,6 +24,41 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     return 1;
 }
 
+int ReplayManager::PlayOnUpdate(ReplayManager *replay)
+{
+    if (!g_GameManager.unk_1821)
+    {
+        return 1;
+    }
+    while (replay->frame >= (replay->cursors[0] + 1)->frame)
+    {
+        replay->cursors[0]++;
+    }
+    g_Buttons = (g_Buttons & ~0x1f7) | replay->cursors[0]->input;
+    g_ButtonRepeat = 0;
+    if (g_PrevButtons == g_Buttons)
+    {
+        if (g_ButtonFrames >= 30)
+        {
+            if (g_ButtonFrames % 8 == 0)
+            {
+                g_ButtonRepeat = 1;
+            }
+            if (g_ButtonFrames >= 38)
+            {
+                g_ButtonFrames = 30;
+            }
+        }
+        g_ButtonFrames++;
+    }
+    else
+    {
+        g_ButtonFrames = 0;
+    }
+    replay->frame++;
+    return 1;
+}
+
 int ReplayManager::PlayOnDraw(ReplayManager *replay)
 {
     if (!g_GameManager.unk_1821)

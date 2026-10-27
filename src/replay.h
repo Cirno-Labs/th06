@@ -27,6 +27,11 @@ public:
     // g_GameManager.unk_1821 is set, adds an entry whenever the buttons
     // (masked with 0x1f7) change, and counts the frame. Returns 1.
     static int RecordOnUpdate(ReplayManager *replay);
+    // The update callback while playing: while g_GameManager.unk_1821 is
+    // set, puts the recorded buttons for the frame into g_Buttons (with
+    // key repeat as in Unknown6c6d18::OnUpdate) and counts the frame.
+    // Returns 1.
+    static int PlayOnUpdate(ReplayManager *replay);
     // The draw callback while playing: while g_GameManager.unk_1821 is
     // set, g_Gui.Func4195a2() and g_Gui.Func417344() hold, returns 6 on
     // two frames of every three; otherwise 1.

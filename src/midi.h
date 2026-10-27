@@ -108,8 +108,8 @@ struct MidiTrack
 {
     // Set when the track is rewound.
     int active;
-    // Delta time of the next event, read by ReadVarLen.
-    DWORD delta;
+    // Time of the next event, from the delta times read by ReadVarLen.
+    int delta;
     // The length of `data`.
     DWORD length;
     unsigned char unk_0c[0x4];
@@ -150,6 +150,9 @@ public:
     // Stops playback and closes the device. Returns -1 if nothing is
     // loaded, otherwise 0.
     int Stop();
+    // Handles the next event of a track and reads the time of the one
+    // after.
+    void ProcessEvent(MidiTrack *track);
     // Unprepares and frees a header from `headers`.
     int ReleaseHeader(LPMIDIHDR header);
     // Frees the MIDI file loaded into a slot.
@@ -183,11 +186,13 @@ public:
     // From the file header: the format and the time division.
     int format;
     int division;
-    // Set to 1000000 by ParseFile.
-    int unk_120;
+    // Divides time; 1000000 after ParseFile.
+    int tempo;
     unsigned char unk_124[0x4];
-    __int64 unk_128;
-    __int64 unk_130;
+    // Timer ticks since the start.
+    unsigned __int64 ticks;
+    // Added to the time computed from `ticks`.
+    unsigned __int64 unk_130;
     // Parsed tracks, `trackCount` of them.
     MidiTrack *tracks;
     MidiDevice device;
@@ -196,16 +201,18 @@ public:
     BYTE unk_2c4;
     // Scales every channel's volume; 1.0 after Rewind.
     float volumeScale;
-    int unk_2cc;
+    // The volume last sent while fading, volumeScale * 128.
+    int lastVolume;
     int unk_2d0;
     int unk_2d4;
     int unk_2d8;
     int unk_2dc;
     // Set while fading out.
-    int unk_2e0;
+    int fading;
     // In ms, set by FadeOut.
     int fadeDuration;
-    int unk_2e8;
+    // Ticks of the fade so far.
+    int fadeElapsed;
     unsigned char unk_2ec[0x14];
 };
 ASSERT_SIZE(MidiPlayer, 0x300);

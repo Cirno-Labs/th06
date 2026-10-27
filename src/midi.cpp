@@ -150,16 +150,16 @@ MidiPlayer::MidiPlayer()
 
     this->tracks = NULL;
     this->division = 0;
-    this->unk_120 = 0;
+    this->tempo = 0;
     this->trackCount = 0;
     this->unk_2c4 = 0;
     this->volumeScale = 0.0f;
-    this->unk_2cc = 0;
+    this->lastVolume = 0;
     this->unk_2d0 = 0;
     this->unk_2d4 = 0;
     this->unk_2d8 = 0;
     this->unk_2dc = 0;
-    this->unk_2e0 = 0;
+    this->fading = 0;
     for (i = 0; i < 0x20; i++)
     {
         this->fileData[i] = NULL;
@@ -237,8 +237,8 @@ void MidiPlayer::Rewind()
     track = this->tracks;
     this->volumeScale = 1.0f;
     this->unk_2dc = 0;
-    this->unk_2e0 = 0;
-    this->unk_128 = 0;
+    this->fading = 0;
+    this->ticks = 0;
     this->unk_130 = 0;
     for (i = 0; i < this->trackCount; i++, track++)
     {
@@ -253,9 +253,9 @@ int MidiPlayer::FadeOut(int duration)
 {
     this->volumeScale = 0.0f;
     this->fadeDuration = duration;
-    this->unk_2e8 = 0;
+    this->fadeElapsed = 0;
     this->unk_2dc = 0;
-    this->unk_2e0 = 1;
+    this->fading = 1;
     return 0;
 }
 
@@ -396,6 +396,51 @@ int MidiPlayer::ParseFile(int slot)
         memcpy(this->tracks[i].data, cursor, trackLen);
         cursor += trackLen;
     }
-    this->unk_120 = 1000000;
+    this->tempo = 1000000;
     return 0;
+}
+
+void MidiPlayer::OnTimer()
+{
+    int i;
+    unsigned __int64 time;
+    int anyPlaying;
+
+    anyPlaying = 0;
+    time = this->unk_130 + this->ticks * this->division * 1000 / this->tempo;
+    if (this->fading != 0)
+    {
+        if (this->fadeElapsed < this->fadeDuration)
+        {
+            this->volumeScale = 1.0f - (float)this->fadeElapsed / (float)this->fadeDuration;
+            if ((int)(this->volumeScale * 128.0f) != this->lastVolume)
+            {
+                this->SendVolume(0);
+            }
+            this->lastVolume = (int)(this->volumeScale * 128.0f);
+            this->fadeElapsed++;
+        }
+        else
+        {
+            this->volumeScale = 0.0f;
+            return;
+        }
+    }
+    for (i = 0; i < this->trackCount; i++)
+    {
+        if (this->tracks[i].active)
+        {
+            anyPlaying = 1;
+            while (this->tracks[i].active && this->tracks[i].delta <= time)
+            {
+                this->ProcessEvent(&this->tracks[i]);
+                time = this->unk_130 + this->ticks * this->division * 1000 / this->tempo;
+            }
+        }
+    }
+    this->ticks++;
+    if (!anyPlaying)
+    {
+        this->Rewind();
+    }
 }

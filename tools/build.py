@@ -65,9 +65,8 @@ def compile_all():
                 f.write(text)
     headers = max((os.path.getmtime(h) for h in glob.glob("src/**/*.h", recursive=True)), default=0)
     objs = []
-    for src in sorted(glob.glob("src/**/*.cpp", recursive=True)):
+    for src, obj in sources():
         rel = os.path.relpath(src, "src")
-        obj = os.path.join(OBJ, rel.replace("/", "_")[:-4] + ".obj")
         objs.append(obj)
         if os.path.exists(obj) and os.path.getmtime(obj) > max(os.path.getmtime(src), headers):
             continue
@@ -75,6 +74,13 @@ def compile_all():
         tool("cl", "/c", *file_flags(src), "/I" + win(SJIS), "/Fo" + win(obj),
              win(os.path.join(SJIS, rel)))
     return objs
+
+
+def sources():
+    """Yields (source, object) for each .cpp in src/."""
+    for src in sorted(glob.glob(os.path.join(ROOT, "src/**/*.cpp"), recursive=True)):
+        rel = os.path.relpath(src, os.path.join(ROOT, "src"))
+        yield os.path.relpath(src, ROOT), os.path.join(OBJ, rel.replace("/", "_")[:-4] + ".obj")
 
 
 def file_flags(src):

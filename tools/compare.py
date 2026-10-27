@@ -7,9 +7,9 @@ Relocations whose target has a known address (symbols.csv, or the same
 function) are filled in and compared. The others, such as string literals,
 are masked.
 """
-import csv, glob, os, subprocess, sys, tempfile
+import csv, os, subprocess, sys, tempfile
 
-import coff
+import build, coff
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EXE = "build/th06_102h.exe"
@@ -20,10 +20,10 @@ LABEL = 6  # IMAGE_SYM_CLASS_LABEL
 
 def compiled_functions(symbols):
     """Yields (name, bytes, mask) for each function src/ defines."""
-    for path in sorted(glob.glob(os.path.join(ROOT, "build/obj/*.obj"))):
-        if path.endswith("hooks.obj"):
-            continue
-        obj = coff.Object(path)
+    # Objects of the current sources only: a renamed file leaves its old
+    # object behind.
+    for _, path in build.sources():
+        obj = coff.Object(os.path.join(ROOT, path))
         for sym in obj.externals():
             if sym.section <= 0 or sym.name not in symbols:
                 continue

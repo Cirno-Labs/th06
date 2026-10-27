@@ -5,13 +5,29 @@
 
 #include <windows.h>
 
-// Set from CreateWindowExA's result; MidiDevice::Open has MIDI messages
-// sent to it (CALLBACK_WINDOW).
-extern HWND g_Hwnd6c6d5c;
-
-// How music is played; 2 is MIDI. Set to 2 after logging "wave データが無い
-// ので、midi にします" ("no wave data, switching to MIDI").
-extern BYTE g_MusicMode;
+// The global at 0x6c6d18: the window, settings and game speed. Larger
+// than its known fields.
+class Unknown6c6d18
+{
+public:
+    unsigned char unk_000[0x44];
+    // Set from CreateWindowExA's result; MidiDevice::Open has MIDI
+    // messages sent to it (CALLBACK_WINDOW).
+    HWND hwnd;
+    unsigned char unk_048[0xe7];
+    // How music is played: 1 or 2, 2 being MIDI. Set to 2 after logging
+    // "wave データが無いので、midi にします" ("no wave data, switching to
+    // MIDI").
+    BYTE musicMode;
+    unsigned char unk_130[0x78];
+    // The part of a frame a Timer advances per frame while the game runs
+    // slower than full speed.
+    float frameAdvance;
+    // 1.0 at full speed; at 0.99 or below, Timers count fractions of
+    // frames.
+    float gameSpeed;
+};
+extern Unknown6c6d18 g_Unknown6c6d18;
 
 // Loads a whole file into a malloc'd buffer; NULL on failure.
 void *Func41e290(char *path, int unk);

@@ -280,8 +280,8 @@ address,size,name,symbol
 0x00423f3f,433,Func423f3f,
 0x004240f0,55,Func4240f0,
 0x00424127,30,Timer::Initialize,?Initialize@Timer@@QAEXXZ
-0x00424145,160,Func424145,
-0x004241e5,160,Func4241e5,
+0x00424145,160,Timer::Add,?Add@Timer@@QAEXH@Z
+0x004241e5,160,Timer::Sub,?Sub@Timer@@QAEXH@Z
 0x00424285,110,Func424285,
 0x004242f3,130,Func4242f3,
 0x00424375,728,Func424375,
@@ -1536,5 +1536,4 @@ address,size,name,symbol
 0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
 0x0047a630,4,__security_cookie,___security_cookie
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
-0x006c6d5c,4,g_Hwnd6c6d5c,?g_Hwnd6c6d5c@@3PAUHWND__@@A
-0x006c6e47,1,g_MusicMode,?g_MusicMode@@3EA
+0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A

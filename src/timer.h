@@ -10,6 +10,11 @@ struct Timer
 {
     // Starts counting from 0.
     void Initialize();
+    // Advances by `frames` frames, or by the matching fraction of them
+    // while the game runs slow.
+    void Add(int frames);
+    // Goes back by `frames` frames, like Add.
+    void Sub(int frames);
 
     // `current` before the last change.
     int previous;

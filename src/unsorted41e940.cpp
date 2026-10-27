@@ -4,7 +4,18 @@
 
 #include "unsorted.h"
 
-Unknown41e981::~Unknown41e981()
+GdiSurface::GdiSurface()
+{
+    this->format = -1;
+    this->width = 0;
+    this->height = 0;
+    this->hdc = NULL;
+    this->bitmap = NULL;
+    this->oldObject = NULL;
+    this->bits = NULL;
+}
+
+GdiSurface::~GdiSurface()
 {
     this->Func41e992();
 }

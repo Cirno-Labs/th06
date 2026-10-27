@@ -493,12 +493,23 @@ extern Gui g_Gui;
 extern ChainElem g_GuiCalcChain;
 extern ChainElem g_GuiDrawChain;
 
-// Holds GDI objects: 0x41e992 selects the old object back into the DC at
-// +0x14, then deletes the DC and the object at +0x1c.
-class Unknown41e981
+// A GDI DIB section text is drawn into before it is copied to a Direct3D
+// surface; `format` is the D3DFORMAT its pixels follow.
+class GdiSurface
 {
 public:
-    ~Unknown41e981();
+    GdiSurface();
+    ~GdiSurface();
+    // Selects the old object back into `hdc`, then deletes the DC and the
+    // bitmap.
     void Func41e992();
-};
 
+    int format;
+    int width;
+    int height;
+    DWORD unk_0c[0x2];
+    HDC hdc;
+    HGDIOBJ oldObject;
+    HBITMAP bitmap;
+    void *bits;
+};

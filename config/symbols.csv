@@ -212,9 +212,9 @@ address,size,name,symbol
 0x0041e850,127,AddNormalizeAngle,?AddNormalizeAngle@@YAMMM@Z
 0x0041e8d0,111,Rotate2D,?Rotate2D@@YAXPAUD3DXVECTOR3@@0M@Z
 0x0041e940,5,DebugPrint,?DebugPrint@@YAXPBDZZ
-0x0041e945,60,Func41e945,
-0x0041e981,17,Unknown41e981::~Unknown41e981,??1Unknown41e981@@QAE@XZ
-0x0041e992,114,Unknown41e981::Func41e992,?Func41e992@Unknown41e981@@QAEXXZ
+0x0041e945,60,GdiSurface::GdiSurface,??0GdiSurface@@QAE@XZ
+0x0041e981,17,GdiSurface::~GdiSurface,??1GdiSurface@@QAE@XZ
+0x0041e992,114,GdiSurface::Func41e992,?Func41e992@GdiSurface@@QAEXXZ
 0x0041ea04,95,Func41ea04,
 0x0041ea63,447,Func41ea63,
 0x0041ec22,80,Func41ec22,

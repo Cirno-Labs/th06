@@ -5,6 +5,21 @@
 #include "timer.h"
 #include "unsorted.h"
 
+BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE *pdidInstance, VOID *pContext)
+{
+    HRESULT hr;
+
+    if (g_Unknown6c6d18.joystick == NULL)
+    {
+        hr = g_Unknown6c6d18.dinput->CreateDevice(pdidInstance->guidInstance, &g_Unknown6c6d18.joystick, NULL);
+        if (FAILED(hr))
+        {
+            return DIENUM_CONTINUE;
+        }
+    }
+    return DIENUM_STOP;
+}
+
 void SpriteEngine::ReleaseVertexBuffer()
 {
     if (this->vertexBuffer != NULL)

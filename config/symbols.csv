@@ -275,7 +275,7 @@ address,size,name,symbol
 0x0042386b,159,Func42386b,
 0x0042390a,522,Func42390a,
 0x00423b14,652,Func423b14,
-0x00423da0,63,Func423da0,
+0x00423da0,63,EnumJoysticksCallback,?EnumJoysticksCallback@@YGHPBUDIDEVICEINSTANCEA@@PAX@Z
 0x00423ddf,352,Func423ddf,
 0x00423f3f,433,Func423f3f,
 0x004240f0,55,SpriteEngine::ReleaseVertexBuffer,?ReleaseVertexBuffer@SpriteEngine@@QAEXXZ

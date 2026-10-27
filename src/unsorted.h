@@ -4,6 +4,8 @@
 #pragma once
 
 #include <windows.h>
+#define DIRECTINPUT_VERSION 0x0800
+#include <dinput.h>
 
 #include "sprite.h"
 #include "dsutil.h"
@@ -57,7 +59,13 @@ public:
     // nor MIDI, otherwise 0.
     int PlayMusic(char *path);
 
-    unsigned char unk_000[0x44];
+    unsigned char unk_000[0xc];
+    // Created by DirectInput8Create.
+    IDirectInput8 *dinput;
+    unsigned char unk_010[0x4];
+    // The first joystick found; NULL without one.
+    IDirectInputDevice8 *joystick;
+    unsigned char unk_018[0x2c];
     // Set from CreateWindowExA's result; MidiDevice::Open has MIDI
     // messages sent to it (CALLBACK_WINDOW).
     HWND hwnd;
@@ -90,6 +98,11 @@ extern WORD g_PrevButtons;
 
 // Whether any of the buttons in `mask` went down this frame.
 #define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_PrevButtons & (mask)))
+
+// IDirectInput8::EnumDevices's callback for joysticks, from the DirectX
+// 8 SDK's Joystick sample: creates a device for the first joystick that
+// works, unless there already is one.
+BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE *pdidInstance, VOID *pContext);
 
 // Loads a whole file into a malloc'd buffer; NULL on failure.
 void *Func41e290(char *path, int unk);

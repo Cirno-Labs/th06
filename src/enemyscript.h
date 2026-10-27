@@ -123,6 +123,9 @@ void ScriptMovePos(Enemy *enemy, EnemyScriptInstr *instr);
 // Moves `enemy` at its own angle and speed over instr's duration,
 // slowing down to a stop: moveMode 2.
 void ScriptMoveTime(Enemy *enemy, EnemyScriptInstr *instr);
+// Sets variable `dst` to operand *a plus operand *b, as ints or floats
+// by the variable's type.
+void ScriptAdd(Enemy *enemy, int dst, int *a, int *b);
 
 // Where ResolveOperand computes its read-only values.
 extern int g_Unknown487e44;

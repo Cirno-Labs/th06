@@ -1,6 +1,10 @@
-// The chains, from 0x41c720.
+// The chains, from 0x41c6d0.
 
 #include "chain.h"
+
+Chain::~Chain()
+{
+}
 
 void Chain::Release()
 {

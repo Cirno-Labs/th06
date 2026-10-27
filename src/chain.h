@@ -13,6 +13,10 @@ typedef int (*ChainCallback)(void *arg);
 // An element of a chain. Allocated with new by Chain::CreateElem.
 struct ChainElem
 {
+    // Calls the deleted callback, if any, and clears the links and
+    // callbacks.
+    ~ChainElem();
+
     // Sets the callback and clears the added and deleted callbacks.
     void SetCallback(ChainCallback callback)
     {
@@ -41,6 +45,8 @@ ASSERT_SIZE(ChainElem, 0x20);
 class Chain
 {
 public:
+    ~Chain();
+
     // Allocates an element that runs `callback`.
     ChainElem *CreateElem(ChainCallback callback);
     // Inserts `elem` into the update chain by priority and calls its

@@ -31,6 +31,12 @@ ChainElem::~ChainElem()
     this->deletedCallback = NULL;
 }
 
+Chain::Chain()
+{
+    this->midiOutDevs = midiOutGetNumDevs();
+    this->unk_44 = 0;
+}
+
 void Chain::Release()
 {
     this->ReleaseList(&this->calcChain);

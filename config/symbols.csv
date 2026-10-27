@@ -183,7 +183,7 @@ address,size,name,symbol
 0x0041c6d0,75,Chain::~Chain,??1Chain@@QAE@XZ
 0x0041c720,97,ChainElem::ChainElem,??0ChainElem@@QAE@XZ
 0x0041c790,86,ChainElem::~ChainElem,??1ChainElem@@QAE@XZ
-0x0041c7f0,100,Func41c7f0,
+0x0041c7f0,100,Chain::Chain,??0Chain@@QAE@XZ
 0x0041c860,218,Chain::AddToCalcChain,?AddToCalcChain@Chain@@QAEHPAUChainElem@@H@Z
 0x0041c940,205,Chain::AddToDrawChain,?AddToDrawChain@Chain@@QAEHPAUChainElem@@H@Z
 0x0041ca10,157,Func41ca10,

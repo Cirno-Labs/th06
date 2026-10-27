@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <windows.h>
+#include <mmsystem.h>
+
 #include "common.h"
 
 // Chain callbacks are cdecl and take the element's `arg`. They return a
@@ -47,6 +50,7 @@ ASSERT_SIZE(ChainElem, 0x20);
 class Chain
 {
 public:
+    Chain();
     ~Chain();
 
     // Allocates an element that runs `callback`.
@@ -66,5 +70,8 @@ public:
 
     ChainElem calcChain;
     ChainElem drawChain;
+    // midiOutGetNumDevs's count, taken by the constructor.
+    UINT midiOutDevs;
+    DWORD unk_44;
 };
 extern Chain g_Chain;

@@ -142,3 +142,31 @@ DWORD ReadVarLen(BYTE **cursor)
     } while (byte & 0x80);
     return value;
 }
+
+MidiPlayer::MidiPlayer()
+{
+    int i;
+    int j;
+
+    this->tracks = NULL;
+    this->unk_11c = 0;
+    this->unk_120 = 0;
+    this->trackCount = 0;
+    this->unk_2c4 = 0;
+    this->unk_2c8 = 0;
+    this->unk_2cc = 0;
+    this->unk_2d0 = 0;
+    this->unk_2d4 = 0;
+    this->unk_2d8 = 0;
+    this->unk_2dc = 0;
+    this->unk_2e0 = 0;
+    for (i = 0; i < 0x20; i++)
+    {
+        this->fileData[i] = NULL;
+    }
+    for (j = 0; j < 0x20; j++)
+    {
+        this->unk_010[j] = NULL;
+    }
+    this->unk_090 = 0;
+}

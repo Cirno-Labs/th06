@@ -5,6 +5,8 @@
 #include <windows.h>
 #include <mmsystem.h>
 
+#include "common.h"
+
 // A short MIDI message as midiOutShortMsg takes it: status and two data
 // bytes, low byte first.
 union MidiShortMsg
@@ -73,3 +75,39 @@ public:
     UINT timerId;
     TIMECAPS caps;
 };
+ASSERT_SIZE(MmTimer, 0x10);
+
+// Plays MIDI files on a MidiDevice, driven by its own timer. Allocated with
+// operator new(0x300).
+class MidiPlayer : public MmTimer
+{
+public:
+    MidiPlayer();
+
+    virtual void OnTimer();
+
+    void *unk_010[0x20];
+    int unk_090;
+    // MIDI files loaded by 0x421ff0, freed by 0x422070.
+    void *fileData[0x20];
+    // The number of entries in `tracks`.
+    int trackCount;
+    unsigned char unk_118[0x4];
+    int unk_11c;
+    int unk_120;
+    unsigned char unk_124[0x14];
+    // 0x20-byte track records: the data at +0x10, a read cursor at +0x14.
+    void *tracks;
+    MidiDevice device;
+    unsigned char unk_144[0x180];
+    BYTE unk_2c4;
+    int unk_2c8;
+    int unk_2cc;
+    int unk_2d0;
+    int unk_2d4;
+    int unk_2d8;
+    int unk_2dc;
+    int unk_2e0;
+    unsigned char unk_2e4[0x1c];
+};
+ASSERT_SIZE(MidiPlayer, 0x300);

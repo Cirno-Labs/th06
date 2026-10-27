@@ -253,7 +253,7 @@ address,size,name,symbol
 0x00421d50,26,MmTimer::DefaultCallback,?DefaultCallback@MmTimer@@SGXIIKKK@Z
 0x00421d70,24,SwapBytes16,?SwapBytes16@@YAGG@Z
 0x00421d90,85,ReadVarLen,?ReadVarLen@@YAKPAPAE@Z
-0x00421df0,341,Func421df0,
+0x00421df0,341,MidiPlayer::MidiPlayer,??0MidiPlayer@@QAE@XZ
 0x00421f50,147,Func421f50,
 0x00421ff0,121,Func421ff0,
 0x00422070,60,Func422070,
@@ -265,7 +265,7 @@ address,size,name,symbol
 0x004224e0,124,Func4224e0,
 0x00422560,199,Func422560,
 0x00422630,79,Func422630,
-0x00422680,635,Func422680,
+0x00422680,635,MidiPlayer::OnTimer,?OnTimer@MidiPlayer@@UAEXXZ
 0x00422900,2047,Func422900,
 0x00423260,206,Func423260,
 0x00423330,11,Unknown423330::~Unknown423330,??1Unknown423330@@QAE@XZ ?OnTimer@MmTimer@@UAEXXZ
@@ -1533,4 +1533,5 @@ address,size,name,symbol
 0x0046a268,4,mmioAdvance,__imp__mmioAdvance@12
 0x0046a270,4,Direct3DCreate8,__imp__Direct3DCreate8@4
 0x0046b564,4,MmTimer::`vftable',??_7MmTimer@@6B@
+0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
 0x006c6d5c,4,g_Hwnd6c6d5c,?g_Hwnd6c6d5c@@3PAUHWND__@@A

@@ -11,6 +11,17 @@
 class EnemyManager
 {
 public:
+    // Sets everything up for a stage.
+    void Initialize();
+
+    // Initializes, remembers the stage's two enemy sprite files and adds
+    // the update element (priority 9) and the draw element (priority 6).
+    // Returns 0, or -1 if adding fails.
+    static int RegisterChain(char *anmPath, char *anmPath2);
+    static int OnUpdate(EnemyManager *mgr);
+    static int OnDraw(EnemyManager *mgr);
+    // Loads the enemy sprites.
+    static int AddedCallback(EnemyManager *mgr);
     // Frees the enemy sprites. Returns 0.
     static int DeletedCallback(EnemyManager *mgr);
     // Removes the two chain elements.

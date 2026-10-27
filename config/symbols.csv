@@ -103,7 +103,7 @@ address,size,name,symbol
 0x00410a70,150,Func410a70,
 0x00410b10,620,Func410b10,
 0x00410d80,172,Func410d80,
-0x00410e30,859,Func410e30,
+0x00410e30,859,EnemyManager::Initialize,?Initialize@EnemyManager@@QAEXXZ
 0x00411190,170,Func411190,
 0x00411240,327,Func411240,
 0x00411390,290,Func411390,
@@ -113,11 +113,11 @@ address,size,name,symbol
 0x00411f40,623,Func411f40,
 0x004121b0,132,Func4121b0,
 0x00412240,217,Func412240,
-0x00412320,192,Func412320,
-0x004123e0,2655,Func4123e0,
+0x00412320,192,EnemyManager::RegisterChain,?RegisterChain@EnemyManager@@SAHPAD0@Z
+0x004123e0,2655,EnemyManager::OnUpdate,?OnUpdate@EnemyManager@@SAHPAV1@@Z
 0x00412e50,189,Func412e50,
-0x00412f10,772,Func412f10,
-0x00413220,255,Func413220,
+0x00412f10,772,EnemyManager::OnDraw,?OnDraw@EnemyManager@@SAHPAV1@@Z
+0x00413220,255,EnemyManager::AddedCallback,?AddedCallback@EnemyManager@@SAHPAV1@@Z
 0x00413320,33,EnemyManager::DeletedCallback,?DeletedCallback@EnemyManager@@SAHPAV1@@Z
 0x00413350,35,EnemyManager::RemoveChain,?RemoveChain@EnemyManager@@SAXXZ
 0x00413380,170,Func413380,

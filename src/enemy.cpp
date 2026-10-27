@@ -15,3 +15,27 @@ void EnemyManager::RemoveChain()
     g_Chain.Remove(&g_EnemyCalcChain);
     g_Chain.Remove(&g_EnemyDrawChain);
 }
+
+int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
+{
+    EnemyManager *mgr = &g_EnemyManager;
+
+    mgr->Initialize();
+    mgr->anmPath = anmPath;
+    mgr->anmPath2 = anmPath2;
+    g_EnemyCalcChain.SetCallback((ChainCallback)EnemyManager::OnUpdate);
+    g_EnemyCalcChain.addedCallback = (ChainCallback)EnemyManager::AddedCallback;
+    g_EnemyCalcChain.deletedCallback = (ChainCallback)EnemyManager::DeletedCallback;
+    g_EnemyCalcChain.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_EnemyCalcChain, 9) != 0)
+    {
+        return -1;
+    }
+    g_EnemyDrawChain.SetCallback((ChainCallback)EnemyManager::OnDraw);
+    g_EnemyDrawChain.arg = mgr;
+    if (g_Chain.AddToDrawChain(&g_EnemyDrawChain, 6) != 0)
+    {
+        return -1;
+    }
+    return 0;
+}

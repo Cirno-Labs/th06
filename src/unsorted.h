@@ -287,6 +287,11 @@ extern WORD g_ButtonRepeat;
 // How many frames the buttons have been held unchanged, kept between 30
 // and 38 once it reaches 30.
 extern WORD g_ButtonFrames;
+// Sets `bit` in `buttons` if pad button `button` (none when negative) is
+// down in DIJOYSTATE2::rgbButtons. Returns the bit set, or 0.
+int SetButtonFromDirectInput(WORD *buttons, short button, WORD bit, BYTE *rgbButtons);
+// Like SetButtonFromDirectInput, for joyGetPosEx's dwButtons.
+int SetButtonFromJoystick(WORD *buttons, short button, WORD bit, DWORD joyButtons);
 // Adds the joystick's buttons to `buttons` and returns them.
 WORD Func41cfc0(WORD buttons);
 // Reads the keyboard and the joystick into button bits.

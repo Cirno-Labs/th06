@@ -51,3 +51,8 @@ int BulletManager::RegisterChain(int unk)
     g_Chain.AddToDrawChain(&g_BulletDrawChain, 9);
     return 0;
 }
+
+void BulletManager::ClearAllToItems()
+{
+    this->Func414160(1);
+}

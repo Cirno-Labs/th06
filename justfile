@@ -44,7 +44,7 @@ progress: build _orig
 
 # Remove build outputs (keeps the Ghidra project)
 clean:
-    rm -rf build/obj build/game build/th06.*
+    rm -rf build/obj build/src build/game build/th06.*
 
 # Verify the original and copy it to an ASCII file name
 _orig:

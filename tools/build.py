@@ -11,6 +11,7 @@ import coff
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OBJ = "build/obj"
+SJIS = "build/src"  # src/ converted to Shift-JIS
 DLL = "build/th06.dll"
 CFLAGS = ["/Od", "/Ob1", "/G5", "/GX"]
 GLUE_PREFIX = "dll_"  # objects from src/dll/, the DLL's own code
@@ -48,16 +49,31 @@ def read_symbols():
 
 
 def compile_all():
+    """Compiles src/ from a Shift-JIS copy in build/src/.
+
+    Sources are UTF-8, but the game's strings are Shift-JIS and MSVC 7
+    copies string bytes as they are, so each file is converted first.
+    """
     os.makedirs(OBJ, exist_ok=True)
+    for src in glob.glob("src/**/*.*", recursive=True):
+        copy = os.path.join(SJIS, os.path.relpath(src, "src"))
+        if not os.path.exists(copy) or os.path.getmtime(copy) < os.path.getmtime(src):
+            os.makedirs(os.path.dirname(copy), exist_ok=True)
+            with open(src, encoding="utf-8") as f:
+                text = f.read()
+            with open(copy, "w", encoding="cp932", newline="") as f:
+                f.write(text)
     headers = max((os.path.getmtime(h) for h in glob.glob("src/**/*.h", recursive=True)), default=0)
     objs = []
     for src in sorted(glob.glob("src/**/*.cpp", recursive=True)):
-        obj = os.path.join(OBJ, os.path.relpath(src, "src").replace("/", "_")[:-4] + ".obj")
+        rel = os.path.relpath(src, "src")
+        obj = os.path.join(OBJ, rel.replace("/", "_")[:-4] + ".obj")
         objs.append(obj)
         if os.path.exists(obj) and os.path.getmtime(obj) > max(os.path.getmtime(src), headers):
             continue
         print("cl", src)
-        tool("cl", "/c", *CFLAGS, *file_flags(src), "/Isrc", "/Fo" + win(obj), win(src))
+        tool("cl", "/c", *CFLAGS, *file_flags(src), "/I" + win(SJIS), "/Fo" + win(obj),
+             win(os.path.join(SJIS, rel)))
     return objs
 
 

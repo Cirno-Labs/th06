@@ -87,6 +87,10 @@ public:
     // hitbox, killing the player unless it is dying or invulnerable,
     // else 0.
     int CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
+    // Like CheckHit with the box grown by 20 on each side: returns 2 in a
+    // bullet-clearing area, else 1 if it touches the hitbox while the
+    // player is alive, grazing it, else 0.
+    int CheckGraze(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // Grazes a bullet at `pos`: counts it (unless bombing), bursts an
     // effect between it and the player, scores 500 and raises the rank.
     void Graze(D3DXVECTOR3 *pos);

@@ -108,6 +108,48 @@ void Player::RemoveChain()
     g_Player.drawChain2 = NULL;
 }
 
+int Player::CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
+{
+    D3DXVECTOR3 areaMin;
+    int idx;
+    D3DXVECTOR3 start;
+    D3DXVECTOR3 end;
+    float (*area)[4];
+    D3DXVECTOR3 areaMax;
+
+    area = this->bulletClearAreas;
+    start.x = pos->x - size->x / 2.0f;
+    start.y = pos->y - size->y / 2.0f;
+    end.x = size->x / 2.0f + pos->x;
+    end.y = size->y / 2.0f + pos->y;
+    for (idx = 0; idx < 16; idx++, area++)
+    {
+        if ((*area)[2] == 0.0f)
+        {
+            continue;
+        }
+        areaMin.x = (*area)[0] - (*area)[2] / 2.0f;
+        areaMin.y = (*area)[1] - (*area)[3] / 2.0f;
+        areaMax.x = (*area)[2] / 2.0f + (*area)[0];
+        areaMax.y = (*area)[3] / 2.0f + (*area)[1];
+        if (!(areaMin.x > end.x || areaMax.x < start.x || areaMin.y > end.y || areaMax.y < start.y))
+        {
+            return 2;
+        }
+    }
+    if (this->hitboxMin.x > end.x || this->hitboxMin.y > end.y || this->hitboxMax.x < start.x ||
+        this->hitboxMax.y < start.y)
+    {
+        return 0;
+    }
+    if (this->unk_09e0 != 0)
+    {
+        return 1;
+    }
+    this->Die();
+    return 1;
+}
+
 void Player::Die()
 {
     int i;

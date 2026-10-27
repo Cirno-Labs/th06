@@ -309,7 +309,7 @@ address,size,name,symbol
 0x00426450,34,FireShotType2,?FireShotType2@@YAHPAVPlayer@@PAUPlayerBullet@@HH@Z
 0x00426480,34,FireShotType3,?FireShotType3@@YAHPAVPlayer@@PAUPlayerBullet@@HH@Z
 0x004264b0,1917,Func4264b0,
-0x00426c40,432,Func426c40,
+0x00426c40,432,Player::CheckHit,?CheckHit@Player@@QAEHPAUD3DXVECTOR3@@0@Z
 0x00426df0,477,Func426df0,
 0x00426fd0,442,Func426fd0,
 0x00427190,1180,Func427190,

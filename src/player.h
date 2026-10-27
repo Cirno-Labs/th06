@@ -82,6 +82,11 @@ public:
     int HandleInput();
     // Starts fireTimer unless it runs.
     static void StartFiring(Player *player);
+    // Tests a `size` box centred on `pos` (an enemy bullet's): returns 2
+    // if it touches a bullet-clearing area, else 1 if it touches the
+    // hitbox, killing the player unless it is dying or invulnerable,
+    // else 0.
+    int CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // Kills the player: bursts effects, starts the death (state 2), plays
     // sound 4 and counts the death.
     void Die();

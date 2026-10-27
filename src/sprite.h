@@ -174,6 +174,9 @@ public:
     // the result in out[0] and out[1].
     void RotatePoint(float *out, float sine, float cosine, float x, float y, float cx, float cy);
     int Func432cc0(Sprite *sprite);
+    // Creates texture `index` at `width` by `height` in the format
+    // g_TextureFormats[`format`]. Returns 0.
+    int CreateTexture(int index, int width, int height, int format);
     // Like StartScript, after zeroing the position and unk_0e4 and
     // setting unk_10c and unk_10d to 15. Inline, but not expanded: its
     // copy is the stage file's.
@@ -200,7 +203,9 @@ public:
     void RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...);
 
     SpriteData sprites[0x800];
-    unsigned char unk_1c000[0x934];
+    unsigned char unk_1c000[0x110];
+    IDirect3DTexture8 *textures[0x108];
+    unsigned char unk_1c530[0x404];
     // The scripts of the loaded ANM files.
     void *scripts[0x800];
     unsigned char unk_1e934[0x2784];
@@ -221,3 +226,7 @@ public:
     IDirect3DVertexBuffer8 *vertexBuffer;
 };
 extern SpriteEngine *g_SpriteEngine;
+
+// The texture formats ANM files choose from: unknown (the surface's own),
+// A8R8G8B8, A1R5G5B5, R5G6B5, R8G8B8 and A4R4G4B4.
+extern D3DFORMAT g_TextureFormats[];

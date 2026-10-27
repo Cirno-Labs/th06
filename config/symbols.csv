@@ -394,7 +394,7 @@ address,size,name,symbol
 0x00431660,700,SpriteEngine::Func431660,?Func431660@SpriteEngine@@QAEXXZ
 0x00431920,237,Func431920,
 0x00431a10,863,Func431a10,
-0x00431d70,66,Func431d70,
+0x00431d70,66,SpriteEngine::CreateTexture,?CreateTexture@SpriteEngine@@QAEHHHHH@Z
 0x00431dc0,624,SpriteEngine::LoadAnm,?LoadAnm@SpriteEngine@@QAEHHPADH@Z
 0x00432030,418,SpriteEngine::ReleaseAnm,?ReleaseAnm@SpriteEngine@@QAEXH@Z
 0x004321e0,125,Func4321e0,
@@ -524,7 +524,7 @@ address,size,name,symbol
 0x0043f81c,994,Func43f81c,
 0x0043fbfe,566,Func43fbfe,
 0x0043fe34,40,Func43fe34,
-0x0043fe5c,102,Func43fe5c,
+0x0043fe5c,102,D3DXCreateTexture,_D3DXCreateTexture@32
 0x0043fec2,182,Func43fec2,
 0x0043ff78,285,D3DXLoadSurfaceFromSurface,_D3DXLoadSurfaceFromSurface@32
 0x00440095,305,Func440095,
@@ -1540,6 +1540,7 @@ address,size,name,symbol
 0x0046a270,4,Direct3DCreate8,__imp__Direct3DCreate8@4
 0x0046b564,4,MmTimer::`vftable',??_7MmTimer@@6B@
 0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
+0x0046c220,,g_TextureFormats,?g_TextureFormats@@3PAW4_D3DFORMAT@@A
 0x0046c680,4,CSound::`vftable',??_7CSound@@6B@
 0x0046c69c,4,CStreamingSound::`vftable',??_7CStreamingSound@@6B@
 0x0046cdfc,,c_dfDIJoystick2,_c_dfDIJoystick2

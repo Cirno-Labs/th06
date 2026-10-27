@@ -6,6 +6,11 @@
 #include "item.h"
 #include "unsorted.h"
 
+BulletManager::BulletManager()
+{
+    this->Reset();
+}
+
 void BulletManager::Reset()
 {
     memset(this, 0, sizeof(BulletManager));

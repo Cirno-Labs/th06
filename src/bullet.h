@@ -10,12 +10,27 @@
 #include "timer.h"
 
 // Runs the enemy bullets, the global at 0x5a5ff8.
+// A bullet type's sprites: the bullet's and those of its spawning
+// effects.
+struct BulletTypeSprites
+{
+    Sprite sprite0;
+    Sprite sprite1;
+    Sprite sprite2;
+    Sprite sprite3;
+    Sprite sprite4;
+    DWORD unk_550[0x4];
+};
+ASSERT_SIZE(BulletTypeSprites, 0x560);
+
 // One enemy bullet.
 struct Bullet
 {
-    DWORD unk_000[0x158];
+    BulletTypeSprites sprites;
     D3DXVECTOR3 pos;
-    DWORD unk_56c[0x14];
+    DWORD unk_56c[0xc];
+    Timer timer;
+    DWORD unk_5a8[0x5];
     WORD unk_5bc;
     // 0 unused; 5 fading out.
     WORD state;
@@ -27,7 +42,8 @@ ASSERT_SIZE(Bullet, 0x5c4);
 // and endOffset.
 struct Laser
 {
-    DWORD unk_000[0x88];
+    Sprite sprite0;
+    Sprite sprite1;
     D3DXVECTOR3 pos;
     float angle;
     float startOffset;
@@ -46,6 +62,9 @@ ASSERT_SIZE(Laser, 0x270);
 class BulletManager
 {
 public:
+    // Constructs the members and resets.
+    BulletManager();
+
     // Zeroes everything.
     void Reset();
     // Ends every bullet and laser: with `toItems` zero they fade out;
@@ -72,10 +91,11 @@ public:
     // Removes the two chain elements.
     static void RemoveChain();
 
-    DWORD unk_00000[0x1580];
+    BulletTypeSprites typeSprites[0x10];
     Bullet bullets[0x280];
     Laser lasers[0x40];
-    DWORD unk_f5c00[0x5];
+    DWORD unk_f5c00[0x2];
+    Timer unk_f5c08;
     int unk_f5c14;
 };
 ASSERT_SIZE(BulletManager, 0xf5c18);

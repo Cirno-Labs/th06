@@ -122,7 +122,7 @@ address,size,name,symbol
 0x00413350,35,EnemyManager::RemoveChain,?RemoveChain@EnemyManager@@SAXXZ
 0x00413380,170,Func413380,
 0x00413430,25,BulletManager::Reset,?Reset@BulletManager@@QAEXXZ
-0x00413450,270,Func413450,
+0x00413450,270,BulletManager::BulletManager,??0BulletManager@@QAE@XZ
 0x00413560,80,Func413560,
 0x004135b0,2955,Func4135b0,
 0x00414160,466,BulletManager::ClearAll,?ClearAll@BulletManager@@QAEXH@Z

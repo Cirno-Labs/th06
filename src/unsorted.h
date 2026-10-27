@@ -25,6 +25,9 @@ public:
     // stopping what plays, and starts the thread that streams it.
     // Returns 0 or -1.
     int LoadBgm(char *path);
+    // Sets the wave music's loop from the .pos file at `path`: its start
+    // and end, in samples of 4 bytes. Returns 0 or -1.
+    int LoadBgmLoop(char *path);
     // Stops the wave music: ends the notification thread and releases
     // the stream ("stop BGM").
     void StopBgm();

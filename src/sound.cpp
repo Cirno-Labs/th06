@@ -268,6 +268,39 @@ int Unknown6d3f50::LoadBgm(char *path)
     return 0;
 }
 
+int Unknown6d3f50::LoadBgmLoop(char *path)
+{
+    int *posData;
+    CWaveFile *pWaveFile;
+    int loopEnd;
+    int loopBegin;
+
+    if (!this->manager)
+    {
+        return -1;
+    }
+    if (!g_Unknown6c6d18.cfg.playSounds)
+    {
+        return -1;
+    }
+    if (this->bgm == NULL)
+    {
+        return -1;
+    }
+    posData = (int *)Func41e290(path, 0);
+    if (posData == NULL)
+    {
+        return -1;
+    }
+    pWaveFile = this->bgm->m_pWaveFile;
+    loopEnd = posData[1] * 4;
+    loopBegin = posData[0] * 4;
+    pWaveFile->loopStart = loopBegin;
+    pWaveFile->loopEnd = loopEnd;
+    free(posData);
+    return 0;
+}
+
 void Unknown6d3f50::StopBgm()
 {
     if (this->bgm != NULL)

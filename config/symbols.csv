@@ -382,7 +382,7 @@ address,size,name,symbol
 0x004306e0,784,Unknown6d3f50::LoadSound,?LoadSound@Unknown6d3f50@@QAEHHPAD@Z
 0x004309f0,87,FindRiffChunk,?FindRiffChunk@@YAPADPAD0PAHI@Z
 0x00430a50,949,Unknown6d3f50::LoadBgm,?LoadBgm@Unknown6d3f50@@QAEHPAD@Z
-0x00430e10,173,Func430e10,
+0x00430e10,173,Unknown6d3f50::LoadBgmLoop,?LoadBgmLoop@Unknown6d3f50@@QAEHPAD@Z
 0x00430ec0,190,Func430ec0,
 0x00430f80,252,Unknown6d3f50::StopBgm,?StopBgm@Unknown6d3f50@@QAEXXZ
 0x00431080,342,Unknown6d3f50::LoadSounds,?LoadSounds@Unknown6d3f50@@QAEHXZ

@@ -501,13 +501,17 @@ struct GuiImpl
     void Func41878b(int index);
     void Func4188c9();
 
-    DWORD unk_0000[0x81b];
-    WORD unk_206c;
-    WORD unk_206e;
-    DWORD unk_2070[0x43];
-    WORD unk_217c;
-    WORD unk_217e;
-    DWORD unk_2180[0xa9];
+    Sprite unk_0000[0x1a];
+    DWORD unk_1ba0;
+    Sprite unk_1ba4;
+    Sprite unk_1cb4;
+    Sprite unk_1dc4;
+    // Func417bfd shows a sprite and a line of text on these two.
+    Sprite unk_1ed4;
+    Sprite unk_1fe4;
+    Sprite unk_20f4;
+    Sprite unk_2204;
+    Sprite unk_2314;
     Sprite unk_2424;
     // The message file loaded.
     MsgFile *msgFile;
@@ -563,7 +567,10 @@ public:
     BOOL Func4172d3();
     // Shows spell card `name` with sprite `sprite`.
     void Func417acd(int sprite, char *name);
-    // Sets impl->unk_206e.
+    // Shows sprite `sprite` + 0x4a8 with `text` (scripts 0x4a3 and 0x707)
+    // and plays sound 14.
+    void Func417bfd(int sprite, char *text);
+    // Sets impl->unk_1fe4.unk_08a.
     void Func417314();
     // Shows fullPowerPopup, when the power reaches its maximum.
     void ShowFullPowerPopup(int unk);
@@ -571,7 +578,7 @@ public:
     void Func417458(int value);
     // Shows `bonus` in bonusPopup, the bonus for bullets cleared.
     void ShowBonusPopup(int bonus);
-    // Sets impl->unk_217e.
+    // Sets impl->unk_20f4.unk_08a.
     void Func41732c();
     // Returns impl->unk_2bd8.
     BOOL Func417344();
@@ -585,7 +592,10 @@ public:
 
     GuiFlags flags;
     GuiImpl *impl;
-    DWORD unk_08[0x6];
+    DWORD unk_08;
+    // Set by Func417bfd from the length of its text.
+    float unk_0c;
+    DWORD unk_10[0x4];
     BYTE unk_20;
     BYTE unk_21[0x3];
     DWORD unk_24[0x2];

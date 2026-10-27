@@ -11,12 +11,12 @@ BOOL Gui::Func4172d3()
 
 void Gui::Func417314()
 {
-    this->impl->unk_206e = 1;
+    this->impl->unk_1fe4.unk_08a = 1;
 }
 
 void Gui::Func41732c()
 {
-    this->impl->unk_217e = 1;
+    this->impl->unk_20f4.unk_08a = 1;
 }
 
 BOOL Gui::Func417344()
@@ -57,6 +57,16 @@ int Gui::OnUpdate(Gui *gui)
     gui->Func4195bf();
     gui->impl->Func4188c9();
     return 1;
+}
+
+void Gui::Func417bfd(int sprite, char *text)
+{
+    g_SpriteEngine->StartScript(&this->impl->unk_1ed4, 0x4a3);
+    g_SpriteEngine->SetSprite(&this->impl->unk_1ed4, sprite + 0x4a8);
+    g_SpriteEngine->StartScript(&this->impl->unk_20f4, 0x707);
+    g_SpriteEngine->Func434c40(&this->impl->unk_20f4, 0xfff0f0, 0, text);
+    this->unk_0c = strlen(text) * 15 / 2.0f + 16.0f;
+    g_Unknown6d3f50.Func4311e0(14, 0);
 }
 
 void Gui::FreeMsgFile()

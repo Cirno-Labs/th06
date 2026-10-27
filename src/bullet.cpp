@@ -60,6 +60,209 @@ int BulletManager::RegisterChain(int unk)
     return 0;
 }
 
+// Picks `spr`'s sprite for `cur`'s color by the bullet's size.
+#define SET_BULLET_SPRITE(spr)                                                                   \
+    if (cur->sprites.sprite0.spriteData->height <= 16.0f)                                     \
+    {                                                                                            \
+        g_SpriteEngine->SetSprite(&(spr), (spr).spriteIndex + g_BulletColorOffsets16[shooter->color]); \
+    }                                                                                            \
+    else if (cur->sprites.sprite0.spriteData->height <= 32.0f)                                \
+    {                                                                                            \
+        if (cur->sprites.sprite0.scriptIndex != 0x207)                                        \
+        {                                                                                        \
+            g_SpriteEngine->SetSprite(&(spr), (spr).spriteIndex + g_BulletColorOffsets32[shooter->color]); \
+        }                                                                                        \
+        else                                                                                     \
+        {                                                                                        \
+            g_SpriteEngine->SetSprite(&(spr), (spr).spriteIndex + 1);                            \
+        }                                                                                        \
+    }                                                                                            \
+    else                                                                                         \
+    {                                                                                            \
+        g_SpriteEngine->SetSprite(&(spr), (spr).spriteIndex + shooter->color);                   \
+    }
+
+int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float aimAngle)
+{
+    float v;
+    int i = 0;
+    Bullet *cur;
+    float angle;
+
+    cur = &this->bullets[this->nextBullet];
+    for (i = 0; i < 0x280; i++)
+    {
+        this->nextBullet++;
+        if (this->nextBullet >= 0x280)
+        {
+            this->nextBullet = 0;
+        }
+        if (cur->state != 0)
+        {
+            cur++;
+            if (this->nextBullet == 0)
+            {
+                cur = this->bullets;
+            }
+            continue;
+        }
+        break;
+    }
+    if (i >= 0x280)
+    {
+        return 1;
+    }
+    angle = 0.0f;
+    v = shooter->speed1 - (shooter->speed1 - shooter->speed2) * row / shooter->count2;
+    switch (shooter->aimMode)
+    {
+    case 0:
+    case 1:
+        if (shooter->count1 & 1)
+        {
+            angle += (col + 1) / 2 * shooter->angle2;
+        }
+        else
+        {
+            angle += col / 2 * shooter->angle2 + shooter->angle2 * 0.5f;
+        }
+        if (col & 1)
+        {
+            angle *= -1.0f;
+        }
+        if (shooter->aimMode == 0)
+        {
+            angle += aimAngle;
+        }
+        angle += shooter->angle1;
+        break;
+    case 2:
+        angle += aimAngle;
+    case 3:
+        angle += col * 6.2831855f / shooter->count1;
+        angle += row * shooter->angle2 + shooter->angle1;
+        break;
+    case 4:
+        angle += aimAngle;
+    case 5:
+        angle += 3.1415927f / shooter->count1;
+        angle += col * 6.2831855f / shooter->count1;
+        angle += shooter->angle1;
+        break;
+    case 6:
+    {
+        float angleDiff = shooter->angle1 - shooter->angle2;
+        angle = g_Rng.GetRandomF32ZeroToOne() * angleDiff + shooter->angle2;
+        break;
+    }
+    case 7:
+    {
+        float speedDiff = shooter->speed1 - shooter->speed2;
+        v = g_Rng.GetRandomF32ZeroToOne() * speedDiff + shooter->speed2;
+        angle += col * 6.2831855f / shooter->count1;
+        angle += row * shooter->angle2 + shooter->angle1;
+        break;
+    }
+    case 8:
+    {
+        float angleDiff = shooter->angle1 - shooter->angle2;
+        angle = g_Rng.GetRandomF32ZeroToOne() * angleDiff + shooter->angle2;
+        float speedDiff = shooter->speed1 - shooter->speed2;
+        v = g_Rng.GetRandomF32ZeroToOne() * speedDiff + shooter->speed2;
+        break;
+    }
+    }
+    cur->state = 1;
+    cur->unk_5c2 = 1;
+    cur->speed = v;
+    cur->angle = AddNormalizeAngle(angle, 0.0f);
+    cur->pos = shooter->pos;
+    cur->pos.z = 0.1f;
+    SinCosScale(&cur->velocity, cur->angle, v);
+    cur->flags = shooter->flags;
+    cur->color = shooter->color;
+    cur->sprites.sprite0 = this->typeSprites[shooter->sprite].sprite0;
+    cur->sprites.sprite4 = this->typeSprites[shooter->sprite].sprite4;
+    cur->sprites.unk_550 = this->typeSprites[shooter->sprite].unk_550;
+    cur->sprites.unk_55c = this->typeSprites[shooter->sprite].unk_55c;
+    cur->sprites.unk_55d = this->typeSprites[shooter->sprite].unk_55d;
+    if (cur->flags & 2)
+    {
+        cur->sprites.sprite1 = this->typeSprites[shooter->sprite].sprite1;
+        SET_BULLET_SPRITE(cur->sprites.sprite1);
+        cur->state = 2;
+    }
+    else if (cur->flags & 4)
+    {
+        cur->sprites.sprite2 = this->typeSprites[shooter->sprite].sprite2;
+        SET_BULLET_SPRITE(cur->sprites.sprite2);
+        cur->state = 3;
+    }
+    else if (cur->flags & 8)
+    {
+        cur->sprites.sprite3 = this->typeSprites[shooter->sprite].sprite3;
+        SET_BULLET_SPRITE(cur->sprites.sprite3);
+        cur->state = 4;
+    }
+    g_SpriteEngine->SetSprite(&cur->sprites.sprite0, cur->sprites.sprite0.spriteIndex + shooter->color);
+    SET_BULLET_SPRITE(cur->sprites.sprite4);
+    if (cur->flags & 0x10)
+    {
+        if (shooter->exFloats[1] <= -999.0f)
+        {
+            SinCosScale(&cur->accel, angle, shooter->exFloats[0]);
+        }
+        else
+        {
+            SinCosScale(&cur->accel, shooter->exFloats[1], shooter->exFloats[0]);
+        }
+        if (shooter->exInts[0] > 0)
+        {
+            cur->unk_5a8 = shooter->exInts[0];
+        }
+        else
+        {
+            cur->unk_5a8 = 99999;
+        }
+        cur->accel.z = 0.0f;
+    }
+    else if (cur->flags & 0x20)
+    {
+        cur->unk_588 = shooter->exFloats[0];
+        cur->unk_594 = shooter->exFloats[1];
+        cur->unk_5a8 = shooter->exInts[0];
+    }
+    if (cur->flags & 0x1c0)
+    {
+        cur->unk_598 = shooter->exFloats[0];
+        if (shooter->exFloats[1] >= 0.0f)
+        {
+            cur->unk_58c = shooter->exFloats[1];
+        }
+        else
+        {
+            cur->unk_58c = v;
+        }
+        cur->unk_5ac = shooter->exInts[0];
+        cur->unk_5b4 = shooter->exInts[1];
+        cur->unk_5b0 = 0;
+    }
+    if (cur->flags & 0xc00)
+    {
+        if (shooter->exFloats[0] >= 0.0f)
+        {
+            cur->unk_58c = shooter->exFloats[0];
+        }
+        else
+        {
+            cur->unk_58c = v;
+        }
+        cur->unk_5b4 = shooter->exInts[0];
+        cur->unk_5b0 = 0;
+    }
+    return 0;
+}
+
 void BulletManager::ClearAll(int toItems)
 {
     D3DXVECTOR3 p;

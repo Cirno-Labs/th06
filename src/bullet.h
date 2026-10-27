@@ -19,7 +19,10 @@ struct BulletTypeSprites
     Sprite sprite2;
     Sprite sprite3;
     Sprite sprite4;
-    DWORD unk_550[0x4];
+    D3DXVECTOR3 unk_550;
+    BYTE unk_55c;
+    BYTE unk_55d;
+    BYTE unk_55e[0x2];
 };
 ASSERT_SIZE(BulletTypeSprites, 0x560);
 
@@ -28,15 +31,62 @@ struct Bullet
 {
     BulletTypeSprites sprites;
     D3DXVECTOR3 pos;
-    DWORD unk_56c[0xc];
+    D3DXVECTOR3 velocity;
+    // Added to the velocity (flag 0x10).
+    D3DXVECTOR3 accel;
+    float speed;
+    float unk_588;
+    float unk_58c;
+    float angle;
+    float unk_594;
+    float unk_598;
     Timer timer;
-    DWORD unk_5a8[0x5];
+    int unk_5a8;
+    int unk_5ac;
+    int unk_5b0;
+    int unk_5b4;
+    // BulletShooter::flags.
+    WORD flags;
+    short color;
     WORD unk_5bc;
-    // 0 unused; 5 fading out.
+    // 0 unused; 1 flying; 2 to 4 spawning (flags 2, 4, 8); 5 fading out.
     WORD state;
-    DWORD unk_5c0;
+    BYTE unk_5c0;
+    BYTE unk_5c1;
+    BYTE unk_5c2;
+    BYTE unk_5c3;
 };
 ASSERT_SIZE(Bullet, 0x5c4);
+
+// What a bullet pattern fires: count1 bullets around, count2 in a row,
+// aimed by `aimMode`.
+struct BulletShooter
+{
+    // The bullet type, and its color.
+    short sprite;
+    short color;
+    D3DXVECTOR3 pos;
+    float angle1;
+    float angle2;
+    // The speed of the first and the last of a row.
+    float speed1;
+    float speed2;
+    // Extra values for the flags' behaviors.
+    float exFloats[4];
+    int exInts[4];
+    DWORD unk_40;
+    short count1;
+    short count2;
+    WORD aimMode;
+    WORD unk_4a;
+    // Bullet::flags; 0x200 plays `sound`.
+    int flags;
+    int sound;
+};
+
+// Sprite offsets by color, for bullets up to 16 and up to 32 high.
+extern int g_BulletColorOffsets16[16];
+extern int g_BulletColorOffsets32[16];
 
 // One enemy laser: a beam from `pos` along `angle`, between startOffset
 // and endOffset.
@@ -71,6 +121,10 @@ public:
     // with it nonzero bullets turn into items of type 6, as do points
     // every 32 along each laser.
     void ClearAll(int toItems);
+    // Spawns bullet (`col`, `row`) of `shooter`'s pattern, aimed at
+    // `aimAngle` by the aiming modes that use it. Returns 0, or 1 if no
+    // bullet is free.
+    int SpawnBullet(BulletShooter *shooter, int col, int row, float aimAngle);
     // ClearAll(1).
     void ClearAllToItems();
     // Like ClearAll, but each bullet scores a bonus, from 2000 up by 10
@@ -94,7 +148,9 @@ public:
     BulletTypeSprites typeSprites[0x10];
     Bullet bullets[0x280];
     Laser lasers[0x40];
-    DWORD unk_f5c00[0x2];
+    // Where SpawnBullet looks for a free bullet first.
+    int nextBullet;
+    DWORD unk_f5c04;
     Timer unk_f5c08;
     int unk_f5c14;
 };

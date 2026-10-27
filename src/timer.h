@@ -20,6 +20,9 @@ struct Timer
     void Add(int frames);
     // Goes back by `frames` frames, like Add.
     void Sub(int frames);
+    // Advances by one frame through Unknown6c6d18::TickTimer. Inline;
+    // defined in unsorted.h.
+    void Tick();
 
     // `current` before the last change.
     int previous;

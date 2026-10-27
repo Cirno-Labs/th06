@@ -27,12 +27,27 @@ ASSERT_SIZE(AsciiString, 0x60);
 class Unknown4010e0
 {
 public:
+    void Func401b80();
     void Func402740();
+    void Func402870();
     void Func403060();
 
     unsigned char unk_000[0x778];
 };
 ASSERT_SIZE(Unknown4010e0, 0x778);
+
+// One of AsciiText's 0x203 entries that OnUpdate moves up the screen
+// while active, and deactivates after 60 frames.
+struct Unknown7134
+{
+    unsigned char unk_00[0xc];
+    float unk_0c;
+    unsigned char unk_10[0x8];
+    Timer timer;
+    BYTE active;
+    unsigned char unk_25[0x3];
+};
+ASSERT_SIZE(Unknown7134, 0x28);
 
 // Queues strings to draw in the ASCII font, the global at 0x47b900. Its
 // code starts at 0x401000 and loads "data/ascii.anm".
@@ -50,7 +65,9 @@ public:
     static int OnDraw(AsciiText *text);
     // Draws the queued strings.
     void DrawStrings();
-    // The update element's callback.
+    // The update element's callback: moves the active Unknown7134
+    // entries along, unless g_Unknown69d4bf or g_Unknown69d4c0 is set;
+    // then it updates the matching part. Returns 1.
     static int OnUpdate(AsciiText *text);
     // The update element's added callback: loads the font's ANM files
     // and initializes. Returns 0, or -1 if loading fails.
@@ -100,12 +117,14 @@ public:
     unsigned char unk_6238[0xc];
     Unknown4010e0 unk_6244;
     Unknown4010e0 unk_69bc;
-    unsigned char unk_7134[0x5078];
+    Unknown7134 unk_7134[0x203];
 };
 ASSERT_SIZE(AsciiText, 0xc1ac);
 extern AsciiText g_AsciiText;
 
 extern BYTE g_Unknown6c7114;
+extern BYTE g_Unknown69d4bf;
+extern BYTE g_Unknown69d4c0;
 
 // AsciiText's chain elements, statically allocated: the update element,
 // and draw elements at priorities 0xf and 10.

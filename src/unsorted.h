@@ -177,6 +177,12 @@ public:
 };
 extern Unknown6c6d18 g_Unknown6c6d18;
 
+inline void Timer::Tick()
+{
+    this->previous = this->current;
+    g_Unknown6c6d18.TickTimer(&this->current, &this->subFrame);
+}
+
 // The buttons held this frame and the frame before, as bits: 0x10 up,
 // 0x20 down, 0x1001 select, 0xa cancel.
 extern WORD g_Buttons;

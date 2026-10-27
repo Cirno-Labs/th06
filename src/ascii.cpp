@@ -4,6 +4,39 @@
 #include <stdio.h>
 
 #include "ascii.h"
+#include "unsorted.h"
+
+int AsciiText::OnUpdate(AsciiText *text)
+{
+    int i;
+    Unknown7134 *entry;
+
+    if (!g_Unknown69d4bf && !g_Unknown69d4c0)
+    {
+        for (entry = text->unk_7134, i = 0; i < 0x203; i++, entry++)
+        {
+            if (!entry->active)
+            {
+                continue;
+            }
+            entry->unk_0c -= 0.5f * g_Unknown6c6d18.frameAdvance;
+            entry->timer.Tick();
+            if ((entry->timer.current > 60) != 0)
+            {
+                entry->active = 0;
+            }
+        }
+    }
+    else if (g_Unknown69d4bf)
+    {
+        text->unk_6244.Func401b80();
+    }
+    if (g_Unknown69d4c0)
+    {
+        text->unk_69bc.Func402870();
+    }
+    return 1;
+}
 
 int AsciiText::RegisterChain()
 {

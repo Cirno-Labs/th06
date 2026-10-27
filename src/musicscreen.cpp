@@ -3,9 +3,24 @@
 
 #include "musicscreen.h"
 
-MusicScreen::MusicScreen()
+int MusicScreen::RegisterChain()
 {
-    memset(this, 0, sizeof(MusicScreen));
+    static MusicScreen g_MusicScreen;
+    MusicScreen *screen = &g_MusicScreen;
+
+    memset(screen, 0, sizeof(MusicScreen));
+    screen->calcChain = g_Chain.CreateElem((ChainCallback)MusicScreen::OnUpdate);
+    screen->calcChain->arg = screen;
+    screen->calcChain->addedCallback = (ChainCallback)MusicScreen::AddedCallback;
+    screen->calcChain->deletedCallback = (ChainCallback)MusicScreen::DeletedCallback;
+    if (g_Chain.AddToCalcChain(screen->calcChain, 2) != 0)
+    {
+        return -1;
+    }
+    screen->drawChain = g_Chain.CreateElem((ChainCallback)MusicScreen::OnDraw);
+    screen->drawChain->arg = screen;
+    g_Chain.AddToDrawChain(screen->drawChain, 0);
+    return 0;
 }
 
 int MusicScreen::UpdateIntro()

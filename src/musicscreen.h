@@ -4,6 +4,7 @@
 #pragma once
 
 #include "ascii.h"
+#include "chain.h"
 #include "sprite.h"
 #include "unsorted.h"
 
@@ -19,13 +20,24 @@ struct MusicTune
 };
 ASSERT_SIZE(MusicTune, 0x272);
 
-// The music screen, the global at 0x6c71f0. Runs on two chain
+// The music screen, the static at 0x6c71f0. Runs on two chain
 // elements: one updates it each frame, one draws it.
 class MusicScreen
 {
 public:
-    // Constructs the Sprites, then zeroes the whole screen.
-    MusicScreen();
+    // Constructs the Sprites, then zeroes the whole screen. Inline, but
+    // too large to expand, like Sprite's.
+    MusicScreen()
+    {
+        memset(this, 0, sizeof(MusicScreen));
+    }
+
+    // Sets up the music screen, a static constructed on first use, and
+    // adds it to the chains. Returns 0, or -1 if adding fails.
+    static int RegisterChain();
+    // The update chain element's added and deleted callbacks.
+    static int AddedCallback(MusicScreen *screen);
+    static int DeletedCallback(MusicScreen *screen);
 
     // The update chain element's callback: runs the current state's
     // handler and counts its frames. Returns 0 while a handler asks to
@@ -39,7 +51,8 @@ public:
     // State 1: the list of tunes. Returns nonzero to stop.
     int UpdateList();
 
-    unsigned char unk_0000[0x8];
+    ChainElem *calcChain;
+    ChainElem *drawChain;
     // Frames spent in `state`.
     int stateFrames;
     int state;

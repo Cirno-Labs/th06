@@ -419,6 +419,17 @@ void DebugPrint2(const char *fmt, ...);
 int Func42a670(void *arg);
 
 
+// The bulk of Gui, allocated by its added callback (0x2c44 bytes,
+// constructed at 0x41b34b).
+struct GuiImpl
+{
+    DWORD unk_0000[0x81b];
+    WORD unk_206c;
+    WORD unk_206e;
+    DWORD unk_2070[0x2f5];
+};
+ASSERT_SIZE(GuiImpl, 0x2c44);
+
 // The in-game interface, the global at 0x69bc30: it loads
 // "data/front.anm" and the dialogue portraits ("data/face00a.anm", ...)
 // and draws the stage clear bonus ("Stage Clear", "Graze *   10 = %5d").
@@ -433,7 +444,16 @@ public:
     static int AddedCallback(Gui *gui);
     // Removes the update element and the draw element.
     static void RemoveChain();
+
+    // Sets impl->unk_206e.
+    void Func417314();
+
+    DWORD unk_00;
+    GuiImpl *impl;
+    DWORD unk_08[0x9];
 };
+ASSERT_SIZE(Gui, 0x2c);
+extern Gui g_Gui;
 
 // Gui's statically allocated chain elements.
 extern ChainElem g_GuiCalcChain;

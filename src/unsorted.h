@@ -35,6 +35,15 @@ public:
 // Unknown417d29::Func417d29 on the element's user pointer.
 int Func41b1a4(Unknown417d29 *arg);
 
+// Holds GDI objects: 0x41e992 selects the old object back into the DC at
+// +0x14, then deletes the DC and the object at +0x1c.
+class Unknown41e981
+{
+public:
+    ~Unknown41e981();
+    void Func41e992();
+};
+
 class Unknown43be50
 {
 public:

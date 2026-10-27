@@ -31,11 +31,16 @@ public:
     Unknown4010e0();
 
     void Func401b80();
+    // Draws, while g_Unknown69d4bf is set, inside the viewport given
+    // by g_Unknown69d6dc: unk_668 without z writes if g_Unknown6c7115 is
+    // set and unk_000 is nonzero, then those of the six sprites with
+    // flag 0.
     void Func402740();
     void Func402870();
     void Func403060();
 
-    unsigned char unk_000[0x8];
+    int unk_000;
+    unsigned char unk_004[0x4];
     Sprite unk_008[6];
     Sprite unk_668;
 };
@@ -88,7 +93,7 @@ public:
         this->color = 0xffffffff;
         this->scaleX = 1.0f;
         this->scaleY = 1.0f;
-        this->unk_0110.flags |= 0x300;
+        this->unk_0110.flags.unk8 = 3;
         g_SpriteEngine->InitSprite(&this->unk_0110, 0);
         g_SpriteEngine->InitSprite(&this->unk_0000, 0x20);
         this->unk_0110.pos.z = 0.1f;
@@ -141,6 +146,9 @@ extern AsciiText g_AsciiText;
 
 extern BYTE g_Unknown6c7114;
 extern BYTE g_Unknown69d4bf;
+extern BYTE g_Unknown6c7115;
+// A rectangle: x, y, width and height.
+extern float g_Unknown69d6dc[4];
 extern BYTE g_Unknown69d4c0;
 
 // AsciiText's chain elements, statically allocated: the update element,

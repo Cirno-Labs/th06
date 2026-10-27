@@ -216,7 +216,8 @@ public:
     // Set from CreateWindowExA's result; MidiDevice::Open has MIDI
     // messages sent to it (CALLBACK_WINDOW).
     HWND hwnd;
-    unsigned char unk_048[0x98];
+    unsigned char unk_048[0x80];
+    D3DVIEWPORT8 viewport;
     // What the device was created with; AddedCallback resets the device
     // with them when presenting fails.
     D3DPRESENT_PARAMETERS presentParams;

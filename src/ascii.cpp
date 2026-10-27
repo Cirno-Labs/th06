@@ -10,6 +10,34 @@ Unknown4010e0::Unknown4010e0()
 {
 }
 
+void Unknown4010e0::Func402740()
+{
+    int i;
+
+    if (g_Unknown69d4bf)
+    {
+        g_Unknown6c6d18.viewport.X = g_Unknown69d6dc[0];
+        g_Unknown6c6d18.viewport.Y = g_Unknown69d6dc[1];
+        g_Unknown6c6d18.viewport.Width = g_Unknown69d6dc[2];
+        g_Unknown6c6d18.viewport.Height = g_Unknown69d6dc[3];
+        g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+        if (g_Unknown6c7115 && this->unk_000 != 0)
+        {
+            Sprite sprite = this->unk_668;
+
+            sprite.flags.zWriteDisabled = 1;
+            g_SpriteEngine->Draw(&sprite);
+        }
+        for (i = 0; i < 6; i++)
+        {
+            if (this->unk_008[i].flags.unk0)
+            {
+                g_SpriteEngine->Draw(&this->unk_008[i]);
+            }
+        }
+    }
+}
+
 int AsciiText::OnUpdate(AsciiText *text)
 {
     int i;

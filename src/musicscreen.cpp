@@ -79,17 +79,17 @@ int MusicScreen::UpdateList()
             }
             if (line[0] != '\0')
             {
-                this->comment[i].flags |= 2;
+                this->comment[i].flags.visible = 1;
                 g_SpriteEngine->RenderText(&this->comment[i], 0xffe0c0, 0x300000, line);
             }
             else
             {
-                this->comment[i].flags &= ~2;
+                this->comment[i].flags.visible = 0;
             }
             this->comment[i].pos.x = (i % 2) * 248.0f + 96.0f;
             this->comment[i].pos.y = 320.0f + (i / 2) * 16;
             this->comment[i].pos.z = 0.0f;
-            this->comment[i].flags |= 0x300;
+            this->comment[i].flags.unk8 = 3;
         }
     }
     if (WAS_PRESSED(0xa))
@@ -316,7 +316,7 @@ done:
         screen->titles[i].pos.x = 93.0f;
         screen->titles[i].pos.y = 104.0f + (i + 1) * 18 - 20.0f;
         screen->titles[i].pos.z = 0.0f;
-        screen->titles[i].flags |= 0x300;
+        screen->titles[i].flags.unk8 = 3;
     }
     // The comment of the first i, as UpdateList shows it.
     for (i = 0; i < 0x10; i++)
@@ -329,17 +329,17 @@ done:
         }
         if (str[0] != '\0')
         {
-            screen->comment[i].flags |= 2;
+            screen->comment[i].flags.visible = 1;
             g_SpriteEngine->RenderText(&screen->comment[i], 0xffe0c0, 0x300000, str);
         }
         else
         {
-            screen->comment[i].flags &= ~2;
+            screen->comment[i].flags.visible = 0;
         }
         screen->comment[i].pos.x = (i % 2) * 248.0f + 96.0f;
         screen->comment[i].pos.y = 320.0f + (i / 2) * 16;
         screen->comment[i].pos.z = 0.0f;
-        screen->comment[i].flags |= 0x300;
+        screen->comment[i].flags.unk8 = 3;
     }
     free(data);
     return 0;

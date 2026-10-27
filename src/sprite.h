@@ -7,6 +7,27 @@
 #include "common.h"
 #include "timer.h"
 
+// Sprite's flags, a bitfield.
+struct SpriteFlags
+{
+    // SpriteEngine::Draw skips the sprite without it; RenderText sets
+    // it.
+    unsigned int unk0 : 1;
+    // Shows the sprite.
+    unsigned int visible : 1;
+    // Selects SpriteEngine::Draw's D3DRS_DESTBLEND.
+    unsigned int blendMode : 1;
+    // Selects SpriteEngine::Draw's stage 0 D3DTSS_COLOROP.
+    unsigned int colorOp : 1;
+    unsigned int unk4 : 4;
+    // Set to 3 throughout the music screen.
+    unsigned int unk8 : 2;
+    unsigned int unk10 : 2;
+    // Turns D3DRS_ZWRITEENABLE off while drawing.
+    unsigned int zWriteDisabled : 1;
+    unsigned int unk13 : 19;
+};
+
 // The state of one sprite's animation script.
 class Sprite
 {
@@ -21,27 +42,33 @@ public:
     // Resets the sprite's state, keeping its texture.
     void Initialize();
 
-    unsigned char unk_000[0x30];
+    // The gaps are DWORDs, not bytes: a byte array would make /GS put a
+    // security cookie in functions with a Sprite local.
+    DWORD unk_000[0xc];
     Timer unk_030;
-    unsigned char unk_03c[0x40];
+    // Set to the identity by Initialize.
+    D3DXMATRIX matrix;
     // SpriteEngine::Draw skips the sprite while it is 0.
     D3DCOLOR color;
-    // Bit 1 shows the sprite.
-    DWORD flags;
-    unsigned char unk_084[0xc];
+    SpriteFlags flags;
+    DWORD unk_084[0x3];
     D3DXVECTOR3 pos;
-    unsigned char unk_09c[0x8];
+    DWORD unk_09c[0x2];
     Timer unk_0a4;
     // The sprite SpriteEngine::SetSprite set; -1 for none.
     short spriteIndex;
-    unsigned char unk_0b2[0x2];
+    short unk_0b2;
     // The script SpriteEngine::StartScript started.
     short scriptIndex;
-    unsigned char unk_0b6[0x3a];
+    short unk_0b6;
+    DWORD unk_0b8[0xe];
     Timer unk_0f0;
-    unsigned char unk_0fc[0x4];
+    DWORD unk_0fc;
     Timer unk_100;
-    unsigned char unk_10c[0x4];
+    // Used by RenderText.
+    BYTE unk_10c;
+    BYTE unk_10d;
+    short unk_10e;
 };
 ASSERT_SIZE(Sprite, 0x110);
 

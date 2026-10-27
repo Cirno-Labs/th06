@@ -1550,6 +1550,7 @@ address,size,name,symbol
 0x0069d4bf,,g_Unknown69d4bf,?g_Unknown69d4bf@@3EA
 0x0069d4c0,,g_Unknown69d4c0,?g_Unknown69d4c0@@3EA
 0x0069d4c1,,g_Unknown69d4c1,?g_Unknown69d4c1@@3EA
+0x0069d6dc,,g_Unknown69d6dc,?g_Unknown69d6dc@@3PAMA
 0x0069d8f8,,g_Rng,?g_Rng@@3VRng@@A
 0x0069d900,,g_Archives,?g_Archives@@3PAPAVDatArchive@@A
 0x0069d904,,g_Buttons,?g_Buttons@@3GA
@@ -1561,6 +1562,7 @@ address,size,name,symbol
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A
 0x006c7114,,g_Unknown6c7114,?g_Unknown6c7114@@3EA
+0x006c7115,,g_Unknown6c7115,?g_Unknown6c7115@@3EA
 0x006d3f50,,g_Unknown6d3f50,?g_Unknown6d3f50@@3VUnknown6d3f50@@A
 0x006d457c,,g_Unknown6d457c,?g_Unknown6d457c@@3PAVUnknown6d457c@@A
 0x006d4588,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A

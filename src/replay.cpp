@@ -24,6 +24,19 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     return 1;
 }
 
+int ReplayManager::PlayOnDraw(ReplayManager *replay)
+{
+    if (!g_GameManager.unk_1821)
+    {
+        return 1;
+    }
+    if (g_Gui.Func4195a2() && g_Gui.Func417344() && replay->frame % 3 != 2)
+    {
+        return 6;
+    }
+    return 1;
+}
+
 void ReplayManager::EndStage()
 {
     ReplayManager *replay = g_ReplayManager;

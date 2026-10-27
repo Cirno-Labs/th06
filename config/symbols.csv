@@ -334,7 +334,7 @@ address,size,name,symbol
 0x0042a140,256,Func42a140,
 0x0042a240,552,Func42a240,
 0x0042a470,151,ReplayManager::RecordOnUpdate,?RecordOnUpdate@ReplayManager@@SAHPAV1@@Z
-0x0042a510,81,Func42a510,
+0x0042a510,81,ReplayManager::PlayOnDraw,?PlayOnDraw@ReplayManager@@SAHPAV1@@Z
 0x0042a570,242,Func42a570,
 0x0042a670,10,Func42a670,?Func42a670@@YAHPAX@Z
 0x0042a680,445,Func42a680,

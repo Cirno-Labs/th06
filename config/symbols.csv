@@ -451,7 +451,7 @@ address,size,name,symbol
 0x0043ada0,241,CSound::~CSound,??1CSound@@UAE@XZ
 0x0043aea0,485,CSound::FillBufferWithSound,?FillBufferWithSound@CSound@@QAEJPAUIDirectSoundBuffer@@H@Z
 0x0043b090,163,CSound::RestoreBuffer,?RestoreBuffer@CSound@@QAEJPAUIDirectSoundBuffer@@PAH@Z
-0x0043b140,182,Func43b140,
+0x0043b140,182,CSound::GetFreeBuffer,?GetFreeBuffer@CSound@@QAEPAUIDirectSoundBuffer@@XZ
 0x0043b200,53,Func43b200,
 0x0043b240,182,Func43b240,
 0x0043b300,164,Func43b300,
@@ -1026,7 +1026,7 @@ address,size,name,symbol
 0x0045d588,44,Func45d588,
 0x0045d5c0,57,_strncmp,
 0x0045d5f9,156,Func45d5f9,
-0x0045d695,34,_rand,
+0x0045d695,34,_rand,_rand
 0x0045d6c0,61,__chkstk,
 0x0045d6fd,34,__amsg_exit,
 0x0045d722,36,fast_error_exit,

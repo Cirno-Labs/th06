@@ -95,7 +95,9 @@ public:
     static int OnDraw(Player *player);
     // Runs DrawHitBullets. Returns 1.
     static int OnDraw2(Player *player);
-    // Draws the player's bullets of type 2.
+    // Draws the flying bullets (state 1), turned along their angle.
+    static void DrawBullets(Player *player);
+    // Draws the bullets that hit (state 2).
     static void DrawHitBullets(Player *player);
     // Loads the character's sprites ("data/player00.anm" or
     // "player01.anm", unless the scene is 3) and sets the player up at

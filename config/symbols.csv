@@ -325,7 +325,7 @@ address,size,name,symbol
 0x00429710,268,Player::UpdateFiring,?UpdateFiring@Player@@SAHPAV1@@Z
 0x00429820,270,Player::FireShots,?FireShots@Player@@SAXPAV1@H@Z
 0x00429930,457,Player::OnDraw,?OnDraw@Player@@SAHPAV1@@Z
-0x00429b00,140,Func429b00,
+0x00429b00,140,Player::DrawBullets,?DrawBullets@Player@@SAXPAV1@@Z
 0x00429b90,22,Player::OnDraw2,?OnDraw2@Player@@SAHPAV1@@Z
 0x00429bb0,153,Player::DrawHitBullets,?DrawHitBullets@Player@@SAXPAV1@@Z
 0x00429c50,1118,Player::AddedCallback,?AddedCallback@Player@@SAHPAV1@@Z

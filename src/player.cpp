@@ -705,6 +705,25 @@ int Player::OnDraw2(Player *player)
     return 1;
 }
 
+void Player::DrawBullets(Player *player)
+{
+    PlayerBullet *bullet = player->bullets;
+    int i;
+
+    for (i = 0; i < 0x50; i++, bullet++)
+    {
+        if (bullet->state != 1)
+        {
+            continue;
+        }
+        if (bullet->sprite.unk_088 != 0)
+        {
+            bullet->sprite.rotation = 1.5707964f - AddNormalizeAngle(bullet->angle, 3.1415927f);
+        }
+        g_SpriteEngine->Func433590(&bullet->sprite);
+    }
+}
+
 void Player::DrawHitBullets(Player *player)
 {
     PlayerBullet *bullet = player->bullets;

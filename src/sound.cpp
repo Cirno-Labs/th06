@@ -301,6 +301,37 @@ int Unknown6d3f50::LoadBgmLoop(char *path)
     return 0;
 }
 
+int Unknown6d3f50::PlayBgm(BOOL bLoop)
+{
+    LPDIRECTSOUNDBUFFER pDSB;
+    HRESULT hr;
+
+    DebugPrint("play BGM\n");
+    if (this->bgm == NULL)
+    {
+        return -1;
+    }
+    hr = this->bgm->Reset();
+    if (hr < 0)
+    {
+        return -1;
+    }
+    pDSB = this->bgm->GetBuffer(0);
+    hr = this->bgm->FillBufferWithSound(pDSB, bLoop);
+    if (hr < 0)
+    {
+        return -1;
+    }
+    hr = this->bgm->Play(0, DSBPLAY_LOOPING);
+    if (hr < 0)
+    {
+        return -1;
+    }
+    DebugPrint("comp\n");
+    this->bgmLoop = bLoop;
+    return 0;
+}
+
 void Unknown6d3f50::StopBgm()
 {
     if (this->bgm != NULL)

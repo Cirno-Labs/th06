@@ -28,6 +28,9 @@ public:
     // Sets the wave music's loop from the .pos file at `path`: its start
     // and end, in samples of 4 bytes. Returns 0 or -1.
     int LoadBgmLoop(char *path);
+    // Plays the wave music from the start, filling the buffer with
+    // `bLoop` as the repeat flag. Returns 0 or -1.
+    int PlayBgm(BOOL bLoop);
     // Stops the wave music: ends the notification thread and releases
     // the stream ("stop BGM").
     void StopBgm();
@@ -71,6 +74,8 @@ public:
     CStreamingSound *bgm;
     // Signalled as the wave music plays.
     HANDLE notifyEvent;
+    // PlayBgm's `bLoop`.
+    BOOL bgmLoop;
 };
 extern Unknown6d3f50 g_Unknown6d3f50;
 

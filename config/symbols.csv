@@ -202,9 +202,9 @@ address,size,name,symbol
 0x0041e150,192,Func41e150,
 0x0041e210,75,Func41e210,
 0x0041e260,48,Func41e260,
-0x0041e290,456,Func41e290,
+0x0041e290,456,Func41e290,?Func41e290@@YAPAXPADH@Z
 0x0041e460,99,Func41e460,
-0x0041e4d0,331,Func41e4d0,
+0x0041e4d0,331,Func41e4d0,?Func41e4d0@@YAHPAVUnknown69d998@@PBDZZ
 0x0041e620,341,Func41e620,
 0x0041e780,99,Func41e780,
 0x0041e7f0,48,Func41e7f0,
@@ -262,7 +262,7 @@ address,size,name,symbol
 0x00422380,58,MidiPlayer::Load,?Load@MidiPlayer@@QAEHPAD@Z
 0x004223c0,207,MidiPlayer::Rewind,?Rewind@MidiPlayer@@QAEXXZ
 0x00422490,68,MidiPlayer::Play,?Play@MidiPlayer@@QAEHXZ
-0x004224e0,124,Func4224e0,
+0x004224e0,124,MidiPlayer::Stop,?Stop@MidiPlayer@@QAEHXZ
 0x00422560,199,Func422560,
 0x00422630,79,MidiPlayer::FadeOut,?FadeOut@MidiPlayer@@QAEHH@Z
 0x00422680,635,MidiPlayer::OnTimer,?OnTimer@MidiPlayer@@UAEXXZ
@@ -1534,4 +1534,6 @@ address,size,name,symbol
 0x0046a270,4,Direct3DCreate8,__imp__Direct3DCreate8@4
 0x0046b564,4,MmTimer::`vftable',??_7MmTimer@@6B@
 0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
+0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
 0x006c6d5c,4,g_Hwnd6c6d5c,?g_Hwnd6c6d5c@@3PAUHWND__@@A
+0x006c6e47,1,g_MusicMode,?g_MusicMode@@3EA

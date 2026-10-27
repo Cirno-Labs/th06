@@ -105,8 +105,11 @@ public:
 
     virtual void OnTimer();
 
-    // Loads a MIDI file into a slot; nonzero on failure.
+    // Loads a MIDI file into a slot, stopping playback first. Returns -1
+    // on failure, 0 otherwise or if the game doesn't play MIDI.
     int LoadFile(int slot, char *path);
+    // Stops playback and closes the device.
+    int Stop();
     // Frees the MIDI file loaded into a slot.
     void UnloadFile(int slot);
     // Parses the file in a slot into tracks.

@@ -9,6 +9,20 @@
 // sent to it (CALLBACK_WINDOW).
 extern HWND g_Hwnd6c6d5c;
 
+// How music is played; 2 is MIDI. Set to 2 after logging "wave データが無い
+// ので、midi にします" ("no wave data, switching to MIDI").
+extern BYTE g_MusicMode;
+
+// Loads a whole file into a malloc'd buffer; NULL on failure.
+void *Func41e290(char *path, int unk);
+
+// The object error messages go to, e.g. "error : MIDI File が読み込めない".
+class Unknown69d998;
+extern Unknown69d998 g_Unknown69d998;
+
+// Logs a printf-style message to a log object.
+int Func41e4d0(Unknown69d998 *log, const char *fmt, ...);
+
 // Logs a printf-style message. Compiled out in the release build: the body
 // is empty, but callers still pass format strings such as
 // "add calc chain (pri = %d)\n".

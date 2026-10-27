@@ -137,13 +137,19 @@ public:
     unsigned int noDirectInput : 1;
     unsigned int unk_148_12 : 20;
     unsigned char unk_14c[0x38];
-    int unk_184;
-    int unk_188;
+    // Counts OnUpdate's calls.
+    int frames;
+    // The scene set up; OnUpdate switches it to `scene` when they
+    // differ.
+    int curScene;
     // The scene the game is in or switches to: many places set it (1
     // through 10), and the main loop's callbacks compare it with 3. The
     // music screen sets it to 1 to leave; RegisterChain to -1.
+    // OnUpdate sets up the scene requested here.
     int scene;
-    unsigned char unk_190[0x8];
+    // The scene before `curScene`.
+    int prevScene;
+    unsigned char unk_194[0x4];
     int unk_198;
     // DrawFps shows the frame rate while it is 0.
     int unk_19c;
@@ -176,6 +182,15 @@ extern Unknown6c6d18 g_Unknown6c6d18;
 extern WORD g_Buttons;
 extern WORD g_PrevButtons;
 
+// 1 on every 8th frame once the buttons have been held unchanged for 30
+// frames, for key repeat.
+extern WORD g_ButtonRepeat;
+// How many frames the buttons have been held unchanged, kept between 30
+// and 38 once it reaches 30.
+extern WORD g_ButtonFrames;
+// Reads the keyboard and the joystick into button bits.
+WORD ReadButtons();
+
 // Whether any of the buttons in `mask` went down this frame.
 #define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_PrevButtons & (mask)))
 
@@ -202,6 +217,23 @@ extern DatArchive **g_Archives;
 // samples: the keyboard, then the first joystick found, if any. Returns
 // 0, or -1 if DirectInput is off or the keyboard fails.
 int InitDirectInput(Unknown6c6d18 *game);
+
+// The object at 0x6d457c, run first in Unknown6c6d18::OnUpdate when it
+// exists.
+class Unknown6d457c
+{
+public:
+    int Func43b4d0();
+};
+extern Unknown6d457c *g_Unknown6d457c;
+
+// Scene set-up and tear-down functions Unknown6c6d18::OnUpdate calls.
+// The non-void ones return nonzero on failure.
+int Func41ba6a();
+int Func42d773(int unk);
+int Func4107b0();
+void Func41c269();
+int Func43a338(int unk);
 void Func41f008();
 
 // Counts frames and draws the frame rate ("%.02ffps"), updated every

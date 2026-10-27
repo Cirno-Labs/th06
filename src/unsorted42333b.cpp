@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include "chain.h"
+#include "musicscreen.h"
 #include "timer.h"
 #include "unsorted.h"
 
@@ -13,9 +14,9 @@ int Unknown6c6d18::RegisterChain()
     Unknown6c6d18 *game = &g_Unknown6c6d18;
     ChainElem *elem;
 
-    game->unk_188 = 0;
+    game->curScene = 0;
     game->scene = -1;
-    game->unk_184 = 0;
+    game->frames = 0;
     elem = g_Chain.CreateElem((ChainCallback)Unknown6c6d18::OnUpdate);
     elem->arg = game;
     elem->addedCallback = (ChainCallback)Unknown6c6d18::AddedCallback;
@@ -28,6 +29,190 @@ int Unknown6c6d18::RegisterChain()
     elem->arg = game;
     g_Chain.AddToDrawChain(elem, 0xe);
     return 0;
+}
+
+// Updates the buttons, then sets up the scene `scene` asks for, tearing
+// down the old one, before the chain runs the scene's own callbacks.
+// Returns 4 when a scene fails to set up (or the game is to quit), 5
+// for scene 5, otherwise 1.
+int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
+{
+    if (g_Unknown6d457c != NULL)
+    {
+        g_Unknown6d457c->Func43b4d0();
+    }
+    g_PrevButtons = g_Buttons;
+    g_Buttons = ReadButtons();
+    g_ButtonRepeat = 0;
+    if (g_PrevButtons == g_Buttons)
+    {
+        if (g_ButtonFrames >= 30)
+        {
+            if (g_ButtonFrames % 8 == 0)
+            {
+                g_ButtonRepeat = 1;
+            }
+            if (g_ButtonFrames >= 38)
+            {
+                g_ButtonFrames = 30;
+            }
+        }
+        g_ButtonFrames++;
+    }
+    else
+    {
+        g_ButtonFrames = 0;
+    }
+    if (arg->curScene != arg->scene)
+    {
+        arg->prevScene = arg->curScene;
+        switch (arg->curScene)
+        {
+        case 0:
+        title:
+            arg->scene = 1;
+            g_Unknown6c6d18.d3dDevice->ResourceManagerDiscardBytes(0);
+            if (Func43a338(0) != 0)
+            {
+                return 4;
+            }
+            break;
+        case 1:
+            switch (arg->scene)
+            {
+            case 4:
+                return 4;
+            case 2:
+                if (Func41ba6a() != 0)
+                {
+                    return 4;
+                }
+                break;
+            case 5:
+                return 5;
+            case 6:
+                if (Func42d773(0) != 0)
+                {
+                    return 4;
+                }
+                break;
+            case 9:
+                if (MusicScreen::RegisterChain() != 0)
+                {
+                    return 4;
+                }
+                break;
+            case 10:
+                Func41c269();
+                if (Func4107b0() != 0)
+                {
+                    return 4;
+                }
+                break;
+            }
+            break;
+        case 6:
+            switch (arg->scene)
+            {
+            case 4:
+                return 4;
+            case 1:
+                arg->scene = 0;
+                goto title;
+            }
+            break;
+        case 2:
+            switch (arg->scene)
+            {
+            case 4:
+                return 4;
+            case 1:
+            toTitle:
+                Func41c269();
+                arg->scene = 0;
+                Func42ab30(0, NULL);
+                goto title;
+            case 7:
+                Func41c269();
+                if (Func42d773(1) != 0)
+                {
+                    return 4;
+                }
+                break;
+            case 3:
+                Func41c269();
+                if (Func41ba6a() != 0)
+                {
+                    return 4;
+                }
+                if (arg->scene == 1)
+                {
+                    goto toTitle;
+                }
+                arg->scene = 2;
+                break;
+            case 8:
+                Func41c269();
+                arg->scene = 0;
+                Func42ab30(0, NULL);
+                arg->scene = 1;
+                g_Unknown6c6d18.d3dDevice->ResourceManagerDiscardBytes(0);
+                if (Func43a338(1) != 0)
+                {
+                    return 4;
+                }
+                break;
+            case 10:
+                Func41c269();
+                if (Func4107b0() != 0)
+                {
+                    return 4;
+                }
+                break;
+            }
+            break;
+        case 7:
+            switch (arg->scene)
+            {
+            case 4:
+                Func42ab30(0, NULL);
+                return 4;
+            case 1:
+                arg->scene = 0;
+                Func42ab30(0, NULL);
+                goto title;
+            }
+            break;
+        case 9:
+            switch (arg->scene)
+            {
+            case 4:
+                return 4;
+            case 1:
+                arg->scene = 0;
+                goto title;
+            }
+            break;
+        case 10:
+            switch (arg->scene)
+            {
+            case 4:
+                return 4;
+            case 1:
+                arg->scene = 0;
+                goto title;
+            case 7:
+                if (Func42d773(1) != 0)
+                {
+                    return 4;
+                }
+            }
+        }
+        g_Buttons = g_PrevButtons = g_ButtonRepeat = 0;
+    }
+    arg->curScene = arg->scene;
+    arg->frames++;
+    return 1;
 }
 
 int Unknown6c6d18::OnDraw(Unknown6c6d18 *arg)

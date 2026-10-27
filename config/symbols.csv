@@ -97,7 +97,7 @@ address,size,name,symbol
 0x0040f550,596,Func40f550,
 0x0040f7c0,3619,Func40f7c0,
 0x004106d0,221,Func4106d0,
-0x004107b0,245,Func4107b0,
+0x004107b0,245,Func4107b0,?Func4107b0@@YAHXZ
 0x004108b0,271,Func4108b0,
 0x004109c0,170,Func4109c0,
 0x00410a70,150,Func410a70,
@@ -171,10 +171,10 @@ address,size,name,symbol
 0x0041b5e1,130,Func41b5e1,
 0x0041b663,999,Func41b663,
 0x0041ba4a,32,Func41ba4a,
-0x0041ba6a,152,Func41ba6a,
+0x0041ba6a,152,Func41ba6a,?Func41ba6a@@YAHXZ
 0x0041bb02,1781,Func41bb02,
 0x0041c1f7,114,Func41c1f7,
-0x0041c269,35,Func41c269,
+0x0041c269,35,Func41c269,?Func41c269@@YAXXZ
 0x0041c28c,359,Func41c28c,
 0x0041c3f3,395,Func41c3f3,
 0x0041c57e,124,Func41c57e,
@@ -197,7 +197,7 @@ address,size,name,symbol
 0x0041d580,127,Func41d580,
 0x0041d600,117,Func41d600,
 0x0041d680,414,Func41d680,
-0x0041d820,2196,Func41d820,
+0x0041d820,2196,ReadButtons,?ReadButtons@@YAGXZ
 0x0041e0c0,133,Func41e0c0,
 0x0041e150,192,Func41e150,
 0x0041e210,75,Func41e210,
@@ -359,7 +359,7 @@ address,size,name,symbol
 0x0042d18f,259,Func42d18f,
 0x0042d292,200,Func42d292,
 0x0042d35a,1049,Func42d35a,
-0x0042d773,302,Func42d773,
+0x0042d773,302,Func42d773,?Func42d773@@YAHH@Z
 0x0042d8a1,237,Func42d8a1,
 0x0042d98e,2744,Func42d98e,
 0x0042e446,3098,Func42e446,
@@ -436,7 +436,7 @@ address,size,name,symbol
 0x00439da0,488,Func439da0,
 0x00439f88,612,Func439f88,
 0x0043a1ec,332,Func43a1ec,
-0x0043a338,300,Func43a338,
+0x0043a338,300,Func43a338,?Func43a338@@YAHH@Z
 0x0043a464,501,Func43a464,
 0x0043a659,177,Func43a659,
 0x0043a70a,44,Func43a70a,
@@ -459,7 +459,7 @@ address,size,name,symbol
 0x0043b420,96,Func43b420,
 0x0043b480,46,Func43b480,
 0x0043b4b0,28,Func43b4b0,
-0x0043b4d0,143,Func43b4d0,
+0x0043b4d0,143,Unknown6d457c::Func43b4d0,?Func43b4d0@Unknown6d457c@@QAEHXZ
 0x0043b560,887,Func43b560,
 0x0043b8e0,194,Func43b8e0,
 0x0043b9b0,82,Func43b9b0,
@@ -1548,9 +1548,12 @@ address,size,name,symbol
 0x0069d900,,g_Archives,?g_Archives@@3PAPAVDatArchive@@A
 0x0069d904,,g_Buttons,?g_Buttons@@3GA
 0x0069d908,,g_PrevButtons,?g_PrevButtons@@3GA
+0x0069d90c,,g_ButtonRepeat,?g_ButtonRepeat@@3GA
+0x0069d910,,g_ButtonFrames,?g_ButtonFrames@@3GA
 0x0069d914,,g_FileSize,?g_FileSize@@3HA
 0x0069d918,,g_Chain,?g_Chain@@3VChain@@A
 0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A
 0x006d3f50,,g_Unknown6d3f50,?g_Unknown6d3f50@@3VUnknown6d3f50@@A
+0x006d457c,,g_Unknown6d457c,?g_Unknown6d457c@@3PAVUnknown6d457c@@A
 0x006d4588,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A

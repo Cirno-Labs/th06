@@ -423,6 +423,9 @@ int Func42a670(void *arg);
 // constructed at 0x41b34b).
 struct GuiImpl
 {
+    // Starts script `index` of the table at +0x2534.
+    void Func41878b(int index);
+
     DWORD unk_0000[0x81b];
     WORD unk_206c;
     WORD unk_206e;
@@ -454,6 +457,9 @@ public:
     // Removes the update element and the draw element.
     static void RemoveChain();
 
+    // Runs impl->Func41878b(`index`) and sets
+    // g_Unknown6c6d18.unk_198 to 3.
+    void StartMsg(int index);
     // Sets impl->unk_206e.
     void Func417314();
     // Sets impl->unk_217e.

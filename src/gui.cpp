@@ -18,6 +18,12 @@ BOOL Gui::Func417344()
     return this->impl->unk_2bd8;
 }
 
+void Gui::StartMsg(int index)
+{
+    this->impl->Func41878b(index);
+    g_Unknown6c6d18.unk_198 = 3;
+}
+
 BOOL Gui::Func419572()
 {
     if (this->impl->unk_2bd4 > 0)

@@ -70,6 +70,7 @@ class CStreamingSound : public CSound
 {
 public:
     CStreamingSound(LPDIRECTSOUNDBUFFER pDSBuffer, DWORD dwDSBufferSize, CWaveFile *pWaveFile, DWORD dwNotifySize);
+    ~CStreamingSound();
 
     DWORD m_dwLastPlayPos;
     DWORD m_dwPlayProgress;

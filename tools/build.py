@@ -12,7 +12,7 @@ import coff
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OBJ = "build/obj"
 DLL = "build/th06.dll"
-CFLAGS = ["/Od", "/Ob1", "/G5"]
+CFLAGS = ["/Od", "/Ob1", "/G5", "/GX"]
 GLUE_PREFIX = "dll_"  # objects from src/dll/, the DLL's own code
 TIMEOUT = 60  # cl spins forever after a fatal error
 
@@ -108,6 +108,10 @@ def write_hooks(objs, symbols):
             entry[name] = (2, len(thunks))
             thunks += struct.pack("<BIB", 0x68, addr, 0xC3).ljust(8, b"\xcc")
     absolute = {n: a for n, a in external.items() if n not in entry}
+    # Functions with exception handling address the handler chain as
+    # fs:[__except_list]; the CRT defines it as the absolute value 0.
+    if "__except_list" in undefined:
+        absolute["__except_list"] = 0
 
     path = os.path.join(OBJ, "hooks.obj")
     coff.write_object(path, [(".rdata", coff.RDATA, bytes(table), table_relocs),

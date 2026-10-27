@@ -970,7 +970,7 @@ address,size,name,symbol
 0x0045bf32,43,_JumpToContinuation,
 0x0045bf62,7,FID_conflict:_CallMemberFunction1,
 0x0045bf69,82,_UnwindNestedFrames,
-0x0045bfbb,54,___CxxFrameHandler,
+0x0045bfbb,54,___CxxFrameHandler,___CxxFrameHandler
 0x0045c015,110,Func45c015,
 0x0045c086,122,_GetRangeOfTrysToCheck,
 0x0045c100,40,Func45c100,

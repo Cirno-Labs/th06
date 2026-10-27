@@ -31,7 +31,11 @@ public:
     int unk_0004;
     DWORD unk_0008[0x2];
     int difficulty;
-    DWORD unk_0014[0x5ff];
+    DWORD unk_0014[0x6];
+    // Gui::OnUpdate skips the interface's update while it is set.
+    char unk_002c;
+    BYTE unk_002d[0x3];
+    DWORD unk_0030[0x5f8];
     // What FireShot compares the shot tables' levels with.
     WORD power;
     WORD unk_1812;

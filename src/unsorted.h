@@ -427,6 +427,7 @@ struct GuiImpl
 {
     // Starts script `index` of the table at +0x2534.
     void Func41878b(int index);
+    void Func4188c9();
 
     DWORD unk_0000[0x81b];
     WORD unk_206c;
@@ -455,6 +456,9 @@ public:
     // Loads the interface's sprites.
     int Func417d29();
 
+    // The update element's callback: unless g_GameManager.unk_002c is
+    // set, runs Func4195bf and impl->Func4188c9. Returns 1.
+    static int OnUpdate(Gui *gui);
     // The update element's added callback (the element at 0x69bc7c):
     // runs Func417d29.
     static int AddedCallback(Gui *gui);
@@ -476,6 +480,7 @@ public:
     BOOL Func419572();
     // Whether impl->unk_253c is not negative.
     BOOL Func4195a2();
+    void Func4195bf();
 
     DWORD unk_00;
     GuiImpl *impl;

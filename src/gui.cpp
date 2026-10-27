@@ -1,6 +1,7 @@
 // cflags: /Os
 // The /Os file with Gui, from 0x4172d3.
 
+#include "gamemanager.h"
 #include "unsorted.h"
 
 BOOL Gui::Func4172d3()
@@ -21,6 +22,17 @@ void Gui::Func41732c()
 BOOL Gui::Func417344()
 {
     return this->impl->unk_2bd8;
+}
+
+int Gui::OnUpdate(Gui *gui)
+{
+    if (g_GameManager.unk_002c)
+    {
+        return 1;
+    }
+    gui->Func4195bf();
+    gui->impl->Func4188c9();
+    return 1;
 }
 
 void Gui::StartMsg(int index)

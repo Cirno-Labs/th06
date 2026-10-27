@@ -50,6 +50,8 @@ public:
     static int OnDraw(AsciiText *text);
     // Draws the queued strings.
     void DrawStrings();
+    // The update element's callback.
+    static int OnUpdate(AsciiText *text);
     // The update element's added callback: loads the font's ANM files
     // and initializes. Returns 0, or -1 if loading fails.
     static int AddedCallback(AsciiText *text);

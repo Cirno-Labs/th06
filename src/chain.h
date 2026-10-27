@@ -12,6 +12,14 @@ typedef int (*ChainCallback)(void *arg);
 // An element of a chain. Allocated with new by Chain::CreateElem.
 struct ChainElem
 {
+    // Sets the callback and clears the added and deleted callbacks.
+    void SetCallback(ChainCallback callback)
+    {
+        this->callback = callback;
+        this->addedCallback = NULL;
+        this->deletedCallback = NULL;
+    }
+
     // Lower runs first.
     short priority;
     // Bit 0 is set by Chain::CreateElem.

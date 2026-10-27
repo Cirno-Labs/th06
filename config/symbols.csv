@@ -1,7 +1,7 @@
 address,size,name,symbol
 0x00401000,224,Func401000,
 0x004010e0,87,Func4010e0,
-0x00401140,257,Func401140,
+0x00401140,257,AsciiText::OnUpdate,?OnUpdate@AsciiText@@SAHPAV1@@Z
 0x00401250,59,AsciiText::OnDraw,?OnDraw@AsciiText@@SAHPAV1@@Z
 0x00401290,39,AsciiText::OnDraw2,?OnDraw2@AsciiText@@SAHPAV1@@Z
 0x004012c0,213,AsciiText::RegisterChain,?RegisterChain@AsciiText@@SAHXZ

@@ -1,6 +1,7 @@
 // The file with EffectManager, up to 0x40f7c0 at least.
 
 #include "effect.h"
+#include "unsorted.h"
 
 EffectManager::EffectManager()
 {
@@ -108,6 +109,32 @@ int EffectManager::OnDraw(EffectManager *mgr)
         }
         eff->sprite.pos = eff->pos;
         g_SpriteEngine->Func433150(&eff->sprite);
+    }
+    return 1;
+}
+
+int EffectManager::OnUpdate(EffectManager *mgr)
+{
+    Effect *eff = mgr->effects;
+    int i;
+
+    mgr->activeCount = 0;
+    for (i = 0; i < 0x200; i++, eff++)
+    {
+        if (!eff->active)
+        {
+            continue;
+        }
+        mgr->activeCount++;
+        if (eff->update != NULL && eff->update(eff) != 1)
+        {
+            eff->active = 0;
+        }
+        if (g_SpriteEngine->Step(&eff->sprite) != 0)
+        {
+            eff->active = 0;
+        }
+        eff->timer.Tick();
     }
     return 1;
 }

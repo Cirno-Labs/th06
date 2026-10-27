@@ -37,6 +37,9 @@ public:
     // Resets and adds the update element (priority 10) and the draw
     // element (priority 8). Returns 0, or -1 if adding fails.
     static int RegisterChain();
+    // Runs the active effects (only the first 0x200): their update
+    // callbacks and scripts, which end them by returning nonzero, and
+    // their Timers. Returns 1.
     static int OnUpdate(EffectManager *mgr);
     // Draws the active effects at their positions (only the first 0x200).
     // Returns 1.
@@ -50,7 +53,9 @@ public:
     // Removes the two chain elements.
     static void RemoveChain();
 
-    DWORD unk_00000[0x2];
+    DWORD unk_00000;
+    // How many effects were active this frame.
+    int activeCount;
     Effect effects[0x201];
 };
 ASSERT_SIZE(EffectManager, 0x2f984);

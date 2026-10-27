@@ -7,6 +7,7 @@
 #include "enemy.h"
 #include "enemyscript.h"
 #include "player.h"
+#include "replay.h"
 #include "stage.h"
 #include "unsorted.h"
 
@@ -52,7 +53,7 @@ int GameManager::DeletedCallback(GameManager *mgr)
     g_EnemyScripts.Release();
     EffectManager::RemoveChain();
     Gui::RemoveChain();
-    Func42aab0();
+    ReplayManager::EndStage();
     mgr->unk_1821 = 0;
     g_AsciiText.Initialize();
     return 0;

@@ -341,8 +341,6 @@ int Func42d773(int unk);
 int Func4107b0();
 int Func43a338(int unk);
 
-// It removes the chain elements of a class not decompiled yet.
-void Func42aab0();
 void Func41f008();
 
 // Returns `a + b`, brought back into -pi to pi by whole turns (at most

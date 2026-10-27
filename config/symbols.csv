@@ -340,7 +340,7 @@ address,size,name,symbol
 0x0042a680,445,Func42a680,
 0x0042a840,469,Func42a840,
 0x0042aa20,140,Func42aa20,
-0x0042aab0,123,Func42aab0,?Func42aab0@@YAXXZ
+0x0042aab0,123,ReplayManager::EndStage,?EndStage@ReplayManager@@SAXXZ
 0x0042ab30,1449,Func42ab30,?Func42ab30@@YAXHPAD@Z
 0x0042b0d9,423,Func42b0d9,
 0x0042b280,294,Func42b280,
@@ -1588,6 +1588,7 @@ address,size,name,symbol
 0x006c7114,,g_Unknown6c7114,?g_Unknown6c7114@@3EA
 0x006c7115,,g_Unknown6c7115,?g_Unknown6c7115@@3EA
 0x006ca628,,g_Player,?g_Player@@3VPlayer@@A
+0x006d3f18,,g_ReplayManager,?g_ReplayManager@@3PAVReplayManager@@A
 0x006d3f50,,g_Unknown6d3f50,?g_Unknown6d3f50@@3VUnknown6d3f50@@A
 0x006d457c,,g_Unknown6d457c,?g_Unknown6d457c@@3PAVUnknown6d457c@@A
 0x006d4588,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A

@@ -133,6 +133,10 @@ void DrawMarisaABomb(Player *player);
 // name, 300 frames) slowing the player, then keeps a beam's hitbox and
 // bullet clearing above the player three frames in four.
 void UpdateMarisaBBomb(Player *player);
+// Marisa B's bomb draw callback: dims the play area and draws the four
+// beam sprites fanned out above the player, each turned along its
+// direction.
+void DrawMarisaBBomb(Player *player);
 extern Player g_Player;
 // A shot type's shots by power level: entries of a count, the power
 // they last up to and their data.

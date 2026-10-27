@@ -1,4 +1,4 @@
-// The file with EnemyScripts, from 0x4071b0 at least.
+// The file with EnemyScripts, from 0x407340.
 
 #include "enemyscript.h"
 #include "unsorted.h"

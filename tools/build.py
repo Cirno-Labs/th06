@@ -13,6 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OBJ = "build/obj"
 DLL = "build/th06.dll"
 CFLAGS = ["/Od", "/Ob1"]
+GLUE_PREFIX = "dll_"  # objects from src/dll/, the DLL's own code
 TIMEOUT = 60  # cl spins forever after a fatal error
 
 ENV = dict(
@@ -74,15 +75,20 @@ def write_hooks(objs, symbols):
     that new code calls gets a thunk instead: push <address>; ret. It
     leaves every register intact, whatever the calling convention.
     """
-    defined, undefined, called = set(), set(), set()
+    defined, undefined, called, glue = set(), set(), set(), set()
     for path in objs:
         obj = coff.Object(path)
         for s in obj.externals():
             (defined if s.section > 0 else undefined).add(s.name)
+            if os.path.basename(path).startswith(GLUE_PREFIX) and s.section <= 0:
+                glue.add(s.name)
         for sec in obj.sections:
             called.update(obj.symbols[i].name for _, i, t in sec.relocs if t == coff.REL32)
     hooks = sorted((symbols[n], n) for n in defined & symbols.keys())
-    external = {n: a for n, a in symbols.items() if n in undefined - defined}
+    # Imports the hook installer itself uses stay real imports: it runs
+    # from DllMain and should not rely on the game's import table.
+    external = {n: a for n, a in symbols.items()
+                if n in undefined - defined and not (n.startswith("__imp_") and n in glue)}
 
     table, table_relocs = bytearray(), []
     for addr, name in hooks:
@@ -110,7 +116,7 @@ def main():
     hooks = write_hooks(objs, read_symbols())
     tool("link", "/DLL", "/NODEFAULTLIB", "/ENTRY:DllMain", "/BASE:0x30000000",
          "/MAP:" + win(DLL[:-4] + ".map"), "/OUT:" + win(DLL),
-         *map(win, objs), win(hooks), "kernel32.lib", "user32.lib")
+         *map(win, objs), win(hooks), "kernel32.lib", "user32.lib", "winmm.lib")
     print("linked", DLL)
 
 

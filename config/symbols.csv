@@ -46,7 +46,7 @@ address,size,name,symbol
 0x004071b0,389,Func4071b0,
 0x00407340,178,Func407340,
 0x00407400,50,EnemyScripts::Release,?Release@EnemyScripts@@QAEXXZ
-0x00407440,84,Func407440,
+0x00407440,84,EnemyScripts::StartSub,?StartSub@EnemyScripts@@QAEHPAUEnemyScriptState@@F@Z
 0x004074a0,13572,Func4074a0,
 0x0040abe0,291,Func40abe0,
 0x0040ad10,358,Func40ad10,

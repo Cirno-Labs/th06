@@ -10,3 +10,11 @@ void EnemyScripts::Release()
     }
     this->file = NULL;
 }
+
+int EnemyScripts::StartSub(EnemyScriptState *state, short sub)
+{
+    state->code = this->subs[sub];
+    state->timer.Set(0);
+    state->sub = sub;
+    return 0;
+}

@@ -37,12 +37,22 @@ extern Unknown6d3f50 g_Unknown6d3f50;
 class DatArchive
 {
 public:
+    DatArchive();
     // Calls Release.
     ~DatArchive();
 
+    // Opens the archive at `path` and reads its entry table. Returns
+    // nonzero on success.
+    int Open(char *path);
+    // Returns the index of the entry named `name`, or -1.
+    int FindEntry(char *name);
+
     // Closes the archive and frees its entry table. Returns 1.
     int Release();
+
+    unsigned char unk_00[0x14];
 };
+ASSERT_SIZE(DatArchive, 0x14);
 
 // The global at 0x6c6d18: the window, settings and game speed. Larger
 // than its known fields.
@@ -63,7 +73,9 @@ public:
     // nor MIDI (2), otherwise 0.
     int StopMusic();
     // Opens the archive at `path` (such as "紅魔郷IN.dat") as archive
-    // `index`. Returns 0, or -1 on failure.
+    // `index`, unless it already is. Returns 1 if the archive lacks the
+    // version entry ("ver0102.dat"), otherwise 0, even when the archive
+    // cannot be opened.
     int LoadArchive(int index, char *path);
     // Closes and deletes archive `index`, if it is open.
     void ReleaseArchive(int index);
@@ -151,7 +163,9 @@ public:
     float unk_1b8;
     // The open data archives; NULL where none is open.
     DatArchive *archives[0x10];
-    unsigned char unk_1fc[0x204];
+    // The paths the archives were opened from.
+    char archivePaths[0x10][0x20];
+    unsigned char unk_3fc[0x4];
     // timeGetTime() when AddedCallback ran.
     DWORD unk_400;
 };
@@ -221,6 +235,8 @@ extern Unknown69d998 g_Unknown69d998;
 
 // Logs a printf-style message to a log object.
 int Func41e4d0(Unknown69d998 *log, const char *fmt, ...);
+// Logs a printf-style error message to a log object.
+int Func41e620(Unknown69d998 *log, const char *fmt, ...);
 
 // Logs a printf-style message. Compiled out in the release build: the body
 // is empty, but callers still pass format strings such as

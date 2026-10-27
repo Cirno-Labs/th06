@@ -386,6 +386,37 @@ void Unknown6c6d18::ReleaseArchive(int index)
     this->archives[index] = NULL;
 }
 
+int Unknown6c6d18::LoadArchive(int index, char *path)
+{
+    int idx;
+    char name[0x80];
+
+    if (this->archives[index] == NULL || strcmp(path, this->archivePaths[index]) != 0)
+    {
+        this->ReleaseArchive(index);
+        this->archives[index] = new DatArchive();
+        DebugPrint2("%s open ...\n", path);
+        if (this->archives[index]->Open(path))
+        {
+            strcpy(this->archivePaths[index], path);
+            sprintf(name, "ver%.4x.dat", 0x102);
+            idx = this->archives[index]->FindEntry(name);
+            if (idx < 0)
+            {
+                Func41e620(&g_Unknown69d998, "error : データのバージョンが違います\n");
+                return 1;
+            }
+        }
+        else
+        {
+            delete this->archives[index];
+            this->archives[index] = NULL;
+            this->archives[index] = NULL;
+        }
+    }
+    return 0;
+}
+
 int Unknown6c6d18::LoadMidi(int slot, char *path)
 {
     if (g_Unknown6c6d18.musicMode == 2)

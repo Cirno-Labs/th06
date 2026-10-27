@@ -205,7 +205,7 @@ address,size,name,symbol
 0x0041e290,456,Func41e290,?Func41e290@@YAPAXPADH@Z
 0x0041e460,99,Func41e460,
 0x0041e4d0,331,Func41e4d0,?Func41e4d0@@YAHPAVUnknown69d998@@PBDZZ
-0x0041e620,341,Func41e620,
+0x0041e620,341,Func41e620,?Func41e620@@YAHPAVUnknown69d998@@PBDZZ
 0x0041e780,99,Func41e780,
 0x0041e7f0,48,Func41e7f0,
 0x0041e820,46,Func41e820,
@@ -483,14 +483,14 @@ address,size,name,symbol
 0x0043c650,39,Func43c650,
 0x0043c6e0,105,Func43c6e0,
 0x0043c750,30,Func43c750,
-0x0043c770,19,Func43c770,
+0x0043c770,19,DatArchive::DatArchive,??0DatArchive@@QAE@XZ
 0x0043c790,305,Func43c790,
 0x0043c8d0,78,DatArchive::Release,?Release@DatArchive@@QAEHXZ
-0x0043c920,100,Func43c920,
+0x0043c920,100,DatArchive::FindEntry,?FindEntry@DatArchive@@QAEHPAD@Z
 0x0043c990,37,Func43c990,
 0x0043c9c0,189,Func43c9c0,
 0x0043ca80,5,DatArchive::~DatArchive,??1DatArchive@@QAE@XZ
-0x0043ca90,165,Func43ca90,
+0x0043ca90,165,DatArchive::Open,?Open@DatArchive@@QAEHPAD@Z
 0x0043cb40,753,Func43cb40,
 0x0043ce40,23,Func43ce40,
 0x0043ce60,190,Func43ce60,

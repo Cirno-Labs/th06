@@ -13,6 +13,7 @@ typedef int (*ChainCallback)(void *arg);
 // An element of a chain. Allocated with new by Chain::CreateElem.
 struct ChainElem
 {
+    ChainElem();
     // Calls the deleted callback, if any, and clears the links and
     // callbacks.
     ~ChainElem();
@@ -27,8 +28,8 @@ struct ChainElem
 
     // Lower runs first.
     short priority;
-    // Bit 0 is set by Chain::CreateElem.
-    unsigned short flags;
+    // Set by Chain::CreateElem: the element was allocated with new.
+    unsigned short allocated : 1;
     ChainCallback callback;
     // Called when the element is added to a chain; adding it to the
     // update chain clears it after the call.
@@ -36,7 +37,8 @@ struct ChainElem
     ChainCallback deletedCallback;
     ChainElem *prev;
     ChainElem *next;
-    unsigned char unk_18[0x4];
+    // Points to the element itself.
+    ChainElem *self;
     void *arg;
 };
 ASSERT_SIZE(ChainElem, 0x20);

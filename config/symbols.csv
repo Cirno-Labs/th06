@@ -181,7 +181,7 @@ address,size,name,symbol
 0x0041c5fa,124,Func41c5fa,
 0x0041c676,86,Func41c676,
 0x0041c6d0,75,Chain::~Chain,??1Chain@@QAE@XZ
-0x0041c720,97,Func41c720,
+0x0041c720,97,ChainElem::ChainElem,??0ChainElem@@QAE@XZ
 0x0041c790,86,ChainElem::~ChainElem,??1ChainElem@@QAE@XZ
 0x0041c7f0,100,Func41c7f0,
 0x0041c860,218,Chain::AddToCalcChain,?AddToCalcChain@Chain@@QAEHPAUChainElem@@H@Z

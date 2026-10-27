@@ -52,7 +52,9 @@ struct StageObject
     BYTE unk_00[0x2];
     // The background layer (0 to 3) it is drawn on.
     char layer;
-    BYTE unk_03;
+    // Bit 0: its sprites still run scripts. Set by Stage::Load, cleared
+    // by Stage::StepObjects once none does.
+    char flags;
     D3DXVECTOR3 pos;
     // The bounding box DrawLayer tests against the viewport.
     D3DXVECTOR3 size;
@@ -109,7 +111,9 @@ public:
     // Loads the background sprites from `anmPath` and the data from
     // `dataPath`. Returns 0, or -1 on failure.
     int Load(char *anmPath, char *dataPath);
-    void Func404860();
+    // Runs one frame of the scripts of each animated object's sprites.
+    // Returns 0.
+    int StepObjects();
     // Frees the background sprites and the data. Returns 0.
     static int DeletedCallback(Stage *stage);
     // Removes the update element and the two draw elements.

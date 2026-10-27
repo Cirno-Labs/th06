@@ -27,17 +27,22 @@ int AsciiText::OnDraw2(AsciiText *text)
     return 1;
 }
 
-void AsciiText::Initialize()
+int AsciiText::AddedCallback(AsciiText *text)
 {
-    memset(this, 0, sizeof(AsciiText));
-    this->color = 0xffffffff;
-    this->scaleX = 1.0f;
-    this->scaleY = 1.0f;
-    this->unk_0110.flags |= 0x300;
-    g_SpriteEngine->InitSprite(&this->unk_0110, 0);
-    g_SpriteEngine->InitSprite(&this->unk_0000, 0x20);
-    this->unk_0110.pos.z = 0.1f;
-    this->unk_6234 = 0;
+    if (g_SpriteEngine->LoadAnm(1, "data/ascii.anm", 0) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(2, "data/asciis.anm", 0x77) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(3, "data/capture.anm", 0x718) != 0)
+    {
+        return -1;
+    }
+    text->Initialize();
+    return 0;
 }
 
 int AsciiText::DeletedCallback(AsciiText *text)

@@ -50,9 +50,24 @@ public:
     static int OnDraw(AsciiText *text);
     // Draws the queued strings.
     void DrawStrings();
+    // The update element's added callback: loads the font's ANM files
+    // and initializes. Returns 0, or -1 if loading fails.
+    static int AddedCallback(AsciiText *text);
     // Zeroes everything, then sets the color to white, the scale to 1
-    // and the two sprites up.
-    void Initialize();
+    // and the two sprites up. Inline, but too large to expand, like
+    // Sprite's constructor.
+    void Initialize()
+    {
+        memset(this, 0, sizeof(AsciiText));
+        this->color = 0xffffffff;
+        this->scaleX = 1.0f;
+        this->scaleY = 1.0f;
+        this->unk_0110.flags |= 0x300;
+        g_SpriteEngine->InitSprite(&this->unk_0110, 0);
+        g_SpriteEngine->InitSprite(&this->unk_0000, 0x20);
+        this->unk_0110.pos.z = 0.1f;
+        this->unk_6234 = 0;
+    }
     void Func4031e0();
     void Func4033b0();
 

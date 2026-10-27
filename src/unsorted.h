@@ -340,6 +340,9 @@ extern Unknown6d457c *g_Unknown6d457c;
 int Func42d773(int unk);
 int Func4107b0();
 void Func41c269();
+// Remove chain elements of classes not decompiled yet.
+void Func404650();
+void Func42aab0();
 int Func43a338(int unk);
 void Func41f008();
 

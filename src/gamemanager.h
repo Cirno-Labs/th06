@@ -18,6 +18,8 @@ public:
     static int OnUpdate(GameManager *mgr);
     // Loads the scores and sets the game up.
     static int AddedCallback(GameManager *mgr);
+    // Stops the music unless unk_1824 is set, removes the game's chain
+    // elements and resets the ASCII text. Returns 0.
     static int DeletedCallback(GameManager *mgr);
     // The draw element's callback: sets unk_181f to 2 while it is set.
     // Returns 1.
@@ -31,7 +33,9 @@ public:
     // Makes DrawFps measure how far the frame rate falls short.
     BYTE unk_1821;
     BYTE unk_1822[0x2];
-    DWORD unk_1824[0x83];
+    BYTE unk_1824;
+    BYTE unk_1825[0x3];
+    DWORD unk_1828[0x82];
     int unk_1a30;
     // The stage being played: 1 to 6, 7 for the extra stage.
     int stage;

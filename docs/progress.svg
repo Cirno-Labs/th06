@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">57.32% (270)</tspan> · <tspan class="decompiled">9.13% (43)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">33.55% (158)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">57.54% (271)</tspan> · <tspan class="decompiled">9.13% (43)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">33.33% (157)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="428.22" height="6" x="0" y="0" class="named"/>
-<rect width="68.20" height="6" x="428.22" y="0" class="decompiled"/>
-<rect width="250.59" height="6" x="496.41" y="0" class="todo"/>
+<rect width="429.80" height="6" x="0" y="0" class="named"/>
+<rect width="68.20" height="6" x="429.80" y="0" class="decompiled"/>
+<rect width="249" height="6" x="498" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -457,7 +457,7 @@
 <rect width="12" height="12" x="540" y="105" class="decompiled"><title>0x00431080 Unknown6d3f50::LoadSounds (342 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="105" class="decompiled"><title>0x004311e0 Unknown6d3f50::QueueSound (133 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="105" class="decompiled"><title>0x00431270 Unknown6d3f50::PlayQueuedSounds (256 bytes)</title></rect>
-<rect width="12" height="12" x="585" y="105" class="todo"><title>0x00431370 Func431370 (176 bytes)</title></rect>
+<rect width="12" height="12" x="585" y="105" class="named"><title>0x00431370 BgmNotificationProc (176 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="105" class="todo"><title>0x00431420 Func431420 (76 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="105" class="todo"><title>0x00431470 Func431470 (493 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="105" class="todo"><title>0x00431660 SpriteEngine::Func431660 (700 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">36.51%</tspan> · <tspan class="decompiled">4.78%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">58.70%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">36.59%</tspan> · <tspan class="decompiled">4.78%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">58.63%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="272.76" height="6" x="0" y="0" class="named"/>
-<rect width="35.71" height="6" x="272.76" y="0" class="decompiled"/>
-<rect width="438.52" height="6" x="308.48" y="0" class="todo"/>
+<rect width="273.32" height="6" x="0" y="0" class="named"/>
+<rect width="35.71" height="6" x="273.32" y="0" class="decompiled"/>
+<rect width="437.97" height="6" x="309.03" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -814,7 +814,7 @@
 <rect width="5.98" height="6.77" x="652.90" y="96.09" class="named"><title>0x0043b240 CSound::Play (182 bytes)</title></rect>
 <rect width="5.98" height="6.56" x="652.90" y="105.86" class="named"><title>0x00407340 EnemyScripts::Load (178 bytes)</title></rect>
 <rect width="5.98" height="6.50" x="652.90" y="115.42" class="todo"><title>0x0043a659 Func43a659 (177 bytes)</title></rect>
-<rect width="5.98" height="6.45" x="652.90" y="124.92" class="todo"><title>0x00431370 Func431370 (176 bytes)</title></rect>
+<rect width="5.98" height="6.45" x="652.90" y="124.92" class="named"><title>0x00431370 BgmNotificationProc (176 bytes)</title></rect>
 <rect width="5.98" height="6.34" x="652.90" y="134.37" class="todo"><title>0x0042f800 Func42f800 (174 bytes)</title></rect>
 <rect width="5.98" height="6.29" x="652.90" y="143.71" class="decompiled"><title>0x00430e10 Unknown6d3f50::LoadBgmLoop (173 bytes)</title></rect>
 <rect width="6.02" height="6.20" x="661.88" y="56.35" class="todo"><title>0x00410d80 Func410d80 (172 bytes)</title></rect>

@@ -79,8 +79,10 @@ public:
 };
 extern Unknown6d3f50 g_Unknown6d3f50;
 
-// The thread LoadBgm starts, with the main window.
-DWORD WINAPI Func431370(LPVOID hwnd);
+// The thread LoadBgm starts, with the main window: streams the wave music
+// each time notifyEvent is signalled, until WM_QUIT or the music is gone.
+// The DX8 SDK's StreamData sample's NotificationProc, looping always.
+DWORD WINAPI BgmNotificationProc(LPVOID lpParameter);
 
 // Each sound effect's sound buffer and volume.
 struct SoundInfo

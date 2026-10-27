@@ -255,7 +255,7 @@ int Unknown6d3f50::LoadBgm(char *path)
     dwNotifySize = nSamplesPerSec * 2 * nBlockAlign / 4;
     dwNotifySize -= dwNotifySize % nBlockAlign;
     this->notifyEvent = CreateEventA(NULL, FALSE, FALSE, NULL);
-    this->notifyThread = CreateThread(NULL, 0, Func431370, g_Unknown6c6d18.hwnd, 0, &this->notifyThreadId);
+    this->notifyThread = CreateThread(NULL, 0, BgmNotificationProc, g_Unknown6c6d18.hwnd, 0, &this->notifyThreadId);
     hr = this->manager->CreateStreaming(&this->bgm, path, DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GETCURRENTPOSITION2,
                                         GUID_NULL, 4, dwNotifySize, this->notifyEvent);
     if (hr < 0)
@@ -443,4 +443,42 @@ void Unknown6d3f50::PlayQueuedSounds()
         this->sounds[sound]->SetCurrentPosition(0);
         this->sounds[sound]->Play(0, 0, 0);
     }
+}
+
+DWORD WINAPI BgmNotificationProc(LPVOID lpParameter)
+{
+    HRESULT hr;
+    HWND hDlg = (HWND)lpParameter;
+    MSG msg;
+    DWORD dwResult;
+    BOOL bDone = FALSE;
+    BOOL bLooped = TRUE;
+
+    while (!bDone)
+    {
+        dwResult = MsgWaitForMultipleObjects(1, &g_Unknown6d3f50.notifyEvent, FALSE, INFINITE, QS_ALLEVENTS);
+        if (g_Unknown6d3f50.bgm == NULL)
+        {
+            bDone = TRUE;
+        }
+        switch (dwResult)
+        {
+        case WAIT_OBJECT_0 + 0:
+            if (g_Unknown6d3f50.bgm != NULL)
+            {
+                hr = g_Unknown6d3f50.bgm->HandleWaveStreamNotification(bLooped);
+            }
+            break;
+        case WAIT_OBJECT_0 + 1:
+            while (PeekMessageA(&msg, NULL, 0, 0, PM_REMOVE))
+            {
+                if (msg.message == WM_QUIT)
+                {
+                    bDone = TRUE;
+                }
+            }
+            break;
+        }
+    }
+    return 0;
 }

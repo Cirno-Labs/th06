@@ -59,6 +59,11 @@ public:
     // nor MIDI, otherwise 0.
     int PlayMusic(char *path);
 
+    // The draw chain callback registered with the game's main update
+    // callback (priority 0xe): resets the cached device state and draws
+    // the frame rate. Returns 1.
+    static int OnDraw(Unknown6c6d18 *arg);
+
     unsigned char unk_000[0xc];
     // Created by DirectInput8Create.
     IDirectInput8 *dinput;
@@ -98,6 +103,9 @@ extern WORD g_PrevButtons;
 
 // Whether any of the buttons in `mask` went down this frame.
 #define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_PrevButtons & (mask)))
+
+// Counts frames and draws the frame rate ("%.02ffps").
+void DrawFps();
 
 // IDirectInput8::EnumDevices's callback for joysticks, from the DirectX
 // 8 SDK's Joystick sample: creates a device for the first joystick that

@@ -5,6 +5,18 @@
 #include "timer.h"
 #include "unsorted.h"
 
+int Unknown6c6d18::OnDraw(Unknown6c6d18 *arg)
+{
+    g_SpriteEngine->ClearVertexFormat();
+    g_SpriteEngine->ClearSpriteData();
+    g_SpriteEngine->ClearTexture();
+    g_SpriteEngine->ClearColorOp();
+    g_SpriteEngine->ClearBlendMode();
+    g_SpriteEngine->ClearZWrite();
+    DrawFps();
+    return 1;
+}
+
 BOOL CALLBACK EnumAxesCallback(const DIDEVICEOBJECTINSTANCE *pdidoi, VOID *pContext)
 {
     HWND hDlg = (HWND)pContext;

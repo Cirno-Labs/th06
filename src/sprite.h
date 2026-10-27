@@ -53,11 +53,31 @@ public:
     // delete.
     ~SpriteEngine();
 
-    // Forgets the texture last set on the device, so the next sprite
-    // drawn sets its own.
+    // These forget a piece of the device state Draw last set, so the
+    // next sprite drawn sets its own.
     void ClearTexture()
     {
         this->currentTexture = NULL;
+    }
+    void ClearBlendMode()
+    {
+        this->blendMode = 0xff;
+    }
+    void ClearColorOp()
+    {
+        this->colorOp = 0xff;
+    }
+    void ClearVertexFormat()
+    {
+        this->vertexFormat = 0xff;
+    }
+    void ClearZWrite()
+    {
+        this->zWriteDisabled = 0xff;
+    }
+    void ClearSpriteData()
+    {
+        this->currentSpriteData = NULL;
     }
 
     // Loads an ANM file into `slot`, numbering its sprites from
@@ -109,7 +129,16 @@ public:
     unsigned char unk_1e934[0x2784];
     // The texture last set on the device (IDirect3DDevice8::SetTexture).
     IDirect3DTexture8 *currentTexture;
-    unsigned char unk_210bc[0x8];
+    // Sprite flag bit 2 as last set: the D3DRS_DESTBLEND choice.
+    BYTE blendMode;
+    // Sprite flag bit 3 as last set: stage 0's D3DTSS_COLOROP choice.
+    BYTE colorOp;
+    // Which vertex format (SetVertexShader) Draw set last.
+    BYTE vertexFormat;
+    // Sprite flag bit 12 as last set: D3DRS_ZWRITEENABLE off.
+    BYTE zWriteDisabled;
+    // The sprite entry whose texture coordinates are in the vertices.
+    void *currentSpriteData;
     // Created with IDirect3DDevice8::CreateVertexBuffer and set as the
     // stream source.
     IDirect3DVertexBuffer8 *vertexBuffer;

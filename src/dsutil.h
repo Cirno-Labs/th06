@@ -68,4 +68,12 @@ public:
 // A CSound refilled from its wave file as it plays.
 class CStreamingSound : public CSound
 {
+public:
+    CStreamingSound(LPDIRECTSOUNDBUFFER pDSBuffer, DWORD dwDSBufferSize, CWaveFile *pWaveFile, DWORD dwNotifySize);
+
+    DWORD m_dwLastPlayPos;
+    DWORD m_dwPlayProgress;
+    DWORD m_dwNotifySize;
+    DWORD m_dwNextWriteOffset;
+    BOOL m_bFillNextNotificationWithSilence;
 };

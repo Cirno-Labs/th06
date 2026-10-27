@@ -452,7 +452,7 @@ void DrawFps()
         lastTime = now;
         frames = 0;
         sprintf(fpsText, "%.02ffps", fps);
-        if (g_Unknown69d4c1)
+        if (g_GameManager.unk_1821)
         {
             target = 60.0f / g_Unknown6c6d18.gameSpeed;
             g_Unknown6c6d18.unk_1b8 += target;

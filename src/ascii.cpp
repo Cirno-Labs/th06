@@ -14,12 +14,12 @@ void Unknown4010e0::Func402740()
 {
     int i;
 
-    if (g_Unknown69d4bf)
+    if (g_GameManager.unk_181f)
     {
-        g_Unknown6c6d18.viewport.X = g_Unknown69d6dc[0];
-        g_Unknown6c6d18.viewport.Y = g_Unknown69d6dc[1];
-        g_Unknown6c6d18.viewport.Width = g_Unknown69d6dc[2];
-        g_Unknown6c6d18.viewport.Height = g_Unknown69d6dc[3];
+        g_Unknown6c6d18.viewport.X = g_GameManager.arena[0];
+        g_Unknown6c6d18.viewport.Y = g_GameManager.arena[1];
+        g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
+        g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
         g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
         if (g_Unknown6c7115 && this->unk_000 != 0)
         {
@@ -42,12 +42,12 @@ void Unknown4010e0::Func403060()
 {
     int i;
 
-    if (g_Unknown69d4c0)
+    if (g_GameManager.unk_1820)
     {
-        g_Unknown6c6d18.viewport.X = g_Unknown69d6dc[0];
-        g_Unknown6c6d18.viewport.Y = g_Unknown69d6dc[1];
-        g_Unknown6c6d18.viewport.Width = g_Unknown69d6dc[2];
-        g_Unknown6c6d18.viewport.Height = g_Unknown69d6dc[3];
+        g_Unknown6c6d18.viewport.X = g_GameManager.arena[0];
+        g_Unknown6c6d18.viewport.Y = g_GameManager.arena[1];
+        g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
+        g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
         g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
         if (g_Unknown6c7115 && (this->unk_000 != 0 || this->unk_004 > 2))
         {
@@ -57,7 +57,7 @@ void Unknown4010e0::Func403060()
         {
             this->unk_008[4] = this->unk_008[1];
             this->unk_008[4].pos.x += 8.0f * this->unk_008[4].scaleX;
-            this->unk_008[4].spriteData = &g_SpriteEngine->sprites[0x1e - g_Unknown69d4b8];
+            this->unk_008[4].spriteData = &g_SpriteEngine->sprites[0x1e - g_GameManager.unk_1818];
             g_SpriteEngine->Draw(&this->unk_008[4]);
         }
         for (i = 0; i < 4; i++)
@@ -75,7 +75,7 @@ int AsciiText::OnUpdate(AsciiText *text)
     int i;
     AsciiPopup *entry;
 
-    if (!g_Unknown69d4bf && !g_Unknown69d4c0)
+    if (!g_GameManager.unk_181f && !g_GameManager.unk_1820)
     {
         for (entry = text->popups, i = 0; i < 0x203; i++, entry++)
         {
@@ -91,11 +91,11 @@ int AsciiText::OnUpdate(AsciiText *text)
             }
         }
     }
-    else if (g_Unknown69d4bf)
+    else if (g_GameManager.unk_181f)
     {
         text->unk_6244.Func401b80();
     }
-    if (g_Unknown69d4c0)
+    if (g_GameManager.unk_1820)
     {
         text->unk_69bc.Func402870();
     }
@@ -147,10 +147,10 @@ void AsciiText::DrawStrings()
             clipped = string->unk_5c;
             if (clipped != 0)
             {
-                g_Unknown6c6d18.viewport.X = g_Unknown69d6dc[0];
-                g_Unknown6c6d18.viewport.Y = g_Unknown69d6dc[1];
-                g_Unknown6c6d18.viewport.Width = g_Unknown69d6dc[2];
-                g_Unknown6c6d18.viewport.Height = g_Unknown69d6dc[3];
+                g_Unknown6c6d18.viewport.X = g_GameManager.arena[0];
+                g_Unknown6c6d18.viewport.Y = g_GameManager.arena[1];
+                g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
+                g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
                 g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
             }
             else
@@ -241,10 +241,10 @@ void AsciiText::DrawPopups()
     BYTE *digitPtr;
     D3DXVECTOR3 unused;
 
-    g_Unknown6c6d18.viewport.X = g_Unknown69d6dc[0];
-    g_Unknown6c6d18.viewport.Y = g_Unknown69d6dc[1];
-    g_Unknown6c6d18.viewport.Width = g_Unknown69d6dc[2];
-    g_Unknown6c6d18.viewport.Height = g_Unknown69d6dc[3];
+    g_Unknown6c6d18.viewport.X = g_GameManager.arena[0];
+    g_Unknown6c6d18.viewport.Y = g_GameManager.arena[1];
+    g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
+    g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
     g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
     for (i = 0; i < 0x203; i++, p++)
     {
@@ -286,10 +286,10 @@ void AsciiText::DrawPopups2()
     BYTE *digitPtr;
     D3DXVECTOR3 unused;
 
-    g_Unknown6c6d18.viewport.X = g_Unknown69d6dc[0];
-    g_Unknown6c6d18.viewport.Y = g_Unknown69d6dc[1];
-    g_Unknown6c6d18.viewport.Width = g_Unknown69d6dc[2];
-    g_Unknown6c6d18.viewport.Height = g_Unknown69d6dc[3];
+    g_Unknown6c6d18.viewport.X = g_GameManager.arena[0];
+    g_Unknown6c6d18.viewport.Y = g_GameManager.arena[1];
+    g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
+    g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
     g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
     for (i = 0; i < 0x203; i++, p++)
     {

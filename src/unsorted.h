@@ -251,9 +251,9 @@ public:
     float gameSpeed;
     // Plays music in MIDI mode; may be NULL.
     MidiPlayer *midi;
-    // While g_Unknown69d4c1 is set, DrawFps adds up every half second
-    // the frames there should have been (unk_1b8) and a share of them
-    // that shrinks as the frame rate drops (unk_1b4).
+    // While g_GameManager.unk_1821 is set, DrawFps adds up every half
+    // second the frames there should have been (unk_1b8) and a share of
+    // them that shrinks as the frame rate drops (unk_1b4).
     float unk_1b4;
     float unk_1b8;
     // The open data archives; NULL where none is open.
@@ -373,8 +373,6 @@ void ResetKeyboard();
 // Counts frames and draws the frame rate ("%.02ffps"), updated every
 // half second, at the bottom right.
 void DrawFps();
-// Makes DrawFps measure how far the frame rate falls short.
-extern BYTE g_Unknown69d4c1;
 
 void Func42ab30(int unk1, char *unk2);
 // Releases the COM object at 0x69e230, if there is one.

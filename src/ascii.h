@@ -6,6 +6,7 @@
 
 #include "chain.h"
 #include "common.h"
+#include "gamemanager.h"
 #include "sprite.h"
 
 // A string queued by AsciiText::AddString.
@@ -31,18 +32,18 @@ public:
     Unknown4010e0();
 
     void Func401b80();
-    // Draws, while g_Unknown69d4bf is set, inside the viewport given
-    // by g_Unknown69d6dc: unk_668 without z writes if g_Unknown6c7115 is
-    // set and unk_000 is nonzero, then those of the six sprites with
+    // Draws, while g_GameManager.unk_181f is set, inside the viewport given
+    // by g_GameManager.arena: unk_668 without z writes if g_Unknown6c7115
+    // is set and unk_000 is nonzero, then those of the six sprites with
     // flag 0.
     void Func402740();
     void Func402870();
-    // Draws, while g_Unknown69d4c0 is set, inside the viewport given
-    // by g_Unknown69d6dc: unk_668 if g_Unknown6c7115 is set and unk_000
+    // Draws, while g_GameManager.unk_1820 is set, inside the viewport given
+    // by g_GameManager.arena: unk_668 if g_Unknown6c7115 is set and unk_000
     // is nonzero or unk_004 above 2, then, when unk_000 is 1 or 2, a copy
     // of sprite 1 as sprite 4, shifted right and showing sprite entry
-    // 0x1e - g_Unknown69d4b8, then those of the first four sprites with
-    // flag 0.
+    // 0x1e - g_GameManager.unk_1818, then those of the first four sprites
+    // with flag 0.
     void Func403060();
 
     int unk_000;
@@ -83,14 +84,15 @@ public:
     // The first draw element's callback (priority 0xf): draws the queued
     // strings and empties the queue. Returns 1.
     static int OnDraw(AsciiText *text);
-    // Draws the queued strings with unk_0000, glyph by glyph: 14 pixels
-    // a glyph and 16 a line, times the string's scale. Strings with
-    // unk_5c set are drawn inside the viewport given by g_Unknown69d6dc,
-    // the others in the whole 640x480 screen; those with unk_58 set use
-    // the second glyph set, in white.
+    // Draws the queued strings with unk_0000, glyph by glyph: 14 pixels a
+    // glyph and 16 a line, times the string's scale. Strings with unk_5c
+    // set are drawn inside the viewport given by g_GameManager.arena, the
+    // others in the whole 640x480 screen; those with unk_58 set use the
+    // second glyph set, in white.
     void DrawStrings();
-    // The update element's callback: moves the active popups along, unless g_Unknown69d4bf or g_Unknown69d4c0 is set;
-    // then it updates the matching part. Returns 1.
+    // The update element's callback: moves the active popups along, unless
+    // g_GameManager.unk_181f or g_GameManager.unk_1820 is set; then it
+    // updates the matching part. Returns 1.
     static int OnUpdate(AsciiText *text);
     // The update element's added callback: loads the font's ANM files
     // and initializes. Returns 0, or -1 if loading fails.
@@ -111,7 +113,7 @@ public:
         this->unk_6234 = 0;
     }
     // Draws the active popups digit by digit with unk_0110, inside the
-    // viewport given by g_Unknown69d6dc, through
+    // viewport given by g_GameManager.arena, through
     // SpriteEngine::Func433590.
     void DrawPopups();
     // Like DrawPopups, but draws the minus sign through
@@ -161,12 +163,7 @@ ASSERT_SIZE(AsciiText, 0xc1ac);
 extern AsciiText g_AsciiText;
 
 extern BYTE g_Unknown6c7114;
-extern BYTE g_Unknown69d4bf;
 extern BYTE g_Unknown6c7115;
-extern BYTE g_Unknown69d4b8;
-// A rectangle: x, y, width and height.
-extern float g_Unknown69d6dc[4];
-extern BYTE g_Unknown69d4c0;
 
 // AsciiText's chain elements, statically allocated: the update element,
 // and draw elements at priorities 0xf and 10.

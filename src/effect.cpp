@@ -47,7 +47,7 @@ void EffectManager::RemoveChain()
 int EffectManager::AddedCallback(EffectManager *mgr)
 {
     mgr->Reset();
-    switch (g_Stage)
+    switch (g_GameManager.stage)
     {
     case 0:
     case 1:

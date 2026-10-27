@@ -4,6 +4,7 @@
 
 #include "chain.h"
 #include "common.h"
+#include "gamemanager.h"
 #include "sprite.h"
 #include "timer.h"
 
@@ -60,9 +61,6 @@ public:
 };
 ASSERT_SIZE(EffectManager, 0x2f984);
 extern EffectManager g_EffectManager;
-
-// The stage being played, at 0x69d6d4: 1 to 6, 7 for the extra stage.
-extern int g_Stage;
 
 // EffectManager's statically allocated chain elements.
 extern ChainElem g_EffectCalcChain;

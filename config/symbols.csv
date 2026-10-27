@@ -170,7 +170,7 @@ address,size,name,symbol
 0x0041b5af,50,Func41b5af,
 0x0041b5e1,130,Func41b5e1,
 0x0041b663,999,Func41b663,
-0x0041ba4a,32,Func41ba4a,
+0x0041ba4a,32,GameManager::OnDraw,?OnDraw@GameManager@@SAHPAV1@@Z
 0x0041ba6a,152,Func41ba6a,?Func41ba6a@@YAHXZ
 0x0041bb02,1781,Func41bb02,
 0x0041c1f7,114,Func41c1f7,
@@ -1567,12 +1567,7 @@ address,size,name,symbol
 0x0069bc30,,g_Gui,?g_Gui@@3VGui@@A
 0x0069bc5c,,g_GuiDrawChain,?g_GuiDrawChain@@3UChainElem@@A
 0x0069bc7c,,g_GuiCalcChain,?g_GuiCalcChain@@3UChainElem@@A
-0x0069d4b8,,g_Unknown69d4b8,?g_Unknown69d4b8@@3EA
-0x0069d4bf,,g_Unknown69d4bf,?g_Unknown69d4bf@@3EA
-0x0069d4c0,,g_Unknown69d4c0,?g_Unknown69d4c0@@3EA
-0x0069d4c1,,g_Unknown69d4c1,?g_Unknown69d4c1@@3EA
-0x0069d6d4,,g_Stage,?g_Stage@@3HA
-0x0069d6dc,,g_Unknown69d6dc,?g_Unknown69d6dc@@3PAMA
+0x0069bca0,,g_GameManager,?g_GameManager@@3VGameManager@@A
 0x0069d8f8,,g_Rng,?g_Rng@@3VRng@@A
 0x0069d900,,g_Archives,?g_Archives@@3PAPAVDatArchive@@A
 0x0069d904,,g_Buttons,?g_Buttons@@3GA

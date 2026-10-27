@@ -56,8 +56,15 @@ def compile_all():
         if os.path.exists(obj) and os.path.getmtime(obj) > max(os.path.getmtime(src), headers):
             continue
         print("cl", src)
-        tool("cl", "/c", *CFLAGS, "/Isrc", "/Fo" + win(obj), win(src))
+        tool("cl", "/c", *CFLAGS, *file_flags(src), "/Isrc", "/Fo" + win(obj), win(src))
     return objs
+
+
+def file_flags(src):
+    """Extra flags for one file, from a `// cflags: ...` first line."""
+    with open(src) as f:
+        first = f.readline()
+    return first.split(":", 1)[1].split() if first.startswith("// cflags:") else []
 
 
 def write_hooks(objs, symbols):

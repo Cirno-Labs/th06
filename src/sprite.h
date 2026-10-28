@@ -210,7 +210,10 @@ public:
     void ReleaseAnm(int slot);
     // Releases one of the loaded surfaces.
     void ReleaseSurface(int surface);
-    void Func431660();
+    // Sets up `quad` and copies it into g_DiffuseQuadXyz; unless the
+    // vertex buffer is disabled, creates the vertex buffer from it and
+    // sets it as the stream source.
+    void CreateQuad();
     // Copies a rectangle of one of the loaded surfaces to the back buffer.
     void Func435300(int surface, int unk1, int unk2, int unk3, int unk4);
     // Prints a printf-style text with a shadow into the sprite's texture
@@ -242,7 +245,9 @@ public:
     // Created with IDirect3DDevice8::CreateVertexBuffer and set as the
     // stream source.
     IDirect3DVertexBuffer8 *vertexBuffer;
-    VertexTex1Xyz unk_210c8[4];
+    // A 256 by 256 quad around the origin, and the vertex buffer's
+    // contents.
+    VertexTex1Xyz quad[4];
     int unk_21118;
     unsigned char unk_2111c[0x10];
 };
@@ -267,6 +272,15 @@ struct VertexTex1Xyzrwh
 // A quad of each, set up by SpriteEngine's constructor.
 extern VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
 extern VertexTex1Xyzrwh g_Quad[4];
+// An untransformed vertex with a color and texture coordinates.
+struct VertexTex1DiffuseXyz
+{
+    D3DXVECTOR3 pos;
+    D3DCOLOR diffuse;
+    D3DXVECTOR2 uv;
+};
+// SpriteEngine::quad with colors.
+extern VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
 
 // The texture formats ANM files choose from: unknown (the surface's own),
 // A8R8G8B8, A1R5G5B5, R5G6B5, R8G8B8 and A4R4G4B4.

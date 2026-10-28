@@ -268,7 +268,7 @@ int Unknown6c6d18::AddedCallback(Unknown6c6d18 *arg)
         return -1;
     }
     arg->unk_198 = 0;
-    g_SpriteEngine->Func431660();
+    g_SpriteEngine->CreateQuad();
     CreateTextSurface();
     arg->ReleaseArchive(0);
     if (g_Unknown6c6d18.LoadArchive(1, "紅魔郷MD.dat") != 0)

@@ -391,7 +391,7 @@ address,size,name,symbol
 0x00431370,176,BgmNotificationProc,?BgmNotificationProc@@YGKPAX@Z
 0x00431420,76,Unknown6d3f50::Unknown6d3f50,??0Unknown6d3f50@@QAE@XZ
 0x00431470,493,SpriteEngine::SpriteEngine,??0SpriteEngine@@QAE@XZ
-0x00431660,700,SpriteEngine::Func431660,?Func431660@SpriteEngine@@QAEXXZ
+0x00431660,700,SpriteEngine::CreateQuad,?CreateQuad@SpriteEngine@@QAEXXZ
 0x00431920,237,Func431920,
 0x00431a10,863,Func431a10,
 0x00431d70,66,SpriteEngine::CreateTexture,?CreateTexture@SpriteEngine@@QAEHHHHH@Z
@@ -1621,3 +1621,4 @@ address,size,name,symbol
 0x006d4588,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A
 0x006d4590,,g_DiffuseQuad,?g_DiffuseQuad@@3PAUVertexTex1DiffuseXyzrwh@@A
 0x006d4600,,g_Quad,?g_Quad@@3PAUVertexTex1Xyzrwh@@A
+0x006d4660,,g_DiffuseQuadXyz,?g_DiffuseQuadXyz@@3PAUVertexTex1DiffuseXyz@@A

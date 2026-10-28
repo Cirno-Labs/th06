@@ -226,6 +226,63 @@ int MainMenu::DrawPracticeScores()
     return 0;
 }
 
+int MainMenu::OnDraw(MainMenu *menu)
+{
+    Sprite *vm;
+    int i;
+    float rect[4];
+    DWORD alpha;
+
+    vm = menu->sprites;
+    rect[0] = 0.0f;
+    rect[1] = 0.0f;
+    rect[2] = 640.0f;
+    rect[3] = 480.0f;
+    if (menu->unk_81f0 == 0)
+    {
+        return 1;
+    }
+    g_SpriteEngine->ClearTexture();
+    g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+    if (menu->unk_8210 != 0)
+    {
+        if (menu->unk_820c < menu->unk_8210)
+        {
+            menu->unk_820c++;
+        }
+        alpha = ((menu->unk_8200 & 0xff000000) >> 24) - ((menu->unk_81fc & 0xff000000) >> 24);
+        DrawColorRect(rect, (alpha * menu->unk_820c / menu->unk_8210 + ((menu->unk_81fc & 0xff000000) >> 24)) << 24 |
+                                menu->unk_8200 & 0xffffff);
+    }
+    else if (menu->unk_820c != 0)
+    {
+        menu->unk_820c--;
+        alpha = ((menu->unk_8200 & 0xff000000) >> 24) - ((menu->unk_81fc & 0xff000000) >> 24);
+        DrawColorRect(rect, (alpha * menu->unk_820c / menu->unk_8214 + ((menu->unk_81fc & 0xff000000) >> 24)) << 24 |
+                                menu->unk_8200 & 0xffffff);
+    }
+    for (i = 0; i < 0x62; i++, vm++)
+    {
+        if (vm->HasTexture())
+        {
+            D3DXVECTOR3 savedPos = vm->pos;
+            vm->pos += vm->posOffset;
+            g_SpriteEngine->DrawRotated(vm);
+            vm->pos = savedPos;
+        }
+    }
+    switch (menu->unk_81f0)
+    {
+    case 13:
+    case 14:
+    case 15:
+        menu->Func438bc1();
+        break;
+    }
+    menu->DrawPracticeScores();
+    return 1;
+}
+
 int LoadTitleResources(MainMenu *menu)
 {
     int i;

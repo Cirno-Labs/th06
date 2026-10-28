@@ -42,6 +42,7 @@ public:
     // stages the shot type reached on this difficulty, fading in over
     // 30 frames, the one at the cursor brighter. Returns 0.
     int DrawPracticeScores();
+    int Func438bc1();
 
     Sprite sprites[0x7a];
     // The selected entry.
@@ -61,7 +62,8 @@ public:
     D3DCOLOR unk_8208;
     int unk_820c;
     int unk_8210;
-    DWORD unk_8214[0x2];
+    int unk_8214;
+    DWORD unk_8218;
     // The button mapping the options screen edits.
     ControllerMapping controllerMapping;
     short unk_822e;

@@ -121,6 +121,8 @@ public:
 
     // Resets the sprite's state, keeping its texture.
     void Initialize();
+    // Whether the sprite shows a sprite whose texture is loaded.
+    __forceinline BOOL HasTexture();
 
     // The gaps are DWORDs, not bytes: a byte array would make /GS put a
     // security cookie in functions with a Sprite local.
@@ -433,6 +435,19 @@ public:
 };
 ASSERT_SIZE(SpriteEngine, 0x2112c);
 extern SpriteEngine *g_SpriteEngine;
+
+inline BOOL Sprite::HasTexture()
+{
+    if (this->spriteData == NULL)
+    {
+        return FALSE;
+    }
+    if (this->spriteData->sourceFileIndex < 0)
+    {
+        return FALSE;
+    }
+    return g_SpriteEngine->textures[this->spriteData->sourceFileIndex] != NULL;
+}
 
 // Transformed vertices with a color and texture coordinates, and without
 // a color.

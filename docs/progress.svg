@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">74.73% (352)</tspan> · <tspan class="decompiled">12.31% (58)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">12.95% (61)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">74.73% (352)</tspan> · <tspan class="decompiled">12.53% (59)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">12.74% (60)</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="558.27" height="6" x="0" y="0" class="named"/>
-<rect width="91.99" height="6" x="558.27" y="0" class="decompiled"/>
-<rect width="96.75" height="6" x="650.25" y="0" class="todo"/>
+<rect width="93.57" height="6" x="558.27" y="0" class="decompiled"/>
+<rect width="95.16" height="6" x="651.84" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -143,7 +143,7 @@
 <rect width="12" height="12" x="330" y="15" class="decompiled"><title>0x0040d770 Func40d770 (438 bytes)</title></rect>
 <rect width="12" height="12" x="345" y="15" class="decompiled"><title>0x0040d930 Func40d930 (356 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="15" class="decompiled"><title>0x0040daa0 Func40daa0 (276 bytes)</title></rect>
-<rect width="12" height="12" x="375" y="15" class="todo"><title>0x0040dbc0 Func40dbc0 (242 bytes)</title></rect>
+<rect width="12" height="12" x="375" y="15" class="decompiled"><title>0x0040dbc0 Func40dbc0 (242 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="15" class="todo"><title>0x0040dcc0 Func40dcc0 (313 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="15" class="todo"><title>0x0040de00 Func40de00 (942 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="15" class="todo"><title>0x0040e1b0 Func40e1b0 (276 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.49%</tspan> · <tspan class="decompiled">8.57%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">21.94%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.49%</tspan> · <tspan class="decompiled">8.67%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">21.84%</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="519.06" height="6" x="0" y="0" class="named"/>
-<rect width="64.02" height="6" x="519.06" y="0" class="decompiled"/>
-<rect width="163.92" height="6" x="583.08" y="0" class="todo"/>
+<rect width="64.78" height="6" x="519.06" y="0" class="decompiled"/>
+<rect width="163.16" height="6" x="583.84" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="named"><title>0x004074a0 EnemyScripts::RunEnemy (13572 bytes)</title></rect>
@@ -770,7 +770,7 @@
 <rect width="8.04" height="7.70" x="631.53" y="58.21" class="todo"><title>0x004107b0 Func4107b0 (245 bytes)</title></rect>
 <rect width="8.04" height="7.66" x="631.53" y="68.91" class="decompiled"><title>0x0040ba80 Func40ba80 (244 bytes)</title></rect>
 <rect width="8.04" height="7.66" x="631.53" y="79.57" class="decompiled"><title>0x00416c50 Func416c50 (244 bytes)</title></rect>
-<rect width="8.04" height="7.57" x="631.53" y="90.23" class="todo"><title>0x0040dbc0 Func40dbc0 (242 bytes)</title></rect>
+<rect width="8.04" height="7.57" x="631.53" y="90.23" class="decompiled"><title>0x0040dbc0 Func40dbc0 (242 bytes)</title></rect>
 <rect width="8.04" height="7.57" x="631.53" y="100.80" class="named"><title>0x0042a570 ReplayManager::PlayOnUpdate (242 bytes)</title></rect>
 <rect width="8.04" height="7.53" x="631.53" y="111.37" class="named"><title>0x0043ada0 CSound::~CSound (241 bytes)</title></rect>
 <rect width="8.04" height="7.40" x="631.53" y="121.90" class="todo"><title>0x00403580 Sprite::Initialize (238 bytes)</title></rect>

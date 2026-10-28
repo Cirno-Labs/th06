@@ -2045,3 +2045,30 @@ void Func40daa0(Enemy *enemy, EnemyScriptInstr *instr)
         }
     }
 }
+
+// g_EnemyScriptFuncs[13], set as the context's func: every sixth frame
+// fires a copy of the enemy's shooter from instr's second argument
+// points on a circle (radius floatVars[3], from angle floatVars[2])
+// around the play area's center, each aimed outwards turned by
+// floatVars[1].
+void Func40dbc0(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int i;
+    BulletShooter sh = enemy->shooter;
+    int n2 = instr->args.i[1];
+    float theta = enemy->ctx.floatVars[2];
+    int unused;
+
+    if (enemy->ctx.intVars[3] % 6 == 0)
+    {
+        for (i = 0; i < n2; i++, theta += 6.2831855f / n2)
+        {
+            SinCosScale(&sh.pos, theta, enemy->ctx.floatVars[3]);
+            sh.pos.x += 192.0f;
+            sh.pos.y += 224.0f;
+            sh.angle1 = theta + enemy->ctx.floatVars[1];
+            g_BulletManager.FirePattern(&sh);
+        }
+    }
+    enemy->ctx.intVars[3]++;
+}

@@ -55,7 +55,7 @@ void Gui::Func417458(int value)
 
 int Gui::OnUpdate(Gui *gui)
 {
-    if (g_GameManager.unk_002c)
+    if (g_GameManager.isFrozen)
     {
         return 1;
     }
@@ -129,7 +129,7 @@ int Gui::OnDraw(Gui *gui)
             break;
         }
         cursor.y += 16.0f;
-        if (g_GameManager.difficulty < 4 && !g_GameManager.unk_1823)
+        if (g_GameManager.difficulty < 4 && !g_GameManager.isInPractice)
         {
             switch (g_App.startCfg.lives)
             {
@@ -574,7 +574,7 @@ int GuiImpl::RunMsg()
             }
             else
             {
-                g_GameManager.unk_181c = 0xff;
+                g_GameManager.nextExtend = 0xff;
             }
             break;
         case 10:
@@ -583,10 +583,10 @@ int GuiImpl::RunMsg()
             g_App.FadeOutMusic(4.0f);
             break;
         case 11:
-            g_GameManager.unk_0000 = g_GameManager.score;
-            if (g_GameManager.unk_1823)
+            g_GameManager.guiScore = g_GameManager.score;
+            if (g_GameManager.isInPractice)
             {
-                g_GameManager.unk_0000 = g_GameManager.score;
+                g_GameManager.guiScore = g_GameManager.score;
                 g_App.scene = 7;
                 goto stepSprites;
             }
@@ -594,12 +594,12 @@ int GuiImpl::RunMsg()
             {
                 g_App.scene = 3;
             }
-            else if (g_GameManager.unk_001c == 0)
+            else if (g_GameManager.isInReplay == 0)
             {
                 if (g_GameManager.difficulty == 4)
                 {
-                    g_GameManager.unk_1822 = 1;
-                    g_GameManager.unk_0000 = g_GameManager.score;
+                    g_GameManager.isGameCleared = 1;
+                    g_GameManager.guiScore = g_GameManager.score;
                     g_App.scene = 7;
                     goto stepSprites;
                 }
@@ -1101,7 +1101,7 @@ void Gui::DrawHud()
         // power bar's vertices.
         D3DXVECTOR3 scorePos(496.0f, 82.0f, 0.0f);
 
-        g_AsciiText.AddFormat(&scorePos, "%.9d", g_GameManager.unk_0000);
+        g_AsciiText.AddFormat(&scorePos, "%.9d", g_GameManager.guiScore);
         scorePos = D3DXVECTOR3(496.0f, 58.0f, 0.0f);
         g_AsciiText.AddFormat(&scorePos, "%.9d", g_GameManager.highScore);
         if (this->flags.grazeChanged || g_App.cfg.flags.noFrameItems)
@@ -1146,7 +1146,7 @@ void Gui::DrawBanners()
         pos.x = 168.0f;
         pos.y = 198.0f;
         pos.z = 0.0f;
-        if (!g_GameManager.unk_1824)
+        if (!g_GameManager.isInDemo)
         {
             g_SpriteEngine->Draw3DRounded(&this->impl->unk_1ba4);
             g_AsciiText.SetColor((this->impl->unk_1ba4.color & 0xff000000) | 0xffff40);
@@ -1174,7 +1174,7 @@ void Gui::DrawBanners()
         }
         g_AsciiText.color = 0xffffffff;
     }
-    if (this->impl->unk_1cb4.flags.unk0 && !g_GameManager.unk_1824)
+    if (this->impl->unk_1cb4.flags.unk0 && !g_GameManager.isInDemo)
     {
         g_SpriteEngine->Draw3DRounded(&this->impl->unk_1cb4);
     }

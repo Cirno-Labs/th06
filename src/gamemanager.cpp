@@ -38,7 +38,7 @@ int GameManager::OnUpdate(GameManager *mgr)
 {
     unsigned int step;
 
-    if (mgr->unk_1824)
+    if (mgr->isInDemo)
     {
         if (WAS_PRESSED(0xffff))
         {
@@ -54,16 +54,16 @@ int GameManager::OnUpdate(GameManager *mgr)
             g_App.scene = 1;
         }
     }
-    if (!mgr->unk_1820 && !mgr->unk_181f && !mgr->unk_1824 && WAS_PRESSED(8))
+    if (!mgr->isInContinueMenu && !mgr->isPaused && !mgr->isInDemo && WAS_PRESSED(8))
     {
-        mgr->unk_181f = 1;
+        mgr->isPaused = 1;
         g_GameManager.arena[0] = 32.0f;
         g_GameManager.arena[1] = 16.0f;
         g_GameManager.arena[2] = 384.0f;
         g_GameManager.arena[3] = 448.0f;
         g_App.redrawFrames = 3;
     }
-    mgr->unk_1821 = !mgr->unk_1820 && !mgr->unk_181f ? 1 : 0;
+    mgr->isPlaying = !mgr->isInContinueMenu && !mgr->isPaused ? 1 : 0;
     g_App.viewport.X = mgr->arena[0];
     g_App.viewport.Y = mgr->arena[1];
     g_App.viewport.Width = mgr->arena[2];
@@ -73,7 +73,7 @@ int GameManager::OnUpdate(GameManager *mgr)
     SetupCamera(0.0f);
     g_App.d3dDevice->SetViewport(&g_App.viewport);
     g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, g_Stage.fog.color, 1.0f, 0);
-    if (mgr->unk_181f == 1 || mgr->unk_181f == 2 || mgr->unk_1820)
+    if (mgr->isPaused == 1 || mgr->isPaused == 2 || mgr->isInContinueMenu)
     {
         return 3;
     }
@@ -81,13 +81,13 @@ int GameManager::OnUpdate(GameManager *mgr)
     {
         mgr->score = 999999990;
     }
-    if (mgr->unk_0000 != mgr->score)
+    if (mgr->guiScore != mgr->score)
     {
-        if (mgr->score < mgr->unk_0000)
+        if (mgr->score < mgr->guiScore)
         {
-            mgr->score = mgr->unk_0000;
+            mgr->score = mgr->guiScore;
         }
-        step = (mgr->score - mgr->unk_0000) >> 5;
+        step = (mgr->score - mgr->guiScore) >> 5;
         if (step >= 0x1343e)
         {
             step = 0x1343e;
@@ -97,21 +97,21 @@ int GameManager::OnUpdate(GameManager *mgr)
             step = 10;
         }
         step -= step % 10;
-        if (mgr->unk_0008 < step)
+        if (mgr->scoreIncrement < step)
         {
-            mgr->unk_0008 = step;
+            mgr->scoreIncrement = step;
         }
-        if (mgr->unk_0000 + mgr->unk_0008 > mgr->score)
+        if (mgr->guiScore + mgr->scoreIncrement > mgr->score)
         {
-            mgr->unk_0008 = mgr->score - mgr->unk_0000;
+            mgr->scoreIncrement = mgr->score - mgr->guiScore;
         }
-        mgr->unk_0000 += mgr->unk_0008;
-        if (mgr->unk_0000 >= mgr->score)
+        mgr->guiScore += mgr->scoreIncrement;
+        if (mgr->guiScore >= mgr->score)
         {
-            mgr->unk_0008 = 0;
-            mgr->unk_0000 = mgr->score;
+            mgr->scoreIncrement = 0;
+            mgr->guiScore = mgr->score;
         }
-        if (mgr->unk_181c >= 0 && g_ExtendScores[mgr->unk_181c] <= mgr->unk_0000)
+        if (mgr->nextExtend >= 0 && g_ExtendScores[mgr->nextExtend] <= mgr->guiScore)
         {
             if (mgr->lives < 8)
             {
@@ -119,23 +119,23 @@ int GameManager::OnUpdate(GameManager *mgr)
                 g_SoundPlayer.QueueSound(0x1c, 0);
             }
             g_Gui.flags.livesChanged = 2;
-            mgr->unk_181c++;
+            mgr->nextExtend++;
             g_GameManager.AddSubRank(200);
         }
-        if (mgr->highScore < mgr->unk_0000)
+        if (mgr->highScore < mgr->guiScore)
         {
-            mgr->highScore = mgr->unk_0000;
+            mgr->highScore = mgr->guiScore;
         }
     }
-    mgr->unk_1a30++;
+    mgr->stageFrames++;
     return 1;
 }
 
 int GameManager::OnDraw(GameManager *mgr)
 {
-    if (mgr->unk_181f)
+    if (mgr->isPaused)
     {
-        mgr->unk_181f = 2;
+        mgr->isPaused = 2;
     }
     return 1;
 }
@@ -163,9 +163,9 @@ int GameManager::AddedCallback(GameManager *mgr)
         mgr->playerArea[2] = 368.0f;
         mgr->playerArea[3] = 416.0f;
         mgr->progressFrames = 0;
-        mgr->unk_0000 = 0;
+        mgr->guiScore = 0;
         mgr->score = 0;
-        mgr->unk_0008 = 0;
+        mgr->scoreIncrement = 0;
         mgr->highScore = 100000;
         mgr->power = 0;
         mgr->continuesUsed = 0;
@@ -175,11 +175,11 @@ int GameManager::AddedCallback(GameManager *mgr)
         }
         if (mgr->difficulty < 4)
         {
-            mgr->unk_181c = 0;
+            mgr->nextExtend = 0;
         }
         else
         {
-            mgr->unk_181c = 4;
+            mgr->nextExtend = 4;
         }
         g_GameManager.powerItemCombo = 0;
         mgr->rank = 8;
@@ -204,7 +204,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         LoadSpellCards(data, mgr->catks);
         LoadClears(data, mgr->clrds);
         LoadPracticeScores(data, &mgr->pscrs[0][0][0]);
-        if (mgr->unk_1823)
+        if (mgr->isInPractice)
         {
             g_GameManager.highScore = mgr->pscrs[g_GameManager.character * 2 + g_GameManager.shotType][g_GameManager.stage][g_GameManager.difficulty].score;
         }
@@ -218,15 +218,15 @@ int GameManager::AddedCallback(GameManager *mgr)
     }
     else
     {
-        mgr->unk_0000 = mgr->score;
-        mgr->unk_0008 = 0;
+        mgr->guiScore = mgr->score;
+        mgr->scoreIncrement = 0;
     }
     mgr->subRank = 0;
     mgr->pointItems = 0;
     mgr->graze = 0;
-    mgr->unk_181f = 0;
+    mgr->isPaused = 0;
     mgr->stage++;
-    if (g_GameManager.unk_001c == 0)
+    if (g_GameManager.isInReplay == 0)
     {
         shot2 = g_GameManager.character * 2 + g_GameManager.shotType;
         if (!mgr->continuesUsed && mgr->clrds[shot2].unk_0c[g_GameManager.difficulty] < mgr->stage - 1)
@@ -238,7 +238,7 @@ int GameManager::AddedCallback(GameManager *mgr)
             mgr->clrds[shot2].unk_11[g_GameManager.difficulty] = mgr->stage - 1;
         }
     }
-    if (mgr->unk_1823)
+    if (mgr->isInPractice)
     {
         switch (mgr->stage)
         {
@@ -254,21 +254,21 @@ int GameManager::AddedCallback(GameManager *mgr)
     }
     g_App.LoadArchive(4, "紅魔郷CM.dat");
     g_App.LoadArchive(2, "紅魔郷ST.dat");
-    if (g_GameManager.unk_001c == 1)
+    if (g_GameManager.isInReplay == 1)
     {
         if (ReplayManager::RegisterChain(1, g_GameManager.replayFile) != 0)
         {
             failed = TRUE;
         }
-        while (g_ExtendScores[mgr->unk_181c] <= mgr->unk_0000)
+        while (g_ExtendScores[mgr->nextExtend] <= mgr->guiScore)
         {
-            mgr->unk_181c++;
+            mgr->nextExtend++;
         }
         mgr->minRank = g_ReplayRanks[g_GameManager.difficulty].minRank;
         mgr->maxRank = g_ReplayRanks[g_GameManager.difficulty].maxRank;
     }
     g_Rng.generated = 0;
-    mgr->unk_1a2c = g_Rng.seed;
+    mgr->rngSeed = g_Rng.seed;
     if (Stage::RegisterChain(mgr->stage) != 0)
     {
         LogPrintf(&g_Log, "error : 背景データの初期化に失敗しました\n");
@@ -304,25 +304,25 @@ int GameManager::AddedCallback(GameManager *mgr)
         LogPrintf(&g_Log, "error : 2D表示の初期化に失敗しました\n");
         return -1;
     }
-    if (g_GameManager.unk_001c == 0)
+    if (g_GameManager.isInReplay == 0)
     {
         ReplayManager::RegisterChain(0, "replay/th6_00.rpy");
     }
-    if (!g_GameManager.unk_1824)
+    if (!g_GameManager.isInDemo)
     {
         g_App.LoadMidi(1, g_Stage.data->songPaths[1]);
         g_App.PlayMusic(g_Stage.data->songPaths[0]);
     }
-    mgr->unk_1820 = 0;
-    mgr->unk_1821 = 1;
+    mgr->isInContinueMenu = 0;
+    mgr->isPlaying = 1;
     if (g_App.scene != 3)
     {
         g_App.achievedFrames = 0.0f;
         g_App.expectedFrames = 0.0f;
     }
-    mgr->unk_002c = 0;
+    mgr->isFrozen = 0;
     mgr->score = 0;
-    mgr->unk_1822 = 0;
+    mgr->isGameCleared = 0;
     g_AsciiText.Initialize();
     if (failed)
     {
@@ -340,7 +340,7 @@ int GameManager::RegisterChain()
     g_GameManagerCalcChain.addedCallback = (ChainCallback)GameManager::AddedCallback;
     g_GameManagerCalcChain.deletedCallback = (ChainCallback)GameManager::DeletedCallback;
     g_GameManagerCalcChain.arg = mgr;
-    mgr->unk_1a30 = 0;
+    mgr->stageFrames = 0;
     if (g_Chain.AddToCalcChain(&g_GameManagerCalcChain, 4) != 0)
     {
         return -1;
@@ -354,7 +354,7 @@ int GameManager::RegisterChain()
 int GameManager::DeletedCallback(GameManager *mgr)
 {
     g_App.d3dDevice->ResourceManagerDiscardBytes(0);
-    if (!g_GameManager.unk_1824)
+    if (!g_GameManager.isInDemo)
     {
         g_App.StopMusic();
     }
@@ -366,7 +366,7 @@ int GameManager::DeletedCallback(GameManager *mgr)
     EffectManager::RemoveChain();
     Gui::RemoveChain();
     ReplayManager::EndStage();
-    mgr->unk_1821 = 0;
+    mgr->isPlaying = 0;
     g_AsciiText.Initialize();
     return 0;
 }

@@ -53,7 +53,7 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
 {
     WORD input;
 
-    if (!g_GameManager.unk_1821)
+    if (!g_GameManager.isPlaying)
     {
         return 1;
     }
@@ -71,7 +71,7 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
 
 int ReplayManager::PlayOnUpdate(ReplayManager *replay)
 {
-    if (!g_GameManager.unk_1821)
+    if (!g_GameManager.isPlaying)
     {
         return 1;
     }
@@ -106,7 +106,7 @@ int ReplayManager::PlayOnUpdate(ReplayManager *replay)
 
 int ReplayManager::PlayOnUpdate2(ReplayManager *replay)
 {
-    if (!g_GameManager.unk_1821)
+    if (!g_GameManager.isPlaying)
     {
         return 1;
     }
@@ -256,7 +256,7 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     cur->power = g_GameManager.power;
     cur->rank = g_GameManager.rank;
     cur->unk_06 = g_GameManager.pointItemsTotal;
-    cur->unk_04 = g_GameManager.unk_1a2c;
+    cur->unk_04 = g_GameManager.rngSeed;
     cur->unk_0c = g_GameManager.powerItemCombo;
     replay->cursors[0] = cur->frames;
     replay->cursors[0]->frame = 0;
@@ -273,7 +273,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     replay->frame = 0;
     if (replay->data == NULL)
     {
-        replay->data = (ReplayHeader *)LoadFileData(replay->path, !g_GameManager.unk_1824);
+        replay->data = (ReplayHeader *)LoadFileData(replay->path, !g_GameManager.isInDemo);
         if (ValidateReplay(replay->data, g_FileSize) != 0)
         {
             return -1;
@@ -304,7 +304,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     g_GameManager.powerItemCombo = cur->unk_0c;
     if (g_GameManager.stage >= 2 && replay->data->stages[g_GameManager.stage - 1] != NULL)
     {
-        g_GameManager.unk_0000 = g_GameManager.score = replay->data->stages[g_GameManager.stage - 1]->score;
+        g_GameManager.guiScore = g_GameManager.score = replay->data->stages[g_GameManager.stage - 1]->score;
     }
     return 0;
 }
@@ -343,7 +343,7 @@ void SaveReplay(char *path, char *name)
                     }
                 }
                 DebugPrint("%s write ...\n", path);
-                hX.score = g_GameManager.unk_0000;
+                hX.score = g_GameManager.guiScore;
                 slowdown2 = (g_App.achievedFrames / g_App.expectedFrames - 0.5f) * 2.0f;
                 if (slowdown2 < 0.0f)
                 {

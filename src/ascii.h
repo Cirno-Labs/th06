@@ -36,19 +36,19 @@ public:
     {
     }
 
-    // The pause menu, while g_GameManager.unk_181f is set. `state`: 0
+    // The pause menu, while g_GameManager.isPaused is set. `state`: 0
     // starts the menu's scripts (and a copy of the play area into texture
     // 3 for the background), 1 and 2 have resume or quit selected, 4 and
     // 5 the no and yes of quitting; 3 resumes and 6 returns to the title
     // (scene 1) after 20 frames. The pause button resumes and 0x200 quits
     // from any state. Returns 0.
     int UpdatePauseMenu();
-    // Draws, while g_GameManager.unk_181f is set, inside the viewport given
+    // Draws, while g_GameManager.isPaused is set, inside the viewport given
     // by g_GameManager.arena: the background without z writes if
     // g_App.lockableBackBuffer is set and state is nonzero,
     // then those of the six sprites with flag 0.
     void DrawPauseMenu();
-    // The continue menu, while g_GameManager.unk_1820 is set; leaves at
+    // The continue menu, while g_GameManager.isInContinueMenu is set; leaves at
     // once (scene 7, or 8 in a replay; returns 1) in practice, replays,
     // after 3 continues or on Extra. `state`: 0 starts the scripts
     // (and the play area's copy as in UpdatePauseMenu), 1 and 2
@@ -56,7 +56,7 @@ public:
     // lives and bombs and resetting the score to the continues used; 4
     // gives up (scene 7) after 20. Returns 0 then.
     int UpdateContinueMenu();
-    // Draws, while g_GameManager.unk_1820 is set, inside the viewport
+    // Draws, while g_GameManager.isInContinueMenu is set, inside the viewport
     // given by g_GameManager.arena: the background if lockableBackBuffer
     // is set and state is nonzero or stateFrames above 2, then, when state
     // is 1 or 2, a copy of sprite 1 as sprite 4, shifted right and showing
@@ -116,7 +116,7 @@ public:
     // second glyph set, in white.
     void DrawStrings();
     // The update element's callback: moves the active popups along, unless
-    // g_GameManager.unk_181f or g_GameManager.unk_1820 is set; then it
+    // g_GameManager.isPaused or g_GameManager.isInContinueMenu is set; then it
     // updates the matching part. Returns 1.
     static int OnUpdate(AsciiText *text);
     // The update element's added callback: loads the font's ANM files

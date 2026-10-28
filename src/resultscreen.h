@@ -218,7 +218,7 @@ public:
 
     // Allocates the screen and adds it to the chains (update priority
     // 0xd, draw 0xc). With `unk` set, it starts in state 9, or 0x11 when
-    // g_GameManager.unk_1823 is set. Returns 0, or -1 if adding fails.
+    // g_GameManager.isInPractice is set. Returns 0, or -1 if adding fails.
     static int RegisterChain(int unk);
     // The menu (states 0 and 1: score lists by difficulty, spell
     // cards, quit), the score lists (3 to 7, by shot), the spell cards

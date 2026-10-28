@@ -49,35 +49,39 @@ public:
     // interface) and the stage's music. Returns 0, or -1 after logging
     // which part failed.
     static int AddedCallback(GameManager *mgr);
-    // Stops the music unless unk_1824 is set, removes the game's chain
+    // Stops the music unless isInDemo is set, removes the game's chain
     // elements and resets the ASCII text. Returns 0.
     static int DeletedCallback(GameManager *mgr);
     // Removes the two chain elements.
     static void RemoveChain();
-    // The draw element's callback: sets unk_181f to 2 while it is set.
+    // The draw element's callback: sets isPaused to 2 while it is set.
     // Returns 1.
     static int OnDraw(GameManager *mgr);
 
     // The score shown, and the score, which it counts up to.
-    unsigned int unk_0000;
+    unsigned int guiScore;
     unsigned int score;
-    // How far unk_0000 moves towards score a frame.
-    unsigned int unk_0008;
+    // How far guiScore moves towards score a frame.
+    unsigned int scoreIncrement;
     // The high score shown.
     unsigned int highScore;
     int difficulty;
     // Grazes, up to 9999 and 999999.
     int graze;
     int grazeTotal;
-    DWORD unk_001c;
+    // Set while a replay or the demo plays (1 plays replayFile); no
+    // replay is recorded and nothing is saved.
+    DWORD isInReplay;
     // Counts the player's deaths.
     int deaths;
     // Counts the bombs used.
     int bombsUsed;
     // Spell cards captured.
     int spellCardsCaptured;
-    // Gui::OnUpdate skips the interface's update while it is set.
-    char unk_002c;
+    // Set by an enemy script (with an effect): the interface, the bullets,
+    // the player, the stage and the enemies' timers stop updating while
+    // it is set.
+    char isFrozen;
     BYTE unk_002d[0x3];
     // The score file's spell card, clear and practice chunks
     // (SaveScoreDat).
@@ -99,29 +103,38 @@ public:
     char lives;
     char bombs;
     // The next of g_ExtendScores to reach; -1 once there are no more.
-    char unk_181c;
+    char nextExtend;
     // The replay header keeps character * 2 + shotType.
     BYTE character;
     BYTE shotType;
-    BYTE unk_181f;
-    BYTE unk_1820;
-    // Makes DrawFps measure how far the frame rate falls short.
-    BYTE unk_1821;
-    BYTE unk_1822;
-    BYTE unk_1823;
-    BYTE unk_1824;
+    // The pause menu is open (OnDraw makes 1 into 2).
+    BYTE isPaused;
+    // The continue menu is open, after the last life is lost.
+    BYTE isInContinueMenu;
+    // Neither of the two menus is open: the replay records and DrawFps
+    // measures how far the frame rate falls short only then.
+    BYTE isPlaying;
+    // Set once the game is cleared (the ending starts, or the extra stage
+    // ends): the score entry gets no stage.
+    BYTE isGameCleared;
+    // A practice game: no continues, and its own scores.
+    BYTE isInPractice;
+    // The title screen's demo plays (data/demo/demo00.rpy).
+    BYTE isInDemo;
     BYTE unk_1825[0x3];
     // Counts a demo's frames: it fades out at 3600 and ends at 3720.
     int demoFrames;
     // The replay file to play (ReplayManager::RegisterChain mode 1).
     char replayFile[0x200];
-    WORD unk_1a2c;
+    // g_Rng's seed when the stage started; replays keep it.
+    WORD rngSeed;
     WORD unk_1a2e;
-    int unk_1a30;
+    // Counts OnUpdate's calls since RegisterChain.
+    int stageFrames;
     // The stage being played: 1 to 6, 7 for the extra stage.
     int stage;
     // The stage last picked in practice.
-    int unk_1a38;
+    int lastPracticeStage;
     // The play area: x, y, width and height.
     float arena[4];
     // Where the player may move: x, y, width and height.

@@ -190,7 +190,7 @@ int ScreenEffect::OnUpdateShake(ScreenEffect *effect)
 {
     float shake;
 
-    if (g_GameManager.unk_002c)
+    if (g_GameManager.isFrozen)
     {
         g_GameManager.arena[0] = 32.0f;
         g_GameManager.arena[1] = 16.0f;

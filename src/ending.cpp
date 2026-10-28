@@ -418,7 +418,7 @@ int Ending::AddedCallback(Ending *ending)
     // Unused.
     int unused = g_GameManager.character * 2 + g_GameManager.shotType;
 
-    g_GameManager.unk_1822 = 1;
+    g_GameManager.isGameCleared = 1;
     g_App.hideFps = 1;
     g_App.LoadArchive(5, "紅魔郷ED.dat");
     g_SpriteEngine->LoadAnm(0x2c, "data/staff01.anm", 0x600);

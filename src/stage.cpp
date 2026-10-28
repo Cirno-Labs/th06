@@ -95,7 +95,7 @@ int Stage::OnUpdate(Stage *stage)
     {
         return 1;
     }
-    if (g_GameManager.unk_002c)
+    if (g_GameManager.isFrozen)
     {
         ((BYTE *)&stage->unk_088.color)[3] = 0x60;
         ((BYTE *)&stage->unk_088.color)[2] = 0x80;

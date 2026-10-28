@@ -121,7 +121,7 @@ int PauseMenu::UpdatePauseMenu()
         if (this->stateFrames >= 20)
         {
             this->state = 0;
-            g_GameManager.unk_181f = 0;
+            g_GameManager.isPaused = 0;
             for (i = 0; i < 6; i++)
             {
                 this->sprites[i].ClearUnk0();
@@ -188,7 +188,7 @@ int PauseMenu::UpdatePauseMenu()
         if (this->stateFrames >= 20)
         {
             this->state = 0;
-            g_GameManager.unk_181f = 0;
+            g_GameManager.isPaused = 0;
             g_App.scene = 1;
             for (i = 0; i < 6; i++)
             {
@@ -213,7 +213,7 @@ void PauseMenu::DrawPauseMenu()
 {
     int i;
 
-    if (g_GameManager.unk_181f)
+    if (g_GameManager.isPaused)
     {
         g_App.viewport.X = g_GameManager.arena[0];
         g_App.viewport.Y = g_GameManager.arena[1];
@@ -241,25 +241,25 @@ int PauseMenu::UpdateContinueMenu()
 {
     int i;
 
-    if (g_GameManager.unk_1823)
+    if (g_GameManager.isInPractice)
     {
-        g_GameManager.unk_1820 = 0;
-        g_GameManager.unk_0000 = g_GameManager.score;
+        g_GameManager.isInContinueMenu = 0;
+        g_GameManager.guiScore = g_GameManager.score;
         g_App.scene = 7;
         return 1;
     }
-    if (g_GameManager.unk_001c)
+    if (g_GameManager.isInReplay)
     {
-        g_GameManager.unk_1820 = 0;
+        g_GameManager.isInContinueMenu = 0;
         g_App.scene = 8;
-        g_GameManager.unk_0000 = g_GameManager.score;
+        g_GameManager.guiScore = g_GameManager.score;
         return 1;
     }
     if (g_GameManager.continuesUsed >= 3 || g_GameManager.difficulty >= 4)
     {
-        g_GameManager.unk_1820 = 0;
+        g_GameManager.isInContinueMenu = 0;
         g_App.scene = 7;
-        g_GameManager.unk_0000 = g_GameManager.score;
+        g_GameManager.guiScore = g_GameManager.score;
         return 1;
     }
     switch (this->state)
@@ -352,13 +352,13 @@ int PauseMenu::UpdateContinueMenu()
         {
             this->state = 0;
             this->stateFrames = 0;
-            g_GameManager.unk_1820 = 0;
+            g_GameManager.isInContinueMenu = 0;
             g_App.scene = 7;
             for (i = 0; i < 4; i++)
             {
                 this->sprites[i].ClearUnk0();
             }
-            g_GameManager.unk_0000 = g_GameManager.score;
+            g_GameManager.guiScore = g_GameManager.score;
             return 0;
         }
         break;
@@ -367,21 +367,21 @@ int PauseMenu::UpdateContinueMenu()
         {
             this->state = 0;
             this->stateFrames = 0;
-            g_GameManager.unk_1820 = 0;
+            g_GameManager.isInContinueMenu = 0;
             for (i = 0; i < 4; i++)
             {
                 this->sprites[i].ClearUnk0();
             }
             g_GameManager.continuesUsed++;
-            g_GameManager.unk_0000 = g_GameManager.continuesUsed;
-            g_GameManager.unk_0008 = 0;
-            g_GameManager.score = g_GameManager.unk_0000;
+            g_GameManager.guiScore = g_GameManager.continuesUsed;
+            g_GameManager.scoreIncrement = 0;
+            g_GameManager.score = g_GameManager.guiScore;
             g_GameManager.lives = g_App.startCfg.lives;
             g_GameManager.bombs = g_App.startCfg.bombs;
             g_GameManager.graze = 0;
             g_GameManager.pointItems = 0;
             g_GameManager.power = 0;
-            g_GameManager.unk_181c = 0;
+            g_GameManager.nextExtend = 0;
             g_Gui.flags.livesChanged = 2;
             g_Gui.flags.bombsChanged = 2;
             g_Gui.flags.grazeChanged = 2;
@@ -406,7 +406,7 @@ void PauseMenu::DrawContinueMenu()
 {
     int i;
 
-    if (g_GameManager.unk_1820)
+    if (g_GameManager.isInContinueMenu)
     {
         g_App.viewport.X = g_GameManager.arena[0];
         g_App.viewport.Y = g_GameManager.arena[1];
@@ -439,7 +439,7 @@ int AsciiText::OnUpdate(AsciiText *text)
     int i;
     AsciiPopup *entry;
 
-    if (!g_GameManager.unk_181f && !g_GameManager.unk_1820)
+    if (!g_GameManager.isPaused && !g_GameManager.isInContinueMenu)
     {
         for (entry = text->popups, i = 0; i < 0x203; i++, entry++)
         {
@@ -455,11 +455,11 @@ int AsciiText::OnUpdate(AsciiText *text)
             }
         }
     }
-    else if (g_GameManager.unk_181f)
+    else if (g_GameManager.isPaused)
     {
         text->pauseMenu.UpdatePauseMenu();
     }
-    if (g_GameManager.unk_1820)
+    if (g_GameManager.isInContinueMenu)
     {
         text->continueMenu.UpdateContinueMenu();
     }

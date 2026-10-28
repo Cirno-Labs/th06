@@ -455,7 +455,7 @@ void DrawFps()
         lastTime = now;
         frames = 0;
         sprintf(fpsText, "%.02ffps", fps);
-        if (g_GameManager.unk_1821)
+        if (g_GameManager.isPlaying)
         {
             target = 60.0f / g_App.gameSpeed;
             g_App.expectedFrames += target;

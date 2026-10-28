@@ -85,16 +85,16 @@ public:
     // and an end marker (frame 9999999), and keeps where it ends.
     static void EndStage();
     // The update callback while recording: while
-    // g_GameManager.unk_1821 is set, adds an entry whenever the buttons
+    // g_GameManager.isPlaying is set, adds an entry whenever the buttons
     // (masked with 0x1f7) change, and counts the frame. Returns 1.
     static int RecordOnUpdate(ReplayManager *replay);
-    // The update callback while playing: while g_GameManager.unk_1821 is
+    // The update callback while playing: while g_GameManager.isPlaying is
     // set, puts the recorded buttons for the frame into g_Buttons (with
     // key repeat as in App::OnUpdate) and counts the frame.
     // Returns 1.
     static int PlayOnUpdate(ReplayManager *replay);
     // The second update callback while playing: while
-    // g_GameManager.unk_1821 is set, g_Gui.Func4195a2() and
+    // g_GameManager.isPlaying is set, g_Gui.Func4195a2() and
     // g_Gui.Func417344() hold, returns 6 on two frames of every three;
     // otherwise 1.
     static int PlayOnUpdate2(ReplayManager *replay);

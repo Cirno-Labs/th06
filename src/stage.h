@@ -101,7 +101,7 @@ public:
     static int RegisterChain(int stage);
     // Runs the stage script up to the current frame, moves the camera
     // between its keyframes and fades the camera offset and the fog.
-    // While g_GameManager.unk_002c is set it only tints unk_088. Returns
+    // While g_GameManager.isFrozen is set it only tints unk_088. Returns
     // 1.
     static int OnUpdate(Stage *stage);
     // Sets the fog, then draws layers 0 and 1 unless unk_080 is above 1

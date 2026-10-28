@@ -727,7 +727,7 @@ restart:
             enemy->unk_ce2 = 0;
             rec = &g_GameManager.catks[g_EnemyManager.spellCardIndex];
             sum = 0;
-            if (g_GameManager.unk_001c == 0)
+            if (g_GameManager.isInReplay == 0)
             {
                 strcpy(rec->name, (char *)&instr->args.i[1]);
                 len = strlen(rec->name);
@@ -765,7 +765,7 @@ restart:
                         bonus = g_EnemyManager.spellCardBonus + g_EnemyManager.spellCardBonus * g_Gui.GetBossTimer() / 10;
                         g_Gui.Func417458(bonus);
                         g_GameManager.score += bonus;
-                        if (g_GameManager.unk_001c == 0)
+                        if (g_GameManager.isInReplay == 0)
                         {
                             rec->unk_3e++;
                             for (k = 4; k > 0; k--)
@@ -1546,7 +1546,7 @@ inline float AngleAwayFromPlayer(D3DXVECTOR3 *pos, float offset)
 }
 
 // g_EnemyScriptFuncs[4]: with instr's second argument below 2, sets
-// g_GameManager.unk_002c to it. Otherwise turns some large bullets (14,
+// g_GameManager.isFrozen to it. Otherwise turns some large bullets (14,
 // or 52 above normal difficulty; one in four at random) into color 5 and
 // sends them off: away from the player when close, else downwards (or
 // anywhere above normal difficulty).
@@ -1561,7 +1561,7 @@ void Func40c180(Enemy *enemy, EnemyScriptInstr *instr)
     if (instr->args.i[1] < 2)
     {
         g_EffectManager.SpawnEffect(0xc, &enemy->pos, 1, 0xffffffff);
-        g_GameManager.unk_002c = instr->args.i[1];
+        g_GameManager.isFrozen = instr->args.i[1];
     }
     else
     {

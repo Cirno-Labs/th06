@@ -90,8 +90,8 @@ int MainMenu::OnUpdate(MainMenu *menu)
         if (menu->unk_81f8 >= 720)
         {
         demo:
-            g_GameManager.unk_001c = 1;
-            g_GameManager.unk_1824 = 1;
+            g_GameManager.isInReplay = 1;
+            g_GameManager.isInDemo = 1;
             g_GameManager.demoFrames = 0;
             g_App.gameSpeed = 1.0f;
             strcpy(g_GameManager.replayFile, "data/demo/demo00.rpy");
@@ -339,7 +339,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             if (g_GameManager.difficulty < 4)
             {
                 g_App.cfg.defaultDifficulty = menu->cursor;
-                if (!g_GameManager.unk_1823)
+                if (!g_GameManager.isInPractice)
                 {
                     menu->cursor = 0;
                 }
@@ -615,7 +615,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
         else if (WAS_PRESSED(0x1001))
         {
             g_GameManager.shotType = menu->cursor;
-            if (!g_GameManager.unk_1823)
+            if (!g_GameManager.isInPractice)
             {
                 if (g_GameManager.difficulty < 4)
                 {
@@ -628,14 +628,14 @@ int MainMenu::OnUpdate(MainMenu *menu)
             start:
                 g_GameManager.lives = g_App.cfg.lives;
                 g_GameManager.bombs = g_App.cfg.bombs;
-                if (g_GameManager.difficulty == 4 || g_GameManager.unk_1823)
+                if (g_GameManager.difficulty == 4 || g_GameManager.isInPractice)
                 {
                     g_GameManager.lives = 2;
                     g_GameManager.bombs = 3;
                 }
                 g_App.scene = 2;
                 g_SoundPlayer.QueueSound(10, 0);
-                g_GameManager.unk_001c = 0;
+                g_GameManager.isInReplay = 0;
                 {
                     float average;
                     float speed;
@@ -723,7 +723,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                     text3[1].pendingInterrupt = 0;
                 }
             }
-            menu->cursor = g_GameManager.unk_1a38;
+            menu->cursor = g_GameManager.lastPracticeStage;
             {
                 int stages;
 
@@ -794,7 +794,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
         else if (WAS_PRESSED(0x1001))
         {
             g_GameManager.stage = menu->cursor;
-            g_GameManager.unk_1a38 = menu->cursor;
+            g_GameManager.lastPracticeStage = menu->cursor;
             goto start;
         }
         break;
@@ -1034,7 +1034,7 @@ int MainMenu::UpdateTitleMenu()
                 this->sprites[i].pendingInterrupt = 4;
             }
             this->unk_81f0 = 6;
-            g_GameManager.unk_1823 = 0;
+            g_GameManager.isInPractice = 0;
             if (g_GameManager.difficulty >= 4)
             {
                 g_GameManager.difficulty = 1;
@@ -1059,7 +1059,7 @@ int MainMenu::UpdateTitleMenu()
                     this->sprites[i].pendingInterrupt = 4;
                 }
                 this->unk_81f0 = 6;
-                g_GameManager.unk_1823 = 0;
+                g_GameManager.isInPractice = 0;
                 g_GameManager.difficulty = 4;
                 this->unk_81f4 = 0;
                 this->unk_81fc = 0x40000000;
@@ -1074,7 +1074,7 @@ int MainMenu::UpdateTitleMenu()
             }
             break;
             case 2:
-            g_GameManager.unk_1823 = 1;
+            g_GameManager.isInPractice = 1;
             for (i = 0; i < 0x7a; i++)
             {
                 this->sprites[i].pendingInterrupt = 4;
@@ -1101,7 +1101,7 @@ int MainMenu::UpdateTitleMenu()
                 this->sprites[i].pendingInterrupt = 4;
             }
             this->unk_81f0 = 12;
-            g_GameManager.unk_1823 = 0;
+            g_GameManager.isInPractice = 0;
             this->unk_81f4 = 0;
             this->unk_81fc = 0x40000000;
             this->unk_8200 = 0xff000000;
@@ -1345,7 +1345,7 @@ int MainMenu::UpdateReplayMenu()
         }
         if (WAS_PRESSED(0x1001) && &this->unk_10edc[this->cursor].stages[1] != NULL)
         {
-            g_GameManager.unk_001c = 1;
+            g_GameManager.isInReplay = 1;
             g_App.gameSpeed = 1.0f;
             strcpy(g_GameManager.replayFile, this->replayPaths[this->unk_81e8]);
             g_GameManager.difficulty = this->unk_10edc->difficulty;
@@ -2011,7 +2011,7 @@ int SetUpTitleScene(int unk)
     MainMenu *menu = &g_MainMenu;
 
     memset(menu, 0, sizeof(MainMenu));
-    g_GameManager.unk_181f = 0;
+    g_GameManager.isPaused = 0;
     DebugPrint2("Debug : title 開始 VRAM = %d\n", g_App.d3dDevice->GetAvailableTextureMem());
     menu->unk_81f0 = unk != 0 ? 12 : 0;
     g_App.gameSpeed = 0.0f;
@@ -2037,7 +2037,7 @@ int MainMenu::AddedCallback(MainMenu *menu)
 {
     ScoreDat *scoreDat;
 
-    if (!g_GameManager.unk_1824)
+    if (!g_GameManager.isInDemo)
     {
         g_App.LoadMusic("bgm/th06_01.mid");
     }
@@ -2060,11 +2060,11 @@ int MainMenu::AddedCallback(MainMenu *menu)
         menu->cursor = 0;
         break;
     }
-    if (g_GameManager.unk_1823)
+    if (g_GameManager.isInPractice)
     {
         menu->cursor = 2;
     }
-    g_GameManager.unk_1823 = 0;
+    g_GameManager.isInPractice = 0;
     if (!g_App.cfg.flags.unk0)
     {
         menu->unk_8208 = 0x80004000;
@@ -2085,7 +2085,7 @@ int MainMenu::AddedCallback(MainMenu *menu)
     LoadClears(scoreDat, g_GameManager.clrds);
     LoadPracticeScores(scoreDat, &g_GameManager.pscrs[0][0][0]);
     ReleaseScoreDat(scoreDat);
-    if (!g_GameManager.unk_1824)
+    if (!g_GameManager.isInDemo)
     {
         if (g_App.startTime == 0)
         {
@@ -2097,7 +2097,7 @@ int MainMenu::AddedCallback(MainMenu *menu)
             ScreenEffect::StartEffect(0, 200, 0xffffff, 0, 0);
         }
     }
-    g_GameManager.unk_1824 = 0;
+    g_GameManager.isInDemo = 0;
     g_GameManager.demoFrames = 0;
     return 0;
 }

@@ -452,7 +452,7 @@ int ResultScreen::HandleNameEntry()
         this->entry.score = g_GameManager.score;
         this->entry.version = 0x10;
         this->entry.magic = *(DWORD *)"HSCR";
-        if (g_GameManager.unk_1822 == 0)
+        if (g_GameManager.isGameCleared == 0)
         {
             this->entry.stage = g_GameManager.stage;
         }
@@ -998,14 +998,14 @@ int ResultScreen::DrawStatistics()
         cursorPos = spr->pos;
         cursorPos.x += 224.0f;
         cursorPos.y += 32.0f;
-        g_AsciiText.AddFormat(&cursorPos, "%9d", g_GameManager.unk_0000);
-        if (g_GameManager.unk_0000 < 2000000)
+        g_AsciiText.AddFormat(&cursorPos, "%9d", g_GameManager.guiScore);
+        if (g_GameManager.guiScore < 2000000)
         {
             rating -= 20.0f;
         }
-        else if (g_GameManager.unk_0000 < 200000000)
+        else if (g_GameManager.guiScore < 200000000)
         {
-            rating += (g_GameManager.unk_0000 - 2000000) / 198000000.0f * 60.0f - 20.0f;
+            rating += (g_GameManager.guiScore - 2000000) / 198000000.0f * 60.0f - 20.0f;
         }
         else
         {
@@ -1015,7 +1015,7 @@ int ResultScreen::DrawStatistics()
         g_AsciiText.AddString(&cursorPos, g_DifficultyNames[g_GameManager.difficulty]);
         rating += g_DifficultyRatings[g_GameManager.difficulty];
         cursorPos.y += 22.0f;
-        if (g_GameManager.difficulty == 0 || !g_GameManager.unk_1822)
+        if (g_GameManager.difficulty == 0 || !g_GameManager.isGameCleared)
         {
             g_AsciiText.AddFormat(&cursorPos, "    %3.2f%%", progress * 100.0f);
             rating += progress * 70.0f;
@@ -1094,7 +1094,7 @@ int ResultScreen::RegisterChain(int unk)
     screen->calcChain->arg = screen;
     if (unk != 0)
     {
-        if (!g_GameManager.unk_1823)
+        if (!g_GameManager.isInPractice)
         {
             screen->state = 9;
         }

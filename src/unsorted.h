@@ -398,7 +398,7 @@ public:
     float gameSpeed;
     // Plays music in MIDI mode; may be NULL.
     MidiPlayer *midi;
-    // While g_GameManager.unk_1821 is set, DrawFps adds up every half
+    // While g_GameManager.isPlaying is set, DrawFps adds up every half
     // second the frames there should have been (expectedFrames) and a
     // share of them that shrinks as the frame rate drops
     // (achievedFrames); the result screen and replays show the slowdown
@@ -820,7 +820,7 @@ public:
     // file fails to load.
     int LoadResources();
 
-    // The update element's callback: unless g_GameManager.unk_002c is
+    // The update element's callback: unless g_GameManager.isFrozen is
     // set, runs UpdateInterface and impl->RunMsg. Returns 1.
     static int OnUpdate(Gui *gui);
     // The draw element's callback: the stage clear bonus once

@@ -692,7 +692,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             }
         }
         MoveEnemyEffects(em);
-        if (g_GameManager.unk_002c == 0)
+        if (g_GameManager.isFrozen == 0)
         {
             em->unk_cf0.Tick();
         }

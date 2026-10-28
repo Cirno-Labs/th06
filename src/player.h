@@ -100,7 +100,7 @@ public:
     // (priority 7) and two draw elements (priorities 5 and 7). Returns
     // 0, or -1 if adding fails.
     static int RegisterChain(BYTE unk);
-    // The update element's callback, unless g_GameManager.unk_002c is
+    // The update element's callback, unless g_GameManager.isFrozen is
     // set: runs the bomb or starts one (X pressed, bombs left), plays
     // the death (state 2: drops items, takes a life, respawns at the
     // bottom) and the respawn (state 1) and the blinking invulnerability
@@ -158,7 +158,7 @@ public:
     // bomb, and stops it after 30 frames or on dying. Returns 0.
     static int UpdateFiring(Player *player);
     // The draw element's callback: draws the flying bullets, the bomb,
-    // and unless the game is over (g_GameManager.unk_1820) the player
+    // and unless the game is over (g_GameManager.isInContinueMenu) the player
     // and, while alive, its options. Returns 1.
     static int OnDraw(Player *player);
     // Runs DrawHitBullets. Returns 1.

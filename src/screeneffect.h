@@ -28,7 +28,7 @@ public:
     static int OnUpdateFadeIn(ScreenEffect *effect);
     // Type 1's update callback: shakes the play area, moving its edges
     // in at random by from shakeFrom to shakeTo pixels over `duration`
-    // frames, unless g_GameManager.unk_002c is set. Returns 0 when done
+    // frames, unless g_GameManager.isFrozen is set. Returns 0 when done
     // (with the play area back in place), else 1.
     static int OnUpdateShake(ScreenEffect *effect);
     // Type 2's update callback: fades `alpha` from 0 to 255 over

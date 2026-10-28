@@ -769,7 +769,7 @@ int Player::OnUpdate(Player *player)
     float progress;
     float progress2;
 
-    if (g_GameManager.unk_002c)
+    if (g_GameManager.isFrozen)
     {
         return 1;
     }
@@ -834,7 +834,7 @@ int Player::OnUpdate(Player *player)
                     g_ItemManager.SpawnItem(&player->position, 4, 2);
                     g_GameManager.power = 0;
                     g_Gui.flags.powerChanged = 2;
-                    g_GameManager.unk_181c = 0xff;
+                    g_GameManager.nextExtend = 0xff;
                 }
                 g_GameManager.SubSubRank(1600);
             }
@@ -860,13 +860,13 @@ int Player::OnUpdate(Player *player)
                 g_SpriteEngine->StartScript(&player->sprite, 0x400);
                 if (g_GameManager.lives <= 0)
                 {
-                    g_GameManager.unk_1820 = 1;
+                    g_GameManager.isInContinueMenu = 1;
                 }
                 else
                 {
                     g_GameManager.lives--;
                     g_Gui.flags.livesChanged = 2;
-                    if (g_GameManager.difficulty < 4 && g_GameManager.unk_1823 == 0)
+                    if (g_GameManager.difficulty < 4 && g_GameManager.isInPractice == 0)
                     {
                         g_GameManager.bombs = g_App.startCfg.bombs;
                     }
@@ -1129,7 +1129,7 @@ int Player::OnDraw(Player *player)
     player->sprite.pos.x = g_GameManager.arena[0] + player->position.x;
     player->sprite.pos.y = g_GameManager.arena[1] + player->position.y;
     player->sprite.pos.z = 0.49f;
-    if (!g_GameManager.unk_1820)
+    if (!g_GameManager.isInContinueMenu)
     {
         g_SpriteEngine->Draw(&player->sprite);
         if (player->optionState && (player->unk_09e0 == 0 || player->unk_09e0 == 3))

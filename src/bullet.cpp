@@ -485,7 +485,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
     int k7;
     int result;
 
-    if (g_GameManager.unk_002c != 0)
+    if (g_GameManager.isFrozen != 0)
     {
         return 1;
     }

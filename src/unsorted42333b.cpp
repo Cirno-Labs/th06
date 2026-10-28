@@ -7,6 +7,7 @@
 
 #include "chain.h"
 #include "ending.h"
+#include "features.h"
 #include "musicscreen.h"
 #include "resultscreen.h"
 #include "timer.h"
@@ -46,6 +47,9 @@ int App::OnUpdate(App *arg)
     }
     g_PrevButtons = g_Buttons;
     g_Buttons = ReadButtons();
+#if FEAT_FRAME_CAP
+    g_FrameCapButtons = g_Buttons;
+#endif
     g_ButtonRepeat = 0;
     if (g_PrevButtons == g_Buttons)
     {
@@ -320,7 +324,12 @@ int InitDirectInput(App *game)
         LogPrintf(&g_Log, "DirectInput SetDataFormat が使用できません\n");
         return -1;
     }
+#if FEAT_FRAME_CAP
+    // vpatch reads the keyboard and the pad in the background too.
+    if (FAILED(game->keyboard->SetCooperativeLevel(game->hwnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND)))
+#else
     if (FAILED(game->keyboard->SetCooperativeLevel(game->hwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND | DISCL_NOWINKEY)))
+#endif
     {
         if (game->keyboard)
         {
@@ -341,7 +350,11 @@ int InitDirectInput(App *game)
     if (game->joystick)
     {
         game->joystick->SetDataFormat(&c_dfDIJoystick2);
+#if FEAT_FRAME_CAP
+        game->joystick->SetCooperativeLevel(game->hwnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
+#else
         game->joystick->SetCooperativeLevel(game->hwnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
+#endif
         g_App.joystickCaps.dwSize = sizeof(DIDEVCAPS);
         game->joystick->GetCapabilities(&g_App.joystickCaps);
         game->joystick->EnumObjects(EnumAxesCallback, NULL, DIDFT_ALL);
@@ -446,6 +459,11 @@ void DrawFps()
     float duration;
     D3DXVECTOR3 pos;
 
+#if FEAT_FRAME_CAP
+    // vpatch shows the rate it measures at each present instead.
+    if (FrameCapFps(&fps))
+    {
+#else
     now = timeGetTime();
     frames += 1 + g_App.cfg.frameSkip;
     if (now - lastTime >= 500)
@@ -454,6 +472,7 @@ void DrawFps()
         fps = frames / duration;
         lastTime = now;
         frames = 0;
+#endif
         sprintf(fpsText, "%.02ffps", fps);
         if (g_GameManager.isPlaying)
         {

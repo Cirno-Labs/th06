@@ -115,6 +115,17 @@ only, and keeps their objects in `build/obj_<features>/`. Without `FEAT`
 the exe is the vanilla game. The DLL and `just compare` always build the
 vanilla code.
 
+`frame_cap` is VsyncPatch (`vpatch_th06.dll`, rev4, from
+`VsyncPatch.zip` at <https://maribelhearn.com/faq/eosd>) with the
+settings of the `vpatch.ini` it ships with. The game no longer waits
+for the display's vsync: frames are timed with the performance counter
+at 60 per second (240 while Ctrl is held in a replay, 30 with Shift),
+each is presented at its deadline, and the next starts only as early as
+recent frames needed to be ready by their own, which keeps input lag
+low. Frame skip is off and the frame rate shown is measured at each
+present. `src/exe/framecap.cpp` has the limiter; the changes to the game
+are under `#if FEAT_FRAME_CAP`.
+
 ### Hooking
 
 The decompiled code runs inside the original game. `tools/patch_exe.py` adds

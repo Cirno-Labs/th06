@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "chain.h"
+#include "features.h"
 #include "stage.h"
 #include "unsorted.h"
 
@@ -14,6 +15,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     HRESULT testResult;
     int renderResult = 0;
 
+#if FEAT_FRAME_CAP
+    FrameCapInit();
+#endif
     if (CheckSingleInstance() != 0)
     {
         g_Log.Flush();
@@ -25,6 +29,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         g_Log.Flush();
         return -1;
     }
+#if FEAT_FRAME_CAP
+    // vpatch draws every frame.
+    g_App.cfg.frameSkip = 0;
+#endif
     if (CreateD3d() != 0)
     {
         g_Log.Flush();
@@ -138,6 +146,9 @@ int GameWindow::RunFrame()
 
     if (this->isAppActive == 0)
     {
+#if FEAT_FRAME_CAP
+        Sleep(15);
+#endif
         return 0;
     }
     if (this->curFrame == 0)
@@ -168,6 +179,9 @@ int GameWindow::RunFrame()
         g_App.viewport.Width = 640;
         g_App.viewport.Height = 480;
         g_App.d3dDevice->SetViewport(&g_App.viewport);
+#if FEAT_FRAME_CAP
+        FrameCapBeforeCalc();
+#endif
         res = g_Chain.RunCalcChain();
         g_SoundPlayer.PlayQueuedSounds();
         if (res == 0)
@@ -180,6 +194,21 @@ int GameWindow::RunFrame()
         }
         this->curFrame++;
     }
+#if FEAT_FRAME_CAP
+    // The frame was presented in FrameCapBeforeCalc, on time: only the
+    // bookkeeping after a present is left.
+    if (this->curFrame == 0)
+    {
+        return 0;
+    }
+    g_App.gameSpeed = 1.0f;
+    s_lastFrameTime = timeGetTime();
+    if (g_App.cfg.frameSkip >= this->curFrame)
+    {
+        goto loop;
+    }
+    goto present;
+#endif
     if ((g_App.cfg.windowed != 0 || g_App.UsesPresentImmediate()) && this->curFrame != 0)
     {
         g_App.gameSpeed = 1.0f;
@@ -257,6 +286,8 @@ int GameWindow::RunFrame()
 
 void PresentFrame()
 {
+    // With FEAT_FRAME_CAP, FrameCapBeforeCalc presents instead.
+#if !FEAT_FRAME_CAP
     if (g_App.d3dDevice->Present(NULL, NULL, NULL, NULL) < 0)
     {
         g_SpriteEngine->ReleaseSurfaces();
@@ -264,6 +295,7 @@ void PresentFrame()
         SetDefaultRenderStates();
         g_App.redrawFrames = 2;
     }
+#endif
     g_SpriteEngine->DoPendingCopy();
     if (g_App.redrawFrames != 0)
     {
@@ -406,6 +438,16 @@ int InitD3dDevice()
         {
             params3.BackBufferFormat = D3DFMT_R5G6B5;
         }
+#if FEAT_FRAME_CAP
+        // vpatch presents without waiting for vsync and keeps the
+        // display's refresh rate.
+        if (g_App.cfg.flags.force60Fps != 0)
+        {
+            LogPrintf(&g_Log, "リフレッシュレートを60Hzに変更します\n");
+        }
+        params3.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+        params3.SwapEffect = D3DSWAPEFFECT_DISCARD;
+#else
         if (g_App.cfg.flags.force60Fps == 0)
         {
             params3.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_ONE;
@@ -424,11 +466,16 @@ int InitD3dDevice()
         {
             params3.SwapEffect = D3DSWAPEFFECT_COPY_VSYNC;
         }
+#endif
     }
     else
     {
         params3.BackBufferFormat = displayMode2.Format;
+#if FEAT_FRAME_CAP
+        params3.SwapEffect = D3DSWAPEFFECT_DISCARD;
+#else
         params3.SwapEffect = D3DSWAPEFFECT_COPY;
+#endif
         params3.Windowed = TRUE;
     }
     params3.BackBufferWidth = 640;

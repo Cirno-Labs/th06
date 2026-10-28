@@ -2027,3 +2027,21 @@ void Func40d930(Enemy *enemy, EnemyScriptInstr *instr)
         }
     }
 }
+
+// g_EnemyScriptFuncs[12]: fires the enemy's shooter from 64 along each
+// of its first eight lasers that is active.
+void Func40daa0(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int i;
+
+    for (i = 0; i < 8; i++)
+    {
+        if (enemy->lasers[i] != NULL && enemy->lasers[i]->active)
+        {
+            enemy->shooter.pos = D3DXVECTOR3(64.0f, 0.0f, 0.0f);
+            Rotate2D(&enemy->shooter.pos, &enemy->shooter.pos, enemy->lasers[i]->angle);
+            enemy->shooter.pos += enemy->pos;
+            g_BulletManager.FirePattern(&enemy->shooter);
+        }
+    }
+}

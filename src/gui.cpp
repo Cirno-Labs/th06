@@ -151,7 +151,7 @@ int Gui::OnDraw(Gui *gui)
     }
     gui->impl->DrawMsg();
     gui->DrawBanners();
-    gui->Func419c99();
+    gui->DrawHud();
     g_AsciiText.unk_6230 = 1;
     if (gui->impl->bonusPopup.shown)
     {
@@ -881,6 +881,259 @@ void Gui::UpdateInterface()
         this->impl->stageClearTotal = bonus;
         g_GameManager.score += bonus;
         this->impl->stageClearShown++;
+    }
+}
+
+void Gui::DrawHud()
+{
+    float y;
+    float xx;
+    int idx;
+    Sprite *vm;
+    int clamped;
+    D3DCOLOR c;
+    D3DXVECTOR3 pos;
+
+    if (this->impl->msg.scriptIndex < 0 && this->bossPresent + this->impl->bossBarState > 0)
+    {
+        vm = &this->impl->unk_0000[0x13];
+        g_SpriteEngine->Draw(vm);
+        vm = &this->impl->unk_0000[0x15];
+        vm->flags.anchor = 3;
+        vm->scaleX = this->bossHealthShown * 288.0f / 14.0f;
+        vm->pos.x = 96.0f;
+        vm->pos.y = 24.0f;
+        vm->pos.z = 0.0f;
+        g_SpriteEngine->Draw(vm);
+        pos.x = 80.0f;
+        pos.y = 16.0f;
+        pos.z = 0.0f;
+        g_AsciiText.SetColor(this->bossBarAlpha << 24 | 0xffff80);
+        g_AsciiText.AddFormat(&pos, "%d", this->unk_14);
+        pos = D3DXVECTOR3(384.0f, 16.0f, 0.0f);
+        if (this->bossTimer >= 20)
+        {
+            c = g_BossTimerColors[0];
+        }
+        else if (this->bossTimer >= 10)
+        {
+            c = g_BossTimerColors[1];
+        }
+        else if (this->bossTimer >= 5)
+        {
+            c = g_BossTimerColors[2];
+        }
+        else
+        {
+            c = g_BossTimerColors[3];
+        }
+        g_AsciiText.SetColor(this->bossBarAlpha << 24 | c);
+        clamped = this->bossTimer > 99 ? 99 : this->bossTimer;
+        if (clamped < 10 && this->unk_1c != this->bossTimer)
+        {
+            g_Unknown6d3f50.QueueSound(0x1d, 0);
+        }
+        g_AsciiText.AddFormat(&pos, "%.2d", clamped);
+        g_AsciiText.color = 0xffffffff;
+        this->unk_1c = this->bossTimer;
+    }
+    g_Unknown6c6d18.viewport.X = 0;
+    g_Unknown6c6d18.viewport.Y = 0;
+    g_Unknown6c6d18.viewport.Width = 640;
+    g_Unknown6c6d18.viewport.Height = 480;
+    g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+    vm = &this->impl->unk_0000[6];
+    if (!g_Unknown6c6d18.cfg.flags.noFrameItems &&
+        (vm->scriptPos != NULL || g_Unknown6c6d18.unk_198 != 0 || g_Unknown6c6d18.ClearsBackBuffer()))
+    {
+        for (y = 0.0f; y < 464.0f; y += 32.0f)
+        {
+            vm->pos = D3DXVECTOR3(0.0f, y, 0.49f);
+            g_SpriteEngine->Draw(vm);
+        }
+        for (xx = 416.0f; xx < 624.0f; xx += 32.0f)
+        {
+            for (y = 0.0f; y < 464.0f; y += 32.0f)
+            {
+                vm->pos = D3DXVECTOR3(xx, y, 0.49f);
+                g_SpriteEngine->Draw(vm);
+            }
+        }
+        vm = &this->impl->unk_0000[7];
+        for (xx = 32.0f; xx < 416.0f; xx += 32.0f)
+        {
+            vm->pos = D3DXVECTOR3(xx, 0.0f, 0.49f);
+            g_SpriteEngine->Draw(vm);
+        }
+        vm = &this->impl->unk_0000[8];
+        for (xx = 32.0f; xx < 416.0f; xx += 32.0f)
+        {
+            vm->pos = D3DXVECTOR3(xx, 464.0f, 0.49f);
+            g_SpriteEngine->Draw(vm);
+        }
+        g_SpriteEngine->DrawRotated(&this->impl->unk_0000[5]);
+        g_SpriteEngine->DrawRotated(&this->impl->unk_0000[0]);
+        g_SpriteEngine->DrawRotated(&this->impl->unk_0000[1]);
+        g_SpriteEngine->DrawRotated(&this->impl->unk_0000[3]);
+        g_SpriteEngine->DrawRotated(&this->impl->unk_0000[4]);
+        g_SpriteEngine->DrawRotated(&this->impl->unk_0000[2]);
+        g_SpriteEngine->Draw(&this->impl->unk_0000[9]);
+        g_SpriteEngine->Draw(&this->impl->unk_0000[10]);
+        g_SpriteEngine->Draw(&this->impl->unk_0000[11]);
+        g_SpriteEngine->Draw(&this->impl->unk_0000[12]);
+        g_SpriteEngine->Draw(&this->impl->unk_0000[13]);
+        g_SpriteEngine->Draw(&this->impl->unk_0000[14]);
+        g_SpriteEngine->Draw(&this->impl->unk_0000[15]);
+        this->flags.livesChanged = 2;
+        this->flags.bombsChanged = 2;
+        this->flags.grazeChanged = 2;
+        this->flags.pointsChanged = 2;
+        this->flags.powerChanged = 2;
+    }
+    if (!g_Unknown6c6d18.cfg.flags.noFrameItems)
+    {
+        vm = &this->impl->unk_0000[0x16];
+        xx = 496.0f;
+        vm->pos = D3DXVECTOR3(xx, 58.0f, 0.49f);
+        g_SpriteEngine->Draw(vm);
+        vm->pos = D3DXVECTOR3(xx, 82.0f, 0.49f);
+        g_SpriteEngine->Draw(vm);
+        if (this->flags.livesChanged)
+        {
+            vm->pos = D3DXVECTOR3(xx, 122.0f, 0.49f);
+            g_SpriteEngine->Draw(vm);
+        }
+        if (this->flags.bombsChanged)
+        {
+            vm->pos = D3DXVECTOR3(xx, 146.0f, 0.49f);
+            g_SpriteEngine->Draw(vm);
+        }
+        if (this->flags.powerChanged)
+        {
+            vm->pos = D3DXVECTOR3(xx, 186.0f, 0.49f);
+            g_SpriteEngine->Draw(vm);
+        }
+        if (this->flags.grazeChanged)
+        {
+            vm->pos = D3DXVECTOR3(xx, 206.0f, 0.49f);
+            g_SpriteEngine->Draw(vm);
+        }
+        if (this->flags.pointsChanged)
+        {
+            vm->pos = D3DXVECTOR3(xx, 226.0f, 0.49f);
+            g_SpriteEngine->Draw(vm);
+        }
+        vm->pos = D3DXVECTOR3(488.0f, 464.0f, 0.49f);
+        g_SpriteEngine->Draw(vm);
+        vm->pos = D3DXVECTOR3(0.0f, 464.0f, 0.49f);
+        g_SpriteEngine->Draw(vm);
+    }
+    if (this->flags.livesChanged || g_Unknown6c6d18.cfg.flags.noFrameItems)
+    {
+        vm = &this->impl->unk_0000[0x10];
+        for (idx = 0, xx = 496.0f; idx < g_GameManager.lives; idx++, xx += 16.0f)
+        {
+            vm->pos = D3DXVECTOR3(xx, 122.0f, 0.49f);
+            g_SpriteEngine->Draw(vm);
+        }
+    }
+    if (this->flags.bombsChanged || g_Unknown6c6d18.cfg.flags.noFrameItems)
+    {
+        vm = &this->impl->unk_0000[0x11];
+        for (idx = 0, xx = 496.0f; idx < g_GameManager.bombs; idx++, xx += 16.0f)
+        {
+            vm->pos = D3DXVECTOR3(xx, 146.0f, 0.49f);
+            g_SpriteEngine->Draw(vm);
+        }
+    }
+    if (this->flags.powerChanged || g_Unknown6c6d18.cfg.flags.noFrameItems)
+    {
+        VertexDiffuseXyzrwh vertices[4];
+
+        if (g_GameManager.power > 0)
+        {
+            vertices[0].pos = D3DXVECTOR3(496.0f, 186.0f, 0.1f);
+            vertices[1].pos = D3DXVECTOR3(g_GameManager.power + 496 + 0.0f, 186.0f, 0.1f);
+            vertices[2].pos = D3DXVECTOR3(496.0f, 202.0f, 0.1f);
+            vertices[3].pos = D3DXVECTOR3(g_GameManager.power + 496 + 0.0f, 202.0f, 0.1f);
+            vertices[0].diffuse = vertices[2].diffuse = 0xe0e0e0ff;
+            vertices[1].diffuse = vertices[3].diffuse = 0x80e0e0ff;
+            vertices[0].w = vertices[1].w = vertices[2].w = vertices[3].w = 1.0f;
+            if (!g_Unknown6c6d18.cfg.flags.noColorBlending)
+            {
+                g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+                g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+            }
+            g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+            g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+            if (!g_Unknown6c6d18.cfg.flags.noDepthTest)
+            {
+                g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+                g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+            }
+            g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+            g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertices, sizeof(VertexDiffuseXyzrwh));
+            g_SpriteEngine->ClearVertexFormat();
+            g_SpriteEngine->ClearColorOp();
+            g_SpriteEngine->ClearBlendMode();
+            g_SpriteEngine->ClearZWrite();
+            if (!g_Unknown6c6d18.cfg.flags.noColorBlending)
+            {
+                g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+                g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+            }
+            g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+            g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+            if (g_GameManager.power >= 128)
+            {
+                vm = &this->impl->unk_0000[0x12];
+                vm->pos = D3DXVECTOR3(496.0f, 186.0f, 0.0f);
+                g_SpriteEngine->Draw(vm);
+            }
+        }
+        if (g_GameManager.power < 128)
+        {
+            g_AsciiText.AddFormat(&D3DXVECTOR3(496.0f, 186.0f, 0.0f), "%d", g_GameManager.power);
+        }
+    }
+    {
+        // A block of its own: the original keeps scorePos after the
+        // power bar's vertices.
+        D3DXVECTOR3 scorePos(496.0f, 82.0f, 0.0f);
+
+        g_AsciiText.AddFormat(&scorePos, "%.9d", g_GameManager.unk_0000);
+        scorePos = D3DXVECTOR3(496.0f, 58.0f, 0.0f);
+        g_AsciiText.AddFormat(&scorePos, "%.9d", g_GameManager.highScore);
+        if (this->flags.grazeChanged || g_Unknown6c6d18.cfg.flags.noFrameItems)
+        {
+            scorePos = D3DXVECTOR3(496.0f, 206.0f, 0.0f);
+            g_AsciiText.AddFormat(&scorePos, "%d", g_GameManager.graze);
+        }
+        if (this->flags.pointsChanged || g_Unknown6c6d18.cfg.flags.noFrameItems)
+        {
+            scorePos = D3DXVECTOR3(496.0f, 226.0f, 0.0f);
+            g_AsciiText.AddFormat(&scorePos, "%d", g_GameManager.pointItems);
+        }
+    }
+    if (this->flags.livesChanged)
+    {
+        this->flags.livesChanged--;
+    }
+    if (this->flags.powerChanged)
+    {
+        this->flags.powerChanged--;
+    }
+    if (this->flags.bombsChanged)
+    {
+        this->flags.bombsChanged--;
+    }
+    if (this->flags.grazeChanged)
+    {
+        this->flags.grazeChanged--;
+    }
+    if (this->flags.pointsChanged)
+    {
+        this->flags.pointsChanged--;
     }
 }
 

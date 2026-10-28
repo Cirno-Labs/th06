@@ -819,14 +819,18 @@ public:
     // set, runs UpdateInterface and impl->RunMsg. Returns 1.
     static int OnUpdate(Gui *gui);
     // The draw element's callback: the stage clear bonus once
-    // impl->stageClearShown is set, the dialogue, DrawBanners, Func419c99 and the
+    // impl->stageClearShown is set, the dialogue, DrawBanners, DrawHud and the
     // popups, with the depth test off. Returns 1.
     static int OnDraw(Gui *gui);
     // Draws the stage's title ("STAGE %d", "FINAL STAGE", "EXTRA STAGE",
     // or " DEMO PLAY"), the song's name, the sprites Func417bfd and
     // ShowBombName show with their bars, and unk_2424 in the play area.
     void DrawBanners();
-    void Func419c99();
+    // Draws the interface: the boss's bar, spell cards left and timer
+    // (ticking under 10 seconds), the frame around the play area when
+    // it changed, and the score, the high score, lives, bombs, power
+    // (a bar), graze and point items, each while its flag counts down.
+    void DrawHud();
     // The update element's added callback (the element at 0x69bc7c):
     // runs LoadResources.
     static int AddedCallback(Gui *gui);
@@ -916,6 +920,9 @@ public:
 };
 ASSERT_SIZE(Gui, 0x2c);
 extern Gui g_Gui;
+// The boss timer's colors: 20 seconds and more, 10, 5, and less
+// (0x4764a0).
+extern D3DCOLOR g_BossTimerColors[4];
 
 // Gui's statically allocated chain elements.
 extern ChainElem g_GuiCalcChain;

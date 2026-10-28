@@ -48,7 +48,9 @@ public:
     // The score shown, and the score, which it counts up to.
     unsigned int unk_0000;
     unsigned int score;
-    DWORD unk_0008[0x2];
+    DWORD unk_0008;
+    // The high score shown.
+    unsigned int highScore;
     int difficulty;
     // Grazes, up to 9999 and 999999.
     int graze;

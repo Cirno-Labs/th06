@@ -159,7 +159,7 @@ address,size,name,symbol
 0x00419572,48,Gui::Func419572,?Func419572@Gui@@QAEHXZ
 0x004195a2,29,Gui::Func4195a2,?Func4195a2@Gui@@QAEHXZ
 0x004195bf,1754,Gui::UpdateInterface,?UpdateInterface@Gui@@QAEXXZ
-0x00419c99,4442,Gui::Func419c99,?Func419c99@Gui@@QAEXXZ
+0x00419c99,4442,Gui::DrawHud,?DrawHud@Gui@@QAEXXZ
 0x0041adf3,945,Gui::DrawBanners,?DrawBanners@Gui@@QAEXXZ
 0x0041b1a4,13,Gui::AddedCallback,?AddedCallback@Gui@@SAHPAV1@@Z
 0x0041b1b1,161,Func41b1b1,
@@ -1564,6 +1564,7 @@ address,size,name,symbol
 0x00476438,,g_Unknown476438,?g_Unknown476438@@3PAKA
 0x00476440,,g_BulletColorOffsets16,?g_BulletColorOffsets16@@3PAHA
 0x00476480,,g_BulletColorOffsets32,?g_BulletColorOffsets32@@3PAHA
+0x004764a0,,g_BossTimerColors,?g_BossTimerColors@@3PAKA
 0x004765a0,,g_ControllerMapping,?g_ControllerMapping@@3UControllerMapping@@A
 0x004765b8,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
 0x00476660,,g_PowerItemBonus,?g_PowerItemBonus@@3PAHA

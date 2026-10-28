@@ -22,7 +22,7 @@ int EnemyScripts::Load(char *path)
     {
         this->subs[i] = (char *)this->subs[i] + (int)this->file;
     }
-    this->unk_08 = (void *)this->file->unk_04;
+    this->timeline = (EnemyTimelineEntry *)this->file->unk_04;
     return 0;
 }
 

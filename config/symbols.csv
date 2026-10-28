@@ -106,9 +106,9 @@ address,size,name,symbol
 0x00410e30,859,EnemyManager::Initialize,?Initialize@EnemyManager@@QAEXXZ
 0x00411190,170,EnemyManager::EnemyManager,??0EnemyManager@@QAE@XZ
 0x00411240,327,Enemy::Enemy,??0Enemy@@QAE@XZ
-0x00411390,290,EnemyManager::Spawn,?Spawn@EnemyManager@@QAEPAUEnemy@@FPAUD3DXVECTOR3@@FDH@Z
+0x00411390,290,EnemyManager::Spawn,?Spawn@EnemyManager@@QAEPAUEnemy@@HPAUD3DXVECTOR3@@FFH@Z
 0x004114c0,110,ReleaseEnemyEffects,?ReleaseEnemyEffects@@YAXPAUEnemy@@@Z
-0x00411530,2099,EnemyManager::Func411530,?Func411530@EnemyManager@@QAEXXZ
+0x00411530,2099,EnemyManager::RunTimeline,?RunTimeline@EnemyManager@@QAEXXZ
 0x00411da0,412,Enemy::Func411da0,?Func411da0@Enemy@@QAEXXZ
 0x00411f40,623,Enemy::Func411f40,?Func411f40@Enemy@@QAEXXZ
 0x004121b0,132,Enemy::Func4121b0,?Func4121b0@Enemy@@QAEXXZ

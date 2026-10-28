@@ -76,6 +76,29 @@ struct EnemyScriptHeader
     // Then the subroutines' offsets.
 };
 
+// The arguments of a timeline entry that spawns an enemy: where (-990 or
+// less for a random place), the life and item (negative for the
+// script's) and the score. Other entries read them as ints.
+struct EnemyTimelineArgs
+{
+    D3DXVECTOR3 pos;
+    short life;
+    short item;
+    int score;
+};
+
+// One entry of the stage's enemy timeline, ended by a negative time.
+struct EnemyTimelineEntry
+{
+    // The frame it runs on.
+    short time;
+    short arg0;
+    short opcode;
+    // The size of the entry, arguments included.
+    short size;
+    EnemyTimelineArgs args;
+};
+
 // The enemy script file, the global at 0x487e50: a header, then a table
 // of subroutines. Load turns the file's offsets into pointers.
 class EnemyScripts
@@ -95,8 +118,8 @@ public:
     EnemyScriptHeader *file;
     // Points at the subroutine table in `file`.
     void **subs;
-    // The header's unk_04, as a pointer.
-    void *unk_08;
+    // The timeline, at the header's unk_04.
+    EnemyTimelineEntry *timeline;
 };
 extern EnemyScripts g_EnemyScripts;
 

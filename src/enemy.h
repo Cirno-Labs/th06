@@ -66,7 +66,9 @@ struct Enemy
     // The subroutine the script runs when the enemy dies; negative for
     // none.
     int deathSub;
-    DWORD unk_c48[0x9];
+    DWORD unk_c48[0x8];
+    // Set by the timeline.
+    int unk_c68;
     D3DXVECTOR3 pos;
     // The size of the enemy's hitbox.
     D3DXVECTOR3 hitboxSize;
@@ -153,7 +155,10 @@ public:
 
     // Sets everything up for a stage.
     void Initialize();
-    void Func411530();
+    // Runs the stage's enemy timeline up to the current frame: spawns
+    // enemies, starts dialogue, waits for bosses. Raises the rank now
+    // and then.
+    void RunTimeline();
 
     // Initializes, remembers the stage's two enemy sprite files and adds
     // the update element (priority 9) and the draw element (priority 6).
@@ -174,7 +179,7 @@ public:
     // subroutine `sub` and running its first frame. `life` and `score`
     // replace the script's when not negative. Returns the enemy, or the
     // last one if all are in use.
-    Enemy *Spawn(short sub, D3DXVECTOR3 *pos, short life, char unk_e3f, int score);
+    Enemy *Spawn(int sub, D3DXVECTOR3 *pos, short life, short unk_e3f, int score);
 
     // The stage's two enemy sprite files.
     char *anmPath;
@@ -182,7 +187,8 @@ public:
     // The template new enemies start from, and the enemies.
     Enemy enemyTemplate;
     Enemy enemies[0x101];
-    DWORD unk_ee598[0x8];
+    // Enemies the timeline refers to.
+    Enemy *bosses[0x8];
     // Below 3 and below 8.
     WORD unk_ee5b8;
     WORD unk_ee5ba;
@@ -194,8 +200,9 @@ public:
     DWORD unk_ee5cc[0x2];
     int unk_ee5d4;
     DWORD unk_ee5d8;
-    int unk_ee5dc;
-    Timer unk_ee5e0;
+    // The next timeline entry, and the timeline's frame count.
+    EnemyTimelineEntry *timelinePos;
+    Timer timelineTime;
 };
 ASSERT_SIZE(EnemyManager, 0xee5ec);
 extern EnemyManager g_EnemyManager;

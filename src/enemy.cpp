@@ -25,7 +25,7 @@ EnemyManager::EnemyManager()
     this->Initialize();
 }
 
-Enemy *EnemyManager::Spawn(short sub, D3DXVECTOR3 *pos, short life, char unk_e3f, int score)
+Enemy *EnemyManager::Spawn(int sub, D3DXVECTOR3 *pos, short life, short unk_e3f, int score)
 {
     Enemy *enemy;
     int i;
@@ -77,6 +77,193 @@ void ReleaseEnemyEffects(Enemy *enemy)
     enemy->effectCount = 0;
 }
 
+void EnemyManager::RunTimeline()
+{
+    Enemy *enemy;
+    int delay;
+
+    if (this->timelinePos == NULL)
+    {
+        this->timelinePos = g_EnemyScripts.timeline;
+    }
+    if (!g_Gui.Func4195a2())
+    {
+        delay = 2400;
+        delay -= g_GameManager.lives * 4 * 60;
+        if (this->timelineTime.HasTicked() && this->timelineTime.AsFrames() % delay == 0)
+        {
+            g_GameManager.AddSubRank(100);
+        }
+    }
+    while (this->timelinePos->time >= 0)
+    {
+        if (this->timelineTime == this->timelinePos->time)
+        {
+            switch (this->timelinePos->opcode)
+            {
+            case 0:
+                if (!g_Gui.IsBossPresent())
+                {
+                    EnemyTimelineArgs *args = &this->timelinePos->args;
+                    this->Spawn(this->timelinePos->arg0, &args->pos, args->life, args->item,
+                                args->score);
+                }
+                break;
+            case 1:
+                if (!g_Gui.IsBossPresent())
+                {
+                    this->Spawn(this->timelinePos->arg0, &this->timelinePos->args.pos, -1, -1, -1);
+                }
+                break;
+            case 2:
+                if (!g_Gui.IsBossPresent())
+                {
+                    EnemyTimelineArgs *args = &this->timelinePos->args;
+                    enemy = this->Spawn(this->timelinePos->arg0, &args->pos, args->life, args->item,
+                                        args->score);
+                    enemy->flags.mirrored = 1;
+                }
+                break;
+            case 3:
+                if (!g_Gui.IsBossPresent())
+                {
+                    enemy = this->Spawn(this->timelinePos->arg0, &this->timelinePos->args.pos, -1, -1, -1);
+                    enemy->flags.mirrored = 1;
+                }
+                break;
+            case 4:
+                if (!g_Gui.IsBossPresent())
+                {
+                    EnemyTimelineArgs *args = &this->timelinePos->args;
+                    D3DXVECTOR3 pos;
+
+                    pos = args->pos;
+                    if (args->pos.x <= -990.0f)
+                    {
+                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[2]);
+                    }
+                    if (args->pos.y <= -990.0f)
+                    {
+                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[3]);
+                    }
+                    if (args->pos.z <= -990.0f)
+                    {
+                        pos.z = g_Rng.GetRandomF32InRange(800.0f);
+                    }
+                    this->Spawn(this->timelinePos->arg0, &pos, args->life, args->item, args->score);
+                }
+                break;
+            case 5:
+                if (!g_Gui.IsBossPresent())
+                {
+                    D3DXVECTOR3 pos;
+
+                    pos = this->timelinePos->args.pos;
+                    if (pos.x <= -990.0f)
+                    {
+                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[2]);
+                    }
+                    if (pos.y <= -990.0f)
+                    {
+                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[3]);
+                    }
+                    if (pos.z <= -990.0f)
+                    {
+                        pos.z = g_Rng.GetRandomF32InRange(800.0f);
+                    }
+                    this->Spawn(this->timelinePos->arg0, &pos, -1, -1, -1);
+                }
+                break;
+            case 6:
+                if (!g_Gui.IsBossPresent())
+                {
+                    EnemyTimelineArgs *args = &this->timelinePos->args;
+                    D3DXVECTOR3 pos;
+
+                    pos = args->pos;
+                    if (args->pos.x <= -990.0f)
+                    {
+                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[2]);
+                    }
+                    if (args->pos.y <= -990.0f)
+                    {
+                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[3]);
+                    }
+                    if (args->pos.z <= -990.0f)
+                    {
+                        pos.z = g_Rng.GetRandomF32InRange(800.0f);
+                    }
+                    enemy = this->Spawn(this->timelinePos->arg0, &pos, args->life, args->item,
+                                        args->score);
+                    enemy->flags.mirrored = 1;
+                }
+                break;
+            case 7:
+                if (!g_Gui.IsBossPresent())
+                {
+                    D3DXVECTOR3 pos;
+
+                    pos = this->timelinePos->args.pos;
+                    if (pos.x <= -990.0f)
+                    {
+                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[2]);
+                    }
+                    if (pos.y <= -990.0f)
+                    {
+                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[3]);
+                    }
+                    if (pos.z <= -990.0f)
+                    {
+                        pos.z = g_Rng.GetRandomF32InRange(800.0f);
+                    }
+                    enemy = this->Spawn(this->timelinePos->arg0, &pos, -1, -1, -1);
+                    enemy->flags.mirrored = 1;
+                }
+                break;
+            case 8:
+                if (g_GameManager.difficulty == 0 && g_GameManager.stage == 5 && this->timelinePos->arg0 == 1)
+                {
+                    g_Gui.StartMsg(g_GameManager.character * 10 + 3);
+                }
+                else
+                {
+                    g_Gui.StartMsg(this->timelinePos->arg0 + g_GameManager.character * 10);
+                }
+                break;
+            case 9:
+                if (g_Gui.Func419572())
+                {
+                    this->timelineTime.Sub(1);
+                    return;
+                }
+                break;
+            case 10:
+                this->bosses[((int *)&this->timelinePos->args)[0]]->unk_c68 = ((int *)&this->timelinePos->args)[1];
+                break;
+            case 11:
+                g_GameManager.power = this->timelinePos->arg0;
+                break;
+            case 12:
+                if (this->bosses[this->timelinePos->arg0] != NULL && this->bosses[this->timelinePos->arg0]->flags.active)
+                {
+                    this->timelineTime.Sub(1);
+                    return;
+                }
+                break;
+            }
+        }
+        else if (this->timelineTime < this->timelinePos->time)
+        {
+            break;
+        }
+        this->timelinePos = (EnemyTimelineEntry *)((char *)this->timelinePos + this->timelinePos->size);
+    }
+    if (!g_Gui.Func4195a2())
+    {
+        g_GameManager.unk_1a5c[4]++;
+    }
+}
+
 void Enemy::Func4121b0()
 {
     if (this->flags.unk13 == 0)
@@ -89,7 +276,7 @@ void Enemy::Func4121b0()
     }
     if (this->flags.unk11)
     {
-        g_Gui.unk_20 = 0;
+        g_Gui.bossPresent = 0;
     }
     if (this->effectCount != 0)
     {
@@ -144,7 +331,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
     int lifeBefore;
     Enemy *em;
 
-    mgr->Func411530();
+    mgr->RunTimeline();
     em = mgr->enemies;
     mgr->enemyCount = 0;
     for (i = 0; i < 0x100; i++, em++)
@@ -263,7 +450,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     em->life = 1;
                     em->flags.unk12 = 0;
                     em->flags.unk13 = 0;
-                    g_Gui.unk_20 = 0;
+                    g_Gui.bossPresent = 0;
                     g_EffectManager.SpawnEffect(em->deathEffect, &em->pos, 1, 0xffffffff);
                     g_EffectManager.SpawnEffect(em->deathEffect, &em->pos, 1, 0xffffffff);
                     g_EffectManager.SpawnEffect(em->deathEffect, &em->pos, 1, 0xffffffff);
@@ -278,7 +465,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 dead:
                     if (em->flags.unk11)
                     {
-                        g_Gui.unk_20 = 0;
+                        g_Gui.bossPresent = 0;
                         ReleaseEnemyEffects(em);
                     }
                 case 2:
@@ -350,7 +537,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             em->unk_cf0.Tick();
         }
     }
-    mgr->unk_ee5e0.Tick();
+    mgr->timelineTime.Tick();
     return 1;
 }
 
@@ -468,6 +655,6 @@ int EnemyManager::AddedCallback(EnemyManager *mgr)
     mgr->unk_ee5b8 = g_Rng.GetRandomU16InRange(3);
     mgr->unk_ee5ba = g_Rng.GetRandomU16InRange(8);
     mgr->unk_ee5c8 = 0;
-    mgr->unk_ee5dc = 0;
+    mgr->timelinePos = NULL;
     return 0;
 }

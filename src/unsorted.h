@@ -399,6 +399,11 @@ public:
     DWORD GetRandomU32();
     // A random float from 0 up to 1.
     float GetRandomF32ZeroToOne();
+    // A random float from 0 up to `range`.
+    float GetRandomF32InRange(float range)
+    {
+        return this->GetRandomF32ZeroToOne() * range;
+    }
     // A random number below `range`, or 0 if `range` is 0.
     WORD GetRandomU16InRange(WORD range)
     {
@@ -652,6 +657,10 @@ public:
     BOOL Func4195a2();
     // Frees impl->msgFile, if there is one.
     void FreeMsgFile();
+    BYTE IsBossPresent()
+    {
+        return this->bossPresent;
+    }
     // Sets the boss's life bar, as a fraction of its maximum.
     void SetBossHealth(float health)
     {
@@ -665,7 +674,8 @@ public:
     // Set by Func417bfd from the length of its text.
     float unk_0c;
     DWORD unk_10[0x4];
-    BYTE unk_20;
+    // Set while a boss fight runs.
+    BYTE bossPresent;
     BYTE unk_21[0x3];
     // The boss's life as a fraction of its maximum, for its bar.
     float bossHealth;

@@ -424,8 +424,8 @@ address,size,name,symbol
 0x0043753c,310,MoveMenuCursor,?MoveMenuCursor@@YAHPAVMainMenu@@H@Z
 0x00437672,305,ReassignButton,?ReassignButton@@YAXPAVMainMenu@@FFH@Z
 0x004377a3,255,HighlightMenuEntry,?HighlightMenuEntry@@YAXPAVSprite@@HHKKH@Z
-0x004378a2,322,MainMenu::Func4378a2,?Func4378a2@MainMenu@@QAEHXZ
-0x004379e4,349,MainMenu::Func4379e4,?Func4379e4@MainMenu@@QAEHXZ
+0x004378a2,322,MainMenu::StartTitle,?StartTitle@MainMenu@@QAEHXZ
+0x004379e4,349,MainMenu::WaitForKey,?WaitForKey@MainMenu@@QAEHXZ
 0x00437b41,1675,MainMenu::UpdateTitleMenu,?UpdateTitleMenu@MainMenu@@QAEHXZ
 0x004381ec,2517,MainMenu::UpdateReplayMenu,?UpdateReplayMenu@MainMenu@@QAEHXZ
 0x00438bc1,823,MainMenu::DrawReplayMenu,?DrawReplayMenu@MainMenu@@QAEHXZ
@@ -439,7 +439,7 @@ address,size,name,symbol
 0x0043a338,300,SetUpTitleScene,?SetUpTitleScene@@YAHH@Z
 0x0043a464,501,MainMenu::AddedCallback,?AddedCallback@MainMenu@@SAHPAV1@@Z
 0x0043a659,177,MainMenu::DeletedCallback,?DeletedCallback@MainMenu@@SAHPAV1@@Z
-0x0043a70a,44,Func43a70a,?Func43a70a@@YAXXZ
+0x0043a70a,44,ReleaseTitleAnms,?ReleaseTitleAnms@@YAXXZ
 0x0043a736,112,GameManager::IsExtraUnlocked,?IsExtraUnlocked@GameManager@@QAEHHH@Z
 0x0043a7b0,23,CSoundManager::CSoundManager,??0CSoundManager@@QAE@XZ
 0x0043a7d0,44,CSoundManager::~CSoundManager,??1CSoundManager@@QAE@XZ
@@ -1603,7 +1603,7 @@ address,size,name,symbol
 0x00478518,,g_ShotTypeNames,?g_ShotTypeNames@@3PAPADA
 0x00478528,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A
 0x00478628,,g_SoundPaths,?g_SoundPaths@@3PAPADA
-0x00478690,,g_Unknown478690,?g_Unknown478690@@3FA
+0x00478690,,g_LastPressedKey,?g_LastPressedKey@@3FA
 0x00478694,,g_MenuStageNames,?g_MenuStageNames@@3PAPADA
 0x004786b0,,g_MenuShotTypeNames,?g_MenuShotTypeNames@@3PAPADA
 0x004786c0,,g_MenuDifficultyNames,?g_MenuDifficultyNames@@3PAPADA

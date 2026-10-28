@@ -529,7 +529,7 @@ int CreateD3d();
 int SetUpTitleScene(int unk);
 
 // Releases ANMs 21 to 27.
-void Func43a70a();
+void ReleaseTitleAnms();
 
 // The 640 by 64 surface text is drawn on with GDI before it is copied
 // into a texture.

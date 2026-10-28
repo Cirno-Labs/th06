@@ -27,18 +27,19 @@ public:
     MainMenu();
 
     // Releases the menu's sprite files (slots 0x1b to 0x24 and those
-    // of Func43a70a) and surface 0, forgets their scripts, removes the
-    // calc element and frees unk_10edc. Returns 0.
+    // of ReleaseTitleAnms) and surface 0, forgets their scripts, removes the
+    // calc element and frees loadedReplay. Returns 0.
     static int DeletedCallback(MainMenu *menu);
     // Sets the menu up with LoadTitleResources (on failure sets the scene to 4
     // and returns -1); the first time, waits until 3 seconds after the
     // game started and plays "bgm/th06_01.mid". Then resets every
-    // sprite's interrupt, color and offset and sets unk_81f0. Returns 0.
-    int Func4378a2();
-    // After 30 frames, on a press of a confirming button (0x160b):
+    // sprite's interrupt, color and offset and moves to state 1, the
+    // title waiting for a key. Returns 0.
+    int StartTitle();
+    // State 1: after 30 frames, on a press of a confirming button (0x160b):
     // moves to state 2, interrupts every sprite with 2 and marks the
     // entry at the cursor. Returns 0 then, else 1.
-    int Func4379e4();
+    int WaitForKey();
     // In state 17 (practice), lists the practice high scores of the
     // stages the shot type reached on this difficulty, fading in over
     // 30 frames, the one at the cursor brighter. Returns 0.
@@ -78,7 +79,7 @@ public:
     // the resources fail to load (scene 4).
     int UpdateReplayMenu();
     // In the replay menu (states 13 to 15), lists the page of 15 replays
-    // around the cursor (unk_81e8), the one at the cursor highlighted, and
+    // around the cursor (replayCursor), the one at the cursor highlighted, and
     // in state 15 the picked replay's slowdown and the score each stage
     // ended with, the stage at `cursor` highlighted. Returns 0.
     int DrawReplayMenu();
@@ -89,22 +90,28 @@ public:
     DWORD unk_81a4[0x10];
     int unk_81e4;
     // The replay menu's cursor and the number of replays listed.
-    int unk_81e8;
-    int unk_81ec;
-    int unk_81f0;
-    // Counts the frames in the current state (unk_81f0).
-    int unk_81f4;
+    int replayCursor;
+    int replayCount;
+    // The menu's state (0 sets the title up, 1 waits for a key, 2 the
+    // title menu, ...; see the Update functions).
+    int state;
+    // Counts the frames in the current state.
+    int stateFrames;
     // Frames without input on the title; at 720 the demo starts.
-    int unk_81f8;
-    int unk_81fc;
-    D3DCOLOR unk_8200;
+    int idleFrames;
+    // OnDraw's overlay over the background: it goes from fadeFromColor's
+    // alpha to fadeToColor's (in fadeToColor's color), fadeFrame
+    // counting up to fadeInFrames while that is nonzero, else back down
+    // over fadeOutFrames.
+    D3DCOLOR fadeFromColor;
+    D3DCOLOR fadeToColor;
     // The colors HighlightMenuEntry gives the selected entry and the
     // others.
-    D3DCOLOR unk_8204;
-    D3DCOLOR unk_8208;
-    int unk_820c;
-    int unk_8210;
-    int unk_8214;
+    D3DCOLOR selectedColor;
+    D3DCOLOR unselectedColor;
+    int fadeFrame;
+    int fadeInFrames;
+    int fadeOutFrames;
     DWORD unk_8218;
     // The button mapping the options screen edits.
     ControllerMapping controllerMapping;
@@ -112,9 +119,9 @@ public:
     // The options screen's pending settings: cfg.colorMode16Bits as it
     // was when the screen opened, and the windowed mode and frame skip,
     // applied (by restarting, scene 5) when leaving if any changed.
-    BYTE unk_8230;
-    BYTE unk_8231;
-    BYTE unk_8232;
+    BYTE prevColorMode16Bits;
+    BYTE pendingWindowed;
+    BYTE pendingFrameSkip;
     BYTE unk_8233;
     // The update element (priority 2, with the added and deleted
     // callbacks) and the draw element (priority 0), created by
@@ -127,21 +134,22 @@ public:
     char replayLabels[60][8];
     ReplayHeader replays[60];
     // The replay picked in the replay menu.
-    ReplayHeader *unk_10edc;
+    ReplayHeader *loadedReplay;
     // The frame rates measured on the title screen (frames per half
     // second or more, those of 57 or above), and how many: their average
     // picks the game speed when a game starts.
-    int unk_10ee0;
-    float unk_10ee4[0x10];
+    int fpsCount;
+    float fpsSamples[0x10];
     DWORD unk_10f24;
     int unk_10f28;
-    int unk_10f2c;
-    int unk_10f30;
+    // The frames counted since fpsStartTime, a timeGetTime().
+    int fpsFrames;
+    int fpsStartTime;
 };
 ASSERT_SIZE(MainMenu, 0x10f34);
 extern MainMenu g_MainMenu;
 // The key the key configuration saw pressed last frame (0x20 for none).
-extern short g_Unknown478690;
+extern short g_LastPressedKey;
 // The names the replay menu shows for stages, shot types and difficulties.
 extern char *g_MenuStageNames[7];
 extern char *g_MenuShotTypeNames[4];

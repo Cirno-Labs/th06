@@ -28,66 +28,66 @@ int MainMenu::OnUpdate(MainMenu *menu)
     short pressedKey;
     BYTE *pad1;
 
-    if (menu->unk_10ee0 < 0x10)
+    if (menu->fpsCount < 0x10)
     {
         timeBeginPeriod(1);
-        if (menu->unk_10f30 == 0)
+        if (menu->fpsStartTime == 0)
         {
-            menu->unk_10f30 = timeGetTime();
+            menu->fpsStartTime = timeGetTime();
         }
         time = timeGetTime();
         timeEndPeriod(1);
-        menu->unk_10f2c++;
-        deltaX = time - menu->unk_10f30;
+        menu->fpsFrames++;
+        deltaX = time - menu->fpsStartTime;
         if (deltaX >= 700)
         {
-            menu->unk_10f30 = time;
-            menu->unk_10f2c = 0;
+            menu->fpsStartTime = time;
+            menu->fpsFrames = 0;
         }
         else if (deltaX >= 500)
         {
             seconds = deltaX / 1000.0f;
-            fps3 = menu->unk_10f2c * 1000.0f / deltaX;
+            fps3 = menu->fpsFrames * 1000.0f / deltaX;
             if (fps3 >= 57.0f)
             {
-                menu->unk_10ee4[menu->unk_10ee0] = fps3;
-                menu->unk_10ee0++;
+                menu->fpsSamples[menu->fpsCount] = fps3;
+                menu->fpsCount++;
             }
-            menu->unk_10f30 = time;
-            menu->unk_10f2c = 0;
+            menu->fpsStartTime = time;
+            menu->fpsFrames = 0;
         }
     }
-    switch (menu->unk_81f0)
+    switch (menu->state)
     {
     case 0:
-        status = menu->Func4378a2();
+        status = menu->StartTitle();
         if (status == -1)
         {
             return 0;
         }
     case 1:
-        menu->unk_81f8++;
+        menu->idleFrames++;
         if (g_Buttons & 0xffff)
         {
-            menu->unk_81f8 = 0;
+            menu->idleFrames = 0;
         }
-        if (menu->unk_81f8 >= 720)
+        if (menu->idleFrames >= 720)
         {
             goto demo;
         }
-        if (menu->Func4379e4())
+        if (menu->WaitForKey())
         {
             break;
         }
-        menu->unk_81f8 = 0;
+        menu->idleFrames = 0;
     case 2:
         menu->UpdateTitleMenu();
         if (g_Buttons & 0xffff)
         {
-            menu->unk_81f8 = 0;
+            menu->idleFrames = 0;
         }
-        menu->unk_81f8++;
-        if (menu->unk_81f8 >= 720)
+        menu->idleFrames++;
+        if (menu->idleFrames >= 720)
         {
         demo:
             g_GameManager.isInReplay = 1;
@@ -120,7 +120,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
         MoveMenuCursor(menu, 11);
         for (text3 = &menu->sprites[0x22], i = 0; i < 11; i++, text3++)
         {
-            HighlightMenuEntry(text3, i, menu->cursor, menu->unk_8204, menu->unk_8208, 0x73);
+            HighlightMenuEntry(text3, i, menu->cursor, menu->selectedColor, menu->unselectedColor, 0x73);
         }
         for (i = 0; i < 9; i++, text3++)
         {
@@ -130,7 +130,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 continue;
             }
             text3->flags.visible = 1;
-            HighlightMenuEntry(text3, i, menu->cursor, menu->unk_8204, menu->unk_8208, 0x73);
+            HighlightMenuEntry(text3, i, menu->cursor, menu->selectedColor, menu->unselectedColor, 0x73);
         }
         for (i = 0; i < 18; i++, text3++)
         {
@@ -150,9 +150,9 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 g_SpriteEngine->SetSprite(text3, button3 % 10 + 0x100);
             }
             text3->unk_0b2 = text3->spriteIndex;
-            HighlightMenuEntry(text3, i / 2, menu->cursor, menu->unk_8204, menu->unk_8208, 0x7a);
+            HighlightMenuEntry(text3, i / 2, menu->cursor, menu->selectedColor, menu->unselectedColor, 0x7a);
         }
-        if (menu->unk_81f4 >= 0x20)
+        if (menu->stateFrames >= 0x20)
         {
             pad1 = GetPadButtons();
             for (pressedKey = 0; pressedKey < 0x20; pressedKey++)
@@ -162,7 +162,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                     break;
                 }
             }
-            if (pressedKey < 0x20 && g_Unknown478690 != pressedKey)
+            if (pressedKey < 0x20 && g_LastPressedKey != pressedKey)
             {
                 g_SoundPlayer.QueueSound(10, 0);
                 switch (menu->cursor)
@@ -205,7 +205,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                     break;
                 }
             }
-            g_Unknown478690 = pressedKey;
+            g_LastPressedKey = pressedKey;
             if (WAS_PRESSED(0x1001))
             {
                 switch (menu->cursor)
@@ -217,8 +217,8 @@ int MainMenu::OnUpdate(MainMenu *menu)
                     break;
                 }
                 case 10:
-                    menu->unk_81f0 = 3;
-                    menu->unk_81f4 = 0;
+                    menu->state = 3;
+                    menu->stateFrames = 0;
                     for (pressedKey = 0; pressedKey < 0x7a; pressedKey++)
                     {
                         menu->sprites[pressedKey].pendingInterrupt = 3;
@@ -233,7 +233,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
         }
         break;
     case 6:
-        if (menu->unk_81f4 == 60)
+        if (menu->stateFrames == 60)
         {
             if (LoadSelectResources(menu) != 0)
             {
@@ -241,10 +241,10 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 g_App.scene = 4;
                 return 0;
             }
-            menu->unk_81f0 = 7;
-            menu->unk_81fc = 0;
-            menu->unk_8214 = menu->unk_8210;
-            menu->unk_8210 = 0;
+            menu->state = 7;
+            menu->fadeFromColor = 0;
+            menu->fadeOutFrames = menu->fadeInFrames;
+            menu->fadeInFrames = 0;
             if (g_GameManager.difficulty < 4)
             {
                 for (i = 0; i < 0x7a; i++)
@@ -267,10 +267,10 @@ int MainMenu::OnUpdate(MainMenu *menu)
             break;
         }
     case 8:
-        if (menu->unk_81f4 == 36)
+        if (menu->stateFrames == 36)
         {
-            menu->unk_81f0 = 0;
-            menu->unk_81f4 = 0;
+            menu->state = 0;
+            menu->stateFrames = 0;
         }
         break;
     case 7:
@@ -329,8 +329,8 @@ int MainMenu::OnUpdate(MainMenu *menu)
         }
         if (WAS_PRESSED(0xa))
         {
-            menu->unk_81f0 = 8;
-            menu->unk_81f4 = 0;
+            menu->state = 8;
+            menu->stateFrames = 0;
             for (i = 0; i < 0x7a; i++)
             {
                 menu->sprites[i].pendingInterrupt = 4;
@@ -356,8 +356,8 @@ int MainMenu::OnUpdate(MainMenu *menu)
         }
         else if (WAS_PRESSED(0x1001))
         {
-            menu->unk_81f0 = 9;
-            menu->unk_81f4 = 0;
+            menu->state = 9;
+            menu->stateFrames = 0;
             for (i = 0; i < 0x7a; i++)
             {
                 menu->sprites[i].pendingInterrupt = 7;
@@ -398,7 +398,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
         }
         break;
     case 9:
-        if (menu->unk_81f4 < 30)
+        if (menu->stateFrames < 30)
         {
             break;
         }
@@ -475,8 +475,8 @@ int MainMenu::OnUpdate(MainMenu *menu)
     characterChosen:
         if (WAS_PRESSED(0xa))
         {
-            menu->unk_81f0 = 7;
-            menu->unk_81f4 = 0;
+            menu->state = 7;
+            menu->stateFrames = 0;
             if (g_GameManager.difficulty < 4)
             {
                 for (i = 0; i < 0x7a; i++)
@@ -498,8 +498,8 @@ int MainMenu::OnUpdate(MainMenu *menu)
         }
         else if (WAS_PRESSED(0x1001))
         {
-            menu->unk_81f0 = 11;
-            menu->unk_81f4 = 0;
+            menu->state = 11;
+            menu->stateFrames = 0;
             for (i = 0; i < 0x7a; i++)
             {
                 menu->sprites[i].pendingInterrupt = 0xd;
@@ -577,14 +577,14 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 text3->posOffset = D3DXVECTOR3(-6.0f, -6.0f, 0.0f);
             }
         }
-        if (menu->unk_81f4 < 30)
+        if (menu->stateFrames < 30)
         {
             break;
         }
         if (WAS_PRESSED(0xa))
         {
-            menu->unk_81f0 = 9;
-            menu->unk_81f4 = 0;
+            menu->state = 9;
+            menu->stateFrames = 0;
             for (i = 0; i < 0x7a; i++)
             {
                 menu->sprites[i].pendingInterrupt = 7;
@@ -641,11 +641,11 @@ int MainMenu::OnUpdate(MainMenu *menu)
                     float speed;
 
                     average = 0.0f;
-                    if (menu->unk_10ee0 >= 2)
+                    if (menu->fpsCount >= 2)
                     {
-                        for (i = 0; i < menu->unk_10ee0; i++)
+                        for (i = 0; i < menu->fpsCount; i++)
                         {
-                            average += menu->unk_10ee4[i];
+                            average += menu->fpsSamples[i];
                         }
                         average /= i;
                     }
@@ -699,8 +699,8 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 g_App.StopMusic();
                 return 0;
             }
-            menu->unk_81f0 = 17;
-            menu->unk_81f4 = 0;
+            menu->state = 17;
+            menu->stateFrames = 0;
             for (i = 0; i < 0x7a; i++)
             {
                 menu->sprites[i].pendingInterrupt = 0x13;
@@ -757,14 +757,14 @@ int MainMenu::OnUpdate(MainMenu *menu)
             stages = 5;
         }
         MoveMenuCursor(menu, stages);
-        if (menu->unk_81f4 < 30)
+        if (menu->stateFrames < 30)
         {
             break;
         }
         if (WAS_PRESSED(0xa))
         {
-            menu->unk_81f0 = 11;
-            menu->unk_81f4 = 0;
+            menu->state = 11;
+            menu->stateFrames = 0;
             for (i = 0; i < 0x7a; i++)
             {
                 menu->sprites[i].pendingInterrupt = 0xd;
@@ -800,28 +800,28 @@ int MainMenu::OnUpdate(MainMenu *menu)
         break;
     }
     case 4:
-        if (menu->unk_81f4 >= 60)
+        if (menu->stateFrames >= 60)
         {
             g_App.scene = 4;
             return 0;
         }
         break;
     case 10:
-        if (menu->unk_81f4 >= 60)
+        if (menu->stateFrames >= 60)
         {
             g_App.scene = 6;
             return 0;
         }
         break;
     case 16:
-        if (menu->unk_81f4 >= 60)
+        if (menu->stateFrames >= 60)
         {
             g_App.scene = 9;
             return 0;
         }
         break;
     }
-    menu->unk_81f4++;
+    menu->stateFrames++;
     for (i = 0; i < 0x7a; i++)
     {
         if (menu->sprites[i].HasTexture())
@@ -935,7 +935,7 @@ void HighlightMenuEntry(Sprite *vm, int index, int cursor, D3DCOLOR selectedColo
     }
 }
 
-int MainMenu::Func4378a2()
+int MainMenu::StartTitle()
 {
     DWORD current;
     int i;
@@ -969,15 +969,15 @@ int MainMenu::Func4378a2()
         }
         this->sprites[i].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     }
-    this->unk_81f0 = 1;
+    this->state = 1;
     return 0;
 }
 
-int MainMenu::Func4379e4()
+int MainMenu::WaitForKey()
 {
     int i;
 
-    if (this->unk_81f4 < 30)
+    if (this->stateFrames < 30)
     {
         return 1;
     }
@@ -985,8 +985,8 @@ int MainMenu::Func4379e4()
     {
         return 1;
     }
-    this->unk_81f4 = 0;
-    this->unk_81f0 = 2;
+    this->stateFrames = 0;
+    this->state = 2;
     for (i = 0; i < 0x7a; i++)
     {
         this->sprites[i].pendingInterrupt = 2;
@@ -1000,10 +1000,10 @@ int MainMenu::Func4379e4()
         this->sprites[this->cursor].color = 0xffffe0e0;
     }
     this->sprites[this->cursor].posOffset = D3DXVECTOR3(-6.0f, -6.0f, 0.0f);
-    this->unk_81fc = 0;
-    this->unk_8200 = 0x40000000;
-    this->unk_820c = 0;
-    this->unk_8210 = 60;
+    this->fadeFromColor = 0;
+    this->fadeToColor = 0x40000000;
+    this->fadeFrame = 0;
+    this->fadeInFrames = 60;
     return 0;
 }
 
@@ -1022,7 +1022,7 @@ int MainMenu::UpdateTitleMenu()
     {
         HighlightMenuEntry(vm, i, this->cursor, 0xffff0000, 0x80300000, 0x7a);
     }
-    if (this->unk_81f4 >= 20)
+    if (this->stateFrames >= 20)
     {
         if (WAS_PRESSED(0x1001))
         {
@@ -1033,7 +1033,7 @@ int MainMenu::UpdateTitleMenu()
             {
                 this->sprites[i].pendingInterrupt = 4;
             }
-            this->unk_81f0 = 6;
+            this->state = 6;
             g_GameManager.isInPractice = 0;
             if (g_GameManager.difficulty >= 4)
             {
@@ -1043,11 +1043,11 @@ int MainMenu::UpdateTitleMenu()
             {
                 g_App.cfg.defaultDifficulty = 1;
             }
-            this->unk_81f4 = 0;
-            this->unk_81fc = 0x40000000;
-            this->unk_8200 = 0xff000000;
-            this->unk_820c = 0;
-            this->unk_8210 = 60;
+            this->stateFrames = 0;
+            this->fadeFromColor = 0x40000000;
+            this->fadeToColor = 0xff000000;
+            this->fadeFrame = 0;
+            this->fadeInFrames = 60;
             g_SoundPlayer.QueueSound(10, 0);
             break;
             case 1:
@@ -1058,14 +1058,14 @@ int MainMenu::UpdateTitleMenu()
                 {
                     this->sprites[i].pendingInterrupt = 4;
                 }
-                this->unk_81f0 = 6;
+                this->state = 6;
                 g_GameManager.isInPractice = 0;
                 g_GameManager.difficulty = 4;
-                this->unk_81f4 = 0;
-                this->unk_81fc = 0x40000000;
-                this->unk_8200 = 0xff000000;
-                this->unk_820c = 0;
-                this->unk_8210 = 60;
+                this->stateFrames = 0;
+                this->fadeFromColor = 0x40000000;
+                this->fadeToColor = 0xff000000;
+                this->fadeFrame = 0;
+                this->fadeInFrames = 60;
                 g_SoundPlayer.QueueSound(10, 0);
             }
             else
@@ -1079,7 +1079,7 @@ int MainMenu::UpdateTitleMenu()
             {
                 this->sprites[i].pendingInterrupt = 4;
             }
-            this->unk_81f0 = 6;
+            this->state = 6;
             if (g_GameManager.difficulty >= 4)
             {
                 g_GameManager.difficulty = 1;
@@ -1088,11 +1088,11 @@ int MainMenu::UpdateTitleMenu()
             {
                 g_App.cfg.defaultDifficulty = 1;
             }
-            this->unk_81f4 = 0;
-            this->unk_81fc = 0x40000000;
-            this->unk_8200 = 0xff000000;
-            this->unk_820c = 0;
-            this->unk_8210 = 60;
+            this->stateFrames = 0;
+            this->fadeFromColor = 0x40000000;
+            this->fadeToColor = 0xff000000;
+            this->fadeFrame = 0;
+            this->fadeInFrames = 60;
             g_SoundPlayer.QueueSound(10, 0);
             break;
             case 3:
@@ -1100,13 +1100,13 @@ int MainMenu::UpdateTitleMenu()
             {
                 this->sprites[i].pendingInterrupt = 4;
             }
-            this->unk_81f0 = 12;
+            this->state = 12;
             g_GameManager.isInPractice = 0;
-            this->unk_81f4 = 0;
-            this->unk_81fc = 0x40000000;
-            this->unk_8200 = 0xff000000;
-            this->unk_820c = 0;
-            this->unk_8210 = 60;
+            this->stateFrames = 0;
+            this->fadeFromColor = 0x40000000;
+            this->fadeToColor = 0xff000000;
+            this->fadeFrame = 0;
+            this->fadeInFrames = 60;
             g_SoundPlayer.QueueSound(10, 0);
             break;
             case 4:
@@ -1114,17 +1114,17 @@ int MainMenu::UpdateTitleMenu()
             {
                 this->sprites[i].pendingInterrupt = 4;
             }
-            this->unk_81f0 = 10;
-            this->unk_81f4 = 0;
-            this->unk_81fc = 0x40000000;
-            this->unk_8200 = 0xff000000;
-            this->unk_820c = 0;
-            this->unk_8210 = 60;
+            this->state = 10;
+            this->stateFrames = 0;
+            this->fadeFromColor = 0x40000000;
+            this->fadeToColor = 0xff000000;
+            this->fadeFrame = 0;
+            this->fadeInFrames = 60;
             g_SoundPlayer.QueueSound(10, 0);
             break;
             case 5:
-            this->unk_81f0 = 16;
-            this->unk_81f4 = 0;
+            this->state = 16;
+            this->stateFrames = 0;
             for (i = 0; i < 0x7a; i++)
             {
                 this->sprites[i].pendingInterrupt = 4;
@@ -1132,21 +1132,21 @@ int MainMenu::UpdateTitleMenu()
             g_SoundPlayer.QueueSound(10, 0);
             break;
             case 6:
-            this->unk_81f0 = 3;
-            this->unk_81f4 = 0;
+            this->state = 3;
+            this->stateFrames = 0;
             for (i = 0; i < 0x7a; i++)
             {
                 this->sprites[i].pendingInterrupt = 3;
             }
             this->cursor = 0;
-            this->unk_8230 = g_App.cfg.colorMode16Bits;
-            this->unk_8231 = g_App.cfg.windowed;
-            this->unk_8232 = g_App.cfg.frameSkip;
+            this->prevColorMode16Bits = g_App.cfg.colorMode16Bits;
+            this->pendingWindowed = g_App.cfg.windowed;
+            this->pendingFrameSkip = g_App.cfg.frameSkip;
             g_SoundPlayer.QueueSound(10, 0);
             break;
             case 7:
-            this->unk_81f0 = 4;
-            this->unk_81f4 = 0;
+            this->state = 4;
+            this->stateFrames = 0;
             for (i = 0; i < 0x7a; i++)
             {
                 this->sprites[i].pendingInterrupt = 4;
@@ -1157,8 +1157,8 @@ int MainMenu::UpdateTitleMenu()
         }
         if (WAS_PRESSED(0x200))
         {
-            this->unk_81f0 = 4;
-            this->unk_81f4 = 0;
+            this->state = 4;
+            this->stateFrames = 0;
             for (i = 0; i < 0x7a; i++)
             {
                 this->sprites[i].pendingInterrupt = 4;
@@ -1184,10 +1184,10 @@ int MainMenu::UpdateReplayMenu()
     char path[0x40];
     WIN32_FIND_DATAA fd;
 
-    switch (this->unk_81f0)
+    switch (this->state)
     {
     case 12:
-        if (this->unk_81f4 == 60)
+        if (this->stateFrames == 60)
         {
             if (LoadReplayMenuResources(this) != 0)
             {
@@ -1241,11 +1241,11 @@ int MainMenu::UpdateReplayMenu()
             }
             FindClose(findHandle);
             _chdir("../");
-            this->unk_81ec = replayCount;
-            this->unk_81fc = 0;
-            this->unk_8214 = this->unk_8210;
-            this->unk_8210 = 0;
-            this->unk_81f0 = 13;
+            this->replayCount = replayCount;
+            this->fadeFromColor = 0;
+            this->fadeOutFrames = this->fadeInFrames;
+            this->fadeInFrames = 0;
+            this->state = 13;
             for (text = this->sprites, i = 0; i < 0x7a; i++, text++)
             {
                 text->pendingInterrupt = 15;
@@ -1255,44 +1255,44 @@ int MainMenu::UpdateReplayMenu()
         }
         break;
     case 14:
-        if (this->unk_81f4 == 36)
+        if (this->stateFrames == 36)
         {
-            this->unk_81f0 = 0;
-            this->unk_81f4 = 0;
+            this->state = 0;
+            this->stateFrames = 0;
         }
         break;
     case 13:
-        if (this->unk_81f4 < 40)
+        if (this->stateFrames < 40)
         {
             break;
         }
-        if (this->unk_81ec != 0)
+        if (this->replayCount != 0)
         {
-            MoveMenuCursor(this, this->unk_81ec);
-            this->unk_81e8 = this->cursor;
+            MoveMenuCursor(this, this->replayCount);
+            this->replayCursor = this->cursor;
             if (WAS_PRESSED(0x1001))
             {
-                this->unk_81f0 = 15;
+                this->state = 15;
                 for (text = &this->sprites[0x61], i = 0; i < 0x19; i++, text++)
                 {
                     text->pendingInterrupt = 0x11;
                 }
-                text = &this->sprites[this->unk_81e8 + 0x63];
+                text = &this->sprites[this->replayCursor + 0x63];
                 text->pendingInterrupt = 0x10;
-                this->unk_81f4 = 0;
+                this->stateFrames = 0;
                 this->cursor = 0;
                 g_SoundPlayer.QueueSound(10, 0);
-                this->unk_10edc = (ReplayHeader *)LoadFileData(this->replayPaths[this->unk_81e8], 1);
-                ValidateReplay(this->unk_10edc, g_FileSize);
+                this->loadedReplay = (ReplayHeader *)LoadFileData(this->replayPaths[this->replayCursor], 1);
+                ValidateReplay(this->loadedReplay, g_FileSize);
                 for (i = 0; i < 7; i++)
                 {
-                    if (this->unk_10edc->stages[i + 1] != NULL)
+                    if (this->loadedReplay->stages[i + 1] != NULL)
                     {
-                        this->unk_10edc->stages[i + 1] =
-                            (ReplayStage *)((int)this->unk_10edc + (int)this->unk_10edc->stages[i + 1]);
+                        this->loadedReplay->stages[i + 1] =
+                            (ReplayStage *)((int)this->loadedReplay + (int)this->loadedReplay->stages[i + 1]);
                     }
                 }
-                while (this->replays[this->unk_81e8].stages[this->cursor + 1] == NULL)
+                while (this->replays[this->replayCursor].stages[this->cursor + 1] == NULL)
                 {
                     this->cursor++;
                     if (this->cursor >= 7)
@@ -1304,8 +1304,8 @@ int MainMenu::UpdateReplayMenu()
         }
         if (WAS_PRESSED(0xa))
         {
-            this->unk_81f0 = 14;
-            this->unk_81f4 = 0;
+            this->state = 14;
+            this->stateFrames = 0;
             for (i = 0; i < 0x7a; i++)
             {
                 this->sprites[i].pendingInterrupt = 4;
@@ -1316,14 +1316,14 @@ int MainMenu::UpdateReplayMenu()
         }
         break;
     case 15:
-        if (this->unk_81f4 < 40)
+        if (this->stateFrames < 40)
         {
             break;
         }
         i = MoveMenuCursor(this, 7);
         if (i < 0)
         {
-            while (this->replays[this->unk_81e8].stages[this->cursor + 1] == NULL)
+            while (this->replays[this->replayCursor].stages[this->cursor + 1] == NULL)
             {
                 this->cursor--;
                 if (this->cursor < 0)
@@ -1334,7 +1334,7 @@ int MainMenu::UpdateReplayMenu()
         }
         else if (i > 0)
         {
-            while (this->replays[this->unk_81e8].stages[this->cursor + 1] == NULL)
+            while (this->replays[this->replayCursor].stages[this->cursor + 1] == NULL)
             {
                 this->cursor++;
                 if (this->cursor >= 7)
@@ -1343,44 +1343,44 @@ int MainMenu::UpdateReplayMenu()
                 }
             }
         }
-        if (WAS_PRESSED(0x1001) && &this->unk_10edc[this->cursor].stages[1] != NULL)
+        if (WAS_PRESSED(0x1001) && &this->loadedReplay[this->cursor].stages[1] != NULL)
         {
             g_GameManager.isInReplay = 1;
             g_App.gameSpeed = 1.0f;
-            strcpy(g_GameManager.replayFile, this->replayPaths[this->unk_81e8]);
-            g_GameManager.difficulty = this->unk_10edc->difficulty;
-            g_GameManager.character = this->unk_10edc->shotType / 2;
-            g_GameManager.shotType = this->unk_10edc->shotType % 2;
+            strcpy(g_GameManager.replayFile, this->replayPaths[this->replayCursor]);
+            g_GameManager.difficulty = this->loadedReplay->difficulty;
+            g_GameManager.character = this->loadedReplay->shotType / 2;
+            g_GameManager.shotType = this->loadedReplay->shotType % 2;
             i = 0;
-            while (this->unk_10edc->stages[i + 1] == NULL)
+            while (this->loadedReplay->stages[i + 1] == NULL)
             {
                 i++;
             }
-            g_GameManager.lives = this->unk_10edc->stages[i + 1]->lives;
-            g_GameManager.bombs = this->unk_10edc->stages[i + 1]->bombs;
-            MemFree(this->unk_10edc);
-            this->unk_10edc = NULL;
+            g_GameManager.lives = this->loadedReplay->stages[i + 1]->lives;
+            g_GameManager.bombs = this->loadedReplay->stages[i + 1]->bombs;
+            MemFree(this->loadedReplay);
+            this->loadedReplay = NULL;
             g_GameManager.stage = this->cursor;
             g_App.scene = 2;
             return 1;
         }
         if (WAS_PRESSED(0xa))
         {
-            MemFree(this->unk_10edc);
-            this->unk_10edc = NULL;
-            this->unk_81f0 = 13;
-            this->unk_81f4 = 0;
+            MemFree(this->loadedReplay);
+            this->loadedReplay = NULL;
+            this->state = 13;
+            this->stateFrames = 0;
             for (i = 0; i < 0x7a; i++)
             {
                 this->sprites[i].pendingInterrupt = 4;
             }
             g_SoundPlayer.QueueSound(0xb, 0);
-            this->unk_81f0 = 13;
+            this->state = 13;
             for (text = this->sprites, i = 0; i < 0x7a; i++, text++)
             {
                 text->pendingInterrupt = 15;
             }
-            this->cursor = this->unk_81e8;
+            this->cursor = this->replayCursor;
         }
         break;
     }
@@ -1395,17 +1395,17 @@ int MainMenu::DrawReplayMenu()
 
     text = &this->sprites[0x62];
     g_AsciiText.AddFormat(&text->pos, "No.   Name      Date     Player   Rank");
-    i = this->unk_81e8 - this->unk_81e8 % 15;
+    i = this->replayCursor - this->replayCursor % 15;
     for (top = i; i < top + 15; i++)
     {
-        if (i >= this->unk_81ec)
+        if (i >= this->replayCount)
         {
             break;
         }
         text++;
         if (!g_App.HasFlag0Or8())
         {
-            if (i == this->unk_81e8)
+            if (i == this->replayCursor)
             {
                 g_AsciiText.SetColor(0xffff8080);
             }
@@ -1416,8 +1416,8 @@ int MainMenu::DrawReplayMenu()
         }
         else
         {
-            g_AsciiText.SetHighlight(i == this->unk_81e8);
-            if (i == this->unk_81e8)
+            g_AsciiText.SetHighlight(i == this->replayCursor);
+            if (i == this->replayCursor)
             {
                 g_AsciiText.SetColor(0xffffffff);
             }
@@ -1430,12 +1430,12 @@ int MainMenu::DrawReplayMenu()
                               this->replays[i].date, g_MenuShotTypeNames[this->replays[i].shotType],
                               g_MenuDifficultyNames[this->replays[i].difficulty]);
     }
-    if (this->unk_81f0 == 15 && this->unk_10edc != NULL)
+    if (this->state == 15 && this->loadedReplay != NULL)
     {
         g_AsciiText.SetColor(0xffffffff);
         g_AsciiText.SetHighlight(0);
         text = &this->sprites[0x61];
-        g_AsciiText.AddFormat(&text->pos, "       %2.3f%%", this->unk_10edc->slowdown);
+        g_AsciiText.AddFormat(&text->pos, "       %2.3f%%", this->loadedReplay->slowdown);
         text = &this->sprites[0x72];
         g_AsciiText.AddFormat(&text->pos, "Stage  LastScore");
         for (i = 0; i < 7; i++)
@@ -1464,9 +1464,9 @@ int MainMenu::DrawReplayMenu()
                     g_AsciiText.SetColor(0xff808080);
                 }
             }
-            if (this->unk_10edc->stages[i + 1] != NULL)
+            if (this->loadedReplay->stages[i + 1] != NULL)
             {
-                g_AsciiText.AddFormat(&text->pos, "%s %9d", g_MenuStageNames[i], this->unk_10edc->stages[i + 1]->score);
+                g_AsciiText.AddFormat(&text->pos, "%s %9d", g_MenuStageNames[i], this->loadedReplay->stages[i + 1]->score);
             }
             else
             {
@@ -1580,9 +1580,9 @@ int MainMenu::UpdateOptions()
     vm = &this->sprites[0x4b];
     for (i = 0; i < 2; i++, vm++)
     {
-        this->HighlightOption(vm, 5, i, this->unk_8231);
+        this->HighlightOption(vm, 5, i, this->pendingWindowed);
     }
-    if (this->unk_81f4 >= 0x20)
+    if (this->stateFrames >= 0x20)
     {
         if (WAS_PRESSED_OR_HELD(0x40))
         {
@@ -1633,11 +1633,11 @@ int MainMenu::UpdateOptions()
                 break;
             case 5:
                 g_SoundPlayer.QueueSound(0xc, 0);
-                if (this->unk_8231 <= 0)
+                if (this->pendingWindowed <= 0)
                 {
-                    this->unk_8231 = 2;
+                    this->pendingWindowed = 2;
                 }
-                this->unk_8231 = this->unk_8231 - 1;
+                this->pendingWindowed = this->pendingWindowed - 1;
                 break;
             }
         }
@@ -1695,10 +1695,10 @@ int MainMenu::UpdateOptions()
                 break;
             case 5:
                 g_SoundPlayer.QueueSound(0xc, 0);
-                this->unk_8231 = this->unk_8231 + 1;
-                if (this->unk_8231 >= 2)
+                this->pendingWindowed = this->pendingWindowed + 1;
+                if (this->pendingWindowed >= 2)
                 {
-                    this->unk_8231 = 0;
+                    this->pendingWindowed = 0;
                 }
                 break;
             }
@@ -1708,8 +1708,8 @@ int MainMenu::UpdateOptions()
             switch (this->cursor)
             {
             case 7:
-                this->unk_81f0 = 5;
-                this->unk_81f4 = 0;
+                this->state = 5;
+                this->stateFrames = 0;
                 for (i = 0; i < 0x7a; i++)
                 {
                     this->sprites[i].pendingInterrupt = 5;
@@ -1733,19 +1733,19 @@ int MainMenu::UpdateOptions()
                 g_App.PlayMusic("bgm/th06_01.mid");
                 break;
             case 8:
-                this->unk_81f0 = 2;
-                this->unk_81f4 = 0;
+                this->state = 2;
+                this->stateFrames = 0;
                 for (i = 0; i < 0x7a; i++)
                 {
                     this->sprites[i].pendingInterrupt = 2;
                 }
                 this->cursor = 6;
                 g_SoundPlayer.QueueSound(0xb, 0);
-                if (this->unk_8230 != g_App.cfg.colorMode16Bits ||
-                    this->unk_8231 != g_App.cfg.windowed || this->unk_8232 != g_App.cfg.frameSkip)
+                if (this->prevColorMode16Bits != g_App.cfg.colorMode16Bits ||
+                    this->pendingWindowed != g_App.cfg.windowed || this->pendingFrameSkip != g_App.cfg.frameSkip)
                 {
-                    g_App.cfg.frameSkip = this->unk_8232;
-                    g_App.cfg.windowed = this->unk_8231;
+                    g_App.cfg.frameSkip = this->pendingFrameSkip;
+                    g_App.cfg.windowed = this->pendingWindowed;
                     g_App.scene = 5;
                     return 1;
                 }
@@ -1764,12 +1764,12 @@ int MainMenu::DrawPracticeScores()
     int si3;
     D3DXVECTOR3 pos;
 
-    if (this->unk_81f0 == 17)
+    if (this->state == 17)
     {
         pos.x = 320.0f;
         pos.y = 200.0f;
         pos.z = 0.0f;
-        fade = this->unk_81f4 < 30 ? this->unk_81f4 * 255 / 30 : 255;
+        fade = this->stateFrames < 30 ? this->stateFrames * 255 / 30 : 255;
         si3 = g_GameManager.character * 2 + g_GameManager.shotType;
         n2 = g_GameManager.clrds[si3].unk_11[g_GameManager.difficulty] > 6
                     ? 6
@@ -1808,28 +1808,28 @@ int MainMenu::OnDraw(MainMenu *menu)
     rect[1] = 0.0f;
     rect[2] = 640.0f;
     rect[3] = 480.0f;
-    if (menu->unk_81f0 == 0)
+    if (menu->state == 0)
     {
         return 1;
     }
     g_SpriteEngine->ClearTexture();
     g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
-    if (menu->unk_8210 != 0)
+    if (menu->fadeInFrames != 0)
     {
-        if (menu->unk_820c < menu->unk_8210)
+        if (menu->fadeFrame < menu->fadeInFrames)
         {
-            menu->unk_820c++;
+            menu->fadeFrame++;
         }
-        alpha = ((menu->unk_8200 & 0xff000000) >> 24) - ((menu->unk_81fc & 0xff000000) >> 24);
-        DrawColorRect(rect, (alpha * menu->unk_820c / menu->unk_8210 + ((menu->unk_81fc & 0xff000000) >> 24)) << 24 |
-                                menu->unk_8200 & 0xffffff);
+        alpha = ((menu->fadeToColor & 0xff000000) >> 24) - ((menu->fadeFromColor & 0xff000000) >> 24);
+        DrawColorRect(rect, (alpha * menu->fadeFrame / menu->fadeInFrames + ((menu->fadeFromColor & 0xff000000) >> 24)) << 24 |
+                                menu->fadeToColor & 0xffffff);
     }
-    else if (menu->unk_820c != 0)
+    else if (menu->fadeFrame != 0)
     {
-        menu->unk_820c--;
-        alpha = ((menu->unk_8200 & 0xff000000) >> 24) - ((menu->unk_81fc & 0xff000000) >> 24);
-        DrawColorRect(rect, (alpha * menu->unk_820c / menu->unk_8214 + ((menu->unk_81fc & 0xff000000) >> 24)) << 24 |
-                                menu->unk_8200 & 0xffffff);
+        menu->fadeFrame--;
+        alpha = ((menu->fadeToColor & 0xff000000) >> 24) - ((menu->fadeFromColor & 0xff000000) >> 24);
+        DrawColorRect(rect, (alpha * menu->fadeFrame / menu->fadeOutFrames + ((menu->fadeFromColor & 0xff000000) >> 24)) << 24 |
+                                menu->fadeToColor & 0xffffff);
     }
     for (i = 0; i < 0x62; i++, vm++)
     {
@@ -1841,7 +1841,7 @@ int MainMenu::OnDraw(MainMenu *menu)
             vm->pos = savedPos;
         }
     }
-    switch (menu->unk_81f0)
+    switch (menu->state)
     {
     case 13:
     case 14:
@@ -2013,13 +2013,13 @@ int SetUpTitleScene(int unk)
     memset(menu, 0, sizeof(MainMenu));
     g_GameManager.isPaused = 0;
     DebugPrint2("Debug : title 開始 VRAM = %d\n", g_App.d3dDevice->GetAvailableTextureMem());
-    menu->unk_81f0 = unk != 0 ? 12 : 0;
+    menu->state = unk != 0 ? 12 : 0;
     g_App.gameSpeed = 0.0f;
     menu->calcChain = g_Chain.CreateElem((ChainCallback)MainMenu::OnUpdate);
     menu->calcChain->arg = menu;
     menu->calcChain->addedCallback = (ChainCallback)MainMenu::AddedCallback;
     menu->calcChain->deletedCallback = (ChainCallback)MainMenu::DeletedCallback;
-    menu->unk_81f4 = 0;
+    menu->stateFrames = 0;
     if (g_Chain.AddToCalcChain(menu->calcChain, 2) != 0)
     {
         return -1;
@@ -2027,9 +2027,9 @@ int SetUpTitleScene(int unk)
     menu->drawChain = g_Chain.CreateElem((ChainCallback)MainMenu::OnDraw);
     menu->drawChain->arg = menu;
     g_Chain.AddToDrawChain(menu->drawChain, 0);
-    menu->unk_10f30 = 0;
-    menu->unk_81f4 = 60;
-    menu->unk_10f2c = 0;
+    menu->fpsStartTime = 0;
+    menu->stateFrames = 60;
+    menu->fpsFrames = 0;
     return 0;
 }
 
@@ -2067,20 +2067,20 @@ int MainMenu::AddedCallback(MainMenu *menu)
     g_GameManager.isInPractice = 0;
     if (!g_App.cfg.flags.unk0)
     {
-        menu->unk_8208 = 0x80004000;
-        menu->unk_8204 = 0xff008000;
+        menu->unselectedColor = 0x80004000;
+        menu->selectedColor = 0xff008000;
     }
     else
     {
-        menu->unk_8208 = 0x80ffffff;
-        menu->unk_8204 = 0xffffffff;
+        menu->unselectedColor = 0x80ffffff;
+        menu->selectedColor = 0xffffffff;
     }
-    menu->unk_81fc = 0;
-    menu->unk_8200 = 0x40000000;
-    menu->unk_820c = 0;
-    menu->unk_8210 = 0;
+    menu->fadeFromColor = 0;
+    menu->fadeToColor = 0x40000000;
+    menu->fadeFrame = 0;
+    menu->fadeInFrames = 0;
     menu->unk_10f28 = 0x10;
-    menu->unk_10edc = NULL;
+    menu->loadedReplay = NULL;
     scoreDat = LoadScoreDat("score.dat");
     LoadClears(scoreDat, g_GameManager.clrds);
     LoadPracticeScores(scoreDat, &g_GameManager.pscrs[0][0][0]);
@@ -2107,7 +2107,7 @@ int MainMenu::DeletedCallback(MainMenu *menu)
     int i;
 
     g_App.d3dDevice->ResourceManagerDiscardBytes(0);
-    Func43a70a();
+    ReleaseTitleAnms();
     for (i = 0x1b; i <= 0x24; i++)
     {
         g_SpriteEngine->ReleaseAnm(i);
@@ -2116,11 +2116,11 @@ int MainMenu::DeletedCallback(MainMenu *menu)
     g_SpriteEngine->ClearMenuScripts();
     g_Chain.Remove(menu->drawChain);
     menu->drawChain = NULL;
-    MemFree(menu->unk_10edc);
+    MemFree(menu->loadedReplay);
     return 0;
 }
 
-void Func43a70a()
+void ReleaseTitleAnms()
 {
     int i;
 

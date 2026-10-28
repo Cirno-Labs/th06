@@ -63,7 +63,7 @@ address,size,name,symbol
 0x0040b890,74,D3DXVec3Length,?D3DXVec3Length@@YAMPBUD3DXVECTOR3@@@Z
 0x0040b8e0,414,Func40b8e0,?Func40b8e0@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040ba80,244,Func40ba80,?Func40ba80@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x0040bb80,1396,Func40bb80,
+0x0040bb80,1396,Func40bb80,?Func40bb80@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040c100,117,Func40c100,
 0x0040c180,1066,Func40c180,
 0x0040c5b0,1331,Func40c5b0,
@@ -1593,6 +1593,9 @@ address,size,name,symbol
 0x00487e48,,g_Unknown487e48,?g_Unknown487e48@@3MA
 0x00487e4c,,g_Unknown487e4c,?g_Unknown487e4c@@3MA
 0x00487e50,,g_EnemyScripts,?g_EnemyScripts@@3VEnemyScripts@@A
+0x00487edc,,g_Unknown487edc,?g_Unknown487edc@@3PAMA
+0x00487f5c,,g_Unknown487f5c,?g_Unknown487f5c@@3UD3DXVECTOR3@@A
+0x00487f68,,g_Unknown487f68,?g_Unknown487f68@@3UD3DXVECTOR3@@A
 0x00487fe0,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x004b7964,,g_EffectCalcChain,?g_EffectCalcChain@@3UChainElem@@A
 0x004b7984,,g_EffectDrawChain,?g_EffectDrawChain@@3UChainElem@@A

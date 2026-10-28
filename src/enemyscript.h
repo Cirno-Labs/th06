@@ -220,3 +220,9 @@ extern float g_Unknown487e4c;
 extern void (*g_EnemyScriptFuncs[])(Enemy *enemy, EnemyScriptInstr *instr);
 // The bonus of each spell card.
 extern int g_SpellCardBonuses[0x40];
+
+// Func40bb80's star: its corners' angles, and where its center moves
+// from and to.
+extern float g_Unknown487edc[6];
+extern D3DXVECTOR3 g_Unknown487f5c;
+extern D3DXVECTOR3 g_Unknown487f68;

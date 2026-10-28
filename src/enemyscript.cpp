@@ -1466,3 +1466,65 @@ void Func40ba80(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->shooter.pos.y = g_Rng.GetRandomF32InRange(range) + enemy->pos.y - range / 2.0f;
     g_BulletManager.FirePattern(&enemy->shooter);
 }
+
+// g_EnemyScriptFuncs[2], set as the context's func: every sixth frame
+// until the count in intVars[2] reaches intVars[3], fires five patterns
+// from points on a star (corners g_Unknown487edc, radius floatVars[3])
+// whose center moves from the enemy towards where the player was.
+void Func40bb80(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    D3DXVECTOR3 center2;
+    float progress2;
+    D3DXVECTOR3 from;
+    float t;
+    D3DXVECTOR3 to3;
+    float speed;
+    int i;
+
+    if (enemy->ctx.intVars[2] >= enemy->ctx.intVars[3])
+    {
+        enemy->ctx.func = NULL;
+        return;
+    }
+    if (enemy->ctx.intVars[2] == 0)
+    {
+        g_Unknown487f5c = enemy->pos;
+        g_Unknown487f68 = g_Player.position;
+        g_Unknown487edc[0] = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+        g_Unknown487edc[1] = AddNormalizeAngle(g_Unknown487edc[0], 2.5132742f);
+    }
+    if (enemy->ctx.intVars[2] % 30 == 0)
+    {
+        g_Unknown487edc[0] = g_Unknown487edc[1];
+        g_Unknown487edc[1] = AddNormalizeAngle(g_Unknown487edc[0], 2.5132742f);
+        g_Unknown487edc[2] = AddNormalizeAngle(g_Unknown487edc[1], 2.5132742f);
+        g_Unknown487edc[3] = AddNormalizeAngle(g_Unknown487edc[2], 2.5132742f);
+        g_Unknown487edc[4] = AddNormalizeAngle(g_Unknown487edc[3], 2.5132742f);
+        g_Unknown487edc[5] = AddNormalizeAngle(g_Unknown487edc[4], 2.5132742f);
+    }
+    if (enemy->ctx.intVars[2] % 6 == 0)
+    {
+        progress2 = (float)enemy->ctx.intVars[2] / (float)enemy->ctx.intVars[3];
+        t = progress2 * 0.1f;
+        center2 = (g_Unknown487f68 - g_Unknown487f5c) * t + g_Unknown487f5c;
+        center2.z = 0.0f;
+        progress2 += 0.5f;
+        enemy->shooter.angle1 = 1.0471976f * progress2;
+        for (i = 0; i < 5; i++)
+        {
+            t = (float)(enemy->ctx.intVars[2] % 30) / 30.0f;
+            SinCosScale(&from, g_Unknown487edc[i], enemy->ctx.floatVars[3]);
+            SinCosScale(&to3, g_Unknown487edc[i + 1], enemy->ctx.floatVars[3]);
+            from = (to3 - from) * t + from;
+            from.z = 0.0f;
+            enemy->shooter.pos = center2 + from;
+            speed = enemy->shooter.speed1;
+            enemy->shooter.speed1 += g_Rng.GetRandomF32InRange(enemy->shooter.speed2);
+            g_BulletManager.FirePattern(&enemy->shooter);
+            enemy->shooter.speed1 = speed;
+            enemy->shooter.angle1 -= 0.5235988f * progress2;
+        }
+        g_Unknown6d3f50.QueueSound(0x16, 0);
+    }
+    enemy->ctx.intVars[2]++;
+}

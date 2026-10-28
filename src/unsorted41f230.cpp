@@ -3,8 +3,139 @@
 #include <math.h>
 #include <stdio.h>
 
+#include "chain.h"
 #include "stage.h"
 #include "unsorted.h"
+
+int GameWindow::RunFrame()
+{
+    DWORD time2;
+    double ratio2;
+    double delta;
+    double now;
+    D3DVIEWPORT8 viewport;
+    int res;
+    static int s_frames;
+    static double s_lastFrameTime;
+
+    if (this->isAppActive == 0)
+    {
+        return 0;
+    }
+    if (this->curFrame == 0)
+    {
+    loop:
+        if (g_Unknown6c6d18.cfg.frameSkip <= this->curFrame)
+        {
+            if (g_Unknown6c6d18.ClearsBackBuffer())
+            {
+                viewport.X = 0;
+                viewport.Y = 0;
+                viewport.Width = 640;
+                viewport.Height = 480;
+                viewport.MinZ = 0.0f;
+                viewport.MaxZ = 1.0f;
+                g_Unknown6c6d18.d3dDevice->SetViewport(&viewport);
+                g_Unknown6c6d18.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, g_Stage.fog.color, 1.0f,
+                                                 0);
+                g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+            }
+            g_Unknown6c6d18.d3dDevice->BeginScene();
+            g_Chain.RunDrawChain();
+            g_Unknown6c6d18.d3dDevice->EndScene();
+            g_Unknown6c6d18.d3dDevice->SetTexture(0, NULL);
+        }
+        g_Unknown6c6d18.viewport.X = 0;
+        g_Unknown6c6d18.viewport.Y = 0;
+        g_Unknown6c6d18.viewport.Width = 640;
+        g_Unknown6c6d18.viewport.Height = 480;
+        g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+        res = g_Chain.RunCalcChain();
+        g_Unknown6d3f50.PlayQueuedSounds();
+        if (res == 0)
+        {
+            return 1;
+        }
+        if (res == -1)
+        {
+            return 2;
+        }
+        this->curFrame++;
+    }
+    if ((g_Unknown6c6d18.cfg.windowed != 0 || g_Unknown6c6d18.UsesPresentImmediate()) && this->curFrame != 0)
+    {
+        g_Unknown6c6d18.gameSpeed = 1.0f;
+        timeBeginPeriod(1);
+        now = timeGetTime();
+        if (now < s_lastFrameTime)
+        {
+            s_lastFrameTime = now;
+        }
+        delta = fabs(now - s_lastFrameTime);
+        timeEndPeriod(1);
+        if (delta >= 1000.0 / 60.0)
+        {
+            do
+            {
+                s_lastFrameTime += 1000.0 / 60.0;
+                delta -= 1000.0 / 60.0;
+            } while (delta >= 1000.0 / 60.0);
+            if (g_Unknown6c6d18.cfg.frameSkip < this->curFrame)
+            {
+                goto present;
+            }
+            goto loop;
+        }
+    }
+    if (g_Unknown6c6d18.cfg.windowed == 0 && !g_Unknown6c6d18.UsesPresentImmediate())
+    {
+        if (g_Unknown6c6d18.cfg.frameSkip >= this->curFrame)
+        {
+            PresentFrame();
+            goto loop;
+        }
+    present:
+        PresentFrame();
+        if (g_Unknown6c6d18.gameSpeed == 0.0f)
+        {
+            if (s_frames >= 2)
+            {
+                timeBeginPeriod(1);
+                time2 = timeGetTime();
+                if (time2 < g_Unknown6c6d18.unk_1a4)
+                {
+                    g_Unknown6c6d18.unk_1a4 = time2;
+                }
+                ratio2 = time2 - g_Unknown6c6d18.unk_1a4;
+                ratio2 = ratio2 * 60.0 / 2.0 / 1000.0;
+                ratio2 /= g_Unknown6c6d18.cfg.frameSkip + 1;
+                if (ratio2 >= 0.865)
+                {
+                    ratio2 = 1.0;
+                }
+                else if (ratio2 >= 0.6)
+                {
+                    ratio2 = 0.8;
+                }
+                else
+                {
+                    ratio2 = 0.5;
+                }
+                g_Unknown6c6d18.frameAdvance = ratio2;
+                g_Unknown6c6d18.unk_1a4 = time2;
+                timeEndPeriod(1);
+                s_frames = 0;
+            }
+        }
+        else
+        {
+            g_Unknown6c6d18.frameAdvance = g_Unknown6c6d18.gameSpeed;
+        }
+        this->curFrame = 0;
+        s_frames++;
+    }
+    return 0;
+}
 
 void PresentFrame()
 {

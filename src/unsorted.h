@@ -38,6 +38,13 @@ void PresentFrame();
 // The game's window and the main loop's state.
 struct GameWindow
 {
+    // Runs a frame: the calc chain, and unless the frame is skipped, the
+    // draw chain and PresentFrame; in windowed mode (or when presenting
+    // immediately) it waits for 1/60 s to pass. Returns 0, or what the
+    // calc chain asks for: 1 to quit, 2 to restart. Does nothing while
+    // the game is not the active app.
+    int RunFrame();
+
     // The window, also kept in g_Unknown6c6d18.hwnd.
     HWND hwnd;
     // Set when the window gets WM_CLOSE: the main loop ends.
@@ -380,7 +387,7 @@ public:
     // not be set to 60 Hz. Cleared by LoadConfig when the 60 frame mode
     // is forced.
     int presentImmediate;
-    int unk_1a4;
+    DWORD unk_1a4;
     // The part of a frame a Timer advances per frame while the game runs
     // slower than full speed. Movement per frame is scaled by it too.
     float frameAdvance;

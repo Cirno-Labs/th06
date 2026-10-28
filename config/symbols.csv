@@ -229,7 +229,7 @@ address,size,name,symbol
 0x00420130,86,ItemManager::CollectAll,?CollectAll@ItemManager@@QAEXXZ
 0x00420190,408,ItemManager::DrawItems,?DrawItems@ItemManager@@QAEXXZ
 0x00420330,943,Func420330,
-0x004206e0,1126,Func4206e0,
+0x004206e0,1126,GameWindow::RunFrame,?RunFrame@GameWindow@@QAEHXZ
 0x00420b50,118,PresentFrame,?PresentFrame@@YAXXZ
 0x00420bd0,53,CreateD3d,?CreateD3d@@YAHXZ
 0x00420c10,295,CreateGameWindow,?CreateGameWindow@@YAXPAUHINSTANCE__@@@Z

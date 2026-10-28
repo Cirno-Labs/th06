@@ -67,3 +67,17 @@ int DatArchive::Release()
     free(this->unk_04);
     return 1;
 }
+
+int DatArchive::FindEntry(char *name)
+{
+    DWORD i;
+
+    for (i = 0; i < this->numEntries; i++)
+    {
+        if (strcmp(name, this->entries[i].name) == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
+}

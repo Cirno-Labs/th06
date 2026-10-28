@@ -234,6 +234,8 @@ public:
     // aligned to the sprite's right edge. A character takes
     // (unk_10c + 1) / 2 pixels.
     void RenderTextRightAligned(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...);
+    // RenderTextRightAligned, centered on the sprite.
+    void RenderTextCentered(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...);
 
     // Releases the vertex buffer, if there is one.
     void ReleaseVertexBuffer();

@@ -1992,3 +1992,38 @@ void Func40d770(Enemy *enemy, EnemyScriptInstr *instr)
         }
     }
 }
+
+// g_EnemyScriptFuncs[11], set as the context's func: Func40caf0's sparks
+// while the enemy lives; a bomb makes it unshootable (and turns its
+// sprite to script 0x1a5) until 60 frames after the bomb ends.
+void Func40d930(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    if (enemy->life <= 0)
+    {
+        return;
+    }
+    Func40caf0(enemy, instr);
+    if (g_Player.bomb.running != 0)
+    {
+        if (enemy->unk_e5a >= 0)
+        {
+            g_SpriteEngine->StartScript(&enemy->sprite, 0x1a5);
+            enemy->unk_e5a = -1;
+        }
+        enemy->flags.unk8 = 0;
+        enemy->unk_e44.Set(60);
+    }
+    else if (enemy->unk_e44 > 0)
+    {
+        enemy->unk_e44.Sub(1);
+        if (enemy->unk_e44 == 0)
+        {
+            if (enemy->unk_e5a < 0)
+            {
+                g_SpriteEngine->StartScript(&enemy->sprite, 0x1a0);
+                enemy->unk_e5a = 0xa1;
+            }
+            enemy->flags.unk8 = 1;
+        }
+    }
+}

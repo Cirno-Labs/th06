@@ -69,6 +69,26 @@ void Gui::Func417bfd(int sprite, char *text)
     g_Unknown6d3f50.QueueSound(14, 0);
 }
 
+int Gui::LoadMsg(char *path)
+{
+    int i;
+
+    this->FreeMsgFile();
+    this->impl->msgFile = (MsgFile *)LoadFileData(path, 0);
+    if (this->impl->msgFile == NULL)
+    {
+        LogPrintf(&g_Unknown69d998, "error : メッセージファイル %s が読み込めませんでした\n", path);
+        return -1;
+    }
+    this->impl->unk_253c = -1;
+    this->impl->unk_2538 = 0;
+    for (i = 0; i < this->impl->msgFile->count; i++)
+    {
+        this->impl->msgFile->scripts[i] = (char *)this->impl->msgFile->scripts[i] + (int)this->impl->msgFile;
+    }
+    return 0;
+}
+
 void Gui::FreeMsgFile()
 {
     if (this->impl->msgFile != NULL)

@@ -669,6 +669,7 @@ void DebugPrint2(const char *fmt, ...);
 struct MsgFile
 {
     int count;
+    void *scripts[1];
 };
 
 // A message Gui shows for a while at a fixed place, with a number.
@@ -773,6 +774,10 @@ public:
     BOOL Func419572();
     // Whether impl->unk_253c is not negative.
     BOOL Func4195a2();
+    // Loads the message file at `path` into impl->msgFile, turning its
+    // offsets into pointers. Returns 0, or -1 after logging
+    // "メッセージファイル %s が読み込めませんでした".
+    int LoadMsg(char *path);
     // Frees impl->msgFile, if there is one.
     void FreeMsgFile();
     BYTE IsBossPresent()

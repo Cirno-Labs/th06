@@ -776,9 +776,10 @@ struct GuiImpl
     Sprite unk_2314;
     Sprite unk_2424;
     GuiMsg msg;
-    // Set by the dialogue's opcode 9.
-    DWORD unk_2bdc;
-    DWORD unk_2be0;
+    // Set by the dialogue's opcode 9: OnDraw then shows the stage clear
+    // bonus, stageClearTotal.
+    DWORD stageClearShown;
+    DWORD stageClearTotal;
     // The bonus for bullets cleared, the full power message and one more.
     GuiPopup bonusPopup;
     GuiPopup fullPowerPopup;
@@ -815,6 +816,12 @@ public:
     // The update element's callback: unless g_GameManager.unk_002c is
     // set, runs Func4195bf and impl->RunMsg. Returns 1.
     static int OnUpdate(Gui *gui);
+    // The draw element's callback: the stage clear bonus once
+    // impl->stageClearShown is set, the dialogue, Func41adf3, Func419c99 and the
+    // popups, with the depth test off. Returns 1.
+    static int OnDraw(Gui *gui);
+    void Func41adf3();
+    void Func419c99();
     // The update element's added callback (the element at 0x69bc7c):
     // runs LoadResources.
     static int AddedCallback(Gui *gui);

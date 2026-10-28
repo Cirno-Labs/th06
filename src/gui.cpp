@@ -1,6 +1,10 @@
 // cflags: /Os
 // The /Os file with Gui, from 0x4172d3.
 
+#include <stdio.h>
+#include <string.h>
+
+#include "ascii.h"
 #include "gamemanager.h"
 #include "stage.h"
 #include "unsorted.h"
@@ -57,6 +61,129 @@ int Gui::OnUpdate(Gui *gui)
     }
     gui->Func4195bf();
     gui->impl->RunMsg();
+    return 1;
+}
+
+int Gui::OnDraw(Gui *gui)
+{
+    D3DXVECTOR3 cursor;
+    char buf[32];
+
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+    if (gui->impl->stageClearShown != 0)
+    {
+        cursor.x = 74.0f;
+        cursor.y = 128.0f;
+        cursor.z = 0.0f;
+        g_AsciiText.color = 0xffffff40;
+        if (g_GameManager.stage < 6)
+        {
+            g_AsciiText.AddFormat(&cursor, "Stage Clear\n\n");
+        }
+        else
+        {
+            g_AsciiText.AddFormat(&cursor, "All Clear!\n\n");
+        }
+        cursor.y += 32.0f;
+        g_AsciiText.color = 0xffffffff;
+        g_AsciiText.AddFormat(&cursor, "Stage * 1000 = %5d\n", g_GameManager.stage * 1000);
+        cursor.y += 16.0f;
+        g_AsciiText.color = 0xffe0e0ff;
+        g_AsciiText.AddFormat(&cursor, "Power *  100 = %5d\n", g_GameManager.power * 100);
+        cursor.y += 16.0f;
+        g_AsciiText.color = 0xffd0d0ff;
+        g_AsciiText.AddFormat(&cursor, "Graze *   10 = %5d\n", g_GameManager.graze * 10);
+        cursor.y += 16.0f;
+        g_AsciiText.color = 0xffff8080;
+        g_AsciiText.AddFormat(&cursor, "    * Point Item %3d\n", g_GameManager.pointItems);
+        if (g_GameManager.stage >= 6)
+        {
+            cursor.y += 16.0f;
+            g_AsciiText.color = 0xffffff80;
+            g_AsciiText.AddFormat(&cursor, "Player    = %8d\n", g_GameManager.lives * 3000000);
+            cursor.y += 16.0f;
+            g_AsciiText.AddFormat(&cursor, "Bomb      = %8d\n", g_GameManager.bombs * 1000000);
+        }
+        cursor.y += 32.0f;
+        switch (g_GameManager.difficulty)
+        {
+        case 0:
+            g_AsciiText.color = 0xffff8080;
+            g_AsciiText.AddFormat(&cursor, "Easy Rank      * 0.5\n");
+            break;
+        case 1:
+            g_AsciiText.color = 0xffff8080;
+            g_AsciiText.AddFormat(&cursor, "Normal Rank    * 1.0\n");
+            break;
+        case 2:
+            g_AsciiText.color = 0xffff8080;
+            g_AsciiText.AddFormat(&cursor, "Hard Rank      * 1.2\n");
+            break;
+        case 3:
+            g_AsciiText.color = 0xffff8080;
+            g_AsciiText.AddFormat(&cursor, "Lunatic Rank   * 1.5\n");
+            break;
+        case 4:
+            g_AsciiText.color = 0xffff8080;
+            g_AsciiText.AddFormat(&cursor, "Extra Rank     * 2.0\n");
+            break;
+        }
+        cursor.y += 16.0f;
+        if (g_GameManager.difficulty < 4 && !g_GameManager.unk_1823)
+        {
+            switch (g_Unknown6c6d18.unk_14c.lives)
+            {
+            case 3:
+                g_AsciiText.color = 0xffff8080;
+                g_AsciiText.AddFormat(&cursor, "Player Penalty * 0.5\n");
+                cursor.y += 16.0f;
+                break;
+            case 4:
+                g_AsciiText.color = 0xffff8080;
+                g_AsciiText.AddFormat(&cursor, "Player Penalty * 0.2\n");
+                cursor.y += 16.0f;
+                break;
+            }
+        }
+        g_AsciiText.color = 0xffffffff;
+        g_AsciiText.AddFormat(&cursor, "Total     = %8d", gui->impl->stageClearTotal);
+        g_AsciiText.color = 0xffffffff;
+    }
+    gui->impl->DrawMsg();
+    gui->Func41adf3();
+    gui->Func419c99();
+    g_AsciiText.unk_6230 = 1;
+    if (gui->impl->bonusPopup.shown)
+    {
+        g_AsciiText.color = 0xffffff80;
+        g_AsciiText.AddFormat(&gui->impl->bonusPopup.pos, "BONUS %8d", gui->impl->bonusPopup.value);
+        g_AsciiText.color = 0xffffffff;
+    }
+    if (gui->impl->fullPowerPopup.shown)
+    {
+        g_AsciiText.color = 0xffc0b0ff;
+        g_AsciiText.AddFormat(&gui->impl->fullPowerPopup.pos, "Full Power Mode!!", gui->impl->fullPowerPopup.value);
+        g_AsciiText.color = 0xffffffff;
+    }
+    if (gui->impl->unk_2c24.shown)
+    {
+        g_AsciiText.color = 0xffff0000;
+        gui->impl->unk_2c24.pos.x = (384.0f - strlen("Spell Card Bonus!") * 16.0f) / 2.0f + 32.0f;
+        gui->impl->unk_2c24.pos.y = 80.0f;
+        g_AsciiText.AddFormat(&gui->impl->unk_2c24.pos, "Spell Card Bonus!");
+        gui->impl->unk_2c24.pos.y += 16.0f;
+        sprintf(buf, "+%d", gui->impl->unk_2c24.value);
+        gui->impl->unk_2c24.pos.x = (384.0f - strlen(buf) * 32.0f) / 2.0f + 32.0f;
+        g_AsciiText.scaleX = 2.0f;
+        g_AsciiText.scaleY = 2.0f;
+        g_AsciiText.color = 0xffff8080;
+        g_AsciiText.AddString(&gui->impl->unk_2c24.pos, buf);
+        g_AsciiText.scaleX = 1.0f;
+        g_AsciiText.scaleY = 1.0f;
+        g_AsciiText.color = 0xffffffff;
+    }
+    g_AsciiText.unk_6230 = 0;
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
     return 1;
 }
 
@@ -264,7 +391,7 @@ int Gui::LoadResources()
     this->impl->unk_1cb4.unk_10d = 16;
     g_SpriteEngine->RenderTextRightAligned(&this->impl->unk_1cb4, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[0]);
     this->impl->msg.scriptIndex = -1;
-    this->impl->unk_2bdc = 0;
+    this->impl->stageClearShown = 0;
     this->impl->bonusPopup.shown = 0;
     this->impl->fullPowerPopup.shown = 0;
     this->impl->unk_2c24.shown = 0;
@@ -429,7 +556,7 @@ int GuiImpl::RunMsg()
             this->msg.waitFrames = 0;
             break;
         case 9:
-            this->unk_2bdc = 1;
+            this->stageClearShown = 1;
             if (g_GameManager.stage < 6)
             {
                 g_SpriteEngine->StartScript(&this->unk_2424, 0x619);

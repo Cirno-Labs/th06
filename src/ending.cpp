@@ -406,3 +406,93 @@ int Ending::OnDraw(Ending *ending)
     ending->DrawFade();
     return 1;
 }
+
+int Ending::AddedCallback(Ending *ending)
+{
+    int si;
+    // Unused.
+    int unused = g_GameManager.character * 2 + g_GameManager.shotType;
+
+    g_GameManager.unk_1822 = 1;
+    g_Unknown6c6d18.unk_19c = 1;
+    g_Unknown6c6d18.LoadArchive(5, "紅魔郷ED.dat");
+    g_SpriteEngine->LoadAnm(0x2c, "data/staff01.anm", 0x600);
+    g_SpriteEngine->LoadAnm(0x2d, "data/staff02.anm", 0x607);
+    g_SpriteEngine->LoadAnm(0x2e, "data/staff03.anm", 0x60e);
+    g_SpriteEngine->ClearTexture();
+    g_SpriteEngine->ClearSpriteData();
+    g_SpriteEngine->ClearBlendMode();
+    g_SpriteEngine->ClearVertexFormat();
+    si = g_GameManager.character * 2 + g_GameManager.shotType;
+    ending->canSkip = 0;
+    if (g_GameManager.continuesUsed == 0)
+    {
+        if (g_GameManager.clrds[si].unk_0c[g_GameManager.difficulty] == 'c')
+        {
+            ending->canSkip = 1;
+        }
+        g_GameManager.clrds[si].unk_0c[g_GameManager.difficulty] = 'c';
+    }
+    else if (g_GameManager.clrds[si].unk_11[g_GameManager.difficulty] == 'c')
+    {
+        ending->canSkip = 1;
+    }
+    g_GameManager.clrds[si].unk_11[g_GameManager.difficulty] = 'c';
+    if (g_GameManager.difficulty == 0 || g_GameManager.continuesUsed != 0)
+    {
+        switch (g_GameManager.character)
+        {
+        case 0:
+            if (ending->Load("data/end00b.end") != 0)
+            {
+                return -1;
+            }
+            break;
+        case 1:
+            if (ending->Load("data/end10b.end") != 0)
+            {
+                return -1;
+            }
+            break;
+        }
+    }
+    else
+    {
+        switch (g_GameManager.character)
+        {
+        case 0:
+            if (g_GameManager.shotType == 0)
+            {
+                if (ending->Load("data/end00.end") != 0)
+                {
+                    return -1;
+                }
+            }
+            else
+            {
+                if (ending->Load("data/end01.end") != 0)
+                {
+                    return -1;
+                }
+            }
+            break;
+        case 1:
+            if (g_GameManager.shotType == 0)
+            {
+                if (ending->Load("data/end10.end") != 0)
+                {
+                    return -1;
+                }
+            }
+            else
+            {
+                if (ending->Load("data/end11.end") != 0)
+                {
+                    return -1;
+                }
+            }
+            break;
+        }
+    }
+    return 0;
+}

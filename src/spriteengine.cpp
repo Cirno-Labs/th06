@@ -77,6 +77,34 @@ void SpriteEngine::CreateQuad()
     }
 }
 
+int SpriteEngine::LoadTexture(int index, char *path, int format, D3DCOLOR colorKey)
+{
+    this->ReleaseTexture(index);
+    this->textureFiles[index] = Func41e290(path, 0);
+    if (this->textureFiles[index] == NULL)
+    {
+        return -1;
+    }
+    if (g_Unknown6c6d18.cfg.flags.force16BitTextures)
+    {
+        if (g_TextureFormats[format] == D3DFMT_A8R8G8B8 || g_TextureFormats[format] == D3DFMT_UNKNOWN)
+        {
+            format = 5;
+        }
+        else if (g_TextureFormats[format] == D3DFMT_R8G8B8)
+        {
+            format = 3;
+        }
+    }
+    if (D3DXCreateTextureFromFileInMemoryEx(g_Unknown6c6d18.d3dDevice, this->textureFiles[index], g_FileSize, 0, 0, 0, 0,
+                                            g_TextureFormats[format], D3DPOOL_MANAGED, D3DX_FILTER_LINEAR,
+                                            D3DX_DEFAULT, colorKey, NULL, NULL, &this->textures[index]) != D3D_OK)
+    {
+        return -1;
+    }
+    return 0;
+}
+
 int SpriteEngine::CreateTexture(int index, int width, int height, int format)
 {
     D3DXCreateTexture(g_Unknown6c6d18.d3dDevice, width, height, 1, 0, g_TextureFormats[format], D3DPOOL_MANAGED,

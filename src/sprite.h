@@ -194,6 +194,10 @@ public:
     // the result in out[0] and out[1].
     void RotatePoint(float *out, float sine, float cosine, float x, float y, float cx, float cy);
     int Func432cc0(Sprite *sprite);
+    // Loads the image file at `path` into texture `index` in the format
+    // g_TextureFormats[`format`] (16 bits when forced), with `colorKey`
+    // transparent. Returns 0 or -1.
+    int LoadTexture(int index, char *path, int format, D3DCOLOR colorKey);
     // Releases texture `index` and frees its image file.
     void ReleaseTexture(int index);
     // Creates texture `index` at `width` by `height` in the format

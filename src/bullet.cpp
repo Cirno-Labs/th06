@@ -472,6 +472,371 @@ int BulletManager::ClearAllWithBonus(int maxBonus, int toItems)
     return totalBonus;
 }
 
+int BulletManager::OnUpdate(BulletManager *mgr)
+{
+    int fadeTime6;
+    D3DXVECTOR3 center2;
+    Laser *las;
+    int alpha4;
+    Bullet *bullet = mgr->bullets;
+    D3DXVECTOR3 extent5;
+    float scale3;
+    float speed7;
+    int k7;
+    int result;
+
+    if (g_GameManager.unk_002c != 0)
+    {
+        return 1;
+    }
+    g_ItemManager.UpdateItems();
+    mgr->bulletCount = 0;
+    for (k7 = 0; k7 < 0x280; k7++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        mgr->bulletCount++;
+        switch (bullet->state)
+        {
+        case 2:
+            bullet->pos += bullet->velocity / 2.0f * g_Unknown6c6d18.frameAdvance;
+            if (g_SpriteEngine->Step(&bullet->sprites.sprite1) == 0)
+            {
+                break;
+            }
+            goto spawned;
+        case 3:
+            bullet->pos += bullet->velocity / 2.5f * g_Unknown6c6d18.frameAdvance;
+            if (g_SpriteEngine->Step(&bullet->sprites.sprite2) == 0)
+            {
+                break;
+            }
+            goto spawned;
+        case 4:
+            bullet->pos += bullet->velocity / 3.0f * g_Unknown6c6d18.frameAdvance;
+            if (g_SpriteEngine->Step(&bullet->sprites.sprite3) == 0)
+            {
+                break;
+            }
+        spawned:
+            bullet->state = 1;
+            bullet->timer.Set(0);
+        case 1:
+            if (bullet->flags != 0)
+            {
+                if (bullet->flags & 1)
+                {
+                    if (bullet->timer <= 16)
+                    {
+                        speed7 = 5.0f - bullet->timer.AsFloat() * 5.0f / 16.0f;
+                        SinCosScale(&bullet->velocity, bullet->angle, speed7 + bullet->speed);
+                    }
+                    else
+                    {
+                        bullet->flags ^= 1;
+                    }
+                }
+                else if (bullet->flags & 0x10)
+                {
+                    if (bullet->timer >= bullet->unk_5a8)
+                    {
+                        bullet->flags &= ~0x10;
+                    }
+                    else
+                    {
+                        bullet->velocity += bullet->accel * g_Unknown6c6d18.frameAdvance;
+                        bullet->angle = atan2f(bullet->velocity.y, bullet->velocity.x);
+                    }
+                }
+                else if (bullet->flags & 0x20)
+                {
+                    if (bullet->timer >= bullet->unk_5a8)
+                    {
+                        bullet->flags &= ~0x20;
+                    }
+                    else
+                    {
+                        bullet->angle = AddNormalizeAngle(bullet->angle, g_Unknown6c6d18.frameAdvance * bullet->unk_594);
+                        bullet->speed = g_Unknown6c6d18.frameAdvance * bullet->unk_588 + bullet->speed;
+                        SinCosScale(&bullet->velocity, bullet->angle, bullet->speed);
+                    }
+                }
+                if (bullet->flags & 0x40)
+                {
+                    if (bullet->timer >= bullet->unk_5ac * (bullet->unk_5b0 + 1))
+                    {
+                        bullet->unk_5b0++;
+                        if (bullet->unk_5b0 >= bullet->unk_5b4)
+                        {
+                            bullet->flags &= ~0x40;
+                        }
+                        bullet->angle += bullet->unk_598;
+                        bullet->speed = bullet->unk_58c;
+                        speed7 = bullet->speed;
+                    }
+                    else
+                    {
+                        speed7 = bullet->speed - (bullet->timer.AsFloat() - bullet->unk_5ac * bullet->unk_5b0) * bullet->speed / bullet->unk_5ac;
+                    }
+                    SinCosScale(&bullet->velocity, bullet->angle, speed7);
+                }
+                else if (bullet->flags & 0x100)
+                {
+                    if (bullet->timer >= bullet->unk_5ac * (bullet->unk_5b0 + 1))
+                    {
+                        bullet->unk_5b0++;
+                        if (bullet->unk_5b0 >= bullet->unk_5b4)
+                        {
+                            bullet->flags &= ~0x100;
+                        }
+                        bullet->angle = bullet->unk_598;
+                        bullet->speed = bullet->unk_58c;
+                        speed7 = bullet->speed;
+                    }
+                    else
+                    {
+                        speed7 = bullet->speed - (bullet->timer.AsFloat() - bullet->unk_5ac * bullet->unk_5b0) * bullet->speed / bullet->unk_5ac;
+                    }
+                    SinCosScale(&bullet->velocity, bullet->angle, speed7);
+                }
+                else if (bullet->flags & 0x80)
+                {
+                    if (bullet->timer >= bullet->unk_5ac * (bullet->unk_5b0 + 1))
+                    {
+                        bullet->unk_5b0++;
+                        if (bullet->unk_5b0 >= bullet->unk_5b4)
+                        {
+                            bullet->flags &= ~0x80;
+                        }
+                        bullet->angle = g_Player.AngleFrom(&bullet->pos) + bullet->unk_598;
+                        bullet->speed = bullet->unk_58c;
+                        speed7 = bullet->speed;
+                    }
+                    else
+                    {
+                        speed7 = bullet->speed - (bullet->timer.AsFloat() - bullet->unk_5ac * bullet->unk_5b0) * bullet->speed / bullet->unk_5ac;
+                    }
+                    SinCosScale(&bullet->velocity, bullet->angle, speed7);
+                }
+                else if (bullet->flags & 0x400)
+                {
+                    if (!g_GameManager.Func41b5e1(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
+                    {
+                        if (bullet->pos.x < 0.0f || bullet->pos.x >= 384.0f)
+                        {
+                            bullet->angle = -bullet->angle - 3.1415927f;
+                            bullet->angle = AddNormalizeAngle(bullet->angle, 0.0f);
+                        }
+                        if (bullet->pos.y < 0.0f || bullet->pos.y >= 448.0f)
+                        {
+                            bullet->angle = -bullet->angle;
+                        }
+                        bullet->speed = bullet->unk_58c;
+                        speed7 = bullet->speed;
+                        SinCosScale(&bullet->velocity, bullet->angle, speed7);
+                        bullet->unk_5b0++;
+                        if (bullet->unk_5b0 >= bullet->unk_5b4)
+                        {
+                            bullet->flags &= ~0x400;
+                        }
+                    }
+                }
+                else if (bullet->flags & 0x800)
+                {
+                    if (!g_GameManager.Func41b5e1(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
+                    {
+                        if (bullet->pos.x < 0.0f || bullet->pos.x >= 384.0f)
+                        {
+                            bullet->angle = -bullet->angle - 3.1415927f;
+                            bullet->angle = AddNormalizeAngle(bullet->angle, 0.0f);
+                        }
+                        if (bullet->pos.y < 0.0f)
+                        {
+                            bullet->angle = -bullet->angle;
+                        }
+                        bullet->speed = bullet->unk_58c;
+                        speed7 = bullet->speed;
+                        SinCosScale(&bullet->velocity, bullet->angle, speed7);
+                        bullet->unk_5b0++;
+                        if (bullet->unk_5b0 >= bullet->unk_5b4)
+                        {
+                            bullet->flags &= ~0x800;
+                        }
+                    }
+                }
+            }
+            bullet->pos += bullet->velocity * g_Unknown6c6d18.frameAdvance;
+            if (!g_GameManager.Func41b5e1(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
+            {
+                if (!(bullet->flags & 0x40) && !(bullet->flags & 0x100) && !(bullet->flags & 0x80) && !(bullet->flags & 0x400) && !(bullet->flags & 0x800) && bullet->outsideFrames == 0)
+                {
+                    memset(bullet, 0, sizeof(Bullet));
+                    continue;
+                }
+                bullet->outsideFrames++;
+                if (bullet->outsideFrames >= 0x100)
+                {
+                    memset(bullet, 0, sizeof(Bullet));
+                    continue;
+                }
+            }
+            else
+            {
+                bullet->outsideFrames = 0;
+            }
+            if (bullet->grazed == 0)
+            {
+                result = g_Player.CheckGraze(&bullet->pos, &bullet->sprites.hitboxSize);
+                if (result == 1)
+                {
+                    bullet->grazed = 1;
+                    goto checkHit;
+                }
+                else if (result == 2)
+                {
+                    bullet->state = 5;
+                    g_ItemManager.SpawnItem(&bullet->pos, 6, 1);
+                }
+            }
+            else if (bullet->grazed == 1)
+            {
+            checkHit:
+                result = g_Player.CheckHit(&bullet->pos, &bullet->sprites.hitboxSize);
+                if (result != 0)
+                {
+                    bullet->state = 5;
+                    if (result == 2)
+                    {
+                        g_ItemManager.SpawnItem(&bullet->pos, 6, 1);
+                    }
+                }
+            }
+            g_SpriteEngine->Step(&bullet->sprites.sprite0);
+            break;
+        case 5:
+            bullet->pos += bullet->velocity / 2.0f * g_Unknown6c6d18.frameAdvance;
+            if (g_SpriteEngine->Step(&bullet->sprites.sprite4) != 0)
+            {
+                memset(bullet, 0, sizeof(Bullet));
+                continue;
+            }
+            break;
+        }
+        bullet->timer.Tick();
+    }
+    las = mgr->lasers;
+    for (k7 = 0; k7 < 0x40; k7++, las++)
+    {
+        if (!las->active)
+        {
+            continue;
+        }
+        las->endOffset = g_Unknown6c6d18.frameAdvance * las->speed + las->endOffset;
+        if (las->endOffset - las->startOffset > las->unk_238)
+        {
+            las->startOffset = las->endOffset - las->unk_238;
+        }
+        if (las->startOffset < 0.0f)
+        {
+            las->startOffset = 0.0f;
+        }
+        extent5.y = las->width / 2.0f;
+        extent5.x = las->endOffset - las->startOffset;
+        center2.x = (las->endOffset - las->startOffset) / 2.0f + las->startOffset + las->pos.x;
+        center2.y = las->pos.y;
+        las->sprite0.scaleX = las->width / las->sprite0.spriteData->width;
+        scale3 = las->endOffset - las->startOffset;
+        las->sprite0.scaleY = scale3 / las->sprite0.spriteData->height;
+        las->sprite0.rotationZ = 1.5707964f - las->angle;
+        switch (las->state)
+        {
+        case 0:
+            if (las->flags & 1)
+            {
+                alpha4 = las->timer.AsFloat() * 255.0f / las->unk_244;
+                if (alpha4 > 0xff)
+                {
+                    alpha4 = 0xff;
+                }
+                las->sprite0.color = alpha4 << 24;
+            }
+            else
+            {
+                fadeTime6 = las->unk_244 > 30 ? 30 : las->unk_244;
+                if (las->unk_244 - fadeTime6 < las->timer.AsFrames())
+                {
+                    scale3 = las->timer.AsFloat() * las->width / las->unk_244;
+                }
+                else
+                {
+                    scale3 = 1.2f;
+                }
+                las->sprite0.scaleX = scale3 / 16.0f;
+                extent5.x = scale3 / 2.0f;
+            }
+            if (las->timer >= las->unk_248)
+            {
+                g_Player.CheckLaserHit(&center2, &extent5, &las->pos, las->angle, las->timer.AsFrames() % 12 == 0);
+            }
+            if (las->timer < las->unk_244)
+            {
+                break;
+            }
+            las->timer.Set(0);
+            las->state++;
+        case 1:
+            g_Player.CheckLaserHit(&center2, &extent5, &las->pos, las->angle, las->timer.AsFrames() % 12 == 0);
+            if (las->timer < las->unk_24c)
+            {
+                break;
+            }
+            las->timer.Set(0);
+            las->state++;
+            if (las->unk_250 == 0)
+            {
+                las->active = 0;
+                continue;
+            }
+        case 2:
+            if (las->flags & 1)
+            {
+                alpha4 = las->timer.AsFloat() * 255.0f / las->unk_244;
+                if (alpha4 > 0xff)
+                {
+                    alpha4 = 0xff;
+                }
+                las->sprite0.color = alpha4 << 24;
+            }
+            else if (las->unk_250 > 0)
+            {
+                scale3 = las->width - las->timer.AsFloat() * las->width / las->unk_250;
+                las->sprite0.scaleX = scale3 / 16.0f;
+                extent5.x = scale3 / 2.0f;
+            }
+            if (las->timer < las->unk_254)
+            {
+                g_Player.CheckLaserHit(&center2, &extent5, &las->pos, las->angle, las->timer.AsFrames() % 12 == 0);
+            }
+            if (las->timer < las->unk_250)
+            {
+                break;
+            }
+            las->active = 0;
+            continue;
+        }
+        if (las->startOffset >= 640.0f)
+        {
+            las->active = 0;
+        }
+        las->timer.Tick();
+        g_SpriteEngine->Step(&las->sprite0);
+    }
+    mgr->unk_f5c08.Tick();
+    return 1;
+}
+
 int BulletManager::OnDraw(BulletManager *mgr)
 {
     int i;

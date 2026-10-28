@@ -52,10 +52,13 @@ struct Bullet
     WORD unk_5bc;
     // 0 unused; 1 flying; 2 to 4 spawning (flags 2, 4, 8); 5 fading out.
     WORD state;
-    BYTE unk_5c0;
-    BYTE unk_5c1;
+    // Counts the frames spent outside the play area by bullets that
+    // bounce or change course; at 0x100 they end.
+    WORD outsideFrames;
     BYTE unk_5c2;
-    BYTE unk_5c3;
+    // Set once the player grazed the bullet; it is then only checked for
+    // hits.
+    BYTE grazed;
 };
 ASSERT_SIZE(Bullet, 0x5c4);
 
@@ -176,7 +179,8 @@ public:
     Laser lasers[0x40];
     // Where SpawnBullet looks for a free bullet first.
     int nextBullet;
-    DWORD unk_f5c04;
+    // Counts the bullets in use, each frame.
+    int bulletCount;
     Timer unk_f5c08;
     int unk_f5c14;
 };

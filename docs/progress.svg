@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">74.52% (351)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">15.92% (75)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">74.73% (352)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">15.71% (74)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="556.68" height="6" x="0" y="0" class="named"/>
-<rect width="71.37" height="6" x="556.68" y="0" class="decompiled"/>
-<rect width="118.95" height="6" x="628.05" y="0" class="todo"/>
+<rect width="558.27" height="6" x="0" y="0" class="named"/>
+<rect width="71.37" height="6" x="558.27" y="0" class="decompiled"/>
+<rect width="117.36" height="6" x="629.64" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -200,7 +200,7 @@
 <rect width="12" height="12" x="435" y="30" class="named"><title>0x004145c0 BulletManager::FirePattern (165 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="30" class="named"><title>0x00414670 BulletManager::SpawnLaser (635 bytes)</title></rect>
 <rect width="12" height="12" x="465" y="30" class="named"><title>0x004148f0 BulletManager::RegisterChain (211 bytes)</title></rect>
-<rect width="12" height="12" x="480" y="30" class="todo"><title>0x004149d0 BulletManager::OnUpdate (6928 bytes)</title></rect>
+<rect width="12" height="12" x="480" y="30" class="named"><title>0x004149d0 BulletManager::OnUpdate (6928 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="30" class="named"><title>0x00416500 BulletManager::OnDraw (1607 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="30" class="named"><title>0x00416b50 DrawBullet (234 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="30" class="decompiled"><title>0x00416c50 Func416c50 (244 bytes)</title></rect>
@@ -543,16 +543,16 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">66.57%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">28.56%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.49%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">25.65%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="497.31" height="6" x="0" y="0" class="named"/>
-<rect width="36.35" height="6" x="497.31" y="0" class="decompiled"/>
-<rect width="213.34" height="6" x="533.66" y="0" class="todo"/>
+<rect width="519.06" height="6" x="0" y="0" class="named"/>
+<rect width="36.35" height="6" x="519.06" y="0" class="decompiled"/>
+<rect width="191.59" height="6" x="555.41" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="named"><title>0x004074a0 EnemyScripts::RunEnemy (13572 bytes)</title></rect>
 <rect width="63.34" height="51.33" x="0" y="98.67" class="todo"><title>0x0043579f Func43579f (7473 bytes)</title></rect>
-<rect width="46.57" height="64.41" x="66.34" y="0" class="todo"><title>0x004149d0 BulletManager::OnUpdate (6928 bytes)</title></rect>
+<rect width="46.57" height="64.41" x="66.34" y="0" class="named"><title>0x004149d0 BulletManager::OnUpdate (6928 bytes)</title></rect>
 <rect width="46.57" height="40.22" x="66.34" y="67.41" class="todo"><title>0x00419c99 Func419c99 (4442 bytes)</title></rect>
 <rect width="46.57" height="39.37" x="66.34" y="110.63" class="named"><title>0x00433960 SpriteEngine::Step (4355 bytes)</title></rect>
 <rect width="40.49" height="37.13" x="115.91" y="0" class="named"><title>0x0040f7c0 Ending::RunScript (3619 bytes)</title></rect>

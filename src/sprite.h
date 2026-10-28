@@ -194,6 +194,8 @@ public:
     // the result in out[0] and out[1].
     void RotatePoint(float *out, float sine, float cosine, float x, float y, float cx, float cy);
     int Func432cc0(Sprite *sprite);
+    // Releases texture `index` and frees its image file.
+    void ReleaseTexture(int index);
     // Creates texture `index` at `width` by `height` in the format
     // g_TextureFormats[`format`]. Returns 0.
     int CreateTexture(int index, int width, int height, int format);
@@ -229,7 +231,8 @@ public:
     SpriteData sprites[0x800];
     Sprite unk_1c000;
     IDirect3DTexture8 *textures[0x108];
-    unsigned char unk_1c530[0x400];
+    // The image files the textures were created from, kept loaded.
+    void *textureFiles[0x100];
     DWORD unk_1c930;
     // The scripts of the loaded ANM files.
     void *scripts[0x800];

@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">58.17% (274)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">32.48% (153)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">58.39% (275)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">32.27% (152)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="434.56" height="6" x="0" y="0" class="named"/>
-<rect width="69.78" height="6" x="434.56" y="0" class="decompiled"/>
-<rect width="242.66" height="6" x="504.34" y="0" class="todo"/>
+<rect width="436.15" height="6" x="0" y="0" class="named"/>
+<rect width="69.78" height="6" x="436.15" y="0" class="decompiled"/>
+<rect width="241.07" height="6" x="505.93" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -466,7 +466,7 @@
 <rect width="12" height="12" x="675" y="105" class="named"><title>0x00431d70 SpriteEngine::CreateTexture (66 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="105" class="todo"><title>0x00431dc0 SpriteEngine::LoadAnm (624 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="105" class="todo"><title>0x00432030 SpriteEngine::ReleaseAnm (418 bytes)</title></rect>
-<rect width="12" height="12" x="720" y="105" class="todo"><title>0x004321e0 Func4321e0 (125 bytes)</title></rect>
+<rect width="12" height="12" x="720" y="105" class="named"><title>0x004321e0 SpriteEngine::ReleaseTexture (125 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="105" class="todo"><title>0x00432260 Func432260 (315 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="120" class="todo"><title>0x004323a0 SpriteEngine::SetSprite (144 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="120" class="named"><title>0x00432430 SpriteEngine::SetScript (151 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">37.15%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">58.03%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">37.21%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">57.98%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="277.54" height="6" x="0" y="0" class="named"/>
-<rect width="35.95" height="6" x="277.54" y="0" class="decompiled"/>
-<rect width="433.51" height="6" x="313.49" y="0" class="todo"/>
+<rect width="277.93" height="6" x="0" y="0" class="named"/>
+<rect width="35.95" height="6" x="277.93" y="0" class="decompiled"/>
+<rect width="433.12" height="6" x="313.88" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -868,7 +868,7 @@
 <rect width="5" height="4.65" x="679.30" y="81.83" class="named"><title>0x0041e850 AddNormalizeAngle (127 bytes)</title></rect>
 <rect width="4.94" height="4.65" x="687.30" y="81.83" class="todo"><title>0x00421950 Func421950 (126 bytes)</title></rect>
 <rect width="4.88" height="4.65" x="695.24" y="81.83" class="named"><title>0x004253dd MusicScreen::OnUpdate (125 bytes)</title></rect>
-<rect width="4.88" height="4.65" x="703.12" y="81.83" class="todo"><title>0x004321e0 Func4321e0 (125 bytes)</title></rect>
+<rect width="4.88" height="4.65" x="703.12" y="81.83" class="named"><title>0x004321e0 SpriteEngine::ReleaseTexture (125 bytes)</title></rect>
 <rect width="4.81" height="4.65" x="711" y="81.83" class="named"><title>0x0041c57e GameManager::AddSubRank (124 bytes)</title></rect>
 <rect width="4.81" height="4.65" x="718.81" y="81.83" class="named"><title>0x0041c5fa GameManager::SubSubRank (124 bytes)</title></rect>
 <rect width="4.81" height="4.65" x="726.62" y="81.83" class="named"><title>0x004224e0 MidiPlayer::Stop (124 bytes)</title></rect>

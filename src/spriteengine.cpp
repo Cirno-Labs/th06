@@ -84,6 +84,17 @@ int SpriteEngine::CreateTexture(int index, int width, int height, int format)
     return 0;
 }
 
+void SpriteEngine::ReleaseTexture(int index)
+{
+    if (this->textures[index] != NULL)
+    {
+        this->textures[index]->Release();
+        this->textures[index] = NULL;
+    }
+    MemFree(this->textureFiles[index]);
+    this->textureFiles[index] = NULL;
+}
+
 void SpriteEngine::SetScript(Sprite *vm, void *script)
 {
     vm->flags.unk6 = 0;

@@ -433,7 +433,7 @@ address,size,name,symbol
 0x00439137,2094,Func439137,
 0x00439965,369,Func439965,
 0x00439ad6,714,Func439ad6,
-0x00439da0,488,Func439da0,?Func439da0@@YAHPAVMainMenu@@@Z
+0x00439da0,488,LoadTitleResources,?LoadTitleResources@@YAHPAVMainMenu@@@Z
 0x00439f88,612,Func439f88,
 0x0043a1ec,332,Func43a1ec,
 0x0043a338,300,Func43a338,?Func43a338@@YAHH@Z

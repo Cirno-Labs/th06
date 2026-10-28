@@ -20,7 +20,7 @@ public:
     // of Func43a70a) and surface 0, forgets their scripts, removes the
     // calc element and frees unk_10edc. Returns 0.
     static int DeletedCallback(MainMenu *menu);
-    // Sets the menu up with Func439da0 (on failure sets the scene to 4
+    // Sets the menu up with LoadTitleResources (on failure sets the scene to 4
     // and returns -1); the first time, waits until 3 seconds after the
     // game started and plays "bgm/th06_01.mid". Then resets every
     // sprite's interrupt, color and offset and sets unk_81f0. Returns 0.
@@ -71,4 +71,8 @@ void ReassignButton(MainMenu *menu, short button, short replacement, int unk);
 // instead, keeping the color's alpha.
 void HighlightMenuEntry(Sprite *vm, int index, int cursor, D3DCOLOR selectedColor, D3DCOLOR color, int spriteOffset);
 
-int Func439da0(MainMenu *menu);
+// Loads the title's archive ("紅魔郷TL.dat"), sprites (slots 0x15 to
+// 0x1a, after freeing 0x1b to 0x24) and background
+// ("data/title/title00.jpg") and starts scripts 0x100 to 0x14f on the
+// first 0x50 sprites. Returns 0, or -1 if a file fails to load.
+int LoadTitleResources(MainMenu *menu);

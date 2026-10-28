@@ -116,7 +116,7 @@ int MainMenu::Func4378a2()
     DWORD current;
     int i;
 
-    if (Func439da0(this) != 0)
+    if (LoadTitleResources(this) != 0)
     {
         g_Unknown6c6d18.scene = 4;
         return -1;
@@ -180,6 +180,53 @@ int MainMenu::Func4379e4()
     this->unk_8200 = 0x40000000;
     this->unk_820c = 0;
     this->unk_8210 = 60;
+    return 0;
+}
+
+int LoadTitleResources(MainMenu *menu)
+{
+    int i;
+
+    g_Unknown6c6d18.LoadArchive(3, "紅魔郷TL.dat");
+    for (i = 0x1b; i <= 0x24; i++)
+    {
+        g_SpriteEngine->ReleaseAnm(i);
+    }
+    if (g_SpriteEngine->LoadAnm(0x15, "data/title01.anm", 0x100) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x18, "data/title02.anm", 0x11b) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x19, "data/title03.anm", 0x11f) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x1a, "data/title04.anm", 0x122) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x16, "data/title01s.anm", 0x17a) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x17, "data/title04s.anm", 0x195) != 0)
+    {
+        return -1;
+    }
+    for (i = 0; i < 0x50; i++)
+    {
+        g_SpriteEngine->Func4051b0(&menu->sprites[i], i + 0x100);
+        menu->sprites[i].flags.unk0 = 0;
+        menu->sprites[i].unk_0b2 = menu->sprites[i].spriteIndex;
+        menu->sprites[i].flags.zWriteDisabled = 1;
+    }
+    if (g_SpriteEngine->LoadSurface(0, "data/title/title00.jpg") != 0)
+    {
+        return -1;
+    }
     return 0;
 }
 

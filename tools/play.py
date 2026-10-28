@@ -1,6 +1,6 @@
 """Runs the patched game, headless under Xvfb, and drives it with keys.
 
-    play.py [STEP...]
+    play.py [--exe NAME] [STEP...]
 
 Steps run in order:
 
@@ -9,7 +9,8 @@ Steps run in order:
     hold:KEY:SECONDS hold a key down
     shot:NAME        save a screenshot to build/shots/NAME.png
 
-With no steps the game starts on a fresh Xvfb display, and a screenshot
+--exe runs build/game/NAME instead of the patched th06.exe (the
+standalone build is th06_standalone.exe there). With no steps the game starts on a fresh Xvfb display, and a screenshot
 is taken after 15 seconds. The hook log from the DLL is printed. Needs
 Xvfb, xdotool and ImageMagick; the game runs in a Japanese locale, or it
 cannot find its Shift-JIS named data files.
@@ -34,7 +35,11 @@ def xdo(env, *args):
 
 
 def main():
-    steps = sys.argv[1:] or ["wait:15", "shot:start"]
+    args = sys.argv[1:]
+    exe = "th06.exe"
+    if args[:1] == ["--exe"]:
+        exe, args = args[1], args[2:]
+    steps = args or ["wait:15", "shot:start"]
     display = free_display()
     env = dict(os.environ, DISPLAY=display, LANG="ja_JP.UTF-8", LC_ALL="ja_JP.UTF-8",
                WINEPREFIX=os.environ.get("WINEPREFIX", os.path.join(ROOT, ".wine")),
@@ -46,7 +51,7 @@ def main():
     try:
         time.sleep(1)
         with open(log, "w") as out:
-            game = subprocess.Popen(["wine", "th06.exe"], cwd=GAME, env=env, stdout=out, stderr=out)
+            game = subprocess.Popen(["wine", exe], cwd=GAME, env=env, stdout=out, stderr=out)
         for step in steps:
             kind, _, arg = step.partition(":")
             if game.poll() is not None:

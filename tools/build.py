@@ -1,9 +1,16 @@
 """Compiles src/ with the original compiler and links the hook DLL.
 
+    build.py        the hook DLL, build/th06.dll
+    build.py exe    the standalone game, build/th06.exe
+
 Every function in config/symbols.csv that src/ defines is hooked: the DLL
 overwrites the original function with a jump to the new one. Every other
 symbol becomes an absolute symbol at its original address, so new code
 calls and reads the original game.
+
+The standalone exe links src/ without src/dll/ but with src/exe/ (the
+game's data and global objects, which the DLL takes from the original)
+against the real libraries, plus the original's resources.
 """
 import csv, glob, os, struct, subprocess, sys
 
@@ -13,8 +20,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OBJ = "build/obj"
 SJIS = "build/src"  # src/ converted to Shift-JIS
 DLL = "build/th06.dll"
+EXE = "build/th06.exe"
+ORIGINAL = "build/th06_102h.exe"
 CFLAGS = ["/Od", "/Ob1", "/G5", "/GX", "/Op", "/Oi", "/GS"]
 GLUE_PREFIX = "dll_"  # objects from src/dll/, the DLL's own code
+DLL_ONLY, EXE_ONLY = "dll", "exe"  # subdirectories of src/ only one target builds
 TIMEOUT = 60  # cl spins forever after a fatal error
 
 ENV = dict(
@@ -64,7 +74,7 @@ def to_sjis(text):
     return bytes(out)
 
 
-def compile_all():
+def compile_all(target=DLL):
     """Compiles src/ from a Shift-JIS copy in build/src/.
 
     Sources are UTF-8, but the game's strings are Shift-JIS and MSVC 7
@@ -81,7 +91,7 @@ def compile_all():
                 f.write(to_sjis(text))
     headers = max((os.path.getmtime(h) for h in glob.glob("src/**/*.h", recursive=True)), default=0)
     objs = []
-    for src, obj in sources():
+    for src, obj in sources(target):
         rel = os.path.relpath(src, "src")
         objs.append(obj)
         if os.path.exists(obj) and os.path.getmtime(obj) > max(os.path.getmtime(src), headers):
@@ -92,10 +102,13 @@ def compile_all():
     return objs
 
 
-def sources():
-    """Yields (source, object) for each .cpp in src/."""
+def sources(target=DLL):
+    """Yields (source, object) for each .cpp in src/ that `target` builds."""
+    skip = EXE_ONLY if target == DLL else DLL_ONLY
     for src in sorted(glob.glob(os.path.join(ROOT, "src/**/*.cpp"), recursive=True)):
         rel = os.path.relpath(src, os.path.join(ROOT, "src"))
+        if rel.split(os.sep)[0] == skip:
+            continue
         yield os.path.relpath(src, ROOT), os.path.join(OBJ, rel.replace("/", "_")[:-4] + ".obj")
 
 
@@ -162,8 +175,38 @@ def write_hooks(objs, symbols):
     return path
 
 
+def link_exe(objs):
+    """Links the standalone game with the libraries the original was built
+    with: the static multithreaded CRT, D3DX8 and the import libraries."""
+    import rsrc
+    res = os.path.join(OBJ, "th06.res")
+    rsrc.write_res(res, rsrc.resources(ORIGINAL))
+    tool("link", "/SUBSYSTEM:WINDOWS", "/FIXED", "/NODEFAULTLIB:libc.lib",
+         "/MAP:" + win(EXE[:-4] + ".map"), "/OUT:" + win(EXE), *map(win, objs), win(res),
+         "libcmt.lib", "d3dx8.lib", "d3d8.lib", "dsound.lib", "dinput8.lib", "dxguid.lib",
+         "winmm.lib", "kernel32.lib", "user32.lib", "gdi32.lib")
+    copy_header_fields(ORIGINAL, EXE)
+    print("linked", EXE)
+
+
+def copy_header_fields(src, dst):
+    """Gives dst the original's link timestamp, the one header field the
+    linker has no option for."""
+    with open(src, "rb") as f:
+        orig = f.read(0x400)
+    pe = struct.unpack_from("<I", orig, 0x3C)[0]
+    with open(dst, "r+b") as f:
+        f.seek(0x3C)
+        dpe = struct.unpack("<I", f.read(4))[0]
+        f.seek(dpe + 8)
+        f.write(orig[pe + 8:pe + 12])
+
+
 def main():
     os.chdir(ROOT)
+    if sys.argv[1:] == ["exe"]:
+        link_exe(compile_all(EXE))
+        return
     objs = compile_all()
     hooks = write_hooks(objs, read_symbols())
     tool("link", "/DLL", "/NODEFAULTLIB", "/ENTRY:DllMain", "/BASE:0x30000000",

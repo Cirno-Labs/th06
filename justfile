@@ -29,6 +29,13 @@ game: build _orig
 run *steps: game
     python3 tools/play.py "$@"
 
+# Link the standalone build/th06.exe (no DLL); with STEPS, run it like `run`
+[positional-arguments]
+exe *steps: game
+    python3 tools/build.py exe
+    cp build/th06.exe build/game/th06_standalone.exe
+    if [ $# -gt 0 ]; then python3 tools/play.py --exe th06_standalone.exe "$@"; fi
+
 # Analyze the original with headless Ghidra; add new functions to symbols.csv
 analyze: _orig
     tools/ghidra/analyze.sh
@@ -44,7 +51,7 @@ progress: build _orig
 
 # Remove build outputs (keeps the Ghidra project)
 clean:
-    rm -rf build/obj build/src build/game build/th06.*
+    rm -rf build/obj build/src build/game build/th06.* build/th06.*
 
 # Verify the original and copy it to an ASCII file name
 _orig:

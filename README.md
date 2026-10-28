@@ -94,6 +94,12 @@ Everything runs headless, so it works over SSH. `just` lists the recipes.
    `just run wait:12 key:Escape key:z wait:2 shot:menu` writes
    `build/shots/menu.png`.
 
+6. Standalone (`just exe`): links the same objects, without the
+   hook DLL, into `build/th06.exe`, a game that needs nothing from the
+   original executable. It links the real D3DX8, the static CRT and the
+   SDK import libraries, and carries the original's icon and header
+   fields. `just exe STEPS` runs it like `just run`.
+
 ### Hooking
 
 The decompiled code runs inside the original game. `tools/patch_exe.py` adds
@@ -112,7 +118,8 @@ in `symbols.csv` too, so the game and the new code share one heap.
 
 ```
 orig/     your game files (not tracked) and their checksums
-src/      decompiled source; src/dll/ is the hook DLL's own code
+src/      decompiled source; src/dll/ is the hook DLL's own code,
+          src/exe/ the game's data and globals for the standalone exe
 config/   symbols.csv: address, size, name and mangled symbol
 tools/    build, compare, exe patcher, symbol seeding, Ghidra scripts
 build/    outputs; build/game/ is a runnable copy of the patched game

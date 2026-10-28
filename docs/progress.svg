@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">81.74% (385)</tspan> · <tspan class="decompiled">14.86% (70)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">3.40% (16)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">81.95% (386)</tspan> · <tspan class="decompiled">14.86% (70)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">3.18% (15)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="610.61" height="6" x="0" y="0" class="named"/>
-<rect width="111.02" height="6" x="610.61" y="0" class="decompiled"/>
-<rect width="25.38" height="6" x="721.62" y="0" class="todo"/>
+<rect width="612.19" height="6" x="0" y="0" class="named"/>
+<rect width="111.02" height="6" x="612.19" y="0" class="decompiled"/>
+<rect width="23.79" height="6" x="723.21" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -495,7 +495,7 @@
 <rect width="12" height="12" x="360" y="120" class="named"><title>0x004377a3 HighlightMenuEntry (255 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="120" class="decompiled"><title>0x004378a2 MainMenu::Func4378a2 (322 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="120" class="decompiled"><title>0x004379e4 MainMenu::Func4379e4 (349 bytes)</title></rect>
-<rect width="12" height="12" x="405" y="120" class="todo"><title>0x00437b41 Func437b41 (1675 bytes)</title></rect>
+<rect width="12" height="12" x="405" y="120" class="named"><title>0x00437b41 MainMenu::UpdateTitleMenu (1675 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="120" class="named"><title>0x004381ec MainMenu::UpdateReplayMenu (2517 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="120" class="named"><title>0x00438bc1 MainMenu::DrawReplayMenu (823 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="120" class="named"><title>0x00438ef8 MainMenu::HighlightOption (575 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">81.77%</tspan> · <tspan class="decompiled">10.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">7.36%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">82.48%</tspan> · <tspan class="decompiled">10.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">6.65%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="610.85" height="6" x="0" y="0" class="named"/>
-<rect width="81.21" height="6" x="610.85" y="0" class="decompiled"/>
-<rect width="54.94" height="6" x="692.06" y="0" class="todo"/>
+<rect width="616.11" height="6" x="0" y="0" class="named"/>
+<rect width="81.21" height="6" x="616.11" y="0" class="decompiled"/>
+<rect width="49.68" height="6" x="697.32" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="named"><title>0x004074a0 EnemyScripts::RunEnemy (13572 bytes)</title></rect>
@@ -580,7 +580,7 @@
 <rect width="24.40" height="29.86" x="294.16" y="0" class="named"><title>0x0042564c MusicScreen::AddedCallback (1867 bytes)</title></rect>
 <rect width="24.40" height="28.35" x="294.16" y="32.86" class="named"><title>0x0041bb02 GameManager::AddedCallback (1781 bytes)</title></rect>
 <rect width="24.40" height="27.87" x="294.16" y="64.21" class="named"><title>0x004195bf Gui::UpdateInterface (1754 bytes)</title></rect>
-<rect width="24.40" height="26.48" x="294.16" y="95.09" class="todo"><title>0x00437b41 Func437b41 (1675 bytes)</title></rect>
+<rect width="24.40" height="26.48" x="294.16" y="95.09" class="named"><title>0x00437b41 MainMenu::UpdateTitleMenu (1675 bytes)</title></rect>
 <rect width="24.40" height="25.43" x="294.16" y="124.57" class="named"><title>0x0042bc85 ResultScreen::HandleNameEntry (1615 bytes)</title></rect>
 <rect width="24.95" height="24.74" x="321.56" y="0" class="named"><title>0x00416500 BulletManager::OnDraw (1607 bytes)</title></rect>
 <rect width="24.95" height="22.59" x="321.56" y="27.74" class="named"><title>0x00417502 Gui::OnDraw (1483 bytes)</title></rect>

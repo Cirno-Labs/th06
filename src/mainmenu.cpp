@@ -190,6 +190,173 @@ int MainMenu::Func4379e4()
     return 0;
 }
 
+int MainMenu::UpdateTitleMenu()
+{
+    int i;
+    Sprite *vm;
+
+    i = MoveMenuCursor(this, 8);
+    if (this->cursor == 1 && !g_GameManager.IsExtraUnlocked(0, 0) && !g_GameManager.IsExtraUnlocked(0, 1) &&
+        !g_GameManager.IsExtraUnlocked(1, 0) && !g_GameManager.IsExtraUnlocked(1, 1))
+    {
+        this->cursor += i;
+    }
+    for (vm = this->sprites, i = 0; i < 8; i++, vm++)
+    {
+        HighlightMenuEntry(vm, i, this->cursor, 0xffff0000, 0x80300000, 0x7a);
+    }
+    if (this->unk_81f4 >= 20)
+    {
+        if (WAS_PRESSED(0x1001))
+        {
+            switch (this->cursor)
+            {
+            case 0:
+            for (i = 0; i < 0x7a; i++)
+            {
+                this->sprites[i].pendingInterrupt = 4;
+            }
+            this->unk_81f0 = 6;
+            g_GameManager.unk_1823 = 0;
+            if (g_GameManager.difficulty >= 4)
+            {
+                g_GameManager.difficulty = 1;
+            }
+            if (g_Unknown6c6d18.cfg.unk_1d >= 4)
+            {
+                g_Unknown6c6d18.cfg.unk_1d = 1;
+            }
+            this->unk_81f4 = 0;
+            this->unk_81fc = 0x40000000;
+            this->unk_8200 = 0xff000000;
+            this->unk_820c = 0;
+            this->unk_8210 = 60;
+            g_Unknown6d3f50.QueueSound(10, 0);
+            break;
+            case 1:
+            if (g_GameManager.IsExtraUnlocked(0, 0) || g_GameManager.IsExtraUnlocked(0, 1) ||
+                g_GameManager.IsExtraUnlocked(1, 0) || g_GameManager.IsExtraUnlocked(1, 1))
+            {
+                for (i = 0; i < 0x7a; i++)
+                {
+                    this->sprites[i].pendingInterrupt = 4;
+                }
+                this->unk_81f0 = 6;
+                g_GameManager.unk_1823 = 0;
+                g_GameManager.difficulty = 4;
+                this->unk_81f4 = 0;
+                this->unk_81fc = 0x40000000;
+                this->unk_8200 = 0xff000000;
+                this->unk_820c = 0;
+                this->unk_8210 = 60;
+                g_Unknown6d3f50.QueueSound(10, 0);
+            }
+            else
+            {
+                g_Unknown6d3f50.QueueSound(0xb, 0);
+            }
+            break;
+            case 2:
+            g_GameManager.unk_1823 = 1;
+            for (i = 0; i < 0x7a; i++)
+            {
+                this->sprites[i].pendingInterrupt = 4;
+            }
+            this->unk_81f0 = 6;
+            if (g_GameManager.difficulty >= 4)
+            {
+                g_GameManager.difficulty = 1;
+            }
+            if (g_Unknown6c6d18.cfg.unk_1d >= 4)
+            {
+                g_Unknown6c6d18.cfg.unk_1d = 1;
+            }
+            this->unk_81f4 = 0;
+            this->unk_81fc = 0x40000000;
+            this->unk_8200 = 0xff000000;
+            this->unk_820c = 0;
+            this->unk_8210 = 60;
+            g_Unknown6d3f50.QueueSound(10, 0);
+            break;
+            case 3:
+            for (i = 0; i < 0x7a; i++)
+            {
+                this->sprites[i].pendingInterrupt = 4;
+            }
+            this->unk_81f0 = 12;
+            g_GameManager.unk_1823 = 0;
+            this->unk_81f4 = 0;
+            this->unk_81fc = 0x40000000;
+            this->unk_8200 = 0xff000000;
+            this->unk_820c = 0;
+            this->unk_8210 = 60;
+            g_Unknown6d3f50.QueueSound(10, 0);
+            break;
+            case 4:
+            for (i = 0; i < 0x7a; i++)
+            {
+                this->sprites[i].pendingInterrupt = 4;
+            }
+            this->unk_81f0 = 10;
+            this->unk_81f4 = 0;
+            this->unk_81fc = 0x40000000;
+            this->unk_8200 = 0xff000000;
+            this->unk_820c = 0;
+            this->unk_8210 = 60;
+            g_Unknown6d3f50.QueueSound(10, 0);
+            break;
+            case 5:
+            this->unk_81f0 = 16;
+            this->unk_81f4 = 0;
+            for (i = 0; i < 0x7a; i++)
+            {
+                this->sprites[i].pendingInterrupt = 4;
+            }
+            g_Unknown6d3f50.QueueSound(10, 0);
+            break;
+            case 6:
+            this->unk_81f0 = 3;
+            this->unk_81f4 = 0;
+            for (i = 0; i < 0x7a; i++)
+            {
+                this->sprites[i].pendingInterrupt = 3;
+            }
+            this->cursor = 0;
+            this->unk_8230 = g_Unknown6c6d18.cfg.colorMode16Bits;
+            this->unk_8231 = g_Unknown6c6d18.cfg.windowed;
+            this->unk_8232 = g_Unknown6c6d18.cfg.frameSkip;
+            g_Unknown6d3f50.QueueSound(10, 0);
+            break;
+            case 7:
+            this->unk_81f0 = 4;
+            this->unk_81f4 = 0;
+            for (i = 0; i < 0x7a; i++)
+            {
+                this->sprites[i].pendingInterrupt = 4;
+            }
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+            break;
+            }
+        }
+        if (WAS_PRESSED(0x200))
+        {
+            this->unk_81f0 = 4;
+            this->unk_81f4 = 0;
+            for (i = 0; i < 0x7a; i++)
+            {
+                this->sprites[i].pendingInterrupt = 4;
+            }
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            this->cursor = 7;
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+        }
+    }
+    return 0;
+}
+
 int MainMenu::UpdateReplayMenu()
 {
     Sprite *text;

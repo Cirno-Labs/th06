@@ -60,6 +60,14 @@ public:
     // 2). Returns 1 when leaving with a changed display setting, after
     // setting the scene to 5; else 0.
     int UpdateOptions();
+    // The title menu (state 1): highlights the 8 entries and skips
+    // Extra Start while no shot type has unlocked it. After 20 frames,
+    // a confirm opens the entry at the cursor: game start, extra start
+    // (difficulty 4) or practice start (state 6, the difficulty
+    // select), the replay menu (12), the scores (10), the music room
+    // (16), the options (3) or quit (4); 0x200 quits too, cancel moves
+    // to Quit. Returns 0.
+    int UpdateTitleMenu();
     // The replay menu's states: 12 loads its resources (after 60 frames)
     // and lists the replays in "./replay" (the numbered slots, then up
     // to 45 "th6_ud????.rpy" files) and moves to 13, the list; a confirm

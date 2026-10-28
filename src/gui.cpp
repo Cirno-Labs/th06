@@ -150,7 +150,7 @@ int Gui::OnDraw(Gui *gui)
         g_AsciiText.color = 0xffffffff;
     }
     gui->impl->DrawMsg();
-    gui->Func41adf3();
+    gui->DrawBanners();
     gui->Func419c99();
     g_AsciiText.unk_6230 = 1;
     if (gui->impl->bonusPopup.shown)
@@ -693,6 +693,82 @@ BOOL Gui::Func419572()
 BOOL Gui::Func4195a2()
 {
     return this->impl->msg.scriptIndex >= 0;
+}
+
+void Gui::DrawBanners()
+{
+    D3DXVECTOR3 pos;
+
+    if (this->impl->unk_1ba4.flags.unk0)
+    {
+        pos.x = 168.0f;
+        pos.y = 198.0f;
+        pos.z = 0.0f;
+        if (!g_GameManager.unk_1824)
+        {
+            g_SpriteEngine->Draw3DRounded(&this->impl->unk_1ba4);
+            g_AsciiText.SetColor((this->impl->unk_1ba4.color & 0xff000000) | 0xffff40);
+            if (g_GameManager.stage < 6)
+            {
+                pos.x = 168.0f;
+                g_AsciiText.AddFormat(&pos, "STAGE %d", g_GameManager.stage);
+            }
+            else if (g_GameManager.stage == 6)
+            {
+                pos.x = 136.0f;
+                g_AsciiText.AddFormat(&pos, "FINAL STAGE");
+            }
+            else
+            {
+                pos.x = 136.0f;
+                g_AsciiText.AddFormat(&pos, "EXTRA STAGE");
+            }
+        }
+        else
+        {
+            g_AsciiText.SetColor((this->impl->unk_1ba4.color & 0xff000000) | 0xffff40);
+            pos.x = 136.0f;
+            g_AsciiText.AddFormat(&pos, " DEMO PLAY");
+        }
+        g_AsciiText.color = 0xffffffff;
+    }
+    if (this->impl->unk_1cb4.flags.unk0 && !g_GameManager.unk_1824)
+    {
+        g_SpriteEngine->Draw3DRounded(&this->impl->unk_1cb4);
+    }
+    if (this->impl->unk_1dc4.flags.unk0)
+    {
+        g_SpriteEngine->Draw(&this->impl->unk_1dc4);
+    }
+    if (this->impl->unk_1ed4.flags.unk0)
+    {
+        g_SpriteEngine->Draw(&this->impl->unk_1ed4);
+    }
+    if (this->impl->unk_1fe4.flags.unk0)
+    {
+        this->impl->unk_2204.pos = this->impl->unk_1fe4.pos;
+        this->impl->unk_2204.pos.x += this->unk_08 * 16.0f / 15.0f / 2.0f + -128.0f - 16.0f;
+        this->impl->unk_2204.scaleX = this->unk_08 / 14.0f;
+        g_SpriteEngine->Draw(&this->impl->unk_2204);
+        g_SpriteEngine->Draw(&this->impl->unk_1fe4);
+    }
+    if (this->impl->unk_20f4.flags.unk0)
+    {
+        this->impl->unk_2314.pos = this->impl->unk_20f4.pos;
+        this->impl->unk_2314.pos.x += 128.0f - this->unk_0c * 16.0f / 15.0f / 2.0f;
+        this->impl->unk_2314.scaleX = this->unk_0c / 14.0f;
+        g_SpriteEngine->Draw(&this->impl->unk_2314);
+        g_SpriteEngine->Draw(&this->impl->unk_20f4);
+    }
+    if (this->impl->unk_2424.spriteIndex >= 0)
+    {
+        g_Unknown6c6d18.viewport.X = g_GameManager.arena[0];
+        g_Unknown6c6d18.viewport.Y = g_GameManager.arena[1];
+        g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
+        g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
+        g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+        g_SpriteEngine->Draw(&this->impl->unk_2424);
+    }
 }
 
 int Timer::NextTick()

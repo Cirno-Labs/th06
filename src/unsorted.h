@@ -817,10 +817,13 @@ public:
     // set, runs Func4195bf and impl->RunMsg. Returns 1.
     static int OnUpdate(Gui *gui);
     // The draw element's callback: the stage clear bonus once
-    // impl->stageClearShown is set, the dialogue, Func41adf3, Func419c99 and the
+    // impl->stageClearShown is set, the dialogue, DrawBanners, Func419c99 and the
     // popups, with the depth test off. Returns 1.
     static int OnDraw(Gui *gui);
-    void Func41adf3();
+    // Draws the stage's title ("STAGE %d", "FINAL STAGE", "EXTRA STAGE",
+    // or " DEMO PLAY"), the song's name, the sprites Func417bfd and
+    // Func417acd show with their bars, and unk_2424 in the play area.
+    void DrawBanners();
     void Func419c99();
     // The update element's added callback (the element at 0x69bc7c):
     // runs LoadResources.
@@ -885,7 +888,8 @@ public:
 
     GuiFlags flags;
     GuiImpl *impl;
-    DWORD unk_08;
+    // The width of the text Func417acd shows, as unk_0c for Func417bfd.
+    float unk_08;
     // Set by Func417bfd from the length of its text.
     float unk_0c;
     DWORD unk_10;

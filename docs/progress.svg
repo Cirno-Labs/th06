@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">76.22% (359)</tspan> · <tspan class="decompiled">14.44% (68)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">9.34% (44)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">76.43% (360)</tspan> · <tspan class="decompiled">14.44% (68)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">9.13% (43)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="569.37" height="6" x="0" y="0" class="named"/>
-<rect width="107.85" height="6" x="569.37" y="0" class="decompiled"/>
-<rect width="69.78" height="6" x="677.22" y="0" class="todo"/>
+<rect width="570.96" height="6" x="0" y="0" class="named"/>
+<rect width="107.85" height="6" x="570.96" y="0" class="decompiled"/>
+<rect width="68.20" height="6" x="678.80" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -229,7 +229,7 @@
 <rect width="12" height="12" x="120" y="45" class="decompiled"><title>0x004195a2 Gui::Func4195a2 (29 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="45" class="todo"><title>0x004195bf Gui::Func4195bf (1754 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="45" class="todo"><title>0x00419c99 Gui::Func419c99 (4442 bytes)</title></rect>
-<rect width="12" height="12" x="165" y="45" class="todo"><title>0x0041adf3 Gui::Func41adf3 (945 bytes)</title></rect>
+<rect width="12" height="12" x="165" y="45" class="named"><title>0x0041adf3 Gui::DrawBanners (945 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="45" class="named"><title>0x0041b1a4 Gui::AddedCallback (13 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="45" class="todo"><title>0x0041b1b1 Func41b1b1 (161 bytes)</title></rect>
 <rect width="12" height="12" x="210" y="45" class="todo"><title>0x0041b252 Func41b252 (249 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">72.73%</tspan> · <tspan class="decompiled">10.59%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">16.68%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">73.13%</tspan> · <tspan class="decompiled">10.59%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">16.28%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="543.31" height="6" x="0" y="0" class="named"/>
-<rect width="79.10" height="6" x="543.31" y="0" class="decompiled"/>
-<rect width="124.58" height="6" x="622.42" y="0" class="todo"/>
+<rect width="546.28" height="6" x="0" y="0" class="named"/>
+<rect width="79.10" height="6" x="546.28" y="0" class="decompiled"/>
+<rect width="121.62" height="6" x="625.38" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="named"><title>0x004074a0 EnemyScripts::RunEnemy (13572 bytes)</title></rect>
@@ -612,7 +612,7 @@
 <rect width="18.05" height="19.18" x="422.81" y="22.34" class="named"><title>0x0042f8b0 DrawColorRect (968 bytes)</title></rect>
 <rect width="18.05" height="18.88" x="422.81" y="44.52" class="decompiled"><title>0x0040d040 Func40d040 (955 bytes)</title></rect>
 <rect width="18.05" height="18.75" x="422.81" y="66.41" class="decompiled"><title>0x00430a50 Unknown6d3f50::LoadBgm (949 bytes)</title></rect>
-<rect width="18.05" height="18.65" x="422.81" y="88.15" class="todo"><title>0x0041adf3 Gui::Func41adf3 (945 bytes)</title></rect>
+<rect width="18.05" height="18.65" x="422.81" y="88.15" class="named"><title>0x0041adf3 Gui::DrawBanners (945 bytes)</title></rect>
 <rect width="18.05" height="18.61" x="422.81" y="109.81" class="named"><title>0x00420330 WinMain (943 bytes)</title></rect>
 <rect width="18.05" height="18.59" x="422.81" y="131.41" class="decompiled"><title>0x0040de00 Func40de00 (942 bytes)</title></rect>
 <rect width="16.42" height="19.72" x="443.86" y="0" class="named"><title>0x00432730 SpriteEngine::DrawQuad (915 bytes)</title></rect>

@@ -127,6 +127,10 @@ public:
     // the second draw element stays.
     static void RemoveChain();
 
+    void SetColor(D3DCOLOR color)
+    {
+        this->color = color;
+    }
     // Queues a string at `pos` in the current color. Up to 256 strings
     // a frame; more are dropped.
     void AddString(D3DXVECTOR3 *pos, char *text);

@@ -29,6 +29,21 @@ int Func40e360(Effect *effect)
     return 1;
 }
 
+// Like Func40e360, faster, slowing to a stop over 20 frames.
+int Func40e5b0(Effect *effect)
+{
+    if (effect->timer == 0 && effect->timer.HasTicked())
+    {
+        effect->unk_11c.x = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
+        effect->unk_11c.y = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
+        effect->unk_11c.z = 0.0f;
+        effect->unk_128 = -effect->unk_11c / 20.0f;
+    }
+    effect->pos += effect->unk_11c * g_Unknown6c6d18.frameAdvance;
+    effect->unk_11c += effect->unk_128 * g_Unknown6c6d18.frameAdvance;
+    return 1;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

@@ -204,3 +204,12 @@ int FileBitStream::Read(void *buffer, DWORD size)
     this->AlignToByte();
     return this->File::Read(buffer, size, &read);
 }
+
+int FileBitStream::GetLastWriteTime(FILETIME *time)
+{
+    if (this->handle == INVALID_HANDLE_VALUE)
+    {
+        return 0;
+    }
+    return GetFileTime(this->handle, NULL, NULL, time);
+}

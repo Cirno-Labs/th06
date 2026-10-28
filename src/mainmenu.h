@@ -46,3 +46,10 @@ int MoveMenuCursor(MainMenu *menu, int count);
 // Gives every button of menu->controllerMapping assigned `button` the
 // value `replacement`, skipping entries 0 and 2 when `unk` is set.
 void ReassignButton(MainMenu *menu, short button, short replacement, int unk);
+
+// Highlights menu entry sprite `vm` (number `index`) when it is the
+// one at `cursor`: `selectedColor` and a (-4, -4) offset, else `color`
+// and no offset. Where colors are not blended (HasFlag0Or8), it shows
+// sprite unk_0b2 + `spriteOffset` (selected) or unk_0b2 in white
+// instead, keeping the color's alpha.
+void HighlightMenuEntry(Sprite *vm, int index, int cursor, D3DCOLOR selectedColor, D3DCOLOR color, int spriteOffset);

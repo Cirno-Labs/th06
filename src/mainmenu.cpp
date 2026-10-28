@@ -81,6 +81,36 @@ void ReassignButton(MainMenu *menu, short button, short replacement, int unk)
     }
 }
 
+void HighlightMenuEntry(Sprite *vm, int index, int cursor, D3DCOLOR selectedColor, D3DCOLOR color, int spriteOffset)
+{
+    if (index == cursor)
+    {
+        if (!g_Unknown6c6d18.HasFlag0Or8())
+        {
+            vm->color = selectedColor;
+        }
+        else
+        {
+            g_SpriteEngine->SetSprite(vm, vm->unk_0b2 + spriteOffset);
+            vm->color = selectedColor & 0xff000000 | 0xffffff;
+        }
+        vm->posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+    }
+    else
+    {
+        if (!g_Unknown6c6d18.HasFlag0Or8())
+        {
+            vm->color = color;
+        }
+        else
+        {
+            g_SpriteEngine->SetSprite(vm, vm->unk_0b2);
+            vm->color = color & 0xff000000 | 0xffffff;
+        }
+        vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    }
+}
+
 int MainMenu::DeletedCallback(MainMenu *menu)
 {
     int i;

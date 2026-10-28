@@ -458,7 +458,7 @@ void DrawMarisaBBomb(Player *player)
         curSprite->pos.x += cosf(angle) * curSprite->spriteData->height * curSprite->scaleY / 2.0f;
         curSprite->pos.y += sinf(angle) * curSprite->spriteData->height * curSprite->scaleY / 2.0f;
         angle = 1.5707964f - angle;
-        curSprite->rotation = AddNormalizeAngle(angle, 3.1415927f);
+        curSprite->rotationZ = AddNormalizeAngle(angle, 3.1415927f);
         curSprite->pos.x += g_GameManager.arena[0];
         curSprite->pos.y += g_GameManager.arena[1];
         curSprite->pos.z = 0.0f;

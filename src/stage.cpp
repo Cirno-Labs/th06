@@ -536,7 +536,7 @@ int Stage::DrawLayer(int layer)
                     }
                     else
                     {
-                        g_SpriteEngine->Func433150(spr);
+                        g_SpriteEngine->Draw3D(spr);
                     }
                     break;
                 }

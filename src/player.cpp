@@ -1162,7 +1162,7 @@ void Player::DrawBullets(Player *player)
         }
         if (bullet->sprite.unk_088 != 0)
         {
-            bullet->sprite.rotation = 1.5707964f - AddNormalizeAngle(bullet->angle, 3.1415927f);
+            bullet->sprite.rotationZ = 1.5707964f - AddNormalizeAngle(bullet->angle, 3.1415927f);
         }
         g_SpriteEngine->Func433590(&bullet->sprite);
     }
@@ -1181,7 +1181,7 @@ void Player::DrawHitBullets(Player *player)
         }
         if (bullet->sprite.unk_088 != 0)
         {
-            bullet->sprite.rotation = 1.5707964f - AddNormalizeAngle(bullet->angle, 3.1415927f);
+            bullet->sprite.rotationZ = 1.5707964f - AddNormalizeAngle(bullet->angle, 3.1415927f);
         }
         bullet->sprite.pos.z = 0.4f;
         g_SpriteEngine->Func433590(&bullet->sprite);

@@ -557,7 +557,7 @@ int SpriteEngine::DrawRotated(Sprite *vm)
     float angle;
     float c;
 
-    if (vm->rotation == 0.0f)
+    if (vm->rotationZ == 0.0f)
     {
         return this->Draw(vm);
     }
@@ -573,7 +573,7 @@ int SpriteEngine::DrawRotated(Sprite *vm)
     {
         return -1;
     }
-    angle = vm->rotation;
+    angle = vm->rotationZ;
     __asm
     {
         fld angle
@@ -647,4 +647,96 @@ int SpriteEngine::DrawNoRound(Sprite *vm)
         g_Quad[2].pos.y = g_Quad[3].pos.y = h + vm->pos.y + h;
     }
     return this->DrawQuad(vm, 0);
+}
+
+int SpriteEngine::Draw3D(Sprite *vm)
+{
+    D3DXMATRIX textureMatrix;
+    D3DXMATRIX rotationMatrix;
+    D3DXMATRIX worldMatrix;
+
+    if (!vm->flags.unk0)
+    {
+        return -1;
+    }
+    if (!vm->flags.visible)
+    {
+        return -1;
+    }
+    if (vm->color == 0)
+    {
+        return -1;
+    }
+    worldMatrix = vm->matrix;
+    worldMatrix._11 *= vm->scaleX;
+    worldMatrix._22 = -vm->scaleY * worldMatrix._22;
+    if (vm->rotationX != 0.0)
+    {
+        D3DXMatrixRotationX(&rotationMatrix, vm->rotationX);
+        D3DXMatrixMultiply(&worldMatrix, &worldMatrix, &rotationMatrix);
+    }
+    if (vm->rotationY != 0.0)
+    {
+        D3DXMatrixRotationY(&rotationMatrix, vm->rotationY);
+        D3DXMatrixMultiply(&worldMatrix, &worldMatrix, &rotationMatrix);
+    }
+    if (vm->rotationZ != 0.0)
+    {
+        D3DXMatrixRotationZ(&rotationMatrix, vm->rotationZ);
+        D3DXMatrixMultiply(&worldMatrix, &worldMatrix, &rotationMatrix);
+    }
+    if ((vm->flags.anchor & 1) == 0)
+    {
+        worldMatrix._41 = vm->pos.x;
+    }
+    else
+    {
+        worldMatrix._41 = fabsf(vm->spriteData->width * vm->scaleX / 2.0f) + vm->pos.x;
+    }
+    if ((vm->flags.anchor & 2) == 0)
+    {
+        worldMatrix._42 = -vm->pos.y;
+    }
+    else
+    {
+        worldMatrix._42 = -vm->pos.y - fabsf(vm->spriteData->height * vm->scaleY / 2.0f);
+    }
+    worldMatrix._43 = vm->pos.z;
+    g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_WORLD, &worldMatrix);
+    if (this->currentSpriteData != vm->spriteData)
+    {
+        this->currentSpriteData = vm->spriteData;
+        textureMatrix = vm->matrix;
+        textureMatrix._31 = vm->spriteData->uvStartX + vm->uvScrollX;
+        textureMatrix._32 = vm->spriteData->uvStartY + vm->uvScrollY;
+        g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_TEXTURE0, &textureMatrix);
+        if (this->currentTexture != this->textures[vm->spriteData->sourceFileIndex])
+        {
+            this->currentTexture = this->textures[vm->spriteData->sourceFileIndex];
+            g_Unknown6c6d18.d3dDevice->SetTexture(0, this->currentTexture);
+        }
+    }
+    if (this->vertexFormat != 3)
+    {
+        if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+        {
+            g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZ | D3DFVF_TEX1);
+            g_Unknown6c6d18.d3dDevice->SetStreamSource(0, this->vertexBuffer, sizeof(VertexTex1Xyz));
+        }
+        else
+        {
+            g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+        }
+        this->vertexFormat = 3;
+    }
+    this->SetRenderStateForSprite(vm);
+    if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+    {
+        g_Unknown6c6d18.d3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+    }
+    else
+    {
+        g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_DiffuseQuadXyz, sizeof(g_DiffuseQuadXyz[0]));
+    }
+    return 0;
 }

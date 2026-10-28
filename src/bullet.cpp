@@ -496,7 +496,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
         laser->sprite0.pos.y = s * len + laser->pos.y;
         laser->sprite0.pos.z = 0.0f;
         laser->color = laser->color & 0xff000000 | 0xffffff;
-        g_SpriteEngine->Func433150(&laser->sprite0);
+        g_SpriteEngine->Draw3D(&laser->sprite0);
         if (laser->startOffset < 16.0f || laser->speed == 0.0f)
         {
             laser->sprite1.pos.x = ca * laser->startOffset + laser->pos.x;
@@ -512,7 +512,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
                 laser->sprite1.scaleX = laser->width / 10.0f;
                 laser->sprite1.scaleY = laser->sprite1.scaleX;
             }
-            g_SpriteEngine->Func433150(&laser->sprite1);
+            g_SpriteEngine->Draw3D(&laser->sprite1);
         }
     }
     g_ItemManager.DrawItems();
@@ -649,7 +649,7 @@ void DrawBullet(Bullet *bullet)
     sprite->color = sprite->color & 0xff000000 | 0xffffff;
     if (sprite->unk_088 != 0)
     {
-        sprite->rotation = 1.5707964f - bullet->angle;
+        sprite->rotationZ = 1.5707964f - bullet->angle;
     }
     g_SpriteEngine->Func433590(sprite);
 }
@@ -681,7 +681,7 @@ void Func416c50(Bullet *bullet)
     sprite->color = sprite->color & 0xff000000 | 0xffffff;
     if (sprite->unk_088 != 0)
     {
-        sprite->rotation = 1.5707964f - bullet->angle;
+        sprite->rotationZ = 1.5707964f - bullet->angle;
     }
     g_SpriteEngine->DrawRotated(sprite);
 }

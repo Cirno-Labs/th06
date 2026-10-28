@@ -106,9 +106,10 @@ public:
 
     // The gaps are DWORDs, not bytes: a byte array would make /GS put a
     // security cookie in functions with a Sprite local.
-    DWORD unk_000[0x2];
-    // Turns the sprite (through SpriteEngine::Func433590).
-    float rotation;
+    // The sprite's rotation about each axis; DrawRotated uses only z.
+    float rotationX;
+    float rotationY;
+    float rotationZ;
     DWORD unk_00c[0x3];
     // SpriteEngine::Draw scales the sprite's height and width by these.
     float scaleY;
@@ -284,7 +285,10 @@ public:
         vm->unk_10c = 15;
         this->SetScript(vm, this->scripts[script]);
     }
-    int Func433150(Sprite *sprite);
+    // Draws `vm` in 3D: its matrix scaled, rotated about x, y and z and
+    // moved to its position (y up), with its sprite through the texture
+    // matrix. Returns 0, or -1 when not shown.
+    int Draw3D(Sprite *vm);
     // Draw without snapping the corners to pixel centers.
     int DrawNoRound(Sprite *vm);
     int Func433590(Sprite *sprite);

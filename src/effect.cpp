@@ -159,7 +159,7 @@ int EffectManager::OnDraw(EffectManager *mgr)
             continue;
         }
         eff->sprite.pos = eff->pos;
-        g_SpriteEngine->Func433150(&eff->sprite);
+        g_SpriteEngine->Draw3D(&eff->sprite);
     }
     return 1;
 }

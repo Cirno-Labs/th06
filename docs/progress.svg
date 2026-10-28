@@ -61,10 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">99.61% (509)</tspan> · <tspan class="decompiled">0% (0)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">0.39% (2)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">99.61% (509)</tspan> · <tspan class="decompiled">0% (0)</tspan> · <tspan class="nonmatching">0.20% (1)</tspan> · <tspan class="todo">0.20% (1)</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="744.08" height="6" x="0" y="0" class="named"/>
-<rect width="2.92" height="6" x="744.08" y="0" class="todo"/>
+<rect width="1.46" height="6" x="744.08" y="0" class="nonmatching"/>
+<rect width="1.46" height="6" x="745.54" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 AsciiText::AsciiText (224 bytes)</title></rect>
@@ -565,7 +566,7 @@
 <rect width="12" height="12" x="675" y="135" class="named"><title>0x0043c9c0 DatArchive::ReadEncoded (189 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="135" class="named"><title>0x0043ca80 DatArchive::~DatArchive (5 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="135" class="named"><title>0x0043ca90 DatArchive::Open (165 bytes)</title></rect>
-<rect width="12" height="12" x="720" y="135" class="todo"><title>0x0043cb40 DatArchive::Decode (753 bytes)</title></rect>
+<rect width="12" height="12" x="720" y="135" class="nonmatching"><title>0x0043cb40 DatArchive::Decode (753 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="135" class="named"><title>0x0043ce40 File::File (23 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="150" class="named"><title>0x0043ce60 File::Open (190 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="150" class="named"><title>0x0043cf20 File::Close (34 bytes)</title></rect>
@@ -582,10 +583,11 @@
 </g>
 <g transform="translate(0 336)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">99.56%</tspan> · <tspan class="decompiled">0%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">0.44%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">99.56%</tspan> · <tspan class="decompiled">0%</tspan> · <tspan class="nonmatching">0.31%</tspan> · <tspan class="todo">0.13%</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="743.73" height="6" x="0" y="0" class="named"/>
-<rect width="3.27" height="6" x="743.73" y="0" class="todo"/>
+<rect width="2.33" height="6" x="743.73" y="0" class="nonmatching"/>
+<rect width="0.93" height="6" x="746.07" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="62.42" height="105.34" x="0" y="0" class="named"><title>0x004074a0 EnemyScripts::RunEnemy (13572 bytes)</title></rect>
@@ -665,7 +667,7 @@
 <rect width="17.45" height="17.30" x="448.81" y="107.96" class="named"><title>0x00426100 FireShot (795 bytes)</title></rect>
 <rect width="17.45" height="17.02" x="448.81" y="128.26" class="named"><title>0x004306e0 SoundPlayer::LoadSound (784 bytes)</title></rect>
 <rect width="17.45" height="16.72" x="448.81" y="148.28" class="named"><title>0x00412f10 EnemyManager::OnDraw (772 bytes)</title></rect>
-<rect width="16.94" height="16.72" x="469.26" y="0" class="todo"><title>0x0043cb40 DatArchive::Decode (753 bytes)</title></rect>
+<rect width="16.94" height="16.72" x="469.26" y="0" class="nonmatching"><title>0x0043cb40 DatArchive::Decode (753 bytes)</title></rect>
 <rect width="16.94" height="16.30" x="469.26" y="19.72" class="named"><title>0x0040e920 EffectUpdateOrbit (737 bytes)</title></rect>
 <rect width="16.94" height="16.07" x="469.26" y="39.03" class="named"><title>0x00424375 App::LoadArchive (728 bytes)</title></rect>
 <rect width="16.94" height="16.04" x="469.26" y="58.10" class="named"><title>0x00432cc0 SpriteEngine::DrawRotated (727 bytes)</title></rect>

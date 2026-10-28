@@ -162,3 +162,146 @@ int DatArchive::Open(char *path)
     }
     return this->ReadTable();
 }
+
+// Not matching: the logic is the original's, the optimizer's register and
+// stack slot choices differ.
+// The encoded data's next byte, zero past its end, added to `checksum`
+// (as FileBitStream reads them).
+#define FETCH_BYTE() \
+    { \
+        currentByte = *cursor; \
+        if (cursor - data >= size) \
+        { \
+            currentByte = 0; \
+        } \
+        else \
+        { \
+            cursor++; \
+        } \
+        checksum += currentByte; \
+    }
+
+// FileBitStream::ReadBit on the encoded data.
+#define READ_BIT(bit) \
+    { \
+        if (mask == 0x80) \
+        { \
+            FETCH_BYTE(); \
+        } \
+        bit = currentByte & mask; \
+        mask >>= 1; \
+        if (mask == 0) \
+        { \
+            mask = 0x80; \
+        } \
+    }
+
+// FileBitStream::ReadBits on the encoded data.
+#define READ_BITS(value, bits) \
+    { \
+        DWORD bitMask = 1 << ((bits) - 1); \
+        DWORD result = 0; \
+        while (bitMask != 0) \
+        { \
+            if (mask == 0x80) \
+            { \
+                FETCH_BYTE(); \
+            } \
+            if (mask & currentByte) \
+            { \
+                result |= bitMask; \
+            } \
+            bitMask >>= 1; \
+            mask >>= 1; \
+            if (mask == 0) \
+            { \
+                mask = 0x80; \
+            } \
+        } \
+        value = result; \
+    }
+
+void *DatArchive::Decode(int entry, char *name)
+{
+    BYTE dictionary[0x2000];
+    int size;
+    BYTE *out;
+    BYTE *outCursor;
+    BYTE *data;
+    BYTE *cursor;
+    DWORD checksum;
+    DWORD expectedChecksum;
+    DWORD currentByte;
+    BYTE mask;
+    DWORD dictionaryPos;
+    int bit;
+    DWORD value;
+    DWORD offset;
+    DWORD c;
+    int i;
+
+    if (entry >= this->numEntries)
+    {
+        return NULL;
+    }
+    if (this->stream == NULL)
+    {
+        return NULL;
+    }
+    size = this->entries[entry].size;
+    out = (BYTE *)malloc(size);
+    if (out == NULL)
+    {
+        return NULL;
+    }
+    outCursor = out;
+    data = (BYTE *)this->ReadEncoded((DWORD *)&size, &expectedChecksum, entry);
+    if (data == NULL)
+    {
+        free(out);
+        return NULL;
+    }
+    cursor = data;
+    mask = 0x80;
+    checksum = 0;
+    dictionaryPos = 1;
+    memset(dictionary, 0, sizeof(dictionary));
+    for (;;)
+    {
+        READ_BIT(bit);
+        if (bit)
+        {
+            READ_BITS(value, 8);
+            *outCursor++ = value;
+            dictionary[dictionaryPos] = value;
+            dictionaryPos = (dictionaryPos + 1) & 0x1fff;
+        }
+        else
+        {
+            READ_BITS(offset, 13);
+            if (offset == 0)
+            {
+                break;
+            }
+            READ_BITS(value, 4);
+            for (i = 0; i <= (int)value + 2; i++)
+            {
+                c = dictionary[(offset + i) & 0x1fff];
+                *outCursor++ = c;
+                dictionary[dictionaryPos] = c;
+                dictionaryPos = (dictionaryPos + 1) & 0x1fff;
+            }
+        }
+    }
+    while (mask != 0x80)
+    {
+        READ_BIT(bit);
+    }
+    free(data);
+    if (this->entries[entry].checksum != checksum)
+    {
+        free(out);
+        return NULL;
+    }
+    return out;
+}

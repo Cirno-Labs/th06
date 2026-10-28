@@ -310,6 +310,9 @@ public:
     // bottom right corner, to (`x`, `y`) on the back buffer, recreating
     // it from its backup first if the device lost it.
     void CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y);
+    // Like CopySurfaceToBackBuffer, for the `width` by `height` rectangle
+    // at (`left`, `top`).
+    void CopySurfaceRectToBackBuffer(int surface, int x, int y, int left, int top, int width, int height);
     // RenderTextToTexture into texture `textureIndex`, with sizes of 0 or
     // less taken as 15.
     void RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight, int unk6,

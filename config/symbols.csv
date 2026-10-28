@@ -417,7 +417,7 @@ address,size,name,symbol
 0x00435010,603,SpriteEngine::LoadSurface,?LoadSurface@SpriteEngine@@QAEHHPAD@Z
 0x00435270,143,SpriteEngine::ReleaseSurface,?ReleaseSurface@SpriteEngine@@QAEXH@Z
 0x00435300,445,SpriteEngine::CopySurfaceToBackBuffer,?CopySurfaceToBackBuffer@SpriteEngine@@QAEXHHHHH@Z
-0x004354c0,424,Func4354c0,
+0x004354c0,424,SpriteEngine::CopySurfaceRectToBackBuffer,?CopySurfaceRectToBackBuffer@SpriteEngine@@QAEXHHHHHHH@Z
 0x00435670,237,Func435670,
 0x0043575d,66,MainMenu::MainMenu,??0MainMenu@@QAE@XZ
 0x0043579f,7473,Func43579f,

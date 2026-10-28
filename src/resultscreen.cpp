@@ -2,6 +2,8 @@
 // The /Os file from 0x42b0d9 to 0x42f6c9, with the result screen: the
 // score file and its sorted lists.
 
+#include <string.h>
+
 #include "resultscreen.h"
 #include "unsorted.h"
 
@@ -176,6 +178,50 @@ int LoadSpellCards(void *scoreDat, Catk *catks)
         }
         left -= chunk->size;
         chunk = (Catk *)((BYTE *)chunk + chunk->size);
+    }
+    return 0;
+}
+
+int LoadClears(void *scoreDat, Clrd *clrds)
+{
+    Clrd *p;
+    int i;
+    int left;
+    int k;
+    ScoreDat *dat1 = (ScoreDat *)scoreDat;
+
+    if (clrds == NULL)
+    {
+        return -1;
+    }
+    for (i = 0; i < 4; i++)
+    {
+        memset(&clrds[i], 0, sizeof(Clrd));
+        clrds[i].magic = 0x44524c43;
+        clrds[i].unk_06 = sizeof(Clrd);
+        clrds[i].size = sizeof(Clrd);
+        clrds[i].version = 0x10;
+        clrds[i].shot = i;
+        for (k = 0; k < 5; k++)
+        {
+            clrds[i].unk_0c[k] = 1;
+            clrds[i].unk_11[k] = 1;
+        }
+    }
+    p = (Clrd *)((BYTE *)dat1 + dat1->dataOffset);
+    left = dat1->fileSize - dat1->dataOffset;
+    while (left > 0)
+    {
+        if (p->magic == 0x44524c43 && p->version == 0x10)
+        {
+            if (p->shot >= 4)
+            {
+                break;
+            }
+            clrds[p->shot] = *p;
+        }
+        left -= p->size;
+        p = (Clrd *)((BYTE *)p + p->size);
     }
     return 0;
 }

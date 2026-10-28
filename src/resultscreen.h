@@ -35,6 +35,22 @@ struct Catk
 };
 ASSERT_SIZE(Catk, 0x40);
 
+// A chunk of the score file ("CLRD") with what a shot type cleared.
+struct Clrd
+{
+    DWORD magic;
+    WORD size;
+    WORD unk_06;
+    BYTE version;
+    BYTE unk_09[0x3];
+    // By difficulty.
+    BYTE unk_0c[5];
+    BYTE unk_11[5];
+    BYTE shot;
+    BYTE unk_17;
+};
+ASSERT_SIZE(Clrd, 0x18);
+
 // A node of the score file's lists. Each list starts with a head node
 // whose `data` is NULL; the entries after it are sorted.
 struct ListNode
@@ -90,6 +106,10 @@ DWORD LoadHighScores(void *scoreDat, ListNode *list, int difficulty, int shot);
 // stopping at a number of 0x40 or more. Returns 0, or -1 if `catks` is
 // NULL.
 int LoadSpellCards(void *scoreDat, Catk *catks);
+// Fills `clrds` with a fresh chunk for each of the four shots, then
+// copies the score file's "CLRD" chunks over them, by shot, stopping at
+// a shot of 4 or more. Returns 0, or -1 if `clrds` is NULL.
+int LoadClears(void *scoreDat, Clrd *clrds);
 // Frees `dat` and its list.
 void ReleaseScoreDat(ScoreDat *dat);
 

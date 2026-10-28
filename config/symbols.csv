@@ -347,7 +347,7 @@ address,size,name,symbol
 0x0042b3a6,145,InsertScore,?InsertScore@@YAHPAUListNode@@PAUHscr@@@Z
 0x0042b437,47,FreeListNodes,?FreeListNodes@@YAXPAUListNode@@@Z
 0x0042b466,156,LoadSpellCards,?LoadSpellCards@@YAHPAXPAUCatk@@@Z
-0x0042b502,348,Func42b502,
+0x0042b502,348,LoadClears,?LoadClears@@YAHPAXPAUClrd@@@Z
 0x0042b65e,382,Func42b65e,
 0x0042b7dc,45,ReleaseScoreDat,?ReleaseScoreDat@@YAXPAUScoreDat@@@Z
 0x0042b809,1060,Func42b809,

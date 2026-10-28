@@ -143,3 +143,22 @@ DatArchive::~DatArchive()
 {
     this->Release();
 }
+
+int DatArchive::Open(char *path)
+{
+    if (!this->Release())
+    {
+        return 0;
+    }
+    this->stream = new FileBitStream();
+    if (this->stream == NULL)
+    {
+        return 0;
+    }
+    if (!this->stream->Open(path))
+    {
+        SAFE_DELETE(this->stream);
+        return 0;
+    }
+    return this->ReadTable();
+}

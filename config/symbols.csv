@@ -1592,10 +1592,10 @@ address,size,name,symbol
 0x004766dc,,g_PowerLevels,?g_PowerLevels@@3PAHA
 0x00476708,,g_Bombs,?g_Bombs@@3PAUBombInfo@@A
 0x00476728,,g_ShotTypes,?g_ShotTypes@@3PAUShotTypeInfo@@A
-0x00476f78,,g_ShotTable0,?g_ShotTable0@@3UShotTable@@A
-0x00477770,,g_ShotTable1,?g_ShotTable1@@3UShotTable@@A
-0x00477ed8,,g_ShotTable2,?g_ShotTable2@@3UShotTable@@A
-0x00478468,,g_ShotTable3,?g_ShotTable3@@3UShotTable@@A
+0x00476f78,,g_ShotTable0,?g_ShotTable0@@3PAUShotTable@@A
+0x00477770,,g_ShotTable1,?g_ShotTable1@@3PAUShotTable@@A
+0x00477ed8,,g_ShotTable2,?g_ShotTable2@@3PAUShotTable@@A
+0x00478468,,g_ShotTable3,?g_ShotTable3@@3PAUShotTable@@A
 0x004784d4,,g_NameAlphabet,?g_NameAlphabet@@3PADA
 0x004784d8,,g_ShotNames,?g_ShotNames@@3PAPADA
 0x004784f0,,g_SpellCardRatings,?g_SpellCardRatings@@3PAMA

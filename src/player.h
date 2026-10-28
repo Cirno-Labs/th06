@@ -348,8 +348,9 @@ int FireShotType3(Player *player, PlayerBullet *bullet, int index, int frame);
 extern ShotTypeInfo g_ShotTypes[4];
 extern BombInfo g_Bombs[4];
 
-// Their shot tables.
-extern ShotTable g_ShotTable0;
-extern ShotTable g_ShotTable1;
-extern ShotTable g_ShotTable2;
-extern ShotTable g_ShotTable3;
+// Their shot tables: one per power level, FireShot takes the first whose
+// maxPower is above the player's power (the last one's is 999).
+extern ShotTable g_ShotTable0[9];
+extern ShotTable g_ShotTable1[9];
+extern ShotTable g_ShotTable2[9];
+extern ShotTable g_ShotTable3[9];

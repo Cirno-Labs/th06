@@ -14,7 +14,7 @@ Player::Player()
 
 int FireShotType0(Player *player, PlayerBullet *bullet, int index, int frame)
 {
-    return FireShot(player, bullet, index, frame, &g_ShotTable0);
+    return FireShot(player, bullet, index, frame, g_ShotTable0);
 }
 
 int FireShot(Player *player, PlayerBullet *bullet, int index, int frame, ShotTable *table)
@@ -81,17 +81,17 @@ int FireShot(Player *player, PlayerBullet *bullet, int index, int frame, ShotTab
 
 int FireShotType1(Player *player, PlayerBullet *bullet, int index, int frame)
 {
-    return FireShot(player, bullet, index, frame, &g_ShotTable1);
+    return FireShot(player, bullet, index, frame, g_ShotTable1);
 }
 
 int FireShotType2(Player *player, PlayerBullet *bullet, int index, int frame)
 {
-    return FireShot(player, bullet, index, frame, &g_ShotTable2);
+    return FireShot(player, bullet, index, frame, g_ShotTable2);
 }
 
 int FireShotType3(Player *player, PlayerBullet *bullet, int index, int frame)
 {
-    return FireShot(player, bullet, index, frame, &g_ShotTable3);
+    return FireShot(player, bullet, index, frame, g_ShotTable3);
 }
 
 int Player::DeletedCallback(Player *player)

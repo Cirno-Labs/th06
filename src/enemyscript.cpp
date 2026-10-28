@@ -2106,3 +2106,60 @@ void Func40dcc0(Enemy *enemy, EnemyScriptInstr *instr)
         }
     }
 }
+
+// g_EnemyScriptFuncs[15]: around every large bullet, starts the small
+// stopped bullets within reach accelerating away from the enemy, bent
+// towards the large one's direction, and recolors them; then
+// Func40d930. Stores the number of large bullets in intVars[3].
+void Func40de00(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int count = 0;
+    Bullet *big3 = g_BulletManager.bullets;
+    BulletShooter shooter;
+    int i;
+    Bullet *sm2;
+    float bigAngle;
+    float d;
+    float theta;
+    int j;
+
+    for (i = 0; i < 0x280; i++, big3++)
+    {
+        if (big3->state == 0 || big3->state == 5)
+        {
+            continue;
+        }
+        if (big3->sprites.sprite0.spriteData != NULL && big3->sprites.sprite0.spriteData->height >= 30.0f)
+        {
+            count++;
+            bigAngle = atan2f(big3->pos.y - enemy->pos.y, big3->pos.x - enemy->pos.x);
+            for (j = 0, sm2 = g_BulletManager.bullets; j < 0x280; j++, sm2++)
+            {
+                if (sm2->state == 0 || sm2->state == 5)
+                {
+                    continue;
+                }
+                if (sm2->sprites.sprite0.spriteData != NULL && sm2->sprites.sprite0.spriteData->height < 30.0f &&
+                    sm2->speed == 0.0f)
+                {
+                    d = sqrtf((sm2->pos.x - big3->pos.x) * (sm2->pos.x - big3->pos.x) +
+                                 (sm2->pos.y - big3->pos.y) * (sm2->pos.y - big3->pos.y));
+                    if (d < 64.0f)
+                    {
+                        sm2->flags |= 0x10;
+                        sm2->speed = 0.01f;
+                        sm2->timer.Set(0);
+                        sm2->unk_5a8 = 120;
+                        theta = atan2f(sm2->pos.y - enemy->pos.y, sm2->pos.x - enemy->pos.x);
+                        sm2->angle = (theta - bigAngle) * 2.2f + bigAngle;
+                        SinCosScale(&sm2->accel, sm2->angle, 0.01f);
+                        sm2->color = sm2->color + 1;
+                        g_SpriteEngine->SetSprite(&sm2->sprites.sprite0, sm2->sprites.sprite0.unk_0b2 + sm2->color);
+                    }
+                }
+            }
+        }
+    }
+    Func40d930(enemy, instr);
+    enemy->ctx.intVars[3] = count;
+}

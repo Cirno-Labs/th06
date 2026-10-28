@@ -112,10 +112,10 @@ void UpdateReimuABomb(Player *player)
                     g_EffectManager.SpawnEffect(6, &player->bomb.partPos[i], 8, 0xffffffff);
                     g_EffectManager.SpawnEffect(0xc, &player->bomb.partPos[i], 1, 0xff4040ff);
                     player->bomb.partActive[i] = 2;
-                    player->bomb.sprites[i * 4].unk_08a = 1;
-                    player->bomb.sprites[i * 4 + 1].unk_08a = 1;
-                    player->bomb.sprites[i * 4 + 2].unk_08a = 1;
-                    player->bomb.sprites[i * 4 + 3].unk_08a = 1;
+                    player->bomb.sprites[i * 4].pendingInterrupt = 1;
+                    player->bomb.sprites[i * 4 + 1].pendingInterrupt = 1;
+                    player->bomb.sprites[i * 4 + 2].pendingInterrupt = 1;
+                    player->bomb.sprites[i * 4 + 3].pendingInterrupt = 1;
                     player->bombHitSize[i].x = 256.0f;
                     player->bombHitSize[i].y = 256.0f;
                     player->bombHitDamage[i] = 200;
@@ -151,7 +151,7 @@ void UpdateReimuABomb(Player *player)
 // Places curSprite at orb i's position in the play area, draws it and
 // moves on to the next.
 #define DRAW_BOMB_SPRITE()                                              \
-    curSprite->pos = player->bomb.partPos[i] + curSprite->unk_0e4;           \
+    curSprite->pos = player->bomb.partPos[i] + curSprite->posOffset;           \
     curSprite->pos[0] += g_GameManager.arena[0];                        \
     curSprite->pos[1] += g_GameManager.arena[1];                        \
     curSprite->pos.z = 0.0f;                                            \
@@ -262,11 +262,11 @@ void UpdateReimuBBomb(Player *player)
             g_SpriteEngine->Step(&player->bomb.sprites[i]);
             if (player->bomb.timer.HasTicked() && player->bomb.timer.AsFrames() % 2 != 0)
             {
-                player->bulletClearAreas[i][0] = player->bomb.partPos[i].x + player->bomb.sprites[i].unk_0e4.x;
-                player->bulletClearAreas[i][1] = player->bomb.partPos[i].y + player->bomb.sprites[i].unk_0e4.y;
+                player->bulletClearAreas[i][0] = player->bomb.partPos[i].x + player->bomb.sprites[i].posOffset.x;
+                player->bulletClearAreas[i][1] = player->bomb.partPos[i].y + player->bomb.sprites[i].posOffset.y;
                 player->bombHitSize[i].x = player->bulletClearAreas[i][2];
                 player->bombHitSize[i].y = player->bulletClearAreas[i][3];
-                player->bombHitPos[i] = player->bomb.partPos[i] + player->bomb.sprites[i].unk_0e4;
+                player->bombHitPos[i] = player->bomb.partPos[i] + player->bomb.sprites[i].posOffset;
                 player->bombHitDamage[i] = 8;
             }
         }
@@ -283,7 +283,7 @@ void DrawReimuBBomb(Player *player)
     DimPlayAreaForBomb(player);
     for (curSprite = player->bomb.sprites, i = 0; i < 4; i++, curSprite++)
     {
-        curSprite->pos = player->bomb.partPos[i] + curSprite->unk_0e4;
+        curSprite->pos = player->bomb.partPos[i] + curSprite->posOffset;
         curSprite->pos.x += g_GameManager.arena[0];
         curSprite->pos.y += g_GameManager.arena[1];
         curSprite->pos.z = 0.0f;

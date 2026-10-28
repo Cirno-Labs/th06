@@ -6,17 +6,17 @@
 
 BOOL Gui::Func4172d3()
 {
-    return this->impl->unk_2424.spriteIndex >= 0 && this->impl->unk_2424.flags.unk13;
+    return this->impl->unk_2424.spriteIndex >= 0 && this->impl->unk_2424.flags.stopped;
 }
 
 void Gui::Func417314()
 {
-    this->impl->unk_1fe4.unk_08a = 1;
+    this->impl->unk_1fe4.pendingInterrupt = 1;
 }
 
 void Gui::Func41732c()
 {
-    this->impl->unk_20f4.unk_08a = 1;
+    this->impl->unk_20f4.pendingInterrupt = 1;
 }
 
 BOOL Gui::Func417344()

@@ -1016,11 +1016,11 @@ void Player::UpdateBullets(Player *player)
         case 3:
             if (player->laserTimers[bullet->laserIndex] == 70)
             {
-                bullet->sprite.unk_08a = 1;
+                bullet->sprite.pendingInterrupt = 1;
             }
             else if (player->laserTimers[bullet->laserIndex] == 1)
             {
-                bullet->sprite.unk_08a = 1;
+                bullet->sprite.pendingInterrupt = 1;
             }
             bullet->pos = player->optionPos[bullet->option - 1];
             bullet->pos.x += bullet->velocity.z;

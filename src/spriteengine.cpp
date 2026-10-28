@@ -357,9 +357,9 @@ void SpriteEngine::ReleaseTexture(int index)
 
 void SpriteEngine::SetScript(Sprite *vm, void *script)
 {
-    vm->flags.unk6 = 0;
+    vm->flags.flip = 0;
     vm->Initialize();
-    vm->scriptStart = script;
+    vm->scriptStart = (AnmInstr *)script;
     vm->scriptPos = vm->scriptStart;
     vm->scriptTime.Set(0);
     vm->flags.unk0 = 0;
@@ -817,6 +817,370 @@ int SpriteEngine::Draw3DRounded(Sprite *vm)
     {
         g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_DiffuseQuadXyz, sizeof(g_DiffuseQuadXyz[0]));
     }
+    return 0;
+}
+
+int SpriteEngine::Step(Sprite *vm)
+{
+    AnmInstr *curInstr;
+
+    if (vm->scriptPos == NULL)
+    {
+        return 1;
+    }
+    if (vm->pendingInterrupt != 0)
+    {
+        goto interrupt;
+    }
+    while (curInstr = vm->scriptPos, curInstr->time <= vm->scriptTime.AsFrames())
+    {
+        switch (curInstr->opcode)
+        {
+        case 0:
+            vm->flags.unk0 = 0;
+        case 15:
+            vm->scriptPos = NULL;
+            return 1;
+        case 1:
+            vm->flags.unk0 = 1;
+            this->SetSprite(vm, curInstr->args[0] + this->scriptSpriteOffsets[vm->scriptIndex]);
+            vm->spriteTime = vm->scriptTime.AsFrames();
+            break;
+        case 16:
+        {
+            int *spriteArgs;
+
+            vm->flags.unk0 = 1;
+            spriteArgs = curInstr->args;
+            this->SetSprite(vm, spriteArgs[0] + g_Rng.GetRandomU16InRange(*(WORD *)&spriteArgs[1]) +
+                                    this->scriptSpriteOffsets[vm->scriptIndex]);
+            vm->spriteTime = vm->scriptTime.AsFrames();
+            break;
+        }
+        case 2:
+            vm->scaleX = *(float *)&curInstr->args[0];
+            vm->scaleY = *(float *)&curInstr->args[1];
+            break;
+        case 3:
+            ((BYTE *)&vm->color)[3] = curInstr->args[0] & 0xff;
+            break;
+        case 4:
+            vm->color = (vm->color & 0xff000000) | (curInstr->args[0] & 0xffffff);
+            break;
+        case 5:
+            vm->scriptPos = (AnmInstr *)((BYTE *)vm->scriptStart + curInstr->args[0]);
+            vm->scriptTime.current = vm->scriptPos->time;
+            continue;
+        case 7:
+            vm->flags.flip ^= 1;
+            vm->scaleX *= -1.0f;
+            break;
+        case 25:
+            vm->flags.usePosOffset = curInstr->args[0];
+            break;
+        case 8:
+            vm->flags.flip ^= 2;
+            vm->scaleY *= -1.0f;
+            break;
+        case 9:
+        {
+            float *rotation;
+
+            rotation = (float *)curInstr->args;
+            vm->rotationX = *rotation;
+            rotation++;
+            vm->rotationY = *rotation;
+            rotation++;
+            vm->rotationZ = *rotation;
+            break;
+        }
+        case 10:
+        {
+            float *rotationSpeed;
+
+            rotationSpeed = (float *)curInstr->args;
+            vm->rotationSpeedX = *rotationSpeed;
+            rotationSpeed++;
+            vm->rotationSpeedY = *rotationSpeed;
+            rotationSpeed++;
+            vm->rotationSpeedZ = *rotationSpeed;
+            break;
+        }
+        case 11:
+        {
+            float *scaleSpeed;
+
+            scaleSpeed = (float *)curInstr->args;
+            vm->scaleTargetX = *scaleSpeed;
+            scaleSpeed++;
+            vm->scaleTargetY = *scaleSpeed;
+            vm->scaleInterpTime = 0;
+            break;
+        }
+        case 30:
+        {
+            float *scaleArgs;
+
+            scaleArgs = (float *)curInstr->args;
+            vm->scaleTargetX = *scaleArgs;
+            scaleArgs++;
+            vm->scaleTargetY = *scaleArgs;
+            scaleArgs++;
+            vm->scaleInterpTime = *(short *)scaleArgs;
+            vm->scaleInterpTimer.Set(0);
+            vm->scaleInitialX = vm->scaleX;
+            vm->scaleInitialY = vm->scaleY;
+            break;
+        }
+        case 12:
+        {
+            int *alphaArgs;
+
+            alphaArgs = curInstr->args;
+            vm->alphaInitial = vm->color;
+            vm->alphaFinal = (vm->color & 0xffffff) | ((alphaArgs[0] & 0xff) << 24);
+            vm->alphaInterpTime = *(short *)&alphaArgs[1];
+            vm->alphaInterpTimer.Set(0);
+            break;
+        }
+        case 13:
+            vm->flags.blendMode = 1;
+            break;
+        case 14:
+            vm->flags.blendMode = 0;
+            break;
+        case 17:
+            if (!vm->flags.usePosOffset)
+            {
+                vm->pos = D3DXVECTOR3(*(float *)&curInstr->args[0], *(float *)&curInstr->args[1],
+                                      *(float *)&curInstr->args[2]);
+            }
+            else
+            {
+                vm->posOffset = D3DXVECTOR3(*(float *)&curInstr->args[0], *(float *)&curInstr->args[1],
+                                            *(float *)&curInstr->args[2]);
+            }
+            break;
+        case 20:
+            vm->flags.posInterpMode = 2;
+            goto posInterp;
+        case 19:
+            vm->flags.posInterpMode = 1;
+            goto posInterp;
+        case 18:
+            vm->flags.posInterpMode = 0;
+        posInterp:
+            if (!vm->flags.usePosOffset)
+            {
+                vm->posInitial = vm->pos;
+            }
+            else
+            {
+                vm->posInitial = vm->posOffset;
+            }
+            vm->posFinal = D3DXVECTOR3(*(float *)&curInstr->args[0], *(float *)&curInstr->args[1],
+                                       *(float *)&curInstr->args[2]);
+            vm->posInterpTime = *(short *)&curInstr->args[3];
+            vm->posInterpTimer.Set(0);
+            break;
+        case 24:
+            vm->flags.unk0 = 0;
+        case 21:
+        {
+            AnmInstr *fallback;
+
+            if (vm->pendingInterrupt == 0)
+            {
+                vm->flags.stopped = 1;
+                vm->scriptTime.Sub(1);
+                goto done;
+            }
+        interrupt:
+            fallback = NULL;
+            curInstr = vm->scriptStart;
+            while ((curInstr->opcode != 22 || vm->pendingInterrupt != curInstr->args[0]) && curInstr->opcode != 0 &&
+                   curInstr->opcode != 15)
+            {
+                if (curInstr->opcode == 22 && curInstr->args[0] == -1)
+                {
+                    fallback = curInstr;
+                }
+                curInstr = (AnmInstr *)((BYTE *)curInstr + 4 + curInstr->argsSize);
+            }
+            vm->pendingInterrupt = 0;
+            vm->flags.stopped = 0;
+            if (curInstr->opcode != 22)
+            {
+                if (fallback == NULL)
+                {
+                    vm->scriptTime.Sub(1);
+                    goto done;
+                }
+                curInstr = fallback;
+            }
+            curInstr = (AnmInstr *)((BYTE *)curInstr + 4 + curInstr->argsSize);
+            vm->scriptPos = curInstr;
+            vm->scriptTime.Set(vm->scriptPos->time);
+            vm->flags.unk0 = 1;
+            continue;
+        }
+        case 29:
+            vm->flags.unk0 = curInstr->args[0];
+            break;
+        case 23:
+            vm->flags.anchor = 3;
+            break;
+        case 26:
+            vm->unk_088 = *(short *)&curInstr->args[0];
+            break;
+        case 27:
+            vm->uvScrollX += *(float *)&curInstr->args[0];
+            if (vm->uvScrollX >= 1.0f)
+            {
+                vm->uvScrollX -= 1.0f;
+            }
+            else if (vm->uvScrollX < 0.0f)
+            {
+                vm->uvScrollX += 1.0f;
+            }
+            break;
+        case 28:
+            vm->uvScrollY += *(float *)&curInstr->args[0];
+            if (vm->uvScrollY >= 1.0f)
+            {
+                vm->uvScrollY -= 1.0f;
+            }
+            else if (vm->uvScrollY < 0.0f)
+            {
+                vm->uvScrollY += 1.0f;
+            }
+            break;
+        case 31:
+            vm->flags.zWriteDisabled = curInstr->args[0];
+            break;
+        }
+        vm->scriptPos = (AnmInstr *)((BYTE *)curInstr + 4 + curInstr->argsSize);
+    }
+
+done:
+    if (vm->rotationSpeedX != 0.0f)
+    {
+        vm->rotationX = AddNormalizeAngle(vm->rotationX, g_Unknown6c6d18.frameAdvance * vm->rotationSpeedX);
+    }
+    if (vm->rotationSpeedY != 0.0f)
+    {
+        vm->rotationY = AddNormalizeAngle(vm->rotationY, g_Unknown6c6d18.frameAdvance * vm->rotationSpeedY);
+    }
+    if (vm->rotationSpeedZ != 0.0f)
+    {
+        vm->rotationZ = AddNormalizeAngle(vm->rotationZ, g_Unknown6c6d18.frameAdvance * vm->rotationSpeedZ);
+    }
+    if (vm->scaleInterpTime > 0)
+    {
+        vm->scaleInterpTimer.Tick();
+        if (vm->scaleInterpTimer.AsFrames() >= vm->scaleInterpTime)
+        {
+            vm->scaleY = vm->scaleTargetY;
+            vm->scaleX = vm->scaleTargetX;
+            vm->scaleInterpTime = 0;
+            vm->scaleTargetY = 0.0f;
+            vm->scaleTargetX = 0.0f;
+        }
+        else
+        {
+            vm->scaleX = (vm->scaleTargetX - vm->scaleInitialX) * vm->scaleInterpTimer.AsFloat() /
+                             (float)vm->scaleInterpTime +
+                         vm->scaleInitialX;
+            vm->scaleY = (vm->scaleTargetY - vm->scaleInitialY) * vm->scaleInterpTimer.AsFloat() /
+                             (float)vm->scaleInterpTime +
+                         vm->scaleInitialY;
+        }
+        if (vm->flags.flip & 1)
+        {
+            vm->scaleX *= -1.0f;
+        }
+        if (vm->flags.flip & 2)
+        {
+            vm->scaleY *= -1.0f;
+        }
+    }
+    else
+    {
+        vm->scaleY += g_Unknown6c6d18.frameAdvance * vm->scaleTargetY;
+        vm->scaleX += g_Unknown6c6d18.frameAdvance * vm->scaleTargetX;
+    }
+    if (vm->alphaInterpTime > 0)
+    {
+        D3DCOLOR col;
+        D3DCOLOR goal;
+        float alpha;
+        int x;
+        int i;
+
+        vm->alphaInterpTimer.Tick();
+        col = vm->alphaInitial;
+        goal = vm->alphaFinal;
+        alpha = vm->alphaInterpTimer.AsFloat() / (float)vm->alphaInterpTime;
+        if (alpha >= 1.0f)
+        {
+            alpha = 1.0f;
+        }
+        for (i = 0; i < 4; i++)
+        {
+            x = (int)(((float)((BYTE *)&goal)[i] - (float)((BYTE *)&col)[i]) * alpha + (float)((BYTE *)&col)[i]);
+            if (x < 0)
+            {
+                x = 0;
+            }
+            ((BYTE *)&col)[i] = x >= 0x100 ? 0xff : x;
+        }
+        vm->color = col;
+        if (vm->alphaInterpTimer.AsFrames() >= vm->alphaInterpTime)
+        {
+            vm->alphaInterpTime = 0;
+        }
+    }
+    if (vm->posInterpTime != 0)
+    {
+        float posT;
+
+        posT = vm->posInterpTimer.AsFloat() / (float)vm->posInterpTime;
+        if (posT >= 1.0f)
+        {
+            posT = 1.0f;
+        }
+        switch (vm->flags.posInterpMode)
+        {
+        case 1:
+            posT = 1.0f - posT;
+            posT = posT * posT;
+            posT = 1.0f - posT;
+            break;
+        case 2:
+            posT = 1.0f - posT;
+            posT = posT * posT * posT * posT;
+            posT = 1.0f - posT;
+            break;
+        }
+        if (!vm->flags.usePosOffset)
+        {
+            vm->pos.x = posT * vm->posFinal.x + (1.0f - posT) * vm->posInitial.x;
+            vm->pos.y = posT * vm->posFinal.y + (1.0f - posT) * vm->posInitial.y;
+            vm->pos.z = posT * vm->posFinal.z + (1.0f - posT) * vm->posInitial.z;
+        }
+        else
+        {
+            vm->posOffset.x = posT * vm->posFinal.x + (1.0f - posT) * vm->posInitial.x;
+            vm->posOffset.y = posT * vm->posFinal.y + (1.0f - posT) * vm->posInitial.y;
+            vm->posOffset.z = posT * vm->posFinal.z + (1.0f - posT) * vm->posInitial.z;
+        }
+        if (vm->posInterpTimer.AsFrames() >= vm->posInterpTime)
+        {
+            vm->posInterpTime = 0;
+        }
+        vm->posInterpTimer.Tick();
+    }
+    vm->scriptTime.Tick();
     return 0;
 }
 

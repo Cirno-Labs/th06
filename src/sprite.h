@@ -77,17 +77,35 @@ struct SpriteFlags
     unsigned int blendMode : 1;
     // Selects SpriteEngine::Draw's stage 0 D3DTSS_COLOROP.
     unsigned int colorOp : 1;
-    unsigned int unk4 : 2;
-    unsigned int unk6 : 2;
+    unsigned int unk4 : 1;
+    // The ANM position instructions set posOffset rather than pos.
+    unsigned int usePosOffset : 1;
+    // Bit 0 mirrors the sprite horizontally (negates scaleX), bit 1
+    // vertically.
+    unsigned int flip : 2;
     // Bit 0 anchors the sprite's left edge at its position instead of
     // centering it, bit 1 its top edge. Set to 3 throughout the music
     // screen.
     unsigned int anchor : 2;
-    unsigned int unk10 : 2;
+    // How a position interpolation eases: 0 linearly, 1 out (squared),
+    // 2 out (to the fourth).
+    unsigned int posInterpMode : 2;
     // Turns D3DRS_ZWRITEENABLE off while drawing.
     unsigned int zWriteDisabled : 1;
-    unsigned int unk13 : 1;
+    // The script reached a stop instruction and waits for an interrupt.
+    unsigned int stopped : 1;
     unsigned int unk14 : 18;
+};
+
+// One instruction of an ANM script.
+struct AnmInstr
+{
+    // The frame it runs on.
+    short time;
+    BYTE opcode;
+    // The size of the arguments, in bytes.
+    BYTE argsSize;
+    int args[1];
 };
 
 // The state of one sprite's animation script.
@@ -110,11 +128,17 @@ public:
     float rotationX;
     float rotationY;
     float rotationZ;
-    DWORD unk_00c[0x3];
+    // Added to the rotations every frame.
+    float rotationSpeedX;
+    float rotationSpeedY;
+    float rotationSpeedZ;
     // SpriteEngine::Draw scales the sprite's height and width by these.
     float scaleY;
     float scaleX;
-    DWORD unk_020[0x2];
+    // Added to the scales every frame; while scaleInterpTime runs, the
+    // scales it interpolates to.
+    float scaleTargetY;
+    float scaleTargetX;
     // Added to the sprite's texture coordinates.
     float uvScrollX;
     float uvScrollY;
@@ -125,15 +149,20 @@ public:
     // SpriteEngine::Draw skips the sprite while it is 0.
     D3DCOLOR color;
     SpriteFlags flags;
-    short unk_084;
-    short unk_086;
+    // The lengths of the running alpha, scale and position
+    // interpolations, in frames; 0 when none runs.
+    short alphaInterpTime;
+    short scaleInterpTime;
     short unk_088;
-    short unk_08a;
-    short unk_08c;
+    // The interrupt label to jump to on the next Step; 0 for none.
+    short pendingInterrupt;
+    short posInterpTime;
     short unk_08e;
     D3DXVECTOR3 pos;
-    DWORD unk_09c[0x2];
-    Timer unk_0a4;
+    // The scales a scale interpolation started from.
+    float scaleInitialY;
+    float scaleInitialX;
+    Timer scaleInterpTimer;
     // The sprite SpriteEngine::SetSprite set; -1 for none.
     short spriteIndex;
     short unk_0b2;
@@ -142,15 +171,22 @@ public:
     short unk_0b6;
     // The script SetScript started, and the next instruction to run;
     // NULL once the script ends.
-    void *scriptStart;
-    void *scriptPos;
+    AnmInstr *scriptStart;
+    AnmInstr *scriptPos;
     // The entry SetSprite chose.
     SpriteData *spriteData;
-    DWORD unk_0c4[0x8];
-    D3DXVECTOR3 unk_0e4;
-    Timer unk_0f0;
-    DWORD unk_0fc;
-    Timer unk_100;
+    // The colors an alpha interpolation goes from and to.
+    D3DCOLOR alphaInitial;
+    D3DCOLOR alphaFinal;
+    // The positions a position interpolation goes from and to.
+    D3DXVECTOR3 posInitial;
+    D3DXVECTOR3 posFinal;
+    // Set instead of pos while flags.usePosOffset is set.
+    D3DXVECTOR3 posOffset;
+    Timer posInterpTimer;
+    // scriptTime when a script instruction last set the sprite.
+    int spriteTime;
+    Timer alphaInterpTimer;
     // Used by RenderText.
     BYTE unk_10c;
     BYTE unk_10d;
@@ -248,7 +284,10 @@ public:
     // wants on the device, those that changed since the last sprite and
     // that the configuration allows.
     void SetRenderStateForSprite(Sprite *vm);
-    // Runs a sprite's script for one frame.
+    // Runs a sprite's script for one frame: the instructions due (jumping
+    // to a pending interrupt's label first), then the rotation, scale,
+    // alpha and position changes they started. Returns 1 once the script
+    // has ended, else 0.
     int Step(Sprite *vm);
     // Draws a sprite if it is shown, flat at its position, scaled and
     // anchored. Returns 0, or -1 when not shown.
@@ -276,14 +315,14 @@ public:
     // Creates texture `index` at `width` by `height` in the format
     // g_TextureFormats[`format`]. Returns 0.
     int CreateTexture(int index, int width, int height, int format);
-    // Like StartScript, after zeroing the position and unk_0e4 and
+    // Like StartScript, after zeroing the position and posOffset and
     // setting unk_10c and unk_10d to 15. Inline, but not expanded: its
     // copy is the stage file's.
     void Func4051b0(Sprite *vm, int script)
     {
         vm->scriptIndex = script;
         vm->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        vm->unk_0e4 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
         vm->unk_10d = 15;
         vm->unk_10c = 15;
         this->SetScript(vm, this->scripts[script]);

@@ -634,7 +634,7 @@ public:
     // Shows sprite `sprite` + 0x4a8 with `text` (scripts 0x4a3 and 0x707)
     // and plays sound 14.
     void Func417bfd(int sprite, char *text);
-    // Sets impl->unk_1fe4.unk_08a.
+    // Sets impl->unk_1fe4.pendingInterrupt.
     void Func417314();
     // Shows fullPowerPopup, when the power reaches its maximum.
     void ShowFullPowerPopup(int unk);
@@ -642,7 +642,7 @@ public:
     void Func417458(int value);
     // Shows `bonus` in bonusPopup, the bonus for bullets cleared.
     void ShowBonusPopup(int bonus);
-    // Sets impl->unk_20f4.unk_08a.
+    // Sets impl->unk_20f4.pendingInterrupt.
     void Func41732c();
     // Returns impl->unk_2bd8.
     BOOL Func417344();

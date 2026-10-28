@@ -78,9 +78,12 @@ struct StageData
     int unk_04;
     int unk_08;
     DWORD unk_0c;
-    // The stage's name and its music's, which Gui shows as it starts.
+    // The stage's name, and its songs' names and files: Gui shows the
+    // name and the first song's as the stage starts, and the dialogue
+    // switches songs.
     char name[0x80];
-    char songName[0x80];
+    char songNames[4][0x80];
+    char songPaths[4][0x80];
     // Then, at 0x490, the objects' offsets.
 };
 

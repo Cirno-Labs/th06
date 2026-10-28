@@ -756,7 +756,7 @@ struct GuiImpl
     // Runs the dialogue for a frame: the instructions due (portraits,
     // text, waits for the shot button, music, the stage's end), then
     // steps its sprites. Returns 0, or -1 when no script runs.
-    int Func4188c9();
+    int RunMsg();
 
     Sprite unk_0000[0x1a];
     BYTE unk_1ba0;
@@ -809,7 +809,7 @@ public:
     int LoadResources();
 
     // The update element's callback: unless g_GameManager.unk_002c is
-    // set, runs Func4195bf and impl->Func4188c9. Returns 1.
+    // set, runs Func4195bf and impl->RunMsg. Returns 1.
     static int OnUpdate(Gui *gui);
     // The update element's added callback (the element at 0x69bc7c):
     // runs LoadResources.

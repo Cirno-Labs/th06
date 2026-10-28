@@ -56,7 +56,7 @@ int Gui::OnUpdate(Gui *gui)
         return 1;
     }
     gui->Func4195bf();
-    gui->impl->Func4188c9();
+    gui->impl->RunMsg();
     return 1;
 }
 
@@ -262,7 +262,7 @@ int Gui::LoadResources()
     g_SpriteEngine->RenderTextCentered(&this->impl->unk_1ba4, 0xe0ffff, 0, g_Stage.data->name);
     this->impl->unk_1cb4.unk_10c = 16;
     this->impl->unk_1cb4.unk_10d = 16;
-    g_SpriteEngine->RenderTextRightAligned(&this->impl->unk_1cb4, 0xe0ffff, 0, "♪%s", g_Stage.data->songName);
+    g_SpriteEngine->RenderTextRightAligned(&this->impl->unk_1cb4, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[0]);
     this->impl->msg.scriptIndex = -1;
     this->impl->unk_2bdc = 0;
     this->impl->bonusPopup.shown = 0;
@@ -341,6 +341,156 @@ void GuiImpl::StartMsgScript(int index)
         g_SpriteEngine->LoadAnm(0xb, "data/eff07.anm", 0x2b3);
         g_SpriteEngine->LoadAnm(0x12, "data/face12c.anm", 0x4a8);
     }
+}
+
+int GuiImpl::RunMsg()
+{
+    MsgArgs *args;
+
+    if (this->msg.scriptIndex < 0)
+    {
+        return -1;
+    }
+    if (this->msg.unk_6a0 > 0)
+    {
+        this->msg.unk_6a0--;
+    }
+    if (this->msg.skippable && (g_Buttons & 0x100))
+    {
+        this->msg.timer.Set(this->msg.instr->time);
+    }
+    while (this->msg.timer >= this->msg.instr->time)
+    {
+        switch (this->msg.instr->opcode)
+        {
+        case 0:
+            this->msg.scriptIndex = -1;
+            return -1;
+        case 1:
+            args = &this->msg.instr->args;
+            g_SpriteEngine->StartScript(&this->msg.portraits[args->who], args->index + (args->who != 0 ? 0x4a2 : 0x4a0));
+            break;
+        case 2:
+            args = &this->msg.instr->args;
+            g_SpriteEngine->SetSprite(&this->msg.portraits[args->who], args->index + (args->who != 0 ? 0x4a8 : 0x4a0));
+            break;
+        case 3:
+            args = &this->msg.instr->args;
+            if (args->index == 0 && this->msg.text[1].scriptIndex >= 0)
+            {
+                g_SpriteEngine->RenderText(&this->msg.text[1], this->msg.textColors[args->who], this->msg.shadowColors[args->who], " ");
+            }
+            g_SpriteEngine->StartScript(&this->msg.text[args->index], args->index + 0x702);
+            this->msg.text[args->index].unk_10d = this->msg.fontSize;
+            this->msg.text[args->index].unk_10c = this->msg.text[args->index].unk_10d;
+            g_SpriteEngine->RenderText(&this->msg.text[args->index], this->msg.textColors[args->who], this->msg.shadowColors[args->who], args->text);
+            this->msg.waitFrames = 0;
+            break;
+        case 4:
+            if ((!this->msg.skippable || !(g_Buttons & 0x100)) &&
+                (!(g_Buttons & 1) || (g_Buttons & 1) == (g_PrevButtons & 1) || this->msg.waitFrames < 8))
+            {
+                if (this->msg.waitFrames >= this->msg.instr->i)
+                {
+                    break;
+                }
+                this->msg.waitFrames++;
+                goto stepSprites;
+            }
+            break;
+        case 5:
+            args = &this->msg.instr->args;
+            if (args->who < 2)
+            {
+                this->msg.portraits[args->who].pendingInterrupt = args->value;
+            }
+            else
+            {
+                this->msg.text[args->who - 2].pendingInterrupt = args->value;
+            }
+            break;
+        case 6:
+            this->msg.unk_6a0++;
+            break;
+        case 7:
+            g_SpriteEngine->StartScript(&this->unk_1cb4, 0x701);
+            this->unk_1cb4.unk_10c = 16;
+            this->unk_1cb4.unk_10d = 16;
+            g_SpriteEngine->RenderTextRightAligned(&this->unk_1cb4, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[this->msg.instr->i]);
+            if (g_Unknown6c6d18.PlayMidi(this->msg.instr->i) != 0)
+            {
+                g_Unknown6c6d18.PlayMusic(g_Stage.data->songPaths[this->msg.instr->i]);
+            }
+            break;
+        case 8:
+            args = &this->msg.instr->args;
+            g_SpriteEngine->StartScript(&this->msg.unk_45c[args->index], args->index + 0x704);
+            g_SpriteEngine->RenderTextRightAligned(&this->msg.unk_45c[args->index], this->msg.textColors[args->who], this->msg.shadowColors[args->who], args->text);
+            this->msg.waitFrames = 0;
+            break;
+        case 9:
+            this->unk_2bdc = 1;
+            if (g_GameManager.stage < 6)
+            {
+                g_SpriteEngine->StartScript(&this->unk_2424, 0x619);
+            }
+            else
+            {
+                g_GameManager.unk_181c = 0xff;
+            }
+            break;
+        case 10:
+            goto stepSprites;
+        case 12:
+            g_Unknown6c6d18.FadeOutMusic(4.0f);
+            break;
+        case 11:
+            g_GameManager.unk_0000 = g_GameManager.score;
+            if (g_GameManager.unk_1823)
+            {
+                g_GameManager.unk_0000 = g_GameManager.score;
+                g_Unknown6c6d18.scene = 7;
+                goto stepSprites;
+            }
+            if (g_GameManager.stage < 5 || (g_GameManager.difficulty != 0 && g_GameManager.stage == 5))
+            {
+                g_Unknown6c6d18.scene = 3;
+            }
+            else if (g_GameManager.unk_001c == 0)
+            {
+                if (g_GameManager.difficulty == 4)
+                {
+                    g_GameManager.unk_1822 = 1;
+                    g_GameManager.unk_0000 = g_GameManager.score;
+                    g_Unknown6c6d18.scene = 7;
+                    goto stepSprites;
+                }
+                g_Unknown6c6d18.scene = 10;
+            }
+            else
+            {
+                g_Unknown6c6d18.scene = 8;
+            }
+            goto stepSprites;
+        case 13:
+            this->msg.skippable = this->msg.instr->b;
+            break;
+        }
+        this->msg.instr = (MsgInstr *)((BYTE *)this->msg.instr + 4 + this->msg.instr->argsSize);
+    }
+    this->msg.timer.NextTick();
+stepSprites:
+    g_SpriteEngine->Step(&this->msg.portraits[0]);
+    g_SpriteEngine->Step(&this->msg.portraits[1]);
+    g_SpriteEngine->Step(&this->msg.text[0]);
+    g_SpriteEngine->Step(&this->msg.text[1]);
+    g_SpriteEngine->Step(&this->msg.unk_45c[0]);
+    g_SpriteEngine->Step(&this->msg.unk_45c[1]);
+    if (this->msg.timer < 60 && this->msg.skippable && (g_Buttons & 0x100))
+    {
+        this->msg.timer.Set(60);
+    }
+    return 0;
 }
 
 BOOL Gui::Func419572()

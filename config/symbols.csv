@@ -130,7 +130,7 @@ address,size,name,symbol
 0x00414360,607,BulletManager::ClearAllWithBonus,?ClearAllWithBonus@BulletManager@@QAEHHH@Z
 0x004145c0,165,BulletManager::FirePattern,?FirePattern@BulletManager@@QAEHPAUBulletShooter@@@Z
 0x00414670,635,BulletManager::SpawnLaser,?SpawnLaser@BulletManager@@QAEPAULaser@@PAUBulletShooter@@@Z
-0x004148f0,211,BulletManager::RegisterChain,?RegisterChain@BulletManager@@SAHH@Z
+0x004148f0,211,BulletManager::RegisterChain,?RegisterChain@BulletManager@@SAHPAD@Z
 0x004149d0,6928,BulletManager::OnUpdate,?OnUpdate@BulletManager@@SAHPAV1@@Z
 0x00416500,1607,BulletManager::OnDraw,?OnDraw@BulletManager@@SAHPAV1@@Z
 0x00416b50,234,DrawBullet,?DrawBullet@@YAXPAUBullet@@@Z
@@ -1566,6 +1566,10 @@ address,size,name,symbol
 0x00476480,,g_BulletColorOffsets32,?g_BulletColorOffsets32@@3PAHA
 0x004764a0,,g_BossTimerColors,?g_BossTimerColors@@3PAKA
 0x004764b0,,g_ExtendScores,?g_ExtendScores@@3PAIA
+0x004764c4,,g_EclPaths,?g_EclPaths@@3PAPADA
+0x004764e8,,g_EnemyAnmPaths,?g_EnemyAnmPaths@@3PAUEnemyAnmPaths@@A
+0x00476528,,g_ReplayRanks,?g_ReplayRanks@@3PAURankSettings@@A
+0x00476564,,g_Ranks,?g_Ranks@@3PAURankSettings@@A
 0x004765a0,,g_ControllerMapping,?g_ControllerMapping@@3UControllerMapping@@A
 0x004765b8,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
 0x00476660,,g_PowerItemBonus,?g_PowerItemBonus@@3PAHA

@@ -162,7 +162,7 @@ public:
     // Resets, remembers `unk`, picks g_Unknown476438's table by option
     // bit 0, and adds the update element (priority 0xb) and the draw
     // element (priority 9). Returns 0, or -1 if adding fails.
-    static int RegisterChain(int unk);
+    static int RegisterChain(char *anmPath);
     static int OnUpdate(BulletManager *mgr);
     static int OnDraw(BulletManager *mgr);
     // Loads the bullet sprites ("data/etama3.anm" and "etama4.anm", unless
@@ -182,7 +182,8 @@ public:
     // Counts the bullets in use, each frame.
     int bulletCount;
     Timer unk_f5c08;
-    int unk_f5c14;
+    // RegisterChain's argument, "data/etama.anm".
+    char *anmPath;
 };
 ASSERT_SIZE(BulletManager, 0xf5c18);
 extern BulletManager g_BulletManager;

@@ -107,7 +107,7 @@ Laser *BulletManager::SpawnLaser(BulletShooter *shooter)
     return laser;
 }
 
-int BulletManager::RegisterChain(int unk)
+int BulletManager::RegisterChain(char *anmPath)
 {
     BulletManager *mgr = &g_BulletManager;
 
@@ -120,7 +120,7 @@ int BulletManager::RegisterChain(int unk)
         g_Unknown476438 = g_Unknown4763c8;
     }
     mgr->Reset();
-    mgr->unk_f5c14 = unk;
+    mgr->anmPath = anmPath;
     g_BulletCalcChain.SetCallback((ChainCallback)BulletManager::OnUpdate);
     g_BulletCalcChain.addedCallback = (ChainCallback)BulletManager::AddedCallback;
     g_BulletCalcChain.deletedCallback = (ChainCallback)BulletManager::DeletedCallback;

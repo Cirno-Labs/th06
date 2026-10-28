@@ -2,6 +2,7 @@
 // The /Os file with GameManager, from 0x41b1a4 at least.
 
 #include "gamemanager.h"
+#include "ascii.h"
 #include "bullet.h"
 #include "effect.h"
 #include "enemy.h"
@@ -137,6 +138,198 @@ int GameManager::OnDraw(GameManager *mgr)
         mgr->unk_181f = 2;
     }
     return 1;
+}
+
+int GameManager::AddedCallback(GameManager *mgr)
+{
+    BOOL failed = FALSE;
+    Catk *catk2;
+    int index2;
+    unsigned int m2;
+    ScoreDat *data;
+    int shot2;
+
+    g_Unknown6c6d18.d3dDevice->ResourceManagerDiscardBytes(0);
+    if (g_Unknown6c6d18.scene != 3)
+    {
+        g_Unknown6c6d18.unk_14c.bombs = g_GameManager.bombs;
+        g_Unknown6c6d18.unk_14c.lives = g_GameManager.lives;
+        mgr->arena[0] = 32.0f;
+        mgr->arena[1] = 16.0f;
+        mgr->arena[2] = 384.0f;
+        mgr->arena[3] = 448.0f;
+        mgr->playerArea[0] = 8.0f;
+        mgr->playerArea[1] = 16.0f;
+        mgr->playerArea[2] = 368.0f;
+        mgr->playerArea[3] = 416.0f;
+        mgr->progressFrames = 0;
+        mgr->unk_0000 = 0;
+        mgr->score = 0;
+        mgr->unk_0008 = 0;
+        mgr->highScore = 100000;
+        mgr->power = 0;
+        mgr->continuesUsed = 0;
+        if (mgr->stage >= 6)
+        {
+            mgr->difficulty = 4;
+        }
+        if (mgr->difficulty < 4)
+        {
+            mgr->unk_181c = 0;
+        }
+        else
+        {
+            mgr->unk_181c = 4;
+        }
+        g_GameManager.powerItemCombo = 0;
+        mgr->rank = 8;
+        mgr->grazeTotal = 0;
+        mgr->pointItemsTotal = 0;
+        for (catk2 = mgr->catks, index2 = 0; index2 < 0x40; index2++, catk2++)
+        {
+            for (m2 = 0; m2 < 0x20; m2++)
+            {
+                ((WORD *)catk2)[m2] = g_Rng.GetRandomU16();
+            }
+            catk2->magic = 0x4b544143;
+            catk2->unk_06 = 0x40;
+            catk2->size = 0x40;
+            catk2->version = 0x10;
+            catk2->index = index2;
+            catk2->unk_3c = 0;
+            catk2->unk_3e = 0;
+        }
+        data = LoadScoreDat("score.dat");
+        g_GameManager.highScore = LoadHighScores(data, NULL, g_GameManager.character * 2 + g_GameManager.shotType, g_GameManager.difficulty);
+        LoadSpellCards(data, mgr->catks);
+        LoadClears(data, mgr->clrds);
+        LoadPracticeScores(data, &mgr->pscrs[0][0][0]);
+        if (mgr->unk_1823)
+        {
+            g_GameManager.highScore = mgr->pscrs[g_GameManager.character * 2 + g_GameManager.shotType][g_GameManager.stage][g_GameManager.difficulty].score;
+        }
+        ReleaseScoreDat(data);
+        mgr->rank = g_Ranks[g_GameManager.difficulty].rank;
+        mgr->minRank = g_Ranks[g_GameManager.difficulty].minRank;
+        mgr->maxRank = g_Ranks[g_GameManager.difficulty].maxRank;
+        mgr->deaths = 0;
+        mgr->bombsUsed = 0;
+        mgr->spellCardsCaptured = 0;
+    }
+    else
+    {
+        mgr->unk_0000 = mgr->score;
+        mgr->unk_0008 = 0;
+    }
+    mgr->subRank = 0;
+    mgr->pointItems = 0;
+    mgr->graze = 0;
+    mgr->unk_181f = 0;
+    mgr->stage++;
+    if (g_GameManager.unk_001c == 0)
+    {
+        shot2 = g_GameManager.character * 2 + g_GameManager.shotType;
+        if (!mgr->continuesUsed && mgr->clrds[shot2].unk_0c[g_GameManager.difficulty] < mgr->stage - 1)
+        {
+            mgr->clrds[shot2].unk_0c[g_GameManager.difficulty] = mgr->stage - 1;
+        }
+        if (mgr->clrds[shot2].unk_11[g_GameManager.difficulty] < mgr->stage - 1)
+        {
+            mgr->clrds[shot2].unk_11[g_GameManager.difficulty] = mgr->stage - 1;
+        }
+    }
+    if (mgr->unk_1823)
+    {
+        switch (mgr->stage)
+        {
+        case 1:
+            break;
+        case 2:
+            mgr->power = 0x40;
+            break;
+        default:
+            mgr->power = 0x80;
+            break;
+        }
+    }
+    g_Unknown6c6d18.LoadArchive(4, "紅魔郷CM.dat");
+    g_Unknown6c6d18.LoadArchive(2, "紅魔郷ST.dat");
+    if (g_GameManager.unk_001c == 1)
+    {
+        if (ReplayManager::RegisterChain(1, g_GameManager.replayFile) != 0)
+        {
+            failed = TRUE;
+        }
+        while (g_ExtendScores[mgr->unk_181c] <= mgr->unk_0000)
+        {
+            mgr->unk_181c++;
+        }
+        mgr->minRank = g_ReplayRanks[g_GameManager.difficulty].minRank;
+        mgr->maxRank = g_ReplayRanks[g_GameManager.difficulty].maxRank;
+    }
+    g_Rng.generated = 0;
+    mgr->unk_1a2c = g_Rng.seed;
+    if (Stage::RegisterChain(mgr->stage) != 0)
+    {
+        LogPrintf(&g_Unknown69d998, "error : 背景データの初期化に失敗しました\n");
+        return -1;
+    }
+    if (Player::RegisterChain(0) != 0)
+    {
+        LogPrintf(&g_Unknown69d998, "error : プレイヤーの初期化に失敗しました\n");
+        return -1;
+    }
+    if (BulletManager::RegisterChain("data/etama.anm") != 0)
+    {
+        LogPrintf(&g_Unknown69d998, "error : 敵弾の初期化に失敗しました\n");
+        return -1;
+    }
+    if (EnemyManager::RegisterChain(g_EnemyAnmPaths[mgr->stage].anmPath, g_EnemyAnmPaths[mgr->stage].anmPath2) != 0)
+    {
+        LogPrintf(&g_Unknown69d998, "error : 敵の初期化に失敗しました\n");
+        return -1;
+    }
+    if (g_EnemyScripts.Load(g_EclPaths[mgr->stage]) != 0)
+    {
+        LogPrintf(&g_Unknown69d998, "error : 敵頭脳の初期化に失敗しました\n");
+        return -1;
+    }
+    if (EffectManager::RegisterChain() != 0)
+    {
+        LogPrintf(&g_Unknown69d998, "error : エフェクトの初期化に失敗しました\n");
+        return -1;
+    }
+    if (Gui::RegisterChain() != 0)
+    {
+        LogPrintf(&g_Unknown69d998, "error : 2D表示の初期化に失敗しました\n");
+        return -1;
+    }
+    if (g_GameManager.unk_001c == 0)
+    {
+        ReplayManager::RegisterChain(0, "replay/th6_00.rpy");
+    }
+    if (!g_GameManager.unk_1824)
+    {
+        g_Unknown6c6d18.LoadMidi(1, g_Stage.data->songPaths[1]);
+        g_Unknown6c6d18.PlayMusic(g_Stage.data->songPaths[0]);
+    }
+    mgr->unk_1820 = 0;
+    mgr->unk_1821 = 1;
+    if (g_Unknown6c6d18.scene != 3)
+    {
+        g_Unknown6c6d18.unk_1b4 = 0.0f;
+        g_Unknown6c6d18.unk_1b8 = 0.0f;
+    }
+    mgr->unk_002c = 0;
+    mgr->score = 0;
+    mgr->unk_1822 = 0;
+    g_AsciiText.Initialize();
+    if (failed)
+    {
+        g_Unknown6c6d18.scene = 1;
+    }
+    g_Unknown6c6d18.unk_198 = 3;
+    return 0;
 }
 
 int GameManager::RegisterChain()

@@ -38,7 +38,13 @@ public:
     // camera, counts the shown score up to the score, and gives a life
     // at each of g_ExtendScores. Returns 3 while paused, else 1.
     static int OnUpdate(GameManager *mgr);
-    // Loads the scores and sets the game up.
+    // The update element's added callback: for a new game (scene not 3)
+    // resets the play area, the score, the rank and the spell card
+    // chunks and loads "score.dat"; then goes to the next stage, records
+    // its progress in clrds, loads the archives, starts the replay and
+    // adds the game's elements (stage, player, bullets, enemies, effects,
+    // interface) and the stage's music. Returns 0, or -1 after logging
+    // which part failed.
     static int AddedCallback(GameManager *mgr);
     // Stops the music unless unk_1824 is set, removes the game's chain
     // elements and resets the ASCII text. Returns 0.
@@ -104,7 +110,8 @@ public:
     BYTE unk_1825[0x3];
     // Counts a demo's frames: it fades out at 3600 and ends at 3720.
     int demoFrames;
-    DWORD unk_182c[0x80];
+    // The replay file to play (ReplayManager::RegisterChain mode 1).
+    char replayFile[0x200];
     WORD unk_1a2c;
     WORD unk_1a2e;
     int unk_1a30;
@@ -130,6 +137,27 @@ ASSERT_SIZE(GameManager, 0x1a80);
 extern GameManager g_GameManager;
 // The scores giving an extra life, in order (0x4764b0).
 extern unsigned int g_ExtendScores[];
+
+// The rank a game starts at and its bounds, by difficulty.
+struct RankSettings
+{
+    int rank;
+    int minRank;
+    int maxRank;
+};
+// Replays keep the rank they recorded but take these bounds (0x476528).
+extern RankSettings g_ReplayRanks[5];
+extern RankSettings g_Ranks[5];
+
+// Each stage's enemy sprites (EnemyManager::RegisterChain's paths;
+// stage 0 has "dummy" ones) and enemy script ("data/ecldata1.ecl", ...).
+struct EnemyAnmPaths
+{
+    char *anmPath;
+    char *anmPath2;
+};
+extern EnemyAnmPaths g_EnemyAnmPaths[8];
+extern char *g_EclPaths[8];
 
 // The 3D camera the stage backgrounds are seen through (0x69d6fc).
 struct Camera

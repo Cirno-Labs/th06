@@ -1,5 +1,7 @@
 // The file from 0x420330: start-up, the window and the display.
 
+#include <stdio.h>
+
 #include "unsorted.h"
 
 int CreateD3d()
@@ -26,4 +28,21 @@ int CheckSingleInstance()
         return -1;
     }
     return 0;
+}
+
+void Unknown69d998::Flush()
+{
+    FILE *file;
+
+    if (this->cursor != this->buffer)
+    {
+        Func41e4d0(this, "---------------------------------------------------------- \n");
+        if (this->hasError)
+        {
+            MessageBoxA(NULL, this->buffer, "log", MB_ICONERROR);
+        }
+        file = fopen("./log.txt", "wt");
+        fprintf(file, this->buffer);
+        fclose(file);
+    }
 }

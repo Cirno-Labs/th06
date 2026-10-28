@@ -547,8 +547,22 @@ void *Func41e290(char *path, int unk);
 // The size of the file Func41e290 loaded last.
 extern int g_FileSize;
 
-// The object error messages go to, e.g. "error : MIDI File が読み込めない".
-class Unknown69d998;
+// The object error messages go to, e.g. "error : MIDI File が読み込めない":
+// a text buffer written to "./log.txt" at exit.
+class Unknown69d998
+{
+public:
+    // If anything was logged, ends the text with a line of dashes, shows
+    // it in a message box if an error was logged, and writes it to
+    // "./log.txt".
+    void Flush();
+
+    char buffer[0x800];
+    // The end of the text in `buffer`.
+    char *cursor;
+    // Set by Func41e620, the error logger.
+    char hasError;
+};
 extern Unknown69d998 g_Unknown69d998;
 
 // Logs a printf-style message to a log object.

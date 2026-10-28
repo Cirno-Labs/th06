@@ -6,6 +6,7 @@
 
 #include "chain.h"
 #include "common.h"
+#include "resultscreen.h"
 
 // Runs the game in play, the global at 0x69bca0. Its added callback
 // reads "score.dat" and sets up the replay ("replay/th6_00.rpy").
@@ -61,7 +62,11 @@ public:
     // Gui::OnUpdate skips the interface's update while it is set.
     char unk_002c;
     BYTE unk_002d[0x3];
-    DWORD unk_0030[0x5f8];
+    // The score file's spell card, clear and practice chunks
+    // (SaveScoreDat).
+    Catk catks[0x40];
+    Clrd clrds[4];
+    Pscr pscrs[4 * 6 * 4];
     // What FireShot compares the shot tables' levels with.
     WORD power;
     WORD unk_1812;

@@ -4,6 +4,7 @@
 
 #include <string.h>
 
+#include "gamemanager.h"
 #include "resultscreen.h"
 #include "unsorted.h"
 
@@ -80,7 +81,7 @@ done:
     return dat;
 }
 
-DWORD LoadHighScores(void *scoreDat, ListNode *list, int difficulty, int shot)
+DWORD LoadHighScores(void *scoreDat, ListNode *list, int shot, int difficulty)
 {
     Hscr *chunk;
     int left;
@@ -98,8 +99,8 @@ DWORD LoadHighScores(void *scoreDat, ListNode *list, int difficulty, int shot)
     left -= dat1->dataOffset;
     while (left > 0)
     {
-        if (chunk->magic == 0x52435348 && chunk->version == 0x10 && chunk->difficulty == difficulty &&
-            chunk->shot == shot)
+        if (chunk->magic == 0x52435348 && chunk->version == 0x10 && chunk->shot == shot &&
+            chunk->difficulty == difficulty)
         {
             if (list != NULL)
             {
@@ -275,6 +276,130 @@ int LoadPracticeScores(void *scoreDat, Pscr *pscrs)
         chunk = (Pscr *)((BYTE *)chunk + chunk->size);
     }
     return 0;
+}
+
+void SaveScoreDat(ResultScreen *screen)
+{
+    ScoreDat *header;
+    BYTE *p24;
+    BYTE key26;
+    int m;
+    BYTE prev3;
+    int l2;
+    int j;
+    Pscr *pscr0;
+    Catk *catk1;
+    Clrd *clrd26;
+    int s14;
+    ListNode *node;
+    int size0 = 0;
+    BYTE *buf;
+    int n;
+    int i;
+
+    buf = (BYTE *)MemAlloc(0xa0000);
+    memcpy(buf + size0, screen->scoreDat, sizeof(ScoreDat));
+    size0 += sizeof(ScoreDat);
+    screen->th6k.magic = 0x4b364854;
+    screen->th6k.unk_06 = sizeof(Th6k);
+    screen->th6k.size = sizeof(Th6k);
+    screen->th6k.version = 0x10;
+    memcpy(buf + size0, &screen->th6k, sizeof(Th6k));
+    size0 += sizeof(Th6k);
+    for (i = 0; i < 5; i++)
+    {
+        for (s14 = 0; s14 < 4; s14++)
+        {
+            node = screen->scores[i][s14].next;
+            n = 0;
+            while (node != NULL)
+            {
+                if (node->data->magic == 0x52435348)
+                {
+                    node->data->shot = s14;
+                    node->data->difficulty = i;
+                    node->data->unk_06 = 0x1c;
+                    node->data->size = 0x1c;
+                    node->data->version = 0x10;
+                    node->data->unk_09[0] = 0;
+                    memcpy(buf + size0, node->data, 0x1c);
+                    size0 += 0x1c;
+                }
+                node = node->next;
+                n++;
+                if (n >= 10)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    clrd26 = g_GameManager.clrds;
+    for (i = 0; i < 4; i++, clrd26++)
+    {
+        clrd26->magic = 0x44524c43;
+        clrd26->unk_06 = sizeof(Clrd);
+        clrd26->size = sizeof(Clrd);
+        clrd26->version = 0x10;
+        memcpy(buf + size0, clrd26, sizeof(Clrd));
+        size0 += sizeof(Clrd);
+    }
+    catk1 = g_GameManager.catks;
+    for (i = 0; i < 0x40; i++, catk1++)
+    {
+        if (catk1->magic == 0x4b544143)
+        {
+            catk1->index = i;
+            catk1->unk_06 = sizeof(Catk);
+            catk1->size = sizeof(Catk);
+            catk1->version = 0x10;
+            memcpy(buf + size0, catk1, sizeof(Catk));
+            size0 += sizeof(Catk);
+        }
+    }
+    pscr0 = g_GameManager.pscrs;
+    for (i = 0; i < 4; i++)
+    {
+        for (j = 0; j < 6; j++)
+        {
+            for (l2 = 0; l2 < 4; l2++, pscr0++)
+            {
+                if (pscr0->score != 0)
+                {
+                    memcpy(buf + size0, pscr0, sizeof(Pscr));
+                    size0 += sizeof(Pscr);
+                }
+            }
+        }
+    }
+    header = (ScoreDat *)buf;
+    header->dataOffset = sizeof(ScoreDat);
+    header->fileSize = size0;
+    header->checksum = 0;
+    header->unk_01 = g_Rng.GetRandomU16InRange(256);
+    header->unk_06 = g_Rng.GetRandomU16InRange(256);
+    header->unk_04 = 0x10;
+    for (m = 4; m < size0; m++)
+    {
+        header->checksum += buf[m];
+    }
+    key26 = 0;
+    prev3 = 0;
+    p24 = (BYTE *)header + 1;
+    m = size0;
+    m -= 2;
+    key26 = *p24;
+    while (m > 0)
+    {
+        prev3 = p24[1];
+        key26 = ((key26 & 0xe0) >> 5) | ((key26 & 0x1f) << 3);
+        p24[1] ^= key26;
+        key26 += prev3;
+        p24++;
+        m--;
+    }
+    Func41e460("score.dat", buf, size0);
+    free(buf);
 }
 
 void ReleaseScoreDat(ScoreDat *dat)

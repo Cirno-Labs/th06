@@ -16,10 +16,21 @@ struct Hscr
     BYTE version;
     BYTE unk_09[0x3];
     DWORD score;
-    // The difficulty (0 to 4) and shot (0 to 3) of its list.
-    BYTE difficulty;
+    // The shot (0 to 3) and difficulty (0 to 4) of its list.
     BYTE shot;
+    BYTE difficulty;
 };
+
+// The score file's first chunk ("TH6K").
+struct Th6k
+{
+    DWORD magic;
+    WORD size;
+    WORD unk_06;
+    BYTE version;
+    BYTE unk_09[0x3];
+};
+ASSERT_SIZE(Th6k, 0xc);
 
 // A spell card chunk of the score file ("CATK"), one per card.
 struct Catk
@@ -97,10 +108,13 @@ struct ScoreChunk
 struct ScoreDat
 {
     BYTE unk_00;
+    // Where the key starts; random.
     BYTE unk_01;
     // The sum of the decrypted bytes from the fifth on.
     WORD checksum;
-    DWORD unk_04;
+    WORD unk_04;
+    BYTE unk_06;
+    BYTE unk_07;
     // Where the chunks start.
     int dataOffset;
     // The list of the score entries read from the chunks; set up when
@@ -114,10 +128,10 @@ ASSERT_SIZE(ScoreDat, 0x14);
 // it is missing, too short, fails its checksum or has no "TH6K" chunk;
 // sets up its list.
 ScoreDat *LoadScoreDat(char *path);
-// Inserts the score file's high scores for `difficulty` and `shot` into
+// Inserts the score file's high scores for `shot` and `difficulty` into
 // `list`, or, if it is NULL, into the file's own list after emptying it.
 // Returns the best score in the file's list, at least 1000000.
-DWORD LoadHighScores(void *scoreDat, ListNode *list, int difficulty, int shot);
+DWORD LoadHighScores(void *scoreDat, ListNode *list, int shot, int difficulty);
 // Copies the score file's spell card chunks into `catks`, by number,
 // stopping at a number of 0x40 or more. Returns 0, or -1 if `catks` is
 // NULL.
@@ -130,6 +144,10 @@ int LoadClears(void *scoreDat, Clrd *clrds);
 // chunks, then copies the score file's "PSCR" chunks over them, stopping
 // at one out of range. Returns 0, or -1 if `pscrs` is NULL.
 int LoadPracticeScores(void *scoreDat, Pscr *pscrs);
+// Writes "score.dat" from `screen`'s file header, a "TH6K" chunk, its
+// high score lists (ten entries each at most) and g_GameManager's clear,
+// spell card and practice chunks, encrypted.
+void SaveScoreDat(class ResultScreen *screen);
 // Frees `dat` and its list.
 void ReleaseScoreDat(ScoreDat *dat);
 
@@ -144,8 +162,13 @@ public:
     // `shot`.
     void AddScore(Hscr *entry, int difficulty, int shot);
 
-    DWORD unk_0000[0xeac];
+    // The score file, as LoadScoreDat loaded it.
+    ScoreDat *scoreDat;
+    DWORD unk_0004[0xeab];
     ListNode scores[5][4];
-    DWORD unk_3ba0[0x6c4];
+    DWORD unk_3ba0[0x57f];
+    // The "TH6K" chunk SaveScoreDat writes.
+    Th6k th6k;
+    DWORD unk_51a8[0x142];
 };
 ASSERT_SIZE(ResultScreen, 0x56b0);

@@ -524,7 +524,6 @@ int CreateD3d();
 
 // Scene set-up functions Unknown6c6d18::OnUpdate calls. They return
 // nonzero on failure.
-int Func4107b0();
 int Func43a338(int unk);
 
 // Releases ANMs 21 to 27.

@@ -336,3 +336,32 @@ int Ending::Load(char *path)
     }
     return 0;
 }
+
+int Ending::RegisterChain()
+{
+    Ending *ending = new Ending();
+
+    ending->calcChain = g_Chain.CreateElem((ChainCallback)Ending::OnUpdate);
+    ending->calcChain->arg = ending;
+    ending->calcChain->addedCallback = (ChainCallback)Ending::AddedCallback;
+    ending->calcChain->deletedCallback = (ChainCallback)Ending::DeletedCallback;
+    if (g_Chain.AddToCalcChain(ending->calcChain, 3) != 0)
+    {
+        return -1;
+    }
+    ending->drawChain = g_Chain.CreateElem((ChainCallback)Ending::OnDraw);
+    ending->drawChain->arg = ending;
+    g_Chain.AddToDrawChain(ending->drawChain, 1);
+    return 0;
+}
+
+inline Ending::Ending()
+{
+    memset(this, 0, sizeof(Ending));
+    this->lineDelay = 8;
+    this->lineTimer.Set(0);
+    this->timer.Set(0);
+    this->scrollX = 0.0f;
+    this->scrollY = 0.0f;
+    this->scrollSpeed = 0.0f;
+}

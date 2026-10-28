@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include "chain.h"
+#include "ending.h"
 #include "musicscreen.h"
 #include "resultscreen.h"
 #include "timer.h"
@@ -105,7 +106,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
                 break;
             case 10:
                 GameManager::RemoveChain();
-                if (Func4107b0() != 0)
+                if (Ending::RegisterChain() != 0)
                 {
                     return 4;
                 }
@@ -165,7 +166,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
                 break;
             case 10:
                 GameManager::RemoveChain();
-                if (Func4107b0() != 0)
+                if (Ending::RegisterChain() != 0)
                 {
                     return 4;
                 }

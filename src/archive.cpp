@@ -138,3 +138,8 @@ void *DatArchive::ReadEncoded(DWORD *size, DWORD *checksum, DWORD entry)
     *size = dataSize;
     return data;
 }
+
+DatArchive::~DatArchive()
+{
+    this->Release();
+}

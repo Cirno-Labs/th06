@@ -2163,3 +2163,30 @@ void Func40de00(Enemy *enemy, EnemyScriptInstr *instr)
     Func40d930(enemy, instr);
     enemy->ctx.intVars[3] = count;
 }
+
+// g_EnemyScriptFuncs[16]: sets values that follow the enemy's life (0
+// after 7200 frames): with instr's second argument 0, floatVars[3] and
+// intVars2[1]; else a random x in floatVars[2] and y in floatVars[3],
+// in a box that widens as the life falls.
+void Func40e1b0(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int life = enemy->life;
+    float range;
+
+    if (enemy->unk_cf0 >= 7200)
+    {
+        life = 0;
+    }
+    if (instr->args.i[1] == 0)
+    {
+        enemy->ctx.floatVars[3] = 2.0f - life * 1.0f / 6000.0f;
+        enemy->ctx.intVars2[1] = life * 240 / 6000 + 40;
+    }
+    else
+    {
+        range = 320.0f - life * 160.0f / 6000.0f;
+        enemy->ctx.floatVars[2] = 192.0f - range / 2.0f + g_Rng.GetRandomF32InRange(range);
+        range = 128.0f - life * 64.0f / 6000.0f;
+        enemy->ctx.floatVars[3] = 96.0f - range / 2.0f + g_Rng.GetRandomF32InRange(range);
+    }
+}

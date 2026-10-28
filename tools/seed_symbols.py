@@ -17,7 +17,7 @@ Existing rows are never changed.
 import csv, glob, os, re, struct, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GAME_END = 0x43C2F0  # unoptimized game code ends here; D3DX8 and the CRT follow
+GAME_END = 0x43D158  # the game's code ends here (archives last); D3DX8 and the CRT follow
 EXE = "build/th06_102h.exe"
 LIBS = [".wine/drive_c/psdk/Lib", ".wine/drive_c/dx8/lib"]
 

@@ -140,7 +140,7 @@ int MusicScreen::OnDraw(MusicScreen *screen)
     int i;
 
     g_SpriteEngine->ClearTexture();
-    g_SpriteEngine->Func435300(0, 0, 0, 0, 0);
+    g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
     g_SpriteEngine->Draw(&screen->unk_0024[0]);
     for (i = screen->listTop; i < screen->listTop + 10; i++)
     {

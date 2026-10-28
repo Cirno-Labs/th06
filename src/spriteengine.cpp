@@ -978,3 +978,48 @@ void SpriteEngine::ReleaseSurface(int surface)
         this->surfacesBackup[surface] = NULL;
     }
 }
+
+void SpriteEngine::CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y)
+{
+    IDirect3DSurface8 *backBuffer;
+    RECT rect;
+    POINT point;
+
+    if (this->surfacesBackup[surface] == NULL)
+    {
+        return;
+    }
+    if (g_Unknown6c6d18.d3dDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &backBuffer) != D3D_OK)
+    {
+        return;
+    }
+    if (this->surfaces[surface] == NULL)
+    {
+        if (g_Unknown6c6d18.d3dDevice->CreateRenderTarget(
+                this->surfaceInfos[surface].Width, this->surfaceInfos[surface].Height,
+                g_Unknown6c6d18.presentParams.BackBufferFormat, D3DMULTISAMPLE_NONE, TRUE,
+                &this->surfaces[surface]) != D3D_OK &&
+            g_Unknown6c6d18.d3dDevice->CreateImageSurface(this->surfaceInfos[surface].Width,
+                                                         this->surfaceInfos[surface].Height,
+                                                         g_Unknown6c6d18.presentParams.BackBufferFormat,
+                                                         &this->surfaces[surface]) != D3D_OK)
+        {
+            backBuffer->Release();
+            return;
+        }
+        if (D3DXLoadSurfaceFromSurface(this->surfaces[surface], NULL, NULL, this->surfacesBackup[surface], NULL, NULL,
+                                       D3DX_FILTER_NONE, 0) != D3D_OK)
+        {
+            backBuffer->Release();
+            return;
+        }
+    }
+    rect.left = left;
+    rect.top = top;
+    rect.right = this->surfaceInfos[surface].Width;
+    rect.bottom = this->surfaceInfos[surface].Height;
+    point.x = x;
+    point.y = y;
+    g_Unknown6c6d18.d3dDevice->CopyRects(this->surfaces[surface], &rect, 1, backBuffer, &point);
+    backBuffer->Release();
+}

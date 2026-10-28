@@ -242,12 +242,12 @@ int Unknown6c6d18::AddedCallback(Unknown6c6d18 *arg)
     }
     // Shows the logo for two frames.
     g_SpriteEngine->LoadSurface(0, "data/title/th06logo.jpg");
-    g_SpriteEngine->Func435300(0, 0, 0, 0, 0);
+    g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
     if (FAILED(g_Unknown6c6d18.d3dDevice->Present(NULL, NULL, NULL, NULL)))
     {
         g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);
     }
-    g_SpriteEngine->Func435300(0, 0, 0, 0, 0);
+    g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
     if (FAILED(g_Unknown6c6d18.d3dDevice->Present(NULL, NULL, NULL, NULL)))
     {
         g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);

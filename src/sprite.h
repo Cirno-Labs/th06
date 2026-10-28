@@ -306,8 +306,10 @@ public:
     // vertex buffer is disabled, creates the vertex buffer from it and
     // sets it as the stream source.
     void CreateQuad();
-    // Copies a rectangle of one of the loaded surfaces to the back buffer.
-    void Func435300(int surface, int unk1, int unk2, int unk3, int unk4);
+    // Copies one of the loaded surfaces, from (`left`, `top`) to its
+    // bottom right corner, to (`x`, `y`) on the back buffer, recreating
+    // it from its backup first if the device lost it.
+    void CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y);
     // RenderTextToTexture into texture `textureIndex`, with sizes of 0 or
     // less taken as 15.
     void RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight, int unk6,

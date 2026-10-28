@@ -173,7 +173,9 @@ public:
     Timer scaleInterpTimer;
     // The sprite SpriteEngine::SetSprite set; -1 for none.
     short spriteIndex;
-    short unk_0b2;
+    // The sprite the color variants count from: bullets show
+    // baseSpriteIndex + their color, menus a highlighted variant.
+    short baseSpriteIndex;
     // The script SpriteEngine::StartScript started.
     short scriptIndex;
     short unk_0b6;
@@ -200,9 +202,9 @@ public:
     // scriptTime when a script instruction last set the sprite.
     int spriteTime;
     Timer alphaInterpTimer;
-    // Used by RenderText.
-    BYTE unk_10c;
-    BYTE unk_10d;
+    // The font size RenderText and its variants print with, in pixels.
+    BYTE fontWidth;
+    BYTE fontHeight;
     short unk_10e;
 };
 ASSERT_SIZE(Sprite, 0x110);
@@ -302,7 +304,7 @@ public:
 
     // Like RenderText, after clearing the sprite's texture with a space,
     // aligned to the sprite's right edge. A character takes
-    // (unk_10c + 1) / 2 pixels.
+    // (fontWidth + 1) / 2 pixels.
     void RenderTextRightAligned(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...);
     // RenderTextRightAligned, centered on the sprite.
     void RenderTextCentered(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...);
@@ -350,15 +352,15 @@ public:
     // g_TextureFormats[`format`]. Returns 0.
     int CreateTexture(int index, int width, int height, int format);
     // Like StartScript, after zeroing the position and posOffset and
-    // setting unk_10c and unk_10d to 15. Inline, but not expanded: its
+    // setting fontWidth and fontHeight to 15. Inline, but not expanded: its
     // copy is the stage file's.
-    void Func4051b0(Sprite *vm, int script)
+    void StartScriptAtOrigin(Sprite *vm, int script)
     {
         vm->scriptIndex = script;
         vm->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
         vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        vm->unk_10d = 15;
-        vm->unk_10c = 15;
+        vm->fontHeight = 15;
+        vm->fontWidth = 15;
         this->SetScript(vm, this->scripts[script]);
     }
     // Draws `vm` in 3D: its matrix scaled, rotated about x, y and z and

@@ -61,10 +61,10 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">98.30% (463)</tspan> · <tspan class="decompiled">1.49% (7)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">0.21% (1)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">98.51% (464)</tspan> · <tspan class="decompiled">1.27% (6)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">0.21% (1)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="734.31" height="6" x="0" y="0" class="named"/>
-<rect width="11.10" height="6" x="734.31" y="0" class="decompiled"/>
+<rect width="735.90" height="6" x="0" y="0" class="named"/>
+<rect width="9.52" height="6" x="735.90" y="0" class="decompiled"/>
 <rect width="1.59" height="6" x="745.41" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
@@ -103,7 +103,7 @@
 <rect width="12" height="12" x="480" y="0" class="named"><title>0x00404690 Stage::Load (449 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="0" class="named"><title>0x00404860 Stage::StepObjects (257 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="0" class="named"><title>0x00404970 Stage::DrawLayer (2109 bytes)</title></rect>
-<rect width="12" height="12" x="525" y="0" class="decompiled"><title>0x004051b0 SpriteEngine::Func4051b0 (169 bytes)</title></rect>
+<rect width="12" height="12" x="525" y="0" class="named"><title>0x004051b0 SpriteEngine::StartScriptAtOrigin (169 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="0" class="named"><title>0x00405260 UpdateReimuABomb (2468 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="0" class="named"><title>0x00405c10 DrawReimuABomb (1040 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="0" class="named"><title>0x00406020 DimPlayAreaForBomb (311 bytes)</title></rect>
@@ -543,10 +543,10 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">98.53%</tspan> · <tspan class="decompiled">1.34%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">0.13%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">98.60%</tspan> · <tspan class="decompiled">1.27%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">0.13%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="736.01" height="6" x="0" y="0" class="named"/>
-<rect width="10.04" height="6" x="736.01" y="0" class="decompiled"/>
+<rect width="736.54" height="6" x="0" y="0" class="named"/>
+<rect width="9.51" height="6" x="736.54" y="0" class="decompiled"/>
 <rect width="0.95" height="6" x="746.05" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
@@ -821,7 +821,7 @@
 <rect width="5.92" height="6.20" x="670.90" y="56.35" class="named"><title>0x004109c0 Ending::OnUpdate (170 bytes)</title></rect>
 <rect width="5.92" height="6.20" x="679.82" y="56.35" class="named"><title>0x00411190 EnemyManager::EnemyManager (170 bytes)</title></rect>
 <rect width="5.92" height="6.20" x="688.74" y="56.35" class="named"><title>0x00413380 Enemy::Move (170 bytes)</title></rect>
-<rect width="5.86" height="6.20" x="697.65" y="56.35" class="decompiled"><title>0x004051b0 SpriteEngine::Func4051b0 (169 bytes)</title></rect>
+<rect width="5.86" height="6.20" x="697.65" y="56.35" class="named"><title>0x004051b0 SpriteEngine::StartScriptAtOrigin (169 bytes)</title></rect>
 <rect width="5.81" height="6.20" x="706.52" y="56.35" class="named"><title>0x0042fc80 ScreenEffect::OnUpdateFadeOut (168 bytes)</title></rect>
 <rect width="5.76" height="6.20" x="715.33" y="56.35" class="named"><title>0x00403670 D3DXMatrixIdentity (167 bytes)</title></rect>
 <rect width="5.65" height="6.20" x="724.09" y="56.35" class="named"><title>0x0040f3f0 EffectManager::RegisterChain (165 bytes)</title></rect>

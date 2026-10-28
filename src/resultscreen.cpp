@@ -1747,8 +1747,8 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
             g_SpriteEngine->InitSprite(sprite, i + 0x708);
             sprite->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
             sprite->flags.anchor = 3;
-            sprite->unk_10c = 15;
-            sprite->unk_10d = 15;
+            sprite->fontWidth = 15;
+            sprite->fontHeight = 15;
         }
     }
     for (i = 0; i < 5; i++)

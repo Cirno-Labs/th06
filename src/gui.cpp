@@ -391,15 +391,15 @@ int Gui::LoadResources()
     this->impl->bombName.flags.unk0 = 0;
     this->impl->spellPortrait.flags.unk0 = 0;
     this->impl->spellName.flags.unk0 = 0;
-    this->impl->bombName.unk_10c = 15;
-    this->impl->bombName.unk_10d = 15;
-    this->impl->spellName.unk_10c = 15;
-    this->impl->spellName.unk_10d = 15;
+    this->impl->bombName.fontWidth = 15;
+    this->impl->bombName.fontHeight = 15;
+    this->impl->spellName.fontWidth = 15;
+    this->impl->spellName.fontHeight = 15;
     g_SpriteEngine->StartScript(&this->impl->stageName, 0x700);
     g_SpriteEngine->StartScript(&this->impl->songName, 0x701);
     g_SpriteEngine->RenderTextCentered(&this->impl->stageName, 0xe0ffff, 0, g_Stage.data->name);
-    this->impl->songName.unk_10c = 16;
-    this->impl->songName.unk_10d = 16;
+    this->impl->songName.fontWidth = 16;
+    this->impl->songName.fontHeight = 16;
     g_SpriteEngine->RenderTextRightAligned(&this->impl->songName, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[0]);
     this->impl->msg.scriptIndex = -1;
     this->impl->stageClearShown = 0;
@@ -519,8 +519,8 @@ int GuiImpl::RunMsg()
                 g_SpriteEngine->RenderText(&this->msg.text[1], this->msg.textColors[args->who], this->msg.shadowColors[args->who], " ");
             }
             g_SpriteEngine->StartScript(&this->msg.text[args->index], args->index + 0x702);
-            this->msg.text[args->index].unk_10d = this->msg.fontSize;
-            this->msg.text[args->index].unk_10c = this->msg.text[args->index].unk_10d;
+            this->msg.text[args->index].fontHeight = this->msg.fontSize;
+            this->msg.text[args->index].fontWidth = this->msg.text[args->index].fontHeight;
             g_SpriteEngine->RenderText(&this->msg.text[args->index], this->msg.textColors[args->who], this->msg.shadowColors[args->who], args->text);
             this->msg.waitFrames = 0;
             break;
@@ -552,8 +552,8 @@ int GuiImpl::RunMsg()
             break;
         case 7:
             g_SpriteEngine->StartScript(&this->songName, 0x701);
-            this->songName.unk_10c = 16;
-            this->songName.unk_10d = 16;
+            this->songName.fontWidth = 16;
+            this->songName.fontHeight = 16;
             g_SpriteEngine->RenderTextRightAligned(&this->songName, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[this->msg.instr->i]);
             if (g_App.PlayMidi(this->msg.instr->i) != 0)
             {

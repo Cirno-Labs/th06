@@ -149,7 +149,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             {
                 g_SpriteEngine->SetSprite(text3, button3 % 10 + 0x100);
             }
-            text3->unk_0b2 = text3->spriteIndex;
+            text3->baseSpriteIndex = text3->spriteIndex;
             HighlightMenuEntry(text3, i / 2, menu->cursor, menu->selectedColor, menu->unselectedColor, 0x7a);
         }
         if (menu->stateFrames >= 0x20)
@@ -915,7 +915,7 @@ void HighlightMenuEntry(Sprite *vm, int index, int cursor, D3DCOLOR selectedColo
         }
         else
         {
-            g_SpriteEngine->SetSprite(vm, vm->unk_0b2 + spriteOffset);
+            g_SpriteEngine->SetSprite(vm, vm->baseSpriteIndex + spriteOffset);
             vm->color = selectedColor & 0xff000000 | 0xffffff;
         }
         vm->posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
@@ -928,7 +928,7 @@ void HighlightMenuEntry(Sprite *vm, int index, int cursor, D3DCOLOR selectedColo
         }
         else
         {
-            g_SpriteEngine->SetSprite(vm, vm->unk_0b2);
+            g_SpriteEngine->SetSprite(vm, vm->baseSpriteIndex);
             vm->color = color & 0xff000000 | 0xffffff;
         }
         vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -1489,7 +1489,7 @@ void MainMenu::HighlightOption(Sprite *vm, int row, int value, int current)
         }
         else
         {
-            g_SpriteEngine->SetSprite(vm, vm->unk_0b2);
+            g_SpriteEngine->SetSprite(vm, vm->baseSpriteIndex);
         }
         vm->scaleX = 1.0f;
         vm->scaleY = 1.0f;
@@ -1501,13 +1501,13 @@ void MainMenu::HighlightOption(Sprite *vm, int row, int value, int current)
         {
             vm->color = 0x800000ff;
         }
-        else if (vm->unk_0b2 < 0x122)
+        else if (vm->baseSpriteIndex < 0x122)
         {
-            g_SpriteEngine->SetSprite(vm, vm->unk_0b2 + 0x7a);
+            g_SpriteEngine->SetSprite(vm, vm->baseSpriteIndex + 0x7a);
         }
         else
         {
-            g_SpriteEngine->SetSprite(vm, vm->unk_0b2 + 0x73);
+            g_SpriteEngine->SetSprite(vm, vm->baseSpriteIndex + 0x73);
         }
         vm->posOffset = D3DXVECTOR3(-2.0f, -2.0f, 0.0f);
     }
@@ -1888,9 +1888,9 @@ int LoadTitleResources(MainMenu *menu)
     }
     for (i = 0; i < 0x50; i++)
     {
-        g_SpriteEngine->Func4051b0(&menu->sprites[i], i + 0x100);
+        g_SpriteEngine->StartScriptAtOrigin(&menu->sprites[i], i + 0x100);
         menu->sprites[i].flags.unk0 = 0;
-        menu->sprites[i].unk_0b2 = menu->sprites[i].spriteIndex;
+        menu->sprites[i].baseSpriteIndex = menu->sprites[i].spriteIndex;
         menu->sprites[i].flags.zWriteDisabled = 1;
     }
     if (g_SpriteEngine->LoadSurface(0, "data/title/title00.jpg") != 0)
@@ -1951,7 +1951,7 @@ int LoadSelectResources(MainMenu *menu)
     }
     for (vm = &menu->sprites[0x50], i = 0x150; i <= 0x15f; i++, vm++)
     {
-        g_SpriteEngine->Func4051b0(vm, i);
+        g_SpriteEngine->StartScriptAtOrigin(vm, i);
         vm->flags.unk0 = 0;
         vm->flags.colorOp = 1;
         if (!g_App.cfg.flags.unk0)
@@ -1963,7 +1963,7 @@ int LoadSelectResources(MainMenu *menu)
             vm->color = 0xffffffff;
         }
         vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        vm->unk_0b2 = vm->spriteIndex;
+        vm->baseSpriteIndex = vm->spriteIndex;
         vm->flags.zWriteDisabled = 1;
     }
     return 0;
@@ -1988,7 +1988,7 @@ int LoadReplayMenuResources(MainMenu *menu)
     }
     for (vm = &menu->sprites[0x60], i = 0x160; i <= 0x179; i++, vm++)
     {
-        g_SpriteEngine->Func4051b0(vm, i);
+        g_SpriteEngine->StartScriptAtOrigin(vm, i);
         vm->flags.unk0 = 0;
         vm->flags.colorOp = 1;
         if (!g_App.cfg.flags.unk0)
@@ -2000,7 +2000,7 @@ int LoadReplayMenuResources(MainMenu *menu)
             vm->color = 0xffffffff;
         }
         vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        vm->unk_0b2 = vm->spriteIndex;
+        vm->baseSpriteIndex = vm->spriteIndex;
         vm->flags.zWriteDisabled = 1;
     }
     return 0;

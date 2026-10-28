@@ -1436,7 +1436,7 @@ void ScriptFreezeBullets(Enemy *enemy, EnemyScriptInstr *instr)
             continue;
         }
         bullet->color = 0xf;
-        g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.unk_0b2 + bullet->color);
+        g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex + bullet->color);
         switch (choice)
         {
         case 0:
@@ -1579,7 +1579,7 @@ void ScriptFreezeOrSendOff(Enemy *enemy, EnemyScriptInstr *instr)
                     bullet->color != 5 && g_Rng.GetRandomU16() % 4 == 0)
                 {
                     bullet->color = 5;
-                    g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.unk_0b2 + bullet->color);
+                    g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex + bullet->color);
                     dx2 = bullet->pos.x - g_Player.position.x;
                     dy = bullet->pos.y - g_Player.position.y;
                     if ((float)sqrt(dy * dy + dx2 * dx2) > 128.0f)
@@ -1612,7 +1612,7 @@ void ScriptFreezeOrSendOff(Enemy *enemy, EnemyScriptInstr *instr)
                     bullet->color != 5 && g_Rng.GetRandomU16() % 4 == 0)
                 {
                     bullet->color = 5;
-                    g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.unk_0b2 + bullet->color);
+                    g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex + bullet->color);
                     dx2 = bullet->pos.x - g_Player.position.x;
                     dy = bullet->pos.y - g_Player.position.y;
                     if ((float)sqrt(dy * dy + dx2 * dx2) > 128.0f)
@@ -1943,7 +1943,7 @@ void ScriptSwirlStoppedBullets(Enemy *enemy, EnemyScriptInstr *instr)
         {
             bullet2->flags |= 0x10;
             bullet2->color = 2;
-            g_SpriteEngine->SetSprite(&bullet2->sprites.sprite0, bullet2->sprites.sprite0.unk_0b2 + bullet2->color);
+            g_SpriteEngine->SetSprite(&bullet2->sprites.sprite0, bullet2->sprites.sprite0.baseSpriteIndex + bullet2->color);
             bullet2->speed = 0.01f;
             bullet2->timer.Set(0);
             bullet2->exDuration = 120;
@@ -1984,7 +1984,7 @@ void ScriptScatterStoppedBullets(Enemy *enemy, EnemyScriptInstr *instr)
         {
             bullet2->flags |= 0x10;
             bullet2->color = 2;
-            g_SpriteEngine->SetSprite(&bullet2->sprites.sprite0, bullet2->sprites.sprite0.unk_0b2 + bullet2->color);
+            g_SpriteEngine->SetSprite(&bullet2->sprites.sprite0, bullet2->sprites.sprite0.baseSpriteIndex + bullet2->color);
             bullet2->speed = 0.01f;
             bullet2->timer.Set(0);
             bullet2->exDuration = 120;
@@ -2154,7 +2154,7 @@ void ScriptBurstAroundLargeBullets(Enemy *enemy, EnemyScriptInstr *instr)
                         sm2->angle = (theta - bigAngle) * 2.2f + bigAngle;
                         SinCosScale(&sm2->accel, sm2->angle, 0.01f);
                         sm2->color = sm2->color + 1;
-                        g_SpriteEngine->SetSprite(&sm2->sprites.sprite0, sm2->sprites.sprite0.unk_0b2 + sm2->color);
+                        g_SpriteEngine->SetSprite(&sm2->sprites.sprite0, sm2->sprites.sprite0.baseSpriteIndex + sm2->color);
                     }
                 }
             }

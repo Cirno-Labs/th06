@@ -1073,7 +1073,7 @@ int BulletManager::AddedCallback(BulletManager *mgr)
         g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite2, g_BulletTypeScripts[i][2]);
         g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite3, g_BulletTypeScripts[i][3]);
         g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite4, g_BulletTypeScripts[i][4]);
-        mgr->typeSprites[i].sprite0.unk_0b2 = mgr->typeSprites[i].sprite0.spriteIndex;
+        mgr->typeSprites[i].sprite0.baseSpriteIndex = mgr->typeSprites[i].sprite0.spriteIndex;
         mgr->typeSprites[i].height = mgr->typeSprites[i].sprite0.spriteData->height;
         if (mgr->typeSprites[i].sprite0.spriteData->height <= 8.0f)
         {

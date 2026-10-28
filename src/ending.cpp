@@ -170,7 +170,7 @@ int Ending::RunScript()
                 a2 = this->ReadInt();
                 sprite2 = this->ReadInt();
                 spr2 = this->ReadInt();
-                g_SpriteEngine->Func4051b0(&this->sprites[a2], sprite2 + 0x600);
+                g_SpriteEngine->StartScriptAtOrigin(&this->sprites[a2], sprite2 + 0x600);
                 g_SpriteEngine->SetSprite(&this->sprites[a2], spr2 + 0x600);
                 break;
             case 'V':

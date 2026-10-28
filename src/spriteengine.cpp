@@ -1232,13 +1232,13 @@ void SpriteEngine::RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shado
     char buf[64];
     int fontW;
 
-    fontW = sprite->unk_10c;
+    fontW = sprite->fontWidth;
     va_start(args, fmt);
     vsprintf(buf, fmt, args);
     va_end(args);
     this->RenderTextToTextureIndex(sprite->spriteData->sourceFileIndex, sprite->spriteData->startX,
                                    sprite->spriteData->startY, sprite->spriteData->textureWidth,
-                                   sprite->spriteData->textureHeight, fontW, sprite->unk_10d, textColor, shadowColor,
+                                   sprite->spriteData->textureHeight, fontW, sprite->fontHeight, textColor, shadowColor,
                                    buf);
     sprite->flags.unk0 = 1;
 }
@@ -1250,17 +1250,17 @@ void SpriteEngine::RenderTextRightAligned(Sprite *vm, D3DCOLOR color, D3DCOLOR s
     char buf[64];
     int fontW;
 
-    fontW = vm->unk_10c <= 0 ? 15 : vm->unk_10c;
+    fontW = vm->fontWidth <= 0 ? 15 : vm->fontWidth;
     va_start(args, fmt);
     vsprintf(buf, fmt, args);
     va_end(args);
     this->RenderTextToTextureIndex(vm->spriteData->sourceFileIndex, vm->spriteData->startX, vm->spriteData->startY,
-                                   vm->spriteData->textureWidth, vm->spriteData->textureHeight, fontW, vm->unk_10d,
+                                   vm->spriteData->textureWidth, vm->spriteData->textureHeight, fontW, vm->fontHeight,
                                    color, shadowColor, " ");
     xPos = vm->spriteData->startX + vm->spriteData->textureWidth -
            (float)strlen(buf) * (float)(fontW + 1) / 2.0f;
     this->RenderTextToTextureIndex(vm->spriteData->sourceFileIndex, xPos, vm->spriteData->startY,
-                                   vm->spriteData->textureWidth, vm->spriteData->textureHeight, fontW, vm->unk_10d,
+                                   vm->spriteData->textureWidth, vm->spriteData->textureHeight, fontW, vm->fontHeight,
                                    color, shadowColor, buf);
     vm->flags.unk0 = 1;
 }
@@ -1272,17 +1272,17 @@ void SpriteEngine::RenderTextCentered(Sprite *vm, D3DCOLOR color, D3DCOLOR shado
     char buf[64];
     int fontW;
 
-    fontW = vm->unk_10c <= 0 ? 15 : vm->unk_10c;
+    fontW = vm->fontWidth <= 0 ? 15 : vm->fontWidth;
     va_start(args, fmt);
     vsprintf(buf, fmt, args);
     va_end(args);
     this->RenderTextToTextureIndex(vm->spriteData->sourceFileIndex, vm->spriteData->startX, vm->spriteData->startY,
-                                   vm->spriteData->textureWidth, vm->spriteData->textureHeight, fontW, vm->unk_10d,
+                                   vm->spriteData->textureWidth, vm->spriteData->textureHeight, fontW, vm->fontHeight,
                                    color, shadowColor, " ");
     xPos = vm->spriteData->startX + vm->spriteData->textureWidth / 2.0f -
            (float)strlen(buf) * (float)(fontW + 1) / 4.0f;
     this->RenderTextToTextureIndex(vm->spriteData->sourceFileIndex, xPos, vm->spriteData->startY,
-                                   vm->spriteData->textureWidth, vm->spriteData->textureHeight, fontW, vm->unk_10d,
+                                   vm->spriteData->textureWidth, vm->spriteData->textureHeight, fontW, vm->fontHeight,
                                    color, shadowColor, buf);
     vm->flags.unk0 = 1;
 }

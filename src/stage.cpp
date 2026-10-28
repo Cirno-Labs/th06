@@ -345,7 +345,7 @@ int Stage::Load(char *anmPath, char *dataPath)
         quad = ob->quads;
         while (quad->type >= 0)
         {
-            g_SpriteEngine->Func4051b0(&this->sprites[count], quad->script + 0x300);
+            g_SpriteEngine->StartScriptAtOrigin(&this->sprites[count], quad->script + 0x300);
             quad->spriteIndex = count;
             count++;
             quad = (StageQuad *)((char *)quad + quad->size);

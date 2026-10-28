@@ -730,7 +730,7 @@ struct GuiMsg
     // The text colors and their shadows, by speaker.
     D3DCOLOR textColors[4];
     D3DCOLOR shadowColors[4];
-    // The text's height in pixels (unk_10c of the text sprites).
+    // The text's height in pixels (the text sprites' font size).
     int fontSize;
     // Raised by opcode 6, counted down every frame: while it is above 0
     // the enemy timeline's wait for the dialogue (MsgHoldsTimeline) ends.

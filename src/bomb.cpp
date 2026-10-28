@@ -57,7 +57,7 @@ void UpdateReimuABomb(Player *player)
                 player->bombHitCount[i] = 0;
                 for (spr = &player->bomb.sprites[i * 4], k = 0; k < 4; k++, spr++)
                 {
-                    g_SpriteEngine->Func4051b0(spr, k + 0x485);
+                    g_SpriteEngine->StartScriptAtOrigin(spr, k + 0x485);
                 }
                 g_SoundPlayer.QueueSound(0xd, 0);
             }
@@ -226,7 +226,7 @@ void UpdateReimuBBomb(Player *player)
         player->stateTimer.Set(200);
         for (sprite = player->bomb.sprites, i = 0; i < 4; i++, sprite++)
         {
-            g_SpriteEngine->Func4051b0(sprite, i + 0x489);
+            g_SpriteEngine->StartScriptAtOrigin(sprite, i + 0x489);
         }
         g_SoundPlayer.QueueSound(6, 0);
         player->bomb.partPos[0].x = player->position.x;
@@ -312,7 +312,7 @@ void UpdateMarisaABomb(Player *player)
         player->stateTimer.Set(300);
         for (sprite = player->bomb.sprites, i = 0; i < 8; i++, sprite++)
         {
-            g_SpriteEngine->Func4051b0(sprite, i % 3 + 0x405);
+            g_SpriteEngine->StartScriptAtOrigin(sprite, i % 3 + 0x405);
             player->bomb.partPos[i] = player->position;
             theta = (float)i * 6.2831855f / 8.0f;
             player->bomb.partVelocity[i].x = cosf(theta) * 2.0f;
@@ -405,7 +405,7 @@ void UpdateMarisaBBomb(Player *player)
         player->stateTimer.Set(360);
         for (sprite = player->bomb.sprites, i = 0; i < 4; i++, sprite++)
         {
-            g_SpriteEngine->Func4051b0(sprite, i + 0x408);
+            g_SpriteEngine->StartScriptAtOrigin(sprite, i + 0x408);
             player->bomb.partPos[i] = player->position;
         }
         g_SoundPlayer.QueueSound(0x13, 0);

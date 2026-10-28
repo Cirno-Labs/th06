@@ -8,6 +8,39 @@ MainMenu::MainMenu()
 {
 }
 
+int MoveMenuCursor(MainMenu *menu, int count)
+{
+    if (WAS_PRESSED_OR_HELD(0x10))
+    {
+        menu->cursor--;
+        g_Unknown6d3f50.QueueSound(0xc, 0);
+        if (menu->cursor < 0)
+        {
+            menu->cursor = count - 1;
+        }
+        if (menu->cursor >= count)
+        {
+            menu->cursor = 0;
+        }
+        return -1;
+    }
+    if (WAS_PRESSED_OR_HELD(0x20))
+    {
+        menu->cursor++;
+        g_Unknown6d3f50.QueueSound(0xc, 0);
+        if (menu->cursor < 0)
+        {
+            menu->cursor = count - 1;
+        }
+        if (menu->cursor >= count)
+        {
+            menu->cursor = 0;
+        }
+        return 1;
+    }
+    return 0;
+}
+
 int MainMenu::DeletedCallback(MainMenu *menu)
 {
     int i;

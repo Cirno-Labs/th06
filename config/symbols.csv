@@ -421,7 +421,7 @@ address,size,name,symbol
 0x00435670,237,SpriteEngine::CopyBackBufferToTexture,?CopyBackBufferToTexture@SpriteEngine@@QAEXHHHHH@Z
 0x0043575d,66,MainMenu::MainMenu,??0MainMenu@@QAE@XZ
 0x0043579f,7473,Func43579f,
-0x0043753c,310,Func43753c,
+0x0043753c,310,MoveMenuCursor,?MoveMenuCursor@@YAHPAVMainMenu@@H@Z
 0x00437672,305,Func437672,
 0x004377a3,255,Func4377a3,
 0x004378a2,322,Func4378a2,

@@ -21,10 +21,17 @@ public:
     static int DeletedCallback(MainMenu *menu);
 
     Sprite sprites[0x7a];
-    DWORD unk_81a0[0x26];
+    // The selected entry.
+    int cursor;
+    DWORD unk_81a4[0x25];
     ChainElem *calcChain;
     DWORD unk_823c[0x2328];
     void *unk_10edc;
     DWORD unk_10ee0[0x15];
 };
 ASSERT_SIZE(MainMenu, 0x10f34);
+
+// Moves the menu's cursor up or down (wrapping among `count` entries)
+// when up or down is pressed or repeats, with sound 12. Returns -1 for
+// up, 1 for down, else 0.
+int MoveMenuCursor(MainMenu *menu, int count);

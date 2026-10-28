@@ -100,6 +100,21 @@ Everything runs headless, so it works over SSH. `just` lists the recipes.
    SDK import libraries, and carries the original's icon and header
    fields. `just exe STEPS` runs it like `just run`.
 
+### Optional features
+
+The standalone exe can be built with optional features, community
+patches reimplemented in the source behind `#if FEAT_...` blocks. `FEAT`
+lists them, comma-separated:
+
+```sh
+FEAT=frame_cap,english just exe wait:15 shot:title
+```
+
+`tools/build.py` passes `/DFEAT_<NAME>=1` for each one, to the exe build
+only, and keeps their objects in `build/obj_<features>/`. Without `FEAT`
+the exe is the vanilla game. The DLL and `just compare` always build the
+vanilla code.
+
 ### Hooking
 
 The decompiled code runs inside the original game. `tools/patch_exe.py` adds

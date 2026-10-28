@@ -29,11 +29,12 @@ game: build _orig
 run *steps: game
     python3 tools/play.py "$@"
 
-# Link the standalone build/th06.exe (no DLL); with STEPS, run it like `run`
+# Link the standalone build/th06.exe (no DLL; FEAT=a,b adds features); with STEPS, run it like `run`
 [positional-arguments]
 exe *steps: game
     python3 tools/build.py exe
     cp build/th06.exe build/game/th06_standalone.exe
+    if [ -d orig/th06e ]; then cp orig/th06e/th06e_*.DAT build/game/; fi
     if [ $# -gt 0 ]; then python3 tools/play.py --exe th06_standalone.exe "$@"; fi
 
 # Analyze the original with headless Ghidra; add new functions to symbols.csv

@@ -81,3 +81,12 @@ int DatArchive::FindEntry(char *name)
     }
     return -1;
 }
+
+DWORD DatArchive::GetEntrySize(DWORD entry)
+{
+    if (entry >= this->numEntries)
+    {
+        return 0;
+    }
+    return this->entries[entry].size;
+}

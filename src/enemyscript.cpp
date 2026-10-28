@@ -1961,3 +1961,34 @@ void Func40d530(Enemy *enemy, EnemyScriptInstr *instr)
         }
     }
 }
+
+// g_EnemyScriptFuncs[10]: like Func40d530, each bullet accelerating in a
+// random direction of its own.
+void Func40d770(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    float base2;
+    Bullet *bullet2 = g_BulletManager.bullets;
+    BulletShooter shooter;
+    int i;
+
+    base2 = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+    g_EffectManager.SpawnEffect(0xc, &enemy->pos, 1, 0xffffffff);
+    for (i = 0; i < 0x280; i++, bullet2++)
+    {
+        if (bullet2->state == 0 || bullet2->state == 5)
+        {
+            continue;
+        }
+        if (bullet2->sprites.sprite0.spriteData != NULL && bullet2->sprites.sprite0.spriteData->height < 30.0f &&
+            bullet2->speed == 0.0f)
+        {
+            bullet2->flags |= 0x10;
+            bullet2->color = 2;
+            g_SpriteEngine->SetSprite(&bullet2->sprites.sprite0, bullet2->sprites.sprite0.unk_0b2 + bullet2->color);
+            bullet2->speed = 0.01f;
+            bullet2->timer.Set(0);
+            bullet2->unk_5a8 = 120;
+            SinCosScale(&bullet2->accel, g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f, 0.01f);
+        }
+    }
+}

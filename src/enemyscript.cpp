@@ -711,7 +711,7 @@ restart:
             Catk *rec;
             int len;
             int sum;
-            g_Gui.Func417bfd(instr->args.s[0], (char *)&instr->args.i[1]);
+            g_Gui.ShowSpellCardName(instr->args.s[0], (char *)&instr->args.i[1]);
             g_EnemyManager.spellCardCapture = 1;
             g_EnemyManager.spellCardActive = 1;
             g_EnemyManager.spellCardIndex = instr->args.s[1];
@@ -753,7 +753,7 @@ restart:
         case 94:
             if (g_EnemyManager.spellCardActive != 0)
             {
-                g_Gui.Func41732c();
+                g_Gui.EndSpellCardName();
                 if (g_EnemyManager.spellCardActive == 1)
                 {
                     int bonus = g_BulletManager.ClearAllWithBonus(0x3200, 1);
@@ -763,7 +763,7 @@ restart:
                         int k;
                         int tenth = g_EnemyManager.spellCardBonus >= 500000 ? 50000 : g_EnemyManager.spellCardBonus / 10;
                         bonus = g_EnemyManager.spellCardBonus + g_EnemyManager.spellCardBonus * g_Gui.GetBossTimer() / 10;
-                        g_Gui.Func417458(bonus);
+                        g_Gui.ShowSpellCardBonus(bonus);
                         g_GameManager.score += bonus;
                         if (g_GameManager.isInReplay == 0)
                         {
@@ -849,7 +849,7 @@ restart:
             g_Stage.unk_2a8 = 1;
             break;
         case 126:
-            g_Gui.SetUnk14(instr->args.i[0]);
+            g_Gui.SetBossLives(instr->args.i[0]);
             g_GameManager.progressFrames += 1800;
             break;
         case 95:

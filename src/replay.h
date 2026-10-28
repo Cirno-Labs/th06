@@ -94,8 +94,8 @@ public:
     // Returns 1.
     static int PlayOnUpdate(ReplayManager *replay);
     // The second update callback while playing: while
-    // g_GameManager.isPlaying is set, g_Gui.Func4195a2() and
-    // g_Gui.Func417344() hold, returns 6 on two frames of every three;
+    // g_GameManager.isPlaying is set, g_Gui.IsMsgRunning() and
+    // g_Gui.IsMsgSkippable() hold, returns 6 on two frames of every three;
     // otherwise 1.
     static int PlayOnUpdate2(ReplayManager *replay);
     // The draw callback; does nothing. Returns 1.

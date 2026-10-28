@@ -21,7 +21,7 @@ void UpdateReimuABomb(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Gui.Func417314();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         return;
     }
@@ -214,7 +214,7 @@ void UpdateReimuBBomb(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Gui.Func417314();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         return;
     }
@@ -300,7 +300,7 @@ void UpdateMarisaABomb(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Gui.Func417314();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         return;
     }
@@ -391,7 +391,7 @@ void UpdateMarisaBBomb(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Gui.Func417314();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         player->moveScaleY = 1.0f;
         player->moveScaleX = 1.0f;

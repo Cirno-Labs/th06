@@ -264,7 +264,7 @@ int Stage::OnDraw(Stage *stage)
     }
     g_App.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
     g_App.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
-    if (stage->unk_080 <= 1 && !g_Gui.Func4172d3())
+    if (stage->unk_080 <= 1 && !g_Gui.IsLoadingShown())
     {
         stage->DrawLayer(0);
         stage->DrawLayer(1);
@@ -278,7 +278,7 @@ int Stage::OnDraw2(Stage *stage)
     int opacity;
     float area[4];
 
-    if (stage->unk_080 <= 1 && !g_Gui.Func4172d3())
+    if (stage->unk_080 <= 1 && !g_Gui.IsLoadingShown())
     {
         stage->DrawLayer(2);
         stage->DrawLayer(3);

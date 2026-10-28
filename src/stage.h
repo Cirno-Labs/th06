@@ -105,7 +105,7 @@ public:
     // 1.
     static int OnUpdate(Stage *stage);
     // Sets the fog, then draws layers 0 and 1 unless unk_080 is above 1
-    // or g_Gui.Func4172d3() is set. Returns 1.
+    // or g_Gui.IsLoadingShown() is set. Returns 1.
     static int OnDraw(Stage *stage);
     // Draws the objects on `layer` whose bounding box shows on screen,
     // relative to the camera at unk_03c. Returns 0.

@@ -61,10 +61,10 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">91.93% (433)</tspan> · <tspan class="decompiled">7.86% (37)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">0.21% (1)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">93.63% (441)</tspan> · <tspan class="decompiled">6.16% (29)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">0.21% (1)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="686.73" height="6" x="0" y="0" class="named"/>
-<rect width="58.68" height="6" x="686.73" y="0" class="decompiled"/>
+<rect width="699.42" height="6" x="0" y="0" class="named"/>
+<rect width="45.99" height="6" x="699.42" y="0" class="decompiled"/>
 <rect width="1.59" height="6" x="745.41" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
@@ -207,17 +207,17 @@
 <rect width="12" height="12" x="540" y="30" class="named"><title>0x00416d60 BulletManager::AddedCallback (1289 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="30" class="named"><title>0x00417270 BulletManager::DeletedCallback (49 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="30" class="named"><title>0x004172b0 BulletManager::RemoveChain (35 bytes)</title></rect>
-<rect width="12" height="12" x="585" y="30" class="decompiled"><title>0x004172d3 Gui::Func4172d3 (65 bytes)</title></rect>
-<rect width="12" height="12" x="600" y="30" class="decompiled"><title>0x00417314 Gui::Func417314 (24 bytes)</title></rect>
-<rect width="12" height="12" x="615" y="30" class="decompiled"><title>0x0041732c Gui::Func41732c (24 bytes)</title></rect>
-<rect width="12" height="12" x="630" y="30" class="decompiled"><title>0x00417344 Gui::Func417344 (22 bytes)</title></rect>
+<rect width="12" height="12" x="585" y="30" class="named"><title>0x004172d3 Gui::IsLoadingShown (65 bytes)</title></rect>
+<rect width="12" height="12" x="600" y="30" class="named"><title>0x00417314 Gui::EndBombName (24 bytes)</title></rect>
+<rect width="12" height="12" x="615" y="30" class="named"><title>0x0041732c Gui::EndSpellCardName (24 bytes)</title></rect>
+<rect width="12" height="12" x="630" y="30" class="named"><title>0x00417344 Gui::IsMsgSkippable (22 bytes)</title></rect>
 <rect width="12" height="12" x="645" y="30" class="named"><title>0x0041735a Gui::ShowBonusPopup (127 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="30" class="named"><title>0x004173d9 Gui::ShowFullPowerPopup (127 bytes)</title></rect>
-<rect width="12" height="12" x="675" y="30" class="decompiled"><title>0x00417458 Gui::Func417458 (127 bytes)</title></rect>
+<rect width="12" height="12" x="675" y="30" class="named"><title>0x00417458 Gui::ShowSpellCardBonus (127 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="30" class="named"><title>0x004174d7 Gui::OnUpdate (43 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="30" class="named"><title>0x00417502 Gui::OnDraw (1483 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="30" class="named"><title>0x00417acd Gui::ShowBombName (304 bytes)</title></rect>
-<rect width="12" height="12" x="735" y="30" class="decompiled"><title>0x00417bfd Gui::Func417bfd (300 bytes)</title></rect>
+<rect width="12" height="12" x="735" y="30" class="named"><title>0x00417bfd Gui::ShowSpellCardName (300 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="45" class="named"><title>0x00417d29 Gui::LoadResources (2364 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="45" class="named"><title>0x00418665 Gui::LoadMsg (197 bytes)</title></rect>
 <rect width="12" height="12" x="30" y="45" class="named"><title>0x0041872a Gui::FreeMsgFile (62 bytes)</title></rect>
@@ -225,8 +225,8 @@
 <rect width="12" height="12" x="60" y="45" class="named"><title>0x0041878b GuiImpl::StartMsgScript (318 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="45" class="named"><title>0x004188c9 GuiImpl::RunMsg (2027 bytes)</title></rect>
 <rect width="12" height="12" x="90" y="45" class="named"><title>0x004190ec GuiImpl::DrawMsg (1158 bytes)</title></rect>
-<rect width="12" height="12" x="105" y="45" class="decompiled"><title>0x00419572 Gui::Func419572 (48 bytes)</title></rect>
-<rect width="12" height="12" x="120" y="45" class="decompiled"><title>0x004195a2 Gui::Func4195a2 (29 bytes)</title></rect>
+<rect width="12" height="12" x="105" y="45" class="named"><title>0x00419572 Gui::MsgHoldsTimeline (48 bytes)</title></rect>
+<rect width="12" height="12" x="120" y="45" class="named"><title>0x004195a2 Gui::IsMsgRunning (29 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="45" class="named"><title>0x004195bf Gui::UpdateInterface (1754 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="45" class="named"><title>0x00419c99 Gui::DrawHud (4442 bytes)</title></rect>
 <rect width="12" height="12" x="165" y="45" class="named"><title>0x0041adf3 Gui::DrawBanners (945 bytes)</title></rect>
@@ -543,10 +543,10 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">93.35%</tspan> · <tspan class="decompiled">6.52%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">0.13%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">93.62%</tspan> · <tspan class="decompiled">6.25%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">0.13%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="697.34" height="6" x="0" y="0" class="named"/>
-<rect width="48.72" height="6" x="697.34" y="0" class="decompiled"/>
+<rect width="699.34" height="6" x="0" y="0" class="named"/>
+<rect width="46.71" height="6" x="699.34" y="0" class="decompiled"/>
 <rect width="0.95" height="6" x="746.05" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
@@ -735,7 +735,7 @@
 <rect width="9.01" height="9.09" x="620.06" y="12.85" class="named"><title>0x0043a890 CSoundManager::SetPrimaryBufferFormat (301 bytes)</title></rect>
 <rect width="8.97" height="9.09" x="632.06" y="12.85" class="named"><title>0x0040ae80 ScriptMoveTime (300 bytes)</title></rect>
 <rect width="8.97" height="9.09" x="644.03" y="12.85" class="named"><title>0x0040f280 EffectManager::AddedCallback (300 bytes)</title></rect>
-<rect width="8.97" height="9.09" x="655.99" y="12.85" class="decompiled"><title>0x00417bfd Gui::Func417bfd (300 bytes)</title></rect>
+<rect width="8.97" height="9.09" x="655.99" y="12.85" class="named"><title>0x00417bfd Gui::ShowSpellCardName (300 bytes)</title></rect>
 <rect width="8.97" height="9.09" x="667.96" y="12.85" class="named"><title>0x0043a338 SetUpTitleScene (300 bytes)</title></rect>
 <rect width="8.77" height="9.09" x="679.92" y="12.85" class="named"><title>0x00420c10 CreateGameWindow (295 bytes)</title></rect>
 <rect width="8.73" height="9.09" x="691.69" y="12.85" class="named"><title>0x00402740 PauseMenu::DrawPauseMenu (294 bytes)</title></rect>
@@ -863,7 +863,7 @@
 <rect width="4.86" height="4.91" x="711.18" y="73.92" class="named"><title>0x0040f1f0 EffectManager::OnDraw (129 bytes)</title></rect>
 <rect width="4.74" height="4.91" x="719.04" y="73.92" class="named"><title>0x0041735a Gui::ShowBonusPopup (127 bytes)</title></rect>
 <rect width="4.74" height="4.91" x="726.78" y="73.92" class="named"><title>0x004173d9 Gui::ShowFullPowerPopup (127 bytes)</title></rect>
-<rect width="4.74" height="4.91" x="734.52" y="73.92" class="decompiled"><title>0x00417458 Gui::Func417458 (127 bytes)</title></rect>
+<rect width="4.74" height="4.91" x="734.52" y="73.92" class="named"><title>0x00417458 Gui::ShowSpellCardBonus (127 bytes)</title></rect>
 <rect width="4.74" height="4.91" x="742.26" y="73.92" class="named"><title>0x0041d580 SetButtonFromDirectInput (127 bytes)</title></rect>
 <rect width="5" height="4.65" x="679.30" y="81.83" class="named"><title>0x0041e850 AddNormalizeAngle (127 bytes)</title></rect>
 <rect width="4.94" height="4.65" x="687.30" y="81.83" class="named"><title>0x00421950 Log::Flush (126 bytes)</title></rect>
@@ -941,7 +941,7 @@
 <rect width="2.48" height="2.89" x="718" y="109.90" class="named"><title>0x00421be0 MidiDevice::SendShortMsg (67 bytes)</title></rect>
 <rect width="2.40" height="2.89" x="723.48" y="109.90" class="named"><title>0x00431d70 SpriteEngine::CreateTexture (66 bytes)</title></rect>
 <rect width="2.40" height="2.89" x="728.89" y="109.90" class="named"><title>0x0043575d MainMenu::MainMenu (66 bytes)</title></rect>
-<rect width="2.32" height="2.89" x="734.29" y="109.90" class="decompiled"><title>0x004172d3 Gui::Func4172d3 (65 bytes)</title></rect>
+<rect width="2.32" height="2.89" x="734.29" y="109.90" class="named"><title>0x004172d3 Gui::IsLoadingShown (65 bytes)</title></rect>
 <rect width="2.24" height="2.89" x="739.61" y="109.90" class="named"><title>0x0040b380 ResolveFloatOperand (64 bytes)</title></rect>
 <rect width="2.16" height="2.89" x="744.84" y="109.90" class="named"><title>0x00423da0 EnumJoysticksCallback (63 bytes)</title></rect>
 <rect width="2.46" height="2.48" x="712.44" y="115.79" class="named"><title>0x0041872a Gui::FreeMsgFile (62 bytes)</title></rect>
@@ -960,7 +960,7 @@
 <rect width="1.71" height="2.12" x="717.89" y="120.67" class="named"><title>0x00407400 EnemyScripts::Release (50 bytes)</title></rect>
 <rect width="1.71" height="2.12" x="722.60" y="120.67" class="named"><title>0x0041b5af Timer::NextTick (50 bytes)</title></rect>
 <rect width="1.61" height="2.12" x="727.31" y="120.67" class="named"><title>0x00417270 BulletManager::DeletedCallback (49 bytes)</title></rect>
-<rect width="1.52" height="2.12" x="731.92" y="120.67" class="decompiled"><title>0x00419572 Gui::Func419572 (48 bytes)</title></rect>
+<rect width="1.52" height="2.12" x="731.92" y="120.67" class="named"><title>0x00419572 Gui::MsgHoldsTimeline (48 bytes)</title></rect>
 <rect width="1.52" height="2.12" x="736.44" y="120.67" class="named"><title>0x0041e260 TextFont::Release (48 bytes)</title></rect>
 <rect width="1.52" height="2.12" x="740.96" y="120.67" class="named"><title>0x0041e7f0 Rng::GetRandomU32 (48 bytes)</title></rect>
 <rect width="1.52" height="2.12" x="745.48" y="120.67" class="named"><title>0x00421c30 MmTimer::MmTimer (48 bytes)</title></rect>
@@ -1000,16 +1000,16 @@
 <rect width="0.82" height="1.04" x="742.60" y="135.07" class="named"><title>0x0041ba4a GameManager::OnDraw (32 bytes)</title></rect>
 <rect width="0.58" height="1.04" x="746.42" y="135.07" class="named"><title>0x00424127 Timer::Initialize (30 bytes)</title></rect>
 <rect width="0.92" height="0.69" x="734.72" y="139.11" class="named"><title>0x00424e8f MusicScreen::UpdateIntro (30 bytes)</title></rect>
-<rect width="0.92" height="0.56" x="734.72" y="142.80" class="decompiled"><title>0x004195a2 Gui::Func4195a2 (29 bytes)</title></rect>
+<rect width="0.92" height="0.56" x="734.72" y="142.80" class="named"><title>0x004195a2 Gui::IsMsgRunning (29 bytes)</title></rect>
 <rect width="0.92" height="0.44" x="734.72" y="146.36" class="named"><title>0x0043b4b0 CStreamingSound::~CStreamingSound (28 bytes)</title></rect>
 <rect width="0.92" height="0.20" x="734.72" y="149.80" class="named"><title>0x00421d50 MmTimer::DefaultCallback (26 bytes)</title></rect>
 <rect width="0.84" height="0.14" x="738.65" y="139.11" class="named"><title>0x0040e340 EffectManager::Reset (25 bytes)</title></rect>
 <rect width="0.84" height="0.14" x="742.48" y="139.11" class="named"><title>0x00413430 BulletManager::Reset (25 bytes)</title></rect>
-<rect width="0.68" height="0.14" x="746.32" y="139.11" class="decompiled"><title>0x00417314 Gui::Func417314 (24 bytes)</title></rect>
-<rect width="0.19" height="0.63" x="738.65" y="142.25" class="decompiled"><title>0x0041732c Gui::Func41732c (24 bytes)</title></rect>
+<rect width="0.68" height="0.14" x="746.32" y="139.11" class="named"><title>0x00417314 Gui::EndBombName (24 bytes)</title></rect>
+<rect width="0.19" height="0.63" x="738.65" y="142.25" class="named"><title>0x0041732c Gui::EndSpellCardName (24 bytes)</title></rect>
 <rect width="0.19" height="0.63" x="738.65" y="145.89" class="named"><title>0x00421d70 SwapBytes16 (24 bytes)</title></rect>
 <rect width="0.19" height="0.48" x="738.65" y="149.52" class="named"><title>0x0043a7b0 CSoundManager::CSoundManager (23 bytes)</title></rect>
-<rect width="0.10" height="0.84" x="741.83" y="142.25" class="decompiled"><title>0x00417344 Gui::Func417344 (22 bytes)</title></rect>
+<rect width="0.10" height="0.84" x="741.83" y="142.25" class="named"><title>0x00417344 Gui::IsMsgSkippable (22 bytes)</title></rect>
 <rect width="0.10" height="0.84" x="744.60" y="142.25" class="named"><title>0x00429b90 Player::OnDraw2 (22 bytes)</title></rect>
 <rect width="0.10" height="0.84" x="747.36" y="142.25" class="named"><title>0x00414340 BulletManager::ClearAllToItems (21 bytes)</title></rect>
 <rect width="0.10" height="0.54" x="741.83" y="146.09" class="named"><title>0x0040f3d0 EffectManager::DeletedCallback (20 bytes)</title></rect>

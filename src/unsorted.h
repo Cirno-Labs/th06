@@ -732,8 +732,9 @@ struct GuiMsg
     D3DCOLOR shadowColors[4];
     // The text's height in pixels (unk_10c of the text sprites).
     int fontSize;
-    // Raised by opcode 6, counted down every frame.
-    DWORD unk_6a0;
+    // Raised by opcode 6, counted down every frame: while it is above 0
+    // the enemy timeline's wait for the dialogue (MsgHoldsTimeline) ends.
+    DWORD timelineRelease;
     // Lets the skip button (0x100) fast-forward the script; set by
     // opcode 13.
     BYTE skippable;
@@ -767,30 +768,36 @@ struct GuiImpl
     // script runs.
     int DrawMsg();
 
-    Sprite unk_0000[0x1a];
-    // The boss's bar (unk_0000[0x13]): 0 hidden, 1 appearing (script
+    // The interface's sprites (scripts from 0x600 on).
+    Sprite sprites[0x1a];
+    // The boss's bar (sprites[0x13]): 0 hidden, 1 appearing (script
     // 0x613), 2 shown, 3 leaving (script 0x614).
     BYTE bossBarState;
     BYTE unk_1ba1[0x3];
-    Sprite unk_1ba4;
-    Sprite unk_1cb4;
-    Sprite unk_1dc4;
-    // Func417bfd shows a sprite and a line of text on these two.
-    Sprite unk_1ed4;
-    Sprite unk_1fe4;
-    Sprite unk_20f4;
-    Sprite unk_2204;
-    Sprite unk_2314;
-    Sprite unk_2424;
+    // The stage's name and the song's (script 0x700 and 0x701).
+    Sprite stageName;
+    Sprite songName;
+    // ShowBombName's portrait; ShowSpellCardName's.
+    Sprite bombPortrait;
+    Sprite spellPortrait;
+    // The bomb's and the spell card's names, and the bars behind them.
+    Sprite bombName;
+    Sprite spellName;
+    Sprite bombNameBar;
+    Sprite spellNameBar;
+    // The loading screen ("data/loading.anm", script 0x619), between
+    // stages; spriteIndex is -1 when it is not shown.
+    Sprite loading;
     GuiMsg msg;
     // Set by the dialogue's opcode 9: OnDraw then shows the stage clear
     // bonus, stageClearTotal.
     DWORD stageClearShown;
     DWORD stageClearTotal;
-    // The bonus for bullets cleared, the full power message and one more.
+    // The bonus for bullets cleared, the full power message and the spell
+    // card's bonus.
     GuiPopup bonusPopup;
     GuiPopup fullPowerPopup;
-    GuiPopup unk_2c24;
+    GuiPopup spellBonusPopup;
 };
 ASSERT_SIZE(GuiImpl, 0x2c44);
 
@@ -828,10 +835,11 @@ public:
     // popups, with the depth test off. Returns 1.
     static int OnDraw(Gui *gui);
     // Draws the stage's title ("STAGE %d", "FINAL STAGE", "EXTRA STAGE",
-    // or " DEMO PLAY"), the song's name, the sprites Func417bfd and
-    // ShowBombName show with their bars, and unk_2424 in the play area.
+    // or " DEMO PLAY"), the song's name, the sprites ShowSpellCardName
+    // and ShowBombName show with their bars, and `loading` in the play
+    // area.
     void DrawBanners();
-    // Draws the interface: the boss's bar, spell cards left and timer
+    // Draws the interface: the boss's bar, bossLives and timer
     // (ticking under 10 seconds), the frame around the play area when
     // it changed, and the score, the high score, lives, bombs, power
     // (a bar), graze and point items, each while its flag counts down.
@@ -852,31 +860,34 @@ public:
     // Runs impl->StartMsgScript(`index`) and sets
     // g_App.redrawFrames to 3.
     void StartMsg(int index);
-    // Whether impl->unk_2424 shows a sprite and has flag 13.
-    BOOL Func4172d3();
+    // Whether impl->loading shows a sprite and has stopped (flag 13): the
+    // loading screen is fully up, and the stage is not drawn.
+    BOOL IsLoadingShown();
     // Shows the player's bomb, spell card `name`, with sprite `sprite`
     // (scripts 0x4a1 and 0x706), sets g_App.redrawFrames to 3 and
     // plays sound 14.
     void ShowBombName(int sprite, char *name);
-    // Shows sprite `sprite` + 0x4a8 with `text` (scripts 0x4a3 and 0x707)
-    // and plays sound 14.
-    void Func417bfd(int sprite, char *text);
-    // Sets impl->unk_1fe4.pendingInterrupt.
-    void Func417314();
+    // Shows a boss's spell card, `text`, with sprite `sprite` + 0x4a8
+    // (scripts 0x4a3 and 0x707), from enemy scripts, and plays sound 14.
+    void ShowSpellCardName(int sprite, char *text);
+    // Sets impl->bombName.pendingInterrupt, as the bomb ends.
+    void EndBombName();
     // Shows fullPowerPopup, when the power reaches its maximum.
     void ShowFullPowerPopup(int unk);
-    // Shows `value` in unk_2c24, from enemy scripts.
-    void Func417458(int value);
+    // Shows `value` in spellBonusPopup, the bonus of a spell card
+    // captured, from enemy scripts.
+    void ShowSpellCardBonus(int value);
     // Shows `bonus` in bonusPopup, the bonus for bullets cleared.
     void ShowBonusPopup(int bonus);
-    // Sets impl->unk_20f4.pendingInterrupt.
-    void Func41732c();
+    // Sets impl->spellName.pendingInterrupt, as the spell card ends.
+    void EndSpellCardName();
     // Returns impl->msg.skippable.
-    BOOL Func417344();
-    // Whether impl->msg.unk_6a0 is 0 and a dialogue script runs.
-    BOOL Func419572();
+    BOOL IsMsgSkippable();
+    // Whether a dialogue script runs and impl->msg.timelineRelease is 0:
+    // the enemy timeline waits for the dialogue then.
+    BOOL MsgHoldsTimeline();
     // Whether a dialogue script runs.
-    BOOL Func4195a2();
+    BOOL IsMsgRunning();
     // Loads the message file at `path` into impl->msgFile, turning its
     // offsets into pointers. Returns 0, or -1 after logging
     // "メッセージファイル %s が読み込めませんでした".
@@ -896,9 +907,9 @@ public:
     {
         return this->bossTimer;
     }
-    void SetUnk14(int value)
+    void SetBossLives(int value)
     {
-        this->unk_14 = value;
+        this->bossLives = value;
     }
     void SetBossHealth(float health)
     {
@@ -911,17 +922,20 @@ public:
 
     GuiFlags flags;
     GuiImpl *impl;
-    // The width of the text ShowBombName shows, as unk_0c for Func417bfd.
-    float unk_08;
-    // Set by Func417bfd from the length of its text.
-    float unk_0c;
+    // The widths of the texts ShowBombName and ShowSpellCardName show,
+    // from their lengths; DrawBanners fits the bars to them.
+    float bombNameWidth;
+    float spellNameWidth;
     // The boss bar's alpha, raised by 4 a frame up to 0xff while a boss
     // fight runs.
     DWORD bossBarAlpha;
-    int unk_14;
+    // The number shown at the boss bar's left, set by enemy scripts (the
+    // boss's remaining bars, as far as can be told).
+    int bossLives;
     // The seconds left of the boss's timer.
     int bossTimer;
-    DWORD unk_1c;
+    // bossTimer when DrawHud last ran: it ticks when the timer changes.
+    DWORD lastBossTimer;
     // Set while a boss fight runs.
     BYTE bossPresent;
     BYTE unk_21[0x3];

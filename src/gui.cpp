@@ -9,22 +9,22 @@
 #include "stage.h"
 #include "unsorted.h"
 
-BOOL Gui::Func4172d3()
+BOOL Gui::IsLoadingShown()
 {
-    return this->impl->unk_2424.spriteIndex >= 0 && this->impl->unk_2424.flags.stopped;
+    return this->impl->loading.spriteIndex >= 0 && this->impl->loading.flags.stopped;
 }
 
-void Gui::Func417314()
+void Gui::EndBombName()
 {
-    this->impl->unk_1fe4.pendingInterrupt = 1;
+    this->impl->bombName.pendingInterrupt = 1;
 }
 
-void Gui::Func41732c()
+void Gui::EndSpellCardName()
 {
-    this->impl->unk_20f4.pendingInterrupt = 1;
+    this->impl->spellName.pendingInterrupt = 1;
 }
 
-BOOL Gui::Func417344()
+BOOL Gui::IsMsgSkippable()
 {
     return this->impl->msg.skippable;
 }
@@ -45,12 +45,12 @@ void Gui::ShowFullPowerPopup(int unk)
     this->impl->fullPowerPopup.value = unk;
 }
 
-void Gui::Func417458(int value)
+void Gui::ShowSpellCardBonus(int value)
 {
-    this->impl->unk_2c24.pos = D3DXVECTOR3(224.0f, 16.0f, 0.0f);
-    this->impl->unk_2c24.shown = 1;
-    this->impl->unk_2c24.timer.Set(0);
-    this->impl->unk_2c24.value = value;
+    this->impl->spellBonusPopup.pos = D3DXVECTOR3(224.0f, 16.0f, 0.0f);
+    this->impl->spellBonusPopup.shown = 1;
+    this->impl->spellBonusPopup.timer.Set(0);
+    this->impl->spellBonusPopup.value = value;
 }
 
 int Gui::OnUpdate(Gui *gui)
@@ -165,19 +165,19 @@ int Gui::OnDraw(Gui *gui)
         g_AsciiText.AddFormat(&gui->impl->fullPowerPopup.pos, "Full Power Mode!!", gui->impl->fullPowerPopup.value);
         g_AsciiText.color = 0xffffffff;
     }
-    if (gui->impl->unk_2c24.shown)
+    if (gui->impl->spellBonusPopup.shown)
     {
         g_AsciiText.color = 0xffff0000;
-        gui->impl->unk_2c24.pos.x = (384.0f - strlen("Spell Card Bonus!") * 16.0f) / 2.0f + 32.0f;
-        gui->impl->unk_2c24.pos.y = 80.0f;
-        g_AsciiText.AddFormat(&gui->impl->unk_2c24.pos, "Spell Card Bonus!");
-        gui->impl->unk_2c24.pos.y += 16.0f;
-        sprintf(buf, "+%d", gui->impl->unk_2c24.value);
-        gui->impl->unk_2c24.pos.x = (384.0f - strlen(buf) * 32.0f) / 2.0f + 32.0f;
+        gui->impl->spellBonusPopup.pos.x = (384.0f - strlen("Spell Card Bonus!") * 16.0f) / 2.0f + 32.0f;
+        gui->impl->spellBonusPopup.pos.y = 80.0f;
+        g_AsciiText.AddFormat(&gui->impl->spellBonusPopup.pos, "Spell Card Bonus!");
+        gui->impl->spellBonusPopup.pos.y += 16.0f;
+        sprintf(buf, "+%d", gui->impl->spellBonusPopup.value);
+        gui->impl->spellBonusPopup.pos.x = (384.0f - strlen(buf) * 32.0f) / 2.0f + 32.0f;
         g_AsciiText.scaleX = 2.0f;
         g_AsciiText.scaleY = 2.0f;
         g_AsciiText.color = 0xffff8080;
-        g_AsciiText.AddString(&gui->impl->unk_2c24.pos, buf);
+        g_AsciiText.AddString(&gui->impl->spellBonusPopup.pos, buf);
         g_AsciiText.scaleX = 1.0f;
         g_AsciiText.scaleY = 1.0f;
         g_AsciiText.color = 0xffffffff;
@@ -189,22 +189,22 @@ int Gui::OnDraw(Gui *gui)
 
 void Gui::ShowBombName(int sprite, char *name)
 {
-    g_SpriteEngine->StartScript(&this->impl->unk_1dc4, 0x4a1);
-    g_SpriteEngine->SetSprite(&this->impl->unk_1dc4, sprite);
-    g_SpriteEngine->StartScript(&this->impl->unk_1fe4, 0x706);
-    g_SpriteEngine->RenderText(&this->impl->unk_1fe4, 0xf0f0ff, 0, name);
-    this->unk_08 = strlen(name) * 15 / 2.0f + 16.0f;
+    g_SpriteEngine->StartScript(&this->impl->bombPortrait, 0x4a1);
+    g_SpriteEngine->SetSprite(&this->impl->bombPortrait, sprite);
+    g_SpriteEngine->StartScript(&this->impl->bombName, 0x706);
+    g_SpriteEngine->RenderText(&this->impl->bombName, 0xf0f0ff, 0, name);
+    this->bombNameWidth = strlen(name) * 15 / 2.0f + 16.0f;
     g_App.redrawFrames = 3;
     g_SoundPlayer.QueueSound(14, 0);
 }
 
-void Gui::Func417bfd(int sprite, char *text)
+void Gui::ShowSpellCardName(int sprite, char *text)
 {
-    g_SpriteEngine->StartScript(&this->impl->unk_1ed4, 0x4a3);
-    g_SpriteEngine->SetSprite(&this->impl->unk_1ed4, sprite + 0x4a8);
-    g_SpriteEngine->StartScript(&this->impl->unk_20f4, 0x707);
-    g_SpriteEngine->RenderTextRightAligned(&this->impl->unk_20f4, 0xfff0f0, 0, text);
-    this->unk_0c = strlen(text) * 15 / 2.0f + 16.0f;
+    g_SpriteEngine->StartScript(&this->impl->spellPortrait, 0x4a3);
+    g_SpriteEngine->SetSprite(&this->impl->spellPortrait, sprite + 0x4a8);
+    g_SpriteEngine->StartScript(&this->impl->spellName, 0x707);
+    g_SpriteEngine->RenderTextRightAligned(&this->impl->spellName, 0xfff0f0, 0, text);
+    this->spellNameWidth = strlen(text) * 15 / 2.0f + 16.0f;
     g_SoundPlayer.QueueSound(14, 0);
 }
 
@@ -223,7 +223,7 @@ int Gui::LoadResources()
         {
             return -1;
         }
-        this->impl->unk_2424.spriteIndex = -1;
+        this->impl->loading.spriteIndex = -1;
         switch (g_GameManager.character)
         {
         case 0:
@@ -258,8 +258,8 @@ int Gui::LoadResources()
     }
     else
     {
-        g_SpriteEngine->StartScript(&this->impl->unk_2424, 0x619);
-        this->impl->unk_2424.pendingInterrupt = 1;
+        g_SpriteEngine->StartScript(&this->impl->loading, 0x619);
+        this->impl->loading.pendingInterrupt = 1;
     }
     switch (g_GameManager.stage)
     {
@@ -370,42 +370,42 @@ int Gui::LoadResources()
     {
         for (i = 0; i < 0x1a; i++)
         {
-            g_SpriteEngine->StartScript(&this->impl->unk_0000[i], i + 0x600);
+            g_SpriteEngine->StartScript(&this->impl->sprites[i], i + 0x600);
         }
     }
     this->bossPresent = 0;
     this->impl->bossBarState = 0;
     this->bossHealth = 0.0f;
     this->bossHealthShown = 0.0f;
-    g_SpriteEngine->StartScript(&this->impl->unk_1dc4, 0x4a1);
-    g_SpriteEngine->StartScript(&this->impl->unk_1ed4, 0x4a3);
-    g_SpriteEngine->StartScript(&this->impl->unk_1fe4, 0x706);
-    g_SpriteEngine->StartScript(&this->impl->unk_20f4, 0x707);
-    g_SpriteEngine->StartScript(&this->impl->unk_2204, 0x617);
-    g_SpriteEngine->StartScript(&this->impl->unk_2314, 0x618);
-    this->impl->unk_1dc4.scriptPos = NULL;
-    this->impl->unk_1fe4.scriptPos = NULL;
-    this->impl->unk_1ed4.scriptPos = NULL;
-    this->impl->unk_20f4.scriptPos = NULL;
-    this->impl->unk_1dc4.flags.unk0 = 0;
-    this->impl->unk_1fe4.flags.unk0 = 0;
-    this->impl->unk_1ed4.flags.unk0 = 0;
-    this->impl->unk_20f4.flags.unk0 = 0;
-    this->impl->unk_1fe4.unk_10c = 15;
-    this->impl->unk_1fe4.unk_10d = 15;
-    this->impl->unk_20f4.unk_10c = 15;
-    this->impl->unk_20f4.unk_10d = 15;
-    g_SpriteEngine->StartScript(&this->impl->unk_1ba4, 0x700);
-    g_SpriteEngine->StartScript(&this->impl->unk_1cb4, 0x701);
-    g_SpriteEngine->RenderTextCentered(&this->impl->unk_1ba4, 0xe0ffff, 0, g_Stage.data->name);
-    this->impl->unk_1cb4.unk_10c = 16;
-    this->impl->unk_1cb4.unk_10d = 16;
-    g_SpriteEngine->RenderTextRightAligned(&this->impl->unk_1cb4, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[0]);
+    g_SpriteEngine->StartScript(&this->impl->bombPortrait, 0x4a1);
+    g_SpriteEngine->StartScript(&this->impl->spellPortrait, 0x4a3);
+    g_SpriteEngine->StartScript(&this->impl->bombName, 0x706);
+    g_SpriteEngine->StartScript(&this->impl->spellName, 0x707);
+    g_SpriteEngine->StartScript(&this->impl->bombNameBar, 0x617);
+    g_SpriteEngine->StartScript(&this->impl->spellNameBar, 0x618);
+    this->impl->bombPortrait.scriptPos = NULL;
+    this->impl->bombName.scriptPos = NULL;
+    this->impl->spellPortrait.scriptPos = NULL;
+    this->impl->spellName.scriptPos = NULL;
+    this->impl->bombPortrait.flags.unk0 = 0;
+    this->impl->bombName.flags.unk0 = 0;
+    this->impl->spellPortrait.flags.unk0 = 0;
+    this->impl->spellName.flags.unk0 = 0;
+    this->impl->bombName.unk_10c = 15;
+    this->impl->bombName.unk_10d = 15;
+    this->impl->spellName.unk_10c = 15;
+    this->impl->spellName.unk_10d = 15;
+    g_SpriteEngine->StartScript(&this->impl->stageName, 0x700);
+    g_SpriteEngine->StartScript(&this->impl->songName, 0x701);
+    g_SpriteEngine->RenderTextCentered(&this->impl->stageName, 0xe0ffff, 0, g_Stage.data->name);
+    this->impl->songName.unk_10c = 16;
+    this->impl->songName.unk_10d = 16;
+    g_SpriteEngine->RenderTextRightAligned(&this->impl->songName, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[0]);
     this->impl->msg.scriptIndex = -1;
     this->impl->stageClearShown = 0;
     this->impl->bonusPopup.shown = 0;
     this->impl->fullPowerPopup.shown = 0;
-    this->impl->unk_2c24.shown = 0;
+    this->impl->spellBonusPopup.shown = 0;
     this->flags.livesChanged = 2;
     this->flags.bombsChanged = 2;
     this->flags.grazeChanged = 2;
@@ -489,9 +489,9 @@ int GuiImpl::RunMsg()
     {
         return -1;
     }
-    if (this->msg.unk_6a0 > 0)
+    if (this->msg.timelineRelease > 0)
     {
-        this->msg.unk_6a0--;
+        this->msg.timelineRelease--;
     }
     if (this->msg.skippable && (g_Buttons & 0x100))
     {
@@ -548,13 +548,13 @@ int GuiImpl::RunMsg()
             }
             break;
         case 6:
-            this->msg.unk_6a0++;
+            this->msg.timelineRelease++;
             break;
         case 7:
-            g_SpriteEngine->StartScript(&this->unk_1cb4, 0x701);
-            this->unk_1cb4.unk_10c = 16;
-            this->unk_1cb4.unk_10d = 16;
-            g_SpriteEngine->RenderTextRightAligned(&this->unk_1cb4, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[this->msg.instr->i]);
+            g_SpriteEngine->StartScript(&this->songName, 0x701);
+            this->songName.unk_10c = 16;
+            this->songName.unk_10d = 16;
+            g_SpriteEngine->RenderTextRightAligned(&this->songName, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[this->msg.instr->i]);
             if (g_App.PlayMidi(this->msg.instr->i) != 0)
             {
                 g_App.PlayMusic(g_Stage.data->songPaths[this->msg.instr->i]);
@@ -570,7 +570,7 @@ int GuiImpl::RunMsg()
             this->stageClearShown = 1;
             if (g_GameManager.stage < 6)
             {
-                g_SpriteEngine->StartScript(&this->unk_2424, 0x619);
+                g_SpriteEngine->StartScript(&this->loading, 0x619);
             }
             else
             {
@@ -692,16 +692,16 @@ int GuiImpl::DrawMsg()
     return 0;
 }
 
-BOOL Gui::Func419572()
+BOOL Gui::MsgHoldsTimeline()
 {
-    if (this->impl->msg.unk_6a0 > 0)
+    if (this->impl->msg.timelineRelease > 0)
     {
         return FALSE;
     }
     return this->impl->msg.scriptIndex >= 0;
 }
 
-BOOL Gui::Func4195a2()
+BOOL Gui::IsMsgRunning()
 {
     return this->impl->msg.scriptIndex >= 0;
 }
@@ -719,13 +719,13 @@ void Gui::UpdateInterface()
             {
                 if (this->impl->bossBarState == 0)
                 {
-                    g_SpriteEngine->StartScript(&this->impl->unk_0000[i], 0x613);
+                    g_SpriteEngine->StartScript(&this->impl->sprites[i], 0x613);
                     this->impl->bossBarState = 1;
                     this->bossBarAlpha = 0;
                 }
                 else
                 {
-                    if (g_SpriteEngine->Step(&this->impl->unk_0000[i]) != 0)
+                    if (g_SpriteEngine->Step(&this->impl->sprites[i]) != 0)
                     {
                         this->impl->bossBarState = 2;
                     }
@@ -743,7 +743,7 @@ void Gui::UpdateInterface()
             {
                 if (this->impl->bossBarState <= 2)
                 {
-                    g_SpriteEngine->StartScript(&this->impl->unk_0000[i], 0x614);
+                    g_SpriteEngine->StartScript(&this->impl->sprites[i], 0x614);
                     this->impl->bossBarState = 3;
                 }
                 if (this->bossBarAlpha > 0)
@@ -754,7 +754,7 @@ void Gui::UpdateInterface()
                 {
                     this->bossBarAlpha = 0;
                 }
-                if (g_SpriteEngine->Step(&this->impl->unk_0000[i]) != 0)
+                if (g_SpriteEngine->Step(&this->impl->sprites[i]) != 0)
                 {
                     this->impl->bossBarState = 0;
                     this->bossHealthShown = 0.0f;
@@ -783,18 +783,18 @@ void Gui::UpdateInterface()
         }
         else
         {
-            g_SpriteEngine->Step(&this->impl->unk_0000[i]);
+            g_SpriteEngine->Step(&this->impl->sprites[i]);
         }
     }
-    g_SpriteEngine->Step(&this->impl->unk_1ba4);
-    g_SpriteEngine->Step(&this->impl->unk_1cb4);
-    g_SpriteEngine->Step(&this->impl->unk_1dc4);
-    g_SpriteEngine->Step(&this->impl->unk_1fe4);
-    g_SpriteEngine->Step(&this->impl->unk_1ed4);
-    g_SpriteEngine->Step(&this->impl->unk_20f4);
-    if (this->impl->unk_2424.spriteIndex >= 0 && g_SpriteEngine->Step(&this->impl->unk_2424) != 0)
+    g_SpriteEngine->Step(&this->impl->stageName);
+    g_SpriteEngine->Step(&this->impl->songName);
+    g_SpriteEngine->Step(&this->impl->bombPortrait);
+    g_SpriteEngine->Step(&this->impl->bombName);
+    g_SpriteEngine->Step(&this->impl->spellPortrait);
+    g_SpriteEngine->Step(&this->impl->spellName);
+    if (this->impl->loading.spriteIndex >= 0 && g_SpriteEngine->Step(&this->impl->loading) != 0)
     {
-        this->impl->unk_2424.spriteIndex = -1;
+        this->impl->loading.spriteIndex = -1;
     }
     if (this->impl->bonusPopup.shown)
     {
@@ -828,13 +828,13 @@ void Gui::UpdateInterface()
         }
         ++this->impl->fullPowerPopup.timer;
     }
-    if (this->impl->unk_2c24.shown)
+    if (this->impl->spellBonusPopup.shown)
     {
-        if (this->impl->unk_2c24.timer >= 280)
+        if (this->impl->spellBonusPopup.timer >= 280)
         {
-            this->impl->unk_2c24.shown = 0;
+            this->impl->spellBonusPopup.shown = 0;
         }
-        ++this->impl->unk_2c24.timer;
+        ++this->impl->spellBonusPopup.timer;
     }
     if (this->impl->stageClearShown == 1)
     {
@@ -896,9 +896,9 @@ void Gui::DrawHud()
 
     if (this->impl->msg.scriptIndex < 0 && this->bossPresent + this->impl->bossBarState > 0)
     {
-        vm = &this->impl->unk_0000[0x13];
+        vm = &this->impl->sprites[0x13];
         g_SpriteEngine->Draw(vm);
-        vm = &this->impl->unk_0000[0x15];
+        vm = &this->impl->sprites[0x15];
         vm->flags.anchor = 3;
         vm->scaleX = this->bossHealthShown * 288.0f / 14.0f;
         vm->pos.x = 96.0f;
@@ -909,7 +909,7 @@ void Gui::DrawHud()
         pos.y = 16.0f;
         pos.z = 0.0f;
         g_AsciiText.SetColor(this->bossBarAlpha << 24 | 0xffff80);
-        g_AsciiText.AddFormat(&pos, "%d", this->unk_14);
+        g_AsciiText.AddFormat(&pos, "%d", this->bossLives);
         pos = D3DXVECTOR3(384.0f, 16.0f, 0.0f);
         if (this->bossTimer >= 20)
         {
@@ -929,20 +929,20 @@ void Gui::DrawHud()
         }
         g_AsciiText.SetColor(this->bossBarAlpha << 24 | c);
         clamped = this->bossTimer > 99 ? 99 : this->bossTimer;
-        if (clamped < 10 && this->unk_1c != this->bossTimer)
+        if (clamped < 10 && this->lastBossTimer != this->bossTimer)
         {
             g_SoundPlayer.QueueSound(0x1d, 0);
         }
         g_AsciiText.AddFormat(&pos, "%.2d", clamped);
         g_AsciiText.color = 0xffffffff;
-        this->unk_1c = this->bossTimer;
+        this->lastBossTimer = this->bossTimer;
     }
     g_App.viewport.X = 0;
     g_App.viewport.Y = 0;
     g_App.viewport.Width = 640;
     g_App.viewport.Height = 480;
     g_App.d3dDevice->SetViewport(&g_App.viewport);
-    vm = &this->impl->unk_0000[6];
+    vm = &this->impl->sprites[6];
     if (!g_App.cfg.flags.noFrameItems &&
         (vm->scriptPos != NULL || g_App.redrawFrames != 0 || g_App.ClearsBackBuffer()))
     {
@@ -959,31 +959,31 @@ void Gui::DrawHud()
                 g_SpriteEngine->Draw(vm);
             }
         }
-        vm = &this->impl->unk_0000[7];
+        vm = &this->impl->sprites[7];
         for (xx = 32.0f; xx < 416.0f; xx += 32.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 0.0f, 0.49f);
             g_SpriteEngine->Draw(vm);
         }
-        vm = &this->impl->unk_0000[8];
+        vm = &this->impl->sprites[8];
         for (xx = 32.0f; xx < 416.0f; xx += 32.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 464.0f, 0.49f);
             g_SpriteEngine->Draw(vm);
         }
-        g_SpriteEngine->DrawRotated(&this->impl->unk_0000[5]);
-        g_SpriteEngine->DrawRotated(&this->impl->unk_0000[0]);
-        g_SpriteEngine->DrawRotated(&this->impl->unk_0000[1]);
-        g_SpriteEngine->DrawRotated(&this->impl->unk_0000[3]);
-        g_SpriteEngine->DrawRotated(&this->impl->unk_0000[4]);
-        g_SpriteEngine->DrawRotated(&this->impl->unk_0000[2]);
-        g_SpriteEngine->Draw(&this->impl->unk_0000[9]);
-        g_SpriteEngine->Draw(&this->impl->unk_0000[10]);
-        g_SpriteEngine->Draw(&this->impl->unk_0000[11]);
-        g_SpriteEngine->Draw(&this->impl->unk_0000[12]);
-        g_SpriteEngine->Draw(&this->impl->unk_0000[13]);
-        g_SpriteEngine->Draw(&this->impl->unk_0000[14]);
-        g_SpriteEngine->Draw(&this->impl->unk_0000[15]);
+        g_SpriteEngine->DrawRotated(&this->impl->sprites[5]);
+        g_SpriteEngine->DrawRotated(&this->impl->sprites[0]);
+        g_SpriteEngine->DrawRotated(&this->impl->sprites[1]);
+        g_SpriteEngine->DrawRotated(&this->impl->sprites[3]);
+        g_SpriteEngine->DrawRotated(&this->impl->sprites[4]);
+        g_SpriteEngine->DrawRotated(&this->impl->sprites[2]);
+        g_SpriteEngine->Draw(&this->impl->sprites[9]);
+        g_SpriteEngine->Draw(&this->impl->sprites[10]);
+        g_SpriteEngine->Draw(&this->impl->sprites[11]);
+        g_SpriteEngine->Draw(&this->impl->sprites[12]);
+        g_SpriteEngine->Draw(&this->impl->sprites[13]);
+        g_SpriteEngine->Draw(&this->impl->sprites[14]);
+        g_SpriteEngine->Draw(&this->impl->sprites[15]);
         this->flags.livesChanged = 2;
         this->flags.bombsChanged = 2;
         this->flags.grazeChanged = 2;
@@ -992,7 +992,7 @@ void Gui::DrawHud()
     }
     if (!g_App.cfg.flags.noFrameItems)
     {
-        vm = &this->impl->unk_0000[0x16];
+        vm = &this->impl->sprites[0x16];
         xx = 496.0f;
         vm->pos = D3DXVECTOR3(xx, 58.0f, 0.49f);
         g_SpriteEngine->Draw(vm);
@@ -1030,7 +1030,7 @@ void Gui::DrawHud()
     }
     if (this->flags.livesChanged || g_App.cfg.flags.noFrameItems)
     {
-        vm = &this->impl->unk_0000[0x10];
+        vm = &this->impl->sprites[0x10];
         for (idx = 0, xx = 496.0f; idx < g_GameManager.lives; idx++, xx += 16.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 122.0f, 0.49f);
@@ -1039,7 +1039,7 @@ void Gui::DrawHud()
     }
     if (this->flags.bombsChanged || g_App.cfg.flags.noFrameItems)
     {
-        vm = &this->impl->unk_0000[0x11];
+        vm = &this->impl->sprites[0x11];
         for (idx = 0, xx = 496.0f; idx < g_GameManager.bombs; idx++, xx += 16.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 146.0f, 0.49f);
@@ -1086,7 +1086,7 @@ void Gui::DrawHud()
             g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
             if (g_GameManager.power >= 128)
             {
-                vm = &this->impl->unk_0000[0x12];
+                vm = &this->impl->sprites[0x12];
                 vm->pos = D3DXVECTOR3(496.0f, 186.0f, 0.0f);
                 g_SpriteEngine->Draw(vm);
             }
@@ -1141,15 +1141,15 @@ void Gui::DrawBanners()
 {
     D3DXVECTOR3 pos;
 
-    if (this->impl->unk_1ba4.flags.unk0)
+    if (this->impl->stageName.flags.unk0)
     {
         pos.x = 168.0f;
         pos.y = 198.0f;
         pos.z = 0.0f;
         if (!g_GameManager.isInDemo)
         {
-            g_SpriteEngine->Draw3DRounded(&this->impl->unk_1ba4);
-            g_AsciiText.SetColor((this->impl->unk_1ba4.color & 0xff000000) | 0xffff40);
+            g_SpriteEngine->Draw3DRounded(&this->impl->stageName);
+            g_AsciiText.SetColor((this->impl->stageName.color & 0xff000000) | 0xffff40);
             if (g_GameManager.stage < 6)
             {
                 pos.x = 168.0f;
@@ -1168,48 +1168,48 @@ void Gui::DrawBanners()
         }
         else
         {
-            g_AsciiText.SetColor((this->impl->unk_1ba4.color & 0xff000000) | 0xffff40);
+            g_AsciiText.SetColor((this->impl->stageName.color & 0xff000000) | 0xffff40);
             pos.x = 136.0f;
             g_AsciiText.AddFormat(&pos, " DEMO PLAY");
         }
         g_AsciiText.color = 0xffffffff;
     }
-    if (this->impl->unk_1cb4.flags.unk0 && !g_GameManager.isInDemo)
+    if (this->impl->songName.flags.unk0 && !g_GameManager.isInDemo)
     {
-        g_SpriteEngine->Draw3DRounded(&this->impl->unk_1cb4);
+        g_SpriteEngine->Draw3DRounded(&this->impl->songName);
     }
-    if (this->impl->unk_1dc4.flags.unk0)
+    if (this->impl->bombPortrait.flags.unk0)
     {
-        g_SpriteEngine->Draw(&this->impl->unk_1dc4);
+        g_SpriteEngine->Draw(&this->impl->bombPortrait);
     }
-    if (this->impl->unk_1ed4.flags.unk0)
+    if (this->impl->spellPortrait.flags.unk0)
     {
-        g_SpriteEngine->Draw(&this->impl->unk_1ed4);
+        g_SpriteEngine->Draw(&this->impl->spellPortrait);
     }
-    if (this->impl->unk_1fe4.flags.unk0)
+    if (this->impl->bombName.flags.unk0)
     {
-        this->impl->unk_2204.pos = this->impl->unk_1fe4.pos;
-        this->impl->unk_2204.pos.x += this->unk_08 * 16.0f / 15.0f / 2.0f + -128.0f - 16.0f;
-        this->impl->unk_2204.scaleX = this->unk_08 / 14.0f;
-        g_SpriteEngine->Draw(&this->impl->unk_2204);
-        g_SpriteEngine->Draw(&this->impl->unk_1fe4);
+        this->impl->bombNameBar.pos = this->impl->bombName.pos;
+        this->impl->bombNameBar.pos.x += this->bombNameWidth * 16.0f / 15.0f / 2.0f + -128.0f - 16.0f;
+        this->impl->bombNameBar.scaleX = this->bombNameWidth / 14.0f;
+        g_SpriteEngine->Draw(&this->impl->bombNameBar);
+        g_SpriteEngine->Draw(&this->impl->bombName);
     }
-    if (this->impl->unk_20f4.flags.unk0)
+    if (this->impl->spellName.flags.unk0)
     {
-        this->impl->unk_2314.pos = this->impl->unk_20f4.pos;
-        this->impl->unk_2314.pos.x += 128.0f - this->unk_0c * 16.0f / 15.0f / 2.0f;
-        this->impl->unk_2314.scaleX = this->unk_0c / 14.0f;
-        g_SpriteEngine->Draw(&this->impl->unk_2314);
-        g_SpriteEngine->Draw(&this->impl->unk_20f4);
+        this->impl->spellNameBar.pos = this->impl->spellName.pos;
+        this->impl->spellNameBar.pos.x += 128.0f - this->spellNameWidth * 16.0f / 15.0f / 2.0f;
+        this->impl->spellNameBar.scaleX = this->spellNameWidth / 14.0f;
+        g_SpriteEngine->Draw(&this->impl->spellNameBar);
+        g_SpriteEngine->Draw(&this->impl->spellName);
     }
-    if (this->impl->unk_2424.spriteIndex >= 0)
+    if (this->impl->loading.spriteIndex >= 0)
     {
         g_App.viewport.X = g_GameManager.arena[0];
         g_App.viewport.Y = g_GameManager.arena[1];
         g_App.viewport.Width = g_GameManager.arena[2];
         g_App.viewport.Height = g_GameManager.arena[3];
         g_App.d3dDevice->SetViewport(&g_App.viewport);
-        g_SpriteEngine->Draw(&this->impl->unk_2424);
+        g_SpriteEngine->Draw(&this->impl->loading);
     }
 }
 

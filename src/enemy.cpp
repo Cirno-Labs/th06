@@ -142,7 +142,7 @@ void EnemyManager::RunTimeline()
     {
         this->timelinePos = g_EnemyScripts.timeline;
     }
-    if (!g_Gui.Func4195a2())
+    if (!g_Gui.IsMsgRunning())
     {
         delay = 2400;
         delay -= g_GameManager.lives * 4 * 60;
@@ -287,7 +287,7 @@ void EnemyManager::RunTimeline()
                 }
                 break;
             case 9:
-                if (g_Gui.Func419572())
+                if (g_Gui.MsgHoldsTimeline())
                 {
                     this->timelineTime.Sub(1);
                     return;
@@ -314,7 +314,7 @@ void EnemyManager::RunTimeline()
         }
         this->timelinePos = (EnemyTimelineEntry *)((char *)this->timelinePos + this->timelinePos->size);
     }
-    if (!g_Gui.Func4195a2())
+    if (!g_Gui.IsMsgRunning())
     {
         g_GameManager.progressFrames++;
     }
@@ -671,7 +671,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     em->deathSub = -1;
                 }
             }
-            if (em->flags.unk11 && !g_Gui.Func4195a2())
+            if (em->flags.unk11 && !g_Gui.IsMsgRunning())
             {
                 g_Gui.SetBossHealth((float)em->life / (float)em->maxLife);
             }

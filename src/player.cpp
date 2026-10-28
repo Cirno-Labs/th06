@@ -695,7 +695,7 @@ int Player::HandleInput()
     this->optionPos[1].x += sideX;
     this->optionPos[0].y += sideY;
     this->optionPos[1].y += sideY;
-    if ((g_Buttons & 1) && !g_Gui.Func4195a2())
+    if ((g_Buttons & 1) && !g_Gui.IsMsgRunning())
     {
         Player::StartFiring(this);
     }
@@ -785,7 +785,7 @@ int Player::OnUpdate(Player *player)
     {
         player->bomb.update(player);
     }
-    else if (!g_Gui.Func4195a2() && player->unk_09d8 != 0 && g_GameManager.bombs > 0 && WAS_PRESSED(2) &&
+    else if (!g_Gui.IsMsgRunning() && player->unk_09d8 != 0 && g_GameManager.bombs > 0 && WAS_PRESSED(2) &&
              player->bomb.update != NULL)
     {
         g_GameManager.bombsUsed++;

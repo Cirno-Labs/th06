@@ -110,7 +110,7 @@ int ReplayManager::PlayOnUpdate2(ReplayManager *replay)
     {
         return 1;
     }
-    if (g_Gui.Func4195a2() && g_Gui.Func417344() && replay->frame % 3 != 2)
+    if (g_Gui.IsMsgRunning() && g_Gui.IsMsgSkippable() && replay->frame % 3 != 2)
     {
         return 6;
     }

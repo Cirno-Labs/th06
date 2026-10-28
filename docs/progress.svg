@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.06% (330)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">20.38% (96)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.28% (331)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">20.17% (95)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="523.38" height="6" x="0" y="0" class="named"/>
-<rect width="71.37" height="6" x="523.38" y="0" class="decompiled"/>
-<rect width="152.25" height="6" x="594.75" y="0" class="todo"/>
+<rect width="524.96" height="6" x="0" y="0" class="named"/>
+<rect width="71.37" height="6" x="524.96" y="0" class="decompiled"/>
+<rect width="150.67" height="6" x="596.33" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -299,7 +299,7 @@
 <rect width="12" height="12" x="420" y="60" class="named"><title>0x00420190 ItemManager::DrawItems (408 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="60" class="todo"><title>0x00420330 Func420330 (943 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="60" class="todo"><title>0x004206e0 Func4206e0 (1126 bytes)</title></rect>
-<rect width="12" height="12" x="465" y="60" class="todo"><title>0x00420b50 Func420b50 (118 bytes)</title></rect>
+<rect width="12" height="12" x="465" y="60" class="named"><title>0x00420b50 PresentFrame (118 bytes)</title></rect>
 <rect width="12" height="12" x="480" y="60" class="named"><title>0x00420bd0 CreateD3d (53 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="60" class="todo"><title>0x00420c10 Func420c10 (295 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="60" class="todo"><title>0x00420d40 Func420d40 (276 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">55.57%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">39.57%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">55.62%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">39.52%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="415.08" height="6" x="0" y="0" class="named"/>
-<rect width="36.35" height="6" x="415.08" y="0" class="decompiled"/>
-<rect width="295.57" height="6" x="451.43" y="0" class="todo"/>
+<rect width="415.45" height="6" x="0" y="0" class="named"/>
+<rect width="36.35" height="6" x="415.45" y="0" class="decompiled"/>
+<rect width="295.20" height="6" x="451.80" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -877,7 +877,7 @@
 <rect width="4.19" height="5.18" x="679.30" y="89.49" class="named"><title>0x00428680 Player::AngleTo (122 bytes)</title></rect>
 <rect width="4.19" height="5.18" x="679.30" y="97.67" class="named"><title>0x00428700 Player::AngleFrom (122 bytes)</title></rect>
 <rect width="4.19" height="5.12" x="679.30" y="105.85" class="named"><title>0x00421ff0 MidiPlayer::LoadFile (121 bytes)</title></rect>
-<rect width="4.19" height="4.91" x="679.30" y="113.97" class="todo"><title>0x00420b50 Func420b50 (118 bytes)</title></rect>
+<rect width="4.19" height="4.91" x="679.30" y="113.97" class="named"><title>0x00420b50 PresentFrame (118 bytes)</title></rect>
 <rect width="4.19" height="4.85" x="679.30" y="121.88" class="todo"><title>0x0040c100 Func40c100 (117 bytes)</title></rect>
 <rect width="4.19" height="4.85" x="679.30" y="129.73" class="named"><title>0x0041d600 SetButtonFromJoystick (117 bytes)</title></rect>
 <rect width="4.19" height="4.71" x="679.30" y="137.57" class="todo"><title>0x0040f4d0 Func40f4d0 (115 bytes)</title></rect>

@@ -18,6 +18,15 @@ extern HANDLE g_AppMutex;
 // run) if another copy of the game holds it.
 int CheckSingleInstance();
 
+// Sets the device's render and texture stage states for drawing
+// sprites; again after the device is reset.
+void Func421420();
+// Presents the frame. If that fails, resets the device (the surfaces
+// are released first and the states set again) and has unk_198 count
+// 2 frames; then does the SpriteEngine's pending copy and counts
+// unk_198 down.
+void PresentFrame();
+
 // The global at 0x6c6d18 plays wave music through it.
 class Unknown6d3f50
 {

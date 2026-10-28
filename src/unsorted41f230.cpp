@@ -4,6 +4,22 @@
 
 #include "unsorted.h"
 
+void PresentFrame()
+{
+    if (g_Unknown6c6d18.d3dDevice->Present(NULL, NULL, NULL, NULL) < 0)
+    {
+        g_SpriteEngine->ReleaseSurfaces();
+        g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);
+        Func421420();
+        g_Unknown6c6d18.unk_198 = 2;
+    }
+    g_SpriteEngine->DoPendingCopy();
+    if (g_Unknown6c6d18.unk_198 != 0)
+    {
+        g_Unknown6c6d18.unk_198--;
+    }
+}
+
 int CreateD3d()
 {
     g_Unknown6c6d18.d3d = Direct3DCreate8(D3D_SDK_VERSION);
@@ -47,7 +63,10 @@ void Unknown69d998::Flush()
     }
 }
 
-void SpriteEngine::ReleaseSurfaces()
+// The functions from here on are inline but defined after their callers,
+// so they are called rather than expanded, and each call site still
+// reserves their locals' slots.
+inline void SpriteEngine::ReleaseSurfaces()
 {
     int i;
 
@@ -61,7 +80,7 @@ void SpriteEngine::ReleaseSurfaces()
     }
 }
 
-void SpriteEngine::DoPendingCopy()
+inline void SpriteEngine::DoPendingCopy()
 {
     if (this->pendingCopyTexture >= 0)
     {

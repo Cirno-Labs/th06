@@ -230,12 +230,12 @@ address,size,name,symbol
 0x00420190,408,ItemManager::DrawItems,?DrawItems@ItemManager@@QAEXXZ
 0x00420330,943,Func420330,
 0x004206e0,1126,Func4206e0,
-0x00420b50,118,Func420b50,
+0x00420b50,118,PresentFrame,?PresentFrame@@YAXXZ
 0x00420bd0,53,CreateD3d,?CreateD3d@@YAHXZ
 0x00420c10,295,Func420c10,
 0x00420d40,276,Func420d40,
 0x00420e60,1458,Func420e60,
-0x00421420,1241,Func421420,
+0x00421420,1241,Func421420,?Func421420@@YAXXZ
 0x00421900,77,CheckSingleInstance,?CheckSingleInstance@@YAHXZ
 0x00421950,126,Unknown69d998::Flush,?Flush@Unknown69d998@@QAEXXZ
 0x004219d0,104,SpriteEngine::ReleaseSurfaces,?ReleaseSurfaces@SpriteEngine@@QAEXXZ

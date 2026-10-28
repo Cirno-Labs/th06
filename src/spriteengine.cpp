@@ -355,6 +355,20 @@ void SpriteEngine::ReleaseTexture(int index)
     this->textureFiles[index] = NULL;
 }
 
+int SpriteEngine::SetSprite(Sprite *vm, int sprite)
+{
+    if (this->sprites[sprite].sourceFileIndex < 0)
+    {
+        return -1;
+    }
+    vm->spriteIndex = sprite;
+    vm->spriteData = &this->sprites[sprite];
+    D3DXMatrixIdentity(&vm->matrix);
+    vm->matrix.m[0][0] = vm->spriteData->width / vm->spriteData->textureWidth;
+    vm->matrix.m[1][1] = vm->spriteData->height / vm->spriteData->textureHeight;
+    return 0;
+}
+
 void SpriteEngine::SetScript(Sprite *vm, void *script)
 {
     vm->flags.flip = 0;

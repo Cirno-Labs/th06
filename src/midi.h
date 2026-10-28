@@ -180,6 +180,13 @@ public:
     // Plays the loaded tracks on the MIDI mapper, ticking every 1 ms.
     // Returns -1 if nothing is loaded, otherwise 0.
     int Play();
+    // Stops, loads `path` and plays it.
+    void Restart(char *path)
+    {
+        this->Stop();
+        this->Load(path);
+        this->Play();
+    }
     // Starts fading the music out over `duration` ms. Returns 0.
     int FadeOut(int duration);
     // Sends every channel's volume, scaled and offset by `offset`, unless

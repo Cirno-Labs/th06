@@ -3,6 +3,7 @@
 // functions are laid out without alignment.
 
 #include <stdio.h>
+#include <string.h>
 
 #include "chain.h"
 #include "ending.h"
@@ -757,6 +758,48 @@ int Unknown6c6d18::LoadMusic(char *path)
     }
     else if (g_Unknown6c6d18.cfg.musicMode == 1)
     {
+    }
+    else
+    {
+        return -1;
+    }
+    return 0;
+}
+
+int Unknown6c6d18::PlayMusic(char *path)
+{
+    char *dot;
+    char posFile[256];
+    char wavFile[256];
+
+    if (g_Unknown6c6d18.cfg.musicMode == 2)
+    {
+        if (g_Unknown6c6d18.midi != NULL)
+        {
+            g_Unknown6c6d18.midi->Restart(path);
+        }
+    }
+    else if (g_Unknown6c6d18.cfg.musicMode == 1)
+    {
+        strcpy(wavFile, path);
+        strcpy(posFile, path);
+        dot = strrchr(wavFile, '.');
+        dot[1] = 'w';
+        dot[2] = 'a';
+        dot[3] = 'v';
+        dot = strrchr(posFile, '.');
+        dot[1] = 'p';
+        dot[2] = 'o';
+        dot[3] = 's';
+        g_Unknown6d3f50.LoadBgm(wavFile);
+        if (g_Unknown6d3f50.LoadBgmLoop(posFile) < 0)
+        {
+            g_Unknown6d3f50.PlayBgm(0);
+        }
+        else
+        {
+            g_Unknown6d3f50.PlayBgm(1);
+        }
     }
     else
     {

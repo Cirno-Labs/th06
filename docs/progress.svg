@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">82.17% (387)</tspan> · <tspan class="decompiled">15.29% (72)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">2.55% (12)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">82.17% (387)</tspan> · <tspan class="decompiled">15.50% (73)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">2.34% (11)</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="613.78" height="6" x="0" y="0" class="named"/>
-<rect width="114.19" height="6" x="613.78" y="0" class="decompiled"/>
-<rect width="19.03" height="6" x="727.97" y="0" class="todo"/>
+<rect width="115.78" height="6" x="613.78" y="0" class="decompiled"/>
+<rect width="17.45" height="6" x="729.55" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -358,7 +358,7 @@
 <rect width="12" height="12" x="555" y="75" class="decompiled"><title>0x00424aac Unknown6c6d18::LoadMidi (56 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="75" class="decompiled"><title>0x00424ae4 Unknown6c6d18::PlayMidi (75 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="75" class="decompiled"><title>0x00424b2f Unknown6c6d18::LoadMusic (46 bytes)</title></rect>
-<rect width="12" height="12" x="600" y="75" class="todo"><title>0x00424b5d Unknown6c6d18::PlayMusic (475 bytes)</title></rect>
+<rect width="12" height="12" x="600" y="75" class="decompiled"><title>0x00424b5d Unknown6c6d18::PlayMusic (475 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="75" class="decompiled"><title>0x00424d38 Unknown6c6d18::StopMusic (74 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="75" class="decompiled"><title>0x00424d82 Unknown6c6d18::FadeOutMusic (191 bytes)</title></rect>
 <rect width="12" height="12" x="645" y="75" class="decompiled"><title>0x00424e41 Unknown6d3f50::FadeOutBgm (78 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">85.62%</tspan> · <tspan class="decompiled">12.96%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">1.42%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">85.62%</tspan> · <tspan class="decompiled">13.16%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">1.22%</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="639.57" height="6" x="0" y="0" class="named"/>
-<rect width="96.82" height="6" x="639.57" y="0" class="decompiled"/>
-<rect width="10.61" height="6" x="736.39" y="0" class="todo"/>
+<rect width="98.31" height="6" x="639.57" y="0" class="decompiled"/>
+<rect width="9.12" height="6" x="737.88" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="named"><title>0x004074a0 EnemyScripts::RunEnemy (13572 bytes)</title></rect>
@@ -669,7 +669,7 @@
 <rect width="12.59" height="11.85" x="535.10" y="138.15" class="named"><title>0x0041f050 RenderTextToTexture (480 bytes)</title></rect>
 <rect width="11.68" height="12.67" x="550.68" y="0" class="named"><title>0x00426df0 Player::CheckGraze (477 bytes)</title></rect>
 <rect width="11.68" height="12.64" x="550.68" y="15.67" class="named"><title>0x00434c40 SpriteEngine::RenderTextRightAligned (476 bytes)</title></rect>
-<rect width="11.68" height="12.61" x="550.68" y="31.31" class="todo"><title>0x00424b5d Unknown6c6d18::PlayMusic (475 bytes)</title></rect>
+<rect width="11.68" height="12.61" x="550.68" y="31.31" class="decompiled"><title>0x00424b5d Unknown6c6d18::PlayMusic (475 bytes)</title></rect>
 <rect width="11.68" height="12.41" x="550.68" y="46.92" class="named"><title>0x0042a840 ReplayManager::PlayAddedCallback (469 bytes)</title></rect>
 <rect width="11.68" height="12.31" x="550.68" y="62.32" class="named"><title>0x00414160 BulletManager::ClearAll (466 bytes)</title></rect>
 <rect width="11.68" height="12.15" x="550.68" y="77.63" class="decompiled"><title>0x00430510 Unknown6d3f50::Release (461 bytes)</title></rect>

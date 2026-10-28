@@ -15,6 +15,823 @@ MainMenu::MainMenu()
 {
 }
 
+int MainMenu::OnUpdate(MainMenu *menu)
+{
+    int i;
+    Sprite *text3;
+    DWORD time;
+    int deltaX;
+    float fps3;
+    float seconds;
+    short button3;
+    int status;
+    short pressedKey;
+    BYTE *pad1;
+
+    if (menu->unk_10ee0 < 0x10)
+    {
+        timeBeginPeriod(1);
+        if (menu->unk_10f30 == 0)
+        {
+            menu->unk_10f30 = timeGetTime();
+        }
+        time = timeGetTime();
+        timeEndPeriod(1);
+        menu->unk_10f2c++;
+        deltaX = time - menu->unk_10f30;
+        if (deltaX >= 700)
+        {
+            menu->unk_10f30 = time;
+            menu->unk_10f2c = 0;
+        }
+        else if (deltaX >= 500)
+        {
+            seconds = deltaX / 1000.0f;
+            fps3 = menu->unk_10f2c * 1000.0f / deltaX;
+            if (fps3 >= 57.0f)
+            {
+                menu->unk_10ee4[menu->unk_10ee0] = fps3;
+                menu->unk_10ee0++;
+            }
+            menu->unk_10f30 = time;
+            menu->unk_10f2c = 0;
+        }
+    }
+    switch (menu->unk_81f0)
+    {
+    case 0:
+        status = menu->Func4378a2();
+        if (status == -1)
+        {
+            return 0;
+        }
+    case 1:
+        menu->unk_81f8++;
+        if (g_Buttons & 0xffff)
+        {
+            menu->unk_81f8 = 0;
+        }
+        if (menu->unk_81f8 >= 720)
+        {
+            goto demo;
+        }
+        if (menu->Func4379e4())
+        {
+            break;
+        }
+        menu->unk_81f8 = 0;
+    case 2:
+        menu->UpdateTitleMenu();
+        if (g_Buttons & 0xffff)
+        {
+            menu->unk_81f8 = 0;
+        }
+        menu->unk_81f8++;
+        if (menu->unk_81f8 >= 720)
+        {
+        demo:
+            g_GameManager.unk_001c = 1;
+            g_GameManager.unk_1824 = 1;
+            g_GameManager.demoFrames = 0;
+            g_Unknown6c6d18.gameSpeed = 1.0f;
+            strcpy(g_GameManager.replayFile, "data/demo/demo00.rpy");
+            g_GameManager.stage = 3;
+            g_GameManager.difficulty = 3;
+            g_Unknown6c6d18.scene = 2;
+            return 0;
+        }
+        break;
+    case 12:
+    case 13:
+    case 14:
+    case 15:
+        if (menu->UpdateReplayMenu())
+        {
+            return 0;
+        }
+        break;
+    case 3:
+        if (menu->UpdateOptions())
+        {
+            return 0;
+        }
+        break;
+    case 5:
+        MoveMenuCursor(menu, 11);
+        for (text3 = &menu->sprites[0x22], i = 0; i < 11; i++, text3++)
+        {
+            HighlightMenuEntry(text3, i, menu->cursor, menu->unk_8204, menu->unk_8208, 0x73);
+        }
+        for (i = 0; i < 9; i++, text3++)
+        {
+            if (((short *)&menu->controllerMapping)[i] < 0)
+            {
+                text3->flags.visible = 0;
+                continue;
+            }
+            text3->flags.visible = 1;
+            HighlightMenuEntry(text3, i, menu->cursor, menu->unk_8204, menu->unk_8208, 0x73);
+        }
+        for (i = 0; i < 18; i++, text3++)
+        {
+            if (((short *)&menu->controllerMapping)[i / 2] < 0)
+            {
+                text3->flags.visible = 0;
+                continue;
+            }
+            text3->flags.visible = 1;
+            button3 = ((short *)&menu->controllerMapping)[i / 2];
+            if (i % 2 == 0)
+            {
+                g_SpriteEngine->SetSprite(text3, button3 / 10 + 0x100);
+            }
+            else
+            {
+                g_SpriteEngine->SetSprite(text3, button3 % 10 + 0x100);
+            }
+            text3->unk_0b2 = text3->spriteIndex;
+            HighlightMenuEntry(text3, i / 2, menu->cursor, menu->unk_8204, menu->unk_8208, 0x7a);
+        }
+        if (menu->unk_81f4 >= 0x20)
+        {
+            pad1 = GetPadButtons();
+            for (pressedKey = 0; pressedKey < 0x20; pressedKey++)
+            {
+                if (pad1[pressedKey] & 0x80)
+                {
+                    break;
+                }
+            }
+            if (pressedKey < 0x20 && g_Unknown478690 != pressedKey)
+            {
+                g_Unknown6d3f50.QueueSound(10, 0);
+                switch (menu->cursor)
+                {
+                case 0:
+                    ReassignButton(menu, pressedKey, menu->controllerMapping.shootButton, 1);
+                    menu->controllerMapping.shootButton = pressedKey;
+                    break;
+                case 1:
+                    ReassignButton(menu, pressedKey, menu->controllerMapping.bombButton, 0);
+                    menu->controllerMapping.bombButton = pressedKey;
+                    break;
+                case 2:
+                    ReassignButton(menu, pressedKey, menu->controllerMapping.focusButton, 1);
+                    menu->controllerMapping.focusButton = pressedKey;
+                    break;
+                case 3:
+                    ReassignButton(menu, pressedKey, menu->controllerMapping.menuButton, 0);
+                    menu->controllerMapping.menuButton = pressedKey;
+                    break;
+                case 4:
+                    ReassignButton(menu, pressedKey, menu->controllerMapping.upButton, 0);
+                    menu->controllerMapping.upButton = pressedKey;
+                    break;
+                case 5:
+                    ReassignButton(menu, pressedKey, menu->controllerMapping.downButton, 0);
+                    menu->controllerMapping.downButton = pressedKey;
+                    break;
+                case 6:
+                    ReassignButton(menu, pressedKey, menu->controllerMapping.leftButton, 0);
+                    menu->controllerMapping.leftButton = pressedKey;
+                    break;
+                case 7:
+                    ReassignButton(menu, pressedKey, menu->controllerMapping.rightButton, 0);
+                    menu->controllerMapping.rightButton = pressedKey;
+                    break;
+                case 8:
+                    ReassignButton(menu, pressedKey, menu->controllerMapping.skipButton, 0);
+                    menu->controllerMapping.skipButton = pressedKey;
+                    break;
+                }
+            }
+            g_Unknown478690 = pressedKey;
+            if (WAS_PRESSED(0x1001))
+            {
+                switch (menu->cursor)
+                {
+                case 9:
+                {
+                    ControllerMapping defaults = {0, 1, 0, -1, -1, -1, -1, -1, -1};
+                    menu->controllerMapping = defaults;
+                    break;
+                }
+                case 10:
+                    menu->unk_81f0 = 3;
+                    menu->unk_81f4 = 0;
+                    for (pressedKey = 0; pressedKey < 0x7a; pressedKey++)
+                    {
+                        menu->sprites[pressedKey].pendingInterrupt = 3;
+                    }
+                    menu->cursor = 7;
+                    g_Unknown6d3f50.QueueSound(0xb, 0);
+                    g_ControllerMapping = menu->controllerMapping;
+                    g_Unknown6c6d18.cfg.controllerMapping = menu->controllerMapping;
+                    break;
+                }
+            }
+        }
+        break;
+    case 6:
+        if (menu->unk_81f4 == 60)
+        {
+            if (LoadSelectResources(menu) != 0)
+            {
+                LogPrintf(&g_Unknown69d998, "セレクト画面の読み込みに失敗\n");
+                g_Unknown6c6d18.scene = 4;
+                return 0;
+            }
+            menu->unk_81f0 = 7;
+            menu->unk_81fc = 0;
+            menu->unk_8214 = menu->unk_8210;
+            menu->unk_8210 = 0;
+            if (g_GameManager.difficulty < 4)
+            {
+                for (i = 0; i < 0x7a; i++)
+                {
+                    menu->sprites[i].pendingInterrupt = 6;
+                }
+                menu->cursor = g_Unknown6c6d18.cfg.unk_1d;
+            }
+            else
+            {
+                for (i = 0; i < 0x7a; i++)
+                {
+                    menu->sprites[i].pendingInterrupt = 0x12;
+                }
+                menu->cursor = 0;
+            }
+        }
+        else
+        {
+            break;
+        }
+    case 8:
+        if (menu->unk_81f4 == 36)
+        {
+            menu->unk_81f0 = 0;
+            menu->unk_81f4 = 0;
+        }
+        break;
+    case 7:
+        text3 = &menu->sprites[0x51];
+        if (g_GameManager.difficulty < 4)
+        {
+            MoveMenuCursor(menu, 4);
+            for (i = 0; i < 4; i++, text3++)
+            {
+                if (i != menu->cursor)
+                {
+                    if (!g_Unknown6c6d18.cfg.flags.unk0)
+                    {
+                        text3->color = 0x60000000;
+                    }
+                    else
+                    {
+                        text3->color = 0x60ffffff;
+                    }
+                    text3->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+                    text3->alphaInterpTime = 0;
+                }
+                else
+                {
+                    if (!g_Unknown6c6d18.cfg.flags.unk0)
+                    {
+                        text3->color = 0xff000000;
+                    }
+                    else
+                    {
+                        text3->color = 0xffffffff;
+                    }
+                    text3->posOffset = D3DXVECTOR3(-6.0f, -6.0f, 0.0f);
+                }
+            }
+            text3->flags.visible = 0;
+        }
+        else
+        {
+            for (i = 0; i < 4; i++, text3++)
+            {
+                text3->flags.visible = 0;
+            }
+            for (i = 4; i < 5; i++, text3++)
+            {
+                if (!g_Unknown6c6d18.cfg.flags.unk0)
+                {
+                    text3->color = 0xff000000;
+                }
+                else
+                {
+                    text3->color = 0xffffffff;
+                }
+                text3->posOffset = D3DXVECTOR3(-6.0f, -6.0f, 0.0f);
+            }
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            menu->unk_81f0 = 8;
+            menu->unk_81f4 = 0;
+            for (i = 0; i < 0x7a; i++)
+            {
+                menu->sprites[i].pendingInterrupt = 4;
+            }
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+            if (g_GameManager.difficulty < 4)
+            {
+                g_Unknown6c6d18.cfg.unk_1d = menu->cursor;
+                if (!g_GameManager.unk_1823)
+                {
+                    menu->cursor = 0;
+                }
+                else
+                {
+                    menu->cursor = 2;
+                }
+            }
+            else
+            {
+                menu->cursor = 1;
+            }
+            break;
+        }
+        else if (WAS_PRESSED(0x1001))
+        {
+            menu->unk_81f0 = 9;
+            menu->unk_81f4 = 0;
+            for (i = 0; i < 0x7a; i++)
+            {
+                menu->sprites[i].pendingInterrupt = 7;
+            }
+            g_Unknown6d3f50.QueueSound(10, 0);
+            if (g_GameManager.difficulty < 4)
+            {
+                text3 = &menu->sprites[menu->cursor + 0x51];
+                text3->pendingInterrupt = 8;
+                g_GameManager.difficulty = menu->cursor;
+                menu->cursor = g_GameManager.character;
+            }
+            else
+            {
+                text3 = &menu->sprites[0x55];
+                text3->pendingInterrupt = 8;
+                g_GameManager.difficulty = 4;
+                if (g_GameManager.IsExtraUnlocked(g_GameManager.character, 0) ||
+                    g_GameManager.IsExtraUnlocked(g_GameManager.character, 1))
+                {
+                    menu->cursor = g_GameManager.character;
+                }
+                else
+                {
+                    menu->cursor = 1 - g_GameManager.character;
+                }
+            }
+            g_Unknown6c6d18.cfg.unk_1d = g_GameManager.difficulty;
+            for (text3 = &menu->sprites[0x56], i = 0; i < 2; i++, text3 += 2)
+            {
+                if (i != menu->cursor)
+                {
+                    text3[0].pendingInterrupt = 0;
+                    text3[1].pendingInterrupt = 0;
+                }
+            }
+            break;
+        }
+        break;
+    case 9:
+        if (menu->unk_81f4 < 30)
+        {
+            break;
+        }
+        if (WAS_PRESSED_OR_HELD(0x40))
+        {
+            menu->cursor++;
+            if (menu->cursor >= 2)
+            {
+                menu->cursor -= 2;
+            }
+            if (g_GameManager.difficulty == 4 && !g_GameManager.IsExtraUnlocked(menu->cursor, 0) &&
+                !g_GameManager.IsExtraUnlocked(menu->cursor, 1))
+            {
+                menu->cursor--;
+                if (menu->cursor < 0)
+                {
+                    menu->cursor += 2;
+                }
+                goto characterChosen;
+            }
+            g_Unknown6d3f50.QueueSound(0xc, 0);
+            for (text3 = &menu->sprites[0x56], i = 0; i < 2; i++, text3++)
+            {
+                if (i == menu->cursor)
+                {
+                    text3->pendingInterrupt = 9;
+                    text3++;
+                    text3->pendingInterrupt = 9;
+                }
+                else
+                {
+                    text3->pendingInterrupt = 0xc;
+                    text3++;
+                    text3->pendingInterrupt = 0xc;
+                }
+            }
+        }
+        if (WAS_PRESSED_OR_HELD(0x80))
+        {
+            menu->cursor--;
+            if (menu->cursor < 0)
+            {
+                menu->cursor += 2;
+            }
+            if (g_GameManager.difficulty == 4 && !g_GameManager.IsExtraUnlocked(menu->cursor, 0) &&
+                !g_GameManager.IsExtraUnlocked(menu->cursor, 1))
+            {
+                menu->cursor++;
+                if (menu->cursor >= 2)
+                {
+                    menu->cursor -= 2;
+                }
+            }
+            else
+            {
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                for (text3 = &menu->sprites[0x56], i = 0; i < 2; i++, text3++)
+                {
+                    if (i == menu->cursor)
+                    {
+                        text3->pendingInterrupt = 10;
+                        text3++;
+                        text3->pendingInterrupt = 10;
+                    }
+                    else
+                    {
+                        text3->pendingInterrupt = 0xb;
+                        text3++;
+                        text3->pendingInterrupt = 0xb;
+                    }
+                }
+            }
+        }
+    characterChosen:
+        if (WAS_PRESSED(0xa))
+        {
+            menu->unk_81f0 = 7;
+            menu->unk_81f4 = 0;
+            if (g_GameManager.difficulty < 4)
+            {
+                for (i = 0; i < 0x7a; i++)
+                {
+                    menu->sprites[i].pendingInterrupt = 6;
+                }
+                menu->cursor = g_Unknown6c6d18.cfg.unk_1d;
+            }
+            else
+            {
+                for (i = 0; i < 0x7a; i++)
+                {
+                    menu->sprites[i].pendingInterrupt = 0x12;
+                }
+                menu->cursor = 0;
+            }
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+            break;
+        }
+        else if (WAS_PRESSED(0x1001))
+        {
+            menu->unk_81f0 = 11;
+            menu->unk_81f4 = 0;
+            for (i = 0; i < 0x7a; i++)
+            {
+                menu->sprites[i].pendingInterrupt = 0xd;
+            }
+            text3 = &menu->sprites[g_GameManager.difficulty + 0x51];
+            text3->pendingInterrupt = 0;
+            for (text3 = &menu->sprites[0x56], i = 0; i < 2; i++, text3 += 2)
+            {
+                if (i != menu->cursor)
+                {
+                    text3[0].pendingInterrupt = 0;
+                    text3[1].pendingInterrupt = 0;
+                }
+            }
+            for (text3 = &menu->sprites[0x5c], i = 0; i < 2; i++, text3 += 2)
+            {
+                if (i != menu->cursor)
+                {
+                    text3[0].pendingInterrupt = 0;
+                    text3[1].pendingInterrupt = 0;
+                }
+            }
+            g_GameManager.character = menu->cursor;
+            if (g_GameManager.difficulty < 4)
+            {
+                menu->cursor = g_GameManager.shotType;
+            }
+            else if (g_GameManager.IsExtraUnlocked(g_GameManager.character, g_GameManager.shotType))
+            {
+                menu->cursor = g_GameManager.shotType;
+            }
+            else
+            {
+                menu->cursor = 1 - g_GameManager.shotType;
+            }
+            g_Unknown6d3f50.QueueSound(10, 0);
+        }
+        break;
+    case 11:
+        MoveMenuCursor(menu, 2);
+        if (g_GameManager.difficulty == 4 && !g_GameManager.IsExtraUnlocked(g_GameManager.character, menu->cursor))
+        {
+            menu->cursor = 1 - menu->cursor;
+        }
+        for (text3 = &menu->sprites[0x5c], i = 0; i < 2; i++, text3 += 2)
+        {
+            text3[1].flags.colorOp = 1;
+        }
+        for (text3 = &menu->sprites[g_GameManager.character * 2 + 0x5c], i = 0; i < 2; i++, text3++)
+        {
+            text3->flags.colorOp = 1;
+            text3->flags.unk0 = 1;
+            if (i != menu->cursor)
+            {
+                if (!g_Unknown6c6d18.cfg.flags.unk0)
+                {
+                    text3->color = 0xa0000000;
+                }
+                else
+                {
+                    text3->color = 0xa0d0d0d0;
+                }
+                text3->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+            }
+            else
+            {
+                if (!g_Unknown6c6d18.cfg.flags.unk0)
+                {
+                    text3->color = 0xff202020;
+                }
+                else
+                {
+                    text3->color = 0xffffffff;
+                }
+                text3->posOffset = D3DXVECTOR3(-6.0f, -6.0f, 0.0f);
+            }
+        }
+        if (menu->unk_81f4 < 30)
+        {
+            break;
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            menu->unk_81f0 = 9;
+            menu->unk_81f4 = 0;
+            for (i = 0; i < 0x7a; i++)
+            {
+                menu->sprites[i].pendingInterrupt = 7;
+            }
+            for (text3 = &menu->sprites[0x5c], i = 0; i < 2; i++, text3 += 2)
+            {
+                if (i != g_GameManager.character)
+                {
+                    text3[0].pendingInterrupt = 0;
+                    text3[1].pendingInterrupt = 0;
+                }
+            }
+            text3 = &menu->sprites[g_GameManager.difficulty + 0x51];
+            text3->pendingInterrupt = 0;
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_GameManager.shotType = menu->cursor;
+            menu->cursor = g_GameManager.character;
+            for (text3 = &menu->sprites[0x56], i = 0; i < 2; i++, text3 += 2)
+            {
+                if (i != menu->cursor)
+                {
+                    text3[0].pendingInterrupt = 0;
+                    text3[1].pendingInterrupt = 0;
+                }
+            }
+            break;
+        }
+        else if (WAS_PRESSED(0x1001))
+        {
+            g_GameManager.shotType = menu->cursor;
+            if (!g_GameManager.unk_1823)
+            {
+                if (g_GameManager.difficulty < 4)
+                {
+                    g_GameManager.stage = 0;
+                }
+                else
+                {
+                    g_GameManager.stage = 6;
+                }
+            start:
+                g_GameManager.lives = g_Unknown6c6d18.cfg.lives;
+                g_GameManager.bombs = g_Unknown6c6d18.cfg.bombs;
+                if (g_GameManager.difficulty == 4 || g_GameManager.unk_1823)
+                {
+                    g_GameManager.lives = 2;
+                    g_GameManager.bombs = 3;
+                }
+                g_Unknown6c6d18.scene = 2;
+                g_Unknown6d3f50.QueueSound(10, 0);
+                g_GameManager.unk_001c = 0;
+                {
+                    float average;
+                    float speed;
+
+                    average = 0.0f;
+                    if (menu->unk_10ee0 >= 2)
+                    {
+                        for (i = 0; i < menu->unk_10ee0; i++)
+                        {
+                            average += menu->unk_10ee4[i];
+                        }
+                        average /= i;
+                    }
+                    else
+                    {
+                        average = 60.0f;
+                    }
+                    if (average >= 155.0f)
+                    {
+                        speed = 0.375f;
+                    }
+                    else if (average >= 135.0f)
+                    {
+                        speed = 0.4f;
+                    }
+                    else if (average >= 110.0f)
+                    {
+                        speed = 0.5f;
+                    }
+                    else if (average >= 95.0f)
+                    {
+                        speed = 0.6f;
+                    }
+                    else if (average >= 87.5f)
+                    {
+                        speed = 0.6666667f;
+                    }
+                    else if (average >= 82.5f)
+                    {
+                        speed = 0.70588235f;
+                    }
+                    else if (average >= 77.5f)
+                    {
+                        speed = 0.75f;
+                    }
+                    else if (average >= 73.5f)
+                    {
+                        speed = 0.8f;
+                    }
+                    else if (average >= 68.0f)
+                    {
+                        speed = 0.85714287f;
+                    }
+                    else
+                    {
+                        speed = 1.0f;
+                    }
+                    DebugPrint2("Reflesh Rate = %f\n", 60.0f / speed);
+                    g_Unknown6c6d18.gameSpeed = speed;
+                }
+                g_Unknown6c6d18.StopMusic();
+                return 0;
+            }
+            menu->unk_81f0 = 17;
+            menu->unk_81f4 = 0;
+            for (i = 0; i < 0x7a; i++)
+            {
+                menu->sprites[i].pendingInterrupt = 0x13;
+            }
+            text3 = &menu->sprites[g_GameManager.difficulty + 0x51];
+            text3->pendingInterrupt = 0;
+            for (text3 = &menu->sprites[0x56], i = 0; i < 2; i++, text3 += 2)
+            {
+                if (i != g_GameManager.character)
+                {
+                    text3[0].pendingInterrupt = 0;
+                    text3[1].pendingInterrupt = 0;
+                }
+            }
+            for (text3 = &menu->sprites[0x5c], i = 0; i < 2; i++, text3 += 2)
+            {
+                if (i != g_GameManager.character)
+                {
+                    text3[0].pendingInterrupt = 0;
+                    text3[1].pendingInterrupt = 0;
+                }
+            }
+            menu->cursor = g_GameManager.unk_1a38;
+            {
+                int stages;
+
+                stages = g_GameManager.clrds[g_GameManager.character * 2 + g_GameManager.shotType]
+                                     .unk_11[g_GameManager.difficulty] > 6
+                             ? 6
+                             : g_GameManager.clrds[g_GameManager.character * 2 + g_GameManager.shotType]
+                                   .unk_11[g_GameManager.difficulty];
+                if (g_GameManager.difficulty == 0 && stages == 6)
+                {
+                    stages = 5;
+                }
+                if (menu->cursor >= stages)
+                {
+                    menu->cursor = 0;
+                }
+            }
+        }
+        break;
+    case 17:
+    {
+        int stages;
+
+        stages = g_GameManager.clrds[g_GameManager.character * 2 + g_GameManager.shotType]
+                             .unk_11[g_GameManager.difficulty] > 6
+                     ? 6
+                     : g_GameManager.clrds[g_GameManager.character * 2 + g_GameManager.shotType]
+                           .unk_11[g_GameManager.difficulty];
+        if (g_GameManager.difficulty == 0 && stages == 6)
+        {
+            stages = 5;
+        }
+        MoveMenuCursor(menu, stages);
+        if (menu->unk_81f4 < 30)
+        {
+            break;
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            menu->unk_81f0 = 11;
+            menu->unk_81f4 = 0;
+            for (i = 0; i < 0x7a; i++)
+            {
+                menu->sprites[i].pendingInterrupt = 0xd;
+            }
+            text3 = &menu->sprites[g_GameManager.difficulty + 0x51];
+            text3->pendingInterrupt = 0;
+            for (text3 = &menu->sprites[0x56], i = 0; i < 2; i++, text3 += 2)
+            {
+                if (i != g_GameManager.character)
+                {
+                    text3[0].pendingInterrupt = 0;
+                    text3[1].pendingInterrupt = 0;
+                }
+            }
+            for (text3 = &menu->sprites[0x5c], i = 0; i < 2; i++, text3 += 2)
+            {
+                if (i != g_GameManager.character)
+                {
+                    text3[0].pendingInterrupt = 0;
+                    text3[1].pendingInterrupt = 0;
+                }
+            }
+            menu->cursor = g_GameManager.shotType;
+            g_Unknown6d3f50.QueueSound(10, 0);
+            break;
+        }
+        else if (WAS_PRESSED(0x1001))
+        {
+            g_GameManager.stage = menu->cursor;
+            g_GameManager.unk_1a38 = menu->cursor;
+            goto start;
+        }
+        break;
+    }
+    case 4:
+        if (menu->unk_81f4 >= 60)
+        {
+            g_Unknown6c6d18.scene = 4;
+            return 0;
+        }
+        break;
+    case 10:
+        if (menu->unk_81f4 >= 60)
+        {
+            g_Unknown6c6d18.scene = 6;
+            return 0;
+        }
+        break;
+    case 16:
+        if (menu->unk_81f4 >= 60)
+        {
+            g_Unknown6c6d18.scene = 9;
+            return 0;
+        }
+        break;
+    }
+    menu->unk_81f4++;
+    for (i = 0; i < 0x7a; i++)
+    {
+        if (menu->sprites[i].HasTexture())
+        {
+            g_SpriteEngine->Step(&menu->sprites[i]);
+        }
+    }
+    return 1;
+}
+
 int MoveMenuCursor(MainMenu *menu, int count)
 {
     if (WAS_PRESSED_OR_HELD(0x10))
@@ -50,41 +867,41 @@ int MoveMenuCursor(MainMenu *menu, int count)
 
 void ReassignButton(MainMenu *menu, short button, short replacement, int unk)
 {
-    if (unk == 0 && menu->controllerMapping.unk_00[0] == button)
+    if (unk == 0 && menu->controllerMapping.shootButton == button)
     {
-        menu->controllerMapping.unk_00[0] = replacement;
+        menu->controllerMapping.shootButton = replacement;
     }
-    if (menu->controllerMapping.unk_00[1] == button)
+    if (menu->controllerMapping.bombButton == button)
     {
-        menu->controllerMapping.unk_00[1] = replacement;
+        menu->controllerMapping.bombButton = replacement;
     }
-    if (unk == 0 && menu->controllerMapping.unk_00[2] == button)
+    if (unk == 0 && menu->controllerMapping.focusButton == button)
     {
-        menu->controllerMapping.unk_00[2] = replacement;
+        menu->controllerMapping.focusButton = replacement;
     }
-    if (menu->controllerMapping.unk_00[4] == button)
+    if (menu->controllerMapping.upButton == button)
     {
-        menu->controllerMapping.unk_00[4] = replacement;
+        menu->controllerMapping.upButton = replacement;
     }
-    if (menu->controllerMapping.unk_00[5] == button)
+    if (menu->controllerMapping.downButton == button)
     {
-        menu->controllerMapping.unk_00[5] = replacement;
+        menu->controllerMapping.downButton = replacement;
     }
-    if (menu->controllerMapping.unk_00[6] == button)
+    if (menu->controllerMapping.leftButton == button)
     {
-        menu->controllerMapping.unk_00[6] = replacement;
+        menu->controllerMapping.leftButton = replacement;
     }
-    if (menu->controllerMapping.unk_00[7] == button)
+    if (menu->controllerMapping.rightButton == button)
     {
-        menu->controllerMapping.unk_00[7] = replacement;
+        menu->controllerMapping.rightButton = replacement;
     }
-    if (menu->controllerMapping.unk_00[3] == button)
+    if (menu->controllerMapping.menuButton == button)
     {
-        menu->controllerMapping.unk_00[3] = replacement;
+        menu->controllerMapping.menuButton = replacement;
     }
-    if (menu->controllerMapping.unk_00[8] == button)
+    if (menu->controllerMapping.skipButton == button)
     {
-        menu->controllerMapping.unk_00[8] = replacement;
+        menu->controllerMapping.skipButton = replacement;
     }
 }
 
@@ -900,8 +1717,8 @@ int MainMenu::UpdateOptions()
                 this->cursor = 0;
                 g_Unknown6d3f50.QueueSound(10, 0);
                 this->controllerMapping = g_ControllerMapping;
-                g_ControllerMapping.unk_00[4] = -1;
-                g_ControllerMapping.unk_00[5] = -1;
+                g_ControllerMapping.upButton = -1;
+                g_ControllerMapping.downButton = -1;
                 break;
             case 6:
                 g_Unknown6c6d18.StopMusic();

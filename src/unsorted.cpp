@@ -105,10 +105,10 @@ WORD ReadJoystick(WORD buttons)
         {
             return buttons;
         }
-        shotPressed = SetButtonFromJoystick(&buttons, g_ControllerMapping.unk_00[0], 1, joyInfo.dwButtons);
-        if (g_ControllerMapping.unk_00[0] != g_ControllerMapping.unk_00[2])
+        shotPressed = SetButtonFromJoystick(&buttons, g_ControllerMapping.shootButton, 1, joyInfo.dwButtons);
+        if (g_ControllerMapping.shootButton != g_ControllerMapping.focusButton)
         {
-            SetButtonFromJoystick(&buttons, g_ControllerMapping.unk_00[2], 4, joyInfo.dwButtons);
+            SetButtonFromJoystick(&buttons, g_ControllerMapping.focusButton, 4, joyInfo.dwButtons);
         }
         else if (shotPressed)
         {
@@ -129,13 +129,13 @@ WORD ReadJoystick(WORD buttons)
         {
             g_ShotHeldFrames = 0;
         }
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[1], 2, joyInfo.dwButtons);
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[3], 8, joyInfo.dwButtons);
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[4], 0x10, joyInfo.dwButtons);
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[5], 0x20, joyInfo.dwButtons);
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[6], 0x40, joyInfo.dwButtons);
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[7], 0x80, joyInfo.dwButtons);
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[8], 0x100, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.bombButton, 2, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.menuButton, 8, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.upButton, 0x10, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.downButton, 0x20, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.leftButton, 0x40, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.rightButton, 0x80, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.skipButton, 0x100, joyInfo.dwButtons);
         margin = (g_JoyCaps.wXmax - g_JoyCaps.wXmin) / 2 / 2;
         buttons |= ((g_JoyCaps.wXmin + g_JoyCaps.wXmax) / 2 + margin < joyInfo.dwXpos) ? 0x80 : 0;
         buttons |= (joyInfo.dwXpos < (g_JoyCaps.wXmin + g_JoyCaps.wXmax) / 2 - margin) ? 0x40 : 0;
@@ -171,10 +171,10 @@ WORD ReadJoystick(WORD buttons)
         {
             return buttons;
         }
-        diFire = SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[0], 1, state.rgbButtons);
-        if (g_ControllerMapping.unk_00[0] != g_ControllerMapping.unk_00[2])
+        diFire = SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.shootButton, 1, state.rgbButtons);
+        if (g_ControllerMapping.shootButton != g_ControllerMapping.focusButton)
         {
-            SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[2], 4, state.rgbButtons);
+            SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.focusButton, 4, state.rgbButtons);
         }
         else if (diFire)
         {
@@ -195,13 +195,13 @@ WORD ReadJoystick(WORD buttons)
         {
             g_ShotHeldFrames = 0;
         }
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[1], 2, state.rgbButtons);
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[3], 8, state.rgbButtons);
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[4], 0x10, state.rgbButtons);
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[5], 0x20, state.rgbButtons);
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[6], 0x40, state.rgbButtons);
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[7], 0x80, state.rgbButtons);
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.unk_00[8], 0x100, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.bombButton, 2, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.menuButton, 8, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.upButton, 0x10, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.downButton, 0x20, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.leftButton, 0x40, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.rightButton, 0x80, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.skipButton, 0x100, state.rgbButtons);
         buttons |= (state.lX > g_Unknown6c6d18.cfg.padThresholdX) ? 0x80 : 0;
         buttons |= (state.lX < -g_Unknown6c6d18.cfg.padThresholdX) ? 0x40 : 0;
         buttons |= (state.lY > g_Unknown6c6d18.cfg.padThresholdY) ? 0x20 : 0;

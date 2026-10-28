@@ -1587,6 +1587,7 @@ address,size,name,symbol
 0x00478518,,g_ShotTypeNames,?g_ShotTypeNames@@3PAPADA
 0x00478528,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A
 0x00478628,,g_SoundPaths,?g_SoundPaths@@3PAPADA
+0x00478690,,g_Unknown478690,?g_Unknown478690@@3FA
 0x00478694,,g_MenuStageNames,?g_MenuStageNames@@3PAPADA
 0x004786b0,,g_MenuShotTypeNames,?g_MenuShotTypeNames@@3PAPADA
 0x004786c0,,g_MenuDifficultyNames,?g_MenuDifficultyNames@@3PAPADA

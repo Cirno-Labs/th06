@@ -120,7 +120,8 @@ public:
     int unk_1a30;
     // The stage being played: 1 to 6, 7 for the extra stage.
     int stage;
-    DWORD unk_1a38;
+    // The stage last picked in practice.
+    int unk_1a38;
     // The play area: x, y, width and height.
     float arena[4];
     // Where the player may move: x, y, width and height.

@@ -94,7 +94,8 @@ public:
     int unk_81f0;
     // Counts the frames in the current state (unk_81f0).
     int unk_81f4;
-    DWORD unk_81f8;
+    // Frames without input on the title; at 720 the demo starts.
+    int unk_81f8;
     int unk_81fc;
     D3DCOLOR unk_8200;
     // The colors HighlightMenuEntry gives the selected entry and the
@@ -127,13 +128,20 @@ public:
     ReplayHeader replays[60];
     // The replay picked in the replay menu.
     ReplayHeader *unk_10edc;
-    DWORD unk_10ee0[0x12];
+    // The frame rates measured on the title screen (frames per half
+    // second or more, those of 57 or above), and how many: their average
+    // picks the game speed when a game starts.
+    int unk_10ee0;
+    float unk_10ee4[0x10];
+    DWORD unk_10f24;
     int unk_10f28;
     int unk_10f2c;
     int unk_10f30;
 };
 ASSERT_SIZE(MainMenu, 0x10f34);
 extern MainMenu g_MainMenu;
+// The key the key configuration saw pressed last frame (0x20 for none).
+extern short g_Unknown478690;
 // The names the replay menu shows for stages, shot types and difficulties.
 extern char *g_MenuStageNames[7];
 extern char *g_MenuShotTypeNames[4];

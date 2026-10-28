@@ -186,10 +186,21 @@ public:
 };
 ASSERT_SIZE(DatArchive, 0x14);
 
-// The pad buttons assigned to the game's actions.
+// The pad buttons assigned to the game's actions, -1 where none is.
+// Named fields rather than an array: a local copy (MainMenu::OnUpdate's
+// defaults) gets no /GS cookie; the key configuration indexes them in
+// order through a short pointer.
 struct ControllerMapping
 {
-    short unk_00[9];
+    short shootButton;
+    short bombButton;
+    short focusButton;
+    short menuButton;
+    short upButton;
+    short downButton;
+    short leftButton;
+    short rightButton;
+    short skipButton;
 };
 ASSERT_SIZE(ControllerMapping, 0x12);
 // The mapping in effect, at 0x4765a0, kept in step with the config's.

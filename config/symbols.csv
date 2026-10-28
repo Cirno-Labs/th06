@@ -438,7 +438,7 @@ address,size,name,symbol
 0x0043a1ec,332,Func43a1ec,
 0x0043a338,300,Func43a338,?Func43a338@@YAHH@Z
 0x0043a464,501,Func43a464,
-0x0043a659,177,Func43a659,
+0x0043a659,177,MainMenu::DeletedCallback,?DeletedCallback@MainMenu@@SAHPAV1@@Z
 0x0043a70a,44,Func43a70a,?Func43a70a@@YAXXZ
 0x0043a736,112,Func43a736,
 0x0043a7b0,23,CSoundManager::CSoundManager,??0CSoundManager@@QAE@XZ

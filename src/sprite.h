@@ -254,6 +254,17 @@ public:
     // frame now unless `script` is NULL.
     void SetScript(Sprite *vm, void *script);
 
+    // Forgets scripts 0x100 to 0x179, the title menu's.
+    void ClearMenuScripts()
+    {
+        int i;
+
+        for (i = 0; i < 0x7a; i++)
+        {
+            this->scripts[i + 0x100] = NULL;
+        }
+    }
+
     // Runs script `script` of the loaded ANM files on `vm`.
     void StartScript(Sprite *vm, int script)
     {

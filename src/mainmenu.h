@@ -4,6 +4,7 @@
 
 #include <windows.h>
 
+#include "chain.h"
 #include "common.h"
 #include "sprite.h"
 
@@ -14,7 +15,16 @@ public:
     // memset instead.
     MainMenu();
 
+    // Releases the menu's sprite files (slots 0x1b to 0x24 and those
+    // of Func43a70a) and surface 0, forgets their scripts, removes the
+    // calc element and frees unk_10edc. Returns 0.
+    static int DeletedCallback(MainMenu *menu);
+
     Sprite sprites[0x7a];
-    DWORD unk_81a0[0x2365];
+    DWORD unk_81a0[0x26];
+    ChainElem *calcChain;
+    DWORD unk_823c[0x2328];
+    void *unk_10edc;
+    DWORD unk_10ee0[0x15];
 };
 ASSERT_SIZE(MainMenu, 0x10f34);

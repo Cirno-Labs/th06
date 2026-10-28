@@ -71,14 +71,14 @@ void ItemManager::UpdateItems()
     static D3DXVECTOR3 itemSize(16.0f, 16.0f, 16.0f);
 
     any = FALSE;
-    this->unk_28948 = 0;
+    this->activeCount = 0;
     for (i = 0; i < 0x200; i++, entry++)
     {
         if (!entry->active)
         {
             continue;
         }
-        this->unk_28948++;
+        this->activeCount++;
         if (entry->state == 2)
         {
             if (entry->timer < 60)

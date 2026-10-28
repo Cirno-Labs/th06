@@ -52,7 +52,8 @@ public:
     Item items[0x201];
     // Where SpawnItem looks for a free slot first.
     int nextIndex;
-    int unk_28948;
+    // How many items were active this frame.
+    int activeCount;
 };
 extern ItemManager g_ItemManager;
 

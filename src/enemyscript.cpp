@@ -1918,3 +1918,46 @@ void Func40d400(Enemy *enemy, EnemyScriptInstr *instr)
     }
     enemy->ctx.intVars[3] = count;
 }
+
+// g_EnemyScriptFuncs[9]: turns every small stopped bullet into color 2
+// and starts it accelerating away, its direction turning with its
+// distance from the enemy.
+void Func40d530(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    float base2;
+    Bullet *bullet2 = g_BulletManager.bullets;
+    BulletShooter shooter;
+    int i;
+    float dist;
+
+    base2 = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+    g_EffectManager.SpawnEffect(0xc, &enemy->pos, 1, 0xffffffff);
+    for (i = 0; i < 0x280; i++, bullet2++)
+    {
+        if (bullet2->state == 0 || bullet2->state == 5)
+        {
+            continue;
+        }
+        if (bullet2->sprites.sprite0.spriteData != NULL && bullet2->sprites.sprite0.spriteData->height < 30.0f &&
+            bullet2->speed == 0.0f)
+        {
+            bullet2->flags |= 0x10;
+            bullet2->color = 2;
+            g_SpriteEngine->SetSprite(&bullet2->sprites.sprite0, bullet2->sprites.sprite0.unk_0b2 + bullet2->color);
+            bullet2->speed = 0.01f;
+            bullet2->timer.Set(0);
+            bullet2->unk_5a8 = 120;
+            dist = (enemy->pos.x - bullet2->pos.x) * (enemy->pos.x - bullet2->pos.x) +
+                   (enemy->pos.y - bullet2->pos.y) * (enemy->pos.y - bullet2->pos.y);
+            if (dist > 0.1f)
+            {
+                dist = sqrtf(dist);
+            }
+            else
+            {
+                dist = 0.0f;
+            }
+            SinCosScale(&bullet2->accel, dist * 3.1415927f / 256.0f + base2, 0.01f);
+        }
+    }
+}

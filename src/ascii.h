@@ -31,7 +31,13 @@ class Unknown4010e0
 public:
     Unknown4010e0();
 
-    void Func401b80();
+    // The pause menu, while g_GameManager.unk_181f is set. unk_000 is the
+    // state: 0 starts the menu's scripts (and a copy of the play area
+    // into texture 3 for unk_668's background), 1 and 2 have resume or
+    // quit selected, 4 and 5 the no and yes of quitting; 3 resumes and 6
+    // returns to the title (scene 1) after 20 frames. The pause button
+    // resumes and 0x200 quits from any state. Returns 0.
+    int UpdatePauseMenu();
     // Draws, while g_GameManager.unk_181f is set, inside the viewport given
     // by g_GameManager.arena: unk_668 without z writes if
     // g_Unknown6c6d18.lockableBackBuffer is set and unk_000 is nonzero,

@@ -10,6 +10,205 @@ Unknown4010e0::Unknown4010e0()
 {
 }
 
+int Unknown4010e0::UpdatePauseMenu()
+{
+    int i;
+
+    if (WAS_PRESSED(8))
+    {
+        this->unk_000 = 3;
+        for (i = 0; i < 6; i++)
+        {
+            if (this->unk_008[i].flags.unk0)
+            {
+                this->unk_008[i].pendingInterrupt = 2;
+            }
+        }
+        this->unk_004 = 0;
+        this->unk_668.pendingInterrupt = 1;
+    }
+    if (WAS_PRESSED(0x200))
+    {
+        this->unk_000 = 6;
+        for (i = 0; i < 6; i++)
+        {
+            if (this->unk_008[i].flags.unk0)
+            {
+                this->unk_008[i].pendingInterrupt = 2;
+            }
+        }
+        this->unk_004 = 0;
+    }
+    switch (this->unk_000)
+    {
+    case 0:
+        for (i = 0; i < 6; i++)
+        {
+            g_SpriteEngine->StartScript(&this->unk_008[i], i + 2);
+        }
+        for (i = 0; i < 3; i++)
+        {
+            this->unk_008[i].pendingInterrupt = 1;
+        }
+        this->unk_000++;
+        this->unk_004 = 0;
+        if (g_Unknown6c6d18.lockableBackBuffer)
+        {
+            g_SpriteEngine->SetPendingCopy(3, 0x20, 0x10, 0x180, 0x1c0);
+            g_SpriteEngine->StartScript(&this->unk_668, 0x718);
+            this->unk_668.pos.x = 32.0f;
+            this->unk_668.pos.y = 16.0f;
+            this->unk_668.pos.z = 0.0f;
+        }
+    case 1:
+        this->unk_008[1].color = 0xffff8080;
+        this->unk_008[2].color = 0x80808080;
+        this->unk_008[1].scaleY = 1.7f;
+        this->unk_008[1].scaleX = 1.7f;
+        this->unk_008[2].scaleY = 1.5f;
+        this->unk_008[2].scaleX = 1.5f;
+        this->unk_008[1].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        this->unk_008[2].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        if (this->unk_004 >= 4)
+        {
+            if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
+            {
+                this->unk_000 = 2;
+            }
+            if (WAS_PRESSED(1))
+            {
+                for (i = 0; i < 3; i++)
+                {
+                    this->unk_008[i].pendingInterrupt = 2;
+                }
+                this->unk_000 = 3;
+                this->unk_004 = 0;
+                this->unk_668.pendingInterrupt = 1;
+            }
+        }
+        break;
+    case 2:
+        this->unk_008[1].color = 0x80808080;
+        this->unk_008[2].color = 0xffff8080;
+        this->unk_008[1].scaleY = 1.5f;
+        this->unk_008[1].scaleX = 1.5f;
+        this->unk_008[2].scaleY = 1.7f;
+        this->unk_008[2].scaleX = 1.7f;
+        this->unk_008[1].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        this->unk_008[2].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        if (this->unk_004 >= 4)
+        {
+            if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
+            {
+                this->unk_000 = 1;
+            }
+            if (WAS_PRESSED(1))
+            {
+                for (i = 0; i < 3; i++)
+                {
+                    this->unk_008[i].pendingInterrupt = 2;
+                }
+                for (i = 3; i < 6; i++)
+                {
+                    this->unk_008[i].pendingInterrupt = 1;
+                }
+                this->unk_000 = 5;
+                this->unk_004 = 0;
+            }
+        }
+        break;
+    case 3:
+        if (this->unk_004 >= 20)
+        {
+            this->unk_000 = 0;
+            g_GameManager.unk_181f = 0;
+            for (i = 0; i < 6; i++)
+            {
+                this->unk_008[i].ClearUnk0();
+            }
+        }
+        break;
+    case 4:
+        this->unk_008[4].color = 0xffff8080;
+        this->unk_008[5].color = 0x80808080;
+        this->unk_008[4].scaleY = 1.7f;
+        this->unk_008[4].scaleX = 1.7f;
+        this->unk_008[5].scaleY = 1.5f;
+        this->unk_008[5].scaleX = 1.5f;
+        this->unk_008[4].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        this->unk_008[5].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        if (this->unk_004 >= 4)
+        {
+            if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
+            {
+                this->unk_000 = 5;
+            }
+            if (WAS_PRESSED(1))
+            {
+                for (i = 3; i < 6; i++)
+                {
+                    this->unk_008[i].pendingInterrupt = 2;
+                }
+                this->unk_000 = 6;
+                this->unk_004 = 0;
+            }
+        }
+        break;
+    case 5:
+        this->unk_008[4].color = 0x80808080;
+        this->unk_008[5].color = 0xffff8080;
+        this->unk_008[4].scaleY = 1.5f;
+        this->unk_008[4].scaleX = 1.5f;
+        this->unk_008[5].scaleY = 1.7f;
+        this->unk_008[5].scaleX = 1.7f;
+        this->unk_008[4].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        this->unk_008[5].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        if (this->unk_004 >= 4)
+        {
+            if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
+            {
+                this->unk_000 = 4;
+            }
+            if (WAS_PRESSED(1))
+            {
+                for (i = 0; i < 3; i++)
+                {
+                    this->unk_008[i].pendingInterrupt = 1;
+                }
+                for (i = 3; i < 6; i++)
+                {
+                    this->unk_008[i].pendingInterrupt = 2;
+                }
+                this->unk_000 = 2;
+                this->unk_004 = 0;
+            }
+        }
+        break;
+    case 6:
+        if (this->unk_004 >= 20)
+        {
+            this->unk_000 = 0;
+            g_GameManager.unk_181f = 0;
+            g_Unknown6c6d18.scene = 1;
+            for (i = 0; i < 6; i++)
+            {
+                this->unk_008[i].ClearUnk0();
+            }
+        }
+        break;
+    }
+    for (i = 0; i < 6; i++)
+    {
+        g_SpriteEngine->Step(&this->unk_008[i]);
+    }
+    if (g_Unknown6c6d18.lockableBackBuffer)
+    {
+        g_SpriteEngine->Step(&this->unk_668);
+    }
+    this->unk_004++;
+    return 0;
+}
+
 void Unknown4010e0::Func402740()
 {
     int i;
@@ -93,7 +292,7 @@ int AsciiText::OnUpdate(AsciiText *text)
     }
     else if (g_GameManager.unk_181f)
     {
-        text->unk_6244.Func401b80();
+        text->unk_6244.UpdatePauseMenu();
     }
     if (g_GameManager.unk_1820)
     {

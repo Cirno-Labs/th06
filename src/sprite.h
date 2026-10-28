@@ -121,6 +121,10 @@ public:
 
     // Resets the sprite's state, keeping its texture.
     void Initialize();
+    void ClearUnk0()
+    {
+        this->flags.unk0 = 0;
+    }
     // Whether the sprite shows a sprite whose texture is loaded.
     __forceinline BOOL HasTexture();
 
@@ -265,6 +269,16 @@ public:
         {
             this->scripts[i + 0x100] = NULL;
         }
+    }
+
+    // Has CopyBackBufferToTexture's copy done after the frame is drawn.
+    void SetPendingCopy(int texture, int left, int top, int width, int height)
+    {
+        this->pendingCopyTexture = texture;
+        this->pendingCopyLeft = left;
+        this->pendingCopyTop = top;
+        this->pendingCopyWidth = width;
+        this->pendingCopyHeight = height;
     }
 
     // Runs script `script` of the loaded ANM files on `vm`.

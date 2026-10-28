@@ -66,7 +66,7 @@ address,size,name,symbol
 0x0040bb80,1396,Func40bb80,?Func40bb80@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040c100,117,Func40c100,?Func40c100@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040c180,1066,Func40c180,?Func40c180@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x0040c5b0,1331,Func40c5b0,
+0x0040c5b0,1331,Func40c5b0,?Func40c5b0@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040caf0,1360,Func40caf0,
 0x0040d040,955,Func40d040,
 0x0040d400,293,Func40d400,
@@ -511,7 +511,7 @@ address,size,name,symbol
 0x0043ef0c,226,Func43ef0c,
 0x0043efee,148,D3DXMatrixPerspectiveFovLH,_D3DXMatrixPerspectiveFovLH@20
 0x0043f082,76,Func43f082,
-0x0043f0ce,167,Func43f0ce,
+0x0043f0ce,167,D3DXVec3Normalize,_D3DXVec3Normalize@8
 0x0043f175,208,Func43f175,
 0x0043f245,253,D3DXVec3Project,_D3DXVec3Project@24
 0x0043f362,511,Func43f362,

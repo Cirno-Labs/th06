@@ -1635,3 +1635,83 @@ void Func40c180(Enemy *enemy, EnemyScriptInstr *instr)
     }
     enemy->ctx.intVars[2] = 0;
 }
+
+// g_EnemyScriptFuncs[5], set as the context's func: every ninth frame,
+// fires a fan of nine bullets from an arc to one side of the enemy (the
+// side alternating), on the way towards the player.
+void Func40c5b0(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int i;
+    int count;
+
+    if (enemy->ctx.intVars[2] % 9 == 0)
+    {
+        D3DXVECTOR3 tmp4;
+        float side;
+        float cs2;
+        float a2;
+        D3DXVECTOR3 perp;
+        float f2;
+        D3DXVECTOR3 offset;
+        float s;
+        BulletShooter shooter;
+
+        count = enemy->ctx.intVars[2] / 9;
+        shooter.sprite = 8;
+        shooter.aimMode = 0;
+        if (g_GameManager.difficulty <= 1)
+        {
+            shooter.count1 = 1;
+        }
+        else
+        {
+            shooter.count1 = 3;
+        }
+        shooter.count2 = 1;
+        shooter.angle2 = 0.5235988f;
+        shooter.unk_4a = 0;
+        shooter.flags = 0;
+        f2 = 0.5f - count * 0.5f / 9.0f;
+        tmp4 = g_Player.position - enemy->pos;
+        D3DXVec3Normalize(&perp, &tmp4);
+        if (count & 1)
+        {
+            side = -256.0f;
+        }
+        else
+        {
+            side = 256.0f;
+        }
+        perp *= side;
+        tmp4 *= f2;
+        offset = tmp4 + perp;
+        perp = -perp;
+        f2 = 0.7853982f;
+        cs2 = cosf(f2);
+        s = sinf(f2);
+        tmp4 = perp;
+        perp.x = tmp4.x * cs2 + tmp4.y * s;
+        perp.y = -tmp4.x * s + tmp4.y * cs2;
+        f2 = -0.17453294f;
+        cs2 = cosf(f2);
+        s = sinf(f2);
+        shooter.angle1 = 0.0f;
+        a2 = -0.7853982f;
+        for (i = 0; i < 9; i++, a2 += 0.17453294f)
+        {
+            tmp4 = perp;
+            perp.x = tmp4.x * cs2 + tmp4.y * s;
+            perp.y = -tmp4.x * s + tmp4.y * cs2;
+            shooter.pos = enemy->pos + perp + offset;
+            shooter.speed1 = 2.0f;
+            if ((count & 1) && g_GameManager.difficulty <= 1)
+            {
+                shooter.angle1 = a2;
+            }
+            shooter.color = 3;
+            g_BulletManager.FirePattern(&shooter);
+        }
+        g_Unknown6d3f50.QueueSound(7, 0);
+    }
+    enemy->ctx.intVars[2]++;
+}

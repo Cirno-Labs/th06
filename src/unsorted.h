@@ -672,6 +672,70 @@ struct MsgFile
     void *scripts[1];
 };
 
+// The arguments of most message instructions: who speaks (0 the
+// player, 1 the boss; 2 and 3 select the text lines for opcode 5) and a
+// sprite, script or line number, then the text.
+struct MsgArgs
+{
+    short who;
+    union
+    {
+        short index;
+        BYTE value;
+    };
+    char text[1];
+};
+
+// One instruction of a message script.
+struct MsgInstr
+{
+    // The frame it runs on.
+    WORD time;
+    BYTE opcode;
+    // The size of the arguments, in bytes.
+    BYTE argsSize;
+    union
+    {
+        MsgArgs args;
+        int i;
+        BYTE b;
+    };
+};
+
+// The dialogue Gui runs (GuiImpl+0x2534, 0x6a8 bytes, constructed at
+// 0x41b4c4).
+struct GuiMsg
+{
+    // The message file loaded.
+    MsgFile *msgFile;
+    // The next instruction of the running script.
+    MsgInstr *instr;
+    // The running script; negative when none runs.
+    int scriptIndex;
+    Timer timer;
+    // Counts the frames since the last line of text showed, for the wait
+    // instruction.
+    int waitFrames;
+    // The player's and the boss's portraits.
+    Sprite portraits[2];
+    // The two lines of text.
+    Sprite text[2];
+    // Lines shown by opcode 8 (scripts 0x704 and 0x705).
+    Sprite unk_45c[2];
+    // The text colors and their shadows, by speaker.
+    D3DCOLOR textColors[4];
+    D3DCOLOR shadowColors[4];
+    // The text's height in pixels (unk_10c of the text sprites).
+    int fontSize;
+    // Raised by opcode 6, counted down every frame.
+    DWORD unk_6a0;
+    // Lets the skip button (0x100) fast-forward the script; set by
+    // opcode 13.
+    BYTE skippable;
+    BYTE unk_6a5[0x3];
+};
+ASSERT_SIZE(GuiMsg, 0x6a8);
+
 // A message Gui shows for a while at a fixed place, with a number.
 struct GuiPopup
 {
@@ -685,9 +749,14 @@ struct GuiPopup
 // constructed at 0x41b34b).
 struct GuiImpl
 {
-    // Starts script `index` of msgFile.
-    void Func41878b(int index);
-    void Func4188c9();
+    // Starts script `index` of msg.msgFile, if there is one: resets
+    // the dialogue's state and the text's colors, and loads the effects
+    // of stage 6 and the extra stage for their scripts 0 and 10.
+    void StartMsgScript(int index);
+    // Runs the dialogue for a frame: the instructions due (portraits,
+    // text, waits for the shot button, music, the stage's end), then
+    // steps its sprites. Returns 0, or -1 when no script runs.
+    int Func4188c9();
 
     Sprite unk_0000[0x1a];
     BYTE unk_1ba0;
@@ -702,15 +771,10 @@ struct GuiImpl
     Sprite unk_2204;
     Sprite unk_2314;
     Sprite unk_2424;
-    // The message file loaded.
-    MsgFile *msgFile;
-    DWORD unk_2538;
-    int unk_253c;
-    DWORD unk_2540[0x1a5];
-    DWORD unk_2bd4;
-    BYTE unk_2bd8;
-    BYTE unk_2bd9[0x3];
-    DWORD unk_2bdc[0x2];
+    GuiMsg msg;
+    // Set by the dialogue's opcode 9.
+    DWORD unk_2bdc;
+    DWORD unk_2be0;
     // The bonus for bullets cleared, the full power message and one more.
     GuiPopup bonusPopup;
     GuiPopup fullPowerPopup;
@@ -753,7 +817,7 @@ public:
     // Removes the update element and the draw element.
     static void RemoveChain();
 
-    // Runs impl->Func41878b(`index`) and sets
+    // Runs impl->StartMsgScript(`index`) and sets
     // g_Unknown6c6d18.unk_198 to 3.
     void StartMsg(int index);
     // Whether impl->unk_2424 shows a sprite and has flag 13.
@@ -773,11 +837,11 @@ public:
     void ShowBonusPopup(int bonus);
     // Sets impl->unk_20f4.pendingInterrupt.
     void Func41732c();
-    // Returns impl->unk_2bd8.
+    // Returns impl->msg.skippable.
     BOOL Func417344();
-    // Whether impl->unk_2bd4 is 0 and impl->unk_253c is not negative.
+    // Whether impl->msg.unk_6a0 is 0 and a dialogue script runs.
     BOOL Func419572();
-    // Whether impl->unk_253c is not negative.
+    // Whether a dialogue script runs.
     BOOL Func4195a2();
     // Loads the message file at `path` into impl->msgFile, turning its
     // offsets into pointers. Returns 0, or -1 after logging

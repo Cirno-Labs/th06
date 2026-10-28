@@ -22,7 +22,7 @@ void Gui::Func41732c()
 
 BOOL Gui::Func417344()
 {
-    return this->impl->unk_2bd8;
+    return this->impl->msg.skippable;
 }
 
 void Gui::ShowBonusPopup(int bonus)
@@ -263,8 +263,8 @@ int Gui::LoadResources()
     this->impl->unk_1cb4.unk_10c = 16;
     this->impl->unk_1cb4.unk_10d = 16;
     g_SpriteEngine->RenderTextRightAligned(&this->impl->unk_1cb4, 0xe0ffff, 0, "♪%s", g_Stage.data->songName);
-    this->impl->unk_253c = -1;
-    this->impl->unk_2bdc[0] = 0;
+    this->impl->msg.scriptIndex = -1;
+    this->impl->unk_2bdc = 0;
     this->impl->bonusPopup.shown = 0;
     this->impl->fullPowerPopup.shown = 0;
     this->impl->unk_2c24.shown = 0;
@@ -281,48 +281,80 @@ int Gui::LoadMsg(char *path)
     int i;
 
     this->FreeMsgFile();
-    this->impl->msgFile = (MsgFile *)LoadFileData(path, 0);
-    if (this->impl->msgFile == NULL)
+    this->impl->msg.msgFile = (MsgFile *)LoadFileData(path, 0);
+    if (this->impl->msg.msgFile == NULL)
     {
         LogPrintf(&g_Unknown69d998, "error : メッセージファイル %s が読み込めませんでした\n", path);
         return -1;
     }
-    this->impl->unk_253c = -1;
-    this->impl->unk_2538 = 0;
-    for (i = 0; i < this->impl->msgFile->count; i++)
+    this->impl->msg.scriptIndex = -1;
+    this->impl->msg.instr = NULL;
+    for (i = 0; i < this->impl->msg.msgFile->count; i++)
     {
-        this->impl->msgFile->scripts[i] = (char *)this->impl->msgFile->scripts[i] + (int)this->impl->msgFile;
+        this->impl->msg.msgFile->scripts[i] = (char *)this->impl->msg.msgFile->scripts[i] + (int)this->impl->msg.msgFile;
     }
     return 0;
 }
 
 void Gui::FreeMsgFile()
 {
-    if (this->impl->msgFile != NULL)
+    if (this->impl->msg.msgFile != NULL)
     {
-        MemFree(this->impl->msgFile);
-        this->impl->msgFile = NULL;
+        MemFree(this->impl->msg.msgFile);
+        this->impl->msg.msgFile = NULL;
     }
 }
 
 void Gui::StartMsg(int index)
 {
-    this->impl->Func41878b(index);
+    this->impl->StartMsgScript(index);
     g_Unknown6c6d18.unk_198 = 3;
+}
+
+void GuiImpl::StartMsgScript(int index)
+{
+    MsgFile *msgFile;
+
+    if (this->msg.msgFile->count <= index)
+    {
+        return;
+    }
+    msgFile = this->msg.msgFile;
+    memset(&this->msg, 0, sizeof(GuiMsg));
+    this->msg.scriptIndex = index;
+    this->msg.msgFile = msgFile;
+    this->msg.instr = (MsgInstr *)this->msg.msgFile->scripts[index];
+    this->msg.text[0].scriptIndex = -1;
+    this->msg.text[1].scriptIndex = -1;
+    this->msg.fontSize = 15;
+    this->msg.textColors[0] = 0xe8f0ff;
+    this->msg.textColors[1] = 0xffe8f0;
+    this->msg.shadowColors[0] = 0;
+    this->msg.shadowColors[1] = 0;
+    this->msg.skippable = 1;
+    if (g_GameManager.stage == 6 && (index == 0 || index == 10))
+    {
+        g_SpriteEngine->LoadAnm(0xb, "data/eff06.anm", 0x2b3);
+    }
+    else if (g_GameManager.stage == 7 && (index == 0 || index == 10))
+    {
+        g_SpriteEngine->LoadAnm(0xb, "data/eff07.anm", 0x2b3);
+        g_SpriteEngine->LoadAnm(0x12, "data/face12c.anm", 0x4a8);
+    }
 }
 
 BOOL Gui::Func419572()
 {
-    if (this->impl->unk_2bd4 > 0)
+    if (this->impl->msg.unk_6a0 > 0)
     {
         return FALSE;
     }
-    return this->impl->unk_253c >= 0;
+    return this->impl->msg.scriptIndex >= 0;
 }
 
 BOOL Gui::Func4195a2()
 {
-    return this->impl->unk_253c >= 0;
+    return this->impl->msg.scriptIndex >= 0;
 }
 
 int Timer::NextTick()

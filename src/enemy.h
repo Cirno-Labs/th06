@@ -124,15 +124,23 @@ struct Enemy
     Effect *effects[12];
     int effectCount;
     float unk_ea4;
-    int unk_ea8;
-    DWORD unk_eac;
-    int unk_eb0;
-    DWORD unk_eb4[0x2];
+    // When the life falls below lifeCallbackLife, the script runs
+    // lifeCallbackSub; -1 for none.
+    int lifeCallbackLife;
+    int lifeCallbackSub;
+    // When unk_cf0 reaches timerCallbackTime, the script runs
+    // timerCallbackSub; -1 for none.
+    int timerCallbackTime;
+    int timerCallbackSub;
+    DWORD unk_eb8;
     Timer unk_ebc;
 
     void Func4121b0();
-    void Func411da0();
-    void Func411f40();
+    // Once the life falls below lifeCallbackLife: sets it to that,
+    // starts lifeCallbackSub, makes the death subroutine the timer
+    // callback's and clears the other enemies. Returns 1 then, else 0.
+    int CheckLifeCallback();
+    int Func411f40();
     // Keeps the position within the bounds, with flags.clampPos.
     void ClampPos();
     // Moves by the velocity, mirrored with flags.mirrored.

@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">63.27% (298)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">27.39% (129)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">63.48% (299)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">27.18% (128)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="472.62" height="6" x="0" y="0" class="named"/>
-<rect width="69.78" height="6" x="472.62" y="0" class="decompiled"/>
-<rect width="204.59" height="6" x="542.41" y="0" class="todo"/>
+<rect width="474.21" height="6" x="0" y="0" class="named"/>
+<rect width="69.78" height="6" x="474.21" y="0" class="decompiled"/>
+<rect width="203.01" height="6" x="543.99" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -178,7 +178,7 @@
 <rect width="12" height="12" x="105" y="30" class="named"><title>0x00411390 EnemyManager::Spawn (290 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="30" class="named"><title>0x004114c0 ReleaseEnemyEffects (110 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="30" class="named"><title>0x00411530 EnemyManager::RunTimeline (2099 bytes)</title></rect>
-<rect width="12" height="12" x="150" y="30" class="todo"><title>0x00411da0 Enemy::Func411da0 (412 bytes)</title></rect>
+<rect width="12" height="12" x="150" y="30" class="named"><title>0x00411da0 Enemy::CheckLifeCallback (412 bytes)</title></rect>
 <rect width="12" height="12" x="165" y="30" class="todo"><title>0x00411f40 Enemy::Func411f40 (623 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="30" class="decompiled"><title>0x004121b0 Enemy::Func4121b0 (132 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="30" class="named"><title>0x00412240 Enemy::ClampPos (217 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">45.64%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">49.54%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">45.82%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">49.37%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="340.96" height="6" x="0" y="0" class="named"/>
-<rect width="35.95" height="6" x="340.96" y="0" class="decompiled"/>
-<rect width="370.09" height="6" x="376.91" y="0" class="todo"/>
+<rect width="342.25" height="6" x="0" y="0" class="named"/>
+<rect width="35.95" height="6" x="342.25" y="0" class="decompiled"/>
+<rect width="368.79" height="6" x="378.21" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -697,7 +697,7 @@
 <rect width="11.51" height="10.83" x="580.59" y="84.39" class="todo"><title>0x0040edb0 Func40edb0 (416 bytes)</title></rect>
 <rect width="11.51" height="10.76" x="580.59" y="98.22" class="todo"><title>0x0040b8e0 Func40b8e0 (414 bytes)</title></rect>
 <rect width="11.51" height="10.76" x="580.59" y="111.98" class="named"><title>0x0041d680 GetPadButtons (414 bytes)</title></rect>
-<rect width="11.51" height="10.69" x="580.59" y="125.74" class="todo"><title>0x00411da0 Enemy::Func411da0 (412 bytes)</title></rect>
+<rect width="11.51" height="10.69" x="580.59" y="125.74" class="named"><title>0x00411da0 Enemy::CheckLifeCallback (412 bytes)</title></rect>
 <rect width="11.51" height="10.56" x="580.59" y="139.44" class="named"><title>0x00420190 ItemManager::DrawItems (408 bytes)</title></rect>
 <rect width="10.18" height="11.45" x="595.10" y="0" class="named"><title>0x0041c3f3 SetupCamera (395 bytes)</title></rect>
 <rect width="10.18" height="11.23" x="595.10" y="14.45" class="named"><title>0x004071b0 DrawMarisaBBomb (389 bytes)</title></rect>

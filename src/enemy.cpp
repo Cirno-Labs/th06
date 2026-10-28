@@ -264,6 +264,49 @@ void EnemyManager::RunTimeline()
     }
 }
 
+int Enemy::CheckLifeCallback()
+{
+    Enemy *it;
+    int i;
+
+    if (this->life < this->lifeCallbackLife)
+    {
+        this->life = this->lifeCallbackLife;
+        g_EnemyScripts.StartSub(&this->ctx, this->lifeCallbackSub);
+        this->lifeCallbackLife = -1;
+        this->timerCallbackSub = this->deathSub;
+        this->unk_cd4 = -0.5f;
+        this->unk_cd8 = 0.5f;
+        this->unk_cdc = 0;
+        this->unk_cde = 0;
+        this->unk_ce0 = 0;
+        this->unk_ce2 = 0;
+        this->unk_c3c = 0;
+        for (it = g_EnemyManager.enemies, i = 0; i < 0x100; i++, it++)
+        {
+            if (!it->flags.active)
+            {
+                continue;
+            }
+            if (it->flags.unk11)
+            {
+                continue;
+            }
+            it->life = 0;
+            if (!it->flags.unk8 && it->deathSub >= 0)
+            {
+                g_EnemyScripts.StartSub(&it->ctx, it->deathSub);
+                it->deathSub = -1;
+            }
+        }
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void Enemy::Func4121b0()
 {
     if (this->flags.unk13 == 0)
@@ -357,11 +400,11 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             em->Func4121b0();
             continue;
         }
-        if (em->unk_ea8 >= 0)
+        if (em->lifeCallbackLife >= 0)
         {
-            em->Func411da0();
+            em->CheckLifeCallback();
         }
-        if (em->unk_eb0 >= 0)
+        if (em->timerCallbackTime >= 0)
         {
             em->Func411f40();
         }
@@ -442,8 +485,8 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             }
             if (em->life <= 0 && em->flags.unk8)
             {
-                em->unk_ea8 = -1;
-                em->unk_eb0 = -1;
+                em->lifeCallbackLife = -1;
+                em->timerCallbackTime = -1;
                 switch (em->flags.unk13)
                 {
                 case 3:

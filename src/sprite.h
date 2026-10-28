@@ -101,10 +101,20 @@ public:
 };
 ASSERT_SIZE(Sprite, 0x110);
 
+// An untransformed vertex with texture coordinates.
+struct VertexTex1Xyz
+{
+    D3DXVECTOR3 pos;
+    D3DXVECTOR2 uv;
+};
+
 // Runs and draws Sprites.
 class SpriteEngine
 {
 public:
+    // Zeroes everything, marks every sprite unused and sets up the quads'
+    // w and texture coordinates.
+    SpriteEngine();
     // Empty, and defined out of line: `delete` calls it, then operator
     // delete.
     ~SpriteEngine();
@@ -208,12 +218,15 @@ public:
     void RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...);
 
     SpriteData sprites[0x800];
-    unsigned char unk_1c000[0x110];
+    Sprite unk_1c000;
     IDirect3DTexture8 *textures[0x108];
-    unsigned char unk_1c530[0x404];
+    unsigned char unk_1c530[0x400];
+    DWORD unk_1c930;
     // The scripts of the loaded ANM files.
     void *scripts[0x800];
-    unsigned char unk_1e934[0x2784];
+    unsigned char unk_1e934[0x2780];
+    // 1 once constructed.
+    int unk_210b4;
     // The texture last set on the device (IDirect3DDevice8::SetTexture).
     IDirect3DTexture8 *currentTexture;
     // Sprite flag bit 2 as last set: the D3DRS_DESTBLEND choice.
@@ -229,8 +242,31 @@ public:
     // Created with IDirect3DDevice8::CreateVertexBuffer and set as the
     // stream source.
     IDirect3DVertexBuffer8 *vertexBuffer;
+    VertexTex1Xyz unk_210c8[4];
+    int unk_21118;
+    unsigned char unk_2111c[0x10];
 };
+ASSERT_SIZE(SpriteEngine, 0x2112c);
 extern SpriteEngine *g_SpriteEngine;
+
+// Transformed vertices with a color and texture coordinates, and without
+// a color.
+struct VertexTex1DiffuseXyzrwh
+{
+    D3DXVECTOR3 pos;
+    float w;
+    D3DCOLOR diffuse;
+    D3DXVECTOR2 uv;
+};
+struct VertexTex1Xyzrwh
+{
+    D3DXVECTOR3 pos;
+    float w;
+    D3DXVECTOR2 uv;
+};
+// A quad of each, set up by SpriteEngine's constructor.
+extern VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
+extern VertexTex1Xyzrwh g_Quad[4];
 
 // The texture formats ANM files choose from: unknown (the surface's own),
 // A8R8G8B8, A1R5G5B5, R5G6B5, R8G8B8 and A4R4G4B4.

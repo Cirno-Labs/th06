@@ -1452,3 +1452,17 @@ void Func40b8e0(Enemy *enemy, EnemyScriptInstr *instr)
         }
     }
 }
+
+// g_EnemyScriptFuncs[1]: fires the enemy's shooter from a random point
+// in a box around it, instr's second argument wide and three quarters
+// as high.
+void Func40ba80(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    float range = instr->args.i[1];
+
+    enemy->shooter.pos = enemy->pos + enemy->shootOffset;
+    enemy->shooter.pos.x = g_Rng.GetRandomF32InRange(range) + enemy->pos.x - range / 2.0f;
+    range *= 0.75f;
+    enemy->shooter.pos.y = g_Rng.GetRandomF32InRange(range) + enemy->pos.y - range / 2.0f;
+    g_BulletManager.FirePattern(&enemy->shooter);
+}

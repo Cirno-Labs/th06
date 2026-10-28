@@ -62,7 +62,7 @@ address,size,name,symbol
 0x0040b7d0,190,ScriptAngle,?ScriptAngle@@YAXPAUEnemy@@HPAM111@Z
 0x0040b890,74,D3DXVec3Length,?D3DXVec3Length@@YAMPBUD3DXVECTOR3@@@Z
 0x0040b8e0,414,Func40b8e0,?Func40b8e0@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x0040ba80,244,Func40ba80,
+0x0040ba80,244,Func40ba80,?Func40ba80@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040bb80,1396,Func40bb80,
 0x0040c100,117,Func40c100,
 0x0040c180,1066,Func40c180,

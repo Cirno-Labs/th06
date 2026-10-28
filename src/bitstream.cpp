@@ -62,3 +62,22 @@ DWORD BitStream::ReadU32()
     DWORD c = (this->ReadBits(8) << 16) + b;
     return (this->ReadBits(8) << 24) + c;
 }
+
+int BitStream::ReadString(char *buffer, DWORD maxLength)
+{
+    DWORD i;
+
+    if (buffer == NULL)
+    {
+        return 0;
+    }
+    for (i = 0; i < maxLength; i++)
+    {
+        buffer[i] = this->ReadBits(8);
+        if (buffer[i] == '\0')
+        {
+            return 1;
+        }
+    }
+    return 0;
+}

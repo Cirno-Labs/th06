@@ -1432,3 +1432,36 @@ void SpriteEngine::CopySurfaceRectToBackBuffer(int surface, int x, int y, int le
     g_Unknown6c6d18.d3dDevice->CopyRects(this->surfaces[surface], &rect, 1, backBuffer, &point);
     backBuffer->Release();
 }
+
+void SpriteEngine::CopyBackBufferToTexture(int texture, int left, int top, int width, int height)
+{
+    IDirect3DSurface8 *backBuffer;
+    IDirect3DSurface8 *dest;
+    RECT rect;
+
+    if (this->textures[texture] == NULL)
+    {
+        return;
+    }
+    if (g_Unknown6c6d18.d3dDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &backBuffer) != D3D_OK)
+    {
+        return;
+    }
+    if (this->textures[texture]->GetSurfaceLevel(0, &dest) != D3D_OK)
+    {
+        backBuffer->Release();
+        return;
+    }
+    rect.left = left;
+    rect.top = top;
+    rect.right = left + width;
+    rect.bottom = top + height;
+    if (D3DXLoadSurfaceFromSurface(dest, NULL, NULL, backBuffer, NULL, &rect, D3DX_DEFAULT, 0) != D3D_OK)
+    {
+        dest->Release();
+        backBuffer->Release();
+        return;
+    }
+    dest->Release();
+    backBuffer->Release();
+}

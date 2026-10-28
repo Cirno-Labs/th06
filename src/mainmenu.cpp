@@ -1,5 +1,5 @@
 // cflags: /Os
-// The /Os file from 0x435670 to 0x43a7a6, with the title menu.
+// The /Os file from 0x43575d to 0x43a7a6, with the title menu.
 
 #include "mainmenu.h"
 #include "unsorted.h"

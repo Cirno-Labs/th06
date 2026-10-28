@@ -627,7 +627,7 @@ int Unknown6c6d18::LoadArchive(int index, char *path)
     } \
     g_Unknown6c6d18.cfg.playSounds = 1; \
     g_Unknown6c6d18.cfg.unk_1d = 1; \
-    g_Unknown6c6d18.cfg.unk_1e = 0; \
+    g_Unknown6c6d18.cfg.windowed = 0; \
     g_Unknown6c6d18.cfg.frameSkip = 0; \
     g_Unknown6c6d18.cfg.controllerMapping = g_ControllerMapping; \
 }
@@ -650,7 +650,7 @@ int Unknown6c6d18::LoadConfig(char *path)
         if (g_Unknown6c6d18.cfg.lives >= 5 || g_Unknown6c6d18.cfg.bombs >= 4 ||
             g_Unknown6c6d18.cfg.unk_1a >= 2 || g_Unknown6c6d18.cfg.musicMode >= 3 ||
             g_Unknown6c6d18.cfg.unk_1d >= 5 || g_Unknown6c6d18.cfg.playSounds >= 2 ||
-            g_Unknown6c6d18.cfg.unk_1e >= 2 || g_Unknown6c6d18.cfg.frameSkip >= 3 ||
+            g_Unknown6c6d18.cfg.windowed >= 2 || g_Unknown6c6d18.cfg.frameSkip >= 3 ||
             g_Unknown6c6d18.cfg.version != 0x102 || g_FileSize != sizeof(GameConfig))
         {
             SET_DEFAULT_CONFIG();

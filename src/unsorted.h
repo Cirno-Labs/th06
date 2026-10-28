@@ -27,6 +27,37 @@ void Func421420();
 // unk_198 down.
 void PresentFrame();
 
+// The game's window and the main loop's state.
+struct GameWindow
+{
+    // The window, also kept in g_Unknown6c6d18.hwnd.
+    HWND hwnd;
+    // Set when the window gets WM_CLOSE: the main loop ends.
+    int isClosing;
+    // WM_ACTIVATEAPP's wParam: nonzero while the game is the active app.
+    WPARAM isAppActive;
+    // Set while the game is not the active app: the window shows the
+    // cursor then.
+    int isAppInactive;
+    // Frames run since the last one drawn, for the frame skip.
+    BYTE curFrame;
+    unsigned char unk_11[0x3];
+    // The screen saver and power saving settings (SPI_GETSCREENSAVEACTIVE,
+    // SPI_GETLOWPOWERACTIVE, SPI_GETPOWEROFFACTIVE), turned off while
+    // the game runs and restored at exit.
+    int screenSaveActive;
+    int lowPowerActive;
+    int powerOffActive;
+};
+ASSERT_SIZE(GameWindow, 0x20);
+extern GameWindow g_GameWindow;
+// The window procedure of the window class "BASE".
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+// Registers the window class "BASE" and creates the game's window: at
+// 640 by 480 in full screen mode, or with room for its frame and caption
+// in windowed mode.
+void CreateGameWindow(HINSTANCE instance);
+
 // The global at 0x6c6d18 plays wave music through it.
 class Unknown6d3f50
 {
@@ -199,8 +230,9 @@ struct GameConfig
     BYTE playSounds;
     // 1, at most 4.
     BYTE unk_1d;
-    // 0, at most 1.
-    BYTE unk_1e;
+    // Whether the game runs in a window rather than full screen. 0, at
+    // most 1.
+    BYTE windowed;
     // Frames skipped per frame drawn: DrawFps counts 1 + this a frame.
     // 0, at most 2.
     BYTE frameSkip;

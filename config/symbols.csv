@@ -232,8 +232,8 @@ address,size,name,symbol
 0x004206e0,1126,Func4206e0,
 0x00420b50,118,PresentFrame,?PresentFrame@@YAXXZ
 0x00420bd0,53,CreateD3d,?CreateD3d@@YAHXZ
-0x00420c10,295,Func420c10,
-0x00420d40,276,Func420d40,
+0x00420c10,295,CreateGameWindow,?CreateGameWindow@@YAXPAUHINSTANCE__@@@Z
+0x00420d40,276,WindowProc,?WindowProc@@YGJPAUHWND__@@IIJ@Z
 0x00420e60,1458,Func420e60,
 0x00421420,1241,Func421420,?Func421420@@YAXXZ
 0x00421900,77,CheckSingleInstance,?CheckSingleInstance@@YAHXZ
@@ -1620,6 +1620,7 @@ address,size,name,symbol
 0x0069e1b0,,g_PadButtons,?g_PadButtons@@3PAEA
 0x0069e230,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
 0x0069e268,,g_ItemManager,?g_ItemManager@@3VItemManager@@A
+0x006c6bd4,,g_GameWindow,?g_GameWindow@@3UGameWindow@@A
 0x006c6c00,,g_AppMutex,?g_AppMutex@@3PAXA
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A
 0x006c7114,,g_Unknown6c7114,?g_Unknown6c7114@@3EA

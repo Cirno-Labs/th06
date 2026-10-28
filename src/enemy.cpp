@@ -307,6 +307,67 @@ int Enemy::CheckLifeCallback()
     }
 }
 
+int Enemy::CheckTimerCallback()
+{
+    Enemy *it;
+    int i;
+
+    if (this->flags.unk11)
+    {
+        g_Gui.SetBossTimer((this->timerCallbackTime - this->unk_cf0.AsFrames()) / 60);
+    }
+    if (this->unk_cf0 >= this->timerCallbackTime)
+    {
+        if (this->lifeCallbackLife > 0)
+        {
+            this->life = this->lifeCallbackLife;
+            this->lifeCallbackLife = -1;
+        }
+        g_EnemyScripts.StartSub(&this->ctx, this->timerCallbackSub);
+        this->timerCallbackTime = -1;
+        this->timerCallbackSub = this->deathSub;
+        this->unk_cf0.Set(0);
+        if (!this->flags.unk20)
+        {
+            g_EnemyManager.unk_ee5c4 = 0;
+            if (g_EnemyManager.unk_ee5c8 != 0)
+            {
+                g_EnemyManager.unk_ee5c8++;
+            }
+            g_BulletManager.ClearAll(0);
+        }
+        for (it = g_EnemyManager.enemies, i = 0; i < 0x100; i++, it++)
+        {
+            if (!it->flags.active)
+            {
+                continue;
+            }
+            if (it->flags.unk11)
+            {
+                continue;
+            }
+            it->life = 0;
+            if (!it->flags.unk8 && it->deathSub >= 0)
+            {
+                g_EnemyScripts.StartSub(&it->ctx, it->deathSub);
+                it->deathSub = -1;
+            }
+        }
+        this->unk_cd4 = -0.5f;
+        this->unk_cd8 = 0.5f;
+        this->unk_cdc = 0;
+        this->unk_cde = 0;
+        this->unk_ce0 = 0;
+        this->unk_ce2 = 0;
+        this->unk_c3c = 0;
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void Enemy::Func4121b0()
 {
     if (this->flags.unk13 == 0)
@@ -406,7 +467,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         }
         if (em->timerCallbackTime >= 0)
         {
-            em->Func411f40();
+            em->CheckTimerCallback();
         }
         if (g_EnemyScripts.Func4074a0(em) == -1)
         {

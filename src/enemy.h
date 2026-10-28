@@ -43,7 +43,9 @@ struct EnemyFlags
     unsigned char unk18 : 1;
     // OnDraw skips the enemy.
     unsigned char hidden : 1;
-    unsigned char unk20 : 4;
+    // CheckTimerCallback leaves the spell card and the bullets alone.
+    unsigned char unk20 : 1;
+    unsigned char unk21 : 3;
     BYTE unk_e53;
 };
 
@@ -140,7 +142,11 @@ struct Enemy
     // starts lifeCallbackSub, makes the death subroutine the timer
     // callback's and clears the other enemies. Returns 1 then, else 0.
     int CheckLifeCallback();
-    int Func411f40();
+    // Once unk_cf0 reaches timerCallbackTime: restores the life from
+    // lifeCallbackLife, starts timerCallbackSub, makes the death
+    // subroutine the next, ends the spell card and clears the bullets
+    // (unless flags.unk20) and the other enemies. Returns 1 then, else 0.
+    int CheckTimerCallback();
     // Keeps the position within the bounds, with flags.clampPos.
     void ClampPos();
     // Moves by the velocity, mirrored with flags.mirrored.

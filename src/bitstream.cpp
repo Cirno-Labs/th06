@@ -93,3 +93,30 @@ int FileBitStream::Open(char *path)
     this->size = GetFileSize(this->handle, NULL);
     return 1;
 }
+
+int FileBitStream::ReadBit()
+{
+    int bit;
+
+    if (this->handle == NULL)
+    {
+        return 0;
+    }
+    if (this->mask == 0x80)
+    {
+        this->currentByte = this->File::ReadByte();
+        if (this->currentByte == -1)
+        {
+            return 0;
+        }
+        this->position++;
+        this->checksum += this->currentByte;
+    }
+    bit = this->currentByte & this->mask;
+    this->mask >>= 1;
+    if (this->mask == 0)
+    {
+        this->mask = 0x80;
+    }
+    return bit != 0;
+}

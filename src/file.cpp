@@ -184,3 +184,13 @@ void *File::ReadAll(DWORD maxSize)
     this->Seek(position, FILE_BEGIN);
     return buffer;
 }
+
+File::~File()
+{
+    if (this->handle != INVALID_HANDLE_VALUE)
+    {
+        CloseHandle(this->handle);
+        this->handle = INVALID_HANDLE_VALUE;
+        this->access = 0;
+    }
+}

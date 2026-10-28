@@ -359,7 +359,7 @@ address,size,name,symbol
 0x0042d18f,259,MoveCursorHorizontal,?MoveCursorHorizontal@@YAHPAVResultScreen@@H@Z
 0x0042d292,200,ResultScreen::WaitAfterNameEntry,?WaitAfterNameEntry@ResultScreen@@QAEHXZ
 0x0042d35a,1049,ResultScreen::DrawStatistics,?DrawStatistics@ResultScreen@@QAEHXZ
-0x0042d773,302,Func42d773,
+0x0042d773,302,ResultScreen::RegisterChain,?RegisterChain@ResultScreen@@SAHH@Z
 0x0042d8a1,237,ResultScreen::ResultScreen,??0ResultScreen@@QAE@XZ
 0x0042d98e,2744,ResultScreen::OnUpdate,?OnUpdate@ResultScreen@@SAHPAV1@@Z
 0x0042e446,3098,ResultScreen::OnDraw,?OnDraw@ResultScreen@@SAHPAV1@@Z

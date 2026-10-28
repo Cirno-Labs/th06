@@ -1079,7 +1079,7 @@ int ResultScreen::DrawStatistics()
     return 0;
 }
 
-// Parked (row unnamed): the original reserves 0x44 bytes for the inlined
+// Not matching: the original reserves 0x44 bytes for the inlined
 // constructor's slots, this 0x54. Without the Sprite at 0x39a0 the frames
 // agree, but the constructor needs it; wrapping it in a struct makes
 // both frames bigger.

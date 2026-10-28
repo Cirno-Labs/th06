@@ -193,6 +193,9 @@ public:
     // saved), lists the replay slots (12), enters its name (13) and asks
     // before overwriting a slot (14). Returns 0.
     int HandleReplaySaving();
+    // After a name is entered (state 15), waits for the shot button, then
+    // (state 16) moves on to the replay saving prompt. Returns 0.
+    int WaitAfterNameEntry();
 
     // The score file, as LoadScoreDat loaded it.
     ScoreDat *scoreDat;

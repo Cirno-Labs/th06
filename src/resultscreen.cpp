@@ -942,6 +942,37 @@ int ResultScreen::HandleReplaySaving()
     return 0;
 }
 
+int ResultScreen::WaitAfterNameEntry()
+{
+    Sprite *sprite;
+
+    switch (this->state)
+    {
+    case 0xf:
+        if (this->frame <= 30)
+        {
+            sprite = &this->sprites[0x25];
+            sprite->pendingInterrupt = 0x10;
+        }
+        if (this->frame >= 90 && WAS_PRESSED(0x1001))
+        {
+            sprite = &this->sprites[0x25];
+            sprite->pendingInterrupt = 2;
+            this->frame = 0;
+            this->state = 0x10;
+        }
+        break;
+    case 0x10:
+        if (this->frame >= 30)
+        {
+            this->frame = 59;
+            this->state = 10;
+        }
+        break;
+    }
+    return 0;
+}
+
 void MoveCursorVertical(ResultScreen *screen, int count)
 {
     if (WAS_PRESSED_OR_HELD(0x10))

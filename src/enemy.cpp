@@ -1,5 +1,7 @@
 // The file with EnemyManager.
 
+#include <string.h>
+
 #include "enemy.h"
 #include "gamemanager.h"
 #include "item.h"
@@ -18,6 +20,60 @@ void EnemyManager::RemoveChain()
 {
     g_Chain.Remove(&g_EnemyCalcChain);
     g_Chain.Remove(&g_EnemyDrawChain);
+}
+
+void EnemyManager::Initialize()
+{
+    int i;
+    Enemy *enemy = this->enemies;
+
+    memset(this, 0, sizeof(EnemyManager));
+    enemy = &this->enemyTemplate;
+    memset(enemy, 0, sizeof(Enemy));
+    for (i = 0; i < 8; i++)
+    {
+        enemy->sprites[i].scriptIndex = -1;
+    }
+    enemy->flags.active = 1;
+    enemy->unk_cf0.Set(0);
+    enemy->flags.unk8 = 1;
+    enemy->flags.unk9 = 1;
+    enemy->flags.onScreen = 0;
+    enemy->hitboxSize = D3DXVECTOR3(12.0f, 12.0f, 12.0f);
+    enemy->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    enemy->angularVelocity = 0.0f;
+    enemy->angle = 0.0f;
+    enemy->acceleration = 0.0f;
+    enemy->speed = 0.0f;
+    enemy->flags.moveMode = 0;
+    enemy->flags.unk5 = 0;
+    enemy->flags.mirrored = 0;
+    enemy->flags.unk11 = 0;
+    enemy->unk_c3c = 0;
+    enemy->life = 1;
+    enemy->score = 100;
+    enemy->deathEffect = 0;
+    enemy->unk_e3d = 0;
+    enemy->unk_e3e = 0;
+    enemy->unk_d54 = 0;
+    enemy->unk_d58.Set(0);
+    enemy->unk_ca0 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    enemy->unk_e5a = -1;
+    enemy->unk_e5c = -1;
+    enemy->unk_e54 = -1;
+    enemy->flags.unk12 = 1;
+    enemy->flags.unk13 = 0;
+    enemy->deathSub = -1;
+    enemy->flags.clampPos = 0;
+    enemy->effectCount = 0;
+    enemy->unk_c68 = -1;
+    enemy->lifeCallbackLife = -1;
+    enemy->timerCallbackTime = -1;
+    enemy->unk_e38 = 0;
+    enemy->hitFlashTimer = 0;
+    enemy->flags.rotateSprite = 0;
+    enemy->unk_cd4 = -0.5f;
+    enemy->unk_cd8 = 0.5f;
 }
 
 EnemyManager::EnemyManager()

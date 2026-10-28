@@ -18,7 +18,8 @@ struct EnemyFlags
     // How the enemy moves: 1 by angle and speed, 2 towards
     // moveStart + moveDelta over moveDuration.
     unsigned char moveMode : 2;
-    unsigned char unk2 : 4;
+    unsigned char unk2 : 3;
+    unsigned char unk5 : 1;
     // Mirrors the horizontal movement.
     unsigned char mirrored : 1;
     // In use: EnemyManager::Spawn takes the first enemy without it.
@@ -80,7 +81,7 @@ struct Enemy
     float angularVelocity;
     float speed;
     float acceleration;
-    DWORD unk_ca0[0x3];
+    D3DXVECTOR3 unk_ca0;
     // Movement with moveMode 2: from moveStart by moveDelta over
     // moveDuration frames, counted down by moveTimer.
     D3DXVECTOR3 moveDelta;
@@ -105,7 +106,8 @@ struct Enemy
     DWORD unk_d54;
     Timer unk_d58;
     BulletShooter laserShooter;
-    DWORD unk_db8[0x21];
+    DWORD unk_db8[0x20];
+    DWORD unk_e38;
     // The effects the enemy's death spawns.
     BYTE deathEffect;
     BYTE unk_e3d;
@@ -118,7 +120,12 @@ struct Enemy
     BYTE unk_e42[0x2];
     Timer unk_e44;
     EnemyFlags flags;
-    DWORD unk_e54[0x3];
+    short unk_e54;
+    short unk_e56;
+    short unk_e58;
+    short unk_e5a;
+    short unk_e5c;
+    short unk_e5e;
     // The bounds of the position, with flags.clampPos.
     float lowerBound[2];
     float upperBound[2];

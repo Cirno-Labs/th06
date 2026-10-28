@@ -354,7 +354,7 @@ address,size,name,symbol
 0x0042bc2d,46,ResultScreen::AddScore,?AddScore@ResultScreen@@QAEHPAUHscr@@HH@Z
 0x0042bc5b,42,ResultScreen::ReleaseScores,?ReleaseScores@ResultScreen@@QAEXHH@Z
 0x0042bc85,1615,ResultScreen::HandleNameEntry,?HandleNameEntry@ResultScreen@@QAEHXZ
-0x0042c2d4,3536,Func42c2d4,
+0x0042c2d4,3536,ResultScreen::HandleReplaySaving,?HandleReplaySaving@ResultScreen@@QAEHXZ
 0x0042d0a4,235,MoveCursorVertical,?MoveCursorVertical@@YAXPAVResultScreen@@H@Z
 0x0042d18f,259,MoveCursorHorizontal,?MoveCursorHorizontal@@YAHPAVResultScreen@@H@Z
 0x0042d292,200,Func42d292,
@@ -1024,7 +1024,7 @@ address,size,name,symbol
 0x0045d414,112,_strdate,__strdate
 0x0045d490,7,strcpy,_strcpy
 0x0045d4a0,232,Func45d4a0,
-0x0045d588,44,Func45d588,
+0x0045d588,44,_mkdir,__mkdir
 0x0045d5c0,57,_strncmp,_strncmp
 0x0045d5f9,156,Func45d5f9,
 0x0045d695,34,_rand,_rand

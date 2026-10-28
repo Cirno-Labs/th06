@@ -6,6 +6,7 @@
 #include <windows.h>
 
 #include "common.h"
+#include "replay.h"
 #include "sprite.h"
 
 // A high score chunk of the score file ("HSCR").
@@ -188,6 +189,10 @@ public:
     // the screen moves to state 0xf; also right away when the score
     // ranks below tenth. Returns 0.
     int HandleNameEntry();
+    // Offers to save the replay (state 10, or 11 when it cannot be
+    // saved), lists the replay slots (12), enters its name (13) and asks
+    // before overwriting a slot (14). Returns 0.
+    int HandleReplaySaving();
 
     // The score file, as LoadScoreDat loaded it.
     ScoreDat *scoreDat;
@@ -198,7 +203,9 @@ public:
     // The menu item selected, or where the next character of a name
     // goes (0 to 8).
     int cursor;
-    DWORD unk_0014[0x3];
+    DWORD unk_0014[0x2];
+    // The replay slot chosen, 0 to 14.
+    int replaySlot;
     // The character of g_NameAlphabet selected.
     int charIndex;
     // g_GameManager's character and difficulty.
@@ -218,6 +225,11 @@ public:
     Hscr entry;
     // The "TH6K" chunk SaveScoreDat writes.
     Th6k th6k;
-    DWORD unk_51a8[0x142];
+    DWORD unk_51a8[0x2];
+    // The headers of "./replay/th6_01.rpy" to "th6_15.rpy", where they
+    // are valid.
+    ReplayHeader replays[0xf];
+    // The date and score of the replay being saved.
+    ReplayHeader replay;
 };
 ASSERT_SIZE(ResultScreen, 0x56b0);

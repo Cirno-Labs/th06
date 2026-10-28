@@ -2,7 +2,10 @@
 // The /Os file from 0x42b0d9 to 0x42f6c9, with the result screen: the
 // score file and its sorted lists.
 
+#include <direct.h>
+#include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #include "gamemanager.h"
 #include "resultscreen.h"
@@ -591,6 +594,350 @@ int ResultScreen::HandleNameEntry()
             sprite->pendingInterrupt = 2;
         }
         strcpy(this->name, this->entry.name);
+    }
+    return 0;
+}
+
+int ResultScreen::HandleReplaySaving()
+{
+    Sprite *spr;
+    int interrupt;
+    int k;
+    ReplayHeader *replay;
+    char path[0x40];
+
+    switch (this->state)
+    {
+    case 10:
+        if (this->frame == 60)
+        {
+            if (g_GameManager.unk_1818)
+            {
+                interrupt = 0xc;
+            }
+            else if (g_Unknown6c6d18.gameSpeed < 0.99f)
+            {
+                interrupt = 0xd;
+            }
+            else
+            {
+                interrupt = 9;
+            }
+            spr = &this->sprites[1];
+            for (k = 0; k < 0x26; k++, spr++)
+            {
+                spr->pendingInterrupt = interrupt;
+            }
+            if (interrupt != 9)
+            {
+                this->state = 0xb;
+            }
+            this->cursor = 0;
+        }
+        spr = &this->sprites[0x10];
+        if (this->cursor == 0)
+        {
+            spr->color = spr->color & 0xff000000 | 0xff6060;
+            spr[1].color = spr[1].color & 0xff000000 | 0x606060;
+        }
+        else
+        {
+            spr->color = spr->color & 0xff000000 | 0x606060;
+            spr[1].color = spr[1].color & 0xff000000 | 0xff6060;
+        }
+        if (this->frame < 80)
+        {
+            return 0;
+        }
+        MoveCursorHorizontal(this, 2);
+        if (WAS_PRESSED(0xa) || WAS_PRESSED(8))
+        {
+            goto cancel;
+        }
+        if (WAS_PRESSED(0x1001))
+        {
+            if (this->cursor == 0)
+            {
+            chooseSlot:
+                g_Unknown6d3f50.QueueSound(10, 0);
+                this->state = 0xc;
+                spr = this->sprites;
+                for (k = 0; k < 0x26; k++, spr++)
+                {
+                    spr->pendingInterrupt = 10;
+                }
+                this->frame = 0;
+                goto listSlots;
+            }
+        cancel:
+            this->frame = 0;
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+            this->state = 2;
+            spr = this->sprites;
+            for (k = 0; k < 0x26; k++, spr++)
+            {
+                spr->pendingInterrupt = 2;
+            }
+        }
+        break;
+    case 0xb:
+        if (this->frame < 20)
+        {
+            return 0;
+        }
+        if (WAS_PRESSED(0x1001) || WAS_PRESSED(0xa))
+        {
+            this->frame = 0;
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+            this->state = 2;
+            spr = this->sprites;
+            for (k = 0; k < 0x26; k++, spr++)
+            {
+                spr->pendingInterrupt = 2;
+            }
+        }
+        break;
+    case 0xc:
+    listSlots:
+        if (this->frame == 0)
+        {
+            _mkdir("replay");
+            for (k = 0; k < 0xf; k++)
+            {
+                sprintf(path, "./replay/th6_%.2d.rpy", k + 1);
+                replay = (ReplayHeader *)Func41e290(path, 1);
+                if (replay == NULL)
+                {
+                    continue;
+                }
+                if (ValidateReplay(replay, g_FileSize) == 0)
+                {
+                    this->replays[k] = *replay;
+                }
+                free(replay);
+            }
+        }
+        if (this->frame < 20)
+        {
+            return 0;
+        }
+        MoveCursorVertical(this, 0xf);
+        this->replaySlot = this->cursor;
+        if (WAS_PRESSED(0x1001))
+        {
+            g_Unknown6d3f50.QueueSound(10, 0);
+            this->replaySlot = this->cursor;
+            this->frame = 0;
+            _strdate(this->replay.date);
+            this->replay.score = g_GameManager.score;
+            if (*(DWORD *)this->replays[this->cursor].magic != *(DWORD *)"T6RP" ||
+                this->replays[this->cursor].version != 0x102)
+            {
+                spr = this->sprites;
+                for (k = 0; k < 0x26; k++, spr++)
+                {
+                    spr->pendingInterrupt = 0xf;
+                }
+                spr = &this->sprites[this->replaySlot + 0x16];
+                spr->pendingInterrupt = 0xe;
+                this->state = 0xd;
+            }
+            else
+            {
+                spr = this->sprites;
+                for (k = 0; k < 0x26; k++, spr++)
+                {
+                    spr->pendingInterrupt = 0xb;
+                }
+                spr = &this->sprites[this->replaySlot + 0x16];
+                spr->pendingInterrupt = 0xe;
+                this->state = 0xe;
+            }
+            this->cursor = 0;
+            this->charIndex = 0;
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+            this->state = 10;
+            spr = this->sprites;
+            for (k = 0; k < 0x26; k++, spr++)
+            {
+                spr->pendingInterrupt = 2;
+            }
+            this->frame = 0;
+        }
+        break;
+    case 0xd:
+        if (this->frame < 30)
+        {
+            return 0;
+        }
+        if (WAS_PRESSED_OR_HELD(0x10))
+        {
+            for (;;)
+            {
+                this->charIndex -= 16;
+                if (this->charIndex < 0)
+                {
+                    this->charIndex += 0x60;
+                }
+                if (g_NameAlphabet[this->charIndex] == ' ')
+                {
+                    continue;
+                }
+                break;
+            }
+            g_Unknown6d3f50.QueueSound(0xc, 0);
+        }
+        if (WAS_PRESSED_OR_HELD(0x20))
+        {
+            for (;;)
+            {
+                this->charIndex += 16;
+                if (this->charIndex >= 0x60)
+                {
+                    this->charIndex -= 0x60;
+                }
+                if (g_NameAlphabet[this->charIndex] == ' ')
+                {
+                    continue;
+                }
+                break;
+            }
+            g_Unknown6d3f50.QueueSound(0xc, 0);
+        }
+        if (WAS_PRESSED_OR_HELD(0x40))
+        {
+            for (;;)
+            {
+                this->charIndex--;
+                if (this->charIndex % 16 == 15)
+                {
+                    this->charIndex += 16;
+                }
+                if (this->charIndex < 0)
+                {
+                    this->charIndex = 15;
+                }
+                if (g_NameAlphabet[this->charIndex] == ' ')
+                {
+                    continue;
+                }
+                break;
+            }
+            g_Unknown6d3f50.QueueSound(0xc, 0);
+        }
+        if (WAS_PRESSED_OR_HELD(0x80))
+        {
+            for (;;)
+            {
+                this->charIndex++;
+                if (this->charIndex % 16 == 0)
+                {
+                    this->charIndex -= 16;
+                }
+                if (g_NameAlphabet[this->charIndex] == ' ')
+                {
+                    continue;
+                }
+                break;
+            }
+            g_Unknown6d3f50.QueueSound(0xc, 0);
+        }
+        if (WAS_PRESSED_OR_HELD(0x1001))
+        {
+            int pos = this->cursor >= 8 ? 7 : this->cursor;
+
+            if (this->charIndex < 0x5e)
+            {
+                this->name[pos] = g_NameAlphabet[this->charIndex];
+            }
+            else if (this->charIndex == 0x5e)
+            {
+                this->name[pos] = ' ';
+            }
+            else
+            {
+                char replayPath[0x40];
+
+                sprintf(replayPath, "./replay/th6_%.2d.rpy", this->replaySlot + 1);
+                SaveReplay(replayPath, this->name);
+                this->frame = 0;
+                this->state = 2;
+                spr = this->sprites;
+                for (k = 0; k < 0x26; k++, spr++)
+                {
+                    spr->pendingInterrupt = 2;
+                }
+            }
+            if (this->cursor < 8)
+            {
+                this->cursor++;
+                if (this->cursor == 8)
+                {
+                    this->charIndex = 0x5f;
+                }
+            }
+            g_Unknown6d3f50.QueueSound(10, 0);
+        }
+        if (WAS_PRESSED_OR_HELD(0xa))
+        {
+            int pos2 = this->cursor >= 8 ? 7 : this->cursor;
+
+            if (this->cursor > 0)
+            {
+                this->cursor--;
+                this->name[pos2] = ' ';
+            }
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+        }
+        if (WAS_PRESSED(8))
+        {
+            goto chooseSlot;
+        }
+        break;
+    case 0xe:
+        spr = &this->sprites[0x10];
+        if (this->cursor == 0)
+        {
+            spr->color = spr->color & 0xff000000 | 0xff6060;
+            spr[1].color = spr[1].color & 0xff000000 | 0x606060;
+        }
+        else
+        {
+            spr->color = spr->color & 0xff000000 | 0x606060;
+            spr[1].color = spr[1].color & 0xff000000 | 0xff6060;
+        }
+        if (this->frame < 20)
+        {
+            return 0;
+        }
+        MoveCursorHorizontal(this, 2);
+        if (WAS_PRESSED(0xa) || WAS_PRESSED(8))
+        {
+            goto chooseSlot;
+        }
+        if (WAS_PRESSED(0x1001))
+        {
+            this->frame = 0;
+            if (this->cursor == 0)
+            {
+                spr = this->sprites;
+                for (k = 0; k < 0x26; k++, spr++)
+                {
+                    spr->pendingInterrupt = 0xf;
+                }
+                spr = &this->sprites[this->replaySlot + 0x16];
+                spr->pendingInterrupt = 0xe;
+                this->state = 0xd;
+            }
+            else
+            {
+                goto chooseSlot;
+            }
+        }
+        break;
     }
     return 0;
 }

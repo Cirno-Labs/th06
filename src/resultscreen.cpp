@@ -616,3 +616,28 @@ void MoveCursorVertical(ResultScreen *screen, int count)
         g_Unknown6d3f50.QueueSound(0xc, 0);
     }
 }
+
+int MoveCursorHorizontal(ResultScreen *screen, int count)
+{
+    if (WAS_PRESSED_OR_HELD(0x40))
+    {
+        screen->cursor--;
+        if (screen->cursor < 0)
+        {
+            screen->cursor += count;
+        }
+        g_Unknown6d3f50.QueueSound(0xc, 0);
+        return 1;
+    }
+    if (WAS_PRESSED_OR_HELD(0x80))
+    {
+        screen->cursor++;
+        if (screen->cursor >= count)
+        {
+            screen->cursor -= count;
+        }
+        g_Unknown6d3f50.QueueSound(0xc, 0);
+        return 1;
+    }
+    return 0;
+}

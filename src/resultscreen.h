@@ -159,6 +159,8 @@ void ReleaseScoreDat(ScoreDat *dat);
 
 // Moves `screen`'s cursor up or down through `count` items, wrapping.
 void MoveCursorVertical(class ResultScreen *screen, int count);
+// The same with left and right. Returns 1 if the cursor moved.
+int MoveCursorHorizontal(class ResultScreen *screen, int count);
 
 // The characters a name can be made of, 16 to a row; the last two
 // stand for a space and the end.

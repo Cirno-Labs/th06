@@ -516,7 +516,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
         }
     }
     g_ItemManager.DrawItems();
-    if (g_Unknown6c7114)
+    if (g_Unknown6c6d18.hardwareTnL)
     {
         blt = mgr->bullets;
         for (i = 0; i < 0x280; i++, blt++)

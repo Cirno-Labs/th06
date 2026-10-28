@@ -33,13 +33,13 @@ public:
 
     void Func401b80();
     // Draws, while g_GameManager.unk_181f is set, inside the viewport given
-    // by g_GameManager.arena: unk_668 without z writes if g_Unknown6c7115
-    // is set and unk_000 is nonzero, then those of the six sprites with
-    // flag 0.
+    // by g_GameManager.arena: unk_668 without z writes if
+    // g_Unknown6c6d18.lockableBackBuffer is set and unk_000 is nonzero,
+    // then those of the six sprites with flag 0.
     void Func402740();
     void Func402870();
     // Draws, while g_GameManager.unk_1820 is set, inside the viewport given
-    // by g_GameManager.arena: unk_668 if g_Unknown6c7115 is set and unk_000
+    // by g_GameManager.arena: unk_668 if lockableBackBuffer is set and unk_000
     // is nonzero or unk_004 above 2, then, when unk_000 is 1 or 2, a copy
     // of sprite 1 as sprite 4, shifted right and showing sprite entry
     // 0x1e - g_GameManager.continuesUsed, then those of the first four sprites
@@ -78,7 +78,7 @@ public:
     // if adding fails.
     static int RegisterChain();
     // The second draw element's callback (priority 10): draws the
-    // popups with DrawPopups while g_Unknown6c7114 is set, otherwise
+    // popups with DrawPopups while g_Unknown6c6d18.hardwareTnL is set, otherwise
     // with DrawPopups2. Returns 1.
     static int OnDraw2(AsciiText *text);
     // The first draw element's callback (priority 0xf): draws the queued
@@ -161,9 +161,6 @@ public:
 };
 ASSERT_SIZE(AsciiText, 0xc1ac);
 extern AsciiText g_AsciiText;
-
-extern BYTE g_Unknown6c7114;
-extern BYTE g_Unknown6c7115;
 
 // AsciiText's chain elements, statically allocated: the update element,
 // and draw elements at priorities 0xf and 10.

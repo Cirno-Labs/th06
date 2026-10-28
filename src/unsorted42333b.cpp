@@ -610,7 +610,7 @@ int Unknown6c6d18::LoadArchive(int index, char *path)
  \
     g_Unknown6c6d18.cfg.lives = 2; \
     g_Unknown6c6d18.cfg.bombs = 3; \
-    g_Unknown6c6d18.cfg.unk_1a = 0xff; \
+    g_Unknown6c6d18.cfg.colorMode16Bits = 0xff; \
     g_Unknown6c6d18.cfg.version = 0x102; \
     g_Unknown6c6d18.cfg.padThresholdX = 600; \
     g_Unknown6c6d18.cfg.padThresholdY = 600; \
@@ -648,7 +648,7 @@ int Unknown6c6d18::LoadConfig(char *path)
     {
         g_Unknown6c6d18.cfg = *file;
         if (g_Unknown6c6d18.cfg.lives >= 5 || g_Unknown6c6d18.cfg.bombs >= 4 ||
-            g_Unknown6c6d18.cfg.unk_1a >= 2 || g_Unknown6c6d18.cfg.musicMode >= 3 ||
+            g_Unknown6c6d18.cfg.colorMode16Bits >= 2 || g_Unknown6c6d18.cfg.musicMode >= 3 ||
             g_Unknown6c6d18.cfg.unk_1d >= 5 || g_Unknown6c6d18.cfg.playSounds >= 2 ||
             g_Unknown6c6d18.cfg.windowed >= 2 || g_Unknown6c6d18.cfg.frameSkip >= 3 ||
             g_Unknown6c6d18.cfg.version != 0x102 || g_FileSize != sizeof(GameConfig))
@@ -692,7 +692,7 @@ int Unknown6c6d18::LoadConfig(char *path)
     if (this->cfg.flags.force60Fps)
     {
         Func41e4d0(&g_Unknown69d998, "６０フレーム強制モードにします\n");
-        this->unk_1a0 = 0;
+        this->presentImmediate = 0;
     }
     if (this->cfg.flags.noColorBlending)
     {

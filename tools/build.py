@@ -48,6 +48,22 @@ def read_symbols():
         return {s: int(r["address"], 16) for r in csv.DictReader(f) for s in r["symbol"].split()}
 
 
+def to_sjis(text):
+    """Encodes `text` as Shift-JIS for cl.
+
+    cl reads source bytes as single-byte characters, so a double-byte
+    character whose second byte is 0x5c ("能", "表", "ソ") would end in an
+    escape inside a string literal: that byte is doubled.
+    """
+    out = bytearray()
+    for ch in text:
+        b = ch.encode("cp932")
+        out += b
+        if len(b) == 2 and b[1] == 0x5C:
+            out += b"\\"
+    return bytes(out)
+
+
 def compile_all():
     """Compiles src/ from a Shift-JIS copy in build/src/.
 
@@ -61,8 +77,8 @@ def compile_all():
             os.makedirs(os.path.dirname(copy), exist_ok=True)
             with open(src, encoding="utf-8") as f:
                 text = f.read()
-            with open(copy, "w", encoding="cp932", newline="") as f:
-                f.write(text)
+            with open(copy, "wb") as f:
+                f.write(to_sjis(text))
     headers = max((os.path.getmtime(h) for h in glob.glob("src/**/*.h", recursive=True)), default=0)
     objs = []
     for src, obj in sources():

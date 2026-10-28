@@ -234,7 +234,7 @@ address,size,name,symbol
 0x00420bd0,53,CreateD3d,?CreateD3d@@YAHXZ
 0x00420c10,295,CreateGameWindow,?CreateGameWindow@@YAXPAUHINSTANCE__@@@Z
 0x00420d40,276,WindowProc,?WindowProc@@YGJPAUHWND__@@IIJ@Z
-0x00420e60,1458,Func420e60,
+0x00420e60,1458,InitD3dDevice,?InitD3dDevice@@YAHXZ
 0x00421420,1241,Func421420,?Func421420@@YAXXZ
 0x00421900,77,CheckSingleInstance,?CheckSingleInstance@@YAHXZ
 0x00421950,126,Unknown69d998::Flush,?Flush@Unknown69d998@@QAEXXZ
@@ -1623,8 +1623,6 @@ address,size,name,symbol
 0x006c6bd4,,g_GameWindow,?g_GameWindow@@3UGameWindow@@A
 0x006c6c00,,g_AppMutex,?g_AppMutex@@3PAXA
 0x006c6d18,,g_Unknown6c6d18,?g_Unknown6c6d18@@3VUnknown6c6d18@@A
-0x006c7114,,g_Unknown6c7114,?g_Unknown6c7114@@3EA
-0x006c7115,,g_Unknown6c7115,?g_Unknown6c7115@@3EA
 0x006ca628,,g_Player,?g_Player@@3VPlayer@@A
 0x006d3f18,,g_ReplayManager,?g_ReplayManager@@3PAVReplayManager@@A
 0x006d3f50,,g_Unknown6d3f50,?g_Unknown6d3f50@@3VUnknown6d3f50@@A

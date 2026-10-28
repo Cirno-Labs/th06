@@ -21,7 +21,7 @@ void Unknown4010e0::Func402740()
         g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
         g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
         g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
-        if (g_Unknown6c7115 && this->unk_000 != 0)
+        if (g_Unknown6c6d18.lockableBackBuffer && this->unk_000 != 0)
         {
             Sprite sprite = this->unk_668;
 
@@ -49,7 +49,7 @@ void Unknown4010e0::Func403060()
         g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
         g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
         g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
-        if (g_Unknown6c7115 && (this->unk_000 != 0 || this->unk_004 > 2))
+        if (g_Unknown6c6d18.lockableBackBuffer && (this->unk_000 != 0 || this->unk_004 > 2))
         {
             g_SpriteEngine->Draw(&this->unk_668);
         }
@@ -204,7 +204,7 @@ int AsciiText::OnDraw(AsciiText *text)
 
 int AsciiText::OnDraw2(AsciiText *text)
 {
-    if (g_Unknown6c7114)
+    if (g_Unknown6c6d18.hardwareTnL)
     {
         text->DrawPopups();
     }

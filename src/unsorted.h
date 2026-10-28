@@ -21,6 +21,13 @@ int CheckSingleInstance();
 // Sets the device's render and texture stage states for drawing
 // sprites; again after the device is reset.
 void Func421420();
+// Creates the Direct3D device for the configuration, falling back from
+// hardware vertex processing to HAL to the reference rasterizer, and
+// from 60 Hz to presenting immediately or from a lockable back buffer
+// to none when that fails; then sets up the camera, reads the caps and
+// adjusts the options to them. Returns 0, or 1 if no device can be
+// created.
+int InitD3dDevice();
 // Presents the frame. If that fails, resets the device (the surfaces
 // are released first and the states set again) and has unk_198 count
 // 2 frames; then does the SpriteEngine's pending copy and counts
@@ -220,8 +227,9 @@ struct GameConfig
     // The lives and bombs to start with. 2, at most 4; 3, at most 3.
     BYTE lives;
     BYTE bombs;
-    // 0xff, at most 1.
-    BYTE unk_1a;
+    // Whether full screen mode uses 16-bit colors rather than 32: 0xff
+    // (at most 1) until the first start picks one from the desktop's.
+    BYTE colorMode16Bits;
     // How music is played: 1 is wave, 2 is MIDI. LoadConfig picks 1 if
     // "bgm/th06_01.wav" opens, otherwise 2 after logging "wave データが
     // 無いので、midi にします" ("no wave data, switching to MIDI").
@@ -317,6 +325,12 @@ public:
     // the frame rate. Returns 1.
     static int OnDraw(Unknown6c6d18 *arg);
 
+    // Whether the 60 frame mode presents without waiting for vsync.
+    BOOL UsesPresentImmediate()
+    {
+        return this->cfg.flags.force60Fps && this->presentImmediate;
+    }
+
     unsigned char unk_000[0x4];
     // Created by Direct3DCreate8 (CreateD3d).
     IDirect3D8 *d3d;
@@ -360,9 +374,12 @@ public:
     int unk_198;
     // DrawFps shows the frame rate while it is 0.
     int unk_19c;
-    // Cleared by LoadConfig when the 60 frame mode is forced.
-    int unk_1a0;
-    unsigned char unk_1a4[0x4];
+    // Set when the 60 frame mode presents without waiting for vsync
+    // (D3DPRESENT_INTERVAL_IMMEDIATE), because the refresh rate could
+    // not be set to 60 Hz. Cleared by LoadConfig when the 60 frame mode
+    // is forced.
+    int presentImmediate;
+    int unk_1a4;
     // The part of a frame a Timer advances per frame while the game runs
     // slower than full speed. Movement per frame is scaled by it too.
     float frameAdvance;
@@ -380,9 +397,19 @@ public:
     DatArchive *archives[0x10];
     // The paths the archives were opened from.
     char archivePaths[0x10][0x20];
-    unsigned char unk_3fc[0x4];
+    // Set when the device was created with hardware vertex processing
+    // ("T&L HAL"); the popups and bullets are drawn differently without.
+    BYTE hardwareTnL;
+    // Whether the back buffer was made lockable
+    // (D3DPRESENTFLAG_LOCKABLE_BACKBUFFER).
+    BYTE lockableBackBuffer;
+    // Whether D3DFMT_A8R8G8B8 textures can be created.
+    BYTE hasA8R8G8B8Textures;
+    unsigned char unk_3ff[0x1];
     // timeGetTime() when AddedCallback ran.
     DWORD unk_400;
+    // The device's capabilities.
+    D3DCAPS8 caps;
 };
 extern Unknown6c6d18 g_Unknown6c6d18;
 

@@ -20,7 +20,7 @@ SpriteEngine::~SpriteEngine()
 
 int Gui::AddedCallback(Gui *gui)
 {
-    return gui->Func417d29();
+    return gui->LoadResources();
 }
 
 void Gui::RemoveChain()

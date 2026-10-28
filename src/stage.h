@@ -77,6 +77,10 @@ struct StageData
     // Offsets from the start of the file.
     int unk_04;
     int unk_08;
+    DWORD unk_0c;
+    // The stage's name and its music's, which Gui shows as it starts.
+    char name[0x80];
+    char songName[0x80];
     // Then, at 0x490, the objects' offsets.
 };
 

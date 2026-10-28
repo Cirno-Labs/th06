@@ -690,7 +690,8 @@ struct GuiImpl
     void Func4188c9();
 
     Sprite unk_0000[0x1a];
-    DWORD unk_1ba0;
+    BYTE unk_1ba0;
+    BYTE unk_1ba1[0x3];
     Sprite unk_1ba4;
     Sprite unk_1cb4;
     Sprite unk_1dc4;
@@ -736,14 +737,18 @@ struct GuiFlags
 class Gui
 {
 public:
-    // Loads the interface's sprites.
-    int Func417d29();
+    // Loads the interface's sprites ("data/front.anm"), the character's
+    // and the stage's portraits and the stage's message file (all but
+    // the stage's kept when the scene is 3), then starts the interface's
+    // scripts and shows the stage and song names. Returns 0, or -1 if a
+    // file fails to load.
+    int LoadResources();
 
     // The update element's callback: unless g_GameManager.unk_002c is
     // set, runs Func4195bf and impl->Func4188c9. Returns 1.
     static int OnUpdate(Gui *gui);
     // The update element's added callback (the element at 0x69bc7c):
-    // runs Func417d29.
+    // runs LoadResources.
     static int AddedCallback(Gui *gui);
     // Removes the update element and the draw element.
     static void RemoveChain();
@@ -818,7 +823,7 @@ public:
     BYTE unk_21[0x3];
     // The boss's life as a fraction of its maximum, for its bar.
     float bossHealth;
-    DWORD unk_28;
+    float unk_28;
 };
 ASSERT_SIZE(Gui, 0x2c);
 extern Gui g_Gui;

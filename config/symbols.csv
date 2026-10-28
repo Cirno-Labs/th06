@@ -149,7 +149,7 @@ address,size,name,symbol
 0x00417502,1483,Func417502,
 0x00417acd,304,Gui::Func417acd,?Func417acd@Gui@@QAEXHPAD@Z
 0x00417bfd,300,Gui::Func417bfd,?Func417bfd@Gui@@QAEXHPAD@Z
-0x00417d29,2364,Gui::Func417d29,?Func417d29@Gui@@QAEHXZ
+0x00417d29,2364,Gui::LoadResources,?LoadResources@Gui@@QAEHXZ
 0x00418665,197,Gui::LoadMsg,?LoadMsg@Gui@@QAEHPAD@Z
 0x0041872a,62,Gui::FreeMsgFile,?FreeMsgFile@Gui@@QAEXXZ
 0x00418768,35,Gui::StartMsg,?StartMsg@Gui@@QAEXH@Z

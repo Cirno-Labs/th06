@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">75.16% (354)</tspan> · <tspan class="decompiled">14.44% (68)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">10.40% (49)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">75.37% (355)</tspan> · <tspan class="decompiled">14.44% (68)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">10.19% (48)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="561.44" height="6" x="0" y="0" class="named"/>
-<rect width="107.85" height="6" x="561.44" y="0" class="decompiled"/>
-<rect width="77.71" height="6" x="669.29" y="0" class="todo"/>
+<rect width="563.03" height="6" x="0" y="0" class="named"/>
+<rect width="107.85" height="6" x="563.03" y="0" class="decompiled"/>
+<rect width="76.13" height="6" x="670.87" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -218,7 +218,7 @@
 <rect width="12" height="12" x="705" y="30" class="todo"><title>0x00417502 Func417502 (1483 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="30" class="todo"><title>0x00417acd Gui::Func417acd (304 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="30" class="decompiled"><title>0x00417bfd Gui::Func417bfd (300 bytes)</title></rect>
-<rect width="12" height="12" x="0" y="45" class="todo"><title>0x00417d29 Gui::Func417d29 (2364 bytes)</title></rect>
+<rect width="12" height="12" x="0" y="45" class="named"><title>0x00417d29 Gui::LoadResources (2364 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="45" class="named"><title>0x00418665 Gui::LoadMsg (197 bytes)</title></rect>
 <rect width="12" height="12" x="30" y="45" class="named"><title>0x0041872a Gui::FreeMsgFile (62 bytes)</title></rect>
 <rect width="12" height="12" x="45" y="45" class="named"><title>0x00418768 Gui::StartMsg (35 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.64%</tspan> · <tspan class="decompiled">10.59%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">19.77%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.64%</tspan> · <tspan class="decompiled">10.59%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">18.77%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="520.24" height="6" x="0" y="0" class="named"/>
-<rect width="79.10" height="6" x="520.24" y="0" class="decompiled"/>
-<rect width="147.66" height="6" x="599.34" y="0" class="todo"/>
+<rect width="527.66" height="6" x="0" y="0" class="named"/>
+<rect width="79.10" height="6" x="527.66" y="0" class="decompiled"/>
+<rect width="140.24" height="6" x="606.76" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="named"><title>0x004074a0 EnemyScripts::RunEnemy (13572 bytes)</title></rect>
@@ -566,7 +566,7 @@
 <rect width="28.54" height="37.61" x="196.51" y="0" class="named"><title>0x004123e0 EnemyManager::OnUpdate (2655 bytes)</title></rect>
 <rect width="28.54" height="35.49" x="196.51" y="40.61" class="todo"><title>0x004381ec Func4381ec (2517 bytes)</title></rect>
 <rect width="28.54" height="34.75" x="196.51" y="79.10" class="named"><title>0x00405260 UpdateReimuABomb (2468 bytes)</title></rect>
-<rect width="28.54" height="33.15" x="196.51" y="116.85" class="todo"><title>0x00417d29 Gui::Func417d29 (2364 bytes)</title></rect>
+<rect width="28.54" height="33.15" x="196.51" y="116.85" class="named"><title>0x00417d29 Gui::LoadResources (2364 bytes)</title></rect>
 <rect width="31.33" height="29.06" x="228.05" y="0" class="named"><title>0x004288c0 Player::OnUpdate (2282 bytes)</title></rect>
 <rect width="31.33" height="27.97" x="228.05" y="32.06" class="named"><title>0x00403810 Stage::OnUpdate (2204 bytes)</title></rect>
 <rect width="31.33" height="27.85" x="228.05" y="63.03" class="named"><title>0x0041d820 ReadButtons (2196 bytes)</title></rect>

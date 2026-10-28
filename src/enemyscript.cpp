@@ -233,12 +233,12 @@ restart:
         call:
             value = instr->args.i[0];
             enemy->ctx.code = (char *)instr + instr->size;
-            if (!enemy->flags.unk18)
+            if (!enemy->flags.noCallStack)
             {
                 enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
             }
             g_EnemyScripts.StartSub(&enemy->ctx, value);
-            if (!enemy->flags.unk18 && enemy->stackDepth < 7)
+            if (!enemy->flags.noCallStack && enemy->stackDepth < 7)
             {
                 enemy->stackDepth++;
             }
@@ -246,7 +246,7 @@ restart:
             enemy->ctx.floatVars[0] = instr->args.f[2];
             goto restart;
         case 36:
-            if (enemy->flags.unk18)
+            if (enemy->flags.noCallStack)
             {
                 DebugPrint("error : no Stack Ret\n");
             }
@@ -395,7 +395,7 @@ restart:
             bs->flags = bulletArgs->flags;
             value = bulletArgs->color;
             bs->color = *ResolveOperand(enemy, &value, NULL);
-            if (!enemy->flags.unk5)
+            if (!enemy->flags.holdFire)
             {
                 g_BulletManager.FirePattern(bs);
             }
@@ -433,10 +433,10 @@ restart:
             }
             break;
         case 78:
-            enemy->flags.unk5 = 1;
+            enemy->flags.holdFire = 1;
             break;
         case 79:
-            enemy->flags.unk5 = 0;
+            enemy->flags.holdFire = 0;
             break;
         case 80:
             enemy->shooter.pos = enemy->pos + enemy->shootOffset;
@@ -531,14 +531,14 @@ restart:
                 g_EnemyManager.bosses[instr->args.i[0]] = enemy;
                 g_Gui.bossPresent = 1;
                 g_Gui.bossHealth = 1.0f;
-                enemy->flags.unk11 = 1;
+                enemy->flags.isBoss = 1;
                 enemy->bossIndex = instr->args.i[0];
             }
             else
             {
                 g_Gui.bossPresent = 0;
                 g_EnemyManager.bosses[enemy->bossIndex] = NULL;
-                enemy->flags.unk11 = 0;
+                enemy->flags.isBoss = 0;
             }
             break;
         case 102:
@@ -670,16 +670,16 @@ restart:
             enemy->hitboxSize.z = instr->args.f[2];
             break;
         case 104:
-            enemy->flags.unk9 = instr->args.i[0];
+            enemy->flags.contactDamage = instr->args.i[0];
             break;
         case 105:
-            enemy->flags.unk12 = instr->args.i[0];
+            enemy->flags.takesDamage = instr->args.i[0];
             break;
         case 106:
             g_SoundPlayer.QueueSound(instr->args.i[0], 0);
             break;
         case 107:
-            enemy->flags.unk13 = instr->args.i[0];
+            enemy->flags.deathMode = instr->args.i[0];
             break;
         case 108:
             enemy->deathSub = instr->args.i[0];
@@ -691,7 +691,7 @@ restart:
             enemy->pendingInterrupt = instr->args.i[0];
         interrupt:
             enemy->ctx.code = (char *)instr + instr->size;
-            if (!enemy->flags.unk18)
+            if (!enemy->flags.noCallStack)
             {
                 enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
             }
@@ -798,7 +798,7 @@ restart:
             enemy->timerCallbackSub = instr->args.i[0];
             break;
         case 117:
-            enemy->flags.unk8 = instr->args.i[0];
+            enemy->flags.shootable = instr->args.i[0];
             break;
         case 118:
             g_EffectManager.SpawnEffect(instr->args.i[0], &enemy->pos, instr->args.i[1], instr->args.i[2]);
@@ -871,12 +871,12 @@ restart:
                 {
                     continue;
                 }
-                if (en->flags.unk11)
+                if (en->flags.isBoss)
                 {
                     continue;
                 }
                 en->life = 0;
-                if (!en->flags.unk8 && en->deathSub >= 0)
+                if (!en->flags.shootable && en->deathSub >= 0)
                 {
                     g_EnemyScripts.StartSub(&en->ctx, en->deathSub);
                     en->deathSub = -1;
@@ -905,7 +905,7 @@ restart:
             }
             break;
         case 130:
-            enemy->flags.unk18 = instr->args.i[0];
+            enemy->flags.noCallStack = instr->args.i[0];
             break;
         case 131:
             enemy->rankSpeedLow = params->f[0];
@@ -923,7 +923,7 @@ restart:
             enemy->callbackTimer.Set(0);
             break;
         case 135:
-            enemy->flags.unk20 = instr->args.i[0];
+            enemy->flags.keepSpellCard = instr->args.i[0];
             break;
         }
     next:
@@ -2010,7 +2010,7 @@ void ScriptSparksAndBombShield(Enemy *enemy, EnemyScriptInstr *instr)
             g_SpriteEngine->StartScript(&enemy->sprite, 0x1a5);
             enemy->turnLeft = -1;
         }
-        enemy->flags.unk8 = 0;
+        enemy->flags.shootable = 0;
         enemy->shieldTimer.Set(60);
     }
     else if (enemy->shieldTimer > 0)
@@ -2023,7 +2023,7 @@ void ScriptSparksAndBombShield(Enemy *enemy, EnemyScriptInstr *instr)
                 g_SpriteEngine->StartScript(&enemy->sprite, 0x1a0);
                 enemy->turnLeft = 0xa1;
             }
-            enemy->flags.unk8 = 1;
+            enemy->flags.shootable = 1;
         }
     }
 }

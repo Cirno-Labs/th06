@@ -36,8 +36,8 @@ void EnemyManager::Initialize()
     }
     enemy->flags.active = 1;
     enemy->callbackTimer.Set(0);
-    enemy->flags.unk8 = 1;
-    enemy->flags.unk9 = 1;
+    enemy->flags.shootable = 1;
+    enemy->flags.contactDamage = 1;
     enemy->flags.onScreen = 0;
     enemy->hitboxSize = D3DXVECTOR3(12.0f, 12.0f, 12.0f);
     enemy->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -46,9 +46,9 @@ void EnemyManager::Initialize()
     enemy->acceleration = 0.0f;
     enemy->speed = 0.0f;
     enemy->flags.moveMode = 0;
-    enemy->flags.unk5 = 0;
+    enemy->flags.holdFire = 0;
     enemy->flags.mirrored = 0;
-    enemy->flags.unk11 = 0;
+    enemy->flags.isBoss = 0;
     enemy->stackDepth = 0;
     enemy->life = 1;
     enemy->score = 100;
@@ -61,8 +61,8 @@ void EnemyManager::Initialize()
     enemy->turnLeft = -1;
     enemy->turnRight = -1;
     enemy->turnStill = -1;
-    enemy->flags.unk12 = 1;
-    enemy->flags.unk13 = 0;
+    enemy->flags.takesDamage = 1;
+    enemy->flags.deathMode = 0;
     enemy->deathSub = -1;
     enemy->flags.clampPos = 0;
     enemy->effectCount = 0;
@@ -344,12 +344,12 @@ int Enemy::CheckLifeCallback()
             {
                 continue;
             }
-            if (it->flags.unk11)
+            if (it->flags.isBoss)
             {
                 continue;
             }
             it->life = 0;
-            if (!it->flags.unk8 && it->deathSub >= 0)
+            if (!it->flags.shootable && it->deathSub >= 0)
             {
                 g_EnemyScripts.StartSub(&it->ctx, it->deathSub);
                 it->deathSub = -1;
@@ -368,7 +368,7 @@ int Enemy::CheckTimerCallback()
     Enemy *it;
     int i;
 
-    if (this->flags.unk11)
+    if (this->flags.isBoss)
     {
         g_Gui.SetBossTimer((this->timerCallbackTime - this->callbackTimer.AsFrames()) / 60);
     }
@@ -383,7 +383,7 @@ int Enemy::CheckTimerCallback()
         this->timerCallbackTime = -1;
         this->timerCallbackSub = this->deathSub;
         this->callbackTimer.Set(0);
-        if (!this->flags.unk20)
+        if (!this->flags.keepSpellCard)
         {
             g_EnemyManager.spellCardCapture = 0;
             if (g_EnemyManager.spellCardActive != 0)
@@ -398,12 +398,12 @@ int Enemy::CheckTimerCallback()
             {
                 continue;
             }
-            if (it->flags.unk11)
+            if (it->flags.isBoss)
             {
                 continue;
             }
             it->life = 0;
-            if (!it->flags.unk8 && it->deathSub >= 0)
+            if (!it->flags.shootable && it->deathSub >= 0)
             {
                 g_EnemyScripts.StartSub(&it->ctx, it->deathSub);
                 it->deathSub = -1;
@@ -426,15 +426,15 @@ int Enemy::CheckTimerCallback()
 
 void Enemy::Despawn()
 {
-    if (this->flags.unk13 == 0)
+    if (this->flags.deathMode == 0)
     {
         this->flags.active = 0;
     }
     else
     {
-        this->flags.unk8 = 0;
+        this->flags.shootable = 0;
     }
-    if (this->flags.unk11)
+    if (this->flags.isBoss)
     {
         g_Gui.bossPresent = 0;
     }
@@ -546,15 +546,15 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         if (em->flags.onScreen && !em->flags.hidden)
         {
             lifeBefore = em->life;
-            if (em->flags.unk9 && em->flags.unk8)
+            if (em->flags.contactDamage && em->flags.shootable)
             {
                 size = em->hitboxSize / 1.5f;
-                if (g_Player.CheckHit(&em->pos, &size) == 1 && em->flags.unk8 && !em->flags.unk11)
+                if (g_Player.CheckHit(&em->pos, &size) == 1 && em->flags.shootable && !em->flags.isBoss)
                 {
                     em->life -= 10;
                 }
             }
-            if (em->flags.unk8)
+            if (em->flags.shootable)
             {
                 hurt = g_Player.CalcDamage(&em->pos, &em->hitboxSize, &bomb);
                 if (hurt >= 70)
@@ -591,7 +591,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                         hurt = 0;
                     }
                 }
-                if (em->flags.unk12)
+                if (em->flags.takesDamage)
                 {
                     em->life -= hurt;
                 }
@@ -600,16 +600,16 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     g_Player.homingTarget = em->pos;
                 }
             }
-            if (em->life <= 0 && em->flags.unk8)
+            if (em->life <= 0 && em->flags.shootable)
             {
                 em->lifeCallbackLife = -1;
                 em->timerCallbackTime = -1;
-                switch (em->flags.unk13)
+                switch (em->flags.deathMode)
                 {
                 case 3:
                     em->life = 1;
-                    em->flags.unk12 = 0;
-                    em->flags.unk13 = 0;
+                    em->flags.takesDamage = 0;
+                    em->flags.deathMode = 0;
                     g_Gui.bossPresent = 0;
                     g_EffectManager.SpawnEffect(em->deathEffect, &em->pos, 1, 0xffffffff);
                     g_EffectManager.SpawnEffect(em->deathEffect, &em->pos, 1, 0xffffffff);
@@ -617,13 +617,13 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     break;
                 case 1:
                     g_GameManager.AddScore(em->score);
-                    em->flags.unk8 = 0;
+                    em->flags.shootable = 0;
                     goto dead;
                 case 0:
                     g_GameManager.AddScore(em->score);
                     em->flags.active = 0;
                 dead:
-                    if (em->flags.unk11)
+                    if (em->flags.isBoss)
                     {
                         g_Gui.bossPresent = 0;
                         ReleaseEnemyEffects(em);
@@ -648,7 +648,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                         }
                         mgr->dropCounter++;
                     }
-                    if (em->flags.unk11 && g_EnemyManager.spellCardActive == 0)
+                    if (em->flags.isBoss && g_EnemyManager.spellCardActive == 0)
                     {
                         g_BulletManager.ClearAllWithBonus(0x3200, 0);
                     }
@@ -671,7 +671,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     em->deathSub = -1;
                 }
             }
-            if (em->flags.unk11 && !g_Gui.IsMsgRunning())
+            if (em->flags.isBoss && !g_Gui.IsMsgRunning())
             {
                 g_Gui.SetBossHealth((float)em->life / (float)em->maxLife);
             }

@@ -21,34 +21,34 @@ struct EnemyFlags
     // How moveMode 2 slows down (0 linear to 4 steepest).
     unsigned char moveEasing : 3;
     // Fire instructions only set the shooter up.
-    unsigned char unk5 : 1;
+    unsigned char holdFire : 1;
     // Mirrors the horizontal movement.
     unsigned char mirrored : 1;
     // In use: EnemyManager::Spawn takes the first enemy without it.
     unsigned char active : 1;
     // Can be shot and killed.
-    unsigned char unk8 : 1;
+    unsigned char shootable : 1;
     // Touching the player costs it 10 life.
-    unsigned char unk9 : 1;
+    unsigned char contactDamage : 1;
     // Has been inside the play area; leaving it again removes the
     // enemy.
     unsigned char onScreen : 1;
     // A boss: its life shows in the interface's bar.
-    unsigned char unk11 : 1;
+    unsigned char isBoss : 1;
     // Takes the player's shots' damage.
-    unsigned char unk12 : 1;
+    unsigned char takesDamage : 1;
     // What dying does, in EnemyManager::OnUpdate.
-    unsigned char unk13 : 3;
+    unsigned char deathMode : 3;
     // Keeps the position within lowerBound and upperBound.
     unsigned char clampPos : 1;
     // Turns the main sprite with the enemy's angle.
     unsigned char rotateSprite : 1;
     // Calls and interrupts don't save the context.
-    unsigned char unk18 : 1;
+    unsigned char noCallStack : 1;
     // OnDraw skips the enemy.
     unsigned char hidden : 1;
     // CheckTimerCallback leaves the spell card and the bullets alone.
-    unsigned char unk20 : 1;
+    unsigned char keepSpellCard : 1;
     unsigned char unk21 : 3;
     // The direction the sprite last turned to: 0 none, 1 left, 2 right,
     // 0xff not yet.
@@ -169,7 +169,7 @@ struct Enemy
     Timer sparkTimer;
 
     // After the enemy leaves the play area or its script ends: frees it
-    // (flags.unk13 0) or makes it unshootable, hides the boss's bar if it
+    // (flags.deathMode 0) or makes it unshootable, hides the boss's bar if it
     // is the boss and releases its effects.
     void Despawn();
     // Once the life falls below lifeCallbackLife: sets it to that,
@@ -179,7 +179,7 @@ struct Enemy
     // Once callbackTimer reaches timerCallbackTime: restores the life from
     // lifeCallbackLife, starts timerCallbackSub, makes the death
     // subroutine the next, ends the spell card and clears the bullets
-    // (unless flags.unk20) and the other enemies. Returns 1 then, else 0.
+    // (unless flags.keepSpellCard) and the other enemies. Returns 1 then, else 0.
     int CheckTimerCallback();
     // Keeps the position within the bounds, with flags.clampPos.
     void ClampPos();

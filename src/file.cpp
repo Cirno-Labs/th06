@@ -121,3 +121,13 @@ int File::WriteByte(int c)
         return c;
     }
 }
+
+int File::Seek(DWORD offset, DWORD origin)
+{
+    if (this->handle == INVALID_HANDLE_VALUE)
+    {
+        return 0;
+    }
+    SetFilePointer(this->handle, offset, NULL, origin);
+    return 1;
+}

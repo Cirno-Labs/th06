@@ -104,7 +104,7 @@ stop:
     {
         g_Unknown69d998.cursor = g_Unknown69d998.buffer;
         *g_Unknown69d998.cursor = '\0';
-        Func41e4d0(&g_Unknown69d998, "再起動を要するオプションが変更されたので再起動します\n");
+        LogPrintf(&g_Unknown69d998, "再起動を要するオプションが変更されたので再起動します\n");
         if (g_Unknown6c6d18.cfg.windowed == 0)
         {
             ShowCursor(TRUE);
@@ -389,13 +389,13 @@ int InitD3dDevice()
             {
                 params3.BackBufferFormat = D3DFMT_X8R8G8B8;
                 g_Unknown6c6d18.cfg.colorMode16Bits = 0;
-                Func41e4d0(&g_Unknown69d998, "初回起動、画面を 32Bits で初期化しました\n");
+                LogPrintf(&g_Unknown69d998, "初回起動、画面を 32Bits で初期化しました\n");
             }
             else
             {
                 params3.BackBufferFormat = D3DFMT_R5G6B5;
                 g_Unknown6c6d18.cfg.colorMode16Bits = 1;
-                Func41e4d0(&g_Unknown69d998, "初回起動、画面を 16Bits で初期化しました\n");
+                LogPrintf(&g_Unknown69d998, "初回起動、画面を 16Bits で初期化しました\n");
             }
         }
         else if (g_Unknown6c6d18.cfg.colorMode16Bits == 0)
@@ -414,7 +414,7 @@ int InitD3dDevice()
         {
             params3.FullScreen_RefreshRateInHz = 60;
             params3.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_ONE;
-            Func41e4d0(&g_Unknown69d998, "リフレッシュレートを60Hzに変更します\n");
+            LogPrintf(&g_Unknown69d998, "リフレッシュレートを60Hzに変更します\n");
         }
         if (g_Unknown6c6d18.cfg.frameSkip == 0)
         {
@@ -447,12 +447,12 @@ retry:
                                           D3DCREATE_HARDWARE_VERTEXPROCESSING, &params3,
                                           &g_Unknown6c6d18.d3dDevice) < 0)
     {
-        Func41e4d0(&g_Unknown69d998, "T&L HAL は使用できないようです\n");
+        LogPrintf(&g_Unknown69d998, "T&L HAL は使用できないようです\n");
         if (g_Unknown6c6d18.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_GameWindow.hwnd,
                                               D3DCREATE_SOFTWARE_VERTEXPROCESSING, &params3,
                                               &g_Unknown6c6d18.d3dDevice) < 0)
         {
-            Func41e4d0(&g_Unknown69d998, "HAL も使用できないようです\n");
+            LogPrintf(&g_Unknown69d998, "HAL も使用できないようです\n");
         reference:
             if (g_Unknown6c6d18.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, g_GameWindow.hwnd,
                                                   D3DCREATE_SOFTWARE_VERTEXPROCESSING, &params3,
@@ -460,7 +460,7 @@ retry:
             {
                 if (g_Unknown6c6d18.cfg.flags.force60Fps && g_Unknown6c6d18.presentImmediate == 0)
                 {
-                    Func41e4d0(&g_Unknown69d998, "リフレッシュレートが変更できません、vsync 非同期に変更します\n");
+                    LogPrintf(&g_Unknown69d998, "リフレッシュレートが変更できません、vsync 非同期に変更します\n");
                     params3.FullScreen_RefreshRateInHz = 0;
                     g_Unknown6c6d18.presentImmediate = 1;
                     params3.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
@@ -468,7 +468,7 @@ retry:
                 }
                 if (params3.Flags == D3DPRESENTFLAG_LOCKABLE_BACKBUFFER)
                 {
-                    Func41e4d0(&g_Unknown69d998, "バックバッファをロック不可能にしてみます\n");
+                    LogPrintf(&g_Unknown69d998, "バックバッファをロック不可能にしてみます\n");
                     params3.Flags = 0;
                     g_Unknown6c6d18.lockableBackBuffer = 0;
                     goto retry;
@@ -483,20 +483,20 @@ retry:
             }
             else
             {
-                Func41e4d0(&g_Unknown69d998, "REF で動作しますが、重すぎて恐らくゲームになりません...\n");
+                LogPrintf(&g_Unknown69d998, "REF で動作しますが、重すぎて恐らくゲームになりません...\n");
                 g_Unknown6c6d18.hardwareTnL = 0;
                 checkTextureFormat2 = false;
             }
         }
         else
         {
-            Func41e4d0(&g_Unknown69d998, "HAL で動作します\n");
+            LogPrintf(&g_Unknown69d998, "HAL で動作します\n");
             g_Unknown6c6d18.hardwareTnL = 0;
         }
     }
     else
     {
-        Func41e4d0(&g_Unknown69d998, "T&L HAL で動作しま～す\n");
+        LogPrintf(&g_Unknown69d998, "T&L HAL で動作しま～す\n");
         g_Unknown6c6d18.hardwareTnL = 1;
     }
     halfWidth = 320.0f;
@@ -517,13 +517,13 @@ retry:
     g_Unknown6c6d18.d3dDevice->GetDeviceCaps(&g_Unknown6c6d18.caps);
     if (g_Unknown6c6d18.cfg.flags.unk0 == 0 && (g_Unknown6c6d18.caps.TextureOpCaps & D3DTEXOPCAPS_ADD) == 0)
     {
-        Func41e4d0(&g_Unknown69d998, "D3DTEXOPCAPS_ADD をサポートしていません、色加算エミュレートモードで動作します\n");
+        LogPrintf(&g_Unknown69d998, "D3DTEXOPCAPS_ADD をサポートしていません、色加算エミュレートモードで動作します\n");
         g_Unknown6c6d18.cfg.flags.unk0 = 1;
     }
     if (g_Unknown6c6d18.UsesPresentImmediate() &&
         (g_Unknown6c6d18.caps.PresentationIntervals & D3DPRESENT_INTERVAL_IMMEDIATE) == 0)
     {
-        Func41e4d0(&g_Unknown69d998, "ビデオカードが非同期フリップをサポートしていません、Force60Frameで動作できません\n");
+        LogPrintf(&g_Unknown69d998, "ビデオカードが非同期フリップをサポートしていません、Force60Frameで動作できません\n");
         g_Unknown6c6d18.cfg.flags.force60Fps = 0;
     }
     if (g_Unknown6c6d18.cfg.flags.force16BitTextures == 0 && checkTextureFormat2)
@@ -537,7 +537,7 @@ retry:
         {
             g_Unknown6c6d18.hasA8R8G8B8Textures = 0;
             g_Unknown6c6d18.cfg.flags.force16BitTextures = 1;
-            Func41e4d0(&g_Unknown69d998, "D3DFMT_A8R8G8B8 をサポートしていません、減色モードで動作します\n");
+            LogPrintf(&g_Unknown69d998, "D3DFMT_A8R8G8B8 をサポートしていません、減色モードで動作します\n");
         }
     }
     SetDefaultRenderStates();
@@ -676,7 +676,7 @@ inline void Unknown69d998::Flush()
 
     if (this->cursor != this->buffer)
     {
-        Func41e4d0(this, "---------------------------------------------------------- \n");
+        LogPrintf(this, "---------------------------------------------------------- \n");
         if (this->hasError)
         {
             MessageBoxA(NULL, this->buffer, "log", MB_ICONERROR);

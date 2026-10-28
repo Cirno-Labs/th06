@@ -1,5 +1,7 @@
 #include <math.h>
+#include <string.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 #include "unsorted.h"
 
@@ -77,7 +79,7 @@ WORD InitJoystick()
     joyInfo.dwFlags = JOY_RETURNALL;
     if (joyGetPosEx(JOYSTICKID1, &joyInfo) != JOYERR_NOERROR)
     {
-        Func41e4d0(&g_Unknown69d998, "使えるパッドが存在しないようです、残念\n");
+        LogPrintf(&g_Unknown69d998, "使えるパッドが存在しないようです、残念\n");
         return 1;
     }
     joyGetDevCapsA(JOYSTICKID1, &g_JoyCaps, sizeof(g_JoyCaps));
@@ -428,4 +430,23 @@ int WriteToFile(char *path, void *data, int size)
     }
     fclose(file);
     return 0;
+}
+
+int LogPrintf(Unknown69d998 *log, const char *fmt, ...)
+{
+    int len2;
+    char buf[0x200];
+    va_list args;
+
+    va_start(args, fmt);
+    vsprintf(buf, fmt, args);
+    len2 = strlen(buf);
+    if (log->cursor + len2 < log->buffer + sizeof(log->buffer) - 1)
+    {
+        strcpy(log->cursor, buf);
+        log->cursor += len2;
+        *log->cursor = '\0';
+    }
+    va_end(args);
+    return (int)fmt;
 }

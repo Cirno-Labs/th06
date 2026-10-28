@@ -13,7 +13,7 @@ int EnemyScripts::Load(char *path)
     this->file = (EnemyScriptHeader *)Func41e290(path, 0);
     if (this->file == NULL)
     {
-        Func41e4d0(&g_Unknown69d998, "敵データの読み込みに失敗しました、データが壊れてるか失われています\n");
+        LogPrintf(&g_Unknown69d998, "敵データの読み込みに失敗しました、データが壊れてるか失われています\n");
         return -1;
     }
     this->file->unk_04 += (int)this->file;

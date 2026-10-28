@@ -321,7 +321,7 @@ int Stage::Load(char *anmPath, char *dataPath)
     this->data = (StageData *)Func41e290(dataPath, 0);
     if (this->data == NULL)
     {
-        Func41e4d0(&g_Unknown69d998, "ステージデータが見つかりません。データが壊れています\n");
+        LogPrintf(&g_Unknown69d998, "ステージデータが見つかりません。データが壊れています\n");
         return -1;
     }
     this->objectCount = this->data->objectCount;

@@ -643,7 +643,7 @@ public:
 extern Unknown69d998 g_Unknown69d998;
 
 // Logs a printf-style message to a log object.
-int Func41e4d0(Unknown69d998 *log, const char *fmt, ...);
+int LogPrintf(Unknown69d998 *log, const char *fmt, ...);
 // Logs a printf-style error message to a log object.
 int Func41e620(Unknown69d998 *log, const char *fmt, ...);
 

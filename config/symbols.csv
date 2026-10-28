@@ -370,7 +370,7 @@ address,size,name,symbol
 0x0042f790,102,ClearViewport,?ClearViewport@@YAXK@Z
 0x0042f800,174,ScreenEffect::OnUpdateFadeIn,?OnUpdateFadeIn@ScreenEffect@@SAHPAV1@@Z
 0x0042f8b0,968,Func42f8b0,?Func42f8b0@@YAXPAMK@Z
-0x0042fc80,168,Func42fc80,
+0x0042fc80,168,ScreenEffect::OnUpdateFadeOut,?OnUpdateFadeOut@ScreenEffect@@SAHPAV1@@Z
 0x0042fd30,428,ScreenEffect::Func42fd30,?Func42fd30@ScreenEffect@@SAPAV1@HHHHH@Z
 0x0042fee0,136,Func42fee0,
 0x0042ff70,71,ScreenEffect::OnDrawPlayArea,?OnDrawPlayArea@ScreenEffect@@SAHPAV1@@Z

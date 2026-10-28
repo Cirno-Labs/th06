@@ -305,6 +305,41 @@ int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
     return 0;
 }
 
+void SpriteEngine::ReleaseAnm(int slot)
+{
+    AnmFile *anmHeader;
+    AnmSprite *rawSprite;
+    int k;
+    int startSprite;
+    int *entries;
+
+    if (this->anmFiles[slot] != NULL)
+    {
+        startSprite = this->anmFileSpriteOffsets[slot];
+        entries = this->anmFiles[slot]->spriteOffsets;
+        for (k = 0; k < this->anmFiles[slot]->numSprites; k++, entries++)
+        {
+            rawSprite = (AnmSprite *)((char *)this->anmFiles[slot] + *entries);
+            memset(&this->sprites[rawSprite->id + startSprite], 0, sizeof(SpriteData));
+            this->sprites[rawSprite->id + startSprite].sourceFileIndex = -1;
+        }
+        for (k = 0; k < this->anmFiles[slot]->numScripts; k++, entries += 2)
+        {
+            this->scripts[entries[0] + startSprite] = NULL;
+            this->scriptSpriteOffsets[entries[0] + startSprite] = 0;
+        }
+        this->anmFileSpriteOffsets[slot] = 0;
+        anmHeader = this->anmFiles[slot];
+        this->ReleaseTexture(anmHeader->textureIndex);
+        MemFree(this->anmFiles[slot]);
+        this->anmFiles[slot] = NULL;
+        this->ClearBlendMode();
+        this->ClearColorOp();
+        this->ClearVertexFormat();
+        this->ClearTexture();
+    }
+}
+
 void SpriteEngine::ReleaseTexture(int index)
 {
     if (this->textures[index] != NULL)

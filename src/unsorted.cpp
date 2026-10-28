@@ -29,6 +29,16 @@ void Gui::RemoveChain()
     g_Chain.Remove(&g_GuiDrawChain);
 }
 
+WORD Rng::GetRandomU16()
+{
+    WORD a;
+
+    a = (this->seed ^ 0x9630) - 0x6553;
+    this->seed = (((a & 0xc000) >> 14) + a * 4) & 0xffff;
+    this->generated++;
+    return this->seed;
+}
+
 DWORD Rng::GetRandomU32()
 {
     return (this->GetRandomU16() << 16) | this->GetRandomU16();

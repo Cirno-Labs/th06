@@ -410,7 +410,7 @@ address,size,name,symbol
 0x00433150,1086,SpriteEngine::Draw3D,?Draw3D@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00433590,975,SpriteEngine::Draw3DRounded,?Draw3DRounded@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00433960,4355,SpriteEngine::Step,?Step@SpriteEngine@@QAEHPAVSprite@@@Z
-0x00434af0,97,Func434af0,
+0x00434af0,97,SpriteEngine::RenderTextToTextureIndex,?RenderTextToTextureIndex@SpriteEngine@@QAEXHHHHHHHKKPAD@Z
 0x00434b60,219,SpriteEngine::RenderText,?RenderText@SpriteEngine@@QAAXPAVSprite@@KKPADZZ
 0x00434c40,476,SpriteEngine::Func434c40,?Func434c40@SpriteEngine@@QAAXPAVSprite@@KKPADZZ
 0x00434e20,482,Func434e20,

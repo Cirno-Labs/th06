@@ -305,6 +305,10 @@ public:
     void CreateQuad();
     // Copies a rectangle of one of the loaded surfaces to the back buffer.
     void Func435300(int surface, int unk1, int unk2, int unk3, int unk4);
+    // RenderTextToTexture into texture `textureIndex`, with sizes of 0 or
+    // less taken as 15.
+    void RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight, int unk6,
+                                  D3DCOLOR textColor, D3DCOLOR shadowColor, char *text);
     // Prints a printf-style text with a shadow into the sprite's texture
     // (formatted into 64 bytes) and marks the sprite for upload.
     void RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...);

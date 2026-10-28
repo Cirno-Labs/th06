@@ -702,8 +702,8 @@ struct MsgInstr
     };
 };
 
-// The dialogue Gui runs (GuiImpl+0x2534, 0x6a8 bytes, constructed at
-// 0x41b4c4).
+// The dialogue Gui runs (GuiImpl+0x2534, 0x6a8 bytes). Its implicit
+// constructor is emitted out of line (0x41b4c4), called from GuiImpl's.
 struct GuiMsg
 {
     // The message file loaded.
@@ -745,8 +745,10 @@ struct GuiPopup
     Timer timer;
 };
 
-// The bulk of Gui, allocated by its added callback (0x2c44 bytes,
-// constructed at 0x41b34b).
+// The bulk of Gui, allocated by Gui::RegisterChain (0x2c44 bytes). Its
+// implicit constructor is emitted out of line at 0x41b34b, but the
+// original's frame reserves one more Sprite's worth of slots (0xb8 bytes
+// to our 0xa8): parked, like Player::Player.
 struct GuiImpl
 {
     // Starts script `index` of msg.msgFile, if there is one: resets

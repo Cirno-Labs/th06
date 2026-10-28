@@ -165,7 +165,7 @@ address,size,name,symbol
 0x0041b1b1,161,Gui::DeletedCallback,?DeletedCallback@Gui@@SAHPAV1@@Z
 0x0041b252,249,Gui::RegisterChain,?RegisterChain@Gui@@SAHXZ
 0x0041b34b,377,Func41b34b,
-0x0041b4c4,200,Func41b4c4,
+0x0041b4c4,200,GuiMsg::GuiMsg,??0GuiMsg@@QAE@XZ
 0x0041b58c,35,Gui::RemoveChain,?RemoveChain@Gui@@SAXXZ
 0x0041b5af,50,Timer::NextTick,?NextTick@Timer@@QAEHXZ
 0x0041b5e1,130,GameManager::Func41b5e1,?Func41b5e1@GameManager@@QAEHMMMM@Z

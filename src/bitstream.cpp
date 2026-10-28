@@ -155,3 +155,12 @@ DWORD FileBitStream::ReadBits(int bits)
     }
     return result;
 }
+
+int FileBitStream::ReadByte()
+{
+    if (this->position < this->size)
+    {
+        this->position++;
+    }
+    return this->File::ReadByte();
+}

@@ -361,7 +361,7 @@ void SaveScoreDat(ResultScreen *screen)
             size0 += sizeof(Catk);
         }
     }
-    pscr0 = g_GameManager.pscrs;
+    pscr0 = &g_GameManager.pscrs[0][0][0];
     for (i = 0; i < 4; i++)
     {
         for (j = 0; j < 6; j++)
@@ -1110,6 +1110,99 @@ int ResultScreen::RegisterChain(int unk)
     screen->drawChain = g_Chain.CreateElem((ChainCallback)ResultScreen::OnDraw);
     screen->drawChain->arg = screen;
     g_Chain.AddToDrawChain(screen->drawChain, 0xc);
+    return 0;
+}
+
+int ResultScreen::AddedCallback(ResultScreen *screen)
+{
+    int i;
+    Sprite *sprite;
+    int shot;
+    int k;
+
+    if (screen->state != 0x11)
+    {
+        if (g_SpriteEngine->LoadSurface(0, "data/result/result.jpg") != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x25, "data/result00.anm", 0x100) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x26, "data/result01.anm", 0x108) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x27, "data/result02.anm", 0x10f) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x28, "data/result03.anm", 0x125) != 0)
+        {
+            return -1;
+        }
+        sprite = screen->sprites;
+        for (i = 0; i < 0x26; i++, sprite++)
+        {
+            sprite->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+            sprite->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+            g_SpriteEngine->StartScript(sprite, i + 0x100);
+        }
+        sprite = screen->textSprites;
+        for (i = 0; i < 0x10; i++, sprite++)
+        {
+            g_SpriteEngine->InitSprite(sprite, i + 0x708);
+            sprite->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+            sprite->flags.anchor = 3;
+            sprite->unk_10c = 15;
+            sprite->unk_10d = 15;
+        }
+    }
+    for (i = 0; i < 5; i++)
+    {
+        for (shot = 0; shot < 4; shot++)
+        {
+            for (k = 0; k < 10; k++)
+            {
+                screen->defaultScores[i][shot][k].score = 1000000 - k * 100000;
+                screen->defaultScores[i][shot][k].magic = *(DWORD *)"DMYS";
+                screen->defaultScores[i][shot][k].difficulty = i;
+                screen->defaultScores[i][shot][k].version = 0x10;
+                screen->defaultScores[i][shot][k].unk_06 = 0x1c;
+                screen->defaultScores[i][shot][k].size = 0x1c;
+                screen->defaultScores[i][shot][k].stage = 1;
+                screen->defaultScores[i][shot][k].unk_09[0] = 0;
+                screen->AddScore(&screen->defaultScores[i][shot][k], i, shot);
+                strcpy(screen->defaultScores[i][shot][k].name, "Nanashi ");
+            }
+        }
+    }
+    screen->unk_0014 = 0;
+    screen->scoreDat = LoadScoreDat("score.dat");
+    for (i = 0; i < 5; i++)
+    {
+        for (shot = 0; shot < 4; shot++)
+        {
+            LoadHighScores(screen->scoreDat, &screen->scores[i][shot], shot, i);
+        }
+    }
+    if (screen->state != 9 && screen->state != 0x11)
+    {
+        LoadSpellCards(screen->scoreDat, g_GameManager.catks);
+        LoadClears(screen->scoreDat, g_GameManager.clrds);
+        LoadPracticeScores(screen->scoreDat, &g_GameManager.pscrs[0][0][0]);
+    }
+    if (screen->state == 0x11 &&
+        g_GameManager.pscrs[g_GameManager.character * 2 + g_GameManager.shotType][g_GameManager.stage - 1]
+                           [g_GameManager.difficulty]
+                               .score < g_GameManager.score)
+    {
+        g_GameManager.pscrs[g_GameManager.character * 2 + g_GameManager.shotType][g_GameManager.stage - 1]
+                           [g_GameManager.difficulty]
+                               .score = g_GameManager.score;
+    }
+    screen->unk_39a0.spriteIndex = -1;
     return 0;
 }
 

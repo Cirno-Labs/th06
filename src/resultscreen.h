@@ -209,6 +209,12 @@ public:
     static int RegisterChain(int unk);
     static int OnUpdate(ResultScreen *screen);
     static int OnDraw(ResultScreen *screen);
+    // Loads the result screen's image and ANMs and starts the sprites'
+    // scripts (unless in state 0x11), fills the lists with the default
+    // entries, then the score file's, and loads its spell card, clear and
+    // practice chunks into g_GameManager (not in states 9 and 0x11). In
+    // state 0x11 it records a better practice score. Returns 0, or -1 if
+    // loading fails.
     static int AddedCallback(ResultScreen *screen);
     // Saves and frees the score file, empties the lists, releases ANMs
     // 0x25 to 0x28 and surface 0, removes the draw element and deletes
@@ -251,7 +257,8 @@ public:
     // The menu item selected, or where the next character of a name
     // goes (0 to 8).
     int cursor;
-    DWORD unk_0014[0x2];
+    DWORD unk_0014;
+    DWORD unk_0018;
     // The replay slot chosen, 0 to 14.
     int replaySlot;
     // The character of g_NameAlphabet selected.
@@ -268,7 +275,9 @@ public:
     Sprite textSprites[0x10];
     Sprite unk_39a0;
     ListNode scores[5][4];
-    DWORD unk_3ba0[0x578];
+    // The entries the lists start with ("Nanashi ", from 1000000 down by
+    // 100000), by difficulty and shot.
+    Hscr defaultScores[5][4][10];
     // The score being entered.
     Hscr entry;
     // The "TH6K" chunk SaveScoreDat writes.

@@ -67,7 +67,8 @@ public:
     // (SaveScoreDat).
     Catk catks[0x40];
     Clrd clrds[4];
-    Pscr pscrs[4 * 6 * 4];
+    // By shot, stage and difficulty.
+    Pscr pscrs[4][6][4];
     // What FireShot compares the shot tables' levels with.
     WORD power;
     WORD unk_1812;

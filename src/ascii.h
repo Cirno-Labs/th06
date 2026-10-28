@@ -22,14 +22,17 @@ struct AsciiString
 };
 ASSERT_SIZE(AsciiString, 0x60);
 
-// A part of AsciiText, twice: at 0x6244 and 0x69bc. Constructed at
-// 0x4010e0; AsciiText::OnDraw runs Func402740 on the first and
-// Func403060 on the second, so they may be two types whose identical
-// constructors were folded.
+// A part of AsciiText, twice: at 0x6244 and 0x69bc, the pause and the
+// continue menus. Its inline constructor is too large to expand: emitted
+// at 0x4010e0, and AsciiText's constructor reserves slots for it.
+// AsciiText::OnDraw runs Func402740 on the first and Func403060 on the
+// second.
 class Unknown4010e0
 {
 public:
-    Unknown4010e0();
+    Unknown4010e0()
+    {
+    }
 
     // The pause menu, while g_GameManager.unk_181f is set. unk_000 is the
     // state: 0 starts the menu's scripts (and a copy of the play area
@@ -87,6 +90,8 @@ ASSERT_SIZE(AsciiPopup, 0x28);
 class AsciiText
 {
 public:
+    // Constructs the members, for g_AsciiText's static initialization.
+    AsciiText();
     // Adds AsciiText's update and draw chain elements. Returns 0, or -1
     // if adding fails.
     static int RegisterChain();

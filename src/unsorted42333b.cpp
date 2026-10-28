@@ -638,7 +638,7 @@ int Unknown6c6d18::LoadConfig(char *path)
 
     memset(&g_Unknown6c6d18.cfg, 0, sizeof(GameConfig));
     g_Unknown6c6d18.cfg.flags.unk0 = 1;
-    file = (GameConfig *)Func41e290(path, 1);
+    file = (GameConfig *)LoadFileData(path, 1);
     if (file == NULL)
     {
         SET_DEFAULT_CONFIG();

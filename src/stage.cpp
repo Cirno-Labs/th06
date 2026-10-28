@@ -318,7 +318,7 @@ int Stage::Load(char *anmPath, char *dataPath)
     {
         return -1;
     }
-    this->data = (StageData *)Func41e290(dataPath, 0);
+    this->data = (StageData *)LoadFileData(dataPath, 0);
     if (this->data == NULL)
     {
         LogPrintf(&g_Unknown69d998, "ステージデータが見つかりません。データが壊れています\n");

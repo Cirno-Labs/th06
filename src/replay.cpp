@@ -273,7 +273,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     replay->frame = 0;
     if (replay->data == NULL)
     {
-        replay->data = (ReplayHeader *)Func41e290(replay->path, !g_GameManager.unk_1824);
+        replay->data = (ReplayHeader *)LoadFileData(replay->path, !g_GameManager.unk_1824);
         if (ValidateReplay(replay->data, g_FileSize) != 0)
         {
             return -1;

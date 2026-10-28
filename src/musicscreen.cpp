@@ -220,7 +220,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
     }
     g_SpriteEngine->StartScript(&screen->unk_0024[0], 0x100);
     screen->stateFrames = 0;
-    data = rp = (char *)Func41e290("data/musiccmt.txt", 0);
+    data = rp = (char *)LoadFileData("data/musiccmt.txt", 0);
     if (rp == NULL)
     {
         return -1;

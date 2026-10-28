@@ -84,7 +84,7 @@ void SpriteEngine::CreateQuad()
 int SpriteEngine::LoadTexture(int index, char *path, int format, D3DCOLOR colorKey)
 {
     this->ReleaseTexture(index);
-    this->textureFiles[index] = Func41e290(path, 0);
+    this->textureFiles[index] = LoadFileData(path, 0);
     if (this->textureFiles[index] == NULL)
     {
         return -1;
@@ -140,7 +140,7 @@ int SpriteEngine::LoadTextureAlpha(int index, char *path, int format, D3DCOLOR c
     D3DLOCKED_RECT srcRect;
     IDirect3DTexture8 *srcTexture = NULL;
 
-    fileData = Func41e290(path, 0);
+    fileData = LoadFileData(path, 0);
     if (fileData == NULL)
     {
         return -1;
@@ -259,7 +259,7 @@ int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
     int *entries;
 
     this->ReleaseAnm(slot);
-    this->anmFiles[slot] = (AnmFile *)Func41e290(path, 0);
+    this->anmFiles[slot] = (AnmFile *)LoadFileData(path, 0);
     anmHeader = this->anmFiles[slot];
     if (anmHeader == NULL)
     {
@@ -1268,7 +1268,7 @@ int SpriteEngine::LoadSurface(int surface, char *path)
     {
         this->ReleaseSurface(surface);
     }
-    fileData = Func41e290(path, 0);
+    fileData = LoadFileData(path, 0);
     if (fileData == NULL)
     {
         LogError(&g_Unknown69d998, "%sが読み込めないです。\n", path);

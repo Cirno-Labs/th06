@@ -135,7 +135,7 @@ int Unknown6d3f50::LoadSound(int index, char *path)
         this->soundBuffers[index]->Release();
         this->soundBuffers[index] = NULL;
     }
-    wavBuf = (char *)Func41e290(path, 0);
+    wavBuf = (char *)LoadFileData(path, 0);
     cursor = wavBuf;
     if (cursor == NULL)
     {
@@ -287,7 +287,7 @@ int Unknown6d3f50::LoadBgmLoop(char *path)
     {
         return -1;
     }
-    posData = (int *)Func41e290(path, 0);
+    posData = (int *)LoadFileData(path, 0);
     if (posData == NULL)
     {
         return -1;

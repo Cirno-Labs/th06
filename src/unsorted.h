@@ -174,6 +174,10 @@ public:
     int Open(char *path);
     // Returns the index of the entry named `name`, or -1.
     int FindEntry(char *name);
+    // Decodes entry `entry` (named `name`) into a malloc'd buffer.
+    void *Decode(int entry, char *name);
+    // The decoded size of entry `entry`.
+    int GetEntrySize(int entry);
 
     // Closes the archive and frees its entry table. Returns 1.
     int Release();
@@ -619,9 +623,12 @@ BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE *pdidInstance, VOID *
 // range to -1000 to 1000.
 BOOL CALLBACK EnumAxesCallback(const DIDEVICEOBJECTINSTANCE *pdidoi, VOID *pContext);
 
-// Loads a whole file into a malloc'd buffer; NULL on failure.
-void *Func41e290(char *path, int unk);
-// The size of the file Func41e290 loaded last.
+// Loads a whole file into a malloc'd buffer; NULL on failure. Unless
+// `isExternal` is set, looks it up by its name (the part after the
+// last '/', or the whole path) in the open archives and decodes it from
+// the first that has it; otherwise reads it from disk.
+void *LoadFileData(char *path, int isExternal);
+// The size of the file LoadFileData loaded last.
 extern int g_FileSize;
 
 // The object error messages go to, e.g. "error : MIDI File が読み込めない":

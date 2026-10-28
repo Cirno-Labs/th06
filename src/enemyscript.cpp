@@ -10,7 +10,7 @@ int EnemyScripts::Load(char *path)
 {
     int i;
 
-    this->file = (EnemyScriptHeader *)Func41e290(path, 0);
+    this->file = (EnemyScriptHeader *)LoadFileData(path, 0);
     if (this->file == NULL)
     {
         LogPrintf(&g_Unknown69d998, "敵データの読み込みに失敗しました、データが壊れてるか失われています\n");

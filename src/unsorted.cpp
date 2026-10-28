@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -412,6 +413,80 @@ void Unknown41e150::Release()
         this->font->Release();
         this->font = NULL;
     }
+}
+
+void *LoadFileData(char *path, int isExternal)
+{
+    FILE *handle;
+    void *buffer;
+    int fileSize3;
+    int entry = -1;
+    char *name;
+    int i;
+
+    if (isExternal == 0)
+    {
+        name = strrchr(path, '\\');
+        if (name == NULL)
+        {
+            name = path;
+        }
+        else
+        {
+            name++;
+        }
+        name = strrchr(name, '/');
+        if (name == NULL)
+        {
+            name = path;
+        }
+        else
+        {
+            name++;
+        }
+        if (g_Archives != NULL)
+        {
+            for (i = 0; i < 0x10; i++)
+            {
+                if (g_Archives[i] != NULL)
+                {
+                    entry = g_Archives[i]->FindEntry(name);
+                    if (entry >= 0)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        if (entry < 0)
+        {
+            return NULL;
+        }
+    }
+    if (entry >= 0)
+    {
+        DebugPrint("%s Decode ... \n", name);
+        buffer = g_Archives[i]->Decode(entry, name);
+        g_FileSize = g_Archives[i]->GetEntrySize(entry);
+    }
+    else
+    {
+        DebugPrint("%s Load ... \n", path);
+        handle = fopen(path, "rb");
+        if (handle == NULL)
+        {
+            DebugPrint("error : %s is not found.\n", path);
+            return NULL;
+        }
+        fseek(handle, 0, SEEK_END);
+        fileSize3 = ftell(handle);
+        g_FileSize = fileSize3;
+        fseek(handle, 0, SEEK_SET);
+        buffer = malloc(fileSize3);
+        fread(buffer, 1, fileSize3, handle);
+        fclose(handle);
+    }
+    return buffer;
 }
 
 int WriteToFile(char *path, void *data, int size)

@@ -23,7 +23,7 @@ ScoreDat *LoadScoreDat(char *path)
     ScoreChunk *chunk0;
     int rest0;
 
-    dat = (ScoreDat *)Func41e290(path, 1);
+    dat = (ScoreDat *)LoadFileData(path, 1);
     if (dat == NULL)
     {
     fail:
@@ -706,7 +706,7 @@ int ResultScreen::HandleReplaySaving()
             for (k = 0; k < 0xf; k++)
             {
                 sprintf(path, "./replay/th6_%.2d.rpy", k + 1);
-                replay = (ReplayHeader *)Func41e290(path, 1);
+                replay = (ReplayHeader *)LoadFileData(path, 1);
                 if (replay == NULL)
                 {
                     continue;

@@ -197,7 +197,7 @@ int MidiPlayer::LoadFile(int slot, char *path)
     }
     this->Stop();
     this->UnloadFile(slot);
-    this->fileData[slot] = Func41e290(path, 0);
+    this->fileData[slot] = LoadFileData(path, 0);
     if (this->fileData[slot] == NULL)
     {
         LogPrintf(&g_Unknown69d998, "error : MIDI File が読み込めない %s \n", path);

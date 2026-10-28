@@ -525,7 +525,7 @@ address,size,name,symbol
 0x0043fbfe,566,Func43fbfe,
 0x0043fe34,40,Func43fe34,
 0x0043fe5c,102,D3DXCreateTexture,_D3DXCreateTexture@32
-0x0043fec2,182,Func43fec2,
+0x0043fec2,182,D3DXLoadSurfaceFromFileInMemory,_D3DXLoadSurfaceFromFileInMemory@36
 0x0043ff78,285,D3DXLoadSurfaceFromSurface,_D3DXLoadSurfaceFromSurface@32
 0x00440095,305,Func440095,
 0x004401c6,1041,D3DXCreateTextureFromFileInMemoryEx,_D3DXCreateTextureFromFileInMemoryEx@60

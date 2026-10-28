@@ -90,3 +90,51 @@ DWORD DatArchive::GetEntrySize(DWORD entry)
     }
     return this->entries[entry].size;
 }
+
+void *DatArchive::ReadEncoded(DWORD *size, DWORD *checksum, DWORD entry)
+{
+    DWORD dataSize;
+    void *data;
+
+    if (this->stream == NULL)
+    {
+        return NULL;
+    }
+    if (entry >= this->numEntries)
+    {
+        return NULL;
+    }
+    if (size == NULL)
+    {
+        return NULL;
+    }
+    if (checksum == NULL)
+    {
+        return NULL;
+    }
+    if (!this->stream->Seek(this->entries[entry].offset))
+    {
+        return NULL;
+    }
+    if (entry == this->numEntries - 1)
+    {
+        dataSize = this->tableOffset - this->entries[entry].offset;
+    }
+    else
+    {
+        dataSize = this->entries[entry + 1].offset - this->entries[entry].offset;
+    }
+    data = malloc(dataSize);
+    if (data == NULL)
+    {
+        return NULL;
+    }
+    if (!this->stream->Read(data, dataSize))
+    {
+        free(data);
+        return NULL;
+    }
+    *checksum = this->entries[entry].checksum;
+    *size = dataSize;
+    return data;
+}

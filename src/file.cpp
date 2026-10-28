@@ -102,3 +102,22 @@ int File::ReadByte()
         return c;
     }
 }
+
+int File::WriteByte(int c)
+{
+    BYTE b = c;
+    DWORD written;
+
+    if (!this->Write(&b, 1, &written))
+    {
+        return -1;
+    }
+    else if (written == 0)
+    {
+        return -1;
+    }
+    else
+    {
+        return c;
+    }
+}

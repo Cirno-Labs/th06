@@ -762,9 +762,7 @@ struct GuiPopup
 };
 
 // The bulk of Gui, allocated by Gui::RegisterChain (0x2c44 bytes). Its
-// implicit constructor is emitted out of line at 0x41b34b, but the
-// original's frame reserves one more Sprite's worth of slots (0xb8 bytes
-// to our 0xa8): parked, like Player::Player.
+// implicit constructor is emitted out of line at 0x41b34b.
 struct GuiImpl
 {
     // Starts script `index` of msg.msgFile, if there is one: resets

@@ -164,7 +164,7 @@ address,size,name,symbol
 0x0041b1a4,13,Gui::AddedCallback,?AddedCallback@Gui@@SAHPAV1@@Z
 0x0041b1b1,161,Gui::DeletedCallback,?DeletedCallback@Gui@@SAHPAV1@@Z
 0x0041b252,249,Gui::RegisterChain,?RegisterChain@Gui@@SAHXZ
-0x0041b34b,377,Func41b34b,
+0x0041b34b,377,GuiImpl::GuiImpl,??0GuiImpl@@QAE@XZ
 0x0041b4c4,200,GuiMsg::GuiMsg,??0GuiMsg@@QAE@XZ
 0x0041b58c,35,Gui::RemoveChain,?RemoveChain@Gui@@SAXXZ
 0x0041b5af,50,Timer::NextTick,?NextTick@Timer@@QAEHXZ

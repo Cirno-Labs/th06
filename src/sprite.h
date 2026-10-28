@@ -187,7 +187,12 @@ public:
     D3DCOLOR alphaInitial;
     D3DCOLOR alphaFinal;
     // The positions a position interpolation goes from and to.
-    D3DXVECTOR3 posInitial;
+    // A D3DVECTOR, without D3DXVECTOR3's (empty, inline) constructor:
+    // inline Sprite constructors too large to expand still use up the
+    // caller's inlining budget, by the number of inline constructors in
+    // them, and one fewer lets GuiImpl's reserve slots for 9 Sprites
+    // rather than 8, as the original's does.
+    D3DVECTOR posInitial;
     D3DXVECTOR3 posFinal;
     // Set instead of pos while flags.usePosOffset is set.
     D3DXVECTOR3 posOffset;

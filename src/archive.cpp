@@ -57,3 +57,13 @@ int DatArchive::ReadTable()
     }
     return 1;
 }
+
+int DatArchive::Release()
+{
+    this->tableOffset = 0;
+    this->numEntries = 0;
+    SAFE_DELETE(this->stream);
+    SAFE_DELETE(this->entries);
+    free(this->unk_04);
+    return 1;
+}

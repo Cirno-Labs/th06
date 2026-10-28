@@ -20,6 +20,11 @@ public:
     // of Func43a70a) and surface 0, forgets their scripts, removes the
     // calc element and frees unk_10edc. Returns 0.
     static int DeletedCallback(MainMenu *menu);
+    // Sets the menu up with Func439da0 (on failure sets the scene to 4
+    // and returns -1); the first time, waits until 3 seconds after the
+    // game started and plays "bgm/th06_01.mid". Then resets every
+    // sprite's interrupt, color and offset and sets unk_81f0. Returns 0.
+    int Func4378a2();
 
     Sprite sprites[0x7a];
     // The selected entry.
@@ -53,3 +58,5 @@ void ReassignButton(MainMenu *menu, short button, short replacement, int unk);
 // sprite unk_0b2 + `spriteOffset` (selected) or unk_0b2 in white
 // instead, keeping the color's alpha.
 void HighlightMenuEntry(Sprite *vm, int index, int cursor, D3DCOLOR selectedColor, D3DCOLOR color, int spriteOffset);
+
+int Func439da0(MainMenu *menu);

@@ -111,6 +111,44 @@ void HighlightMenuEntry(Sprite *vm, int index, int cursor, D3DCOLOR selectedColo
     }
 }
 
+int MainMenu::Func4378a2()
+{
+    DWORD current;
+    int i;
+
+    if (Func439da0(this) != 0)
+    {
+        g_Unknown6c6d18.scene = 4;
+        return -1;
+    }
+    if (g_Unknown6c6d18.unk_400 > 0)
+    {
+        current = timeGetTime();
+        while (current - g_Unknown6c6d18.unk_400 >= 0 && current - g_Unknown6c6d18.unk_400 < 3000)
+        {
+            current = timeGetTime();
+        }
+        g_Unknown6c6d18.unk_400 = 0;
+        g_Unknown6c6d18.PlayMusic("bgm/th06_01.mid");
+    }
+    for (i = 0; i < 0x7a; i++)
+    {
+        this->sprites[i].pendingInterrupt = 1;
+        this->sprites[i].flags.colorOp = 1;
+        if (!g_Unknown6c6d18.cfg.flags.unk0)
+        {
+            this->sprites[i].color = 0xff000000;
+        }
+        else
+        {
+            this->sprites[i].color = 0xffffffff;
+        }
+        this->sprites[i].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    }
+    this->unk_81f0 = 1;
+    return 0;
+}
+
 int MainMenu::DeletedCallback(MainMenu *menu)
 {
     int i;

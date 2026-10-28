@@ -13,8 +13,11 @@
 class ScreenEffect
 {
 public:
-    // Creates an effect of `type` with its chain elements.
-    static ScreenEffect *Func42fd30(int type, int a, int b, int c, int d);
+    // Creates an effect of `type` (0 fade in, 1 shake, 2 fade out) that
+    // lasts `duration` frames, with `a` and `b` as its color or shake
+    // range, and adds its chain elements (update priority 0xe, draw
+    // 0x10). Returns it, or NULL if adding fails.
+    static ScreenEffect *StartEffect(int type, int duration, int a, int b, int c);
     // The update element's added callback: restarts `timer`. Returns 0.
     static int AddedCallback(ScreenEffect *effect);
     // The update element's deleted callback: removes the draw element

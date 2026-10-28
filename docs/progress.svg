@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69% (325)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">21.66% (102)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.21% (326)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">21.44% (101)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="515.45" height="6" x="0" y="0" class="named"/>
-<rect width="69.78" height="6" x="515.45" y="0" class="decompiled"/>
-<rect width="161.77" height="6" x="585.23" y="0" class="todo"/>
+<rect width="517.03" height="6" x="0" y="0" class="named"/>
+<rect width="69.78" height="6" x="517.03" y="0" class="decompiled"/>
+<rect width="160.18" height="6" x="586.82" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -440,7 +440,7 @@
 <rect width="12" height="12" x="285" y="105" class="named"><title>0x0042f800 ScreenEffect::OnUpdateFadeIn (174 bytes)</title></rect>
 <rect width="12" height="12" x="300" y="105" class="todo"><title>0x0042f8b0 Func42f8b0 (968 bytes)</title></rect>
 <rect width="12" height="12" x="315" y="105" class="named"><title>0x0042fc80 ScreenEffect::OnUpdateFadeOut (168 bytes)</title></rect>
-<rect width="12" height="12" x="330" y="105" class="todo"><title>0x0042fd30 ScreenEffect::Func42fd30 (428 bytes)</title></rect>
+<rect width="12" height="12" x="330" y="105" class="named"><title>0x0042fd30 ScreenEffect::StartEffect (428 bytes)</title></rect>
 <rect width="12" height="12" x="345" y="105" class="named"><title>0x0042fee0 ScreenEffect::OnDrawScreen (136 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="105" class="named"><title>0x0042ff70 ScreenEffect::OnDrawPlayArea (71 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="105" class="named"><title>0x0042ffc0 ScreenEffect::OnUpdateShake (556 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">54.86%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">40.32%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">55.04%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">40.14%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="409.83" height="6" x="0" y="0" class="named"/>
-<rect width="35.95" height="6" x="409.83" y="0" class="decompiled"/>
-<rect width="301.21" height="6" x="445.79" y="0" class="todo"/>
+<rect width="411.18" height="6" x="0" y="0" class="named"/>
+<rect width="35.95" height="6" x="411.18" y="0" class="decompiled"/>
+<rect width="299.87" height="6" x="447.13" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -689,7 +689,7 @@
 <rect width="12.22" height="10.66" x="565.36" y="125.69" class="named"><title>0x00432ad0 SpriteEngine::Draw (431 bytes)</title></rect>
 <rect width="12.22" height="10.66" x="565.36" y="139.34" class="named"><title>0x00432fa0 SpriteEngine::DrawNoRound (431 bytes)</title></rect>
 <rect width="11.51" height="11.29" x="580.59" y="0" class="named"><title>0x0040ef50 EffectManager::SpawnEffect (430 bytes)</title></rect>
-<rect width="11.51" height="11.23" x="580.59" y="14.29" class="todo"><title>0x0042fd30 ScreenEffect::Func42fd30 (428 bytes)</title></rect>
+<rect width="11.51" height="11.23" x="580.59" y="14.29" class="named"><title>0x0042fd30 ScreenEffect::StartEffect (428 bytes)</title></rect>
 <rect width="11.51" height="11.09" x="580.59" y="28.52" class="named"><title>0x004354c0 SpriteEngine::CopySurfaceRectToBackBuffer (424 bytes)</title></rect>
 <rect width="11.51" height="11.06" x="580.59" y="42.61" class="named"><title>0x0042b0d9 LoadScoreDat (423 bytes)</title></rect>
 <rect width="11.51" height="10.89" x="580.59" y="56.67" class="named"><title>0x00432030 SpriteEngine::ReleaseAnm (418 bytes)</title></rect>

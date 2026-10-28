@@ -123,7 +123,7 @@ void UpdateReimuABomb(Player *player)
                     player->bulletClearAreas[i][3] = 256.0f;
                     D3DXVECTOR3 velocity = player->bomb.partVelocity[i] / 8.0f;
                     g_Unknown6d3f50.QueueSound(0xf, 0);
-                    ScreenEffect::Func42fd30(1, 0x10, 8, 0, 0);
+                    ScreenEffect::StartEffect(1, 0x10, 8, 0, 0);
                 }
             }
         }
@@ -241,13 +241,13 @@ void UpdateReimuBBomb(Player *player)
         player->bomb.partPos[3].x = 192.0f;
         player->bomb.partPos[3].y = player->position.y;
         player->bomb.partPos[3].z = 0.405f;
-        ScreenEffect::Func42fd30(1, 60, 2, 6, 0);
+        ScreenEffect::StartEffect(1, 60, 2, 6, 0);
     }
     else
     {
         if (player->bomb.timer == 60)
         {
-            ScreenEffect::Func42fd30(1, 80, 20, 0, 0);
+            ScreenEffect::StartEffect(1, 80, 20, 0, 0);
         }
         player->bulletClearAreas[0][2] = 62.0f;
         player->bulletClearAreas[0][3] = 448.0f;
@@ -320,7 +320,7 @@ void UpdateMarisaABomb(Player *player)
             player->bomb.partVelocity[i].z = 0.0f;
         }
         g_Unknown6d3f50.QueueSound(6, 0);
-        ScreenEffect::Func42fd30(1, 120, 4, 1, 0);
+        ScreenEffect::StartEffect(1, 120, 4, 1, 0);
     }
     else
     {
@@ -416,11 +416,11 @@ void UpdateMarisaBBomb(Player *player)
     {
         if (player->bomb.timer == 60)
         {
-            ScreenEffect::Func42fd30(1, 60, 1, 7, 0);
+            ScreenEffect::StartEffect(1, 60, 1, 7, 0);
         }
         else if (player->bomb.timer == 120)
         {
-            ScreenEffect::Func42fd30(1, 200, 24, 0, 0);
+            ScreenEffect::StartEffect(1, 200, 24, 0, 0);
         }
         if (player->bomb.timer.HasTicked() && player->bomb.timer.AsFrames() % 4 != 0)
         {

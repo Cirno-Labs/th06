@@ -1,5 +1,6 @@
 // The file with ScreenEffect, from 0x42f6d0.
 
+#include "gamemanager.h"
 #include "screeneffect.h"
 #include "unsorted.h"
 
@@ -91,6 +92,61 @@ int ScreenEffect::OnDrawPlayArea(ScreenEffect *effect)
     area[2] = 416.0f;
     area[3] = 464.0f;
     Func42f8b0(area, effect->alpha << 24 | effect->color);
+    return 1;
+}
+
+int ScreenEffect::OnUpdateShake(ScreenEffect *effect)
+{
+    float shake;
+
+    if (g_GameManager.unk_002c)
+    {
+        g_GameManager.arena[0] = 32.0f;
+        g_GameManager.arena[1] = 16.0f;
+        g_GameManager.arena[2] = 384.0f;
+        g_GameManager.arena[3] = 448.0f;
+        return 1;
+    }
+    effect->timer.Tick();
+    if (effect->timer >= effect->duration)
+    {
+        g_GameManager.arena[0] = 32.0f;
+        g_GameManager.arena[1] = 16.0f;
+        g_GameManager.arena[2] = 384.0f;
+        g_GameManager.arena[3] = 448.0f;
+        return 0;
+    }
+    shake = effect->timer.AsFloat() * (effect->shakeTo - effect->shakeFrom) / effect->duration + effect->shakeFrom;
+    switch (g_Rng.GetRandomU32InRange(3))
+    {
+    case 0:
+        g_GameManager.arena[0] = 32.0f;
+        g_GameManager.arena[2] = 384.0f;
+        break;
+    case 1:
+        g_GameManager.arena[0] = 32.0f + shake;
+        g_GameManager.arena[2] = 384.0f - shake;
+        break;
+    case 2:
+        g_GameManager.arena[0] = 32.0f;
+        g_GameManager.arena[2] = 384.0f - shake;
+        break;
+    }
+    switch (g_Rng.GetRandomU32InRange(3))
+    {
+    case 0:
+        g_GameManager.arena[1] = 16.0f;
+        g_GameManager.arena[3] = 448.0f;
+        break;
+    case 1:
+        g_GameManager.arena[1] = 16.0f + shake;
+        g_GameManager.arena[3] = 448.0f - shake;
+        break;
+    case 2:
+        g_GameManager.arena[1] = 16.0f;
+        g_GameManager.arena[3] = 448.0f - shake;
+        break;
+    }
     return 1;
 }
 

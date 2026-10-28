@@ -23,6 +23,11 @@ public:
     // Type 0's update callback: fades `alpha` from 255 to 0 over
     // `duration` frames. Returns 0 when done, else 1.
     static int OnUpdateFadeIn(ScreenEffect *effect);
+    // Type 1's update callback: shakes the play area, moving its edges
+    // in at random by from shakeFrom to shakeTo pixels over `duration`
+    // frames, unless g_GameManager.unk_002c is set. Returns 0 when done
+    // (with the play area back in place), else 1.
+    static int OnUpdateShake(ScreenEffect *effect);
     // Type 2's update callback: fades `alpha` from 0 to 255 over
     // `duration` frames. Returns 0 when done, else 1.
     static int OnUpdateFadeOut(ScreenEffect *effect);
@@ -40,8 +45,15 @@ public:
     int alpha;
     // How many frames the effect lasts.
     int duration;
-    D3DCOLOR color;
-    int unk_1c;
+    union
+    {
+        // Types 0 and 2: the color faded.
+        D3DCOLOR color;
+        // Type 1: how far the play area shakes at the start, and at the
+        // end.
+        int shakeFrom;
+    };
+    int shakeTo;
     int unk_20;
     Timer timer;
 };

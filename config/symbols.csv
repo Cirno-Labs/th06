@@ -374,7 +374,7 @@ address,size,name,symbol
 0x0042fd30,428,ScreenEffect::Func42fd30,?Func42fd30@ScreenEffect@@SAPAV1@HHHHH@Z
 0x0042fee0,136,ScreenEffect::OnDrawScreen,?OnDrawScreen@ScreenEffect@@SAHPAV1@@Z
 0x0042ff70,71,ScreenEffect::OnDrawPlayArea,?OnDrawPlayArea@ScreenEffect@@SAHPAV1@@Z
-0x0042ffc0,556,Func42ffc0,
+0x0042ffc0,556,ScreenEffect::OnUpdateShake,?OnUpdateShake@ScreenEffect@@SAHPAV1@@Z
 0x004301f0,48,ScreenEffect::AddedCallback,?AddedCallback@ScreenEffect@@SAHPAV1@@Z
 0x00430220,75,ScreenEffect::DeletedCallback,?DeletedCallback@ScreenEffect@@SAHPAV1@@Z
 0x00430270,669,Unknown6d3f50::Initialize,?Initialize@Unknown6d3f50@@QAEHPAUHWND__@@@Z

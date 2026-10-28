@@ -411,6 +411,10 @@ public:
     {
         return range != 0 ? this->GetRandomU16() % range : 0;
     }
+    DWORD GetRandomU32InRange(DWORD range)
+    {
+        return range != 0 ? this->GetRandomU32() % range : 0;
+    }
 
     WORD seed;
     WORD unk_02;

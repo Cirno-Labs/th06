@@ -120,3 +120,38 @@ int FileBitStream::ReadBit()
     }
     return bit != 0;
 }
+
+DWORD FileBitStream::ReadBits(int bits)
+{
+    DWORD bit = 1 << (bits - 1);
+    DWORD result = 0;
+
+    if (this->handle == NULL)
+    {
+        return 0;
+    }
+    while (bit != 0)
+    {
+        if (this->mask == 0x80)
+        {
+            this->currentByte = this->File::ReadByte();
+            if (this->currentByte == -1)
+            {
+                return 0;
+            }
+            this->position++;
+            this->checksum += this->currentByte;
+        }
+        if (this->mask & this->currentByte)
+        {
+            result |= bit;
+        }
+        bit >>= 1;
+        this->mask >>= 1;
+        if (this->mask == 0)
+        {
+            this->mask = 0x80;
+        }
+    }
+    return result;
+}

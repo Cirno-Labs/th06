@@ -29,6 +29,24 @@ void ClearViewport(D3DCOLOR color)
     ClearScreen(color);
 }
 
+int ScreenEffect::OnUpdateFadeIn(ScreenEffect *effect)
+{
+    if (effect->duration != 0)
+    {
+        effect->alpha = 255.0f - effect->timer.AsFloat() * 255.0f / effect->duration;
+        if (effect->alpha < 0)
+        {
+            effect->alpha = 0;
+        }
+    }
+    if (effect->timer >= effect->duration)
+    {
+        return 0;
+    }
+    effect->timer.Tick();
+    return 1;
+}
+
 int ScreenEffect::OnDrawPlayArea(ScreenEffect *effect)
 {
     float area[4];

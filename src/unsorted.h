@@ -575,7 +575,7 @@ inline void SinCosScale(D3DXVECTOR3 *vec, float angle, float radius)
 
 // Text drawn with a D3DX font in "ＭＳ ゴシック". Nothing calls its
 // functions directly.
-class Unknown41e150
+class TextFont
 {
 public:
     // Creates the font at `width` by `height`.
@@ -637,7 +637,7 @@ extern int g_FileSize;
 
 // The object error messages go to, e.g. "error : MIDI File が読み込めない":
 // a text buffer written to "./log.txt" at exit.
-class Unknown69d998
+class Log
 {
 public:
     // If anything was logged, ends the text with a line of dashes, shows
@@ -651,12 +651,12 @@ public:
     // Set by LogError, the error logger.
     char hasError;
 };
-extern Unknown69d998 g_Unknown69d998;
+extern Log g_Log;
 
 // Logs a printf-style message to a log object.
-int LogPrintf(Unknown69d998 *log, const char *fmt, ...);
+int LogPrintf(Log *log, const char *fmt, ...);
 // Logs a printf-style error message to a log object.
-int LogError(Unknown69d998 *log, const char *fmt, ...);
+int LogError(Log *log, const char *fmt, ...);
 
 // Logs a printf-style message. Compiled out in the release build: the body
 // is empty, but callers still pass format strings such as

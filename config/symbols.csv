@@ -199,13 +199,13 @@ address,size,name,symbol
 0x0041d680,414,GetPadButtons,?GetPadButtons@@YAPAEXZ
 0x0041d820,2196,ReadButtons,?ReadButtons@@YAGXZ
 0x0041e0c0,133,ResetKeyboard,?ResetKeyboard@@YAXXZ
-0x0041e150,192,Unknown41e150::Create,?Create@Unknown41e150@@QAEXPAUIDirect3DDevice8@@HH@Z
-0x0041e210,75,Unknown41e150::Draw,?Draw@Unknown41e150@@QAEHPADHHK@Z
-0x0041e260,48,Unknown41e150::Release,?Release@Unknown41e150@@QAEXXZ
+0x0041e150,192,TextFont::Create,?Create@TextFont@@QAEXPAUIDirect3DDevice8@@HH@Z
+0x0041e210,75,TextFont::Draw,?Draw@TextFont@@QAEHPADHHK@Z
+0x0041e260,48,TextFont::Release,?Release@TextFont@@QAEXXZ
 0x0041e290,456,LoadFileData,?LoadFileData@@YAPAXPADH@Z
 0x0041e460,99,WriteToFile,?WriteToFile@@YAHPADPAXH@Z
-0x0041e4d0,331,LogPrintf,?LogPrintf@@YAHPAVUnknown69d998@@PBDZZ
-0x0041e620,341,LogError,?LogError@@YAHPAVUnknown69d998@@PBDZZ
+0x0041e4d0,331,LogPrintf,?LogPrintf@@YAHPAVLog@@PBDZZ
+0x0041e620,341,LogError,?LogError@@YAHPAVLog@@PBDZZ
 0x0041e780,99,Rng::GetRandomU16,?GetRandomU16@Rng@@QAEGXZ
 0x0041e7f0,48,Rng::GetRandomU32,?GetRandomU32@Rng@@QAEKXZ
 0x0041e820,46,Rng::GetRandomF32ZeroToOne,?GetRandomF32ZeroToOne@Rng@@QAEMXZ
@@ -237,7 +237,7 @@ address,size,name,symbol
 0x00420e60,1458,InitD3dDevice,?InitD3dDevice@@YAHXZ
 0x00421420,1241,SetDefaultRenderStates,?SetDefaultRenderStates@@YAXXZ
 0x00421900,77,CheckSingleInstance,?CheckSingleInstance@@YAHXZ
-0x00421950,126,Unknown69d998::Flush,?Flush@Unknown69d998@@QAEXXZ
+0x00421950,126,Log::Flush,?Flush@Log@@QAEXXZ
 0x004219d0,104,SpriteEngine::ReleaseSurfaces,?ReleaseSurfaces@SpriteEngine@@QAEXXZ
 0x00421a40,94,SpriteEngine::DoPendingCopy,?DoPendingCopy@SpriteEngine@@QAEXXZ
 0x00421aa0,33,MidiDevice::MidiDevice,??0MidiDevice@@QAE@XZ
@@ -1649,7 +1649,7 @@ address,size,name,symbol
 0x0069d910,,g_ButtonFrames,?g_ButtonFrames@@3GA
 0x0069d914,,g_FileSize,?g_FileSize@@3HA
 0x0069d918,,g_Chain,?g_Chain@@3VChain@@A
-0x0069d998,,g_Unknown69d998,?g_Unknown69d998@@3VUnknown69d998@@A
+0x0069d998,,g_Log,?g_Log@@3VLog@@A
 0x0069e1b0,,g_PadButtons,?g_PadButtons@@3PAEA
 0x0069e230,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
 0x0069e268,,g_ItemManager,?g_ItemManager@@3VItemManager@@A

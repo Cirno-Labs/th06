@@ -271,37 +271,37 @@ int GameManager::AddedCallback(GameManager *mgr)
     mgr->unk_1a2c = g_Rng.seed;
     if (Stage::RegisterChain(mgr->stage) != 0)
     {
-        LogPrintf(&g_Unknown69d998, "error : 背景データの初期化に失敗しました\n");
+        LogPrintf(&g_Log, "error : 背景データの初期化に失敗しました\n");
         return -1;
     }
     if (Player::RegisterChain(0) != 0)
     {
-        LogPrintf(&g_Unknown69d998, "error : プレイヤーの初期化に失敗しました\n");
+        LogPrintf(&g_Log, "error : プレイヤーの初期化に失敗しました\n");
         return -1;
     }
     if (BulletManager::RegisterChain("data/etama.anm") != 0)
     {
-        LogPrintf(&g_Unknown69d998, "error : 敵弾の初期化に失敗しました\n");
+        LogPrintf(&g_Log, "error : 敵弾の初期化に失敗しました\n");
         return -1;
     }
     if (EnemyManager::RegisterChain(g_EnemyAnmPaths[mgr->stage].anmPath, g_EnemyAnmPaths[mgr->stage].anmPath2) != 0)
     {
-        LogPrintf(&g_Unknown69d998, "error : 敵の初期化に失敗しました\n");
+        LogPrintf(&g_Log, "error : 敵の初期化に失敗しました\n");
         return -1;
     }
     if (g_EnemyScripts.Load(g_EclPaths[mgr->stage]) != 0)
     {
-        LogPrintf(&g_Unknown69d998, "error : 敵頭脳の初期化に失敗しました\n");
+        LogPrintf(&g_Log, "error : 敵頭脳の初期化に失敗しました\n");
         return -1;
     }
     if (EffectManager::RegisterChain() != 0)
     {
-        LogPrintf(&g_Unknown69d998, "error : エフェクトの初期化に失敗しました\n");
+        LogPrintf(&g_Log, "error : エフェクトの初期化に失敗しました\n");
         return -1;
     }
     if (Gui::RegisterChain() != 0)
     {
-        LogPrintf(&g_Unknown69d998, "error : 2D表示の初期化に失敗しました\n");
+        LogPrintf(&g_Log, "error : 2D表示の初期化に失敗しました\n");
         return -1;
     }
     if (g_GameManager.unk_001c == 0)

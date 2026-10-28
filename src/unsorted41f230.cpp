@@ -16,18 +16,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     if (CheckSingleInstance() != 0)
     {
-        g_Unknown69d998.Flush();
+        g_Log.Flush();
         return 1;
     }
     g_App.hInstance = hInstance;
     if (g_App.LoadConfig("東方紅魔郷.cfg") != 0)
     {
-        g_Unknown69d998.Flush();
+        g_Log.Flush();
         return -1;
     }
     if (CreateD3d() != 0)
     {
-        g_Unknown69d998.Flush();
+        g_Log.Flush();
         return 1;
     }
     SystemParametersInfoA(SPI_GETSCREENSAVEACTIVE, 0, &g_GameWindow.screenSaveActive, 0);
@@ -40,7 +40,7 @@ restart:
     CreateGameWindow(hInstance);
     if (InitD3dDevice() != 0)
     {
-        g_Unknown69d998.Flush();
+        g_Log.Flush();
         return 1;
     }
     g_SoundPlayer.Initialize(g_GameWindow.hwnd);
@@ -102,9 +102,9 @@ stop:
     DestroyWindow(g_GameWindow.hwnd);
     if (renderResult == 2)
     {
-        g_Unknown69d998.cursor = g_Unknown69d998.buffer;
-        *g_Unknown69d998.cursor = '\0';
-        LogPrintf(&g_Unknown69d998, "再起動を要するオプションが変更されたので再起動します\n");
+        g_Log.cursor = g_Log.buffer;
+        *g_Log.cursor = '\0';
+        LogPrintf(&g_Log, "再起動を要するオプションが変更されたので再起動します\n");
         if (g_App.cfg.windowed == 0)
         {
             ShowCursor(TRUE);
@@ -121,7 +121,7 @@ stop:
         g_App.d3d = NULL;
     }
     ShowCursor(TRUE);
-    g_Unknown69d998.Flush();
+    g_Log.Flush();
     return 0;
 }
 
@@ -276,7 +276,7 @@ int CreateD3d()
     g_App.d3d = Direct3DCreate8(D3D_SDK_VERSION);
     if (g_App.d3d == NULL)
     {
-        LogError(&g_Unknown69d998, "Direct3D オブジェクトは何故か作成出来なかった\n");
+        LogError(&g_Log, "Direct3D オブジェクトは何故か作成出来なかった\n");
         return 1;
     }
     return 0;
@@ -389,13 +389,13 @@ int InitD3dDevice()
             {
                 params3.BackBufferFormat = D3DFMT_X8R8G8B8;
                 g_App.cfg.colorMode16Bits = 0;
-                LogPrintf(&g_Unknown69d998, "初回起動、画面を 32Bits で初期化しました\n");
+                LogPrintf(&g_Log, "初回起動、画面を 32Bits で初期化しました\n");
             }
             else
             {
                 params3.BackBufferFormat = D3DFMT_R5G6B5;
                 g_App.cfg.colorMode16Bits = 1;
-                LogPrintf(&g_Unknown69d998, "初回起動、画面を 16Bits で初期化しました\n");
+                LogPrintf(&g_Log, "初回起動、画面を 16Bits で初期化しました\n");
             }
         }
         else if (g_App.cfg.colorMode16Bits == 0)
@@ -414,7 +414,7 @@ int InitD3dDevice()
         {
             params3.FullScreen_RefreshRateInHz = 60;
             params3.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_ONE;
-            LogPrintf(&g_Unknown69d998, "リフレッシュレートを60Hzに変更します\n");
+            LogPrintf(&g_Log, "リフレッシュレートを60Hzに変更します\n");
         }
         if (g_App.cfg.frameSkip == 0)
         {
@@ -447,12 +447,12 @@ retry:
                                           D3DCREATE_HARDWARE_VERTEXPROCESSING, &params3,
                                           &g_App.d3dDevice) < 0)
     {
-        LogPrintf(&g_Unknown69d998, "T&L HAL は使用できないようです\n");
+        LogPrintf(&g_Log, "T&L HAL は使用できないようです\n");
         if (g_App.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_GameWindow.hwnd,
                                               D3DCREATE_SOFTWARE_VERTEXPROCESSING, &params3,
                                               &g_App.d3dDevice) < 0)
         {
-            LogPrintf(&g_Unknown69d998, "HAL も使用できないようです\n");
+            LogPrintf(&g_Log, "HAL も使用できないようです\n");
         reference:
             if (g_App.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, g_GameWindow.hwnd,
                                                   D3DCREATE_SOFTWARE_VERTEXPROCESSING, &params3,
@@ -460,7 +460,7 @@ retry:
             {
                 if (g_App.cfg.flags.force60Fps && g_App.presentImmediate == 0)
                 {
-                    LogPrintf(&g_Unknown69d998, "リフレッシュレートが変更できません、vsync 非同期に変更します\n");
+                    LogPrintf(&g_Log, "リフレッシュレートが変更できません、vsync 非同期に変更します\n");
                     params3.FullScreen_RefreshRateInHz = 0;
                     g_App.presentImmediate = 1;
                     params3.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
@@ -468,12 +468,12 @@ retry:
                 }
                 if (params3.Flags == D3DPRESENTFLAG_LOCKABLE_BACKBUFFER)
                 {
-                    LogPrintf(&g_Unknown69d998, "バックバッファをロック不可能にしてみます\n");
+                    LogPrintf(&g_Log, "バックバッファをロック不可能にしてみます\n");
                     params3.Flags = 0;
                     g_App.lockableBackBuffer = 0;
                     goto retry;
                 }
-                LogError(&g_Unknown69d998, "Direct3D の初期化に失敗、これではゲームは出来ません\n");
+                LogError(&g_Log, "Direct3D の初期化に失敗、これではゲームは出来ません\n");
                 if (g_App.d3d != NULL)
                 {
                     g_App.d3d->Release();
@@ -483,20 +483,20 @@ retry:
             }
             else
             {
-                LogPrintf(&g_Unknown69d998, "REF で動作しますが、重すぎて恐らくゲームになりません...\n");
+                LogPrintf(&g_Log, "REF で動作しますが、重すぎて恐らくゲームになりません...\n");
                 g_App.hardwareTnL = 0;
                 checkTextureFormat2 = false;
             }
         }
         else
         {
-            LogPrintf(&g_Unknown69d998, "HAL で動作します\n");
+            LogPrintf(&g_Log, "HAL で動作します\n");
             g_App.hardwareTnL = 0;
         }
     }
     else
     {
-        LogPrintf(&g_Unknown69d998, "T&L HAL で動作しま～す\n");
+        LogPrintf(&g_Log, "T&L HAL で動作しま～す\n");
         g_App.hardwareTnL = 1;
     }
     halfWidth = 320.0f;
@@ -517,13 +517,13 @@ retry:
     g_App.d3dDevice->GetDeviceCaps(&g_App.caps);
     if (g_App.cfg.flags.unk0 == 0 && (g_App.caps.TextureOpCaps & D3DTEXOPCAPS_ADD) == 0)
     {
-        LogPrintf(&g_Unknown69d998, "D3DTEXOPCAPS_ADD をサポートしていません、色加算エミュレートモードで動作します\n");
+        LogPrintf(&g_Log, "D3DTEXOPCAPS_ADD をサポートしていません、色加算エミュレートモードで動作します\n");
         g_App.cfg.flags.unk0 = 1;
     }
     if (g_App.UsesPresentImmediate() &&
         (g_App.caps.PresentationIntervals & D3DPRESENT_INTERVAL_IMMEDIATE) == 0)
     {
-        LogPrintf(&g_Unknown69d998, "ビデオカードが非同期フリップをサポートしていません、Force60Frameで動作できません\n");
+        LogPrintf(&g_Log, "ビデオカードが非同期フリップをサポートしていません、Force60Frameで動作できません\n");
         g_App.cfg.flags.force60Fps = 0;
     }
     if (g_App.cfg.flags.force16BitTextures == 0 && checkTextureFormat2)
@@ -537,7 +537,7 @@ retry:
         {
             g_App.hasA8R8G8B8Textures = 0;
             g_App.cfg.flags.force16BitTextures = 1;
-            LogPrintf(&g_Unknown69d998, "D3DFMT_A8R8G8B8 をサポートしていません、減色モードで動作します\n");
+            LogPrintf(&g_Log, "D3DFMT_A8R8G8B8 をサポートしていません、減色モードで動作します\n");
         }
     }
     SetDefaultRenderStates();
@@ -664,13 +664,13 @@ inline int CheckSingleInstance()
     }
     if (GetLastError() == ERROR_ALREADY_EXISTS)
     {
-        LogError(&g_Unknown69d998, "二つは起動できません\n");
+        LogError(&g_Log, "二つは起動できません\n");
         return -1;
     }
     return 0;
 }
 
-inline void Unknown69d998::Flush()
+inline void Log::Flush()
 {
     FILE *file;
 

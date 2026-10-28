@@ -90,7 +90,7 @@ WORD InitJoystick()
     joyInfo.dwFlags = JOY_RETURNALL;
     if (joyGetPosEx(JOYSTICKID1, &joyInfo) != JOYERR_NOERROR)
     {
-        LogPrintf(&g_Unknown69d998, "使えるパッドが存在しないようです、残念\n");
+        LogPrintf(&g_Log, "使えるパッドが存在しないようです、残念\n");
         return 1;
     }
     joyGetDevCapsA(JOYSTICKID1, &g_JoyCaps, sizeof(g_JoyCaps));
@@ -382,7 +382,7 @@ void ResetKeyboard()
     SetKeyboardState(keyState);
 }
 
-void Unknown41e150::Create(IDirect3DDevice8 *device, int width, int height)
+void TextFont::Create(IDirect3DDevice8 *device, int width, int height)
 {
     HDC dc = NULL;
     HFONT font = NULL;
@@ -405,7 +405,7 @@ void Unknown41e150::Create(IDirect3DDevice8 *device, int width, int height)
     DeleteObject(font);
 }
 
-int Unknown41e150::Draw(char *text, int x, int y, D3DCOLOR color)
+int TextFont::Draw(char *text, int x, int y, D3DCOLOR color)
 {
     RECT rect;
 
@@ -416,7 +416,7 @@ int Unknown41e150::Draw(char *text, int x, int y, D3DCOLOR color)
     return this->font->DrawTextA(text, -1, &rect, DT_EXPANDTABS, color);
 }
 
-void Unknown41e150::Release()
+void TextFont::Release()
 {
     if (this->font != NULL)
     {
@@ -517,7 +517,7 @@ int WriteToFile(char *path, void *data, int size)
     return 0;
 }
 
-int LogPrintf(Unknown69d998 *log, const char *fmt, ...)
+int LogPrintf(Log *log, const char *fmt, ...)
 {
     int len2;
     char buf[0x200];
@@ -536,7 +536,7 @@ int LogPrintf(Unknown69d998 *log, const char *fmt, ...)
     return (int)fmt;
 }
 
-int LogError(Unknown69d998 *log, const char *fmt, ...)
+int LogError(Log *log, const char *fmt, ...)
 {
     int len2;
     char buf[0x200];

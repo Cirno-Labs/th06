@@ -200,7 +200,7 @@ int MidiPlayer::LoadFile(int slot, char *path)
     this->fileData[slot] = LoadFileData(path, 0);
     if (this->fileData[slot] == NULL)
     {
-        LogPrintf(&g_Unknown69d998, "error : MIDI File が読み込めない %s \n", path);
+        LogPrintf(&g_Log, "error : MIDI File が読み込めない %s \n", path);
         return -1;
     }
     return 0;

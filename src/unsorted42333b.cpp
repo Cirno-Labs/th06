@@ -267,7 +267,7 @@ int App::AddedCallback(App *arg)
     }
     if (AsciiText::RegisterChain() != 0)
     {
-        LogPrintf(&g_Unknown69d998, "error : 文字の初期化に失敗しました\n");
+        LogPrintf(&g_Log, "error : 文字の初期化に失敗しました\n");
         return -1;
     }
     arg->redrawFrames = 0;
@@ -292,7 +292,7 @@ int InitDirectInput(App *game)
     if (FAILED(DirectInput8Create(hInst, DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID **)&game->dinput, NULL)))
     {
         game->dinput = NULL;
-        LogPrintf(&g_Unknown69d998, "DirectInput が使用できません\n");
+        LogPrintf(&g_Log, "DirectInput が使用できません\n");
         return -1;
     }
     if (FAILED(game->dinput->CreateDevice(GUID_SysKeyboard, &game->keyboard, NULL)))
@@ -302,7 +302,7 @@ int InitDirectInput(App *game)
             game->dinput->Release();
             game->dinput = NULL;
         }
-        LogPrintf(&g_Unknown69d998, "DirectInput が使用できません\n");
+        LogPrintf(&g_Log, "DirectInput が使用できません\n");
         return -1;
     }
     if (FAILED(game->keyboard->SetDataFormat(&c_dfDIKeyboard)))
@@ -317,7 +317,7 @@ int InitDirectInput(App *game)
             game->dinput->Release();
             game->dinput = NULL;
         }
-        LogPrintf(&g_Unknown69d998, "DirectInput SetDataFormat が使用できません\n");
+        LogPrintf(&g_Log, "DirectInput SetDataFormat が使用できません\n");
         return -1;
     }
     if (FAILED(game->keyboard->SetCooperativeLevel(game->hwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND | DISCL_NOWINKEY)))
@@ -332,11 +332,11 @@ int InitDirectInput(App *game)
             game->dinput->Release();
             game->dinput = NULL;
         }
-        LogPrintf(&g_Unknown69d998, "DirectInput SetCooperativeLevel が使用できません\n");
+        LogPrintf(&g_Log, "DirectInput SetCooperativeLevel が使用できません\n");
         return -1;
     }
     game->keyboard->Acquire();
-    LogPrintf(&g_Unknown69d998, "DirectInput は正常に初期化されました\n");
+    LogPrintf(&g_Log, "DirectInput は正常に初期化されました\n");
     game->dinput->EnumDevices(DI8DEVCLASS_GAMECTRL, EnumJoysticksCallback, NULL, DIEDFL_ATTACHEDONLY);
     if (game->joystick)
     {
@@ -345,7 +345,7 @@ int InitDirectInput(App *game)
         g_App.joystickCaps.dwSize = sizeof(DIDEVCAPS);
         game->joystick->GetCapabilities(&g_App.joystickCaps);
         game->joystick->EnumObjects(EnumAxesCallback, NULL, DIDFT_ALL);
-        LogPrintf(&g_Unknown69d998, "有効なパッドを発見しました\n");
+        LogPrintf(&g_Log, "有効なパッドを発見しました\n");
     }
     return 0;
 }
@@ -591,7 +591,7 @@ int App::LoadArchive(int index, char *path)
             idx = this->archives[index]->FindEntry(name);
             if (idx < 0)
             {
-                LogError(&g_Unknown69d998, "error : データのバージョンが違います\n");
+                LogError(&g_Log, "error : データのバージョンが違います\n");
                 return 1;
             }
         }
@@ -644,7 +644,7 @@ int App::LoadConfig(char *path)
     if (file == NULL)
     {
         SET_DEFAULT_CONFIG();
-        LogPrintf(&g_Unknown69d998, "コンフィグデータが見つからないので初期化しました\n");
+        LogPrintf(&g_Log, "コンフィグデータが見つからないので初期化しました\n");
     }
     else
     {
@@ -658,65 +658,65 @@ int App::LoadConfig(char *path)
             SET_DEFAULT_CONFIG();
             memset(&g_App.cfg.flags, 0, sizeof(GameConfigFlags));
             g_App.cfg.flags.unk0 = 1;
-            LogPrintf(&g_Unknown69d998, "コンフィグデータが破壊されていたので再初期化しました\n");
+            LogPrintf(&g_Log, "コンフィグデータが破壊されていたので再初期化しました\n");
         }
         g_ControllerMapping = g_App.cfg.controllerMapping;
         free(file);
     }
     if (this->cfg.flags.noVertexBuffer)
     {
-        LogPrintf(&g_Unknown69d998, "頂点バッファの使用を抑制します\n");
+        LogPrintf(&g_Log, "頂点バッファの使用を抑制します\n");
     }
     if (this->cfg.flags.noFog)
     {
-        LogPrintf(&g_Unknown69d998, "フォグの使用を抑制します\n");
+        LogPrintf(&g_Log, "フォグの使用を抑制します\n");
     }
     if (this->cfg.flags.force16BitTextures)
     {
-        LogPrintf(&g_Unknown69d998, "16Bit のテクスチャの使用を強制します\n");
+        LogPrintf(&g_Log, "16Bit のテクスチャの使用を強制します\n");
     }
     if (this->ClearsBackBuffer())
     {
-        LogPrintf(&g_Unknown69d998, "バックバッファの消去を強制します\n");
+        LogPrintf(&g_Log, "バックバッファの消去を強制します\n");
     }
     if (this->cfg.flags.noFrameItems)
     {
-        LogPrintf(&g_Unknown69d998, "ゲーム周りのアイテムの描画を抑制します\n");
+        LogPrintf(&g_Log, "ゲーム周りのアイテムの描画を抑制します\n");
     }
     if (this->cfg.flags.noGouraudShading)
     {
-        LogPrintf(&g_Unknown69d998, "グーローシェーディングを抑制します\n");
+        LogPrintf(&g_Log, "グーローシェーディングを抑制します\n");
     }
     if (this->cfg.flags.noDepthTest)
     {
-        LogPrintf(&g_Unknown69d998, "デプステストを抑制します\n");
+        LogPrintf(&g_Log, "デプステストを抑制します\n");
     }
     if (this->cfg.flags.force60Fps)
     {
-        LogPrintf(&g_Unknown69d998, "６０フレーム強制モードにします\n");
+        LogPrintf(&g_Log, "６０フレーム強制モードにします\n");
         this->presentImmediate = 0;
     }
     if (this->cfg.flags.noColorBlending)
     {
         // Sic: the message ends in "n", not a line break.
-        LogPrintf(&g_Unknown69d998, "テクスチャの色合成を抑制しますn");
+        LogPrintf(&g_Log, "テクスチャの色合成を抑制しますn");
     }
     if (this->cfg.flags.noColorBlending)
     {
-        LogPrintf(&g_Unknown69d998, "ウィンドウモードで起動します\n");
+        LogPrintf(&g_Log, "ウィンドウモードで起動します\n");
     }
     if (this->cfg.flags.referenceRasterizer)
     {
-        LogPrintf(&g_Unknown69d998, "リファレンスラスタライザを強制します\n");
+        LogPrintf(&g_Log, "リファレンスラスタライザを強制します\n");
     }
     if (this->cfg.flags.noDirectInput)
     {
-        LogPrintf(&g_Unknown69d998, "パッド、キーボードの入力に DirectInput を使用しません\n");
+        LogPrintf(&g_Log, "パッド、キーボードの入力に DirectInput を使用しません\n");
     }
     if (WriteToFile(path, &g_App.cfg, sizeof(GameConfig)) != 0)
     {
-        LogError(&g_Unknown69d998, "ファイルが書き出せません %s\n", path);
-        LogError(&g_Unknown69d998, "フォルダが書込み禁止属性になっているか、ディスクがいっぱいいっぱいになってませんか？\n");
+        LogError(&g_Log, "ファイルが書き出せません %s\n", path);
+        LogError(&g_Log, "フォルダが書込み禁止属性になっているか、ディスクがいっぱいいっぱいになってませんか？\n");
         return -1;
     }
     return 0;

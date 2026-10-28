@@ -422,7 +422,7 @@ int Gui::LoadMsg(char *path)
     this->impl->msg.msgFile = (MsgFile *)LoadFileData(path, 0);
     if (this->impl->msg.msgFile == NULL)
     {
-        LogPrintf(&g_Unknown69d998, "error : メッセージファイル %s が読み込めませんでした\n", path);
+        LogPrintf(&g_Log, "error : メッセージファイル %s が読み込めませんでした\n", path);
         return -1;
     }
     this->impl->msg.scriptIndex = -1;

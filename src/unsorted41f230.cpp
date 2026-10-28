@@ -276,7 +276,7 @@ int CreateD3d()
     g_Unknown6c6d18.d3d = Direct3DCreate8(D3D_SDK_VERSION);
     if (g_Unknown6c6d18.d3d == NULL)
     {
-        Func41e620(&g_Unknown69d998, "Direct3D オブジェクトは何故か作成出来なかった\n");
+        LogError(&g_Unknown69d998, "Direct3D オブジェクトは何故か作成出来なかった\n");
         return 1;
     }
     return 0;
@@ -473,7 +473,7 @@ retry:
                     g_Unknown6c6d18.lockableBackBuffer = 0;
                     goto retry;
                 }
-                Func41e620(&g_Unknown69d998, "Direct3D の初期化に失敗、これではゲームは出来ません\n");
+                LogError(&g_Unknown69d998, "Direct3D の初期化に失敗、これではゲームは出来ません\n");
                 if (g_Unknown6c6d18.d3d != NULL)
                 {
                     g_Unknown6c6d18.d3d->Release();
@@ -664,7 +664,7 @@ inline int CheckSingleInstance()
     }
     if (GetLastError() == ERROR_ALREADY_EXISTS)
     {
-        Func41e620(&g_Unknown69d998, "二つは起動できません\n");
+        LogError(&g_Unknown69d998, "二つは起動できません\n");
         return -1;
     }
     return 0;

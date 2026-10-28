@@ -205,7 +205,7 @@ address,size,name,symbol
 0x0041e290,456,Func41e290,?Func41e290@@YAPAXPADH@Z
 0x0041e460,99,WriteToFile,?WriteToFile@@YAHPADPAXH@Z
 0x0041e4d0,331,LogPrintf,?LogPrintf@@YAHPAVUnknown69d998@@PBDZZ
-0x0041e620,341,Func41e620,?Func41e620@@YAHPAVUnknown69d998@@PBDZZ
+0x0041e620,341,LogError,?LogError@@YAHPAVUnknown69d998@@PBDZZ
 0x0041e780,99,Rng::GetRandomU16,?GetRandomU16@Rng@@QAEGXZ
 0x0041e7f0,48,Rng::GetRandomU32,?GetRandomU32@Rng@@QAEKXZ
 0x0041e820,46,Rng::GetRandomF32ZeroToOne,?GetRandomF32ZeroToOne@Rng@@QAEMXZ

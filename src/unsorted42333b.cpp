@@ -589,7 +589,7 @@ int Unknown6c6d18::LoadArchive(int index, char *path)
             idx = this->archives[index]->FindEntry(name);
             if (idx < 0)
             {
-                Func41e620(&g_Unknown69d998, "error : データのバージョンが違います\n");
+                LogError(&g_Unknown69d998, "error : データのバージョンが違います\n");
                 return 1;
             }
         }
@@ -713,8 +713,8 @@ int Unknown6c6d18::LoadConfig(char *path)
     }
     if (WriteToFile(path, &g_Unknown6c6d18.cfg, sizeof(GameConfig)) != 0)
     {
-        Func41e620(&g_Unknown69d998, "ファイルが書き出せません %s\n", path);
-        Func41e620(&g_Unknown69d998, "フォルダが書込み禁止属性になっているか、ディスクがいっぱいいっぱいになってませんか？\n");
+        LogError(&g_Unknown69d998, "ファイルが書き出せません %s\n", path);
+        LogError(&g_Unknown69d998, "フォルダが書込み禁止属性になっているか、ディスクがいっぱいいっぱいになってませんか？\n");
         return -1;
     }
     return 0;

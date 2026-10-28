@@ -637,7 +637,7 @@ public:
     char buffer[0x800];
     // The end of the text in `buffer`.
     char *cursor;
-    // Set by Func41e620, the error logger.
+    // Set by LogError, the error logger.
     char hasError;
 };
 extern Unknown69d998 g_Unknown69d998;
@@ -645,7 +645,7 @@ extern Unknown69d998 g_Unknown69d998;
 // Logs a printf-style message to a log object.
 int LogPrintf(Unknown69d998 *log, const char *fmt, ...);
 // Logs a printf-style error message to a log object.
-int Func41e620(Unknown69d998 *log, const char *fmt, ...);
+int LogError(Unknown69d998 *log, const char *fmt, ...);
 
 // Logs a printf-style message. Compiled out in the release build: the body
 // is empty, but callers still pass format strings such as

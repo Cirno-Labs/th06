@@ -148,7 +148,7 @@ int SpriteEngine::LoadTextureAlpha(int index, char *path, int format, D3DCOLOR c
     this->textures[index]->GetLevelDesc(0, &desc);
     if (desc.Format != D3DFMT_A8R8G8B8 && desc.Format != D3DFMT_A4R4G4B4 && desc.Format != D3DFMT_A1R5G5B5)
     {
-        Func41e620(&g_Unknown69d998, "error : イメージがαを持っていません\n");
+        LogError(&g_Unknown69d998, "error : イメージがαを持っていません\n");
         goto fail;
     }
     if (D3DXCreateTextureFromFileInMemoryEx(g_Unknown6c6d18.d3dDevice, fileData, g_FileSize, 0, 0, 0, 0, desc.Format,
@@ -263,7 +263,7 @@ int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
     anmHeader = this->anmFiles[slot];
     if (anmHeader == NULL)
     {
-        Func41e620(&g_Unknown69d998, "スプライトアニメ %s が読み込めません。データが失われてるか壊れています\n", path);
+        LogError(&g_Unknown69d998, "スプライトアニメ %s が読み込めません。データが失われてるか壊れています\n", path);
         return -1;
     }
     anmHeader->textureIndex = slot;
@@ -274,7 +274,7 @@ int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
     }
     else if (this->LoadTexture(anmHeader->textureIndex, name, anmHeader->format, anmHeader->colorKey) != 0)
     {
-        Func41e620(&g_Unknown69d998, "テクスチャ %s が読み込めません。データが失われてるか壊れています\n", name);
+        LogError(&g_Unknown69d998, "テクスチャ %s が読み込めません。データが失われてるか壊れています\n", name);
         return -1;
     }
     if (anmHeader->alphaNameOffset != 0)
@@ -282,7 +282,7 @@ int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
         name = (char *)anmHeader + anmHeader->alphaNameOffset;
         if (this->LoadTextureAlpha(anmHeader->textureIndex, name, anmHeader->format, anmHeader->colorKey) != 0)
         {
-            Func41e620(&g_Unknown69d998, "テクスチャ %s が読み込めません。データが失われてるか壊れています\n", name);
+            LogError(&g_Unknown69d998, "テクスチャ %s が読み込めません。データが失われてるか壊れています\n", name);
             return -1;
         }
     }
@@ -1271,7 +1271,7 @@ int SpriteEngine::LoadSurface(int surface, char *path)
     fileData = Func41e290(path, 0);
     if (fileData == NULL)
     {
-        Func41e620(&g_Unknown69d998, "%sが読み込めないです。\n", path);
+        LogError(&g_Unknown69d998, "%sが読み込めないです。\n", path);
         return -1;
     }
     if (g_Unknown6c6d18.d3dDevice->CreateImageSurface(640, 1024, g_Unknown6c6d18.presentParams.BackBufferFormat,

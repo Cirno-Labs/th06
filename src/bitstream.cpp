@@ -11,3 +11,46 @@ void BitStream::Reset()
     this->currentByte = 0;
     this->checksum = 0;
 }
+
+DWORD BitStream::ReadVarInt()
+{
+    DWORD result = 0;
+    DWORD size = 0;
+    DWORD bit;
+
+    if (this->ReadBit())
+    {
+        size = 2;
+    }
+    if (this->ReadBit())
+    {
+        size |= 1;
+    }
+    switch (size)
+    {
+    case 0:
+        bit = 0x80;
+        break;
+    case 1:
+        bit = 0x8000;
+        break;
+    case 2:
+        bit = 0x800000;
+        break;
+    case 3:
+        bit = 0x80000000;
+        break;
+    default:
+        goto done;
+    }
+    do
+    {
+        if (this->ReadBit())
+        {
+            result |= bit;
+        }
+        bit >>= 1;
+    } while (bit != 0);
+done:
+    return result;
+}

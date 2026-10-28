@@ -196,3 +196,11 @@ int FileBitStream::AlignToByte()
     }
     return 1;
 }
+
+int FileBitStream::Read(void *buffer, DWORD size)
+{
+    DWORD read;
+
+    this->AlignToByte();
+    return this->File::Read(buffer, size, &read);
+}

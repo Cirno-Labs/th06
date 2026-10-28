@@ -429,7 +429,7 @@ address,size,name,symbol
 0x00437b41,1675,Func437b41,
 0x004381ec,2517,Func4381ec,
 0x00438bc1,823,MainMenu::DrawReplayMenu,?DrawReplayMenu@MainMenu@@QAEHXZ
-0x00438ef8,575,Func438ef8,
+0x00438ef8,575,MainMenu::HighlightOption,?HighlightOption@MainMenu@@QAEXPAVSprite@@HHH@Z
 0x00439137,2094,Func439137,
 0x00439965,369,MainMenu::DrawPracticeScores,?DrawPracticeScores@MainMenu@@QAEHXZ
 0x00439ad6,714,MainMenu::OnDraw,?OnDraw@MainMenu@@SAHPAV1@@Z

@@ -278,6 +278,64 @@ int MainMenu::DrawReplayMenu()
     return 0;
 }
 
+void MainMenu::HighlightOption(Sprite *vm, int row, int value, int current)
+{
+    if (value != current)
+    {
+        if (!g_Unknown6c6d18.HasFlag0Or8())
+        {
+            vm->color = 0x80202050;
+        }
+        else
+        {
+            g_SpriteEngine->SetSprite(vm, vm->unk_0b2);
+        }
+        vm->scaleX = 1.0f;
+        vm->scaleY = 1.0f;
+        vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    }
+    else
+    {
+        if (!g_Unknown6c6d18.HasFlag0Or8())
+        {
+            vm->color = 0x800000ff;
+        }
+        else if (vm->unk_0b2 < 0x122)
+        {
+            g_SpriteEngine->SetSprite(vm, vm->unk_0b2 + 0x7a);
+        }
+        else
+        {
+            g_SpriteEngine->SetSprite(vm, vm->unk_0b2 + 0x73);
+        }
+        vm->posOffset = D3DXVECTOR3(-2.0f, -2.0f, 0.0f);
+    }
+    if (row != this->cursor)
+    {
+        if (!g_Unknown6c6d18.cfg.flags.unk0)
+        {
+            vm->color = vm->color & 0xffffff | 0x80000000;
+        }
+        else
+        {
+            vm->color = vm->color & 0xffffff | 0x80000000;
+        }
+        vm->posOffset += D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    }
+    else
+    {
+        if (!g_Unknown6c6d18.cfg.flags.unk0)
+        {
+            vm->color = vm->color & 0xffffff | 0xff000000;
+        }
+        else
+        {
+            vm->color = vm->color & 0xffffff | 0xff000000;
+        }
+        vm->posOffset += D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+    }
+}
+
 int MainMenu::DrawPracticeScores()
 {
     int i;

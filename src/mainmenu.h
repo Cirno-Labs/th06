@@ -43,6 +43,13 @@ public:
     // stages the shot type reached on this difficulty, fading in over
     // 30 frames, the one at the cursor brighter. Returns 0.
     int DrawPracticeScores();
+    // Shows an options screen entry `vm` of row `row` for the setting's
+    // value `value`, where `current` is the setting's current value: the
+    // current value's entry blue and raised by 2 pixels, the others dark;
+    // entries in the row at the cursor opaque and raised by 4 more,
+    // the others half transparent. Where colors are not blended
+    // (HasFlag0Or8), it picks the sprites for those states instead.
+    void HighlightOption(Sprite *vm, int row, int value, int current);
     // In the replay menu (states 13 to 15), lists the page of 15 replays
     // around the cursor (unk_81e8), the one at the cursor highlighted, and
     // in state 15 the picked replay's slowdown and the score each stage

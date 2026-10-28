@@ -33,17 +33,38 @@ void FreeListNodes(ListNode *head);
 // higher. Returns its rank, from 0.
 int InsertScore(ListNode *head, Hscr *entry);
 
+// The start of a chunk of the score file.
+struct ScoreChunk
+{
+    DWORD magic;
+    // The chunk's size, header included.
+    WORD size;
+    WORD unk_06;
+};
+
 // "score.dat" as loaded: a 0x14-byte header, then chunks ("TH6K", ...).
+// Every byte from the third on is stored xored with a key that runs over
+// the bytes before it.
 struct ScoreDat
 {
-    DWORD unk_00[0x3];
+    BYTE unk_00;
+    BYTE unk_01;
+    // The sum of the decrypted bytes from the fifth on.
+    WORD checksum;
+    DWORD unk_04;
+    // Where the chunks start.
+    int dataOffset;
     // The list of the score entries read from the chunks; set up when
     // the file is loaded.
     ListNode *scores;
-    DWORD unk_10;
+    int fileSize;
 };
 ASSERT_SIZE(ScoreDat, 0x14);
 
+// Loads and decrypts the score file at `path`, or makes an empty one if
+// it is missing, too short, fails its checksum or has no "TH6K" chunk;
+// sets up its list.
+ScoreDat *LoadScoreDat(char *path);
 // Frees `dat` and its list.
 void ReleaseScoreDat(ScoreDat *dat);
 

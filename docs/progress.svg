@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">64.12% (302)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">26.54% (125)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">64.33% (303)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">26.33% (124)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="478.97" height="6" x="0" y="0" class="named"/>
-<rect width="69.78" height="6" x="478.97" y="0" class="decompiled"/>
-<rect width="198.25" height="6" x="548.75" y="0" class="todo"/>
+<rect width="480.55" height="6" x="0" y="0" class="named"/>
+<rect width="69.78" height="6" x="480.55" y="0" class="decompiled"/>
+<rect width="196.66" height="6" x="550.34" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -411,7 +411,7 @@
 <rect width="12" height="12" x="600" y="90" class="named"><title>0x0042aa20 ReplayManager::DeletedCallback (140 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="90" class="named"><title>0x0042aab0 ReplayManager::EndStage (123 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="90" class="named"><title>0x0042ab30 SaveReplay (1449 bytes)</title></rect>
-<rect width="12" height="12" x="645" y="90" class="todo"><title>0x0042b0d9 Func42b0d9 (423 bytes)</title></rect>
+<rect width="12" height="12" x="645" y="90" class="named"><title>0x0042b0d9 LoadScoreDat (423 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="90" class="todo"><title>0x0042b280 Func42b280 (294 bytes)</title></rect>
 <rect width="12" height="12" x="675" y="90" class="named"><title>0x0042b3a6 InsertScore (145 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="90" class="named"><title>0x0042b437 FreeListNodes (47 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">47.05%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">48.14%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">47.23%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">47.96%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="351.46" height="6" x="0" y="0" class="named"/>
-<rect width="35.95" height="6" x="351.46" y="0" class="decompiled"/>
-<rect width="359.59" height="6" x="387.41" y="0" class="todo"/>
+<rect width="352.79" height="6" x="0" y="0" class="named"/>
+<rect width="35.95" height="6" x="352.79" y="0" class="decompiled"/>
+<rect width="358.26" height="6" x="388.74" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -691,7 +691,7 @@
 <rect width="11.51" height="11.29" x="580.59" y="0" class="named"><title>0x0040ef50 EffectManager::SpawnEffect (430 bytes)</title></rect>
 <rect width="11.51" height="11.23" x="580.59" y="14.29" class="todo"><title>0x0042fd30 ScreenEffect::Func42fd30 (428 bytes)</title></rect>
 <rect width="11.51" height="11.09" x="580.59" y="28.52" class="named"><title>0x004354c0 SpriteEngine::CopySurfaceRectToBackBuffer (424 bytes)</title></rect>
-<rect width="11.51" height="11.06" x="580.59" y="42.61" class="todo"><title>0x0042b0d9 Func42b0d9 (423 bytes)</title></rect>
+<rect width="11.51" height="11.06" x="580.59" y="42.61" class="named"><title>0x0042b0d9 LoadScoreDat (423 bytes)</title></rect>
 <rect width="11.51" height="10.89" x="580.59" y="56.67" class="named"><title>0x00432030 SpriteEngine::ReleaseAnm (418 bytes)</title></rect>
 <rect width="11.51" height="10.83" x="580.59" y="70.57" class="todo"><title>0x0040ec10 Func40ec10 (416 bytes)</title></rect>
 <rect width="11.51" height="10.83" x="580.59" y="84.39" class="todo"><title>0x0040edb0 Func40edb0 (416 bytes)</title></rect>

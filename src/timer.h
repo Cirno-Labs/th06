@@ -37,6 +37,10 @@ struct Timer
     void Tick();
     // Tick, out of line in the Gui file, returning the new count.
     int NextTick();
+    void operator++()
+    {
+        this->NextTick();
+    }
 
     // The count with its fraction.
     float AsFloat()

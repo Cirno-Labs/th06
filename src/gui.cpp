@@ -59,7 +59,7 @@ int Gui::OnUpdate(Gui *gui)
     {
         return 1;
     }
-    gui->Func4195bf();
+    gui->UpdateInterface();
     gui->impl->RunMsg();
     return 1;
 }
@@ -374,9 +374,9 @@ int Gui::LoadResources()
         }
     }
     this->bossPresent = 0;
-    this->impl->unk_1ba0 = 0;
+    this->impl->bossBarState = 0;
     this->bossHealth = 0.0f;
-    this->unk_28 = 0.0f;
+    this->bossHealthShown = 0.0f;
     g_SpriteEngine->StartScript(&this->impl->unk_1dc4, 0x4a1);
     g_SpriteEngine->StartScript(&this->impl->unk_1ed4, 0x4a3);
     g_SpriteEngine->StartScript(&this->impl->unk_1fe4, 0x706);
@@ -704,6 +704,184 @@ BOOL Gui::Func419572()
 BOOL Gui::Func4195a2()
 {
     return this->impl->msg.scriptIndex >= 0;
+}
+
+void Gui::UpdateInterface()
+{
+    int i;
+    int bonus;
+
+    for (i = 0; i < 0x1a; i++)
+    {
+        if (i == 0x13 && this->impl->msg.scriptIndex < 0)
+        {
+            if (this->bossPresent)
+            {
+                if (this->impl->bossBarState == 0)
+                {
+                    g_SpriteEngine->StartScript(&this->impl->unk_0000[i], 0x613);
+                    this->impl->bossBarState = 1;
+                    this->bossBarAlpha = 0;
+                }
+                else
+                {
+                    if (g_SpriteEngine->Step(&this->impl->unk_0000[i]) != 0)
+                    {
+                        this->impl->bossBarState = 2;
+                    }
+                    if (this->bossBarAlpha < 0xfc)
+                    {
+                        this->bossBarAlpha += 4;
+                    }
+                    else
+                    {
+                        this->bossBarAlpha = 0xff;
+                    }
+                }
+            }
+            else if (this->impl->bossBarState != 0)
+            {
+                if (this->impl->bossBarState <= 2)
+                {
+                    g_SpriteEngine->StartScript(&this->impl->unk_0000[i], 0x614);
+                    this->impl->bossBarState = 3;
+                }
+                if (this->bossBarAlpha > 0)
+                {
+                    this->bossBarAlpha -= 4;
+                }
+                else
+                {
+                    this->bossBarAlpha = 0;
+                }
+                if (g_SpriteEngine->Step(&this->impl->unk_0000[i]) != 0)
+                {
+                    this->impl->bossBarState = 0;
+                    this->bossHealthShown = 0.0f;
+                    this->bossBarAlpha = 0;
+                }
+            }
+            if (this->impl->bossBarState >= 2)
+            {
+                if (this->bossHealth > this->bossHealthShown)
+                {
+                    this->bossHealthShown += 0.01f;
+                    if (this->bossHealth < this->bossHealthShown)
+                    {
+                        this->bossHealthShown = this->bossHealth;
+                    }
+                }
+                else if (this->bossHealth < this->bossHealthShown)
+                {
+                    this->bossHealthShown -= 0.02f;
+                    if (this->bossHealth > this->bossHealthShown)
+                    {
+                        this->bossHealthShown = this->bossHealth;
+                    }
+                }
+            }
+        }
+        else
+        {
+            g_SpriteEngine->Step(&this->impl->unk_0000[i]);
+        }
+    }
+    g_SpriteEngine->Step(&this->impl->unk_1ba4);
+    g_SpriteEngine->Step(&this->impl->unk_1cb4);
+    g_SpriteEngine->Step(&this->impl->unk_1dc4);
+    g_SpriteEngine->Step(&this->impl->unk_1fe4);
+    g_SpriteEngine->Step(&this->impl->unk_1ed4);
+    g_SpriteEngine->Step(&this->impl->unk_20f4);
+    if (this->impl->unk_2424.spriteIndex >= 0 && g_SpriteEngine->Step(&this->impl->unk_2424) != 0)
+    {
+        this->impl->unk_2424.spriteIndex = -1;
+    }
+    if (this->impl->bonusPopup.shown)
+    {
+        if (this->impl->bonusPopup.timer < 30)
+        {
+            this->impl->bonusPopup.pos.x = this->impl->bonusPopup.timer.AsFloat() * -312.0f / 30.0f + 416.0f;
+        }
+        else
+        {
+            this->impl->bonusPopup.pos.x = 104.0f;
+        }
+        if (this->impl->bonusPopup.timer >= 250)
+        {
+            this->impl->bonusPopup.shown = 0;
+        }
+        ++this->impl->bonusPopup.timer;
+    }
+    if (this->impl->fullPowerPopup.shown)
+    {
+        if (this->impl->fullPowerPopup.timer < 30)
+        {
+            this->impl->fullPowerPopup.pos.x = this->impl->fullPowerPopup.timer.AsFloat() * -312.0f / 30.0f + 416.0f;
+        }
+        else
+        {
+            this->impl->fullPowerPopup.pos.x = 104.0f;
+        }
+        if (this->impl->fullPowerPopup.timer >= 180)
+        {
+            this->impl->fullPowerPopup.shown = 0;
+        }
+        ++this->impl->fullPowerPopup.timer;
+    }
+    if (this->impl->unk_2c24.shown)
+    {
+        if (this->impl->unk_2c24.timer >= 280)
+        {
+            this->impl->unk_2c24.shown = 0;
+        }
+        ++this->impl->unk_2c24.timer;
+    }
+    if (this->impl->stageClearShown == 1)
+    {
+        bonus = 0;
+        bonus += g_GameManager.stage * 1000;
+        bonus += g_GameManager.graze * 10;
+        bonus += g_GameManager.power * 100;
+        bonus *= g_GameManager.pointItems;
+        if (g_GameManager.stage >= 6)
+        {
+            bonus += g_GameManager.lives * 3000000;
+            bonus += g_GameManager.bombs * 1000000;
+        }
+        switch (g_GameManager.difficulty)
+        {
+        case 0:
+            bonus /= 2;
+            bonus -= bonus % 10;
+            break;
+        case 2:
+            bonus = bonus * 12 / 10;
+            bonus -= bonus % 10;
+            break;
+        case 3:
+            bonus = bonus * 15 / 10;
+            bonus -= bonus % 10;
+            break;
+        case 4:
+            bonus *= 2;
+            bonus -= bonus % 10;
+            break;
+        }
+        switch (g_Unknown6c6d18.unk_14c.lives)
+        {
+        case 3:
+            bonus = bonus * 5 / 10;
+            bonus -= bonus % 10;
+            break;
+        case 4:
+            bonus = bonus * 2 / 10;
+            bonus -= bonus % 10;
+            break;
+        }
+        this->impl->stageClearTotal = bonus;
+        g_GameManager.score += bonus;
+        this->impl->stageClearShown++;
+    }
 }
 
 void Gui::DrawBanners()

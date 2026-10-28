@@ -763,7 +763,9 @@ struct GuiImpl
     int DrawMsg();
 
     Sprite unk_0000[0x1a];
-    BYTE unk_1ba0;
+    // The boss's bar (unk_0000[0x13]): 0 hidden, 1 appearing (script
+    // 0x613), 2 shown, 3 leaving (script 0x614).
+    BYTE bossBarState;
     BYTE unk_1ba1[0x3];
     Sprite unk_1ba4;
     Sprite unk_1cb4;
@@ -814,7 +816,7 @@ public:
     int LoadResources();
 
     // The update element's callback: unless g_GameManager.unk_002c is
-    // set, runs Func4195bf and impl->RunMsg. Returns 1.
+    // set, runs UpdateInterface and impl->RunMsg. Returns 1.
     static int OnUpdate(Gui *gui);
     // The draw element's callback: the stage clear bonus once
     // impl->stageClearShown is set, the dialogue, DrawBanners, Func419c99 and the
@@ -886,7 +888,10 @@ public:
     {
         this->bossHealth = health;
     }
-    void Func4195bf();
+    // The update: the interface's sprites, the boss's bar, the popups,
+    // and once the stage is cleared, the bonus (stage, graze, power and
+    // point items, by difficulty and starting lives), added to the score.
+    void UpdateInterface();
 
     GuiFlags flags;
     GuiImpl *impl;
@@ -894,7 +899,9 @@ public:
     float unk_08;
     // Set by Func417bfd from the length of its text.
     float unk_0c;
-    DWORD unk_10;
+    // The boss bar's alpha, raised by 4 a frame up to 0xff while a boss
+    // fight runs.
+    DWORD bossBarAlpha;
     int unk_14;
     // The seconds left of the boss's timer.
     int bossTimer;
@@ -904,7 +911,8 @@ public:
     BYTE unk_21[0x3];
     // The boss's life as a fraction of its maximum, for its bar.
     float bossHealth;
-    float unk_28;
+    // The life the bar shows, following bossHealth.
+    float bossHealthShown;
 };
 ASSERT_SIZE(Gui, 0x2c);
 extern Gui g_Gui;

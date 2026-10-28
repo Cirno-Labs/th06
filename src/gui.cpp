@@ -187,6 +187,17 @@ int Gui::OnDraw(Gui *gui)
     return 1;
 }
 
+void Gui::ShowBombName(int sprite, char *name)
+{
+    g_SpriteEngine->StartScript(&this->impl->unk_1dc4, 0x4a1);
+    g_SpriteEngine->SetSprite(&this->impl->unk_1dc4, sprite);
+    g_SpriteEngine->StartScript(&this->impl->unk_1fe4, 0x706);
+    g_SpriteEngine->RenderText(&this->impl->unk_1fe4, 0xf0f0ff, 0, name);
+    this->unk_08 = strlen(name) * 15 / 2.0f + 16.0f;
+    g_Unknown6c6d18.unk_198 = 3;
+    g_Unknown6d3f50.QueueSound(14, 0);
+}
+
 void Gui::Func417bfd(int sprite, char *text)
 {
     g_SpriteEngine->StartScript(&this->impl->unk_1ed4, 0x4a3);

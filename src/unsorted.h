@@ -822,7 +822,7 @@ public:
     static int OnDraw(Gui *gui);
     // Draws the stage's title ("STAGE %d", "FINAL STAGE", "EXTRA STAGE",
     // or " DEMO PLAY"), the song's name, the sprites Func417bfd and
-    // Func417acd show with their bars, and unk_2424 in the play area.
+    // ShowBombName show with their bars, and unk_2424 in the play area.
     void DrawBanners();
     void Func419c99();
     // The update element's added callback (the element at 0x69bc7c):
@@ -836,8 +836,10 @@ public:
     void StartMsg(int index);
     // Whether impl->unk_2424 shows a sprite and has flag 13.
     BOOL Func4172d3();
-    // Shows spell card `name` with sprite `sprite`.
-    void Func417acd(int sprite, char *name);
+    // Shows the player's bomb, spell card `name`, with sprite `sprite`
+    // (scripts 0x4a1 and 0x706), sets g_Unknown6c6d18.unk_198 to 3 and
+    // plays sound 14.
+    void ShowBombName(int sprite, char *name);
     // Shows sprite `sprite` + 0x4a8 with `text` (scripts 0x4a3 and 0x707)
     // and plays sound 14.
     void Func417bfd(int sprite, char *text);
@@ -888,7 +890,7 @@ public:
 
     GuiFlags flags;
     GuiImpl *impl;
-    // The width of the text Func417acd shows, as unk_0c for Func417bfd.
+    // The width of the text ShowBombName shows, as unk_0c for Func417bfd.
     float unk_08;
     // Set by Func417bfd from the length of its text.
     float unk_0c;

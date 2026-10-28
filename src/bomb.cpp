@@ -27,7 +27,7 @@ void UpdateReimuABomb(Player *player)
     }
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
-        g_Gui.Func417acd(0x4a1, "霊符「夢想封印」");
+        g_Gui.ShowBombName(0x4a1, "霊符「夢想封印」");
         player->bomb.duration = 300;
         player->unk_75b4.Set(360);
         for (i = 0; i < 8; i++)
@@ -221,7 +221,7 @@ void UpdateReimuBBomb(Player *player)
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
         g_ItemManager.CollectAll();
-        g_Gui.Func417acd(0x4a3, "夢符「封魔陣」");
+        g_Gui.ShowBombName(0x4a3, "夢符「封魔陣」");
         player->bomb.duration = 140;
         player->unk_75b4.Set(200);
         for (sprite = player->bomb.sprites, i = 0; i < 4; i++, sprite++)
@@ -307,7 +307,7 @@ void UpdateMarisaABomb(Player *player)
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
         g_ItemManager.CollectAll();
-        g_Gui.Func417acd(0x4a3, "魔符「スターダストレヴァリエ」");
+        g_Gui.ShowBombName(0x4a3, "魔符「スターダストレヴァリエ」");
         player->bomb.duration = 250;
         player->unk_75b4.Set(300);
         for (sprite = player->bomb.sprites, i = 0; i < 8; i++, sprite++)
@@ -400,7 +400,7 @@ void UpdateMarisaBBomb(Player *player)
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
         g_ItemManager.CollectAll();
-        g_Gui.Func417acd(0x4a1, "恋符「マスタースパーク」");
+        g_Gui.ShowBombName(0x4a1, "恋符「マスタースパーク」");
         player->bomb.duration = 300;
         player->unk_75b4.Set(360);
         for (sprite = player->bomb.sprites, i = 0; i < 4; i++, sprite++)

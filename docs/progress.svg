@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">75.80% (357)</tspan> · <tspan class="decompiled">14.44% (68)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">9.77% (46)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">76.01% (358)</tspan> · <tspan class="decompiled">14.44% (68)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">9.55% (45)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="566.20" height="6" x="0" y="0" class="named"/>
-<rect width="107.85" height="6" x="566.20" y="0" class="decompiled"/>
-<rect width="72.96" height="6" x="674.04" y="0" class="todo"/>
+<rect width="567.78" height="6" x="0" y="0" class="named"/>
+<rect width="107.85" height="6" x="567.78" y="0" class="decompiled"/>
+<rect width="71.37" height="6" x="675.63" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -224,7 +224,7 @@
 <rect width="12" height="12" x="45" y="45" class="named"><title>0x00418768 Gui::StartMsg (35 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="45" class="named"><title>0x0041878b GuiImpl::StartMsgScript (318 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="45" class="named"><title>0x004188c9 GuiImpl::RunMsg (2027 bytes)</title></rect>
-<rect width="12" height="12" x="90" y="45" class="todo"><title>0x004190ec Func4190ec (1158 bytes)</title></rect>
+<rect width="12" height="12" x="90" y="45" class="named"><title>0x004190ec GuiImpl::DrawMsg (1158 bytes)</title></rect>
 <rect width="12" height="12" x="105" y="45" class="decompiled"><title>0x00419572 Gui::Func419572 (48 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="45" class="decompiled"><title>0x004195a2 Gui::Func4195a2 (29 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="45" class="todo"><title>0x004195bf Gui::Func4195bf (1754 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">71.62%</tspan> · <tspan class="decompiled">10.59%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">17.79%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">72.11%</tspan> · <tspan class="decompiled">10.59%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">17.30%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="535.02" height="6" x="0" y="0" class="named"/>
-<rect width="79.10" height="6" x="535.02" y="0" class="decompiled"/>
-<rect width="132.88" height="6" x="614.12" y="0" class="todo"/>
+<rect width="538.66" height="6" x="0" y="0" class="named"/>
+<rect width="79.10" height="6" x="538.66" y="0" class="decompiled"/>
+<rect width="129.24" height="6" x="617.76" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="named"><title>0x004074a0 EnemyScripts::RunEnemy (13572 bytes)</title></rect>
@@ -595,7 +595,7 @@
 <rect width="22.11" height="21.76" x="349.51" y="104.40" class="named"><title>0x00416d60 BulletManager::AddedCallback (1289 bytes)</title></rect>
 <rect width="22.11" height="20.84" x="349.51" y="129.16" class="named"><title>0x00421420 SetDefaultRenderStates (1241 bytes)</title></rect>
 <rect width="22.06" height="19.72" x="374.61" y="0" class="named"><title>0x00427190 Player::CheckLaserHit (1180 bytes)</title></rect>
-<rect width="22.06" height="19.29" x="374.61" y="22.72" class="todo"><title>0x004190ec Func4190ec (1158 bytes)</title></rect>
+<rect width="22.06" height="19.29" x="374.61" y="22.72" class="named"><title>0x004190ec GuiImpl::DrawMsg (1158 bytes)</title></rect>
 <rect width="22.06" height="19.12" x="374.61" y="45.01" class="named"><title>0x00406160 UpdateReimuBBomb (1149 bytes)</title></rect>
 <rect width="22.06" height="18.68" x="374.61" y="67.13" class="named"><title>0x004206e0 GameWindow::RunFrame (1126 bytes)</title></rect>
 <rect width="22.06" height="18.54" x="374.61" y="88.80" class="decompiled"><title>0x0042464d Unknown6c6d18::LoadConfig (1119 bytes)</title></rect>

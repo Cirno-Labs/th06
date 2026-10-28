@@ -757,6 +757,10 @@ struct GuiImpl
     // text, waits for the shot button, music, the stage's end), then
     // steps its sprites. Returns 0, or -1 when no script runs.
     int RunMsg();
+    // Draws the dialogue: the portraits, a dark box under the text that
+    // opens over its first second, and the text. Returns 0, or -1 when no
+    // script runs.
+    int DrawMsg();
 
     Sprite unk_0000[0x1a];
     BYTE unk_1ba0;

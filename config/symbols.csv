@@ -155,7 +155,7 @@ address,size,name,symbol
 0x00418768,35,Gui::StartMsg,?StartMsg@Gui@@QAEXH@Z
 0x0041878b,318,GuiImpl::StartMsgScript,?StartMsgScript@GuiImpl@@QAEXH@Z
 0x004188c9,2027,GuiImpl::RunMsg,?RunMsg@GuiImpl@@QAEHXZ
-0x004190ec,1158,Func4190ec,
+0x004190ec,1158,GuiImpl::DrawMsg,?DrawMsg@GuiImpl@@QAEHXZ
 0x00419572,48,Gui::Func419572,?Func419572@Gui@@QAEHXZ
 0x004195a2,29,Gui::Func4195a2,?Func4195a2@Gui@@QAEHXZ
 0x004195bf,1754,Gui::Func4195bf,?Func4195bf@Gui@@QAEXXZ

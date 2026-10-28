@@ -493,6 +493,67 @@ stepSprites:
     return 0;
 }
 
+int GuiImpl::DrawMsg()
+{
+    float height;
+
+    if (this->msg.scriptIndex < 0)
+    {
+        return -1;
+    }
+    if (g_GameManager.stage == 6 && (this->msg.scriptIndex == 1 || this->msg.scriptIndex == 11))
+    {
+        return 0;
+    }
+    if (this->msg.timer < 60)
+    {
+        height = this->msg.timer.AsFloat() * 48.0f / 60.0f;
+    }
+    else
+    {
+        height = 48.0f;
+    }
+    VertexDiffuseXyzrwh vertices[4];
+    vertices[0].pos = D3DXVECTOR3((g_GameManager.arena[2] - 256.0f) / 2.0f + g_GameManager.arena[0] - 16.0f, 384.0f, 0.0f);
+    vertices[1].pos = D3DXVECTOR3((g_GameManager.arena[2] - 256.0f) / 2.0f + g_GameManager.arena[0] + 256.0f + 16.0f, 384.0f, 0.0f);
+    vertices[2].pos = D3DXVECTOR3((g_GameManager.arena[2] - 256.0f) / 2.0f + g_GameManager.arena[0] - 16.0f, 384.0f + height, 0.0f);
+    vertices[3].pos = D3DXVECTOR3((g_GameManager.arena[2] - 256.0f) / 2.0f + g_GameManager.arena[0] + 256.0f + 16.0f, 384.0f + height, 0.0f);
+    vertices[0].diffuse = vertices[1].diffuse = 0xd0000000;
+    vertices[2].diffuse = vertices[3].diffuse = 0x90000000;
+    vertices[0].w = vertices[1].w = vertices[2].w = vertices[3].w = 1.0f;
+    g_SpriteEngine->Draw(&this->msg.portraits[0]);
+    g_SpriteEngine->Draw(&this->msg.portraits[1]);
+    if (!g_Unknown6c6d18.cfg.flags.noColorBlending)
+    {
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+    }
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+    if (!g_Unknown6c6d18.cfg.flags.noDepthTest)
+    {
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+    }
+    g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+    g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertices, sizeof(VertexDiffuseXyzrwh));
+    g_SpriteEngine->ClearVertexFormat();
+    g_SpriteEngine->ClearColorOp();
+    g_SpriteEngine->ClearBlendMode();
+    g_SpriteEngine->ClearZWrite();
+    if (!g_Unknown6c6d18.cfg.flags.noColorBlending)
+    {
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+    }
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+    g_SpriteEngine->Draw(&this->msg.text[0]);
+    g_SpriteEngine->Draw(&this->msg.text[1]);
+    g_SpriteEngine->Draw(&this->msg.unk_45c[0]);
+    g_SpriteEngine->Draw(&this->msg.unk_45c[1]);
+    return 0;
+}
+
 BOOL Gui::Func419572()
 {
     if (this->impl->msg.unk_6a0 > 0)

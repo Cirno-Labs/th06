@@ -1418,3 +1418,37 @@ void ScriptAngle(Enemy *enemy, int dst, float *fromX, float *fromY, float *toX, 
         *resPtr = atan2f(*by - *y1, *x2 - *x1);
     }
 }
+
+// g_EnemyScriptFuncs[0]: turns every flying bullet into color 15, then
+// stops them (instr's second argument 0) or sends them drifting off in
+// random directions (1).
+void Func40b8e0(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int i;
+    Bullet *bullet = g_BulletManager.bullets;
+    int choice = instr->args.i[1];
+
+    g_EffectManager.SpawnEffect(0xc, &enemy->pos, 1, 0xffffffff);
+    for (i = 0; i < 0x280; i++, bullet++)
+    {
+        if (bullet->state == 0 || bullet->state == 5)
+        {
+            continue;
+        }
+        bullet->color = 0xf;
+        g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.unk_0b2 + bullet->color);
+        switch (choice)
+        {
+        case 0:
+            bullet->speed = 0.0f;
+            bullet->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+            break;
+        case 1:
+            bullet->flags |= 0x10;
+            bullet->unk_5a8 = 220;
+            bullet->timer.Set(0);
+            SinCosScale(&bullet->accel, g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f, 0.01f);
+            break;
+        }
+    }
+}

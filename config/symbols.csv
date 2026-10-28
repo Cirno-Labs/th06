@@ -1574,6 +1574,7 @@ address,size,name,symbol
 0x004784d8,,g_ShotNames,?g_ShotNames@@3PAPADA
 0x004784f0,,g_SpellCardRatings,?g_SpellCardRatings@@3PAMA
 0x00478504,,g_DifficultyNames,?g_DifficultyNames@@3PAPADA
+0x00478518,,g_ShotTypeNames,?g_ShotTypeNames@@3PAPADA
 0x00478528,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A
 0x00478628,,g_SoundPaths,?g_SoundPaths@@3PAPADA
 0x0047a630,4,__security_cookie,___security_cookie

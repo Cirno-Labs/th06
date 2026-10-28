@@ -183,6 +183,9 @@ extern char *g_NameAlphabet;
 // character * 2 + shotType.
 extern char *g_ShotNames[6];
 
+// The shot types' short names ("ReimuA ", ...), by character * 2 +
+// shotType.
+extern char *g_ShotTypeNames[4];
 // The difficulties' names ("     Easy", ...), right-aligned.
 extern char *g_DifficultyNames[5];
 // By difficulty: what the result screen's rating starts from, and what
@@ -217,6 +220,9 @@ public:
     // and statistics (15, 16). Steps the sprites. Returns 1, or 0 once it
     // sets the scene back to the title.
     static int OnUpdate(ResultScreen *screen);
+    // Draws the background and the sprites (each moved by its
+    // posOffset), the score lists or the spell cards, the name entry's
+    // alphabet, the replay slots, then DrawStatistics. Returns 1.
     static int OnDraw(ResultScreen *screen);
     // Loads the result screen's image and ANMs and starts the sprites'
     // scripts (unless in state 0x11), fills the lists with the default

@@ -351,9 +351,9 @@ address,size,name,symbol
 0x0042b65e,382,LoadPracticeScores,?LoadPracticeScores@@YAHPAXPAUPscr@@@Z
 0x0042b7dc,45,ReleaseScoreDat,?ReleaseScoreDat@@YAXPAUScoreDat@@@Z
 0x0042b809,1060,SaveScoreDat,?SaveScoreDat@@YAXPAVResultScreen@@@Z
-0x0042bc2d,46,ResultScreen::AddScore,?AddScore@ResultScreen@@QAEXPAUHscr@@HH@Z
+0x0042bc2d,46,ResultScreen::AddScore,?AddScore@ResultScreen@@QAEHPAUHscr@@HH@Z
 0x0042bc5b,42,ResultScreen::ReleaseScores,?ReleaseScores@ResultScreen@@QAEXHH@Z
-0x0042bc85,1615,Func42bc85,
+0x0042bc85,1615,ResultScreen::HandleNameEntry,?HandleNameEntry@ResultScreen@@QAEHXZ
 0x0042c2d4,3536,Func42c2d4,
 0x0042d0a4,235,Func42d0a4,
 0x0042d18f,259,Func42d18f,
@@ -1022,7 +1022,7 @@ address,size,name,symbol
 0x0045d370,104,__aulldiv,__aulldiv
 0x0045d3e0,52,__allmul,__allmul
 0x0045d414,112,_strdate,__strdate
-0x0045d490,7,Func45d490,
+0x0045d490,7,strcpy,_strcpy
 0x0045d4a0,232,Func45d4a0,
 0x0045d588,44,Func45d588,
 0x0045d5c0,57,_strncmp,_strncmp
@@ -1569,6 +1569,8 @@ address,size,name,symbol
 0x00477770,,g_ShotTable1,?g_ShotTable1@@3UShotTable@@A
 0x00477ed8,,g_ShotTable2,?g_ShotTable2@@3UShotTable@@A
 0x00478468,,g_ShotTable3,?g_ShotTable3@@3UShotTable@@A
+0x004784d4,,g_NameAlphabet,?g_NameAlphabet@@3PADA
+0x004784d8,,g_ShotNames,?g_ShotNames@@3PAPADA
 0x00478528,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A
 0x00478628,,g_SoundPaths,?g_SoundPaths@@3PAPADA
 0x0047a630,4,__security_cookie,___security_cookie

@@ -6,6 +6,7 @@
 #include <windows.h>
 
 #include "common.h"
+#include "sprite.h"
 
 // A high score chunk of the score file ("HSCR").
 struct Hscr
@@ -19,7 +20,12 @@ struct Hscr
     // The shot (0 to 3) and difficulty (0 to 4) of its list.
     BYTE shot;
     BYTE difficulty;
+    // The stage reached, 99 for a clear.
+    BYTE stage;
+    // Eight characters and a NUL.
+    char name[9];
 };
+ASSERT_SIZE(Hscr, 0x1c);
 
 // The score file's first chunk ("TH6K").
 struct Th6k
@@ -151,6 +157,13 @@ void SaveScoreDat(class ResultScreen *screen);
 // Frees `dat` and its list.
 void ReleaseScoreDat(ScoreDat *dat);
 
+// The characters a name can be made of, 16 to a row; the last two
+// stand for a space and the end.
+extern char *g_NameAlphabet;
+// Each character's two shot types' names ("博麗 霊夢 (霊)", ...), by
+// character * 2 + shotType.
+extern char *g_ShotNames[8];
+
 // The result screen's scene object (0x56b0 bytes, set up by Func42d773).
 class ResultScreen
 {
@@ -160,13 +173,44 @@ public:
     void ReleaseScores(int difficulty, int shot);
     // Inserts `entry` into the high score list for `difficulty` and
     // `shot`.
-    void AddScore(Hscr *entry, int difficulty, int shot);
+    int AddScore(Hscr *entry, int difficulty, int shot);
+
+    // Lets the player enter a name for `entry`: up and down move
+    // `charIndex` through g_NameAlphabet by rows of 16, left and right
+    // along a row; the shot button writes the character at `cursor`
+    // (the last two are a space and the end) and the bomb button erases.
+    // On the end or the cancel button the name is copied to `name` and
+    // the screen moves to state 0xf; also right away when the score
+    // ranks below tenth. Returns 0.
+    int HandleNameEntry();
 
     // The score file, as LoadScoreDat loaded it.
     ScoreDat *scoreDat;
-    DWORD unk_0004[0xeab];
+    // Counts the frames in the current state.
+    int frame;
+    int state;
+    DWORD unk_000c;
+    // The menu item selected, or where the next character of a name
+    // goes (0 to 8).
+    int cursor;
+    DWORD unk_0014[0x3];
+    // The character of g_NameAlphabet selected.
+    int charIndex;
+    // g_GameManager's character and difficulty.
+    int character;
+    DWORD unk_0028;
+    int difficulty;
+    DWORD unk_0030;
+    char name[0xc];
+    Sprite sprites[0x26];
+    // Text drawn with RenderTextCentered; the first two hold the two shot
+    // types' names.
+    Sprite textSprites[0x10];
+    Sprite unk_39a0;
     ListNode scores[5][4];
-    DWORD unk_3ba0[0x57f];
+    DWORD unk_3ba0[0x578];
+    // The score being entered.
+    Hscr entry;
     // The "TH6K" chunk SaveScoreDat writes.
     Th6k th6k;
     DWORD unk_51a8[0x142];

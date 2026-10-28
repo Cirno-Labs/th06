@@ -382,6 +382,8 @@ WORD ReadButtons();
 
 // Whether any of the buttons in `mask` went down this frame.
 #define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_PrevButtons & (mask)))
+// Also while they are held, once the repeat delay has passed.
+#define WAS_PRESSED_OR_HELD(mask) (WAS_PRESSED(mask) || ((g_Buttons & (mask)) && g_ButtonRepeat))
 
 // The game's random number generator, at 0x69d8f8.
 class Rng

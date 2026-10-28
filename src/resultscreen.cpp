@@ -409,12 +409,188 @@ void ReleaseScoreDat(ScoreDat *dat)
     free(dat);
 }
 
-void ResultScreen::AddScore(Hscr *entry, int difficulty, int shot)
+int ResultScreen::AddScore(Hscr *entry, int difficulty, int shot)
 {
-    InsertScore(&this->scores[difficulty][shot], entry);
+    return InsertScore(&this->scores[difficulty][shot], entry);
 }
 
 void ResultScreen::ReleaseScores(int difficulty, int shot)
 {
     FreeListNodes(&this->scores[difficulty][shot]);
+}
+
+int ResultScreen::HandleNameEntry()
+{
+    Sprite *sprite;
+    int i;
+
+    if (this->frame == 0)
+    {
+        this->character = g_GameManager.character;
+        this->difficulty = g_GameManager.difficulty;
+        sprite = this->sprites;
+        for (i = 0; i < 0x26; i++, sprite++)
+        {
+            sprite->pendingInterrupt = this->difficulty + 3;
+        }
+        g_SpriteEngine->RenderTextCentered(&this->textSprites[0], 0xffffff, 0, g_ShotNames[this->character * 2]);
+        if (g_GameManager.shotType != 0)
+        {
+            this->textSprites[0].color = 0x80ffffff;
+        }
+        g_SpriteEngine->RenderTextCentered(&this->textSprites[1], 0xffffff, 0, g_ShotNames[this->character * 2 + 1]);
+        if (g_GameManager.shotType != 1)
+        {
+            this->textSprites[1].color = 0x80ffffff;
+        }
+        this->entry.shot = this->character * 2 + g_GameManager.shotType;
+        this->entry.difficulty = this->difficulty;
+        this->entry.score = g_GameManager.score;
+        this->entry.version = 0x10;
+        this->entry.magic = *(DWORD *)"HSCR";
+        if (g_GameManager.unk_1822 == 0)
+        {
+            this->entry.stage = g_GameManager.stage;
+        }
+        else
+        {
+            this->entry.stage = 99;
+        }
+        this->entry.unk_09[0] = 1;
+        strcpy(this->entry.name, "        ");
+        if (this->AddScore(&this->entry, this->difficulty, this->character * 2 + g_GameManager.shotType) >= 10)
+        {
+            goto done;
+        }
+        this->cursor = 0;
+        strcpy(this->name, "");
+    }
+    if (this->frame < 30)
+    {
+        return 0;
+    }
+    if (WAS_PRESSED_OR_HELD(0x10))
+    {
+        for (;;)
+        {
+            this->charIndex -= 16;
+            if (this->charIndex < 0)
+            {
+                this->charIndex += 0x60;
+            }
+            if (g_NameAlphabet[this->charIndex] == ' ')
+            {
+                continue;
+            }
+            break;
+        }
+        g_Unknown6d3f50.QueueSound(0xc, 0);
+    }
+    if (WAS_PRESSED_OR_HELD(0x20))
+    {
+        for (;;)
+        {
+            this->charIndex += 16;
+            if (this->charIndex >= 0x60)
+            {
+                this->charIndex -= 0x60;
+            }
+            if (g_NameAlphabet[this->charIndex] == ' ')
+            {
+                continue;
+            }
+            break;
+        }
+        g_Unknown6d3f50.QueueSound(0xc, 0);
+    }
+    if (WAS_PRESSED_OR_HELD(0x40))
+    {
+        for (;;)
+        {
+            this->charIndex--;
+            if (this->charIndex % 16 == 15)
+            {
+                this->charIndex += 16;
+            }
+            if (this->charIndex < 0)
+            {
+                this->charIndex = 15;
+            }
+            if (g_NameAlphabet[this->charIndex] == ' ')
+            {
+                continue;
+            }
+            break;
+        }
+        g_Unknown6d3f50.QueueSound(0xc, 0);
+    }
+    if (WAS_PRESSED_OR_HELD(0x80))
+    {
+        for (;;)
+        {
+            this->charIndex++;
+            if (this->charIndex % 16 == 0)
+            {
+                this->charIndex -= 16;
+            }
+            if (g_NameAlphabet[this->charIndex] == ' ')
+            {
+                continue;
+            }
+            break;
+        }
+        g_Unknown6d3f50.QueueSound(0xc, 0);
+    }
+    if (WAS_PRESSED_OR_HELD(0x1001))
+    {
+        int pos = this->cursor >= 8 ? 7 : this->cursor;
+
+        if (this->charIndex < 0x5e)
+        {
+            this->entry.name[pos] = g_NameAlphabet[this->charIndex];
+        }
+        else if (this->charIndex == 0x5e)
+        {
+            this->entry.name[pos] = ' ';
+        }
+        else
+        {
+            goto end;
+        }
+        if (this->cursor < 8)
+        {
+            this->cursor++;
+            if (this->cursor == 8)
+            {
+                this->charIndex = 0x5f;
+            }
+        }
+        g_Unknown6d3f50.QueueSound(10, 0);
+    }
+    if (WAS_PRESSED_OR_HELD(0xa))
+    {
+        int pos2 = this->cursor >= 8 ? 7 : this->cursor;
+
+        if (this->cursor > 0)
+        {
+            this->cursor--;
+            this->entry.name[pos2] = ' ';
+        }
+        g_Unknown6d3f50.QueueSound(0xb, 0);
+    }
+    if (WAS_PRESSED(8))
+    {
+    end:
+        g_Unknown6d3f50.QueueSound(0xb, 0);
+    done:
+        this->state = 0xf;
+        this->frame = 0;
+        sprite = this->sprites;
+        for (i = 0; i < 0x26; i++, sprite++)
+        {
+            sprite->pendingInterrupt = 2;
+        }
+        strcpy(this->name, this->entry.name);
+    }
+    return 0;
 }

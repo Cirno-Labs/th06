@@ -38,6 +38,10 @@ public:
     // moves to state 2, interrupts every sprite with 2 and marks the
     // entry at the cursor. Returns 0 then, else 1.
     int Func4379e4();
+    // In state 17 (practice), lists the practice high scores of the
+    // stages the shot type reached on this difficulty, fading in over
+    // 30 frames, the one at the cursor brighter. Returns 0.
+    int DrawPracticeScores();
 
     Sprite sprites[0x7a];
     // The selected entry.

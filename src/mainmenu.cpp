@@ -1,6 +1,7 @@
 // cflags: /Os -/Oi
 // The /Os file from 0x43575d to 0x43a7a6, with the title menu.
 
+#include "ascii.h"
 #include "gamemanager.h"
 #include "mainmenu.h"
 #include "screeneffect.h"
@@ -182,6 +183,46 @@ int MainMenu::Func4379e4()
     this->unk_8200 = 0x40000000;
     this->unk_820c = 0;
     this->unk_8210 = 60;
+    return 0;
+}
+
+int MainMenu::DrawPracticeScores()
+{
+    int i;
+    DWORD fade;
+    int n2;
+    int si3;
+    D3DXVECTOR3 pos;
+
+    if (this->unk_81f0 == 17)
+    {
+        pos.x = 320.0f;
+        pos.y = 200.0f;
+        pos.z = 0.0f;
+        fade = this->unk_81f4 < 30 ? this->unk_81f4 * 255 / 30 : 255;
+        si3 = g_GameManager.character * 2 + g_GameManager.shotType;
+        n2 = g_GameManager.clrds[si3].unk_11[g_GameManager.difficulty] > 6
+                    ? 6
+                    : g_GameManager.clrds[si3].unk_11[g_GameManager.difficulty];
+        if (g_GameManager.difficulty == 0 && n2 == 6)
+        {
+            n2 = 5;
+        }
+        for (i = 0; i < n2; i++)
+        {
+            if (i == this->cursor)
+            {
+                g_AsciiText.color = fade << 24 | 0xc0f0f0;
+            }
+            else
+            {
+                g_AsciiText.color = (fade >> 1) << 24 | 0x80c0c0;
+            }
+            g_AsciiText.AddFormat(&pos, "STAGE %d  %.9d", i + 1, g_GameManager.pscrs[si3][i][g_GameManager.difficulty].score);
+            pos.y += 24.0f;
+        }
+        g_AsciiText.color = 0xffffffff;
+    }
     return 0;
 }
 

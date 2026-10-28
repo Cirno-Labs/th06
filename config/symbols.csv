@@ -431,7 +431,7 @@ address,size,name,symbol
 0x00438bc1,823,Func438bc1,
 0x00438ef8,575,Func438ef8,
 0x00439137,2094,Func439137,
-0x00439965,369,Func439965,
+0x00439965,369,MainMenu::DrawPracticeScores,?DrawPracticeScores@MainMenu@@QAEHXZ
 0x00439ad6,714,MainMenu::OnDraw,?OnDraw@MainMenu@@SAHPAV1@@Z
 0x00439da0,488,LoadTitleResources,?LoadTitleResources@@YAHPAVMainMenu@@@Z
 0x00439f88,612,Func439f88,

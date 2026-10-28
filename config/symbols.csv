@@ -93,16 +93,16 @@ address,size,name,symbol
 0x0040f3d0,20,EffectManager::DeletedCallback,?DeletedCallback@EffectManager@@SAHPAV1@@Z
 0x0040f3f0,165,EffectManager::RegisterChain,?RegisterChain@EffectManager@@SAHXZ
 0x0040f4a0,35,EffectManager::RemoveChain,?RemoveChain@EffectManager@@SAXXZ
-0x0040f4d0,115,Func40f4d0,
-0x0040f550,596,Func40f550,
-0x0040f7c0,3619,Func40f7c0,
-0x004106d0,221,Func4106d0,
+0x0040f4d0,115,Ending::ReadInt,?ReadInt@Ending@@QAEHXZ
+0x0040f550,596,Ending::DrawFade,?DrawFade@Ending@@QAEXXZ
+0x0040f7c0,3619,Ending::RunScript,?RunScript@Ending@@QAEHXZ
+0x004106d0,221,Ending::Load,?Load@Ending@@QAEHPAD@Z
 0x004107b0,245,Func4107b0,?Func4107b0@@YAHXZ
-0x004108b0,271,Func4108b0,
-0x004109c0,170,Func4109c0,
-0x00410a70,150,Func410a70,
-0x00410b10,620,Func410b10,
-0x00410d80,172,Func410d80,
+0x004108b0,271,Ending::Ending,??0Ending@@QAE@XZ
+0x004109c0,170,Ending::OnUpdate,?OnUpdate@Ending@@SAHPAV1@@Z
+0x00410a70,150,Ending::OnDraw,?OnDraw@Ending@@SAHPAV1@@Z
+0x00410b10,620,Ending::AddedCallback,?AddedCallback@Ending@@SAHPAV1@@Z
+0x00410d80,172,Ending::DeletedCallback,?DeletedCallback@Ending@@SAHPAV1@@Z
 0x00410e30,859,EnemyManager::Initialize,?Initialize@EnemyManager@@QAEXXZ
 0x00411190,170,EnemyManager::EnemyManager,??0EnemyManager@@QAE@XZ
 0x00411240,327,Enemy::Enemy,??0Enemy@@QAE@XZ
@@ -970,6 +970,7 @@ address,size,name,symbol
 0x0045be40,10,_atan2,_atan2
 0x0045be60,10,_fmod,_fmod
 0x0045be92,136,_atol,
+0x0045bf1a,,atoi,_atoi
 0x0045bf1f,5,operator delete,??3@YAXPAX@Z
 0x0045bf24,14,operator new,??2@YAPAXI@Z
 0x0045bf32,43,_JumpToContinuation,

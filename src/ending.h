@@ -1,0 +1,80 @@
+// The ending and staff roll ("data/end00.end", "紅魔郷ED.dat"): a text
+// script of lines shown two half-lines at a time, with commands after
+// '@'.
+
+#pragma once
+
+#include <windows.h>
+
+#include "chain.h"
+#include "common.h"
+#include "sprite.h"
+#include "timer.h"
+
+class Ending
+{
+public:
+    // Inline, defined after RegisterChain: called, not expanded.
+    Ending();
+
+    // Reads a number at the cursor and moves the cursor past it and the
+    // NULs after it.
+    int ReadInt();
+    // Steps the fade and draws it over the screen.
+    void DrawFade();
+    // Runs the script until it waits: shows text lines, runs the '@'
+    // commands. Returns 0, or -1 at its end ("@z") or on failure.
+    int RunScript();
+    // Loads the script at `path` and starts it. Returns 0, or -1 after
+    // logging an error.
+    int Load(char *path);
+
+    // Creates the ending's chain elements: OnUpdate at priority 3 with
+    // its added and deleted callbacks, OnDraw at 1. Returns 0, or -1 if
+    // adding fails.
+    static int RegisterChain();
+    static int OnUpdate(Ending *ending);
+    static int OnDraw(Ending *ending);
+    static int AddedCallback(Ending *ending);
+    static int DeletedCallback(Ending *ending);
+
+    ChainElem *calcChain;
+    ChainElem *drawChain;
+    // Where the background image (surface 0) is copied from: "@v" sets
+    // the y, which "@V" scrolls back to 0 by its speed per frame.
+    float scrollX;
+    float scrollY;
+    float scrollSpeed;
+    // The text lines (two per line, 0x708 on) and the "@a" pictures.
+    Sprite sprites[0x10];
+    // The script file.
+    char *file;
+    // Set once the ending has been seen: the skip button (0x100) then
+    // runs it up to 5 times as fast.
+    int canSkip;
+    Timer timer;
+    // The wait after a line ("@w" or the line delay), and "@r"'s wait,
+    // which clears the text when it ends. A press of the shot button ends
+    // them, once their minimum frames have passed.
+    Timer lineTimer;
+    Timer waitTimer;
+    int waitMinFrames;
+    int lineMinFrames;
+    // The frames to wait after a line ("@s"), and while the shot button is
+    // held.
+    int lineDelay;
+    int lineDelayFast;
+    unsigned char unk_1150[0x4];
+    // The line the text goes to.
+    int line;
+    // "@c": the text color.
+    D3DCOLOR textColor;
+    // "@0" to "@3": fades in and out of black and white.
+    D3DCOLOR fadeColor;
+    int fadeTimer;
+    int fadeDuration;
+    int fadeType;
+    // The script position.
+    char *cursor;
+};
+ASSERT_SIZE(Ending, 0x1170);

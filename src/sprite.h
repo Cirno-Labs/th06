@@ -8,14 +8,60 @@
 #include "timer.h"
 
 // One of SpriteEngine's sprites: a rectangle of a texture.
+// A sprite in an ANM file: its number and rectangle, in pixels.
+struct AnmSprite
+{
+    int id;
+    float x;
+    float y;
+    float width;
+    float height;
+};
+ASSERT_SIZE(AnmSprite, 0x14);
+
+// An ANM file's header. The sprites' and then the scripts' offsets
+// follow it.
+struct AnmFile
+{
+    int numSprites;
+    int numScripts;
+    // Set to the slot it is loaded into.
+    int textureIndex;
+    int width;
+    int height;
+    int format;
+    D3DCOLOR colorKey;
+    // The image's file name, or "@" for a texture created blank.
+    int nameOffset;
+    // Set to the first sprite number.
+    int spriteOffset;
+    // The file name of an image to take the alpha from, or 0.
+    int alphaNameOffset;
+    DWORD unk_28[6];
+    int spriteOffsets[1];
+};
+
 struct SpriteData
 {
-    // Negative when unused.
-    int unk_00;
-    DWORD unk_04[0xa];
+    // The ANM slot the sprite comes from; negative when unused.
+    int sourceFileIndex;
+    // The sprite's rectangle in the texture, in pixels.
+    float startX;
+    float startY;
+    float endX;
+    float endY;
+    // The texture's size.
+    float textureHeight;
+    float textureWidth;
+    // The rectangle in texture coordinates.
+    float uvStartX;
+    float uvStartY;
+    float uvEndX;
+    float uvEndY;
     float height;
     float width;
-    DWORD unk_34;
+    // Numbers the sprites in the order they were loaded.
+    int spriteId;
 };
 ASSERT_SIZE(SpriteData, 0x38);
 
@@ -202,6 +248,9 @@ public:
     // at `path`, loaded in the texture's format with `colorKey`
     // transparent. `format` is unused. Returns 0 or -1.
     int LoadTextureAlpha(int index, char *path, int format, D3DCOLOR colorKey);
+    // Sets up sprites[`index`] from `sprite`: its texture coordinates,
+    // size and id.
+    void LoadSprite(int index, SpriteData *sprite);
     // Releases texture `index` and frees its image file.
     void ReleaseTexture(int index);
     // Creates texture `index` at `width` by `height` in the format
@@ -241,10 +290,16 @@ public:
     IDirect3DTexture8 *textures[0x108];
     // The image files the textures were created from, kept loaded.
     void *textureFiles[0x100];
-    DWORD unk_1c930;
+    // Counts the sprites loaded, for SpriteData::spriteId.
+    int spriteCount;
     // The scripts of the loaded ANM files.
     void *scripts[0x800];
-    unsigned char unk_1e934[0x2780];
+    // The first sprite number of each script's ANM file.
+    int scriptSpriteOffsets[0x800];
+    // The ANM files loaded into each slot, and their first sprite numbers.
+    AnmFile *anmFiles[0x80];
+    int anmFileSpriteOffsets[0x80];
+    unsigned char unk_20d34[0x380];
     // 1 once constructed.
     int unk_210b4;
     // The texture last set on the device (IDirect3DDevice8::SetTexture).

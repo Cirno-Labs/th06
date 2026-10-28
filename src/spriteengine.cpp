@@ -7,11 +7,11 @@ SpriteEngine::SpriteEngine()
 {
     int i;
 
-    this->unk_1c930 = 0;
+    this->spriteCount = 0;
     memset(this, 0, sizeof(*this));
     for (i = 0; i < 0x800; i++)
     {
-        this->sprites[i].unk_00 = -1;
+        this->sprites[i].sourceFileIndex = -1;
     }
     g_Quad[0].w = g_Quad[1].w = g_Quad[2].w = g_Quad[3].w = 1.0f;
     g_Quad[0].uv.x = 0.0f;
@@ -242,6 +242,66 @@ int SpriteEngine::CreateTexture(int index, int width, int height, int format)
 {
     D3DXCreateTexture(g_Unknown6c6d18.d3dDevice, width, height, 1, 0, g_TextureFormats[format], D3DPOOL_MANAGED,
                       &this->textures[index]);
+    return 0;
+}
+
+int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
+{
+    AnmFile *anmHeader;
+    char *name;
+    AnmSprite *rawSprite;
+    int k;
+    SpriteData data;
+    int *entries;
+
+    this->ReleaseAnm(slot);
+    this->anmFiles[slot] = (AnmFile *)Func41e290(path, 0);
+    anmHeader = this->anmFiles[slot];
+    if (anmHeader == NULL)
+    {
+        Func41e620(&g_Unknown69d998, "スプライトアニメ %s が読み込めません。データが失われてるか壊れています\n", path);
+        return -1;
+    }
+    anmHeader->textureIndex = slot;
+    name = (char *)anmHeader + anmHeader->nameOffset;
+    if (*name == '@')
+    {
+        this->CreateTexture(anmHeader->textureIndex, anmHeader->width, anmHeader->height, anmHeader->format);
+    }
+    else if (this->LoadTexture(anmHeader->textureIndex, name, anmHeader->format, anmHeader->colorKey) != 0)
+    {
+        Func41e620(&g_Unknown69d998, "テクスチャ %s が読み込めません。データが失われてるか壊れています\n", name);
+        return -1;
+    }
+    if (anmHeader->alphaNameOffset != 0)
+    {
+        name = (char *)anmHeader + anmHeader->alphaNameOffset;
+        if (this->LoadTextureAlpha(anmHeader->textureIndex, name, anmHeader->format, anmHeader->colorKey) != 0)
+        {
+            Func41e620(&g_Unknown69d998, "テクスチャ %s が読み込めません。データが失われてるか壊れています\n", name);
+            return -1;
+        }
+    }
+    anmHeader->spriteOffset = firstSprite;
+    entries = anmHeader->spriteOffsets;
+    for (k = 0; k < this->anmFiles[slot]->numSprites; k++, entries++)
+    {
+        rawSprite = (AnmSprite *)((char *)anmHeader + *entries);
+        data.sourceFileIndex = this->anmFiles[slot]->textureIndex;
+        data.startX = rawSprite->x;
+        data.startY = rawSprite->y;
+        data.endX = rawSprite->x + rawSprite->width;
+        data.endY = rawSprite->y + rawSprite->height;
+        data.textureWidth = anmHeader->width;
+        data.textureHeight = anmHeader->height;
+        this->LoadSprite(rawSprite->id + firstSprite, &data);
+    }
+    for (k = 0; k < anmHeader->numScripts; k++, entries += 2)
+    {
+        this->scripts[entries[0] + firstSprite] = (char *)anmHeader + entries[1];
+        this->scriptSpriteOffsets[entries[0] + firstSprite] = firstSprite;
+    }
+    this->anmFileSpriteOffsets[slot] = firstSprite;
     return 0;
 }
 

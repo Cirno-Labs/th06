@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">58.81% (277)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">31.85% (150)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">59.02% (278)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">31.63% (149)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="439.32" height="6" x="0" y="0" class="named"/>
-<rect width="69.78" height="6" x="439.32" y="0" class="decompiled"/>
-<rect width="237.90" height="6" x="509.10" y="0" class="todo"/>
+<rect width="440.90" height="6" x="0" y="0" class="named"/>
+<rect width="69.78" height="6" x="440.90" y="0" class="decompiled"/>
+<rect width="236.31" height="6" x="510.69" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -464,10 +464,10 @@
 <rect width="12" height="12" x="645" y="105" class="named"><title>0x00431920 SpriteEngine::LoadTexture (237 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="105" class="named"><title>0x00431a10 SpriteEngine::LoadTextureAlpha (863 bytes)</title></rect>
 <rect width="12" height="12" x="675" y="105" class="named"><title>0x00431d70 SpriteEngine::CreateTexture (66 bytes)</title></rect>
-<rect width="12" height="12" x="690" y="105" class="todo"><title>0x00431dc0 SpriteEngine::LoadAnm (624 bytes)</title></rect>
+<rect width="12" height="12" x="690" y="105" class="named"><title>0x00431dc0 SpriteEngine::LoadAnm (624 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="105" class="todo"><title>0x00432030 SpriteEngine::ReleaseAnm (418 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="105" class="named"><title>0x004321e0 SpriteEngine::ReleaseTexture (125 bytes)</title></rect>
-<rect width="12" height="12" x="735" y="105" class="todo"><title>0x00432260 Func432260 (315 bytes)</title></rect>
+<rect width="12" height="12" x="735" y="105" class="todo"><title>0x00432260 SpriteEngine::LoadSprite (315 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="120" class="todo"><title>0x004323a0 SpriteEngine::SetSprite (144 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="120" class="named"><title>0x00432430 SpriteEngine::SetScript (151 bytes)</title></rect>
 <rect width="12" height="12" x="30" y="120" class="todo"><title>0x004324d0 Func4324d0 (598 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">37.67%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">57.52%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">37.93%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">57.26%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="281.38" height="6" x="0" y="0" class="named"/>
-<rect width="35.95" height="6" x="281.38" y="0" class="decompiled"/>
-<rect width="429.66" height="6" x="317.34" y="0" class="todo"/>
+<rect width="283.34" height="6" x="0" y="0" class="named"/>
+<rect width="35.95" height="6" x="283.34" y="0" class="decompiled"/>
+<rect width="427.70" height="6" x="319.30" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -639,7 +639,7 @@
 <rect width="16.02" height="13.26" x="482.81" y="104.53" class="named"><title>0x004016b0 AsciiText::DrawStrings (641 bytes)</title></rect>
 <rect width="16.02" height="13.11" x="482.81" y="120.79" class="named"><title>0x00414670 BulletManager::SpawnLaser (635 bytes)</title></rect>
 <rect width="16.02" height="13.11" x="482.81" y="136.89" class="named"><title>0x00422680 MidiPlayer::OnTimer (635 bytes)</title></rect>
-<rect width="14.29" height="14.41" x="501.83" y="0" class="todo"><title>0x00431dc0 SpriteEngine::LoadAnm (624 bytes)</title></rect>
+<rect width="14.29" height="14.41" x="501.83" y="0" class="named"><title>0x00431dc0 SpriteEngine::LoadAnm (624 bytes)</title></rect>
 <rect width="14.29" height="14.38" x="501.83" y="17.41" class="todo"><title>0x00411f40 Func411f40 (623 bytes)</title></rect>
 <rect width="14.29" height="14.30" x="501.83" y="34.79" class="todo"><title>0x00410b10 Func410b10 (620 bytes)</title></rect>
 <rect width="14.29" height="14.07" x="501.83" y="52.09" class="todo"><title>0x00439f88 Func439f88 (612 bytes)</title></rect>
@@ -723,7 +723,7 @@
 <rect width="9.27" height="9.85" x="737.73" y="0" class="named"><title>0x00411240 Enemy::Enemy (327 bytes)</title></rect>
 <rect width="8.78" height="10.19" x="608.28" y="12.85" class="todo"><title>0x004378a2 Func4378a2 (322 bytes)</title></rect>
 <rect width="8.78" height="10.02" x="608.28" y="26.04" class="todo"><title>0x0041878b GuiImpl::Func41878b (318 bytes)</title></rect>
-<rect width="8.78" height="9.90" x="608.28" y="39.07" class="todo"><title>0x00432260 Func432260 (315 bytes)</title></rect>
+<rect width="8.78" height="9.90" x="608.28" y="39.07" class="todo"><title>0x00432260 SpriteEngine::LoadSprite (315 bytes)</title></rect>
 <rect width="8.78" height="9.82" x="608.28" y="51.97" class="todo"><title>0x0040dcc0 Func40dcc0 (313 bytes)</title></rect>
 <rect width="8.78" height="9.82" x="608.28" y="64.78" class="named"><title>0x00427630 Player::Graze (313 bytes)</title></rect>
 <rect width="8.78" height="9.74" x="608.28" y="77.60" class="named"><title>0x00406020 DimPlayAreaForBomb (311 bytes)</title></rect>

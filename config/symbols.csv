@@ -372,7 +372,7 @@ address,size,name,symbol
 0x0042f8b0,968,Func42f8b0,?Func42f8b0@@YAXPAMK@Z
 0x0042fc80,168,ScreenEffect::OnUpdateFadeOut,?OnUpdateFadeOut@ScreenEffect@@SAHPAV1@@Z
 0x0042fd30,428,ScreenEffect::Func42fd30,?Func42fd30@ScreenEffect@@SAPAV1@HHHHH@Z
-0x0042fee0,136,Func42fee0,
+0x0042fee0,136,ScreenEffect::OnDrawScreen,?OnDrawScreen@ScreenEffect@@SAHPAV1@@Z
 0x0042ff70,71,ScreenEffect::OnDrawPlayArea,?OnDrawPlayArea@ScreenEffect@@SAHPAV1@@Z
 0x0042ffc0,556,Func42ffc0,
 0x004301f0,48,ScreenEffect::AddedCallback,?AddedCallback@ScreenEffect@@SAHPAV1@@Z

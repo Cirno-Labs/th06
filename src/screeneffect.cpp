@@ -65,6 +65,23 @@ int ScreenEffect::OnUpdateFadeOut(ScreenEffect *effect)
     return 1;
 }
 
+int ScreenEffect::OnDrawScreen(ScreenEffect *effect)
+{
+    float area[4];
+
+    area[0] = 0.0f;
+    area[1] = 0.0f;
+    area[2] = 640.0f;
+    area[3] = 480.0f;
+    g_Unknown6c6d18.viewport.X = 0;
+    g_Unknown6c6d18.viewport.Y = 0;
+    g_Unknown6c6d18.viewport.Width = 640;
+    g_Unknown6c6d18.viewport.Height = 480;
+    g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+    Func42f8b0(area, effect->alpha << 24 | effect->color);
+    return 1;
+}
+
 int ScreenEffect::OnDrawPlayArea(ScreenEffect *effect)
 {
     float area[4];

@@ -116,7 +116,7 @@ int GameManager::OnUpdate(GameManager *mgr)
             if (mgr->lives < 8)
             {
                 mgr->lives++;
-                g_Unknown6d3f50.QueueSound(0x1c, 0);
+                g_SoundPlayer.QueueSound(0x1c, 0);
             }
             g_Gui.flags.livesChanged = 2;
             mgr->unk_181c++;

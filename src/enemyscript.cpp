@@ -676,7 +676,7 @@ restart:
             enemy->flags.unk12 = instr->args.i[0];
             break;
         case 106:
-            g_Unknown6d3f50.QueueSound(instr->args.i[0], 0);
+            g_SoundPlayer.QueueSound(instr->args.i[0], 0);
             break;
         case 107:
             enemy->flags.unk13 = instr->args.i[0];
@@ -1524,7 +1524,7 @@ void Func40bb80(Enemy *enemy, EnemyScriptInstr *instr)
             enemy->shooter.speed1 = speed;
             enemy->shooter.angle1 -= 0.5235988f * progress2;
         }
-        g_Unknown6d3f50.QueueSound(0x16, 0);
+        g_SoundPlayer.QueueSound(0x16, 0);
     }
     enemy->ctx.intVars[2]++;
 }
@@ -1711,7 +1711,7 @@ void Func40c5b0(Enemy *enemy, EnemyScriptInstr *instr)
             shooter.color = 3;
             g_BulletManager.FirePattern(&shooter);
         }
-        g_Unknown6d3f50.QueueSound(7, 0);
+        g_SoundPlayer.QueueSound(7, 0);
     }
     enemy->ctx.intVars[2]++;
 }

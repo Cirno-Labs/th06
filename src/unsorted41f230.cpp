@@ -43,7 +43,7 @@ restart:
         g_Unknown69d998.Flush();
         return 1;
     }
-    g_Unknown6d3f50.Initialize(g_GameWindow.hwnd);
+    g_SoundPlayer.Initialize(g_GameWindow.hwnd);
     InitJoystick();
     ResetKeyboard();
     g_SpriteEngine = new SpriteEngine();
@@ -89,7 +89,7 @@ restart:
     }
 stop:
     g_Chain.Release();
-    g_Unknown6d3f50.Release();
+    g_SoundPlayer.Release();
     delete g_SpriteEngine;
     g_SpriteEngine = NULL;
     if (g_App.d3dDevice != NULL)
@@ -169,7 +169,7 @@ int GameWindow::RunFrame()
         g_App.viewport.Height = 480;
         g_App.d3dDevice->SetViewport(&g_App.viewport);
         res = g_Chain.RunCalcChain();
-        g_Unknown6d3f50.PlayQueuedSounds();
+        g_SoundPlayer.PlayQueuedSounds();
         if (res == 0)
         {
             return 1;

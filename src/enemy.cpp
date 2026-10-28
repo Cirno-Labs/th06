@@ -655,7 +655,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     em->life = 0;
                     break;
                 }
-                g_Unknown6d3f50.QueueSound(i % 2 + 2, 0);
+                g_SoundPlayer.QueueSound(i % 2 + 2, 0);
                 g_EffectManager.SpawnEffect(em->deathEffect, &em->pos, 1, 0xffffffff);
                 g_EffectManager.SpawnEffect(em->unk_e3d + 4, &em->pos, 4, 0xffffffff);
                 if (em->deathSub >= 0)
@@ -682,7 +682,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             }
             else if (lifeBefore > em->life)
             {
-                g_Unknown6d3f50.QueueSound(0x14, 0);
+                g_SoundPlayer.QueueSound(0x14, 0);
                 em->sprite.flags.colorOp = 1;
                 em->hitFlashTimer = 4;
             }

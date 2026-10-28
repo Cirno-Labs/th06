@@ -40,9 +40,9 @@ int App::RegisterChain()
 // for scene 5, otherwise 1.
 int App::OnUpdate(App *arg)
 {
-    if (g_Unknown6d3f50.bgm != NULL)
+    if (g_SoundPlayer.bgm != NULL)
     {
-        g_Unknown6d3f50.bgm->UpdateFade();
+        g_SoundPlayer.bgm->UpdateFade();
     }
     g_PrevButtons = g_Buttons;
     g_Buttons = ReadButtons();
@@ -260,7 +260,7 @@ int App::AddedCallback(App *arg)
     InitDirectInput(arg);
     arg->midi = new MidiPlayer();
     g_Rng.SetSeed(timeGetTime());
-    g_Unknown6d3f50.LoadSounds();
+    g_SoundPlayer.LoadSounds();
     if (g_SpriteEngine->LoadAnm(0, "data/text.anm", 0x700) != 0)
     {
         return -1;
@@ -400,7 +400,7 @@ int App::DeletedCallback(App *arg)
     }
     g_SpriteEngine->ReleaseAnm(0);
     AsciiText::RemoveChain();
-    g_Unknown6d3f50.StopBgm();
+    g_SoundPlayer.StopBgm();
     if (arg->midi != NULL)
     {
         arg->midi->Stop();
@@ -791,14 +791,14 @@ int App::PlayMusic(char *path)
         dot[1] = 'p';
         dot[2] = 'o';
         dot[3] = 's';
-        g_Unknown6d3f50.LoadBgm(wavFile);
-        if (g_Unknown6d3f50.LoadBgmLoop(posFile) < 0)
+        g_SoundPlayer.LoadBgm(wavFile);
+        if (g_SoundPlayer.LoadBgmLoop(posFile) < 0)
         {
-            g_Unknown6d3f50.PlayBgm(0);
+            g_SoundPlayer.PlayBgm(0);
         }
         else
         {
-            g_Unknown6d3f50.PlayBgm(1);
+            g_SoundPlayer.PlayBgm(1);
         }
     }
     else
@@ -819,7 +819,7 @@ int App::StopMusic()
     }
     else if (g_App.cfg.musicMode == 1)
     {
-        g_Unknown6d3f50.StopBgm();
+        g_SoundPlayer.StopBgm();
     }
     else
     {
@@ -849,15 +849,15 @@ int App::FadeOutMusic(float seconds)
         // game runs slow.
         if (this->frameAdvance == 0.0f)
         {
-            g_Unknown6d3f50.FadeOutBgm(seconds);
+            g_SoundPlayer.FadeOutBgm(seconds);
         }
         else if (this->frameAdvance > 1.0f)
         {
-            g_Unknown6d3f50.FadeOutBgm(seconds);
+            g_SoundPlayer.FadeOutBgm(seconds);
         }
         else
         {
-            g_Unknown6d3f50.FadeOutBgm(seconds / this->frameAdvance);
+            g_SoundPlayer.FadeOutBgm(seconds / this->frameAdvance);
         }
     }
     else
@@ -867,7 +867,7 @@ int App::FadeOutMusic(float seconds)
     return 0;
 }
 
-void Unknown6d3f50::FadeOutBgm(float seconds)
+void SoundPlayer::FadeOutBgm(float seconds)
 {
     if (this->bgm != NULL)
     {

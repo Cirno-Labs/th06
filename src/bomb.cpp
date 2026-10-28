@@ -59,7 +59,7 @@ void UpdateReimuABomb(Player *player)
                 {
                     g_SpriteEngine->Func4051b0(spr, k + 0x485);
                 }
-                g_Unknown6d3f50.QueueSound(0xd, 0);
+                g_SoundPlayer.QueueSound(0xd, 0);
             }
         }
     }
@@ -122,7 +122,7 @@ void UpdateReimuABomb(Player *player)
                     player->bulletClearAreas[i][2] = 256.0f;
                     player->bulletClearAreas[i][3] = 256.0f;
                     D3DXVECTOR3 velocity = player->bomb.partVelocity[i] / 8.0f;
-                    g_Unknown6d3f50.QueueSound(0xf, 0);
+                    g_SoundPlayer.QueueSound(0xf, 0);
                     ScreenEffect::StartEffect(1, 0x10, 8, 0, 0);
                 }
             }
@@ -228,7 +228,7 @@ void UpdateReimuBBomb(Player *player)
         {
             g_SpriteEngine->Func4051b0(sprite, i + 0x489);
         }
-        g_Unknown6d3f50.QueueSound(6, 0);
+        g_SoundPlayer.QueueSound(6, 0);
         player->bomb.partPos[0].x = player->position.x;
         player->bomb.partPos[0].y = 224.0f;
         player->bomb.partPos[0].z = 0.42f;
@@ -319,7 +319,7 @@ void UpdateMarisaABomb(Player *player)
             player->bomb.partVelocity[i].y = sinf(theta) * 2.0f;
             player->bomb.partVelocity[i].z = 0.0f;
         }
-        g_Unknown6d3f50.QueueSound(6, 0);
+        g_SoundPlayer.QueueSound(6, 0);
         ScreenEffect::StartEffect(1, 120, 4, 1, 0);
     }
     else
@@ -408,7 +408,7 @@ void UpdateMarisaBBomb(Player *player)
             g_SpriteEngine->Func4051b0(sprite, i + 0x408);
             player->bomb.partPos[i] = player->position;
         }
-        g_Unknown6d3f50.QueueSound(0x13, 0);
+        g_SoundPlayer.QueueSound(0x13, 0);
         player->moveScaleY = 0.3f;
         player->moveScaleX = 0.3f;
     }

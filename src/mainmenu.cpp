@@ -164,7 +164,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             }
             if (pressedKey < 0x20 && g_Unknown478690 != pressedKey)
             {
-                g_Unknown6d3f50.QueueSound(10, 0);
+                g_SoundPlayer.QueueSound(10, 0);
                 switch (menu->cursor)
                 {
                 case 0:
@@ -224,7 +224,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                         menu->sprites[pressedKey].pendingInterrupt = 3;
                     }
                     menu->cursor = 7;
-                    g_Unknown6d3f50.QueueSound(0xb, 0);
+                    g_SoundPlayer.QueueSound(0xb, 0);
                     g_ControllerMapping = menu->controllerMapping;
                     g_App.cfg.controllerMapping = menu->controllerMapping;
                     break;
@@ -335,7 +335,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             {
                 menu->sprites[i].pendingInterrupt = 4;
             }
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
             if (g_GameManager.difficulty < 4)
             {
                 g_App.cfg.defaultDifficulty = menu->cursor;
@@ -362,7 +362,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             {
                 menu->sprites[i].pendingInterrupt = 7;
             }
-            g_Unknown6d3f50.QueueSound(10, 0);
+            g_SoundPlayer.QueueSound(10, 0);
             if (g_GameManager.difficulty < 4)
             {
                 text3 = &menu->sprites[menu->cursor + 0x51];
@@ -419,7 +419,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 }
                 goto characterChosen;
             }
-            g_Unknown6d3f50.QueueSound(0xc, 0);
+            g_SoundPlayer.QueueSound(0xc, 0);
             for (text3 = &menu->sprites[0x56], i = 0; i < 2; i++, text3++)
             {
                 if (i == menu->cursor)
@@ -454,7 +454,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             }
             else
             {
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 for (text3 = &menu->sprites[0x56], i = 0; i < 2; i++, text3++)
                 {
                     if (i == menu->cursor)
@@ -493,7 +493,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 }
                 menu->cursor = 0;
             }
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
             break;
         }
         else if (WAS_PRESSED(0x1001))
@@ -535,7 +535,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             {
                 menu->cursor = 1 - g_GameManager.shotType;
             }
-            g_Unknown6d3f50.QueueSound(10, 0);
+            g_SoundPlayer.QueueSound(10, 0);
         }
         break;
     case 11:
@@ -599,7 +599,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             }
             text3 = &menu->sprites[g_GameManager.difficulty + 0x51];
             text3->pendingInterrupt = 0;
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
             g_GameManager.shotType = menu->cursor;
             menu->cursor = g_GameManager.character;
             for (text3 = &menu->sprites[0x56], i = 0; i < 2; i++, text3 += 2)
@@ -634,7 +634,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                     g_GameManager.bombs = 3;
                 }
                 g_App.scene = 2;
-                g_Unknown6d3f50.QueueSound(10, 0);
+                g_SoundPlayer.QueueSound(10, 0);
                 g_GameManager.unk_001c = 0;
                 {
                     float average;
@@ -788,7 +788,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 }
             }
             menu->cursor = g_GameManager.shotType;
-            g_Unknown6d3f50.QueueSound(10, 0);
+            g_SoundPlayer.QueueSound(10, 0);
             break;
         }
         else if (WAS_PRESSED(0x1001))
@@ -837,7 +837,7 @@ int MoveMenuCursor(MainMenu *menu, int count)
     if (WAS_PRESSED_OR_HELD(0x10))
     {
         menu->cursor--;
-        g_Unknown6d3f50.QueueSound(0xc, 0);
+        g_SoundPlayer.QueueSound(0xc, 0);
         if (menu->cursor < 0)
         {
             menu->cursor = count - 1;
@@ -851,7 +851,7 @@ int MoveMenuCursor(MainMenu *menu, int count)
     if (WAS_PRESSED_OR_HELD(0x20))
     {
         menu->cursor++;
-        g_Unknown6d3f50.QueueSound(0xc, 0);
+        g_SoundPlayer.QueueSound(0xc, 0);
         if (menu->cursor < 0)
         {
             menu->cursor = count - 1;
@@ -1048,7 +1048,7 @@ int MainMenu::UpdateTitleMenu()
             this->unk_8200 = 0xff000000;
             this->unk_820c = 0;
             this->unk_8210 = 60;
-            g_Unknown6d3f50.QueueSound(10, 0);
+            g_SoundPlayer.QueueSound(10, 0);
             break;
             case 1:
             if (g_GameManager.IsExtraUnlocked(0, 0) || g_GameManager.IsExtraUnlocked(0, 1) ||
@@ -1066,11 +1066,11 @@ int MainMenu::UpdateTitleMenu()
                 this->unk_8200 = 0xff000000;
                 this->unk_820c = 0;
                 this->unk_8210 = 60;
-                g_Unknown6d3f50.QueueSound(10, 0);
+                g_SoundPlayer.QueueSound(10, 0);
             }
             else
             {
-                g_Unknown6d3f50.QueueSound(0xb, 0);
+                g_SoundPlayer.QueueSound(0xb, 0);
             }
             break;
             case 2:
@@ -1093,7 +1093,7 @@ int MainMenu::UpdateTitleMenu()
             this->unk_8200 = 0xff000000;
             this->unk_820c = 0;
             this->unk_8210 = 60;
-            g_Unknown6d3f50.QueueSound(10, 0);
+            g_SoundPlayer.QueueSound(10, 0);
             break;
             case 3:
             for (i = 0; i < 0x7a; i++)
@@ -1107,7 +1107,7 @@ int MainMenu::UpdateTitleMenu()
             this->unk_8200 = 0xff000000;
             this->unk_820c = 0;
             this->unk_8210 = 60;
-            g_Unknown6d3f50.QueueSound(10, 0);
+            g_SoundPlayer.QueueSound(10, 0);
             break;
             case 4:
             for (i = 0; i < 0x7a; i++)
@@ -1120,7 +1120,7 @@ int MainMenu::UpdateTitleMenu()
             this->unk_8200 = 0xff000000;
             this->unk_820c = 0;
             this->unk_8210 = 60;
-            g_Unknown6d3f50.QueueSound(10, 0);
+            g_SoundPlayer.QueueSound(10, 0);
             break;
             case 5:
             this->unk_81f0 = 16;
@@ -1129,7 +1129,7 @@ int MainMenu::UpdateTitleMenu()
             {
                 this->sprites[i].pendingInterrupt = 4;
             }
-            g_Unknown6d3f50.QueueSound(10, 0);
+            g_SoundPlayer.QueueSound(10, 0);
             break;
             case 6:
             this->unk_81f0 = 3;
@@ -1142,7 +1142,7 @@ int MainMenu::UpdateTitleMenu()
             this->unk_8230 = g_App.cfg.colorMode16Bits;
             this->unk_8231 = g_App.cfg.windowed;
             this->unk_8232 = g_App.cfg.frameSkip;
-            g_Unknown6d3f50.QueueSound(10, 0);
+            g_SoundPlayer.QueueSound(10, 0);
             break;
             case 7:
             this->unk_81f0 = 4;
@@ -1151,7 +1151,7 @@ int MainMenu::UpdateTitleMenu()
             {
                 this->sprites[i].pendingInterrupt = 4;
             }
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
             break;
             }
         }
@@ -1163,12 +1163,12 @@ int MainMenu::UpdateTitleMenu()
             {
                 this->sprites[i].pendingInterrupt = 4;
             }
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
         }
         if (WAS_PRESSED(0xa))
         {
             this->cursor = 7;
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
         }
     }
     return 0;
@@ -1281,7 +1281,7 @@ int MainMenu::UpdateReplayMenu()
                 text->pendingInterrupt = 0x10;
                 this->unk_81f4 = 0;
                 this->cursor = 0;
-                g_Unknown6d3f50.QueueSound(10, 0);
+                g_SoundPlayer.QueueSound(10, 0);
                 this->unk_10edc = (ReplayHeader *)LoadFileData(this->replayPaths[this->unk_81e8], 1);
                 ValidateReplay(this->unk_10edc, g_FileSize);
                 for (i = 0; i < 7; i++)
@@ -1310,7 +1310,7 @@ int MainMenu::UpdateReplayMenu()
             {
                 this->sprites[i].pendingInterrupt = 4;
             }
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
             this->cursor = 0;
             break;
         }
@@ -1374,7 +1374,7 @@ int MainMenu::UpdateReplayMenu()
             {
                 this->sprites[i].pendingInterrupt = 4;
             }
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
             this->unk_81f0 = 13;
             for (text = this->sprites, i = 0; i < 0x7a; i++, text++)
             {
@@ -1589,7 +1589,7 @@ int MainMenu::UpdateOptions()
             switch (this->cursor)
             {
             case 0:
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 if (g_App.cfg.lives <= 0)
                 {
                     g_App.cfg.lives = 5;
@@ -1597,7 +1597,7 @@ int MainMenu::UpdateOptions()
                 g_App.cfg.lives = g_App.cfg.lives - 1;
                 break;
             case 1:
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 if (g_App.cfg.bombs <= 0)
                 {
                     g_App.cfg.bombs = 4;
@@ -1605,7 +1605,7 @@ int MainMenu::UpdateOptions()
                 g_App.cfg.bombs = g_App.cfg.bombs - 1;
                 break;
             case 2:
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 if (g_App.cfg.colorMode16Bits <= 0)
                 {
                     g_App.cfg.colorMode16Bits = 2;
@@ -1613,7 +1613,7 @@ int MainMenu::UpdateOptions()
                 g_App.cfg.colorMode16Bits = g_App.cfg.colorMode16Bits - 1;
                 break;
             case 3:
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 g_App.StopMusic();
                 if (g_App.cfg.musicMode <= 0)
                 {
@@ -1624,7 +1624,7 @@ int MainMenu::UpdateOptions()
                 g_App.PlayMusic("bgm/th06_01.mid");
                 break;
             case 4:
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 if (g_App.cfg.playSounds <= 0)
                 {
                     g_App.cfg.playSounds = 2;
@@ -1632,7 +1632,7 @@ int MainMenu::UpdateOptions()
                 g_App.cfg.playSounds = g_App.cfg.playSounds - 1;
                 break;
             case 5:
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 if (this->unk_8231 <= 0)
                 {
                     this->unk_8231 = 2;
@@ -1644,14 +1644,14 @@ int MainMenu::UpdateOptions()
         if (WAS_PRESSED(0xa))
         {
             this->cursor = 8;
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
         }
         if (WAS_PRESSED_OR_HELD(0x80))
         {
             switch (this->cursor)
             {
             case 0:
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 g_App.cfg.lives = g_App.cfg.lives + 1;
                 if (g_App.cfg.lives >= 5)
                 {
@@ -1659,7 +1659,7 @@ int MainMenu::UpdateOptions()
                 }
                 break;
             case 1:
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 g_App.cfg.bombs = g_App.cfg.bombs + 1;
                 if (g_App.cfg.bombs >= 4)
                 {
@@ -1667,7 +1667,7 @@ int MainMenu::UpdateOptions()
                 }
                 break;
             case 2:
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 g_App.cfg.colorMode16Bits = g_App.cfg.colorMode16Bits + 1;
                 if (g_App.cfg.colorMode16Bits >= 2)
                 {
@@ -1675,7 +1675,7 @@ int MainMenu::UpdateOptions()
                 }
                 break;
             case 3:
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 g_App.StopMusic();
                 g_App.cfg.musicMode = g_App.cfg.musicMode + 1;
                 if (g_App.cfg.musicMode >= 3)
@@ -1686,7 +1686,7 @@ int MainMenu::UpdateOptions()
                 g_App.PlayMusic("bgm/th06_01.mid");
                 break;
             case 4:
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 g_App.cfg.playSounds = g_App.cfg.playSounds + 1;
                 if (g_App.cfg.playSounds >= 2)
                 {
@@ -1694,7 +1694,7 @@ int MainMenu::UpdateOptions()
                 }
                 break;
             case 5:
-                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_SoundPlayer.QueueSound(0xc, 0);
                 this->unk_8231 = this->unk_8231 + 1;
                 if (this->unk_8231 >= 2)
                 {
@@ -1715,7 +1715,7 @@ int MainMenu::UpdateOptions()
                     this->sprites[i].pendingInterrupt = 5;
                 }
                 this->cursor = 0;
-                g_Unknown6d3f50.QueueSound(10, 0);
+                g_SoundPlayer.QueueSound(10, 0);
                 this->controllerMapping = g_ControllerMapping;
                 g_ControllerMapping.upButton = -1;
                 g_ControllerMapping.downButton = -1;
@@ -1740,7 +1740,7 @@ int MainMenu::UpdateOptions()
                     this->sprites[i].pendingInterrupt = 2;
                 }
                 this->cursor = 6;
-                g_Unknown6d3f50.QueueSound(0xb, 0);
+                g_SoundPlayer.QueueSound(0xb, 0);
                 if (this->unk_8230 != g_App.cfg.colorMode16Bits ||
                     this->unk_8231 != g_App.cfg.windowed || this->unk_8232 != g_App.cfg.frameSkip)
                 {

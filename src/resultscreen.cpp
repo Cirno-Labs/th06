@@ -488,7 +488,7 @@ int ResultScreen::HandleNameEntry()
             }
             break;
         }
-        g_Unknown6d3f50.QueueSound(0xc, 0);
+        g_SoundPlayer.QueueSound(0xc, 0);
     }
     if (WAS_PRESSED_OR_HELD(0x20))
     {
@@ -505,7 +505,7 @@ int ResultScreen::HandleNameEntry()
             }
             break;
         }
-        g_Unknown6d3f50.QueueSound(0xc, 0);
+        g_SoundPlayer.QueueSound(0xc, 0);
     }
     if (WAS_PRESSED_OR_HELD(0x40))
     {
@@ -526,7 +526,7 @@ int ResultScreen::HandleNameEntry()
             }
             break;
         }
-        g_Unknown6d3f50.QueueSound(0xc, 0);
+        g_SoundPlayer.QueueSound(0xc, 0);
     }
     if (WAS_PRESSED_OR_HELD(0x80))
     {
@@ -543,7 +543,7 @@ int ResultScreen::HandleNameEntry()
             }
             break;
         }
-        g_Unknown6d3f50.QueueSound(0xc, 0);
+        g_SoundPlayer.QueueSound(0xc, 0);
     }
     if (WAS_PRESSED_OR_HELD(0x1001))
     {
@@ -569,7 +569,7 @@ int ResultScreen::HandleNameEntry()
                 this->charIndex = 0x5f;
             }
         }
-        g_Unknown6d3f50.QueueSound(10, 0);
+        g_SoundPlayer.QueueSound(10, 0);
     }
     if (WAS_PRESSED_OR_HELD(0xa))
     {
@@ -580,12 +580,12 @@ int ResultScreen::HandleNameEntry()
             this->cursor--;
             this->entry.name[pos2] = ' ';
         }
-        g_Unknown6d3f50.QueueSound(0xb, 0);
+        g_SoundPlayer.QueueSound(0xb, 0);
     }
     if (WAS_PRESSED(8))
     {
     end:
-        g_Unknown6d3f50.QueueSound(0xb, 0);
+        g_SoundPlayer.QueueSound(0xb, 0);
     done:
         this->state = 0xf;
         this->frame = 0;
@@ -660,7 +660,7 @@ int ResultScreen::HandleReplaySaving()
             if (this->cursor == 0)
             {
             chooseSlot:
-                g_Unknown6d3f50.QueueSound(10, 0);
+                g_SoundPlayer.QueueSound(10, 0);
                 this->state = 0xc;
                 spr = this->sprites;
                 for (k = 0; k < 0x26; k++, spr++)
@@ -672,7 +672,7 @@ int ResultScreen::HandleReplaySaving()
             }
         cancel:
             this->frame = 0;
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
             this->state = 2;
             spr = this->sprites;
             for (k = 0; k < 0x26; k++, spr++)
@@ -689,7 +689,7 @@ int ResultScreen::HandleReplaySaving()
         if (WAS_PRESSED(0x1001) || WAS_PRESSED(0xa))
         {
             this->frame = 0;
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
             this->state = 2;
             spr = this->sprites;
             for (k = 0; k < 0x26; k++, spr++)
@@ -726,7 +726,7 @@ int ResultScreen::HandleReplaySaving()
         this->replaySlot = this->cursor;
         if (WAS_PRESSED(0x1001))
         {
-            g_Unknown6d3f50.QueueSound(10, 0);
+            g_SoundPlayer.QueueSound(10, 0);
             this->replaySlot = this->cursor;
             this->frame = 0;
             _strdate(this->replay.date);
@@ -759,7 +759,7 @@ int ResultScreen::HandleReplaySaving()
         }
         if (WAS_PRESSED(0xa))
         {
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
             this->state = 10;
             spr = this->sprites;
             for (k = 0; k < 0x26; k++, spr++)
@@ -789,7 +789,7 @@ int ResultScreen::HandleReplaySaving()
                 }
                 break;
             }
-            g_Unknown6d3f50.QueueSound(0xc, 0);
+            g_SoundPlayer.QueueSound(0xc, 0);
         }
         if (WAS_PRESSED_OR_HELD(0x20))
         {
@@ -806,7 +806,7 @@ int ResultScreen::HandleReplaySaving()
                 }
                 break;
             }
-            g_Unknown6d3f50.QueueSound(0xc, 0);
+            g_SoundPlayer.QueueSound(0xc, 0);
         }
         if (WAS_PRESSED_OR_HELD(0x40))
         {
@@ -827,7 +827,7 @@ int ResultScreen::HandleReplaySaving()
                 }
                 break;
             }
-            g_Unknown6d3f50.QueueSound(0xc, 0);
+            g_SoundPlayer.QueueSound(0xc, 0);
         }
         if (WAS_PRESSED_OR_HELD(0x80))
         {
@@ -844,7 +844,7 @@ int ResultScreen::HandleReplaySaving()
                 }
                 break;
             }
-            g_Unknown6d3f50.QueueSound(0xc, 0);
+            g_SoundPlayer.QueueSound(0xc, 0);
         }
         if (WAS_PRESSED_OR_HELD(0x1001))
         {
@@ -880,7 +880,7 @@ int ResultScreen::HandleReplaySaving()
                     this->charIndex = 0x5f;
                 }
             }
-            g_Unknown6d3f50.QueueSound(10, 0);
+            g_SoundPlayer.QueueSound(10, 0);
         }
         if (WAS_PRESSED_OR_HELD(0xa))
         {
@@ -891,7 +891,7 @@ int ResultScreen::HandleReplaySaving()
                 this->cursor--;
                 this->name[pos2] = ' ';
             }
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
         }
         if (WAS_PRESSED(8))
         {
@@ -1248,14 +1248,14 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                     sprite->pendingInterrupt = 2;
                 }
                 screen->state = 2;
-                g_Unknown6d3f50.QueueSound(0xb, 0);
+                g_SoundPlayer.QueueSound(0xb, 0);
                 break;
             }
         }
         if (WAS_PRESSED(0xa))
         {
             screen->cursor = 6;
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
         }
         break;
     case 2:
@@ -1312,7 +1312,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                     }
                 }
                 screen->cheatProgress = 0;
-                g_Unknown6d3f50.QueueSound(0x1c, 0);
+                g_SoundPlayer.QueueSound(0x1c, 0);
             }
         }
         else
@@ -1345,7 +1345,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
         }
         if (WAS_PRESSED(0xa))
         {
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
             screen->state = 0;
             screen->frame = 1;
             sprite = screen->sprites;
@@ -1392,7 +1392,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
         }
         if (WAS_PRESSED(0xa))
         {
-            g_Unknown6d3f50.QueueSound(0xb, 0);
+            g_SoundPlayer.QueueSound(0xb, 0);
             screen->state = 0;
             screen->frame = 1;
             sprite = screen->sprites;
@@ -1837,7 +1837,7 @@ void MoveCursorVertical(ResultScreen *screen, int count)
         {
             screen->cursor += count;
         }
-        g_Unknown6d3f50.QueueSound(0xc, 0);
+        g_SoundPlayer.QueueSound(0xc, 0);
     }
     if (WAS_PRESSED_OR_HELD(0x20))
     {
@@ -1846,7 +1846,7 @@ void MoveCursorVertical(ResultScreen *screen, int count)
         {
             screen->cursor -= count;
         }
-        g_Unknown6d3f50.QueueSound(0xc, 0);
+        g_SoundPlayer.QueueSound(0xc, 0);
     }
 }
 
@@ -1859,7 +1859,7 @@ int MoveCursorHorizontal(ResultScreen *screen, int count)
         {
             screen->cursor += count;
         }
-        g_Unknown6d3f50.QueueSound(0xc, 0);
+        g_SoundPlayer.QueueSound(0xc, 0);
         return 1;
     }
     if (WAS_PRESSED_OR_HELD(0x80))
@@ -1869,7 +1869,7 @@ int MoveCursorHorizontal(ResultScreen *screen, int count)
         {
             screen->cursor -= count;
         }
-        g_Unknown6d3f50.QueueSound(0xc, 0);
+        g_SoundPlayer.QueueSound(0xc, 0);
         return 1;
     }
     return 0;

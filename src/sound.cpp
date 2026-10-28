@@ -1,4 +1,4 @@
-// The file with Unknown6d3f50, the sound effects and wave music, from
+// The file with SoundPlayer, the sound effects and wave music, from
 // 0x430270.
 
 #include "unsorted.h"
@@ -17,7 +17,7 @@ char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size);
         }                                                                                                              \
     }
 
-int Unknown6d3f50::Initialize(HWND hwnd)
+int SoundPlayer::Initialize(HWND hwnd)
 {
     DSBUFFERDESC params;
     LPVOID audioPtrTwo;
@@ -69,7 +69,7 @@ int Unknown6d3f50::Initialize(HWND hwnd)
     return 0;
 }
 
-int Unknown6d3f50::Release()
+int SoundPlayer::Release()
 {
     int i;
 
@@ -112,7 +112,7 @@ int Unknown6d3f50::Release()
     return 0;
 }
 
-int Unknown6d3f50::LoadSound(int index, char *path)
+int SoundPlayer::LoadSound(int index, char *path)
 {
     char *cursor;
     DSBUFFERDESC params;
@@ -214,7 +214,7 @@ char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size)
     return NULL;
 }
 
-int Unknown6d3f50::LoadBgm(char *path)
+int SoundPlayer::LoadBgm(char *path)
 {
     DWORD dwNotifySize;
     CWaveFile waveFile;
@@ -268,7 +268,7 @@ int Unknown6d3f50::LoadBgm(char *path)
     return 0;
 }
 
-int Unknown6d3f50::LoadBgmLoop(char *path)
+int SoundPlayer::LoadBgmLoop(char *path)
 {
     int *posData;
     CWaveFile *pWaveFile;
@@ -301,7 +301,7 @@ int Unknown6d3f50::LoadBgmLoop(char *path)
     return 0;
 }
 
-int Unknown6d3f50::PlayBgm(BOOL bLoop)
+int SoundPlayer::PlayBgm(BOOL bLoop)
 {
     LPDIRECTSOUNDBUFFER pDSB;
     HRESULT hr;
@@ -332,7 +332,7 @@ int Unknown6d3f50::PlayBgm(BOOL bLoop)
     return 0;
 }
 
-void Unknown6d3f50::StopBgm()
+void SoundPlayer::StopBgm()
 {
     if (this->bgm != NULL)
     {
@@ -356,7 +356,7 @@ void Unknown6d3f50::StopBgm()
     }
 }
 
-int Unknown6d3f50::LoadSounds()
+int SoundPlayer::LoadSounds()
 {
     int i;
 
@@ -389,7 +389,7 @@ int Unknown6d3f50::LoadSounds()
     return 0;
 }
 
-void Unknown6d3f50::QueueSound(int sound, int unused)
+void SoundPlayer::QueueSound(int sound, int unused)
 {
     int i;
     int unk;
@@ -414,7 +414,7 @@ void Unknown6d3f50::QueueSound(int sound, int unused)
     this->unk_408[sound] = unk;
 }
 
-void Unknown6d3f50::PlayQueuedSounds()
+void SoundPlayer::PlayQueuedSounds()
 {
     int i;
     int sound;
@@ -456,17 +456,17 @@ DWORD WINAPI BgmNotificationProc(LPVOID lpParameter)
 
     while (!bDone)
     {
-        dwResult = MsgWaitForMultipleObjects(1, &g_Unknown6d3f50.notifyEvent, FALSE, INFINITE, QS_ALLEVENTS);
-        if (g_Unknown6d3f50.bgm == NULL)
+        dwResult = MsgWaitForMultipleObjects(1, &g_SoundPlayer.notifyEvent, FALSE, INFINITE, QS_ALLEVENTS);
+        if (g_SoundPlayer.bgm == NULL)
         {
             bDone = TRUE;
         }
         switch (dwResult)
         {
         case WAIT_OBJECT_0 + 0:
-            if (g_Unknown6d3f50.bgm != NULL)
+            if (g_SoundPlayer.bgm != NULL)
             {
-                hr = g_Unknown6d3f50.bgm->HandleWaveStreamNotification(bLooped);
+                hr = g_SoundPlayer.bgm->HandleWaveStreamNotification(bLooped);
             }
             break;
         case WAIT_OBJECT_0 + 1:
@@ -483,7 +483,7 @@ DWORD WINAPI BgmNotificationProc(LPVOID lpParameter)
     return 0;
 }
 
-Unknown6d3f50::Unknown6d3f50()
+SoundPlayer::SoundPlayer()
 {
     int i;
 

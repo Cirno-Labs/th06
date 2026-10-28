@@ -74,12 +74,14 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 // in windowed mode.
 void CreateGameWindow(HINSTANCE instance);
 
-// The global at 0x6c6d18 plays wave music through it.
-class Unknown6d3f50
+// The sound effects and the wave music, through DirectSound and the DX8
+// SDK's CSoundManager; the global is at 0x6d3f50 and g_App plays wave
+// music through it.
+class SoundPlayer
 {
 public:
     // Zeroes everything; no sound is loaded.
-    Unknown6d3f50();
+    SoundPlayer();
     // Sets up DirectSound for `hwnd` (stereo, 44.1 kHz, 16 bits) and
     // starts a silent looping buffer and a 250 ms timer. Returns 0 or -1.
     int Initialize(HWND hwnd);
@@ -119,8 +121,8 @@ public:
     IDirectSoundBuffer *soundBuffers[0x80];
     // Each sound effect's own buffer.
     IDirectSoundBuffer *sounds[0x80];
-    // Set from g_SoundInfos[].unk_6 when a sound is queued; -1 at
-    // first.
+    // Set from g_SoundInfos[].unk_6 when a sound is queued (nothing reads
+    // either); -1 at first.
     int unk_408[0x80];
     // A silent buffer, looping from start-up.
     IDirectSoundBuffer *silence;
@@ -141,8 +143,8 @@ public:
     // PlayBgm's `bLoop`.
     BOOL bgmLoop;
 };
-ASSERT_SIZE(Unknown6d3f50, 0x638);
-extern Unknown6d3f50 g_Unknown6d3f50;
+ASSERT_SIZE(SoundPlayer, 0x638);
+extern SoundPlayer g_SoundPlayer;
 
 // The thread LoadBgm starts, with the main window: streams the wave music
 // each time notifyEvent is signalled, until WM_QUIT or the music is gone.

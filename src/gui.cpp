@@ -195,7 +195,7 @@ void Gui::ShowBombName(int sprite, char *name)
     g_SpriteEngine->RenderText(&this->impl->unk_1fe4, 0xf0f0ff, 0, name);
     this->unk_08 = strlen(name) * 15 / 2.0f + 16.0f;
     g_App.redrawFrames = 3;
-    g_Unknown6d3f50.QueueSound(14, 0);
+    g_SoundPlayer.QueueSound(14, 0);
 }
 
 void Gui::Func417bfd(int sprite, char *text)
@@ -205,7 +205,7 @@ void Gui::Func417bfd(int sprite, char *text)
     g_SpriteEngine->StartScript(&this->impl->unk_20f4, 0x707);
     g_SpriteEngine->RenderTextRightAligned(&this->impl->unk_20f4, 0xfff0f0, 0, text);
     this->unk_0c = strlen(text) * 15 / 2.0f + 16.0f;
-    g_Unknown6d3f50.QueueSound(14, 0);
+    g_SoundPlayer.QueueSound(14, 0);
 }
 
 int Gui::LoadResources()
@@ -931,7 +931,7 @@ void Gui::DrawHud()
         clamped = this->bossTimer > 99 ? 99 : this->bossTimer;
         if (clamped < 10 && this->unk_1c != this->bossTimer)
         {
-            g_Unknown6d3f50.QueueSound(0x1d, 0);
+            g_SoundPlayer.QueueSound(0x1d, 0);
         }
         g_AsciiText.AddFormat(&pos, "%.2d", clamped);
         g_AsciiText.color = 0xffffffff;

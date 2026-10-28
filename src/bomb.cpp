@@ -203,7 +203,7 @@ void DimPlayAreaForBomb(Player *player)
     {
         alpha = 176;
     }
-    Func42f8b0(area, alpha << 24);
+    DrawColorRect(area, alpha << 24);
 }
 
 void UpdateReimuBBomb(Player *player)

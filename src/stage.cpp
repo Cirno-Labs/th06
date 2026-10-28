@@ -285,7 +285,7 @@ int Stage::OnDraw2(Stage *stage)
             area[2] = 416.0f;
             area[3] = 464.0f;
             opacity = stage->unk_084 * 0xff / 60;
-            Func42f8b0(area, opacity << 24);
+            DrawColorRect(area, opacity << 24);
         }
     }
     if (stage->unk_080 >= 1)

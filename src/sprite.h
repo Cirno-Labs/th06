@@ -417,6 +417,13 @@ struct VertexTex1DiffuseXyzrwh
     D3DCOLOR diffuse;
     D3DXVECTOR2 uv;
 };
+// A transformed vertex with a color.
+struct VertexDiffuseXyzrwh
+{
+    D3DXVECTOR3 pos;
+    float w;
+    D3DCOLOR diffuse;
+};
 struct VertexTex1Xyzrwh
 {
     D3DXVECTOR3 pos;

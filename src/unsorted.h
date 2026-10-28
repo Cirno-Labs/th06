@@ -508,7 +508,7 @@ void ClearScreen(D3DCOLOR color);
 // Sets the viewport to the whole 640x480 screen, then ClearScreen.
 void ClearViewport(D3DCOLOR color);
 // Fills `rect` (left, top, right and bottom) with `color`.
-void Func42f8b0(float *rect, D3DCOLOR color);
+void DrawColorRect(float *rect, D3DCOLOR color);
 void Func41c28c(int unk);
 
 // Clears the high bit of every key's state, so no key reads as held.

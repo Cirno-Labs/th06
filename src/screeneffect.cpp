@@ -4,6 +4,7 @@
 
 #include "gamemanager.h"
 #include "screeneffect.h"
+#include "sprite.h"
 #include "unsorted.h"
 
 void ClearScreen(D3DCOLOR color)
@@ -48,6 +49,47 @@ int ScreenEffect::OnUpdateFadeIn(ScreenEffect *effect)
     }
     effect->timer.Tick();
     return 1;
+}
+
+void DrawColorRect(float *rect, D3DCOLOR color)
+{
+    VertexDiffuseXyzrwh vertices[4];
+
+    vertices[0].pos = D3DXVECTOR3(rect[0], rect[1], 0.0f);
+    vertices[1].pos = D3DXVECTOR3(rect[2], rect[1], 0.0f);
+    vertices[2].pos = D3DXVECTOR3(rect[0], rect[3], 0.0f);
+    vertices[3].pos = D3DXVECTOR3(rect[2], rect[3], 0.0f);
+    vertices[0].w = vertices[1].w = vertices[2].w = vertices[3].w = 1.0f;
+    vertices[0].diffuse = vertices[1].diffuse = vertices[2].diffuse = vertices[3].diffuse = color;
+    if (!g_Unknown6c6d18.cfg.flags.noColorBlending)
+    {
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+    }
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+    if (!g_Unknown6c6d18.cfg.flags.noDepthTest)
+    {
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+    }
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+    g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+    g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertices, sizeof(VertexDiffuseXyzrwh));
+    g_SpriteEngine->ClearVertexFormat();
+    g_SpriteEngine->ClearSpriteData();
+    g_SpriteEngine->ClearTexture();
+    g_SpriteEngine->ClearColorOp();
+    g_SpriteEngine->ClearBlendMode();
+    g_SpriteEngine->ClearZWrite();
+    if (!g_Unknown6c6d18.cfg.flags.noColorBlending)
+    {
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+    }
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
 }
 
 int ScreenEffect::OnUpdateFadeOut(ScreenEffect *effect)
@@ -128,7 +170,7 @@ int ScreenEffect::OnDrawScreen(ScreenEffect *effect)
     g_Unknown6c6d18.viewport.Width = 640;
     g_Unknown6c6d18.viewport.Height = 480;
     g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
-    Func42f8b0(area, effect->alpha << 24 | effect->color);
+    DrawColorRect(area, effect->alpha << 24 | effect->color);
     return 1;
 }
 
@@ -140,7 +182,7 @@ int ScreenEffect::OnDrawPlayArea(ScreenEffect *effect)
     area[1] = 16.0f;
     area[2] = 416.0f;
     area[3] = 464.0f;
-    Func42f8b0(area, effect->alpha << 24 | effect->color);
+    DrawColorRect(area, effect->alpha << 24 | effect->color);
     return 1;
 }
 

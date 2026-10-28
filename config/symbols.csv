@@ -84,7 +84,7 @@ address,size,name,symbol
 0x0040e5b0,601,Func40e5b0,?Func40e5b0@@YAHPAUEffect@@@Z
 0x0040e810,271,Func40e810,?Func40e810@@YAHPAUEffect@@@Z
 0x0040e920,737,Func40e920,?Func40e920@@YAHPAUEffect@@@Z
-0x0040ec10,416,Func40ec10,
+0x0040ec10,416,Func40ec10,?Func40ec10@@YAHPAUEffect@@@Z
 0x0040edb0,416,Func40edb0,
 0x0040ef50,430,EffectManager::SpawnEffect,?SpawnEffect@EffectManager@@QAEPAUEffect@@HPAUD3DXVECTOR3@@HK@Z
 0x0040f100,230,EffectManager::OnUpdate,?OnUpdate@EffectManager@@SAHPAV1@@Z

@@ -18,7 +18,7 @@ public:
 
     // Whether a `width` by `height` rectangle centred on (x, y) touches
     // the play area.
-    BOOL Func41b5e1(float x, float y, float width, float height);
+    BOOL IsInPlayArea(float x, float y, float width, float height);
     // Inline; `points` is an int and `score` unsigned, so even a
     // constant goes through a temporary.
     void AddScore(int points)

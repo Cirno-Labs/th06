@@ -504,13 +504,13 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         em->Move();
         em->ClampPos();
         if (em->flags.onScreen == 0 &&
-            g_GameManager.Func41b5e1(em->pos.x, em->pos.y, em->sprite.spriteData->width,
+            g_GameManager.IsInPlayArea(em->pos.x, em->pos.y, em->sprite.spriteData->width,
                                      em->sprite.spriteData->height) != 0)
         {
             em->flags.onScreen = 1;
         }
         if (em->flags.onScreen == 1 &&
-            g_GameManager.Func41b5e1(em->pos.x, em->pos.y, em->sprite.spriteData->width,
+            g_GameManager.IsInPlayArea(em->pos.x, em->pos.y, em->sprite.spriteData->width,
                                      em->sprite.spriteData->height) == 0)
         {
             em->flags.active = 0;

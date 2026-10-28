@@ -622,7 +622,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                 }
                 else if (bullet->flags & 0x400)
                 {
-                    if (!g_GameManager.Func41b5e1(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
+                    if (!g_GameManager.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
                     {
                         if (bullet->pos.x < 0.0f || bullet->pos.x >= 384.0f)
                         {
@@ -645,7 +645,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                 }
                 else if (bullet->flags & 0x800)
                 {
-                    if (!g_GameManager.Func41b5e1(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
+                    if (!g_GameManager.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
                     {
                         if (bullet->pos.x < 0.0f || bullet->pos.x >= 384.0f)
                         {
@@ -668,7 +668,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                 }
             }
             bullet->pos += bullet->velocity * g_Unknown6c6d18.frameAdvance;
-            if (!g_GameManager.Func41b5e1(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
+            if (!g_GameManager.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
             {
                 if (!(bullet->flags & 0x40) && !(bullet->flags & 0x100) && !(bullet->flags & 0x80) && !(bullet->flags & 0x400) && !(bullet->flags & 0x800) && bullet->outsideFrames == 0)
                 {

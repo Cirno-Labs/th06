@@ -1034,7 +1034,7 @@ void Player::UpdateBullets(Player *player)
         bullet->sprite.pos.y = bullet->pos[1] += g_Unknown6c6d18.frameAdvance * bullet->velocity.y;
         bullet->sprite.pos.z = bullet->pos.z;
         if (bullet->type != 3 &&
-            !g_GameManager.Func41b5e1(bullet->pos.x, bullet->pos.y, bullet->sprite.spriteData->width,
+            !g_GameManager.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprite.spriteData->width,
                                       bullet->sprite.spriteData->height))
         {
             bullet->state = 0;

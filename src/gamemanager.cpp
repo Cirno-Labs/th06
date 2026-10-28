@@ -12,6 +12,27 @@
 #include "stage.h"
 #include "unsorted.h"
 
+BOOL GameManager::IsInPlayArea(float x, float y, float width, float height)
+{
+    if (x + width / 2.0f < 0.0f)
+    {
+        return FALSE;
+    }
+    if (x - width / 2.0f > g_GameManager.arena[2])
+    {
+        return FALSE;
+    }
+    if (y + height / 2.0f < 0.0f)
+    {
+        return FALSE;
+    }
+    if (y - height / 2.0f > g_GameManager.arena[3])
+    {
+        return FALSE;
+    }
+    return TRUE;
+}
+
 int GameManager::OnUpdate(GameManager *mgr)
 {
     unsigned int step;

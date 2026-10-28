@@ -1771,3 +1771,117 @@ void Func40caf0(Enemy *enemy, EnemyScriptInstr *instr)
     }
     enemy->unk_ebc.Tick();
 }
+
+// g_EnemyScriptFuncs[7]: from two rings of eight points around the enemy
+// (turning opposite ways), fires lasers (instr's second argument 0) or
+// the enemy's shooter outwards, three times.
+void Func40d040(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    BulletShooter shooter;
+    D3DXVECTOR3 at[8];
+    float origin2;
+    float a2;
+    int half3;
+    float step2;
+    int k;
+    int mode3;
+    float radius;
+    int i;
+
+    mode3 = instr->args.i[1];
+    origin2 = g_Rng.GetRandomF32InRange(6.2831855f);
+    for (half3 = 0; half3 < 2; half3++)
+    {
+        if (half3 == 0)
+        {
+            a2 = -3.1415927f + origin2;
+            step2 = 0.7853982f;
+        }
+        else
+        {
+            a2 = -2.7488937f + origin2;
+            step2 = -0.7853982f;
+        }
+        radius = 32.0f;
+        for (i = 0; i < 8; i++)
+        {
+            at[i] = enemy->pos;
+            at[i].x += cosf(a2) * radius;
+            at[i].y += sinf(a2) * radius;
+            a2 += 0.7853982f;
+        }
+        if (half3 == 0)
+        {
+            a2 = -3.1415927f + origin2;
+        }
+        else
+        {
+            a2 = -2.7488937f + origin2;
+        }
+        for (k = 0; k < 3; k++)
+        {
+            if (k < 2)
+            {
+                radius = 112.0f;
+            }
+            else
+            {
+                radius = 480.0f;
+            }
+            for (i = 0; i < 8; i++)
+            {
+                shooter.pos = at[i];
+                shooter.sprite = 1;
+                if (mode3 == 0)
+                {
+                    if (g_GameManager.difficulty <= 1)
+                    {
+                        shooter.color = 2;
+                    }
+                    else
+                    {
+                        shooter.color = 8;
+                    }
+                    shooter.angle1 = a2;
+                    shooter.speed1 = 0.0f;
+                    shooter.exFloats[0] = 0.0f;
+                    if (g_GameManager.difficulty <= 1)
+                    {
+                        shooter.exFloats[1] = radius;
+                        shooter.exFloats[2] = radius;
+                    }
+                    else
+                    {
+                        shooter.exFloats[1] = 440.0f;
+                        shooter.exFloats[2] = 440.0f;
+                    }
+                    if (g_GameManager.difficulty <= 1)
+                    {
+                        shooter.exFloats[3] = 28.0f;
+                    }
+                    else
+                    {
+                        shooter.exFloats[3] = 20.0f;
+                    }
+                    shooter.exInts[0] = k * 16 + 60;
+                    shooter.exInts[1] = 90 - k * 16;
+                    shooter.exInts[2] = 16;
+                    shooter.exInts[3] = 50;
+                    shooter.unk_40 = 16;
+                    shooter.flags = 2;
+                    shooter.aimMode = 1;
+                    g_BulletManager.SpawnLaser(&shooter);
+                }
+                else
+                {
+                    enemy->shooter.pos = shooter.pos;
+                    g_BulletManager.FirePattern(&enemy->shooter);
+                }
+                at[i].x += cosf(a2) * radius;
+                at[i].y += sinf(a2) * radius;
+                a2 += 0.7853982f;
+            }
+            a2 += step2 - 6.2831855f;
+        }
+    }
+}

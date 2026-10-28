@@ -357,6 +357,12 @@ public:
     // Releases the loaded surfaces (not their backups), before the
     // device is reset.
     void ReleaseSurfaces();
+    // Copies the `width` by `height` rectangle at (`left`, `top`) of the
+    // back buffer into texture `texture`.
+    void CopyBackBufferToTexture(int texture, int left, int top, int width, int height);
+    // Does the copy CopyBackBufferToTexture that `pendingCopy` asks for,
+    // if any, and clears it.
+    void DoPendingCopy();
     // RenderTextToTexture into texture `textureIndex`, with sizes of 0 or
     // less taken as 15.
     void RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight, int unk6,
@@ -405,8 +411,14 @@ public:
     // A 256 by 256 quad around the origin, and the vertex buffer's
     // contents.
     VertexTex1Xyz quad[4];
-    int unk_21118;
-    unsigned char unk_2111c[0x10];
+    // A copy of the back buffer into a texture to do after the frame is
+    // drawn: CopyBackBufferToTexture's arguments, the texture -1 when
+    // there is none.
+    int pendingCopyTexture;
+    int pendingCopyLeft;
+    int pendingCopyTop;
+    int pendingCopyWidth;
+    int pendingCopyHeight;
 };
 ASSERT_SIZE(SpriteEngine, 0x2112c);
 extern SpriteEngine *g_SpriteEngine;

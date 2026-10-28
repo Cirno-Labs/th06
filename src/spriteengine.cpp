@@ -42,7 +42,7 @@ SpriteEngine::SpriteEngine()
     this->currentColor = 1;
     this->vertexFormat = 0;
     this->zWriteDisabled = 0;
-    this->unk_21118 = -1;
+    this->pendingCopyTexture = -1;
 }
 
 void SpriteEngine::CreateQuad()

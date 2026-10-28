@@ -60,3 +60,13 @@ void SpriteEngine::ReleaseSurfaces()
         }
     }
 }
+
+void SpriteEngine::DoPendingCopy()
+{
+    if (this->pendingCopyTexture >= 0)
+    {
+        this->CopyBackBufferToTexture(this->pendingCopyTexture, this->pendingCopyLeft, this->pendingCopyTop,
+                                      this->pendingCopyWidth, this->pendingCopyHeight);
+        this->pendingCopyTexture = -1;
+    }
+}

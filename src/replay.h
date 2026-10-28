@@ -23,7 +23,8 @@ int ValidateReplay(void *data, int size);
 // entries.
 struct ReplayStage
 {
-    int unk_00;
+    // The score the stage started with.
+    int score;
     WORD unk_04;
     WORD unk_06;
     BYTE power;

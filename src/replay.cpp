@@ -243,7 +243,7 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
         {
             return -1;
         }
-        earlier->unk_00 = g_GameManager.score;
+        earlier->score = g_GameManager.score;
     }
     if (replay->data->stages[g_GameManager.stage] != NULL)
     {
@@ -304,7 +304,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     g_GameManager.powerItemCombo = cur->unk_0c;
     if (g_GameManager.stage >= 2 && replay->data->stages[g_GameManager.stage - 1] != NULL)
     {
-        g_GameManager.unk_0000 = g_GameManager.score = replay->data->stages[g_GameManager.stage - 1]->unk_00;
+        g_GameManager.unk_0000 = g_GameManager.score = replay->data->stages[g_GameManager.stage - 1]->score;
     }
     return 0;
 }
@@ -356,7 +356,7 @@ void SaveReplay(char *path, char *name)
                 hX.slowdown = (1.0f - slowdown2) * 100.0f;
                 hX.slowdown2 = hX.slowdown + 1.12f;
                 *(float *)&hX.stages[0] = hX.slowdown + 2.34f;
-                replayTmp->data->stages[g_GameManager.stage]->unk_00 = g_GameManager.score;
+                replayTmp->data->stages[g_GameManager.stage]->score = g_GameManager.score;
                 strcpy(hX.name, name);
                 _strdate(hX.date);
                 hX.key = g_Rng.GetRandomU16InRange(128) + 64;

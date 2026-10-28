@@ -186,6 +186,98 @@ int MainMenu::Func4379e4()
     return 0;
 }
 
+int MainMenu::DrawReplayMenu()
+{
+    Sprite *text;
+    int i;
+    int top;
+
+    text = &this->sprites[0x62];
+    g_AsciiText.AddFormat(&text->pos, "No.   Name      Date     Player   Rank");
+    i = this->unk_81e8 - this->unk_81e8 % 15;
+    for (top = i; i < top + 15; i++)
+    {
+        if (i >= this->unk_81ec)
+        {
+            break;
+        }
+        text++;
+        if (!g_Unknown6c6d18.HasFlag0Or8())
+        {
+            if (i == this->unk_81e8)
+            {
+                g_AsciiText.SetColor(0xffff8080);
+            }
+            else
+            {
+                g_AsciiText.SetColor(0xff808080);
+            }
+        }
+        else
+        {
+            g_AsciiText.SetUnk6234(i == this->unk_81e8);
+            if (i == this->unk_81e8)
+            {
+                g_AsciiText.SetColor(0xffffffff);
+            }
+            else
+            {
+                g_AsciiText.SetColor(0xff808080);
+            }
+        }
+        g_AsciiText.AddFormat(&text->pos, "%s %8s  %8s %7s  %7s", this->replayLabels[i], this->replays[i].name,
+                              this->replays[i].date, g_MenuShotTypeNames[this->replays[i].shotType],
+                              g_MenuDifficultyNames[this->replays[i].difficulty]);
+    }
+    if (this->unk_81f0 == 15 && this->unk_10edc != NULL)
+    {
+        g_AsciiText.SetColor(0xffffffff);
+        g_AsciiText.SetUnk6234(0);
+        text = &this->sprites[0x61];
+        g_AsciiText.AddFormat(&text->pos, "       %2.3f%%", this->unk_10edc->slowdown);
+        text = &this->sprites[0x72];
+        g_AsciiText.AddFormat(&text->pos, "Stage  LastScore");
+        for (i = 0; i < 7; i++)
+        {
+            text++;
+            if (!g_Unknown6c6d18.HasFlag0Or8())
+            {
+                if (i == this->cursor)
+                {
+                    g_AsciiText.SetColor(0xffff8080);
+                }
+                else
+                {
+                    g_AsciiText.SetColor(0xff808080);
+                }
+            }
+            else
+            {
+                g_AsciiText.SetUnk6234(i == this->cursor);
+                if (i == this->cursor)
+                {
+                    g_AsciiText.SetColor(0xffffffff);
+                }
+                else
+                {
+                    g_AsciiText.SetColor(0xff808080);
+                }
+            }
+            if (this->unk_10edc->stages[i + 1] != NULL)
+            {
+                g_AsciiText.AddFormat(&text->pos, "%s %9d", g_MenuStageNames[i], this->unk_10edc->stages[i + 1]->score);
+            }
+            else
+            {
+                g_AsciiText.AddFormat(&text->pos, "%s ---------", g_MenuStageNames[i]);
+            }
+        }
+    }
+    g_AsciiText.SetColor(0xffffffff);
+    g_AsciiText.SetUnk6234(0);
+    return 0;
+}
+
 int MainMenu::DrawPracticeScores()
 {
     int i;
@@ -276,7 +368,7 @@ int MainMenu::OnDraw(MainMenu *menu)
     case 13:
     case 14:
     case 15:
-        menu->Func438bc1();
+        menu->DrawReplayMenu();
         break;
     }
     menu->DrawPracticeScores();

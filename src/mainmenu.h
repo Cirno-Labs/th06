@@ -6,6 +6,7 @@
 
 #include "chain.h"
 #include "common.h"
+#include "replay.h"
 #include "sprite.h"
 #include "unsorted.h"
 
@@ -42,14 +43,20 @@ public:
     // stages the shot type reached on this difficulty, fading in over
     // 30 frames, the one at the cursor brighter. Returns 0.
     int DrawPracticeScores();
-    int Func438bc1();
+    // In the replay menu (states 13 to 15), lists the page of 15 replays
+    // around the cursor (unk_81e8), the one at the cursor highlighted, and
+    // in state 15 the picked replay's slowdown and the score each stage
+    // ended with, the stage at `cursor` highlighted. Returns 0.
+    int DrawReplayMenu();
 
     Sprite sprites[0x7a];
     // The selected entry.
     int cursor;
     DWORD unk_81a4[0x10];
     int unk_81e4;
-    DWORD unk_81e8[0x2];
+    // The replay menu's cursor and the number of replays listed.
+    int unk_81e8;
+    int unk_81ec;
     int unk_81f0;
     // Counts the frames in the current state (unk_81f0).
     int unk_81f4;
@@ -73,8 +80,13 @@ public:
     // SetUpTitleScene; DeletedCallback removes the draw element.
     ChainElem *calcChain;
     ChainElem *drawChain;
-    DWORD unk_823c[0x2328];
-    void *unk_10edc;
+    DWORD unk_823c[0x1e00];
+    // The replay menu's entries: the number shown for each, and the
+    // replays' headers.
+    char replayLabels[60][8];
+    ReplayHeader replays[60];
+    // The replay picked in the replay menu.
+    ReplayHeader *unk_10edc;
     DWORD unk_10ee0[0x12];
     int unk_10f28;
     int unk_10f2c;
@@ -82,6 +94,10 @@ public:
 };
 ASSERT_SIZE(MainMenu, 0x10f34);
 extern MainMenu g_MainMenu;
+// The names the replay menu shows for stages, shot types and difficulties.
+extern char *g_MenuStageNames[7];
+extern char *g_MenuShotTypeNames[4];
+extern char *g_MenuDifficultyNames[5];
 
 // Moves the menu's cursor up or down (wrapping among `count` entries)
 // when up or down is pressed or repeats, with sound 12. Returns -1 for

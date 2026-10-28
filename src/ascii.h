@@ -131,6 +131,10 @@ public:
     {
         this->color = color;
     }
+    void SetUnk6234(int unk)
+    {
+        this->unk_6234 = unk;
+    }
     // Queues a string at `pos` in the current color. Up to 256 strings
     // a frame; more are dropped.
     void AddString(D3DXVECTOR3 *pos, char *text);

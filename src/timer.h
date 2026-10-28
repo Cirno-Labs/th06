@@ -28,6 +28,10 @@ struct Timer
         this->subFrame = 0.0f;
         this->previous = -999;
     }
+    void operator+=(int frames)
+    {
+        this->Add(frames);
+    }
     // Advances by one frame through Unknown6c6d18::TickTimer. Inline;
     // defined in unsorted.h.
     void Tick();

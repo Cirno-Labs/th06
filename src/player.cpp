@@ -418,7 +418,7 @@ void Player::Die()
 {
     int i;
 
-    g_EnemyManager.unk_ee5c4 = 0;
+    g_EnemyManager.spellCardCapture = 0;
     g_EffectManager.SpawnEffect(0xc, &this->position, 1, 0xff4040ff);
     g_EffectManager.SpawnEffect(6, &this->position, 16, 0xffffffff);
     this->unk_09e0 = 2;
@@ -795,9 +795,9 @@ int Player::OnUpdate(Player *player)
         player->bomb.timer.Set(0);
         player->bomb.duration = 999;
         player->bomb.update(player);
-        g_EnemyManager.unk_ee5c4 = 0;
+        g_EnemyManager.spellCardCapture = 0;
         g_GameManager.SubSubRank(200);
-        g_EnemyManager.unk_ee5d4 = g_EnemyManager.unk_ee5c8;
+        g_EnemyManager.unk_ee5d4 = g_EnemyManager.spellCardActive;
     }
     if (player->unk_09e0 == 2)
     {

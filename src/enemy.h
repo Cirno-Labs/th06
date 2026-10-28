@@ -18,7 +18,9 @@ struct EnemyFlags
     // How the enemy moves: 1 by angle and speed, 2 towards
     // moveStart + moveDelta over moveDuration.
     unsigned char moveMode : 2;
-    unsigned char unk2 : 3;
+    // How moveMode 2 slows down (0 linear to 4 steepest).
+    unsigned char moveEasing : 3;
+    // Fire instructions only set the shooter up.
     unsigned char unk5 : 1;
     // Mirrors the horizontal movement.
     unsigned char mirrored : 1;
@@ -41,13 +43,16 @@ struct EnemyFlags
     unsigned char clampPos : 1;
     // Turns the main sprite with the enemy's angle.
     unsigned char rotateSprite : 1;
+    // Calls and interrupts don't save the context.
     unsigned char unk18 : 1;
     // OnDraw skips the enemy.
     unsigned char hidden : 1;
     // CheckTimerCallback leaves the spell card and the bullets alone.
     unsigned char unk20 : 1;
     unsigned char unk21 : 3;
-    BYTE unk_e53;
+    // The direction the sprite last turned to: 0 none, 1 left, 2 right,
+    // 0xff not yet.
+    BYTE spriteDirection;
 };
 
 // One enemy (0xec8 bytes).
@@ -64,14 +69,16 @@ struct Enemy
     EnemyScriptState ctx;
     // Contexts saved by calls.
     EnemyScriptState savedCtx[8];
-    DWORD unk_c3c;
+    // How many of savedCtx are in use.
+    int stackDepth;
     DWORD unk_c40;
     // The subroutine the script runs when the enemy dies; negative for
     // none.
     int deathSub;
-    DWORD unk_c48[0x8];
-    // Set by the timeline.
-    int unk_c68;
+    // The subroutines of the script's interrupts.
+    int interrupts[0x8];
+    // The interrupt to run next; negative for none.
+    int pendingInterrupt;
     D3DXVECTOR3 pos;
     // The size of the enemy's hitbox.
     D3DXVECTOR3 hitboxSize;
@@ -81,13 +88,15 @@ struct Enemy
     float angularVelocity;
     float speed;
     float acceleration;
-    D3DXVECTOR3 unk_ca0;
+    // Where shots start, from the position.
+    D3DXVECTOR3 shootOffset;
     // Movement with moveMode 2: from moveStart by moveDelta over
     // moveDuration frames, counted down by moveTimer.
     D3DXVECTOR3 moveDelta;
     D3DXVECTOR3 moveStart;
     Timer moveTimer;
     int moveDuration;
+    // How the shots' speed and counts grow with the rank.
     float unk_cd4;
     float unk_cd8;
     short unk_cdc;
@@ -103,11 +112,13 @@ struct Enemy
     // The sprite's color when spawned.
     D3DCOLOR color;
     BulletShooter shooter;
-    DWORD unk_d54;
-    Timer unk_d58;
+    // Fires `shooter` every shootInterval frames, counted by shootTimer.
+    int shootInterval;
+    Timer shootTimer;
     BulletShooter laserShooter;
-    DWORD unk_db8[0x20];
-    DWORD unk_e38;
+    Laser *lasers[0x20];
+    // Where the next laser goes in lasers.
+    int laserIndex;
     // The effects the enemy's death spawns.
     BYTE deathEffect;
     BYTE unk_e3d;
@@ -120,6 +131,9 @@ struct Enemy
     BYTE unk_e42[0x2];
     Timer unk_e44;
     EnemyFlags flags;
+    // The sprite scripts (+ 0x100) for turning: unk_e54 to none from
+    // none, unk_e56 from left, unk_e58 from right; unk_e5a to left and
+    // unk_e5c to right. Negative unk_e5a: no turning.
     short unk_e54;
     short unk_e56;
     short unk_e58;
@@ -216,9 +230,12 @@ public:
     // Counts the enemies in use, each frame.
     int enemyCount;
     DWORD unk_ee5c0;
-    int unk_ee5c4;
-    int unk_ee5c8;
-    DWORD unk_ee5cc[0x2];
+    // Set while the spell card running can still be captured.
+    int spellCardCapture;
+    // 1 while a spell card runs.
+    int spellCardActive;
+    int spellCardBonus;
+    int spellCardIndex;
     int unk_ee5d4;
     DWORD unk_ee5d8;
     // The next timeline entry, and the timeline's frame count.

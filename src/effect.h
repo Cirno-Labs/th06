@@ -17,7 +17,9 @@ struct Effect
     // For an effect following an enemy: the enemy's position, and its
     // radius and angle around it.
     D3DXVECTOR3 unk_134;
-    DWORD unk_140[0x7];
+    // Where an effect following an enemy is, relative to it.
+    D3DXVECTOR3 unk_140;
+    DWORD unk_14c[0x4];
     float unk_15c;
     float unk_160;
     Timer timer;

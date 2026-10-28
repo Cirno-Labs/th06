@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">74.31% (350)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">16.14% (76)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">74.52% (351)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">15.92% (75)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="555.10" height="6" x="0" y="0" class="named"/>
-<rect width="71.37" height="6" x="555.10" y="0" class="decompiled"/>
-<rect width="120.54" height="6" x="626.46" y="0" class="todo"/>
+<rect width="556.68" height="6" x="0" y="0" class="named"/>
+<rect width="71.37" height="6" x="556.68" y="0" class="decompiled"/>
+<rect width="118.95" height="6" x="628.05" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -116,7 +116,7 @@
 <rect width="12" height="12" x="675" y="0" class="named"><title>0x00407340 EnemyScripts::Load (178 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="0" class="named"><title>0x00407400 EnemyScripts::Release (50 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="0" class="named"><title>0x00407440 EnemyScripts::StartSub (84 bytes)</title></rect>
-<rect width="12" height="12" x="720" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
+<rect width="12" height="12" x="720" y="0" class="named"><title>0x004074a0 EnemyScripts::RunEnemy (13572 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="0" class="named"><title>0x0040abe0 ScriptMoveAngle (291 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="15" class="named"><title>0x0040ad10 ScriptMovePos (358 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="15" class="named"><title>0x0040ae80 ScriptMoveTime (300 bytes)</title></rect>
@@ -543,14 +543,14 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">60.87%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">34.26%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">66.57%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">28.56%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="454.70" height="6" x="0" y="0" class="named"/>
-<rect width="36.35" height="6" x="454.70" y="0" class="decompiled"/>
-<rect width="255.95" height="6" x="491.05" y="0" class="todo"/>
+<rect width="497.31" height="6" x="0" y="0" class="named"/>
+<rect width="36.35" height="6" x="497.31" y="0" class="decompiled"/>
+<rect width="213.34" height="6" x="533.66" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
-<rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
+<rect width="63.34" height="95.67" x="0" y="0" class="named"><title>0x004074a0 EnemyScripts::RunEnemy (13572 bytes)</title></rect>
 <rect width="63.34" height="51.33" x="0" y="98.67" class="todo"><title>0x0043579f Func43579f (7473 bytes)</title></rect>
 <rect width="46.57" height="64.41" x="66.34" y="0" class="todo"><title>0x004149d0 BulletManager::OnUpdate (6928 bytes)</title></rect>
 <rect width="46.57" height="40.22" x="66.34" y="67.41" class="todo"><title>0x00419c99 Func419c99 (4442 bytes)</title></rect>

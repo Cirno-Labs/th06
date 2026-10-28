@@ -48,10 +48,16 @@ struct Catk
     WORD size;
     WORD unk_06;
     BYTE version;
-    BYTE unk_09[0x7];
+    BYTE unk_09[0x3];
+    // The bonus the card gave when last captured.
+    int bonus;
     // The card's number, below 0x40.
     WORD index;
-    BYTE unk_12[0x6];
+    // The sum of the name's characters: a new name resets the counts.
+    BYTE nameChecksum;
+    // The shot types (character * 2 + shot) of the last captures, the
+    // latest first.
+    BYTE history[0x5];
     char name[0x24];
     // The result screen shows "？？？？？" for the name while it is 0.
     WORD unk_3c;

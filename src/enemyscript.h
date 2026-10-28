@@ -7,19 +7,25 @@
 #include "common.h"
 #include "timer.h"
 
+struct Enemy;
+struct EnemyScriptInstr;
+
 // Where one enemy is in its script.
 struct EnemyScriptState
 {
     // The next instruction.
     void *code;
     Timer timer;
-    DWORD unk_10;
+    // Called with the enemy and NULL every frame while it lives, when
+    // set; one of g_EnemyScriptFuncs.
+    void (*func)(Enemy *enemy, EnemyScriptInstr *instr);
     // The script's variables (operands -10001 to -10012): ints, floats,
     // and ints again.
     int intVars[4];
     float floatVars[4];
     int intVars2[4];
-    DWORD unk_44;
+    // What the last comparison found: -1 less, 0 equal, 1 greater.
+    int compareResult;
     // The subroutine running.
     short sub;
     short unk_4a;
@@ -49,6 +55,46 @@ struct EnemyMoveTimeArgs
     int duration;
 };
 
+// Arguments: fires a pattern of bullets. The counts, speeds and angles
+// are operands; the counts and speeds grow with the rank.
+struct EnemyBulletArgs
+{
+    short sprite;
+    short color;
+    int count1;
+    int count2;
+    float speed1;
+    float speed2;
+    float angle1;
+    float angle2;
+    int flags;
+};
+
+// Arguments: spawns an enemy running subroutine `sub` at `pos`
+// (operands).
+struct EnemySpawnArgs
+{
+    int sub;
+    D3DXVECTOR3 pos;
+    short life;
+    short item;
+    int score;
+};
+
+// An instruction's arguments: the named layouts, or plain ints, floats,
+// shorts and bytes.
+union EnemyScriptArgs
+{
+    int i[16];
+    float f[16];
+    short s[32];
+    BYTE b[64];
+    EnemyMoveAngleArgs moveAngle;
+    EnemyMovePosArgs movePos;
+    EnemyMoveTimeArgs moveTime;
+    EnemyBulletArgs bullet;
+};
+
 // One instruction of an enemy script.
 struct EnemyScriptInstr
 {
@@ -57,12 +103,11 @@ struct EnemyScriptInstr
     short opcode;
     // The size of the instruction, arguments included.
     short size;
-    DWORD unk_08;
-    union {
-        EnemyMoveAngleArgs moveAngle;
-        EnemyMovePosArgs movePos;
-        EnemyMoveTimeArgs moveTime;
-    } args;
+    BYTE unk_08;
+    // The difficulties it runs on, a bit each.
+    BYTE difficultyMask;
+    short unk_0a;
+    EnemyScriptArgs args;
 };
 
 // The start of an enemy script file.
@@ -111,8 +156,11 @@ public:
     void Release();
     // Starts subroutine `sub` on `state`. Returns 0.
     int StartSub(EnemyScriptState *state, short sub);
-    // Runs `enemy`'s script for a frame: the interpreter.
-    int Func4074a0(struct Enemy *enemy);
+    // Runs `enemy`'s script for a frame: the instructions due (calls,
+    // returns and interrupts included), then the movement, the timed
+    // shots, the sprite's direction and `func`. Returns -1 when the
+    // script deletes the enemy, else 0.
+    int RunEnemy(Enemy *enemy);
 
     // The file, as loaded.
     EnemyScriptHeader *file;
@@ -122,8 +170,6 @@ public:
     EnemyTimelineEntry *timeline;
 };
 extern EnemyScripts g_EnemyScripts;
-
-struct Enemy;
 
 // Resolves script operand *operand for `enemy`: one of the variables
 // -10001 to -10025 (the context's, the enemy's and player's positions,
@@ -169,3 +215,8 @@ void ScriptAngle(Enemy *enemy, int dst, float *x1, float *y1, float *x2, float *
 extern int g_Unknown487e44;
 extern float g_Unknown487e48;
 extern float g_Unknown487e4c;
+
+// The functions scripts call or set as EnemyScriptState::func.
+extern void (*g_EnemyScriptFuncs[])(Enemy *enemy, EnemyScriptInstr *instr);
+// The bonus of each spell card.
+extern int g_SpellCardBonuses[0x40];

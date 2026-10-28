@@ -784,6 +784,14 @@ public:
         this->bossTimer = seconds;
     }
     // Sets the boss's life bar, as a fraction of its maximum.
+    int GetBossTimer()
+    {
+        return this->bossTimer;
+    }
+    void SetUnk14(int value)
+    {
+        this->unk_14 = value;
+    }
     void SetBossHealth(float health)
     {
         this->bossHealth = health;
@@ -795,7 +803,8 @@ public:
     DWORD unk_08;
     // Set by Func417bfd from the length of its text.
     float unk_0c;
-    DWORD unk_10[0x2];
+    DWORD unk_10;
+    int unk_14;
     // The seconds left of the boss's timer.
     int bossTimer;
     DWORD unk_1c;

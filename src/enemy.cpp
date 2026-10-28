@@ -49,15 +49,15 @@ void EnemyManager::Initialize()
     enemy->flags.unk5 = 0;
     enemy->flags.mirrored = 0;
     enemy->flags.unk11 = 0;
-    enemy->unk_c3c = 0;
+    enemy->stackDepth = 0;
     enemy->life = 1;
     enemy->score = 100;
     enemy->deathEffect = 0;
     enemy->unk_e3d = 0;
     enemy->unk_e3e = 0;
-    enemy->unk_d54 = 0;
-    enemy->unk_d58.Set(0);
-    enemy->unk_ca0 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    enemy->shootInterval = 0;
+    enemy->shootTimer.Set(0);
+    enemy->shootOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     enemy->unk_e5a = -1;
     enemy->unk_e5c = -1;
     enemy->unk_e54 = -1;
@@ -66,10 +66,10 @@ void EnemyManager::Initialize()
     enemy->deathSub = -1;
     enemy->flags.clampPos = 0;
     enemy->effectCount = 0;
-    enemy->unk_c68 = -1;
+    enemy->pendingInterrupt = -1;
     enemy->lifeCallbackLife = -1;
     enemy->timerCallbackTime = -1;
-    enemy->unk_e38 = 0;
+    enemy->laserIndex = 0;
     enemy->hitFlashTimer = 0;
     enemy->flags.rotateSprite = 0;
     enemy->unk_cd4 = -0.5f;
@@ -100,7 +100,7 @@ Enemy *EnemyManager::Spawn(int sub, D3DXVECTOR3 *pos, short life, short unk_e3f,
         }
         enemy->pos = *pos;
         g_EnemyScripts.StartSub(&enemy->ctx, sub);
-        g_EnemyScripts.Func4074a0(enemy);
+        g_EnemyScripts.RunEnemy(enemy);
         enemy->color = enemy->sprite.color;
         enemy->unk_e3f = unk_e3f;
         if (life >= 0)
@@ -294,7 +294,7 @@ void EnemyManager::RunTimeline()
                 }
                 break;
             case 10:
-                this->bosses[((int *)&this->timelinePos->args)[0]]->unk_c68 = ((int *)&this->timelinePos->args)[1];
+                this->bosses[((int *)&this->timelinePos->args)[0]]->pendingInterrupt = ((int *)&this->timelinePos->args)[1];
                 break;
             case 11:
                 g_GameManager.power = this->timelinePos->arg0;
@@ -337,7 +337,7 @@ int Enemy::CheckLifeCallback()
         this->unk_cde = 0;
         this->unk_ce0 = 0;
         this->unk_ce2 = 0;
-        this->unk_c3c = 0;
+        this->stackDepth = 0;
         for (it = g_EnemyManager.enemies, i = 0; i < 0x100; i++, it++)
         {
             if (!it->flags.active)
@@ -385,10 +385,10 @@ int Enemy::CheckTimerCallback()
         this->unk_cf0.Set(0);
         if (!this->flags.unk20)
         {
-            g_EnemyManager.unk_ee5c4 = 0;
-            if (g_EnemyManager.unk_ee5c8 != 0)
+            g_EnemyManager.spellCardCapture = 0;
+            if (g_EnemyManager.spellCardActive != 0)
             {
-                g_EnemyManager.unk_ee5c8++;
+                g_EnemyManager.spellCardActive++;
             }
             g_BulletManager.ClearAll(0);
         }
@@ -415,7 +415,7 @@ int Enemy::CheckTimerCallback()
         this->unk_cde = 0;
         this->unk_ce0 = 0;
         this->unk_ce2 = 0;
-        this->unk_c3c = 0;
+        this->stackDepth = 0;
         return 1;
     }
     else
@@ -525,7 +525,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         {
             em->CheckTimerCallback();
         }
-        if (g_EnemyScripts.Func4074a0(em) == -1)
+        if (g_EnemyScripts.RunEnemy(em) == -1)
         {
             em->flags.active = 0;
             em->Func4121b0();
@@ -562,7 +562,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     hurt = 70;
                 }
                 g_GameManager.score = hurt / 5 * 10 + g_GameManager.score;
-                if (mgr->unk_ee5c8 != 0)
+                if (mgr->spellCardActive != 0)
                 {
                     if (bomb == 0)
                     {
@@ -648,7 +648,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                         }
                         mgr->unk_ee5b8++;
                     }
-                    if (em->flags.unk11 && g_EnemyManager.unk_ee5c8 == 0)
+                    if (em->flags.unk11 && g_EnemyManager.spellCardActive == 0)
                     {
                         g_BulletManager.ClearAllWithBonus(0x3200, 0);
                     }
@@ -666,7 +666,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     em->unk_cde = 0;
                     em->unk_ce0 = 0;
                     em->unk_ce2 = 0;
-                    em->unk_c3c = 0;
+                    em->stackDepth = 0;
                     g_EnemyScripts.StartSub(&em->ctx, em->deathSub);
                     em->deathSub = -1;
                 }
@@ -814,7 +814,7 @@ int EnemyManager::AddedCallback(EnemyManager *mgr)
     }
     mgr->unk_ee5b8 = g_Rng.GetRandomU16InRange(3);
     mgr->unk_ee5ba = g_Rng.GetRandomU16InRange(8);
-    mgr->unk_ee5c8 = 0;
+    mgr->spellCardActive = 0;
     mgr->timelinePos = NULL;
     return 0;
 }

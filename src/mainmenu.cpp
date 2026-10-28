@@ -1,6 +1,10 @@
 // cflags: /Os -/Oi
 // The /Os file from 0x43575d to 0x43a7a6, with the title menu.
 
+#include <direct.h>
+#include <stdio.h>
+#include <string.h>
+
 #include "ascii.h"
 #include "gamemanager.h"
 #include "mainmenu.h"
@@ -183,6 +187,219 @@ int MainMenu::Func4379e4()
     this->unk_8200 = 0x40000000;
     this->unk_820c = 0;
     this->unk_8210 = 60;
+    return 0;
+}
+
+int MainMenu::UpdateReplayMenu()
+{
+    Sprite *text;
+    int i;
+    HANDLE findHandle;
+    int replayCount;
+    ReplayHeader *data;
+    char path[0x40];
+    WIN32_FIND_DATAA fd;
+
+    switch (this->unk_81f0)
+    {
+    case 12:
+        if (this->unk_81f4 == 60)
+        {
+            if (LoadReplayMenuResources(this) != 0)
+            {
+                LogPrintf(&g_Unknown69d998, "セレクト画面の読み込みに失敗\n");
+                g_Unknown6c6d18.scene = 4;
+                return 0;
+            }
+            replayCount = 0;
+            for (i = 0; i < 15; i++)
+            {
+                sprintf(path, "./replay/th6_%.2d.rpy", i + 1);
+                data = (ReplayHeader *)LoadFileData(path, 1);
+                if (data == NULL)
+                {
+                    continue;
+                }
+                if (!ValidateReplay(data, g_FileSize))
+                {
+                    this->replays[replayCount] = *data;
+                    strcpy(this->replayPaths[replayCount], path);
+                    sprintf(this->replayLabels[replayCount], "No.%.2d", i + 1);
+                    replayCount++;
+                }
+                free(data);
+            }
+            _mkdir("./replay");
+            _chdir("./replay");
+            findHandle = FindFirstFileA("th6_ud????.rpy", &fd);
+            if (findHandle != INVALID_HANDLE_VALUE)
+            {
+                for (i = 0; i < 45; i++)
+                {
+                    data = (ReplayHeader *)LoadFileData(fd.cFileName, 1);
+                    if (data == NULL)
+                    {
+                        continue;
+                    }
+                    if (!ValidateReplay(data, g_FileSize))
+                    {
+                        this->replays[replayCount] = *data;
+                        sprintf(this->replayPaths[replayCount], "./replay/%s", fd.cFileName);
+                        sprintf(this->replayLabels[replayCount], "User ");
+                        replayCount++;
+                    }
+                    free(data);
+                    if (!FindNextFileA(findHandle, &fd))
+                    {
+                        break;
+                    }
+                }
+            }
+            FindClose(findHandle);
+            _chdir("../");
+            this->unk_81ec = replayCount;
+            this->unk_81fc = 0;
+            this->unk_8214 = this->unk_8210;
+            this->unk_8210 = 0;
+            this->unk_81f0 = 13;
+            for (text = this->sprites, i = 0; i < 0x7a; i++, text++)
+            {
+                text->pendingInterrupt = 15;
+            }
+            this->cursor = 0;
+            break;
+        }
+        break;
+    case 14:
+        if (this->unk_81f4 == 36)
+        {
+            this->unk_81f0 = 0;
+            this->unk_81f4 = 0;
+        }
+        break;
+    case 13:
+        if (this->unk_81f4 < 40)
+        {
+            break;
+        }
+        if (this->unk_81ec != 0)
+        {
+            MoveMenuCursor(this, this->unk_81ec);
+            this->unk_81e8 = this->cursor;
+            if (WAS_PRESSED(0x1001))
+            {
+                this->unk_81f0 = 15;
+                for (text = &this->sprites[0x61], i = 0; i < 0x19; i++, text++)
+                {
+                    text->pendingInterrupt = 0x11;
+                }
+                text = &this->sprites[this->unk_81e8 + 0x63];
+                text->pendingInterrupt = 0x10;
+                this->unk_81f4 = 0;
+                this->cursor = 0;
+                g_Unknown6d3f50.QueueSound(10, 0);
+                this->unk_10edc = (ReplayHeader *)LoadFileData(this->replayPaths[this->unk_81e8], 1);
+                ValidateReplay(this->unk_10edc, g_FileSize);
+                for (i = 0; i < 7; i++)
+                {
+                    if (this->unk_10edc->stages[i + 1] != NULL)
+                    {
+                        this->unk_10edc->stages[i + 1] =
+                            (ReplayStage *)((int)this->unk_10edc + (int)this->unk_10edc->stages[i + 1]);
+                    }
+                }
+                while (this->replays[this->unk_81e8].stages[this->cursor + 1] == NULL)
+                {
+                    this->cursor++;
+                    if (this->cursor >= 7)
+                    {
+                        return 0;
+                    }
+                }
+            }
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            this->unk_81f0 = 14;
+            this->unk_81f4 = 0;
+            for (i = 0; i < 0x7a; i++)
+            {
+                this->sprites[i].pendingInterrupt = 4;
+            }
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+            this->cursor = 0;
+            break;
+        }
+        break;
+    case 15:
+        if (this->unk_81f4 < 40)
+        {
+            break;
+        }
+        i = MoveMenuCursor(this, 7);
+        if (i < 0)
+        {
+            while (this->replays[this->unk_81e8].stages[this->cursor + 1] == NULL)
+            {
+                this->cursor--;
+                if (this->cursor < 0)
+                {
+                    this->cursor = 6;
+                }
+            }
+        }
+        else if (i > 0)
+        {
+            while (this->replays[this->unk_81e8].stages[this->cursor + 1] == NULL)
+            {
+                this->cursor++;
+                if (this->cursor >= 7)
+                {
+                    this->cursor = 0;
+                }
+            }
+        }
+        if (WAS_PRESSED(0x1001) && &this->unk_10edc[this->cursor].stages[1] != NULL)
+        {
+            g_GameManager.unk_001c = 1;
+            g_Unknown6c6d18.gameSpeed = 1.0f;
+            strcpy(g_GameManager.replayFile, this->replayPaths[this->unk_81e8]);
+            g_GameManager.difficulty = this->unk_10edc->difficulty;
+            g_GameManager.character = this->unk_10edc->shotType / 2;
+            g_GameManager.shotType = this->unk_10edc->shotType % 2;
+            i = 0;
+            while (this->unk_10edc->stages[i + 1] == NULL)
+            {
+                i++;
+            }
+            g_GameManager.lives = this->unk_10edc->stages[i + 1]->lives;
+            g_GameManager.bombs = this->unk_10edc->stages[i + 1]->bombs;
+            MemFree(this->unk_10edc);
+            this->unk_10edc = NULL;
+            g_GameManager.stage = this->cursor;
+            g_Unknown6c6d18.scene = 2;
+            return 1;
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            MemFree(this->unk_10edc);
+            this->unk_10edc = NULL;
+            this->unk_81f0 = 13;
+            this->unk_81f4 = 0;
+            for (i = 0; i < 0x7a; i++)
+            {
+                this->sprites[i].pendingInterrupt = 4;
+            }
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+            this->unk_81f0 = 13;
+            for (text = this->sprites, i = 0; i < 0x7a; i++, text++)
+            {
+                text->pendingInterrupt = 15;
+            }
+            this->cursor = this->unk_81e8;
+        }
+        break;
+    }
     return 0;
 }
 

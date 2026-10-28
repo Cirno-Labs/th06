@@ -60,6 +60,15 @@ public:
     // 2). Returns 1 when leaving with a changed display setting, after
     // setting the scene to 5; else 0.
     int UpdateOptions();
+    // The replay menu's states: 12 loads its resources (after 60 frames)
+    // and lists the replays in "./replay" (the numbered slots, then up
+    // to 45 "th6_ud????.rpy" files) and moves to 13, the list; a confirm
+    // there loads the replay and moves to 15, the choice of its stages,
+    // where a confirm starts it at that stage (scene 2, returns 1); a
+    // cancel goes back from 15 to 13 and from 13 to 14, which returns to
+    // the title (state 0) after 36 frames. Returns 0 otherwise, also when
+    // the resources fail to load (scene 4).
+    int UpdateReplayMenu();
     // In the replay menu (states 13 to 15), lists the page of 15 replays
     // around the cursor (unk_81e8), the one at the cursor highlighted, and
     // in state 15 the picked replay's slowdown and the score each stage
@@ -103,9 +112,9 @@ public:
     // SetUpTitleScene; DeletedCallback removes the draw element.
     ChainElem *calcChain;
     ChainElem *drawChain;
-    DWORD unk_823c[0x1e00];
-    // The replay menu's entries: the number shown for each, and the
-    // replays' headers.
+    // The replay menu's entries: their files' paths, the numbers shown
+    // for them, and the replays' headers.
+    char replayPaths[60][0x200];
     char replayLabels[60][8];
     ReplayHeader replays[60];
     // The replay picked in the replay menu.

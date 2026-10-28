@@ -427,7 +427,7 @@ address,size,name,symbol
 0x004378a2,322,MainMenu::Func4378a2,?Func4378a2@MainMenu@@QAEHXZ
 0x004379e4,349,MainMenu::Func4379e4,?Func4379e4@MainMenu@@QAEHXZ
 0x00437b41,1675,Func437b41,
-0x004381ec,2517,Func4381ec,
+0x004381ec,2517,MainMenu::UpdateReplayMenu,?UpdateReplayMenu@MainMenu@@QAEHXZ
 0x00438bc1,823,MainMenu::DrawReplayMenu,?DrawReplayMenu@MainMenu@@QAEHXZ
 0x00438ef8,575,MainMenu::HighlightOption,?HighlightOption@MainMenu@@QAEXPAVSprite@@HHH@Z
 0x00439137,2094,MainMenu::UpdateOptions,?UpdateOptions@MainMenu@@QAEHXZ
@@ -1027,7 +1027,7 @@ address,size,name,symbol
 0x0045d4a0,232,Func45d4a0,
 0x0045d588,44,_mkdir,__mkdir
 0x0045d5c0,57,_strncmp,_strncmp
-0x0045d5f9,156,Func45d5f9,
+0x0045d5f9,156,_chdir,__chdir
 0x0045d695,34,_rand,_rand
 0x0045d6c0,61,__chkstk,
 0x0045d6fd,34,__amsg_exit,

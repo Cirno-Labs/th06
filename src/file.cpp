@@ -74,3 +74,12 @@ int File::Read(void *buffer, DWORD size, DWORD *read)
     }
     return ReadFile(this->handle, buffer, size, read, NULL);
 }
+
+int File::Write(void *buffer, DWORD size, DWORD *written)
+{
+    if (this->access != GENERIC_WRITE)
+    {
+        return 0;
+    }
+    return WriteFile(this->handle, buffer, size, written, NULL);
+}

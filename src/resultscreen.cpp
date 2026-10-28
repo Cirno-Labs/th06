@@ -1079,6 +1079,40 @@ int ResultScreen::DrawStatistics()
     return 0;
 }
 
+// Parked (row unnamed): the original reserves 0x44 bytes for the inlined
+// constructor's slots, this 0x54. Without the Sprite at 0x39a0 the frames
+// agree, but the constructor needs it; wrapping it in a struct makes
+// both frames bigger.
+int ResultScreen::RegisterChain(int unk)
+{
+    ResultScreen *screen = new ResultScreen;
+
+    DebugPrint2("counat = %d\n", g_GameManager.progressFrames);
+    screen->calcChain = g_Chain.CreateElem((ChainCallback)ResultScreen::OnUpdate);
+    screen->calcChain->addedCallback = (ChainCallback)ResultScreen::AddedCallback;
+    screen->calcChain->deletedCallback = (ChainCallback)ResultScreen::DeletedCallback;
+    screen->calcChain->arg = screen;
+    if (unk != 0)
+    {
+        if (!g_GameManager.unk_1823)
+        {
+            screen->state = 9;
+        }
+        else
+        {
+            screen->state = 0x11;
+        }
+    }
+    if (g_Chain.AddToCalcChain(screen->calcChain, 0xd) != 0)
+    {
+        return -1;
+    }
+    screen->drawChain = g_Chain.CreateElem((ChainCallback)ResultScreen::OnDraw);
+    screen->drawChain->arg = screen;
+    g_Chain.AddToDrawChain(screen->drawChain, 0xc);
+    return 0;
+}
+
 void MoveCursorVertical(ResultScreen *screen, int count)
 {
     if (WAS_PRESSED_OR_HELD(0x10))

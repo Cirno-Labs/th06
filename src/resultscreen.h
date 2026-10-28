@@ -3,8 +3,10 @@
 
 #pragma once
 
+#include <string.h>
 #include <windows.h>
 
+#include "chain.h"
 #include "common.h"
 #include "replay.h"
 #include "sprite.h"
@@ -89,6 +91,13 @@ ASSERT_SIZE(Pscr, 0x14);
 // whose `data` is NULL; the entries after it are sorted.
 struct ListNode
 {
+    ListNode()
+    {
+        this->prev = NULL;
+        this->next = NULL;
+        this->data = NULL;
+    }
+
     ListNode *prev;
     ListNode *next;
     Hscr *data;
@@ -177,10 +186,27 @@ extern char *g_DifficultyNames[5];
 extern float g_DifficultyRatings[5];
 extern float g_SpellCardRatings[5];
 
-// The result screen's scene object (0x56b0 bytes, set up by Func42d773).
+// The result screen's scene object (0x56b0 bytes, set up by
+// RegisterChain).
 class ResultScreen
 {
 public:
+    // Constructs the Sprites and lists, then zeroes the whole screen and
+    // sets the cursor to 1. Inline, but too large to expand.
+    ResultScreen()
+    {
+        memset(this, 0, sizeof(ResultScreen));
+        this->cursor = 1;
+    }
+
+    // Allocates the screen and adds it to the chains (update priority
+    // 0xd, draw 0xc). With `unk` set, it starts in state 9, or 0x11 when
+    // g_GameManager.unk_1823 is set. Returns 0, or -1 if adding fails.
+    static int RegisterChain(int unk);
+    static int OnUpdate(ResultScreen *screen);
+    static int OnDraw(ResultScreen *screen);
+    static int AddedCallback(ResultScreen *screen);
+    static int DeletedCallback(ResultScreen *screen);
     // Frees the entries of the high score list for `difficulty` and
     // `shot` (0 to 4 and 0 to 3).
     void ReleaseScores(int difficulty, int shot);
@@ -240,7 +266,8 @@ public:
     Hscr entry;
     // The "TH6K" chunk SaveScoreDat writes.
     Th6k th6k;
-    DWORD unk_51a8[0x2];
+    ChainElem *calcChain;
+    ChainElem *drawChain;
     // The headers of "./replay/th6_01.rpy" to "th6_15.rpy", where they
     // are valid.
     ReplayHeader replays[0xf];

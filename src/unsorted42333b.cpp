@@ -6,6 +6,7 @@
 
 #include "chain.h"
 #include "musicscreen.h"
+#include "resultscreen.h"
 #include "timer.h"
 #include "unsorted.h"
 
@@ -91,7 +92,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
             case 5:
                 return 5;
             case 6:
-                if (Func42d773(0) != 0)
+                if (ResultScreen::RegisterChain(0) != 0)
                 {
                     return 4;
                 }
@@ -134,7 +135,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
                 goto title;
             case 7:
                 GameManager::RemoveChain();
-                if (Func42d773(1) != 0)
+                if (ResultScreen::RegisterChain(1) != 0)
                 {
                     return 4;
                 }
@@ -202,7 +203,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
                 arg->scene = 0;
                 goto title;
             case 7:
-                if (Func42d773(1) != 0)
+                if (ResultScreen::RegisterChain(1) != 0)
                 {
                     return 4;
                 }

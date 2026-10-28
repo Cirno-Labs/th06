@@ -235,7 +235,7 @@ address,size,name,symbol
 0x00420c10,295,CreateGameWindow,?CreateGameWindow@@YAXPAUHINSTANCE__@@@Z
 0x00420d40,276,WindowProc,?WindowProc@@YGJPAUHWND__@@IIJ@Z
 0x00420e60,1458,InitD3dDevice,?InitD3dDevice@@YAHXZ
-0x00421420,1241,Func421420,?Func421420@@YAXXZ
+0x00421420,1241,SetDefaultRenderStates,?SetDefaultRenderStates@@YAXXZ
 0x00421900,77,CheckSingleInstance,?CheckSingleInstance@@YAHXZ
 0x00421950,126,Unknown69d998::Flush,?Flush@Unknown69d998@@QAEXXZ
 0x004219d0,104,SpriteEngine::ReleaseSurfaces,?ReleaseSurfaces@SpriteEngine@@QAEXXZ

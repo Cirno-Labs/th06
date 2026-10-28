@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.91% (334)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">19.53% (92)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">71.13% (335)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">19.32% (91)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="529.72" height="6" x="0" y="0" class="named"/>
-<rect width="71.37" height="6" x="529.72" y="0" class="decompiled"/>
-<rect width="145.91" height="6" x="601.09" y="0" class="todo"/>
+<rect width="531.31" height="6" x="0" y="0" class="named"/>
+<rect width="71.37" height="6" x="531.31" y="0" class="decompiled"/>
+<rect width="144.32" height="6" x="602.68" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -304,7 +304,7 @@
 <rect width="12" height="12" x="495" y="60" class="named"><title>0x00420c10 CreateGameWindow (295 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="60" class="named"><title>0x00420d40 WindowProc (276 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="60" class="named"><title>0x00420e60 InitD3dDevice (1458 bytes)</title></rect>
-<rect width="12" height="12" x="540" y="60" class="todo"><title>0x00421420 Func421420 (1241 bytes)</title></rect>
+<rect width="12" height="12" x="540" y="60" class="named"><title>0x00421420 SetDefaultRenderStates (1241 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="60" class="named"><title>0x00421900 CheckSingleInstance (77 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="60" class="decompiled"><title>0x00421950 Unknown69d998::Flush (126 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="60" class="named"><title>0x004219d0 SpriteEngine::ReleaseSurfaces (104 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">56.47%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">38.67%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">56.99%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">38.14%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="421.82" height="6" x="0" y="0" class="named"/>
-<rect width="36.35" height="6" x="421.82" y="0" class="decompiled"/>
-<rect width="288.83" height="6" x="458.17" y="0" class="todo"/>
+<rect width="425.72" height="6" x="0" y="0" class="named"/>
+<rect width="36.35" height="6" x="425.72" y="0" class="decompiled"/>
+<rect width="284.93" height="6" x="462.07" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -593,7 +593,7 @@
 <rect width="22.11" height="23.13" x="349.51" y="52.70" class="todo"><title>0x0040caf0 Func40caf0 (1360 bytes)</title></rect>
 <rect width="22.11" height="22.57" x="349.51" y="78.82" class="todo"><title>0x0040c5b0 Func40c5b0 (1331 bytes)</title></rect>
 <rect width="22.11" height="21.76" x="349.51" y="104.40" class="named"><title>0x00416d60 BulletManager::AddedCallback (1289 bytes)</title></rect>
-<rect width="22.11" height="20.84" x="349.51" y="129.16" class="todo"><title>0x00421420 Func421420 (1241 bytes)</title></rect>
+<rect width="22.11" height="20.84" x="349.51" y="129.16" class="named"><title>0x00421420 SetDefaultRenderStates (1241 bytes)</title></rect>
 <rect width="22.06" height="19.72" x="374.61" y="0" class="named"><title>0x00427190 Player::CheckLaserHit (1180 bytes)</title></rect>
 <rect width="22.06" height="19.29" x="374.61" y="22.72" class="todo"><title>0x004190ec Func4190ec (1158 bytes)</title></rect>
 <rect width="22.06" height="19.12" x="374.61" y="45.01" class="named"><title>0x00406160 UpdateReimuBBomb (1149 bytes)</title></rect>

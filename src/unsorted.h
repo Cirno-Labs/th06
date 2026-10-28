@@ -19,8 +19,9 @@ extern HANDLE g_AppMutex;
 int CheckSingleInstance();
 
 // Sets the device's render and texture stage states for drawing
-// sprites; again after the device is reset.
-void Func421420();
+// sprites, as the options allow; again after the device is reset. Makes
+// the SpriteEngine and the stage set their own states again.
+void SetDefaultRenderStates();
 // Creates the Direct3D device for the configuration, falling back from
 // hardware vertex processing to HAL to the reference rasterizer, and
 // from 60 Hz to presenting immediately or from a lockable back buffer

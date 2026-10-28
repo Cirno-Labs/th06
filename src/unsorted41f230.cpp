@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 
+#include "stage.h"
 #include "unsorted.h"
 
 void PresentFrame()
@@ -11,7 +12,7 @@ void PresentFrame()
     {
         g_SpriteEngine->ReleaseSurfaces();
         g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);
-        Func421420();
+        SetDefaultRenderStates();
         g_Unknown6c6d18.unk_198 = 2;
     }
     g_SpriteEngine->DoPendingCopy();
@@ -290,12 +291,116 @@ retry:
             Func41e4d0(&g_Unknown69d998, "D3DFMT_A8R8G8B8 をサポートしていません、減色モードで動作します\n");
         }
     }
-    Func421420();
+    SetDefaultRenderStates();
     ClearViewport(0);
     g_GameWindow.isClosing = 0;
     g_Unknown6c6d18.unk_1a4 = 0;
     g_Unknown6c6d18.gameSpeed = 0.0f;
     return 0;
+}
+
+void SetDefaultRenderStates()
+{
+    float fogDist;
+    float fogDensity;
+
+    if (g_Unknown6c6d18.cfg.flags.noDepthTest == 0)
+    {
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+    }
+    else
+    {
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
+    }
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+    if (g_Unknown6c6d18.cfg.flags.noGouraudShading == 0)
+    {
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
+    }
+    else
+    {
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_FLAT);
+    }
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+    if (g_Unknown6c6d18.cfg.flags.noDepthTest == 0)
+    {
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+    }
+    else
+    {
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+    }
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ALPHAREF, 4);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
+    if (g_Unknown6c6d18.cfg.flags.noFog == 0)
+    {
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
+    }
+    else
+    {
+        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+    }
+    fogDensity = 1.0f;
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGDENSITY, *(DWORD *)&fogDensity);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, 0xffa0a0a0);
+    fogDist = 1000.0f;
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&fogDist);
+    fogDist = 5000.0f;
+    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&fogDist);
+    if (g_Unknown6c6d18.cfg.flags.noColorBlending == 0)
+    {
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+    }
+    else
+    {
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+    }
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+    if (g_Unknown6c6d18.cfg.flags.noVertexBuffer == 0)
+    {
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
+    }
+    else
+    {
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
+    }
+    if (g_Unknown6c6d18.cfg.flags.noColorBlending == 0)
+    {
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+    }
+    else
+    {
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+    }
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+    if (g_Unknown6c6d18.cfg.flags.noVertexBuffer == 0)
+    {
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR);
+    }
+    else
+    {
+        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+    }
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_MIPFILTER, D3DTEXF_NONE);
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ADDRESSW, D3DTADDRESS_CLAMP);
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
+    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
+    if (g_SpriteEngine != NULL)
+    {
+        g_SpriteEngine->ClearBlendMode();
+        g_SpriteEngine->ClearColorOp();
+        g_SpriteEngine->ClearVertexFormat();
+        g_SpriteEngine->ClearTexture();
+    }
+    g_Stage.fogColorChanged = 1;
 }
 
 int CheckSingleInstance()

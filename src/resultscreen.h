@@ -51,6 +51,22 @@ struct Clrd
 };
 ASSERT_SIZE(Clrd, 0x18);
 
+// A practice score chunk of the score file ("PSCR").
+struct Pscr
+{
+    DWORD magic;
+    WORD size;
+    WORD unk_06;
+    BYTE version;
+    BYTE unk_09[0x3];
+    DWORD score;
+    BYTE shot;
+    BYTE difficulty;
+    BYTE stage;
+    BYTE unk_13;
+};
+ASSERT_SIZE(Pscr, 0x14);
+
 // A node of the score file's lists. Each list starts with a head node
 // whose `data` is NULL; the entries after it are sorted.
 struct ListNode
@@ -110,6 +126,10 @@ int LoadSpellCards(void *scoreDat, Catk *catks);
 // copies the score file's "CLRD" chunks over them, by shot, stopping at
 // a shot of 4 or more. Returns 0, or -1 if `clrds` is NULL.
 int LoadClears(void *scoreDat, Clrd *clrds);
+// Fills `pscrs` (by shot, stage and difficulty, 4 by 6 by 4) with fresh
+// chunks, then copies the score file's "PSCR" chunks over them, stopping
+// at one out of range. Returns 0, or -1 if `pscrs` is NULL.
+int LoadPracticeScores(void *scoreDat, Pscr *pscrs);
 // Frees `dat` and its list.
 void ReleaseScoreDat(ScoreDat *dat);
 

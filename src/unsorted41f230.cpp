@@ -515,10 +515,10 @@ retry:
     g_App.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_App.projectionMatrix);
     g_App.d3dDevice->GetViewport(&g_App.viewport);
     g_App.d3dDevice->GetDeviceCaps(&g_App.caps);
-    if (g_App.cfg.flags.unk0 == 0 && (g_App.caps.TextureOpCaps & D3DTEXOPCAPS_ADD) == 0)
+    if (g_App.cfg.flags.emulateColorAdd == 0 && (g_App.caps.TextureOpCaps & D3DTEXOPCAPS_ADD) == 0)
     {
         LogPrintf(&g_Log, "D3DTEXOPCAPS_ADD をサポートしていません、色加算エミュレートモードで動作します\n");
-        g_App.cfg.flags.unk0 = 1;
+        g_App.cfg.flags.emulateColorAdd = 1;
     }
     if (g_App.UsesPresentImmediate() &&
         (g_App.caps.PresentationIntervals & D3DPRESENT_INTERVAL_IMMEDIATE) == 0)

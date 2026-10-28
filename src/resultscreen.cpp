@@ -1133,7 +1133,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
             {
                 sprite->pendingInterrupt = 1;
                 sprite->flags.colorOp = 1;
-                if (!g_App.cfg.flags.unk0)
+                if (!g_App.cfg.flags.emulateColorAdd)
                 {
                     sprite->color = sprite->color & 0xff000000;
                 }
@@ -1147,7 +1147,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
             {
                 if (i == screen->cursor)
                 {
-                    if (!g_App.cfg.flags.unk0)
+                    if (!g_App.cfg.flags.emulateColorAdd)
                     {
                         sprite->color = 0xff505050;
                     }
@@ -1159,7 +1159,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                 }
                 else
                 {
-                    if (!g_App.cfg.flags.unk0)
+                    if (!g_App.cfg.flags.emulateColorAdd)
                     {
                         sprite->color = 0xb0000000;
                     }
@@ -1184,7 +1184,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
         {
             if (i == screen->cursor)
             {
-                if (!g_App.cfg.flags.unk0)
+                if (!g_App.cfg.flags.emulateColorAdd)
                 {
                     sprite->color = 0xff505050;
                 }
@@ -1196,7 +1196,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
             }
             else
             {
-                if (!g_App.cfg.flags.unk0)
+                if (!g_App.cfg.flags.emulateColorAdd)
                 {
                     sprite->color = 0xb0000000;
                 }

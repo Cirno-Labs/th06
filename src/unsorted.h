@@ -188,8 +188,11 @@ extern ControllerMapping g_ControllerMapping;
 // it set.
 struct GameConfigFlags
 {
-    // Set whenever the configuration is loaded or reset.
-    unsigned int unk0 : 1;
+    // Color add emulation ("色加算エミュレートモード"): set whenever the
+    // configuration is loaded or reset, and when the device lacks
+    // D3DTEXOPCAPS_ADD. Picks the colors of the bullets' effects and of
+    // other sprites.
+    unsigned int emulateColorAdd : 1;
     // "頂点バッファの使用を抑制します"
     unsigned int noVertexBuffer : 1;
     // "16Bit のテクスチャの使用を強制します"
@@ -280,11 +283,11 @@ public:
     {
         return this->cfg.flags.clearBackBuffer | this->cfg.flags.noFrameItems;
     }
-    // Whether option bit 0 or 8 (noColorBlending) is set. Inline; the
-    // operands are evaluated right to left.
+    // Whether option bit 0 (emulateColorAdd) or 8 (noColorBlending) is
+    // set. Inline; the operands are evaluated right to left.
     int HasFlag0Or8()
     {
-        return this->cfg.flags.noColorBlending | this->cfg.flags.unk0;
+        return this->cfg.flags.noColorBlending | this->cfg.flags.emulateColorAdd;
     }
 
     // Loads the configuration from `path`, resetting it to the defaults

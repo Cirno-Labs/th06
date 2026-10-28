@@ -282,7 +282,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             {
                 if (i != menu->cursor)
                 {
-                    if (!g_App.cfg.flags.unk0)
+                    if (!g_App.cfg.flags.emulateColorAdd)
                     {
                         text3->color = 0x60000000;
                     }
@@ -295,7 +295,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 }
                 else
                 {
-                    if (!g_App.cfg.flags.unk0)
+                    if (!g_App.cfg.flags.emulateColorAdd)
                     {
                         text3->color = 0xff000000;
                     }
@@ -316,7 +316,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             }
             for (i = 4; i < 5; i++, text3++)
             {
-                if (!g_App.cfg.flags.unk0)
+                if (!g_App.cfg.flags.emulateColorAdd)
                 {
                     text3->color = 0xff000000;
                 }
@@ -554,7 +554,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             text3->flags.shown = 1;
             if (i != menu->cursor)
             {
-                if (!g_App.cfg.flags.unk0)
+                if (!g_App.cfg.flags.emulateColorAdd)
                 {
                     text3->color = 0xa0000000;
                 }
@@ -566,7 +566,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             }
             else
             {
-                if (!g_App.cfg.flags.unk0)
+                if (!g_App.cfg.flags.emulateColorAdd)
                 {
                     text3->color = 0xff202020;
                 }
@@ -959,7 +959,7 @@ int MainMenu::StartTitle()
     {
         this->sprites[i].pendingInterrupt = 1;
         this->sprites[i].flags.colorOp = 1;
-        if (!g_App.cfg.flags.unk0)
+        if (!g_App.cfg.flags.emulateColorAdd)
         {
             this->sprites[i].color = 0xff000000;
         }
@@ -991,7 +991,7 @@ int MainMenu::WaitForKey()
     {
         this->sprites[i].pendingInterrupt = 2;
     }
-    if (!g_App.cfg.flags.unk0)
+    if (!g_App.cfg.flags.emulateColorAdd)
     {
         this->sprites[this->cursor].color = 0xffff0000;
     }
@@ -1513,7 +1513,7 @@ void MainMenu::HighlightOption(Sprite *vm, int row, int value, int current)
     }
     if (row != this->cursor)
     {
-        if (!g_App.cfg.flags.unk0)
+        if (!g_App.cfg.flags.emulateColorAdd)
         {
             vm->color = vm->color & 0xffffff | 0x80000000;
         }
@@ -1525,7 +1525,7 @@ void MainMenu::HighlightOption(Sprite *vm, int row, int value, int current)
     }
     else
     {
-        if (!g_App.cfg.flags.unk0)
+        if (!g_App.cfg.flags.emulateColorAdd)
         {
             vm->color = vm->color & 0xffffff | 0xff000000;
         }
@@ -1954,7 +1954,7 @@ int LoadSelectResources(MainMenu *menu)
         g_SpriteEngine->StartScriptAtOrigin(vm, i);
         vm->flags.shown = 0;
         vm->flags.colorOp = 1;
-        if (!g_App.cfg.flags.unk0)
+        if (!g_App.cfg.flags.emulateColorAdd)
         {
             vm->color = 0xff000000;
         }
@@ -1991,7 +1991,7 @@ int LoadReplayMenuResources(MainMenu *menu)
         g_SpriteEngine->StartScriptAtOrigin(vm, i);
         vm->flags.shown = 0;
         vm->flags.colorOp = 1;
-        if (!g_App.cfg.flags.unk0)
+        if (!g_App.cfg.flags.emulateColorAdd)
         {
             vm->color = 0xff000000;
         }
@@ -2065,7 +2065,7 @@ int MainMenu::AddedCallback(MainMenu *menu)
         menu->cursor = 2;
     }
     g_GameManager.isInPractice = 0;
-    if (!g_App.cfg.flags.unk0)
+    if (!g_App.cfg.flags.emulateColorAdd)
     {
         menu->unselectedColor = 0x80004000;
         menu->selectedColor = 0xff008000;

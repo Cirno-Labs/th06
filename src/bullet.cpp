@@ -111,7 +111,7 @@ int BulletManager::RegisterChain(char *anmPath)
 {
     BulletManager *mgr = &g_BulletManager;
 
-    if (!g_App.cfg.flags.unk0)
+    if (!g_App.cfg.flags.emulateColorAdd)
     {
         g_EffectColors = g_EffectColorsFull;
     }

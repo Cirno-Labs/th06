@@ -411,7 +411,7 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
             g_App.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
         }
     }
-    if (!g_App.cfg.flags.unk0 && !g_App.cfg.flags.noColorBlending &&
+    if (!g_App.cfg.flags.emulateColorAdd && !g_App.cfg.flags.noColorBlending &&
         this->colorOp != vm->flags.colorOp)
     {
         this->colorOp = vm->flags.colorOp;

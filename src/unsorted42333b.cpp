@@ -639,7 +639,7 @@ int App::LoadConfig(char *path)
     GameConfig *file;
 
     memset(&g_App.cfg, 0, sizeof(GameConfig));
-    g_App.cfg.flags.unk0 = 1;
+    g_App.cfg.flags.emulateColorAdd = 1;
     file = (GameConfig *)LoadFileData(path, 1);
     if (file == NULL)
     {
@@ -657,7 +657,7 @@ int App::LoadConfig(char *path)
         {
             SET_DEFAULT_CONFIG();
             memset(&g_App.cfg.flags, 0, sizeof(GameConfigFlags));
-            g_App.cfg.flags.unk0 = 1;
+            g_App.cfg.flags.emulateColorAdd = 1;
             LogPrintf(&g_Log, "コンフィグデータが破壊されていたので再初期化しました\n");
         }
         g_ControllerMapping = g_App.cfg.controllerMapping;

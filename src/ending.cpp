@@ -1,5 +1,10 @@
 // The ending's file, 0x40f4d0 to 0x410e2c.
 
+// The original was built with an inline depth of 3: RegisterChain
+// reserves no slots for the inlines three levels down (the Sprites'
+// Timers in its inline constructor). It has to come before the headers.
+#pragma inline_depth(3)
+
 #include <stdlib.h>
 #include <string.h>
 

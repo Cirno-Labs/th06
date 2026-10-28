@@ -97,7 +97,7 @@ address,size,name,symbol
 0x0040f550,596,Ending::DrawFade,?DrawFade@Ending@@QAEXXZ
 0x0040f7c0,3619,Ending::RunScript,?RunScript@Ending@@QAEHXZ
 0x004106d0,221,Ending::Load,?Load@Ending@@QAEHPAD@Z
-0x004107b0,245,Func4107b0,
+0x004107b0,245,Ending::RegisterChain,?RegisterChain@Ending@@SAHXZ
 0x004108b0,271,Ending::Ending,??0Ending@@QAE@XZ
 0x004109c0,170,Ending::OnUpdate,?OnUpdate@Ending@@SAHPAV1@@Z
 0x00410a70,150,Ending::OnDraw,?OnDraw@Ending@@SAHPAV1@@Z

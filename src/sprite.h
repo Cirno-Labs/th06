@@ -330,7 +330,12 @@ public:
     // The ANM files loaded into each slot, and their first sprite numbers.
     AnmFile *anmFiles[0x80];
     int anmFileSpriteOffsets[0x80];
-    unsigned char unk_20d34[0x380];
+    // Images loaded by LoadSurface, as render targets (or image
+    // surfaces) to copy to the back buffer from, with system memory
+    // copies to recreate them from, and the images' sizes.
+    IDirect3DSurface8 *surfaces[0x20];
+    IDirect3DSurface8 *surfacesBackup[0x20];
+    D3DXIMAGE_INFO surfaceInfos[0x20];
     // The texture factor last set: the sprites' color.
     D3DCOLOR currentColor;
     // The texture last set on the device (IDirect3DDevice8::SetTexture).

@@ -78,6 +78,44 @@ done:
     return dat;
 }
 
+DWORD LoadHighScores(void *scoreDat, ListNode *list, int difficulty, int shot)
+{
+    Hscr *chunk;
+    int left;
+    ScoreDat *dat1 = (ScoreDat *)scoreDat;
+
+    if (list == NULL)
+    {
+        FreeListNodes(dat1->scores);
+        dat1->scores->next = NULL;
+        dat1->scores->data = NULL;
+        dat1->scores->prev = NULL;
+    }
+    left = dat1->fileSize;
+    chunk = (Hscr *)((BYTE *)dat1 + dat1->dataOffset);
+    left -= dat1->dataOffset;
+    while (left > 0)
+    {
+        if (chunk->magic == 0x52435348 && chunk->version == 0x10 && chunk->difficulty == difficulty &&
+            chunk->shot == shot)
+        {
+            if (list != NULL)
+            {
+                InsertScore(list, chunk);
+            }
+            else
+            {
+                InsertScore(dat1->scores, chunk);
+            }
+        }
+        left -= chunk->size;
+        chunk = (Hscr *)((BYTE *)chunk + chunk->size);
+    }
+    return dat1->scores->next != NULL
+               ? (dat1->scores->next->data->score > 1000000 ? dat1->scores->next->data->score : 1000000)
+               : 1000000;
+}
+
 int InsertScore(ListNode *head, Hscr *entry)
 {
     int index = 0;

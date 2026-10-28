@@ -16,6 +16,9 @@ struct Hscr
     BYTE version;
     BYTE unk_09[0x3];
     DWORD score;
+    // The difficulty (0 to 4) and shot (0 to 3) of its list.
+    BYTE difficulty;
+    BYTE shot;
 };
 
 // A node of the score file's lists. Each list starts with a head node
@@ -65,6 +68,10 @@ ASSERT_SIZE(ScoreDat, 0x14);
 // it is missing, too short, fails its checksum or has no "TH6K" chunk;
 // sets up its list.
 ScoreDat *LoadScoreDat(char *path);
+// Inserts the score file's high scores for `difficulty` and `shot` into
+// `list`, or, if it is NULL, into the file's own list after emptying it.
+// Returns the best score in the file's list, at least 1000000.
+DWORD LoadHighScores(void *scoreDat, ListNode *list, int difficulty, int shot);
 // Frees `dat` and its list.
 void ReleaseScoreDat(ScoreDat *dat);
 

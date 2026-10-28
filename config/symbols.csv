@@ -343,7 +343,7 @@ address,size,name,symbol
 0x0042aab0,123,ReplayManager::EndStage,?EndStage@ReplayManager@@SAXXZ
 0x0042ab30,1449,SaveReplay,?SaveReplay@@YAXPAD0@Z
 0x0042b0d9,423,LoadScoreDat,?LoadScoreDat@@YAPAUScoreDat@@PAD@Z
-0x0042b280,294,Func42b280,
+0x0042b280,294,LoadHighScores,?LoadHighScores@@YAKPAXPAUListNode@@HH@Z
 0x0042b3a6,145,InsertScore,?InsertScore@@YAHPAUListNode@@PAUHscr@@@Z
 0x0042b437,47,FreeListNodes,?FreeListNodes@@YAXPAUListNode@@@Z
 0x0042b466,156,Func42b466,

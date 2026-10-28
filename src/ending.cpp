@@ -496,3 +496,20 @@ int Ending::AddedCallback(Ending *ending)
     }
     return 0;
 }
+
+int Ending::DeletedCallback(Ending *ending)
+{
+    g_SpriteEngine->ReleaseAnm(0x2c);
+    g_SpriteEngine->ReleaseAnm(0x2d);
+    g_SpriteEngine->ReleaseAnm(0x2e);
+    g_Unknown6c6d18.scene = 7;
+    g_SpriteEngine->ReleaseSurface(0);
+    MemFree(ending->file);
+    g_Chain.Remove(ending->drawChain);
+    ending->drawChain = NULL;
+    delete ending;
+    ending = NULL;
+    g_Unknown6c6d18.unk_19c = 0;
+    g_Unknown6c6d18.ReleaseArchive(5);
+    return 0;
+}

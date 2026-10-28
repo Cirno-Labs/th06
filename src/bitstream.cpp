@@ -183,3 +183,16 @@ int FileBitStream::Seek(DWORD offset)
     this->checksum = 0;
     return 1;
 }
+
+int FileBitStream::AlignToByte()
+{
+    if (this->handle == NULL)
+    {
+        return 0;
+    }
+    while (this->mask != 0x80)
+    {
+        this->ReadBit();
+    }
+    return 1;
+}

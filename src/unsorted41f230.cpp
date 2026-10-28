@@ -64,6 +64,54 @@ void CreateGameWindow(HINSTANCE instance)
     g_Unknown6c6d18.hwnd = g_GameWindow.hwnd;
 }
 
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    switch (msg)
+    {
+    case MM_MOM_DONE:
+        if (g_Unknown6c6d18.midi != NULL)
+        {
+            g_Unknown6c6d18.midi->ReleaseHeader((LPMIDIHDR)lParam);
+        }
+        break;
+    case WM_ACTIVATEAPP:
+        g_GameWindow.isAppActive = wParam;
+        if (g_GameWindow.isAppActive != 0)
+        {
+            g_GameWindow.isAppInactive = 0;
+        }
+        else
+        {
+            g_GameWindow.isAppInactive = 1;
+        }
+        break;
+    case WM_SETCURSOR:
+        if (g_Unknown6c6d18.cfg.windowed == 0)
+        {
+            if (g_GameWindow.isAppInactive != 0)
+            {
+                SetCursor(LoadCursorA(NULL, IDC_ARROW));
+                ShowCursor(TRUE);
+            }
+            else
+            {
+                ShowCursor(FALSE);
+                SetCursor(NULL);
+            }
+        }
+        else
+        {
+            SetCursor(LoadCursorA(NULL, IDC_ARROW));
+            ShowCursor(TRUE);
+        }
+        return 1;
+    case WM_CLOSE:
+        g_GameWindow.isClosing = 1;
+        return 1;
+    }
+    return DefWindowProcA(hwnd, msg, wParam, lParam);
+}
+
 int CheckSingleInstance()
 {
     g_AppMutex = CreateMutexA(NULL, TRUE, "Touhou Koumakyou App");

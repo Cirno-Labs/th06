@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.49% (332)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">19.96% (94)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.70% (333)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">19.75% (93)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="526.55" height="6" x="0" y="0" class="named"/>
-<rect width="71.37" height="6" x="526.55" y="0" class="decompiled"/>
-<rect width="149.08" height="6" x="597.92" y="0" class="todo"/>
+<rect width="528.13" height="6" x="0" y="0" class="named"/>
+<rect width="71.37" height="6" x="528.13" y="0" class="decompiled"/>
+<rect width="147.50" height="6" x="599.50" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -302,7 +302,7 @@
 <rect width="12" height="12" x="465" y="60" class="named"><title>0x00420b50 PresentFrame (118 bytes)</title></rect>
 <rect width="12" height="12" x="480" y="60" class="named"><title>0x00420bd0 CreateD3d (53 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="60" class="named"><title>0x00420c10 CreateGameWindow (295 bytes)</title></rect>
-<rect width="12" height="12" x="510" y="60" class="todo"><title>0x00420d40 WindowProc (276 bytes)</title></rect>
+<rect width="12" height="12" x="510" y="60" class="named"><title>0x00420d40 WindowProc (276 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="60" class="todo"><title>0x00420e60 Func420e60 (1458 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="60" class="todo"><title>0x00421420 Func421420 (1241 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="60" class="named"><title>0x00421900 CheckSingleInstance (77 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">55.74%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">39.39%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">55.86%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">39.28%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="416.38" height="6" x="0" y="0" class="named"/>
-<rect width="36.35" height="6" x="416.38" y="0" class="decompiled"/>
-<rect width="294.28" height="6" x="452.72" y="0" class="todo"/>
+<rect width="417.24" height="6" x="0" y="0" class="named"/>
+<rect width="36.35" height="6" x="417.24" y="0" class="decompiled"/>
+<rect width="293.41" height="6" x="453.59" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -749,7 +749,7 @@
 <rect width="8.47" height="8.65" x="620.06" y="60.95" class="named"><title>0x00401530 AsciiText::AddString (277 bytes)</title></rect>
 <rect width="8.47" height="8.61" x="620.06" y="72.59" class="todo"><title>0x0040daa0 Func40daa0 (276 bytes)</title></rect>
 <rect width="8.47" height="8.61" x="620.06" y="84.20" class="todo"><title>0x0040e1b0 Func40e1b0 (276 bytes)</title></rect>
-<rect width="8.47" height="8.61" x="620.06" y="95.81" class="todo"><title>0x00420d40 WindowProc (276 bytes)</title></rect>
+<rect width="8.47" height="8.61" x="620.06" y="95.81" class="named"><title>0x00420d40 WindowProc (276 bytes)</title></rect>
 <rect width="8.47" height="8.44" x="620.06" y="107.41" class="named"><title>0x004065e0 DrawReimuBBomb (272 bytes)</title></rect>
 <rect width="8.47" height="8.40" x="620.06" y="118.85" class="todo"><title>0x0040e810 Func40e810 (271 bytes)</title></rect>
 <rect width="8.47" height="8.40" x="620.06" y="130.25" class="todo"><title>0x004108b0 Func4108b0 (271 bytes)</title></rect>

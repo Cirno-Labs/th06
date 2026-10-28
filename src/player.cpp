@@ -1164,7 +1164,7 @@ void Player::DrawBullets(Player *player)
         {
             bullet->sprite.rotationZ = 1.5707964f - AddNormalizeAngle(bullet->angle, 3.1415927f);
         }
-        g_SpriteEngine->Func433590(&bullet->sprite);
+        g_SpriteEngine->Draw3DRounded(&bullet->sprite);
     }
 }
 
@@ -1184,7 +1184,7 @@ void Player::DrawHitBullets(Player *player)
             bullet->sprite.rotationZ = 1.5707964f - AddNormalizeAngle(bullet->angle, 3.1415927f);
         }
         bullet->sprite.pos.z = 0.4f;
-        g_SpriteEngine->Func433590(&bullet->sprite);
+        g_SpriteEngine->Draw3DRounded(&bullet->sprite);
     }
 }
 

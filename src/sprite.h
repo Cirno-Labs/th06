@@ -291,7 +291,10 @@ public:
     int Draw3D(Sprite *vm);
     // Draw without snapping the corners to pixel centers.
     int DrawNoRound(Sprite *vm);
-    int Func433590(Sprite *sprite);
+    // Like Draw3D for an unrotated sprite, with its position rounded to
+    // pixel centers; Draw3D draws rotated ones. Returns 0, or -1 when
+    // not shown.
+    int Draw3DRounded(Sprite *vm);
     // Frees the ANM file loaded into `slot` and clears its scripts.
     void ReleaseAnm(int slot);
     // Releases one of the loaded surfaces.

@@ -114,7 +114,7 @@ public:
     }
     // Draws the active popups digit by digit with unk_0110, inside the
     // viewport given by g_GameManager.arena, through
-    // SpriteEngine::Func433590.
+    // SpriteEngine::Draw3DRounded.
     void DrawPopups();
     // Like DrawPopups, but draws the minus sign through
     // SpriteEngine::Draw.

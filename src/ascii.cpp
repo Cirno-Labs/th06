@@ -264,13 +264,13 @@ void AsciiText::DrawPopups()
                 // The minus sign, stretched.
                 this->unk_0110.matrix._11 = 0.1875f;
                 this->unk_0110.matrix._22 = 0.03125f;
-                g_SpriteEngine->Func433590(&this->unk_0110);
+                g_SpriteEngine->Draw3DRounded(&this->unk_0110);
                 this->unk_0110.matrix._11 = 0.03125f;
                 this->unk_0110.matrix._22 = 0.03125f;
             }
             else
             {
-                g_SpriteEngine->Func433590(&this->unk_0110);
+                g_SpriteEngine->Draw3DRounded(&this->unk_0110);
             }
             this->unk_0110.pos.x += 8.0f;
             digitPtr--;
@@ -315,7 +315,7 @@ void AsciiText::DrawPopups2()
             }
             else
             {
-                g_SpriteEngine->Func433590(&this->unk_0110);
+                g_SpriteEngine->Draw3DRounded(&this->unk_0110);
             }
             this->unk_0110.pos.x += 8.0f;
             digitPtr--;

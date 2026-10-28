@@ -408,7 +408,7 @@ address,size,name,symbol
 0x00432cc0,727,SpriteEngine::DrawRotated,?DrawRotated@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00432fa0,431,SpriteEngine::DrawNoRound,?DrawNoRound@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00433150,1086,SpriteEngine::Draw3D,?Draw3D@SpriteEngine@@QAEHPAVSprite@@@Z
-0x00433590,975,SpriteEngine::Func433590,?Func433590@SpriteEngine@@QAEHPAVSprite@@@Z
+0x00433590,975,SpriteEngine::Draw3DRounded,?Draw3DRounded@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00433960,4355,SpriteEngine::Step,?Step@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00434af0,97,Func434af0,
 0x00434b60,219,SpriteEngine::RenderText,?RenderText@SpriteEngine@@QAAXPAVSprite@@KKPADZZ

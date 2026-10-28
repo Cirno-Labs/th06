@@ -651,7 +651,7 @@ void DrawBullet(Bullet *bullet)
     {
         sprite->rotationZ = 1.5707964f - bullet->angle;
     }
-    g_SpriteEngine->Func433590(sprite);
+    g_SpriteEngine->Draw3DRounded(sprite);
 }
 
 void Func416c50(Bullet *bullet)

@@ -164,3 +164,22 @@ int FileBitStream::ReadByte()
     }
     return this->File::ReadByte();
 }
+
+int FileBitStream::Seek(DWORD offset)
+{
+    if (offset >= this->size)
+    {
+        return 0;
+    }
+    if (!this->AlignToByte())
+    {
+        return 0;
+    }
+    if (!this->File::Seek(offset, FILE_BEGIN))
+    {
+        return 0;
+    }
+    this->position = offset;
+    this->checksum = 0;
+    return 1;
+}

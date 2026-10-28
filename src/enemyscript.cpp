@@ -1885,3 +1885,36 @@ void Func40d040(Enemy *enemy, EnemyScriptInstr *instr)
         }
     }
 }
+
+// g_EnemyScriptFuncs[8]: fires one bullet in a random direction from
+// every large bullet, and stores how many in intVars[3].
+void Func40d400(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int count = 0;
+    Bullet *bullet = g_BulletManager.bullets;
+    BulletShooter shooter;
+    int i;
+
+    for (i = 0; i < 0x280; i++, bullet++)
+    {
+        if (bullet->state == 0 || bullet->state == 5)
+        {
+            continue;
+        }
+        if (bullet->sprites.sprite0.spriteData != NULL && bullet->sprites.sprite0.spriteData->height >= 30.0f)
+        {
+            shooter.pos = bullet->pos;
+            shooter.sprite = 3;
+            shooter.color = 1;
+            shooter.angle1 = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+            shooter.speed1 = 0.0f;
+            shooter.count1 = 1;
+            shooter.count2 = 1;
+            shooter.flags = 8;
+            shooter.aimMode = 1;
+            g_BulletManager.FirePattern(&shooter);
+            count++;
+        }
+    }
+    enemy->ctx.intVars[3] = count;
+}

@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">73.04% (344)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">17.41% (82)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">73.25% (345)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">17.20% (81)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="545.58" height="6" x="0" y="0" class="named"/>
-<rect width="71.37" height="6" x="545.58" y="0" class="decompiled"/>
-<rect width="130.05" height="6" x="616.95" y="0" class="todo"/>
+<rect width="547.17" height="6" x="0" y="0" class="named"/>
+<rect width="71.37" height="6" x="547.17" y="0" class="decompiled"/>
+<rect width="128.46" height="6" x="618.54" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -164,7 +164,7 @@
 <rect width="12" height="12" x="645" y="15" class="named"><title>0x0040f4a0 EffectManager::RemoveChain (35 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="15" class="named"><title>0x0040f4d0 Ending::ReadInt (115 bytes)</title></rect>
 <rect width="12" height="12" x="675" y="15" class="named"><title>0x0040f550 Ending::DrawFade (596 bytes)</title></rect>
-<rect width="12" height="12" x="690" y="15" class="todo"><title>0x0040f7c0 Ending::RunScript (3619 bytes)</title></rect>
+<rect width="12" height="12" x="690" y="15" class="named"><title>0x0040f7c0 Ending::RunScript (3619 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="15" class="named"><title>0x004106d0 Ending::Load (221 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="15" class="todo"><title>0x004107b0 Func4107b0 (245 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="15" class="todo"><title>0x004108b0 Ending::Ending (271 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">58.77%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">36.37%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">60.29%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">34.85%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="438.99" height="6" x="0" y="0" class="named"/>
-<rect width="36.35" height="6" x="438.99" y="0" class="decompiled"/>
-<rect width="271.66" height="6" x="475.34" y="0" class="todo"/>
+<rect width="450.35" height="6" x="0" y="0" class="named"/>
+<rect width="36.35" height="6" x="450.35" y="0" class="decompiled"/>
+<rect width="260.30" height="6" x="486.70" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -555,7 +555,7 @@
 <rect width="46.57" height="64.41" x="66.34" y="0" class="todo"><title>0x004149d0 BulletManager::OnUpdate (6928 bytes)</title></rect>
 <rect width="46.57" height="40.22" x="66.34" y="67.41" class="todo"><title>0x00419c99 Func419c99 (4442 bytes)</title></rect>
 <rect width="46.57" height="39.37" x="66.34" y="110.63" class="named"><title>0x00433960 SpriteEngine::Step (4355 bytes)</title></rect>
-<rect width="40.49" height="37.13" x="115.91" y="0" class="todo"><title>0x0040f7c0 Ending::RunScript (3619 bytes)</title></rect>
+<rect width="40.49" height="37.13" x="115.91" y="0" class="named"><title>0x0040f7c0 Ending::RunScript (3619 bytes)</title></rect>
 <rect width="40.49" height="36.21" x="115.91" y="40.13" class="named"><title>0x0042c2d4 ResultScreen::HandleReplaySaving (3536 bytes)</title></rect>
 <rect width="40.49" height="35.61" x="115.91" y="79.34" class="named"><title>0x00427860 Player::HandleInput (3482 bytes)</title></rect>
 <rect width="40.49" height="32.04" x="115.91" y="117.96" class="named"><title>0x0041f4a0 ItemManager::UpdateItems (3160 bytes)</title></rect>

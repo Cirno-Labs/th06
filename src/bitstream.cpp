@@ -54,3 +54,11 @@ DWORD BitStream::ReadVarInt()
 done:
     return result;
 }
+
+DWORD BitStream::ReadU32()
+{
+    DWORD a = this->ReadBits(8);
+    DWORD b = (this->ReadBits(8) << 8) + a;
+    DWORD c = (this->ReadBits(8) << 16) + b;
+    return (this->ReadBits(8) << 24) + c;
+}

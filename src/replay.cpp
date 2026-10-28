@@ -255,9 +255,9 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     cur->lives = g_GameManager.lives;
     cur->power = g_GameManager.power;
     cur->rank = g_GameManager.rank;
-    cur->unk_06 = g_GameManager.pointItemsTotal;
-    cur->unk_04 = g_GameManager.rngSeed;
-    cur->unk_0c = g_GameManager.powerItemCombo;
+    cur->pointItemsTotal = g_GameManager.pointItemsTotal;
+    cur->rngSeed = g_GameManager.rngSeed;
+    cur->powerItemCombo = g_GameManager.powerItemCombo;
     replay->cursors[0] = cur->frames;
     replay->cursors[0]->frame = 0;
     replay->cursors[0]->input = 0;
@@ -294,14 +294,14 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     g_GameManager.character = replay->data->shotType / 2;
     g_GameManager.shotType = replay->data->shotType % 2;
     g_GameManager.difficulty = replay->data->difficulty;
-    g_GameManager.pointItemsTotal = cur->unk_06;
-    g_Rng.SetSeed(cur->unk_04);
+    g_GameManager.pointItemsTotal = cur->pointItemsTotal;
+    g_Rng.SetSeed(cur->rngSeed);
     g_GameManager.rank = cur->rank;
     g_GameManager.lives = cur->lives;
     g_GameManager.bombs = cur->bombs;
     g_GameManager.power = cur->power;
     replay->cursors[0] = cur->frames;
-    g_GameManager.powerItemCombo = cur->unk_0c;
+    g_GameManager.powerItemCombo = cur->powerItemCombo;
     if (g_GameManager.stage >= 2 && replay->data->stages[g_GameManager.stage - 1] != NULL)
     {
         g_GameManager.guiScore = g_GameManager.score = replay->data->stages[g_GameManager.stage - 1]->score;

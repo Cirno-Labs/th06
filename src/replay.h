@@ -25,15 +25,17 @@ struct ReplayStage
 {
     // The score the stage started with.
     int score;
-    WORD unk_04;
-    WORD unk_06;
+    // g_GameManager.rngSeed and pointItemsTotal at the start.
+    WORD rngSeed;
+    WORD pointItemsTotal;
     BYTE power;
     // The lives and bombs the stage started with.
     BYTE lives;
     BYTE bombs;
     // g_GameManager.rank at the start of the stage.
     BYTE rank;
-    BYTE unk_0c;
+    // g_GameManager.powerItemCombo at the start.
+    BYTE powerItemCombo;
     BYTE unk_0d[0x3];
     ReplayFrame frames[1];
 };

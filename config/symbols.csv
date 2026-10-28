@@ -366,7 +366,7 @@ address,size,name,symbol
 0x0042f060,1372,ResultScreen::AddedCallback,?AddedCallback@ResultScreen@@SAHPAV1@@Z
 0x0042f5bc,264,ResultScreen::DeletedCallback,?DeletedCallback@ResultScreen@@SAHPAV1@@Z
 0x0042f6c4,5,DebugPrint2,?DebugPrint2@@YAXPBDZZ
-0x0042f6d0,184,Func42f6d0,
+0x0042f6d0,184,ClearScreen,?ClearScreen@@YAXK@Z
 0x0042f790,102,Func42f790,
 0x0042f800,174,Func42f800,
 0x0042f8b0,968,Func42f8b0,?Func42f8b0@@YAXPAMK@Z

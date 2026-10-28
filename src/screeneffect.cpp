@@ -3,6 +3,20 @@
 #include "screeneffect.h"
 #include "unsorted.h"
 
+void ClearScreen(D3DCOLOR color)
+{
+    g_Unknown6c6d18.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, color, 1.0f, 0);
+    if (FAILED(g_Unknown6c6d18.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+    {
+        g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);
+    }
+    g_Unknown6c6d18.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, color, 1.0f, 0);
+    if (FAILED(g_Unknown6c6d18.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+    {
+        g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);
+    }
+}
+
 int ScreenEffect::OnDrawPlayArea(ScreenEffect *effect)
 {
     float area[4];

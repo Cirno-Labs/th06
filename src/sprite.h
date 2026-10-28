@@ -198,6 +198,10 @@ public:
     // g_TextureFormats[`format`] (16 bits when forced), with `colorKey`
     // transparent. Returns 0 or -1.
     int LoadTexture(int index, char *path, int format, D3DCOLOR colorKey);
+    // Sets texture `index`'s alpha from the blue channel of the image file
+    // at `path`, loaded in the texture's format with `colorKey`
+    // transparent. `format` is unused. Returns 0 or -1.
+    int LoadTextureAlpha(int index, char *path, int format, D3DCOLOR colorKey);
     // Releases texture `index` and frees its image file.
     void ReleaseTexture(int index);
     // Creates texture `index` at `width` by `height` in the format

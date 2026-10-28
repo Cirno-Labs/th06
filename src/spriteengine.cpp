@@ -1031,7 +1031,7 @@ int SpriteEngine::Step(Sprite *vm)
             vm->flags.anchor = 3;
             break;
         case 26:
-            vm->unk_088 = *(short *)&curInstr->args[0];
+            vm->autoRotate = *(short *)&curInstr->args[0];
             break;
         case 27:
             vm->uvScrollX += *(float *)&curInstr->args[0];

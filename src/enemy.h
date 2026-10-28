@@ -30,7 +30,12 @@ struct EnemyFlags
     unsigned char unk13 : 3;
     // Keeps the position within lowerBound and upperBound.
     unsigned char clampPos : 1;
-    unsigned char unk17 : 7;
+    // Turns the main sprite with the enemy's angle.
+    unsigned char rotateSprite : 1;
+    unsigned char unk18 : 1;
+    // OnDraw skips the enemy.
+    unsigned char hidden : 1;
+    unsigned char unk20 : 4;
     BYTE unk_e53;
 };
 

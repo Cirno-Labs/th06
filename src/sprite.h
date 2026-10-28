@@ -153,7 +153,9 @@ public:
     // interpolations, in frames; 0 when none runs.
     short alphaInterpTime;
     short scaleInterpTime;
-    short unk_088;
+    // Set by the script: when not 0, the owner turns the sprite with its
+    // angle; the stage draws 2 as a screen-space sprite instead.
+    short autoRotate;
     // The interrupt label to jump to on the next Step; 0 for none.
     short pendingInterrupt;
     short posInterpTime;

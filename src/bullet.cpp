@@ -647,7 +647,7 @@ void DrawBullet(Bullet *bullet)
     sprite->pos.y = bullet->pos.y;
     sprite->pos.z = 0.0f;
     sprite->color = sprite->color & 0xff000000 | 0xffffff;
-    if (sprite->unk_088 != 0)
+    if (sprite->autoRotate != 0)
     {
         sprite->rotationZ = 1.5707964f - bullet->angle;
     }
@@ -679,7 +679,7 @@ void Func416c50(Bullet *bullet)
     sprite->pos.y = g_GameManager.arena[1] + bullet->pos.y;
     sprite->pos.z = 0.0f;
     sprite->color = sprite->color & 0xff000000 | 0xffffff;
-    if (sprite->unk_088 != 0)
+    if (sprite->autoRotate != 0)
     {
         sprite->rotationZ = 1.5707964f - bullet->angle;
     }

@@ -176,6 +176,60 @@ int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
     return 0;
 }
 
+int EnemyManager::OnDraw(EnemyManager *mgr)
+{
+    int i;
+    Sprite *sprite;
+    int k;
+    Enemy *curEnemy;
+
+    for (curEnemy = mgr->enemies, i = 0; i < 0x100; i++, curEnemy++)
+    {
+        if (!curEnemy->flags.active)
+        {
+            continue;
+        }
+        if (curEnemy->flags.hidden)
+        {
+            continue;
+        }
+        for (sprite = curEnemy->sprites, k = 0; k < 4; k++, sprite++)
+        {
+            if (sprite->scriptIndex >= 0)
+            {
+                if (sprite->autoRotate != 0)
+                {
+                    sprite->rotationZ = curEnemy->angle;
+                }
+                sprite->pos = curEnemy->pos + sprite->posOffset;
+                sprite->pos.z = 0.495f;
+                g_SpriteEngine->Draw3DRounded(sprite);
+            }
+        }
+        if (curEnemy->flags.rotateSprite)
+        {
+            curEnemy->sprite.rotationZ = curEnemy->angle;
+        }
+        curEnemy->sprite.pos = curEnemy->pos + curEnemy->sprite.posOffset;
+        curEnemy->sprite.pos.z = 0.494f;
+        g_SpriteEngine->Draw3DRounded(&curEnemy->sprite);
+        for (k = 4; k < 8; k++, sprite++)
+        {
+            if (sprite->scriptIndex >= 0)
+            {
+                if (sprite->autoRotate != 0)
+                {
+                    sprite->rotationZ = curEnemy->angle;
+                }
+                sprite->pos = curEnemy->pos + sprite->posOffset;
+                sprite->pos.z = 0.495f;
+                g_SpriteEngine->Draw3DRounded(sprite);
+            }
+        }
+    }
+    return 1;
+}
+
 int EnemyManager::AddedCallback(EnemyManager *mgr)
 {
     Enemy *unused = mgr->enemies;

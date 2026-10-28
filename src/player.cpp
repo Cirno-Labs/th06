@@ -1160,7 +1160,7 @@ void Player::DrawBullets(Player *player)
         {
             continue;
         }
-        if (bullet->sprite.unk_088 != 0)
+        if (bullet->sprite.autoRotate != 0)
         {
             bullet->sprite.rotationZ = 1.5707964f - AddNormalizeAngle(bullet->angle, 3.1415927f);
         }
@@ -1179,7 +1179,7 @@ void Player::DrawHitBullets(Player *player)
         {
             continue;
         }
-        if (bullet->sprite.unk_088 != 0)
+        if (bullet->sprite.autoRotate != 0)
         {
             bullet->sprite.rotationZ = 1.5707964f - AddNormalizeAngle(bullet->angle, 3.1415927f);
         }

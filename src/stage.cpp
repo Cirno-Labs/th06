@@ -509,7 +509,7 @@ int Stage::DrawLayer(int layer)
                     {
                         spr->scaleY = quadData->height / spr->spriteData->height;
                     }
-                    if (spr->unk_088 == 2)
+                    if (spr->autoRotate == 2)
                     {
                         float width;
 

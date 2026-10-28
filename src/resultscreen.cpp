@@ -152,6 +152,34 @@ void FreeListNodes(ListNode *head)
     }
 }
 
+int LoadSpellCards(void *scoreDat, Catk *catks)
+{
+    Catk *chunk;
+    int left;
+    ScoreDat *dat1 = (ScoreDat *)scoreDat;
+
+    if (catks == NULL)
+    {
+        return -1;
+    }
+    chunk = (Catk *)((BYTE *)dat1 + dat1->dataOffset);
+    left = dat1->fileSize - dat1->dataOffset;
+    while (left > 0)
+    {
+        if (chunk->magic == 0x4b544143 && chunk->version == 0x10)
+        {
+            if (chunk->index >= 0x40)
+            {
+                break;
+            }
+            catks[chunk->index] = *chunk;
+        }
+        left -= chunk->size;
+        chunk = (Catk *)((BYTE *)chunk + chunk->size);
+    }
+    return 0;
+}
+
 void ReleaseScoreDat(ScoreDat *dat)
 {
     FreeListNodes(dat->scores);

@@ -21,6 +21,20 @@ struct Hscr
     BYTE shot;
 };
 
+// A spell card chunk of the score file ("CATK"), one per card.
+struct Catk
+{
+    DWORD magic;
+    WORD size;
+    WORD unk_06;
+    BYTE version;
+    BYTE unk_09[0x7];
+    // The card's number, below 0x40.
+    WORD index;
+    BYTE unk_12[0x2e];
+};
+ASSERT_SIZE(Catk, 0x40);
+
 // A node of the score file's lists. Each list starts with a head node
 // whose `data` is NULL; the entries after it are sorted.
 struct ListNode
@@ -72,6 +86,10 @@ ScoreDat *LoadScoreDat(char *path);
 // `list`, or, if it is NULL, into the file's own list after emptying it.
 // Returns the best score in the file's list, at least 1000000.
 DWORD LoadHighScores(void *scoreDat, ListNode *list, int difficulty, int shot);
+// Copies the score file's spell card chunks into `catks`, by number,
+// stopping at a number of 0x40 or more. Returns 0, or -1 if `catks` is
+// NULL.
+int LoadSpellCards(void *scoreDat, Catk *catks);
 // Frees `dat` and its list.
 void ReleaseScoreDat(ScoreDat *dat);
 

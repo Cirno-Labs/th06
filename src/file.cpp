@@ -149,3 +149,38 @@ DWORD File::GetSize()
     }
     return GetFileSize(this->handle, NULL);
 }
+
+void *File::ReadAll(DWORD maxSize)
+{
+    DWORD size;
+    void *buffer;
+    DWORD position;
+    DWORD read;
+
+    if (this->access != GENERIC_READ)
+    {
+        return NULL;
+    }
+    size = this->GetSize();
+    if (size > maxSize)
+    {
+        return NULL;
+    }
+    buffer = LocalAlloc(LPTR, size);
+    if (buffer == NULL)
+    {
+        return NULL;
+    }
+    position = this->Tell();
+    if (!this->Seek(position, FILE_BEGIN))
+    {
+        return NULL;
+    }
+    if (!this->Read(buffer, size, &read))
+    {
+        LocalFree(buffer);
+        return NULL;
+    }
+    this->Seek(position, FILE_BEGIN);
+    return buffer;
+}

@@ -52,6 +52,57 @@ int Func40e810(Effect *effect)
     return 1;
 }
 
+// An effect update: circles unk_134 at radius unk_15c about the axis
+// unk_140, at angle unk_160 (flattened); once unk_17a is set, fades out
+// and grows over 16 frames, then ends.
+int Func40e920(Effect *effect)
+{
+    float a2;
+    D3DXVECTOR3 n2;
+    float c;
+    D3DXMATRIX m2;
+    float s;
+    D3DXVECTOR3 v;
+
+    D3DXVec3Normalize(&n2, &effect->unk_140);
+    s = sinf(effect->unk_160);
+    c = cosf(effect->unk_160);
+    effect->unk_14c.x = n2.x * s;
+    effect->unk_14c.y = n2.y * s;
+    effect->unk_14c.z = n2.z * s;
+    effect->unk_14c.w = c;
+    D3DXMatrixRotationQuaternion(&m2, &effect->unk_14c);
+    v.x = n2.y * 1.0f - n2.z * 0.0f;
+    v.y = n2.z * 0.0f - n2.x * 1.0f;
+    v.z = n2.x * 0.0f - n2.y * 0.0f;
+    if (D3DXVec3LengthSq(&v) < 0.00001f)
+    {
+        // Sets the axis, not v: v stays (0, 0, 0).
+        n2 = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+    }
+    else
+    {
+        D3DXVec3Normalize(&v, &v);
+    }
+    v *= effect->unk_15c;
+    D3DXVec3TransformCoord(&v, &v, &m2);
+    v.z *= 6.0f;
+    effect->pos = effect->unk_134 + v;
+    if (effect->unk_17a != 0)
+    {
+        effect->unk_17b++;
+        if (effect->unk_17b >= 16)
+        {
+            return 0;
+        }
+        a2 = 1.0f - effect->unk_17b / 16.0f;
+        effect->sprite.color = (effect->sprite.color & 0xffffff) | ((int)(a2 * 255.0f) << 24);
+        effect->sprite.scaleY = 2.0f - a2;
+        effect->sprite.scaleX = effect->sprite.scaleY;
+    }
+    return 1;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

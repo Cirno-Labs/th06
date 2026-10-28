@@ -83,7 +83,7 @@ address,size,name,symbol
 0x0040e360,589,Func40e360,?Func40e360@@YAHPAUEffect@@@Z
 0x0040e5b0,601,Func40e5b0,?Func40e5b0@@YAHPAUEffect@@@Z
 0x0040e810,271,Func40e810,?Func40e810@@YAHPAUEffect@@@Z
-0x0040e920,737,Func40e920,
+0x0040e920,737,Func40e920,?Func40e920@@YAHPAUEffect@@@Z
 0x0040ec10,416,Func40ec10,
 0x0040edb0,416,Func40edb0,
 0x0040ef50,430,EffectManager::SpawnEffect,?SpawnEffect@EffectManager@@QAEPAUEffect@@HPAUD3DXVECTOR3@@HK@Z
@@ -508,11 +508,11 @@ address,size,name,symbol
 0x0043ed9b,122,D3DXMatrixRotationX,_D3DXMatrixRotationX@8
 0x0043ee15,123,D3DXMatrixRotationY,_D3DXMatrixRotationY@8
 0x0043ee90,124,D3DXMatrixRotationZ,_D3DXMatrixRotationZ@8
-0x0043ef0c,226,Func43ef0c,
+0x0043ef0c,226,D3DXMatrixRotationQuaternion,_D3DXMatrixRotationQuaternion@8
 0x0043efee,148,D3DXMatrixPerspectiveFovLH,_D3DXMatrixPerspectiveFovLH@20
 0x0043f082,76,Func43f082,
 0x0043f0ce,167,D3DXVec3Normalize,_D3DXVec3Normalize@8
-0x0043f175,208,Func43f175,
+0x0043f175,208,D3DXVec3TransformCoord,_D3DXVec3TransformCoord@12
 0x0043f245,253,D3DXVec3Project,_D3DXVec3Project@24
 0x0043f362,511,Func43f362,
 0x0043f561,262,D3DXMatrixLookAtLH,_D3DXMatrixLookAtLH@16

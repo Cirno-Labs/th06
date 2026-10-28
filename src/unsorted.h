@@ -12,6 +12,12 @@
 #include "dsutil.h"
 #include "midi.h"
 
+// The mutex CheckSingleInstance creates, held while the game runs.
+extern HANDLE g_AppMutex;
+// Creates g_AppMutex. Returns 0, or -1 (after logging that two cannot
+// run) if another copy of the game holds it.
+int CheckSingleInstance();
+
 // The global at 0x6c6d18 plays wave music through it.
 class Unknown6d3f50
 {

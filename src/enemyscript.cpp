@@ -1537,3 +1537,101 @@ void Func40c100(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->ctx.intVars[2] = g_Unknown476264[g_GameManager.character][g_GameManager.shotType][1];
     enemy->ctx.intVars[3] = g_Unknown476264[g_GameManager.character][g_GameManager.shotType][2];
 }
+
+// The angle from the player to `pos`, turned by a quarter turn and by
+// `offset`.
+inline float AngleAwayFromPlayer(D3DXVECTOR3 *pos, float offset)
+{
+    return g_Player.AngleTo(pos) + 1.5707964f + offset;
+}
+
+// g_EnemyScriptFuncs[4]: with instr's second argument below 2, sets
+// g_GameManager.unk_002c to it. Otherwise turns some large bullets (14,
+// or 52 above normal difficulty; one in four at random) into color 5 and
+// sends them off: away from the player when close, else downwards (or
+// anywhere above normal difficulty).
+void Func40c180(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    Bullet *bullet;
+    int i;
+    int count;
+    float dx2;
+    float dy;
+
+    if (instr->args.i[1] < 2)
+    {
+        g_EffectManager.SpawnEffect(0xc, &enemy->pos, 1, 0xffffffff);
+        g_GameManager.unk_002c = instr->args.i[1];
+    }
+    else
+    {
+        count = 14;
+        bullet = g_BulletManager.bullets;
+        if (g_GameManager.difficulty <= 1)
+        {
+            for (i = 0; i < 0x280; i++, bullet++)
+            {
+                if (bullet->state == 0 || bullet->state == 5)
+                {
+                    continue;
+                }
+                if (bullet->sprites.sprite0.spriteData != NULL && bullet->sprites.sprite0.spriteData->height >= 30.0f &&
+                    bullet->color != 5 && g_Rng.GetRandomU16() % 4 == 0)
+                {
+                    bullet->color = 5;
+                    g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.unk_0b2 + bullet->color);
+                    dx2 = bullet->pos.x - g_Player.position.x;
+                    dy = bullet->pos.y - g_Player.position.y;
+                    if ((float)sqrt(dy * dy + dx2 * dx2) > 128.0f)
+                    {
+                        bullet->angle = g_Rng.GetRandomF32InRange(2.3561945f) + 0.7853982f;
+                    }
+                    else
+                    {
+                        bullet->angle = AngleAwayFromPlayer(&bullet->pos, g_Rng.GetRandomF32InRange(6.2831855f));
+                    }
+                    SinCosScale(&bullet->velocity, bullet->angle, bullet->speed);
+                    count--;
+                    if (count == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            count = 52;
+            for (i = 0; i < 0x280; i++, bullet++)
+            {
+                if (bullet->state == 0 || bullet->state == 5)
+                {
+                    continue;
+                }
+                if (bullet->sprites.sprite0.spriteData != NULL && bullet->sprites.sprite0.spriteData->height >= 30.0f &&
+                    bullet->color != 5 && g_Rng.GetRandomU16() % 4 == 0)
+                {
+                    bullet->color = 5;
+                    g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.unk_0b2 + bullet->color);
+                    dx2 = bullet->pos.x - g_Player.position.x;
+                    dy = bullet->pos.y - g_Player.position.y;
+                    if ((float)sqrt(dy * dy + dx2 * dx2) > 128.0f)
+                    {
+                        bullet->angle = g_Rng.GetRandomF32InRange(6.2831855f);
+                    }
+                    else
+                    {
+                        bullet->angle = AngleAwayFromPlayer(&bullet->pos, g_Rng.GetRandomF32InRange(6.2831855f));
+                    }
+                    SinCosScale(&bullet->velocity, bullet->angle, bullet->speed);
+                    count--;
+                    if (count == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    enemy->ctx.intVars[2] = 0;
+}

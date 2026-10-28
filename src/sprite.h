@@ -252,8 +252,10 @@ public:
     // Rotates (`x`, `y`) by the angle with sine `sine` and cosine
     // `cosine`, clockwise on screen, then moves it by (`cx`, `cy`); stores
     // the result in out[0] and out[1].
-    void RotatePoint(float *out, float sine, float cosine, float x, float y, float cx, float cy);
-    int Func432cc0(Sprite *sprite);
+    void RotatePoint(float *out, float x, float y, float sine, float cosine, float cx, float cy);
+    // Like Draw, rotated by the sprite's rotation about its position,
+    // with the position and size rounded to whole pixels.
+    int DrawRotated(Sprite *vm);
     // Loads the image file at `path` into texture `index` in the format
     // g_TextureFormats[`format`] (16 bits when forced), with `colorKey`
     // transparent. Returns 0 or -1.
@@ -355,6 +357,18 @@ struct VertexTex1Xyzrwh
     float w;
     D3DXVECTOR2 uv;
 };
+// Rounds `f` to a whole number with frndint.
+inline float Rint(float f)
+{
+    __asm
+    {
+        fld f
+        frndint
+        fstp f
+    }
+    return f;
+}
+
 // 0.5f, the float constant the game's hand-written assembly reads.
 extern float g_Half;
 // A quad of each, set up by SpriteEngine's constructor.

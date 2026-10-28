@@ -1142,8 +1142,8 @@ int Player::OnDraw(Player *player)
             player->optionSprites[1].pos[1] += g_GameManager.arena[1];
             player->optionSprites[0].pos.z = 0.491f;
             player->optionSprites[1].pos.z = 0.491f;
-            g_SpriteEngine->Func432cc0(&player->optionSprites[0]);
-            g_SpriteEngine->Func432cc0(&player->optionSprites[1]);
+            g_SpriteEngine->DrawRotated(&player->optionSprites[0]);
+            g_SpriteEngine->DrawRotated(&player->optionSprites[1]);
         }
     }
     return 1;

@@ -287,7 +287,7 @@ void DrawReimuBBomb(Player *player)
         curSprite->pos.x += g_GameManager.arena[0];
         curSprite->pos.y += g_GameManager.arena[1];
         curSprite->pos.z = 0.0f;
-        g_SpriteEngine->Func432cc0(curSprite);
+        g_SpriteEngine->DrawRotated(curSprite);
     }
 }
 
@@ -360,14 +360,14 @@ void DrawMarisaABomb(Player *player)
         curSprite->pos.z = 0.0f;
         curSprite->scaleX = 3.2f;
         curSprite->scaleY = 3.2f;
-        g_SpriteEngine->Func432cc0(curSprite);
+        g_SpriteEngine->DrawRotated(curSprite);
         curSprite->pos -= player->bomb.partVelocity[i] * 6.0f;
         curSprite->pos.x += -32.0f;
         curSprite->pos.y += -32.0f;
         curSprite->pos.z = 0.0f;
         curSprite->scaleX = 2.2f;
         curSprite->scaleY = 2.2f;
-        g_SpriteEngine->Func432cc0(curSprite);
+        g_SpriteEngine->DrawRotated(curSprite);
         curSprite->pos -= player->bomb.partVelocity[i] * 2.0f;
         curSprite->pos.x += 64.0f;
         curSprite->pos.y += 64.0f;
@@ -378,7 +378,7 @@ void DrawMarisaABomb(Player *player)
         curSprite->pos.z = 0.0f;
         curSprite->scaleX = 1.0f;
         curSprite->scaleY = 1.0f;
-        g_SpriteEngine->Func432cc0(curSprite);
+        g_SpriteEngine->DrawRotated(curSprite);
         curSprite++;
     }
 }
@@ -462,7 +462,7 @@ void DrawMarisaBBomb(Player *player)
         curSprite->pos.x += g_GameManager.arena[0];
         curSprite->pos.y += g_GameManager.arena[1];
         curSprite->pos.z = 0.0f;
-        g_SpriteEngine->Func432cc0(curSprite);
+        g_SpriteEngine->DrawRotated(curSprite);
         curSprite++;
     }
 }

@@ -683,7 +683,7 @@ void Func416c50(Bullet *bullet)
     {
         sprite->rotation = 1.5707964f - bullet->angle;
     }
-    g_SpriteEngine->Func432cc0(sprite);
+    g_SpriteEngine->DrawRotated(sprite);
 }
 
 int BulletManager::AddedCallback(BulletManager *mgr)

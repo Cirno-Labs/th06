@@ -294,7 +294,7 @@ int Stage::OnDraw2(Stage *stage)
         {
             g_SpriteEngine->StartScript(&stage->unk_088, 0x2b3);
         }
-        g_SpriteEngine->Func432cc0(&stage->unk_088);
+        g_SpriteEngine->DrawRotated(&stage->unk_088);
     }
     g_Unknown6c6d18.viewport.MinZ = 0.0f;
     g_Unknown6c6d18.viewport.MaxZ = 0.5f;

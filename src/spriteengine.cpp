@@ -541,8 +541,68 @@ int SpriteEngine::Draw(Sprite *vm)
     return this->DrawQuad(vm, 1);
 }
 
-void SpriteEngine::RotatePoint(float *out, float sine, float cosine, float x, float y, float cx, float cy)
+void SpriteEngine::RotatePoint(float *out, float x, float y, float sine, float cosine, float cx, float cy)
 {
-    out[0] = sine * y + cosine * x + cx;
-    out[1] = -sine * x + cosine * y + cy;
+    out[0] = x * cosine + y * sine + cx;
+    out[1] = -x * sine + y * cosine + cy;
+}
+
+int SpriteEngine::DrawRotated(Sprite *vm)
+{
+    float w;
+    float h;
+    float y;
+    float cx;
+    float s;
+    float angle;
+    float c;
+
+    if (vm->rotation == 0.0f)
+    {
+        return this->Draw(vm);
+    }
+    if (!vm->flags.unk0)
+    {
+        return -1;
+    }
+    if (!vm->flags.visible)
+    {
+        return -1;
+    }
+    if (vm->color == 0)
+    {
+        return -1;
+    }
+    angle = vm->rotation;
+    __asm
+    {
+        fld angle
+        fsincos
+        fstp c
+        fstp s
+    }
+    cx = Rint(vm->pos.x);
+    y = Rint(vm->pos.y);
+    w = Rint(vm->spriteData->width * vm->scaleX / 2.0f);
+    h = Rint(vm->spriteData->height * vm->scaleY / 2.0f);
+    this->RotatePoint((float *)&g_Quad[0].pos, -w - 0.5f, -h - 0.5f, s, c, cx, y);
+    this->RotatePoint((float *)&g_Quad[1].pos, w - 0.5f, -h - 0.5f, s, c, cx, y);
+    this->RotatePoint((float *)&g_Quad[2].pos, -w - 0.5f, h - 0.5f, s, c, cx, y);
+    this->RotatePoint((float *)&g_Quad[3].pos, w - 0.5f, h - 0.5f, s, c, cx, y);
+    g_Quad[0].pos.z = g_Quad[1].pos.z = g_Quad[2].pos.z = g_Quad[3].pos.z = vm->pos.z;
+    if (vm->flags.anchor & 1)
+    {
+        g_Quad[0].pos.x += w;
+        g_Quad[1].pos.x += w;
+        g_Quad[2].pos.x += w;
+        g_Quad[3].pos.x += w;
+    }
+    if (vm->flags.anchor & 2)
+    {
+        g_Quad[0].pos.y += h;
+        g_Quad[1].pos.y += h;
+        g_Quad[2].pos.y += h;
+        g_Quad[3].pos.y += h;
+    }
+    return this->DrawQuad(vm, 0);
 }

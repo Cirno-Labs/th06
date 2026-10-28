@@ -122,6 +122,24 @@ int Func40ec10(Effect *effect)
     return 1;
 }
 
+// Like Func40ec10, over 240 frames.
+int Func40edb0(Effect *effect)
+{
+    float f;
+
+    if (effect->timer == 0 && effect->timer.HasTicked())
+    {
+        effect->unk_134 = effect->pos;
+        f = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+        effect->unk_140.x = cosf(f);
+        effect->unk_140.y = sinf(f);
+        effect->unk_140.z = 0.0f;
+    }
+    f = 256.0f - effect->timer.AsFloat() * 256.0f / 240.0f;
+    effect->pos = f * effect->unk_140 + effect->unk_134;
+    return 1;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

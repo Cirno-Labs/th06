@@ -149,6 +149,40 @@ int MainMenu::Func4378a2()
     return 0;
 }
 
+int MainMenu::Func4379e4()
+{
+    int i;
+
+    if (this->unk_81f4 < 30)
+    {
+        return 1;
+    }
+    if (!WAS_PRESSED_OR_HELD(0x160b))
+    {
+        return 1;
+    }
+    this->unk_81f4 = 0;
+    this->unk_81f0 = 2;
+    for (i = 0; i < 0x7a; i++)
+    {
+        this->sprites[i].pendingInterrupt = 2;
+    }
+    if (!g_Unknown6c6d18.cfg.flags.unk0)
+    {
+        this->sprites[this->cursor].color = 0xffff0000;
+    }
+    else
+    {
+        this->sprites[this->cursor].color = 0xffffe0e0;
+    }
+    this->sprites[this->cursor].posOffset = D3DXVECTOR3(-6.0f, -6.0f, 0.0f);
+    this->unk_81fc = 0;
+    this->unk_8200 = 0x40000000;
+    this->unk_820c = 0;
+    this->unk_8210 = 60;
+    return 0;
+}
+
 int MainMenu::DeletedCallback(MainMenu *menu)
 {
     int i;

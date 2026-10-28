@@ -7,6 +7,124 @@
 #include "stage.h"
 #include "unsorted.h"
 
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+    HRESULT resetResult;
+    MSG message;
+    HRESULT testResult;
+    int renderResult = 0;
+
+    if (CheckSingleInstance() != 0)
+    {
+        g_Unknown69d998.Flush();
+        return 1;
+    }
+    g_Unknown6c6d18.hInstance = hInstance;
+    if (g_Unknown6c6d18.LoadConfig("東方紅魔郷.cfg") != 0)
+    {
+        g_Unknown69d998.Flush();
+        return -1;
+    }
+    if (CreateD3d() != 0)
+    {
+        g_Unknown69d998.Flush();
+        return 1;
+    }
+    SystemParametersInfoA(SPI_GETSCREENSAVEACTIVE, 0, &g_GameWindow.screenSaveActive, 0);
+    SystemParametersInfoA(SPI_GETLOWPOWERACTIVE, 0, &g_GameWindow.lowPowerActive, 0);
+    SystemParametersInfoA(SPI_GETPOWEROFFACTIVE, 0, &g_GameWindow.powerOffActive, 0);
+    SystemParametersInfoA(SPI_SETSCREENSAVEACTIVE, 0, NULL, SPIF_SENDCHANGE);
+    SystemParametersInfoA(SPI_SETLOWPOWERACTIVE, 0, NULL, SPIF_SENDCHANGE);
+    SystemParametersInfoA(SPI_SETPOWEROFFACTIVE, 0, NULL, SPIF_SENDCHANGE);
+restart:
+    CreateGameWindow(hInstance);
+    if (InitD3dDevice() != 0)
+    {
+        g_Unknown69d998.Flush();
+        return 1;
+    }
+    g_Unknown6d3f50.Initialize(g_GameWindow.hwnd);
+    InitJoystick();
+    ResetKeyboard();
+    g_SpriteEngine = new SpriteEngine();
+    if (Unknown6c6d18::RegisterChain() != 0)
+    {
+        goto stop;
+    }
+    if (g_Unknown6c6d18.cfg.windowed == 0)
+    {
+        ShowCursor(FALSE);
+    }
+    g_GameWindow.curFrame = 0;
+    while (g_GameWindow.isClosing == 0)
+    {
+        if (PeekMessageA(&message, NULL, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&message);
+            DispatchMessageA(&message);
+        }
+        else
+        {
+            testResult = g_Unknown6c6d18.d3dDevice->TestCooperativeLevel();
+            if (testResult == D3D_OK)
+            {
+                renderResult = g_GameWindow.RunFrame();
+                if (renderResult != 0)
+                {
+                    goto stop;
+                }
+            }
+            else if (testResult == D3DERR_DEVICENOTRESET)
+            {
+                g_SpriteEngine->ReleaseSurfaces();
+                resetResult = g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);
+                if (resetResult != 0)
+                {
+                    goto stop;
+                }
+                SetDefaultRenderStates();
+                g_Unknown6c6d18.unk_198 = 3;
+            }
+        }
+    }
+stop:
+    g_Chain.Release();
+    g_Unknown6d3f50.Release();
+    delete g_SpriteEngine;
+    g_SpriteEngine = NULL;
+    if (g_Unknown6c6d18.d3dDevice != NULL)
+    {
+        g_Unknown6c6d18.d3dDevice->Release();
+        g_Unknown6c6d18.d3dDevice = NULL;
+    }
+    ShowWindow(g_GameWindow.hwnd, SW_HIDE);
+    MoveWindow(g_GameWindow.hwnd, 0, 0, 0, 0, FALSE);
+    DestroyWindow(g_GameWindow.hwnd);
+    if (renderResult == 2)
+    {
+        g_Unknown69d998.cursor = g_Unknown69d998.buffer;
+        *g_Unknown69d998.cursor = '\0';
+        Func41e4d0(&g_Unknown69d998, "再起動を要するオプションが変更されたので再起動します\n");
+        if (g_Unknown6c6d18.cfg.windowed == 0)
+        {
+            ShowCursor(TRUE);
+        }
+        goto restart;
+    }
+    Func41e460("東方紅魔郷.cfg", &g_Unknown6c6d18.cfg, sizeof(GameConfig));
+    SystemParametersInfoA(SPI_SETSCREENSAVEACTIVE, g_GameWindow.screenSaveActive, NULL, SPIF_SENDCHANGE);
+    SystemParametersInfoA(SPI_SETLOWPOWERACTIVE, g_GameWindow.lowPowerActive, NULL, SPIF_SENDCHANGE);
+    SystemParametersInfoA(SPI_SETPOWEROFFACTIVE, g_GameWindow.powerOffActive, NULL, SPIF_SENDCHANGE);
+    if (g_Unknown6c6d18.d3d != NULL)
+    {
+        g_Unknown6c6d18.d3d->Release();
+        g_Unknown6c6d18.d3d = NULL;
+    }
+    ShowCursor(TRUE);
+    g_Unknown69d998.Flush();
+    return 0;
+}
+
 int GameWindow::RunFrame()
 {
     DWORD time2;
@@ -534,7 +652,10 @@ void SetDefaultRenderStates()
     g_Stage.fogColorChanged = 1;
 }
 
-int CheckSingleInstance()
+// The functions from here on are inline but defined after their callers,
+// so they are called rather than expanded, and each call site still
+// reserves their locals' slots.
+inline int CheckSingleInstance()
 {
     g_AppMutex = CreateMutexA(NULL, TRUE, "Touhou Koumakyou App");
     if (g_AppMutex == NULL)
@@ -549,7 +670,7 @@ int CheckSingleInstance()
     return 0;
 }
 
-void Unknown69d998::Flush()
+inline void Unknown69d998::Flush()
 {
     FILE *file;
 
@@ -566,9 +687,6 @@ void Unknown69d998::Flush()
     }
 }
 
-// The functions from here on are inline but defined after their callers,
-// so they are called rather than expanded, and each call site still
-// reserves their locals' slots.
 inline void SpriteEngine::ReleaseSurfaces()
 {
     int i;

@@ -339,7 +339,8 @@ public:
         return this->cfg.flags.force60Fps && this->presentImmediate;
     }
 
-    unsigned char unk_000[0x4];
+    // WinMain's instance.
+    HINSTANCE hInstance;
     // Created by Direct3DCreate8 (CreateD3d).
     IDirect3D8 *d3d;
     IDirect3DDevice8 *d3dDevice;

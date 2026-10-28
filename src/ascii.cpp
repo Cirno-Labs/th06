@@ -237,6 +237,171 @@ void Unknown4010e0::Func402740()
     }
 }
 
+int Unknown4010e0::UpdateContinueMenu()
+{
+    int i;
+
+    if (g_GameManager.unk_1823)
+    {
+        g_GameManager.unk_1820 = 0;
+        g_GameManager.unk_0000 = g_GameManager.score;
+        g_Unknown6c6d18.scene = 7;
+        return 1;
+    }
+    if (g_GameManager.unk_001c)
+    {
+        g_GameManager.unk_1820 = 0;
+        g_Unknown6c6d18.scene = 8;
+        g_GameManager.unk_0000 = g_GameManager.score;
+        return 1;
+    }
+    if (g_GameManager.continuesUsed >= 3 || g_GameManager.difficulty >= 4)
+    {
+        g_GameManager.unk_1820 = 0;
+        g_Unknown6c6d18.scene = 7;
+        g_GameManager.unk_0000 = g_GameManager.score;
+        return 1;
+    }
+    switch (this->unk_000)
+    {
+    case 0:
+        if (this->unk_004 == 0)
+        {
+            for (i = 0; i < 4; i++)
+            {
+                if (i < 2)
+                {
+                    g_SpriteEngine->StartScript(&this->unk_008[i], i + 8);
+                }
+                else
+                {
+                    g_SpriteEngine->StartScript(&this->unk_008[i], i + 4);
+                }
+                this->unk_008[i].pendingInterrupt = 1;
+            }
+            if (g_Unknown6c6d18.lockableBackBuffer)
+            {
+                g_SpriteEngine->SetPendingCopy(3, 0x20, 0x10, 0x180, 0x1c0);
+                g_SpriteEngine->StartScript(&this->unk_668, 0x718);
+                this->unk_668.pos.x = 32.0f;
+                this->unk_668.pos.y = 16.0f;
+                this->unk_668.pos.z = 0.0f;
+            }
+        }
+        if (this->unk_004 > 8)
+        {
+            break;
+        }
+        this->unk_000 += 2;
+        this->unk_004 = 0;
+    case 1:
+        this->unk_008[2].color = 0xffff8080;
+        this->unk_008[3].color = 0x80808080;
+        this->unk_008[2].scaleY = 1.7f;
+        this->unk_008[2].scaleX = 1.7f;
+        this->unk_008[3].scaleY = 1.5f;
+        this->unk_008[3].scaleX = 1.5f;
+        this->unk_008[2].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        this->unk_008[3].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        if (this->unk_004 >= 4)
+        {
+            if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
+            {
+                this->unk_000 = 2;
+            }
+            if (WAS_PRESSED(1))
+            {
+                for (i = 0; i < 4; i++)
+                {
+                    this->unk_008[i].pendingInterrupt = 2;
+                }
+                this->unk_000 = 3;
+                this->unk_668.pendingInterrupt = 1;
+                this->unk_004 = 0;
+            }
+        }
+        break;
+    case 2:
+        this->unk_008[3].color = 0xffff8080;
+        this->unk_008[2].color = 0x80808080;
+        this->unk_008[2].scaleY = 1.5f;
+        this->unk_008[2].scaleX = 1.5f;
+        this->unk_008[3].scaleY = 1.7f;
+        this->unk_008[3].scaleX = 1.7f;
+        this->unk_008[3].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        this->unk_008[2].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        if (this->unk_004 >= 30)
+        {
+            if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
+            {
+                this->unk_000 = 1;
+            }
+            if (WAS_PRESSED(1))
+            {
+                for (i = 0; i < 4; i++)
+                {
+                    this->unk_008[i].pendingInterrupt = 2;
+                }
+                this->unk_000 = 4;
+                this->unk_004 = 0;
+            }
+        }
+        break;
+    case 4:
+        if (this->unk_004 >= 20)
+        {
+            this->unk_000 = 0;
+            this->unk_004 = 0;
+            g_GameManager.unk_1820 = 0;
+            g_Unknown6c6d18.scene = 7;
+            for (i = 0; i < 4; i++)
+            {
+                this->unk_008[i].ClearUnk0();
+            }
+            g_GameManager.unk_0000 = g_GameManager.score;
+            return 0;
+        }
+        break;
+    case 3:
+        if (this->unk_004 >= 30)
+        {
+            this->unk_000 = 0;
+            this->unk_004 = 0;
+            g_GameManager.unk_1820 = 0;
+            for (i = 0; i < 4; i++)
+            {
+                this->unk_008[i].ClearUnk0();
+            }
+            g_GameManager.continuesUsed++;
+            g_GameManager.unk_0000 = g_GameManager.continuesUsed;
+            g_GameManager.unk_0008 = 0;
+            g_GameManager.score = g_GameManager.unk_0000;
+            g_GameManager.lives = g_Unknown6c6d18.unk_14c.lives;
+            g_GameManager.bombs = g_Unknown6c6d18.unk_14c.bombs;
+            g_GameManager.graze = 0;
+            g_GameManager.pointItems = 0;
+            g_GameManager.power = 0;
+            g_GameManager.unk_181c = 0;
+            g_Gui.flags.livesChanged = 2;
+            g_Gui.flags.bombsChanged = 2;
+            g_Gui.flags.grazeChanged = 2;
+            g_Gui.flags.pointsChanged = 2;
+            g_Gui.flags.powerChanged = 2;
+            return 0;
+        }
+    }
+    for (i = 0; i < 4; i++)
+    {
+        g_SpriteEngine->Step(&this->unk_008[i]);
+    }
+    if (g_Unknown6c6d18.lockableBackBuffer)
+    {
+        g_SpriteEngine->Step(&this->unk_668);
+    }
+    this->unk_004++;
+    return 0;
+}
+
 void Unknown4010e0::Func403060()
 {
     int i;
@@ -296,7 +461,7 @@ int AsciiText::OnUpdate(AsciiText *text)
     }
     if (g_GameManager.unk_1820)
     {
-        text->unk_69bc.Func402870();
+        text->unk_69bc.UpdateContinueMenu();
     }
     return 1;
 }

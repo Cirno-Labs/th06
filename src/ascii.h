@@ -43,7 +43,14 @@ public:
     // g_Unknown6c6d18.lockableBackBuffer is set and unk_000 is nonzero,
     // then those of the six sprites with flag 0.
     void Func402740();
-    void Func402870();
+    // The continue menu, while g_GameManager.unk_1820 is set; leaves at
+    // once (scene 7, or 8 in a replay; returns 1) in practice, replays,
+    // after 3 continues or on Extra. unk_000 is the state: 0 starts the
+    // scripts (and the play area's copy as in UpdatePauseMenu), 1 and 2
+    // have yes or no selected; 3 continues after 30 frames, refilling
+    // lives and bombs and resetting the score to the continues used; 4
+    // gives up (scene 7) after 20. Returns 0 then.
+    int UpdateContinueMenu();
     // Draws, while g_GameManager.unk_1820 is set, inside the viewport given
     // by g_GameManager.arena: unk_668 if lockableBackBuffer is set and unk_000
     // is nonzero or unk_004 above 2, then, when unk_000 is 1 or 2, a copy

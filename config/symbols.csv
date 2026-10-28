@@ -16,7 +16,7 @@ address,size,name,symbol
 0x00401a60,286,AsciiText::AddPopup2,?AddPopup2@AsciiText@@QAEXPAUD3DXVECTOR3@@HK@Z
 0x00401b80,2973,Unknown4010e0::UpdatePauseMenu,?UpdatePauseMenu@Unknown4010e0@@QAEHXZ
 0x00402740,294,Unknown4010e0::Func402740,?Func402740@Unknown4010e0@@QAEXXZ
-0x00402870,1998,Unknown4010e0::Func402870,?Func402870@Unknown4010e0@@QAEXXZ
+0x00402870,1998,Unknown4010e0::UpdateContinueMenu,?UpdateContinueMenu@Unknown4010e0@@QAEHXZ
 0x00403060,380,Unknown4010e0::Func403060,?Func403060@Unknown4010e0@@QAEXXZ
 0x004031e0,460,AsciiText::DrawPopups,?DrawPopups@AsciiText@@QAEXXZ
 0x004033b0,460,AsciiText::DrawPopups2,?DrawPopups2@AsciiText@@QAEXXZ

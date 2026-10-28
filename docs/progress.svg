@@ -61,10 +61,9 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">98.51% (464)</tspan> · <tspan class="decompiled">1.27% (6)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">0.21% (1)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">99.79% (470)</tspan> · <tspan class="decompiled">0% (0)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">0.21% (1)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="735.90" height="6" x="0" y="0" class="named"/>
-<rect width="9.52" height="6" x="735.90" y="0" class="decompiled"/>
+<rect width="745.41" height="6" x="0" y="0" class="named"/>
 <rect width="1.59" height="6" x="745.41" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
@@ -149,12 +148,12 @@
 <rect width="12" height="12" x="420" y="15" class="named"><title>0x0040e1b0 ScriptFollowLife (276 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="15" class="named"><title>0x0040e2d0 EffectManager::EffectManager (101 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="15" class="named"><title>0x0040e340 EffectManager::Reset (25 bytes)</title></rect>
-<rect width="12" height="12" x="465" y="15" class="decompiled"><title>0x0040e360 Func40e360 (589 bytes)</title></rect>
-<rect width="12" height="12" x="480" y="15" class="decompiled"><title>0x0040e5b0 Func40e5b0 (601 bytes)</title></rect>
-<rect width="12" height="12" x="495" y="15" class="decompiled"><title>0x0040e810 Func40e810 (271 bytes)</title></rect>
-<rect width="12" height="12" x="510" y="15" class="decompiled"><title>0x0040e920 Func40e920 (737 bytes)</title></rect>
-<rect width="12" height="12" x="525" y="15" class="decompiled"><title>0x0040ec10 Func40ec10 (416 bytes)</title></rect>
-<rect width="12" height="12" x="540" y="15" class="decompiled"><title>0x0040edb0 Func40edb0 (416 bytes)</title></rect>
+<rect width="12" height="12" x="465" y="15" class="named"><title>0x0040e360 EffectUpdateDrift (589 bytes)</title></rect>
+<rect width="12" height="12" x="480" y="15" class="named"><title>0x0040e5b0 EffectUpdateDriftFast (601 bytes)</title></rect>
+<rect width="12" height="12" x="495" y="15" class="named"><title>0x0040e810 EffectUpdateMove (271 bytes)</title></rect>
+<rect width="12" height="12" x="510" y="15" class="named"><title>0x0040e920 EffectUpdateOrbit (737 bytes)</title></rect>
+<rect width="12" height="12" x="525" y="15" class="named"><title>0x0040ec10 EffectUpdateConverge (416 bytes)</title></rect>
+<rect width="12" height="12" x="540" y="15" class="named"><title>0x0040edb0 EffectUpdateConvergeSlow (416 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="15" class="named"><title>0x0040ef50 EffectManager::SpawnEffect (430 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="15" class="named"><title>0x0040f100 EffectManager::OnUpdate (230 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="15" class="named"><title>0x0040f1f0 EffectManager::OnDraw (129 bytes)</title></rect>
@@ -543,10 +542,9 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">98.60%</tspan> · <tspan class="decompiled">1.27%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">0.13%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">99.87%</tspan> · <tspan class="decompiled">0%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">0.13%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="736.54" height="6" x="0" y="0" class="named"/>
-<rect width="9.51" height="6" x="736.54" y="0" class="decompiled"/>
+<rect width="746.05" height="6" x="0" y="0" class="named"/>
 <rect width="0.95" height="6" x="746.05" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
@@ -627,7 +625,7 @@
 <rect width="16.53" height="16.63" x="463.28" y="40.82" class="named"><title>0x00426100 FireShot (795 bytes)</title></rect>
 <rect width="16.53" height="16.36" x="463.28" y="60.45" class="named"><title>0x004306e0 SoundPlayer::LoadSound (784 bytes)</title></rect>
 <rect width="16.53" height="16.06" x="463.28" y="79.81" class="named"><title>0x00412f10 EnemyManager::OnDraw (772 bytes)</title></rect>
-<rect width="16.53" height="15.20" x="463.28" y="98.87" class="decompiled"><title>0x0040e920 Func40e920 (737 bytes)</title></rect>
+<rect width="16.53" height="15.20" x="463.28" y="98.87" class="named"><title>0x0040e920 EffectUpdateOrbit (737 bytes)</title></rect>
 <rect width="16.53" height="14.98" x="463.28" y="117.07" class="named"><title>0x00424375 App::LoadArchive (728 bytes)</title></rect>
 <rect width="16.53" height="14.95" x="463.28" y="135.05" class="named"><title>0x00432cc0 SpriteEngine::DrawRotated (727 bytes)</title></rect>
 <rect width="16.02" height="15.14" x="482.81" y="0" class="named"><title>0x0043a9c0 CSoundManager::CreateStreaming (715 bytes)</title></rect>
@@ -645,10 +643,10 @@
 <rect width="14.29" height="14.07" x="501.83" y="52.09" class="named"><title>0x00439f88 LoadSelectResources (612 bytes)</title></rect>
 <rect width="14.29" height="13.93" x="501.83" y="69.16" class="named"><title>0x00414360 BulletManager::ClearAllWithBonus (607 bytes)</title></rect>
 <rect width="14.29" height="13.82" x="501.83" y="86.10" class="named"><title>0x00435010 SpriteEngine::LoadSurface (603 bytes)</title></rect>
-<rect width="14.29" height="13.77" x="501.83" y="102.92" class="decompiled"><title>0x0040e5b0 Func40e5b0 (601 bytes)</title></rect>
+<rect width="14.29" height="13.77" x="501.83" y="102.92" class="named"><title>0x0040e5b0 EffectUpdateDriftFast (601 bytes)</title></rect>
 <rect width="14.29" height="13.68" x="501.83" y="119.69" class="named"><title>0x004324d0 SpriteEngine::SetRenderStateForSprite (598 bytes)</title></rect>
 <rect width="14.29" height="13.63" x="501.83" y="136.37" class="named"><title>0x0040f550 Ending::DrawFade (596 bytes)</title></rect>
-<rect width="12.98" height="14.78" x="519.12" y="0" class="decompiled"><title>0x0040e360 Func40e360 (589 bytes)</title></rect>
+<rect width="12.98" height="14.78" x="519.12" y="0" class="named"><title>0x0040e360 EffectUpdateDrift (589 bytes)</title></rect>
 <rect width="12.98" height="14.42" x="519.12" y="17.78" class="named"><title>0x0043bc00 CWaveFile::ReadMMIO (577 bytes)</title></rect>
 <rect width="12.98" height="14.36" x="519.12" y="35.19" class="named"><title>0x00438ef8 MainMenu::HighlightOption (575 bytes)</title></rect>
 <rect width="12.98" height="14.17" x="519.12" y="52.55" class="named"><title>0x0043c080 CWaveFile::Read (569 bytes)</title></rect>
@@ -693,8 +691,8 @@
 <rect width="11.51" height="11.09" x="580.59" y="28.52" class="named"><title>0x004354c0 SpriteEngine::CopySurfaceRectToBackBuffer (424 bytes)</title></rect>
 <rect width="11.51" height="11.06" x="580.59" y="42.61" class="named"><title>0x0042b0d9 LoadScoreDat (423 bytes)</title></rect>
 <rect width="11.51" height="10.89" x="580.59" y="56.67" class="named"><title>0x00432030 SpriteEngine::ReleaseAnm (418 bytes)</title></rect>
-<rect width="11.51" height="10.83" x="580.59" y="70.57" class="decompiled"><title>0x0040ec10 Func40ec10 (416 bytes)</title></rect>
-<rect width="11.51" height="10.83" x="580.59" y="84.39" class="decompiled"><title>0x0040edb0 Func40edb0 (416 bytes)</title></rect>
+<rect width="11.51" height="10.83" x="580.59" y="70.57" class="named"><title>0x0040ec10 EffectUpdateConverge (416 bytes)</title></rect>
+<rect width="11.51" height="10.83" x="580.59" y="84.39" class="named"><title>0x0040edb0 EffectUpdateConvergeSlow (416 bytes)</title></rect>
 <rect width="11.51" height="10.76" x="580.59" y="98.22" class="named"><title>0x0040b8e0 ScriptFreezeBullets (414 bytes)</title></rect>
 <rect width="11.51" height="10.76" x="580.59" y="111.98" class="named"><title>0x0041d680 GetPadButtons (414 bytes)</title></rect>
 <rect width="11.51" height="10.69" x="580.59" y="125.74" class="named"><title>0x00411da0 Enemy::CheckLifeCallback (412 bytes)</title></rect>
@@ -751,7 +749,7 @@
 <rect width="8.47" height="8.61" x="620.06" y="84.20" class="named"><title>0x0040e1b0 ScriptFollowLife (276 bytes)</title></rect>
 <rect width="8.47" height="8.61" x="620.06" y="95.81" class="named"><title>0x00420d40 WindowProc (276 bytes)</title></rect>
 <rect width="8.47" height="8.44" x="620.06" y="107.41" class="named"><title>0x004065e0 DrawReimuBBomb (272 bytes)</title></rect>
-<rect width="8.47" height="8.40" x="620.06" y="118.85" class="decompiled"><title>0x0040e810 Func40e810 (271 bytes)</title></rect>
+<rect width="8.47" height="8.40" x="620.06" y="118.85" class="named"><title>0x0040e810 EffectUpdateMove (271 bytes)</title></rect>
 <rect width="8.47" height="8.40" x="620.06" y="130.25" class="named"><title>0x004108b0 Ending::Ending (271 bytes)</title></rect>
 <rect width="8.47" height="8.35" x="620.06" y="141.65" class="named"><title>0x00413450 BulletManager::BulletManager (270 bytes)</title></rect>
 <rect width="8.23" height="8.60" x="631.53" y="24.95" class="named"><title>0x00429820 Player::FireShots (270 bytes)</title></rect>

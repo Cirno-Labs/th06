@@ -15,47 +15,47 @@ void EffectManager::Reset()
 
 // An effect update: on its first frame, picks a random drift that slows
 // to a stop over 19 frames; moves by it.
-int Func40e360(Effect *effect)
+int EffectUpdateDrift(Effect *effect)
 {
     if (effect->timer == 0 && effect->timer.HasTicked())
     {
-        effect->unk_11c.x = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) / 12.0f;
-        effect->unk_11c.y = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) / 12.0f;
-        effect->unk_11c.z = 0.0f;
-        effect->unk_128 = -effect->unk_11c / 19.0f;
+        effect->velocity.x = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) / 12.0f;
+        effect->velocity.y = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) / 12.0f;
+        effect->velocity.z = 0.0f;
+        effect->acceleration = -effect->velocity / 19.0f;
     }
-    effect->pos += effect->unk_11c * g_App.frameAdvance;
-    effect->unk_11c += effect->unk_128 * g_App.frameAdvance;
+    effect->pos += effect->velocity * g_App.frameAdvance;
+    effect->velocity += effect->acceleration * g_App.frameAdvance;
     return 1;
 }
 
-// Like Func40e360, faster, slowing to a stop over 20 frames.
-int Func40e5b0(Effect *effect)
+// Like EffectUpdateDrift, faster, slowing to a stop over 20 frames.
+int EffectUpdateDriftFast(Effect *effect)
 {
     if (effect->timer == 0 && effect->timer.HasTicked())
     {
-        effect->unk_11c.x = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
-        effect->unk_11c.y = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
-        effect->unk_11c.z = 0.0f;
-        effect->unk_128 = -effect->unk_11c / 20.0f;
+        effect->velocity.x = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
+        effect->velocity.y = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
+        effect->velocity.z = 0.0f;
+        effect->acceleration = -effect->velocity / 20.0f;
     }
-    effect->pos += effect->unk_11c * g_App.frameAdvance;
-    effect->unk_11c += effect->unk_128 * g_App.frameAdvance;
+    effect->pos += effect->velocity * g_App.frameAdvance;
+    effect->velocity += effect->acceleration * g_App.frameAdvance;
     return 1;
 }
 
-// An effect update: moves by unk_11c, which changes by unk_128.
-int Func40e810(Effect *effect)
+// An effect update: moves by velocity, which changes by acceleration.
+int EffectUpdateMove(Effect *effect)
 {
-    effect->pos += effect->unk_11c * g_App.frameAdvance;
-    effect->unk_11c += effect->unk_128 * g_App.frameAdvance;
+    effect->pos += effect->velocity * g_App.frameAdvance;
+    effect->velocity += effect->acceleration * g_App.frameAdvance;
     return 1;
 }
 
-// An effect update: circles unk_134 at radius unk_15c about the axis
-// unk_140, at angle unk_160 (flattened); once unk_17a is set, fades out
-// and grows over 16 frames, then ends.
-int Func40e920(Effect *effect)
+// An effect update: circles origin at `radius` about `axis`, at `angle`
+// (flattened); once fadeOut is set, fades out and grows over 16 frames,
+// then ends.
+int EffectUpdateOrbit(Effect *effect)
 {
     float a2;
     D3DXVECTOR3 n2;
@@ -64,14 +64,14 @@ int Func40e920(Effect *effect)
     float s;
     D3DXVECTOR3 v;
 
-    D3DXVec3Normalize(&n2, &effect->unk_140);
-    s = sinf(effect->unk_160);
-    c = cosf(effect->unk_160);
-    effect->unk_14c.x = n2.x * s;
-    effect->unk_14c.y = n2.y * s;
-    effect->unk_14c.z = n2.z * s;
-    effect->unk_14c.w = c;
-    D3DXMatrixRotationQuaternion(&m2, &effect->unk_14c);
+    D3DXVec3Normalize(&n2, &effect->axis);
+    s = sinf(effect->angle);
+    c = cosf(effect->angle);
+    effect->rotation.x = n2.x * s;
+    effect->rotation.y = n2.y * s;
+    effect->rotation.z = n2.z * s;
+    effect->rotation.w = c;
+    D3DXMatrixRotationQuaternion(&m2, &effect->rotation);
     v.x = n2.y * 1.0f - n2.z * 0.0f;
     v.y = n2.z * 0.0f - n2.x * 1.0f;
     v.z = n2.x * 0.0f - n2.y * 0.0f;
@@ -84,18 +84,18 @@ int Func40e920(Effect *effect)
     {
         D3DXVec3Normalize(&v, &v);
     }
-    v *= effect->unk_15c;
+    v *= effect->radius;
     D3DXVec3TransformCoord(&v, &v, &m2);
     v.z *= 6.0f;
-    effect->pos = effect->unk_134 + v;
-    if (effect->unk_17a != 0)
+    effect->pos = effect->origin + v;
+    if (effect->fadeOut != 0)
     {
-        effect->unk_17b++;
-        if (effect->unk_17b >= 16)
+        effect->fadeFrames++;
+        if (effect->fadeFrames >= 16)
         {
             return 0;
         }
-        a2 = 1.0f - effect->unk_17b / 16.0f;
+        a2 = 1.0f - effect->fadeFrames / 16.0f;
         effect->sprite.color = (effect->sprite.color & 0xffffff) | ((int)(a2 * 255.0f) << 24);
         effect->sprite.scaleY = 2.0f - a2;
         effect->sprite.scaleX = effect->sprite.scaleY;
@@ -105,38 +105,38 @@ int Func40e920(Effect *effect)
 
 // An effect update: on its first frame, picks a random direction; comes
 // in from 256 along it to where it started over 60 frames.
-int Func40ec10(Effect *effect)
+int EffectUpdateConverge(Effect *effect)
 {
     float f;
 
     if (effect->timer == 0 && effect->timer.HasTicked())
     {
-        effect->unk_134 = effect->pos;
+        effect->origin = effect->pos;
         f = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
-        effect->unk_140.x = cosf(f);
-        effect->unk_140.y = sinf(f);
-        effect->unk_140.z = 0.0f;
+        effect->axis.x = cosf(f);
+        effect->axis.y = sinf(f);
+        effect->axis.z = 0.0f;
     }
     f = 256.0f - effect->timer.AsFloat() * 256.0f / 60.0f;
-    effect->pos = f * effect->unk_140 + effect->unk_134;
+    effect->pos = f * effect->axis + effect->origin;
     return 1;
 }
 
-// Like Func40ec10, over 240 frames.
-int Func40edb0(Effect *effect)
+// Like EffectUpdateConverge, over 240 frames.
+int EffectUpdateConvergeSlow(Effect *effect)
 {
     float f;
 
     if (effect->timer == 0 && effect->timer.HasTicked())
     {
-        effect->unk_134 = effect->pos;
+        effect->origin = effect->pos;
         f = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
-        effect->unk_140.x = cosf(f);
-        effect->unk_140.y = sinf(f);
-        effect->unk_140.z = 0.0f;
+        effect->axis.x = cosf(f);
+        effect->axis.y = sinf(f);
+        effect->axis.z = 0.0f;
     }
     f = 256.0f - effect->timer.AsFloat() * 256.0f / 240.0f;
-    effect->pos = f * effect->unk_140 + effect->unk_134;
+    effect->pos = f * effect->axis + effect->origin;
     return 1;
 }
 
@@ -172,8 +172,8 @@ Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOL
         effect->sprite.color = color;
         effect->update = g_EffectInfos[type].update;
         effect->timer.Set(0);
-        effect->unk_17a = 0;
-        effect->unk_17b = 0;
+        effect->fadeOut = 0;
+        effect->fadeFrames = 0;
         count--;
         if (count == 0)
         {

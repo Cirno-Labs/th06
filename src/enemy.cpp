@@ -127,7 +127,7 @@ void ReleaseEnemyEffects(Enemy *enemy)
         {
             continue;
         }
-        enemy->effects[i]->unk_17a = 1;
+        enemy->effects[i]->fadeOut = 1;
         enemy->effects[i] = NULL;
     }
     enemy->effectCount = 0;
@@ -713,12 +713,12 @@ void MoveEnemyEffects(Enemy *enemy)
         {
             continue;
         }
-        eff->unk_134 = enemy->pos;
-        if (eff->unk_15c < enemy->effectRadius)
+        eff->origin = enemy->pos;
+        if (eff->radius < enemy->effectRadius)
         {
-            eff->unk_15c += 0.3f;
+            eff->radius += 0.3f;
         }
-        eff->unk_160 = AddNormalizeAngle(eff->unk_160, 0.031415928f);
+        eff->angle = AddNormalizeAngle(eff->angle, 0.031415928f);
     }
 }
 

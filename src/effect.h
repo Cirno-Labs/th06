@@ -13,19 +13,18 @@ struct Effect
 {
     Sprite sprite;
     D3DXVECTOR3 pos;
-    D3DXVECTOR3 unk_11c;
-    D3DXVECTOR3 unk_128;
-    // For an effect following an enemy: the enemy's position, and its
-    // radius and angle around it.
-    D3DXVECTOR3 unk_134;
-    // Where an effect following an enemy is, relative to it; for
-    // Func40e920, the axis it circles about.
-    D3DXVECTOR3 unk_140;
-    // Func40e920's rotation about unk_140 by unk_160.
-    D3DXQUATERNION unk_14c;
-    // Func40e920's radius and angle.
-    float unk_15c;
-    float unk_160;
+    D3DXVECTOR3 velocity;
+    D3DXVECTOR3 acceleration;
+    // The point EffectUpdateOrbit circles (an enemy's position) and
+    // EffectUpdateConverge comes in to.
+    D3DXVECTOR3 origin;
+    // EffectUpdateOrbit's axis; EffectUpdateConverge's direction.
+    D3DXVECTOR3 axis;
+    // EffectUpdateOrbit's rotation about axis by angle.
+    D3DXQUATERNION rotation;
+    // EffectUpdateOrbit's radius and angle.
+    float radius;
+    float angle;
     Timer timer;
     DWORD unk_170;
     // From g_EffectInfos. Called every frame while set; the effect ends when it returns
@@ -34,9 +33,10 @@ struct Effect
     char active;
     // The type it was started as.
     char type;
-    // Set to end an effect that followed an enemy.
-    char unk_17a;
-    char unk_17b;
+    // Set to end an orbiting effect: it fades out over 16 frames, counted
+    // in fadeFrames.
+    char fadeOut;
+    char fadeFrames;
 };
 ASSERT_SIZE(Effect, 0x17c);
 

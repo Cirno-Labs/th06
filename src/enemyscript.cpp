@@ -545,7 +545,7 @@ restart:
         {
             EnemyScriptArgs *effectArgs = &instr->args;
             enemy->effects[enemy->effectCount] = g_EffectManager.SpawnEffect(0xd, &enemy->pos, 1, g_EffectColors[effectArgs->i[0]]);
-            enemy->effects[enemy->effectCount]->unk_140 = *(D3DXVECTOR3 *)&effectArgs->f[1];
+            enemy->effects[enemy->effectCount]->axis = *(D3DXVECTOR3 *)&effectArgs->f[1];
             enemy->effectRadius = effectArgs->f[4];
             enemy->effectCount++;
             break;
@@ -1755,18 +1755,18 @@ void ScriptSparkCircle(Enemy *enemy, EnemyScriptInstr *instr)
             pos.x += cosf(a2) * r;
             pos.y += sinf(a2) * r;
             effect = g_EffectManager.SpawnEffect(0x13, &pos, 1, 0xff3030ff);
-            effect->unk_11c.x = (g_Rng.GetRandomF32ZeroToOne() * 40.0f - 20.0f) / 60.0f;
-            effect->unk_11c.y = 8.0f * k / 60.0f - 0.26666668f;
-            effect->unk_11c.z = 0.0f;
-            effect->unk_128 = -effect->unk_11c / 120.0f;
+            effect->velocity.x = (g_Rng.GetRandomF32ZeroToOne() * 40.0f - 20.0f) / 60.0f;
+            effect->velocity.y = 8.0f * k / 60.0f - 0.26666668f;
+            effect->velocity.z = 0.0f;
+            effect->acceleration = -effect->velocity / 120.0f;
             pos = enemy->pos;
             pos.x -= cosf(a2) * r;
             pos.y += sinf(a2) * r;
             effect = g_EffectManager.SpawnEffect(0x13, &pos, 1, 0xff3030ff);
-            effect->unk_11c.x = (g_Rng.GetRandomF32ZeroToOne() * 40.0f - 20.0f) / 60.0f;
-            effect->unk_11c.y = 8.0f * k / 60.0f - 0.26666668f;
-            effect->unk_11c.z = 0.0f;
-            effect->unk_128 = -effect->unk_11c / 120.0f;
+            effect->velocity.x = (g_Rng.GetRandomF32ZeroToOne() * 40.0f - 20.0f) / 60.0f;
+            effect->velocity.y = 8.0f * k / 60.0f - 0.26666668f;
+            effect->velocity.z = 0.0f;
+            effect->acceleration = -effect->velocity / 120.0f;
         }
     }
     enemy->sparkTimer.Tick();

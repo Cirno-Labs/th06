@@ -392,3 +392,11 @@ void Func43a70a()
         g_SpriteEngine->ReleaseAnm(i);
     }
 }
+
+BOOL GameManager::IsExtraUnlocked(int character, int shot)
+{
+    return this->clrds[character * 2 + shot].unk_0c[1] == 99 || this->clrds[character * 2 + shot].unk_0c[2] == 99 ||
+                   this->clrds[character * 2 + shot].unk_0c[3] == 99
+               ? TRUE
+               : FALSE;
+}

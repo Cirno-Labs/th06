@@ -440,7 +440,7 @@ address,size,name,symbol
 0x0043a464,501,MainMenu::AddedCallback,?AddedCallback@MainMenu@@SAHPAV1@@Z
 0x0043a659,177,MainMenu::DeletedCallback,?DeletedCallback@MainMenu@@SAHPAV1@@Z
 0x0043a70a,44,Func43a70a,?Func43a70a@@YAXXZ
-0x0043a736,112,Func43a736,
+0x0043a736,112,GameManager::IsExtraUnlocked,?IsExtraUnlocked@GameManager@@QAEHHH@Z
 0x0043a7b0,23,CSoundManager::CSoundManager,??0CSoundManager@@QAE@XZ
 0x0043a7d0,44,CSoundManager::~CSoundManager,??1CSoundManager@@QAE@XZ
 0x0043a800,142,CSoundManager::Initialize,?Initialize@CSoundManager@@QAEJPAUHWND__@@KKKK@Z

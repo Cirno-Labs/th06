@@ -25,6 +25,9 @@ public:
     {
         this->score += points;
     }
+    // Whether shot `shot` of `character` cleared the game on normal,
+    // hard or lunatic (clrds' 99), which opens the extra stage.
+    BOOL IsExtraUnlocked(int character, int shot);
     // Adds `amount` hundredths to the rank, up to maxRank.
     void AddSubRank(int amount);
     // Takes `amount` hundredths from the rank, down to minRank.

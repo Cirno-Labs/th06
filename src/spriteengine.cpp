@@ -1,5 +1,8 @@
 // The file with SpriteEngine.
 
+#include <stdarg.h>
+#include <stdio.h>
+
 #include "sprite.h"
 #include "unsorted.h"
 
@@ -828,4 +831,21 @@ void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int 
         unk6 = 15;
     }
     RenderTextToTexture(x, y, width, unk4, fontHeight, unk6, textColor, shadowColor, text, this->textures[textureIndex]);
+}
+
+void SpriteEngine::RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...)
+{
+    va_list args;
+    char buf[64];
+    int fontW;
+
+    fontW = sprite->unk_10c;
+    va_start(args, fmt);
+    vsprintf(buf, fmt, args);
+    va_end(args);
+    this->RenderTextToTextureIndex(sprite->spriteData->sourceFileIndex, sprite->spriteData->startX,
+                                   sprite->spriteData->startY, sprite->spriteData->textureWidth,
+                                   sprite->spriteData->textureHeight, fontW, sprite->unk_10d, textColor, shadowColor,
+                                   buf);
+    sprite->flags.unk0 = 1;
 }

@@ -1113,6 +1113,321 @@ int ResultScreen::RegisterChain(int unk)
     return 0;
 }
 
+int ResultScreen::OnUpdate(ResultScreen *screen)
+{
+    int i;
+    Sprite *sprite;
+    int shot;
+    int k;
+
+    switch (screen->state)
+    {
+    case 0x11:
+        g_Unknown6c6d18.scene = 1;
+        return 0;
+    case 0:
+        if (screen->frame == 0)
+        {
+            sprite = screen->sprites;
+            for (i = 0; i < 0x26; i++, sprite++)
+            {
+                sprite->pendingInterrupt = 1;
+                sprite->flags.colorOp = 1;
+                if (!g_Unknown6c6d18.cfg.flags.unk0)
+                {
+                    sprite->color = sprite->color & 0xff000000;
+                }
+                else
+                {
+                    sprite->color = sprite->color;
+                }
+            }
+            sprite = &screen->sprites[1];
+            for (i = 0; i <= 6; i++, sprite++)
+            {
+                if (i == screen->cursor)
+                {
+                    if (!g_Unknown6c6d18.cfg.flags.unk0)
+                    {
+                        sprite->color = 0xff505050;
+                    }
+                    else
+                    {
+                        sprite->color = 0xffffffff;
+                    }
+                    sprite->posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+                }
+                else
+                {
+                    if (!g_Unknown6c6d18.cfg.flags.unk0)
+                    {
+                        sprite->color = 0xb0000000;
+                    }
+                    else
+                    {
+                        sprite->color = 0xb0ffffff;
+                    }
+                    sprite->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+                }
+            }
+        }
+        if (screen->frame < 20)
+        {
+            break;
+        }
+        screen->state++;
+        screen->frame = 0;
+    case 1:
+        MoveCursorVertical(screen, 7);
+        sprite = &screen->sprites[1];
+        for (i = 0; i <= 6; i++, sprite++)
+        {
+            if (i == screen->cursor)
+            {
+                if (!g_Unknown6c6d18.cfg.flags.unk0)
+                {
+                    sprite->color = 0xff505050;
+                }
+                else
+                {
+                    sprite->color = 0xffffffff;
+                }
+                sprite->posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+            }
+            else
+            {
+                if (!g_Unknown6c6d18.cfg.flags.unk0)
+                {
+                    sprite->color = 0xb0000000;
+                }
+                else
+                {
+                    sprite->color = 0xb0ffffff;
+                }
+                sprite->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+            }
+        }
+        if (WAS_PRESSED(0x1001))
+        {
+            sprite = screen->sprites;
+            switch (screen->cursor)
+            {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                for (i = 0; i < 0x26; i++, sprite++)
+                {
+                    sprite->pendingInterrupt = screen->cursor + 3;
+                }
+                screen->difficulty = screen->cursor;
+                screen->state = screen->cursor + 3;
+                screen->listState = screen->state;
+                screen->frame = 0;
+                screen->cursor = screen->savedCursor;
+                screen->character = -1;
+                screen->spellPage = -1;
+                break;
+            case 5:
+                for (i = 0; i < 0x26; i++, sprite++)
+                {
+                    sprite->pendingInterrupt = screen->cursor + 3;
+                }
+                screen->difficulty = screen->cursor;
+                screen->state = 8;
+                screen->listState = screen->state;
+                screen->frame = 0;
+                screen->character = -1;
+                screen->cursor = screen->savedSpellPage;
+                screen->spellPage = -1;
+                break;
+            case 6:
+                for (i = 0; i < 0x26; i++, sprite++)
+                {
+                    sprite->pendingInterrupt = 2;
+                }
+                screen->state = 2;
+                g_Unknown6d3f50.QueueSound(0xb, 0);
+                break;
+            }
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            screen->cursor = 6;
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+        }
+        break;
+    case 2:
+        if (screen->frame < 60)
+        {
+            break;
+        }
+        g_Unknown6c6d18.scene = 1;
+        return 0;
+    case 7:
+        if ((g_Buttons & 4) || (g_Buttons & 0x100))
+        {
+            if (screen->cheatProgress < 5)
+            {
+                if (WAS_PRESSED(0x800))
+                {
+                    screen->cheatProgress++;
+                }
+                else if (WAS_PRESSED(0x160b))
+                {
+                    screen->cheatProgress = 0;
+                }
+            }
+            else if (screen->cheatProgress < 7)
+            {
+                if (WAS_PRESSED(0x200))
+                {
+                    screen->cheatProgress++;
+                }
+                else if (WAS_PRESSED(0x160b))
+                {
+                    screen->cheatProgress = 0;
+                }
+            }
+            else if (screen->cheatProgress < 10)
+            {
+                if (WAS_PRESSED(0x400))
+                {
+                    screen->cheatProgress++;
+                }
+                else if (WAS_PRESSED(0x160b))
+                {
+                    screen->cheatProgress = 0;
+                }
+            }
+            else
+            {
+                for (shot = 0; shot < 4; shot++)
+                {
+                    for (k = 0; k < 5; k++)
+                    {
+                        g_GameManager.clrds[shot].unk_0c[k] = 99;
+                        g_GameManager.clrds[shot].unk_11[k] = 99;
+                    }
+                }
+                screen->cheatProgress = 0;
+                g_Unknown6d3f50.QueueSound(0x1c, 0);
+            }
+        }
+        else
+        {
+            screen->cheatProgress = 0;
+        }
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+        if (screen->character != screen->cursor && screen->frame == 20)
+        {
+            screen->character = screen->cursor;
+            g_SpriteEngine->RenderTextCentered(&screen->textSprites[0], 0xffffff, 0, g_ShotNames[screen->character * 2]);
+            g_SpriteEngine->RenderTextCentered(&screen->textSprites[1], 0xffffff, 0,
+                                               g_ShotNames[screen->character * 2 + 1]);
+        }
+        if (screen->frame < 30)
+        {
+            break;
+        }
+        if (MoveCursorHorizontal(screen, 2))
+        {
+            screen->frame = 0;
+            sprite = screen->sprites;
+            for (i = 0; i < 0x26; i++, sprite++)
+            {
+                sprite->pendingInterrupt = screen->difficulty + 3;
+            }
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+            screen->state = 0;
+            screen->frame = 1;
+            sprite = screen->sprites;
+            for (i = 0; i < 0x26; i++, sprite++)
+            {
+                sprite->pendingInterrupt = 1;
+            }
+            screen->savedCursor = screen->cursor;
+            screen->cursor = screen->difficulty;
+        }
+        break;
+    case 8:
+        if (screen->spellPage != screen->cursor && screen->frame == 20)
+        {
+            screen->spellPage = screen->cursor;
+            for (i = screen->spellPage * 10; i < screen->spellPage * 10 + 10; i++)
+            {
+                if (i >= 0x40)
+                {
+                    break;
+                }
+                if (g_GameManager.catks[i].unk_3c == 0)
+                {
+                    g_SpriteEngine->RenderText(&screen->textSprites[i % 10], 0xffffff, 0, "？？？？？");
+                }
+                else
+                {
+                    g_SpriteEngine->RenderText(&screen->textSprites[i % 10], 0xffffff, 0, g_GameManager.catks[i].name);
+                }
+            }
+        }
+        if (screen->frame < 30)
+        {
+            break;
+        }
+        if (MoveCursorHorizontal(screen, 7))
+        {
+            screen->frame = 0;
+            sprite = screen->sprites;
+            for (i = 0; i < 0x26; i++, sprite++)
+            {
+                sprite->pendingInterrupt = screen->difficulty + 3;
+            }
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+            screen->state = 0;
+            screen->frame = 1;
+            sprite = screen->sprites;
+            for (i = 0; i < 0x26; i++, sprite++)
+            {
+                sprite->pendingInterrupt = 1;
+            }
+            screen->savedSpellPage = screen->cursor;
+            screen->cursor = screen->difficulty;
+        }
+        break;
+    case 9:
+        screen->HandleNameEntry();
+        break;
+    case 10:
+    case 11:
+    case 12:
+    case 13:
+    case 14:
+        screen->HandleReplaySaving();
+        break;
+    case 15:
+    case 16:
+        screen->WaitAfterNameEntry();
+        break;
+    }
+    sprite = screen->sprites;
+    for (i = 0; i < 0x26; i++, sprite++)
+    {
+        g_SpriteEngine->Step(sprite);
+    }
+    screen->frame++;
+    return 1;
+}
+
 int ResultScreen::AddedCallback(ResultScreen *screen)
 {
     int i;
@@ -1178,7 +1493,7 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
             }
         }
     }
-    screen->unk_0014 = 0;
+    screen->savedCursor = 0;
     screen->scoreDat = LoadScoreDat("score.dat");
     for (i = 0; i < 5; i++)
     {

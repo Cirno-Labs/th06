@@ -51,7 +51,11 @@ struct Catk
     BYTE unk_09[0x7];
     // The card's number, below 0x40.
     WORD index;
-    BYTE unk_12[0x2e];
+    BYTE unk_12[0x6];
+    char name[0x24];
+    // The result screen shows "？？？？？" for the name while it is 0.
+    WORD unk_3c;
+    WORD unk_3e;
 };
 ASSERT_SIZE(Catk, 0x40);
 
@@ -207,6 +211,11 @@ public:
     // 0xd, draw 0xc). With `unk` set, it starts in state 9, or 0x11 when
     // g_GameManager.unk_1823 is set. Returns 0, or -1 if adding fails.
     static int RegisterChain(int unk);
+    // The menu (states 0 and 1: score lists by difficulty, spell
+    // cards, quit), the score lists (3 to 7, by shot), the spell cards
+    // (8), and after a game the name entry (9), replay saving (10 to 14)
+    // and statistics (15, 16). Steps the sprites. Returns 1, or 0 once it
+    // sets the scene back to the title.
     static int OnUpdate(ResultScreen *screen);
     static int OnDraw(ResultScreen *screen);
     // Loads the result screen's image and ANMs and starts the sprites'
@@ -253,21 +262,31 @@ public:
     // Counts the frames in the current state.
     int frame;
     int state;
-    DWORD unk_000c;
+    // The list state (3 to 8) last entered from the menu.
+    int listState;
     // The menu item selected, or where the next character of a name
     // goes (0 to 8).
     int cursor;
-    DWORD unk_0014;
-    DWORD unk_0018;
+    // The cursors of the score lists' shot and of the spell card pages,
+    // kept while back in the menu.
+    int savedCursor;
+    int savedSpellPage;
     // The replay slot chosen, 0 to 14.
     int replaySlot;
     // The character of g_NameAlphabet selected.
     int charIndex;
-    // g_GameManager's character and difficulty.
+    // The character whose shot names textSprites show (g_GameManager's
+    // after a game); -1 to redraw them.
     int character;
-    DWORD unk_0028;
+    // The spell card page (ten cards each) textSprites show; -1 to
+    // redraw.
+    int spellPage;
+    // The difficulty whose scores are shown; 5 for the spell cards.
     int difficulty;
-    DWORD unk_0030;
+    // How far the button sequence that marks every stage cleared has
+    // got: five of 0x800, two of 0x200, three of 0x400 while 4 or 0x100
+    // is held.
+    int cheatProgress;
     char name[0xc];
     Sprite sprites[0x26];
     // Text drawn with RenderTextCentered; the first two hold the two shot

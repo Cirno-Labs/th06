@@ -32,7 +32,7 @@ struct StageInstr
     int frame;
     // 0 a camera keyframe, 1 the fog (color, near, far), 2 the camera
     // offset to fade to, 3 that fade's frames, 4 the fog fade's frames, 5
-    // a wait for Stage::unk_2a8.
+    // a wait for Stage::scriptResume.
     short opcode;
     short unk_06;
     D3DXVECTOR3 args;
@@ -74,9 +74,9 @@ struct StageData
 {
     short objectCount;
     short quadCount;
-    // Offsets from the start of the file.
-    int unk_04;
-    int unk_08;
+    // Offsets from the start of the file: the instances and the script.
+    int instancesOffset;
+    int scriptOffset;
     DWORD unk_0c;
     // The stage's name, and its songs' names and files: Gui shows the
     // name and the first song's as the stage starts, and the dialogue
@@ -101,18 +101,19 @@ public:
     static int RegisterChain(int stage);
     // Runs the stage script up to the current frame, moves the camera
     // between its keyframes and fades the camera offset and the fog.
-    // While g_GameManager.isFrozen is set it only tints unk_088. Returns
+    // While g_GameManager.isFrozen is set it only tints
+    // spellCardBackground. Returns
     // 1.
     static int OnUpdate(Stage *stage);
-    // Sets the fog, then draws layers 0 and 1 unless unk_080 is above 1
+    // Sets the fog, then draws layers 0 and 1 unless spellCardState is above 1
     // or g_Gui.IsLoadingShown() is set. Returns 1.
     static int OnDraw(Stage *stage);
     // Draws the objects on `layer` whose bounding box shows on screen,
-    // relative to the camera at unk_03c. Returns 0.
+    // relative to cameraPos. Returns 0.
     int DrawLayer(int layer);
     // Draws layers 2 and 3 under the same conditions as OnDraw, with a
-    // rectangle fading in over unk_084's 60 frames while unk_080 is 1,
-    // then unk_088 while unk_080 is set, and leaves the fog at 1000 to
+    // rectangle fading in over spellCardFrames' 60 frames while
+    // spellCardState is 1, then spellCardBackground while it is set, and leaves the fog at 1000 to
     // 2000. Returns 1.
     static int OnDraw2(Stage *stage);
     // Resets, loads the files g_StageFiles gives for the stage and sets
@@ -157,12 +158,17 @@ public:
     // Makes OnDraw set the fog color again.
     char fogColorChanged;
     char unk_07d[0x3];
-    int unk_080;
-    int unk_084;
-    Sprite unk_088;
+    // Set to 1 as a spell card starts (enemy script opcode 93), 2 once
+    // the background has faded in over spellCardFrames, 0 as it ends;
+    // from 2 on, the stage's own layers are not drawn.
+    int spellCardState;
+    int spellCardFrames;
+    // The spell card background (script 0x2b3).
+    Sprite spellCardBackground;
     Sprite unk_198;
-    // Lets the script past opcode 5; cleared when it does.
-    BYTE unk_2a8;
+    // Lets the script past opcode 5; set by enemy script opcode 125,
+    // cleared when it does.
+    BYTE scriptResume;
     BYTE unk_2a9[0x3];
     // A fade of g_Camera's offset over offsetFadeFrames, from offsetFrom
     // to offsetTo.

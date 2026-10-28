@@ -62,7 +62,7 @@ int Stage::AddedCallback(Stage *stage)
     stage->cameraPos.x = 0.0f;
     stage->cameraPos.y = 0.0f;
     stage->cameraPos.z = 0.0f;
-    stage->unk_080 = 0;
+    stage->spellCardState = 0;
     stage->fogFadeFrames = 0;
     if (stage->Load(g_StageFiles[g_GameManager.stage].anmPath, g_StageFiles[g_GameManager.stage].dataPath) != 0)
     {
@@ -75,7 +75,7 @@ int Stage::AddedCallback(Stage *stage)
     stage->offsetFrom = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
     stage->offsetFadeFrames = 1;
     stage->offsetFadeTime.Set(0);
-    stage->unk_2a8 = 0;
+    stage->scriptResume = 0;
     g_App.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
     g_App.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
     g_App.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
@@ -97,10 +97,10 @@ int Stage::OnUpdate(Stage *stage)
     }
     if (g_GameManager.isFrozen)
     {
-        ((BYTE *)&stage->unk_088.color)[3] = 0x60;
-        ((BYTE *)&stage->unk_088.color)[2] = 0x80;
-        ((BYTE *)&stage->unk_088.color)[1] = 0x30;
-        ((BYTE *)&stage->unk_088.color)[0] = 0x30;
+        ((BYTE *)&stage->spellCardBackground.color)[3] = 0x60;
+        ((BYTE *)&stage->spellCardBackground.color)[2] = 0x80;
+        ((BYTE *)&stage->spellCardBackground.color)[1] = 0x30;
+        ((BYTE *)&stage->spellCardBackground.color)[0] = 0x30;
         return 1;
     }
     for (;;)
@@ -180,10 +180,10 @@ int Stage::OnUpdate(Stage *stage)
             }
             break;
         case 5:
-            if (stage->unk_2a8)
+            if (stage->scriptResume)
             {
                 stage->scriptIndex++;
-                stage->unk_2a8 = 0;
+                stage->scriptResume = 0;
                 continue;
             }
             break;
@@ -243,14 +243,14 @@ int Stage::OnUpdate(Stage *stage)
         stage->scriptTime.Tick();
     }
     stage->StepObjects();
-    if (stage->unk_080 >= 1)
+    if (stage->spellCardState >= 1)
     {
-        if (stage->unk_084 == 60)
+        if (stage->spellCardFrames == 60)
         {
-            stage->unk_080++;
+            stage->spellCardState++;
         }
-        stage->unk_084++;
-        g_SpriteEngine->Step(&stage->unk_088);
+        stage->spellCardFrames++;
+        g_SpriteEngine->Step(&stage->spellCardBackground);
     }
     return 1;
 }
@@ -264,7 +264,7 @@ int Stage::OnDraw(Stage *stage)
     }
     g_App.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
     g_App.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
-    if (stage->unk_080 <= 1 && !g_Gui.IsLoadingShown())
+    if (stage->spellCardState <= 1 && !g_Gui.IsLoadingShown())
     {
         stage->DrawLayer(0);
         stage->DrawLayer(1);
@@ -278,27 +278,27 @@ int Stage::OnDraw2(Stage *stage)
     int opacity;
     float area[4];
 
-    if (stage->unk_080 <= 1 && !g_Gui.IsLoadingShown())
+    if (stage->spellCardState <= 1 && !g_Gui.IsLoadingShown())
     {
         stage->DrawLayer(2);
         stage->DrawLayer(3);
-        if (stage->unk_080 == 1)
+        if (stage->spellCardState == 1)
         {
             area[0] = 32.0f;
             area[1] = 16.0f;
             area[2] = 416.0f;
             area[3] = 464.0f;
-            opacity = stage->unk_084 * 0xff / 60;
+            opacity = stage->spellCardFrames * 0xff / 60;
             DrawColorRect(area, opacity << 24);
         }
     }
-    if (stage->unk_080 >= 1)
+    if (stage->spellCardState >= 1)
     {
-        if (stage->unk_084 <= g_App.cfg.frameSkip)
+        if (stage->spellCardFrames <= g_App.cfg.frameSkip)
         {
-            g_SpriteEngine->StartScript(&stage->unk_088, 0x2b3);
+            g_SpriteEngine->StartScript(&stage->spellCardBackground, 0x2b3);
         }
-        g_SpriteEngine->DrawRotated(&stage->unk_088);
+        g_SpriteEngine->DrawRotated(&stage->spellCardBackground);
     }
     g_App.viewport.MinZ = 0.0f;
     g_App.viewport.MaxZ = 0.5f;
@@ -330,8 +330,8 @@ int Stage::Load(char *anmPath, char *dataPath)
     }
     this->objectCount = this->data->objectCount;
     this->quadCount = this->data->quadCount;
-    this->instances = (StageInstance *)(this->data->unk_04 + (int)this->data);
-    this->script = (StageInstr *)(this->data->unk_08 + (int)this->data);
+    this->instances = (StageInstance *)(this->data->instancesOffset + (int)this->data);
+    this->script = (StageInstr *)(this->data->scriptOffset + (int)this->data);
     this->objects = (StageObject **)((char *)this->data + 0x490);
     for (i = 0; i < this->objectCount; i++)
     {

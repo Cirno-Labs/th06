@@ -594,3 +594,25 @@ int ResultScreen::HandleNameEntry()
     }
     return 0;
 }
+
+void MoveCursorVertical(ResultScreen *screen, int count)
+{
+    if (WAS_PRESSED_OR_HELD(0x10))
+    {
+        screen->cursor--;
+        if (screen->cursor < 0)
+        {
+            screen->cursor += count;
+        }
+        g_Unknown6d3f50.QueueSound(0xc, 0);
+    }
+    if (WAS_PRESSED_OR_HELD(0x20))
+    {
+        screen->cursor++;
+        if (screen->cursor >= count)
+        {
+            screen->cursor -= count;
+        }
+        g_Unknown6d3f50.QueueSound(0xc, 0);
+    }
+}

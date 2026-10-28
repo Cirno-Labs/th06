@@ -355,7 +355,7 @@ address,size,name,symbol
 0x0042bc5b,42,ResultScreen::ReleaseScores,?ReleaseScores@ResultScreen@@QAEXHH@Z
 0x0042bc85,1615,ResultScreen::HandleNameEntry,?HandleNameEntry@ResultScreen@@QAEHXZ
 0x0042c2d4,3536,Func42c2d4,
-0x0042d0a4,235,Func42d0a4,
+0x0042d0a4,235,MoveCursorVertical,?MoveCursorVertical@@YAXPAVResultScreen@@H@Z
 0x0042d18f,259,Func42d18f,
 0x0042d292,200,Func42d292,
 0x0042d35a,1049,Func42d35a,

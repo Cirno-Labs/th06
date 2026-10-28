@@ -157,6 +157,9 @@ void SaveScoreDat(class ResultScreen *screen);
 // Frees `dat` and its list.
 void ReleaseScoreDat(ScoreDat *dat);
 
+// Moves `screen`'s cursor up or down through `count` items, wrapping.
+void MoveCursorVertical(class ResultScreen *screen, int count);
+
 // The characters a name can be made of, 16 to a row; the last two
 // stand for a space and the end.
 extern char *g_NameAlphabet;

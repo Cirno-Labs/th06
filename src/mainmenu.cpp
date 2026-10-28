@@ -41,6 +41,46 @@ int MoveMenuCursor(MainMenu *menu, int count)
     return 0;
 }
 
+void ReassignButton(MainMenu *menu, short button, short replacement, int unk)
+{
+    if (unk == 0 && menu->controllerMapping.unk_00[0] == button)
+    {
+        menu->controllerMapping.unk_00[0] = replacement;
+    }
+    if (menu->controllerMapping.unk_00[1] == button)
+    {
+        menu->controllerMapping.unk_00[1] = replacement;
+    }
+    if (unk == 0 && menu->controllerMapping.unk_00[2] == button)
+    {
+        menu->controllerMapping.unk_00[2] = replacement;
+    }
+    if (menu->controllerMapping.unk_00[4] == button)
+    {
+        menu->controllerMapping.unk_00[4] = replacement;
+    }
+    if (menu->controllerMapping.unk_00[5] == button)
+    {
+        menu->controllerMapping.unk_00[5] = replacement;
+    }
+    if (menu->controllerMapping.unk_00[6] == button)
+    {
+        menu->controllerMapping.unk_00[6] = replacement;
+    }
+    if (menu->controllerMapping.unk_00[7] == button)
+    {
+        menu->controllerMapping.unk_00[7] = replacement;
+    }
+    if (menu->controllerMapping.unk_00[3] == button)
+    {
+        menu->controllerMapping.unk_00[3] = replacement;
+    }
+    if (menu->controllerMapping.unk_00[8] == button)
+    {
+        menu->controllerMapping.unk_00[8] = replacement;
+    }
+}
+
 int MainMenu::DeletedCallback(MainMenu *menu)
 {
     int i;

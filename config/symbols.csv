@@ -422,7 +422,7 @@ address,size,name,symbol
 0x0043575d,66,MainMenu::MainMenu,??0MainMenu@@QAE@XZ
 0x0043579f,7473,Func43579f,
 0x0043753c,310,MoveMenuCursor,?MoveMenuCursor@@YAHPAVMainMenu@@H@Z
-0x00437672,305,Func437672,
+0x00437672,305,ReassignButton,?ReassignButton@@YAXPAVMainMenu@@FFH@Z
 0x004377a3,255,Func4377a3,
 0x004378a2,322,Func4378a2,
 0x004379e4,349,Func4379e4,

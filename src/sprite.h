@@ -31,7 +31,8 @@ struct SpriteFlags
     unsigned int blendMode : 1;
     // Selects SpriteEngine::Draw's stage 0 D3DTSS_COLOROP.
     unsigned int colorOp : 1;
-    unsigned int unk4 : 4;
+    unsigned int unk4 : 2;
+    unsigned int unk6 : 2;
     // Set to 3 throughout the music screen.
     unsigned int unk8 : 2;
     unsigned int unk10 : 2;
@@ -65,7 +66,8 @@ public:
     float scaleY;
     float scaleX;
     DWORD unk_020[0x4];
-    Timer unk_030;
+    // Counts the frames since the script started.
+    Timer scriptTime;
     // Set to the identity by Initialize.
     D3DXMATRIX matrix;
     // SpriteEngine::Draw skips the sprite while it is 0.
@@ -86,7 +88,10 @@ public:
     // The script SpriteEngine::StartScript started.
     short scriptIndex;
     short unk_0b6;
-    DWORD unk_0b8[0x2];
+    // The script SetScript started, and the next instruction to run;
+    // NULL once the script ends.
+    void *scriptStart;
+    void *scriptPos;
     // The entry SetSprite chose.
     SpriteData *spriteData;
     DWORD unk_0c4[0x8];
@@ -155,7 +160,8 @@ public:
     // Shows sprite `sprite` of the loaded ANM files on `vm`. Returns 0,
     // or -1 if there is no such sprite.
     int SetSprite(Sprite *vm, int sprite);
-    // Resets `vm` and runs `script` on it from the start.
+    // Resets `vm` and runs `script` on it from the start: runs its first
+    // frame now unless `script` is NULL.
     void SetScript(Sprite *vm, void *script);
 
     // Runs script `script` of the loaded ANM files on `vm`.

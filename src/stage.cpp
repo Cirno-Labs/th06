@@ -379,7 +379,7 @@ int Stage::StepObjects()
                     g_SpriteEngine->Step(sprite);
                     break;
                 }
-                if (sprite->unk_0b8[1] != 0)
+                if (sprite->scriptPos != NULL)
                 {
                     busy++;
                 }

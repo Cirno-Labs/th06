@@ -84,6 +84,20 @@ int SpriteEngine::CreateTexture(int index, int width, int height, int format)
     return 0;
 }
 
+void SpriteEngine::SetScript(Sprite *vm, void *script)
+{
+    vm->flags.unk6 = 0;
+    vm->Initialize();
+    vm->scriptStart = script;
+    vm->scriptPos = vm->scriptStart;
+    vm->scriptTime.Set(0);
+    vm->flags.unk0 = 0;
+    if (script != NULL)
+    {
+        this->Step(vm);
+    }
+}
+
 void SpriteEngine::RotatePoint(float *out, float sine, float cosine, float x, float y, float cx, float cy)
 {
     out[0] = sine * y + cosine * x + cx;

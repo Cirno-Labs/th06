@@ -226,3 +226,5 @@ extern int g_SpellCardBonuses[0x40];
 extern float g_Unknown487edc[6];
 extern D3DXVECTOR3 g_Unknown487f5c;
 extern D3DXVECTOR3 g_Unknown487f68;
+// Three values for each character's two shot types, for Func40c100.
+extern int g_Unknown476264[2][2][3];

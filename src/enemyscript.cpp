@@ -1528,3 +1528,12 @@ void Func40bb80(Enemy *enemy, EnemyScriptInstr *instr)
     }
     enemy->ctx.intVars[2]++;
 }
+
+// g_EnemyScriptFuncs[3]: sets intVars[1] to [3] to the player's shot
+// type's values from g_Unknown476264.
+void Func40c100(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    enemy->ctx.intVars[1] = g_Unknown476264[g_GameManager.character][g_GameManager.shotType][0];
+    enemy->ctx.intVars[2] = g_Unknown476264[g_GameManager.character][g_GameManager.shotType][1];
+    enemy->ctx.intVars[3] = g_Unknown476264[g_GameManager.character][g_GameManager.shotType][2];
+}

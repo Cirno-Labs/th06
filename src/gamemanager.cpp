@@ -192,12 +192,12 @@ int GameManager::AddedCallback(GameManager *mgr)
                 ((WORD *)catk2)[m2] = g_Rng.GetRandomU16();
             }
             catk2->magic = 0x4b544143;
-            catk2->unk_06 = 0x40;
+            catk2->size2 = 0x40;
             catk2->size = 0x40;
             catk2->version = 0x10;
             catk2->index = index2;
-            catk2->unk_3c = 0;
-            catk2->unk_3e = 0;
+            catk2->attempts = 0;
+            catk2->captures = 0;
         }
         data = LoadScoreDat("score.dat");
         g_GameManager.highScore = LoadHighScores(data, NULL, g_GameManager.character * 2 + g_GameManager.shotType, g_GameManager.difficulty);
@@ -229,13 +229,13 @@ int GameManager::AddedCallback(GameManager *mgr)
     if (g_GameManager.isInReplay == 0)
     {
         shot2 = g_GameManager.character * 2 + g_GameManager.shotType;
-        if (!mgr->continuesUsed && mgr->clrds[shot2].unk_0c[g_GameManager.difficulty] < mgr->stage - 1)
+        if (!mgr->continuesUsed && mgr->clrds[shot2].stagesClearedNoContinue[g_GameManager.difficulty] < mgr->stage - 1)
         {
-            mgr->clrds[shot2].unk_0c[g_GameManager.difficulty] = mgr->stage - 1;
+            mgr->clrds[shot2].stagesClearedNoContinue[g_GameManager.difficulty] = mgr->stage - 1;
         }
-        if (mgr->clrds[shot2].unk_11[g_GameManager.difficulty] < mgr->stage - 1)
+        if (mgr->clrds[shot2].stagesCleared[g_GameManager.difficulty] < mgr->stage - 1)
         {
-            mgr->clrds[shot2].unk_11[g_GameManager.difficulty] = mgr->stage - 1;
+            mgr->clrds[shot2].stagesCleared[g_GameManager.difficulty] = mgr->stage - 1;
         }
     }
     if (mgr->isInPractice)

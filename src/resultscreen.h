@@ -16,9 +16,12 @@ struct Hscr
 {
     DWORD magic;
     WORD size;
-    WORD unk_06;
+    // The size again.
+    WORD size2;
     BYTE version;
-    BYTE unk_09[0x3];
+    // Set on the entry just added, which is the one being named.
+    BYTE isNew;
+    BYTE unk_0a[0x2];
     DWORD score;
     // The shot (0 to 3) and difficulty (0 to 4) of its list.
     BYTE shot;
@@ -35,7 +38,7 @@ struct Th6k
 {
     DWORD magic;
     WORD size;
-    WORD unk_06;
+    WORD size2;
     BYTE version;
     BYTE unk_09[0x3];
 };
@@ -46,7 +49,7 @@ struct Catk
 {
     DWORD magic;
     WORD size;
-    WORD unk_06;
+    WORD size2;
     BYTE version;
     BYTE unk_09[0x3];
     // The bonus the card gave when last captured.
@@ -59,9 +62,10 @@ struct Catk
     // latest first.
     BYTE history[0x5];
     char name[0x24];
-    // The result screen shows "？？？？？" for the name while it is 0.
-    WORD unk_3c;
-    WORD unk_3e;
+    // How often the card was met and captured, outside replays. The
+    // result screen shows "？？？？？" for the name while attempts is 0.
+    WORD attempts;
+    WORD captures;
 };
 ASSERT_SIZE(Catk, 0x40);
 
@@ -70,12 +74,13 @@ struct Clrd
 {
     DWORD magic;
     WORD size;
-    WORD unk_06;
+    WORD size2;
     BYTE version;
     BYTE unk_09[0x3];
-    // By difficulty.
-    BYTE unk_0c[5];
-    BYTE unk_11[5];
+    // By difficulty: the number of stages cleared, 99 ('c') for the
+    // whole game, without continues and with.
+    BYTE stagesClearedNoContinue[5];
+    BYTE stagesCleared[5];
     BYTE shot;
     BYTE unk_17;
 };
@@ -86,7 +91,7 @@ struct Pscr
 {
     DWORD magic;
     WORD size;
-    WORD unk_06;
+    WORD size2;
     BYTE version;
     BYTE unk_09[0x3];
     DWORD score;
@@ -125,7 +130,7 @@ struct ScoreChunk
     DWORD magic;
     // The chunk's size, header included.
     WORD size;
-    WORD unk_06;
+    WORD size2;
 };
 
 // "score.dat" as loaded: a 0x14-byte header, then chunks ("TH6K", ...).
@@ -135,10 +140,11 @@ struct ScoreDat
 {
     BYTE unk_00;
     // Where the key starts; random.
-    BYTE unk_01;
+    BYTE key;
     // The sum of the decrypted bytes from the fifth on.
     WORD checksum;
-    WORD unk_04;
+    // 0x10.
+    WORD version;
     BYTE unk_06;
     BYTE unk_07;
     // Where the chunks start.

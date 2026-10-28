@@ -738,14 +738,14 @@ restart:
                 }
                 if (rec->nameChecksum != (sum & 0xff))
                 {
-                    rec->unk_3e = 0;
-                    rec->unk_3c = 0;
+                    rec->captures = 0;
+                    rec->attempts = 0;
                     rec->nameChecksum = sum;
                 }
                 rec->bonus = g_EnemyManager.spellCardBonus;
-                if (rec->unk_3c < 9999)
+                if (rec->attempts < 9999)
                 {
-                    rec->unk_3c++;
+                    rec->attempts++;
                 }
             }
             break;
@@ -767,7 +767,7 @@ restart:
                         g_GameManager.score += bonus;
                         if (g_GameManager.isInReplay == 0)
                         {
-                            rec->unk_3e++;
+                            rec->captures++;
                             for (k = 4; k > 0; k--)
                             {
                                 rec->history[k] = rec->history[k - 1];

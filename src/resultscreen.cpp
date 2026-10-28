@@ -203,14 +203,14 @@ int LoadClears(void *scoreDat, Clrd *clrds)
     {
         memset(&clrds[i], 0, sizeof(Clrd));
         clrds[i].magic = 0x44524c43;
-        clrds[i].unk_06 = sizeof(Clrd);
+        clrds[i].size2 = sizeof(Clrd);
         clrds[i].size = sizeof(Clrd);
         clrds[i].version = 0x10;
         clrds[i].shot = i;
         for (k = 0; k < 5; k++)
         {
-            clrds[i].unk_0c[k] = 1;
-            clrds[i].unk_11[k] = 1;
+            clrds[i].stagesClearedNoContinue[k] = 1;
+            clrds[i].stagesCleared[k] = 1;
         }
     }
     p = (Clrd *)((BYTE *)dat1 + dat1->dataOffset);
@@ -254,7 +254,7 @@ int LoadPracticeScores(void *scoreDat, Pscr *pscrs)
             {
                 memset(p, 0, sizeof(Pscr));
                 p->magic = 0x52435350;
-                p->unk_06 = sizeof(Pscr);
+                p->size2 = sizeof(Pscr);
                 p->size = sizeof(Pscr);
                 p->version = 0x10;
                 p->shot = i3;
@@ -305,7 +305,7 @@ void SaveScoreDat(ResultScreen *screen)
     memcpy(buf + size0, screen->scoreDat, sizeof(ScoreDat));
     size0 += sizeof(ScoreDat);
     screen->th6k.magic = 0x4b364854;
-    screen->th6k.unk_06 = sizeof(Th6k);
+    screen->th6k.size2 = sizeof(Th6k);
     screen->th6k.size = sizeof(Th6k);
     screen->th6k.version = 0x10;
     memcpy(buf + size0, &screen->th6k, sizeof(Th6k));
@@ -322,10 +322,10 @@ void SaveScoreDat(ResultScreen *screen)
                 {
                     node->data->shot = s14;
                     node->data->difficulty = i;
-                    node->data->unk_06 = 0x1c;
+                    node->data->size2 = 0x1c;
                     node->data->size = 0x1c;
                     node->data->version = 0x10;
-                    node->data->unk_09[0] = 0;
+                    node->data->isNew = 0;
                     memcpy(buf + size0, node->data, 0x1c);
                     size0 += 0x1c;
                 }
@@ -342,7 +342,7 @@ void SaveScoreDat(ResultScreen *screen)
     for (i = 0; i < 4; i++, clrd26++)
     {
         clrd26->magic = 0x44524c43;
-        clrd26->unk_06 = sizeof(Clrd);
+        clrd26->size2 = sizeof(Clrd);
         clrd26->size = sizeof(Clrd);
         clrd26->version = 0x10;
         memcpy(buf + size0, clrd26, sizeof(Clrd));
@@ -354,7 +354,7 @@ void SaveScoreDat(ResultScreen *screen)
         if (catk1->magic == 0x4b544143)
         {
             catk1->index = i;
-            catk1->unk_06 = sizeof(Catk);
+            catk1->size2 = sizeof(Catk);
             catk1->size = sizeof(Catk);
             catk1->version = 0x10;
             memcpy(buf + size0, catk1, sizeof(Catk));
@@ -380,9 +380,9 @@ void SaveScoreDat(ResultScreen *screen)
     header->dataOffset = sizeof(ScoreDat);
     header->fileSize = size0;
     header->checksum = 0;
-    header->unk_01 = g_Rng.GetRandomU16InRange(256);
+    header->key = g_Rng.GetRandomU16InRange(256);
     header->unk_06 = g_Rng.GetRandomU16InRange(256);
-    header->unk_04 = 0x10;
+    header->version = 0x10;
     for (m = 4; m < size0; m++)
     {
         header->checksum += buf[m];
@@ -460,7 +460,7 @@ int ResultScreen::HandleNameEntry()
         {
             this->entry.stage = 99;
         }
-        this->entry.unk_09[0] = 1;
+        this->entry.isNew = 1;
         strcpy(this->entry.name, "        ");
         if (this->AddScore(&this->entry, this->difficulty, this->character * 2 + g_GameManager.shotType) >= 10)
         {
@@ -1307,8 +1307,8 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                 {
                     for (k = 0; k < 5; k++)
                     {
-                        g_GameManager.clrds[shot].unk_0c[k] = 99;
-                        g_GameManager.clrds[shot].unk_11[k] = 99;
+                        g_GameManager.clrds[shot].stagesClearedNoContinue[k] = 99;
+                        g_GameManager.clrds[shot].stagesCleared[k] = 99;
                     }
                 }
                 screen->cheatProgress = 0;
@@ -1367,7 +1367,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                 {
                     break;
                 }
-                if (g_GameManager.catks[i].unk_3c == 0)
+                if (g_GameManager.catks[i].attempts == 0)
                 {
                     g_SpriteEngine->RenderText(&screen->textSprites[i % 10], 0xffffff, 0, "？？？？？");
                 }
@@ -1480,7 +1480,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
             {
                 if (g_GameManager.shotType == 0)
                 {
-                    if (node3->data->unk_09[0] != 0)
+                    if (node3->data->isNew != 0)
                     {
                         g_AsciiText.color = 0xfff0f0ff;
                         *(DWORD *)&name[0] = *(DWORD *)"    ";
@@ -1522,7 +1522,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
             {
                 if (g_GameManager.shotType == 1)
                 {
-                    if (node21->data->unk_09[0] != 0)
+                    if (node21->data->isNew != 0)
                     {
                         g_AsciiText.color = 0xfffff0f0;
                         *(DWORD *)&name[0] = *(DWORD *)"    ";
@@ -1575,11 +1575,11 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                     break;
                 }
                 screen->textSprites[i].pos = pos3;
-                if (g_GameManager.catks[card].unk_3c == 0)
+                if (g_GameManager.catks[card].attempts == 0)
                 {
                     g_AsciiText.color = 0x80c0c0ff;
                 }
-                else if (g_GameManager.catks[card].unk_3e == 0)
+                else if (g_GameManager.catks[card].captures == 0)
                 {
                     g_AsciiText.color = 0xffc0a0a0;
                 }
@@ -1591,7 +1591,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 screen->textSprites[i].pos[0] += 96.0f;
                 g_SpriteEngine->Draw(&screen->textSprites[i]);
                 pos3[0] += 368.0f;
-                g_AsciiText.AddFormat(&pos3, "%3d/%3d", g_GameManager.catks[card].unk_3e, g_GameManager.catks[card].unk_3c);
+                g_AsciiText.AddFormat(&pos3, "%3d/%3d", g_GameManager.catks[card].captures, g_GameManager.catks[card].attempts);
                 pos3[0] -= 368.0f;
                 pos3[1] += 30.0f;
             }
@@ -1761,10 +1761,10 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
                 screen->defaultScores[i][shot][k].magic = *(DWORD *)"DMYS";
                 screen->defaultScores[i][shot][k].difficulty = i;
                 screen->defaultScores[i][shot][k].version = 0x10;
-                screen->defaultScores[i][shot][k].unk_06 = 0x1c;
+                screen->defaultScores[i][shot][k].size2 = 0x1c;
                 screen->defaultScores[i][shot][k].size = 0x1c;
                 screen->defaultScores[i][shot][k].stage = 1;
-                screen->defaultScores[i][shot][k].unk_09[0] = 0;
+                screen->defaultScores[i][shot][k].isNew = 0;
                 screen->AddScore(&screen->defaultScores[i][shot][k], i, shot);
                 strcpy(screen->defaultScores[i][shot][k].name, "Nanashi ");
             }

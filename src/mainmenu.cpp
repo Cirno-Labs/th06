@@ -728,10 +728,10 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 int stages;
 
                 stages = g_GameManager.clrds[g_GameManager.character * 2 + g_GameManager.shotType]
-                                     .unk_11[g_GameManager.difficulty] > 6
+                                     .stagesCleared[g_GameManager.difficulty] > 6
                              ? 6
                              : g_GameManager.clrds[g_GameManager.character * 2 + g_GameManager.shotType]
-                                   .unk_11[g_GameManager.difficulty];
+                                   .stagesCleared[g_GameManager.difficulty];
                 if (g_GameManager.difficulty == 0 && stages == 6)
                 {
                     stages = 5;
@@ -748,10 +748,10 @@ int MainMenu::OnUpdate(MainMenu *menu)
         int stages;
 
         stages = g_GameManager.clrds[g_GameManager.character * 2 + g_GameManager.shotType]
-                             .unk_11[g_GameManager.difficulty] > 6
+                             .stagesCleared[g_GameManager.difficulty] > 6
                      ? 6
                      : g_GameManager.clrds[g_GameManager.character * 2 + g_GameManager.shotType]
-                           .unk_11[g_GameManager.difficulty];
+                           .stagesCleared[g_GameManager.difficulty];
         if (g_GameManager.difficulty == 0 && stages == 6)
         {
             stages = 5;
@@ -1771,9 +1771,9 @@ int MainMenu::DrawPracticeScores()
         pos.z = 0.0f;
         fade = this->stateFrames < 30 ? this->stateFrames * 255 / 30 : 255;
         si3 = g_GameManager.character * 2 + g_GameManager.shotType;
-        n2 = g_GameManager.clrds[si3].unk_11[g_GameManager.difficulty] > 6
+        n2 = g_GameManager.clrds[si3].stagesCleared[g_GameManager.difficulty] > 6
                     ? 6
-                    : g_GameManager.clrds[si3].unk_11[g_GameManager.difficulty];
+                    : g_GameManager.clrds[si3].stagesCleared[g_GameManager.difficulty];
         if (g_GameManager.difficulty == 0 && n2 == 6)
         {
             n2 = 5;
@@ -2132,8 +2132,8 @@ void ReleaseTitleAnms()
 
 BOOL GameManager::IsExtraUnlocked(int character, int shot)
 {
-    return this->clrds[character * 2 + shot].unk_0c[1] == 99 || this->clrds[character * 2 + shot].unk_0c[2] == 99 ||
-                   this->clrds[character * 2 + shot].unk_0c[3] == 99
+    return this->clrds[character * 2 + shot].stagesClearedNoContinue[1] == 99 || this->clrds[character * 2 + shot].stagesClearedNoContinue[2] == 99 ||
+                   this->clrds[character * 2 + shot].stagesClearedNoContinue[3] == 99
                ? TRUE
                : FALSE;
 }

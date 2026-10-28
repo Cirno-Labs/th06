@@ -194,7 +194,7 @@ int Ending::RunScript()
                 {
                     for (j = 0; j < 4; j++)
                     {
-                        if (g_GameManager.clrds[i2].unk_0c[j] == 'c' || g_GameManager.clrds[i2].unk_11[j] == 'c')
+                        if (g_GameManager.clrds[i2].stagesClearedNoContinue[j] == 'c' || g_GameManager.clrds[i2].stagesCleared[j] == 'c')
                         {
                             this->canSkip = 1;
                             break;
@@ -432,17 +432,17 @@ int Ending::AddedCallback(Ending *ending)
     ending->canSkip = 0;
     if (g_GameManager.continuesUsed == 0)
     {
-        if (g_GameManager.clrds[si].unk_0c[g_GameManager.difficulty] == 'c')
+        if (g_GameManager.clrds[si].stagesClearedNoContinue[g_GameManager.difficulty] == 'c')
         {
             ending->canSkip = 1;
         }
-        g_GameManager.clrds[si].unk_0c[g_GameManager.difficulty] = 'c';
+        g_GameManager.clrds[si].stagesClearedNoContinue[g_GameManager.difficulty] = 'c';
     }
-    else if (g_GameManager.clrds[si].unk_11[g_GameManager.difficulty] == 'c')
+    else if (g_GameManager.clrds[si].stagesCleared[g_GameManager.difficulty] == 'c')
     {
         ending->canSkip = 1;
     }
-    g_GameManager.clrds[si].unk_11[g_GameManager.difficulty] = 'c';
+    g_GameManager.clrds[si].stagesCleared[g_GameManager.difficulty] = 'c';
     if (g_GameManager.difficulty == 0 || g_GameManager.continuesUsed != 0)
     {
         switch (g_GameManager.character)

@@ -94,9 +94,6 @@ class Player
 {
 public:
     // Empty, and defined out of line: constructs the members (0x425e10).
-    // Parked: the original reserves Sprite's inlined Timers' slots for
-    // `sprite` alone, this also for the bullets' sprites (4 more slots
-    // before the bullet loop).
     Player();
 
     // Zeroes the player, remembers `unk` and adds the update element

@@ -301,7 +301,7 @@ address,size,name,symbol
 0x0042545a,498,MusicScreen::OnDraw,?OnDraw@MusicScreen@@SAHPAV1@@Z
 0x0042564c,1867,MusicScreen::AddedCallback,?AddedCallback@MusicScreen@@SAHPAV1@@Z
 0x00425d97,108,MusicScreen::DeletedCallback,?DeletedCallback@MusicScreen@@SAHPAV1@@Z
-0x00425e10,488,Func425e10,
+0x00425e10,488,Player::Player,??0Player@@QAE@XZ
 0x00426000,194,PlayerBomb::PlayerBomb,??0PlayerBomb@@QAE@XZ
 0x004260d0,34,FireShotType0,?FireShotType0@@YAHPAVPlayer@@PAUPlayerBullet@@HH@Z
 0x00426100,795,FireShot,?FireShot@@YAHPAVPlayer@@PAUPlayerBullet@@HHPAUShotTable@@@Z

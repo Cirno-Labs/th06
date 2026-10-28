@@ -231,6 +231,10 @@ public:
     // Releases the vertex buffer, if there is one.
     void ReleaseVertexBuffer();
 
+    // Sets the blend mode, color operation, color and z writes `vm`
+    // wants on the device, those that changed since the last sprite and
+    // that the configuration allows.
+    void SetRenderStateForSprite(Sprite *vm);
     // Runs a sprite's script for one frame.
     int Step(Sprite *vm);
     // Draws a sprite if it is shown.
@@ -300,8 +304,8 @@ public:
     AnmFile *anmFiles[0x80];
     int anmFileSpriteOffsets[0x80];
     unsigned char unk_20d34[0x380];
-    // 1 once constructed.
-    int unk_210b4;
+    // The texture factor last set: the sprites' color.
+    D3DCOLOR currentColor;
     // The texture last set on the device (IDirect3DDevice8::SetTexture).
     IDirect3DTexture8 *currentTexture;
     // Sprite flag bit 2 as last set: the D3DRS_DESTBLEND choice.

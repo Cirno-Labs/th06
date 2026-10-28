@@ -401,7 +401,7 @@ address,size,name,symbol
 0x00432260,315,SpriteEngine::LoadSprite,?LoadSprite@SpriteEngine@@QAEXHPAUSpriteData@@@Z
 0x004323a0,144,SpriteEngine::SetSprite,?SetSprite@SpriteEngine@@QAEHPAVSprite@@H@Z
 0x00432430,151,SpriteEngine::SetScript,?SetScript@SpriteEngine@@QAEXPAVSprite@@PAX@Z
-0x004324d0,598,Func4324d0,
+0x004324d0,598,SpriteEngine::SetRenderStateForSprite,?SetRenderStateForSprite@SpriteEngine@@QAEXPAVSprite@@@Z
 0x00432730,915,Func432730,
 0x00432ad0,431,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00432c80,60,SpriteEngine::RotatePoint,?RotatePoint@SpriteEngine@@QAEXPAMMMMMMM@Z

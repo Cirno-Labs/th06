@@ -35,7 +35,7 @@ SpriteEngine::SpriteEngine()
     this->currentTexture = NULL;
     this->blendMode = 0;
     this->colorOp = 0;
-    this->unk_210b4 = 1;
+    this->currentColor = 1;
     this->vertexFormat = 0;
     this->zWriteDisabled = 0;
     this->unk_21118 = -1;
@@ -362,6 +362,66 @@ void SpriteEngine::SetScript(Sprite *vm, void *script)
     if (script != NULL)
     {
         this->Step(vm);
+    }
+}
+
+void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
+{
+    if (this->blendMode != vm->flags.blendMode)
+    {
+        this->blendMode = vm->flags.blendMode;
+        if (this->blendMode == 0)
+        {
+            g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+        }
+        else
+        {
+            g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+        }
+    }
+    if (!g_Unknown6c6d18.cfg.flags.unk0 && !g_Unknown6c6d18.cfg.flags.noColorBlending &&
+        this->colorOp != vm->flags.colorOp)
+    {
+        this->colorOp = vm->flags.colorOp;
+        if (this->colorOp == 0)
+        {
+            g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+        }
+        else
+        {
+            g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_ADD);
+        }
+    }
+    if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+    {
+        if (this->currentColor != vm->color)
+        {
+            this->currentColor = vm->color;
+            g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_TEXTUREFACTOR, this->currentColor);
+        }
+    }
+    else
+    {
+        g_DiffuseQuad[0].diffuse = vm->color;
+        g_DiffuseQuad[1].diffuse = vm->color;
+        g_DiffuseQuad[2].diffuse = vm->color;
+        g_DiffuseQuad[3].diffuse = vm->color;
+        g_DiffuseQuadXyz[0].diffuse = vm->color;
+        g_DiffuseQuadXyz[1].diffuse = vm->color;
+        g_DiffuseQuadXyz[2].diffuse = vm->color;
+        g_DiffuseQuadXyz[3].diffuse = vm->color;
+    }
+    if (!g_Unknown6c6d18.cfg.flags.noDepthTest && this->zWriteDisabled != vm->flags.zWriteDisabled)
+    {
+        this->zWriteDisabled = vm->flags.zWriteDisabled;
+        if (this->zWriteDisabled == 0)
+        {
+            g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+        }
+        else
+        {
+            g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+        }
     }
 }
 

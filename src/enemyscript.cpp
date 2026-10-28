@@ -18,13 +18,13 @@ int EnemyScripts::Load(char *path)
         LogPrintf(&g_Log, "敵データの読み込みに失敗しました、データが壊れてるか失われています\n");
         return -1;
     }
-    this->file->unk_04 += (int)this->file;
+    this->file->timelineOffset += (int)this->file;
     this->subs = (void **)((char *)this->file + sizeof(EnemyScriptHeader));
     for (i = 0; i < this->file->subCount; i++)
     {
         this->subs[i] = (char *)this->subs[i] + (int)this->file;
     }
-    this->timeline = (EnemyTimelineEntry *)this->file->unk_04;
+    this->timeline = (EnemyTimelineEntry *)this->file->timelineOffset;
     return 0;
 }
 
@@ -1167,12 +1167,12 @@ int *ResolveOperand(Enemy *enemy, int *operand, int *type)
         }
         return (int *)&g_Player.position.z;
     case -10021:
-        g_Unknown487e4c = g_Player.AngleFrom(&enemy->pos);
+        g_PlayerAngle = g_Player.AngleFrom(&enemy->pos);
         if (type != NULL)
         {
             *type = 2;
         }
-        return (int *)&g_Unknown487e4c;
+        return (int *)&g_PlayerAngle;
     case -10022:
         if (type != NULL)
         {
@@ -1182,12 +1182,12 @@ int *ResolveOperand(Enemy *enemy, int *operand, int *type)
     case -10023:
     {
         D3DXVECTOR3 diff = g_Player.position - enemy->pos;
-        g_Unknown487e48 = D3DXVec3Length(&diff);
+        g_PlayerDistance = D3DXVec3Length(&diff);
         if (type != NULL)
         {
             *type = 2;
         }
-        return (int *)&g_Unknown487e48;
+        return (int *)&g_PlayerDistance;
     }
     case -10024:
         if (type != NULL)
@@ -1196,12 +1196,12 @@ int *ResolveOperand(Enemy *enemy, int *operand, int *type)
         }
         return &enemy->life;
     case -10025:
-        g_Unknown487e44 = g_GameManager.character * 2 + g_GameManager.shotType;
+        g_ShotTypeOperand = g_GameManager.character * 2 + g_GameManager.shotType;
         if (type != NULL)
         {
             *type = 0;
         }
-        return &g_Unknown487e44;
+        return &g_ShotTypeOperand;
     }
     return operand;
 }
@@ -1422,7 +1422,7 @@ void ScriptAngle(Enemy *enemy, int dst, float *fromX, float *fromY, float *toX, 
 // g_EnemyScriptFuncs[0]: turns every flying bullet into color 15, then
 // stops them (instr's second argument 0) or sends them drifting off in
 // random directions (1).
-void Func40b8e0(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptFreezeBullets(Enemy *enemy, EnemyScriptInstr *instr)
 {
     int i;
     Bullet *bullet = g_BulletManager.bullets;
@@ -1456,7 +1456,7 @@ void Func40b8e0(Enemy *enemy, EnemyScriptInstr *instr)
 // g_EnemyScriptFuncs[1]: fires the enemy's shooter from a random point
 // in a box around it, instr's second argument wide and three quarters
 // as high.
-void Func40ba80(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptShootFromRandomPoint(Enemy *enemy, EnemyScriptInstr *instr)
 {
     float range = instr->args.i[1];
 
@@ -1469,9 +1469,9 @@ void Func40ba80(Enemy *enemy, EnemyScriptInstr *instr)
 
 // g_EnemyScriptFuncs[2], set as the context's func: every sixth frame
 // until the count in intVars[2] reaches intVars[3], fires five patterns
-// from points on a star (corners g_Unknown487edc, radius floatVars[3])
+// from points on a star (corners g_StarAngles, radius floatVars[3])
 // whose center moves from the enemy towards where the player was.
-void Func40bb80(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptStarPattern(Enemy *enemy, EnemyScriptInstr *instr)
 {
     D3DXVECTOR3 center2;
     float progress2;
@@ -1488,33 +1488,33 @@ void Func40bb80(Enemy *enemy, EnemyScriptInstr *instr)
     }
     if (enemy->ctx.intVars[2] == 0)
     {
-        g_Unknown487f5c = enemy->pos;
-        g_Unknown487f68 = g_Player.position;
-        g_Unknown487edc[0] = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
-        g_Unknown487edc[1] = AddNormalizeAngle(g_Unknown487edc[0], 2.5132742f);
+        g_StarFrom = enemy->pos;
+        g_StarTo = g_Player.position;
+        g_StarAngles[0] = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+        g_StarAngles[1] = AddNormalizeAngle(g_StarAngles[0], 2.5132742f);
     }
     if (enemy->ctx.intVars[2] % 30 == 0)
     {
-        g_Unknown487edc[0] = g_Unknown487edc[1];
-        g_Unknown487edc[1] = AddNormalizeAngle(g_Unknown487edc[0], 2.5132742f);
-        g_Unknown487edc[2] = AddNormalizeAngle(g_Unknown487edc[1], 2.5132742f);
-        g_Unknown487edc[3] = AddNormalizeAngle(g_Unknown487edc[2], 2.5132742f);
-        g_Unknown487edc[4] = AddNormalizeAngle(g_Unknown487edc[3], 2.5132742f);
-        g_Unknown487edc[5] = AddNormalizeAngle(g_Unknown487edc[4], 2.5132742f);
+        g_StarAngles[0] = g_StarAngles[1];
+        g_StarAngles[1] = AddNormalizeAngle(g_StarAngles[0], 2.5132742f);
+        g_StarAngles[2] = AddNormalizeAngle(g_StarAngles[1], 2.5132742f);
+        g_StarAngles[3] = AddNormalizeAngle(g_StarAngles[2], 2.5132742f);
+        g_StarAngles[4] = AddNormalizeAngle(g_StarAngles[3], 2.5132742f);
+        g_StarAngles[5] = AddNormalizeAngle(g_StarAngles[4], 2.5132742f);
     }
     if (enemy->ctx.intVars[2] % 6 == 0)
     {
         progress2 = (float)enemy->ctx.intVars[2] / (float)enemy->ctx.intVars[3];
         t = progress2 * 0.1f;
-        center2 = (g_Unknown487f68 - g_Unknown487f5c) * t + g_Unknown487f5c;
+        center2 = (g_StarTo - g_StarFrom) * t + g_StarFrom;
         center2.z = 0.0f;
         progress2 += 0.5f;
         enemy->shooter.angle1 = 1.0471976f * progress2;
         for (i = 0; i < 5; i++)
         {
             t = (float)(enemy->ctx.intVars[2] % 30) / 30.0f;
-            SinCosScale(&from, g_Unknown487edc[i], enemy->ctx.floatVars[3]);
-            SinCosScale(&to3, g_Unknown487edc[i + 1], enemy->ctx.floatVars[3]);
+            SinCosScale(&from, g_StarAngles[i], enemy->ctx.floatVars[3]);
+            SinCosScale(&to3, g_StarAngles[i + 1], enemy->ctx.floatVars[3]);
             from = (to3 - from) * t + from;
             from.z = 0.0f;
             enemy->shooter.pos = center2 + from;
@@ -1530,12 +1530,12 @@ void Func40bb80(Enemy *enemy, EnemyScriptInstr *instr)
 }
 
 // g_EnemyScriptFuncs[3]: sets intVars[1] to [3] to the player's shot
-// type's values from g_Unknown476264.
-void Func40c100(Enemy *enemy, EnemyScriptInstr *instr)
+// type's values from g_ShotTypeValues.
+void ScriptGetShotTypeValues(Enemy *enemy, EnemyScriptInstr *instr)
 {
-    enemy->ctx.intVars[1] = g_Unknown476264[g_GameManager.character][g_GameManager.shotType][0];
-    enemy->ctx.intVars[2] = g_Unknown476264[g_GameManager.character][g_GameManager.shotType][1];
-    enemy->ctx.intVars[3] = g_Unknown476264[g_GameManager.character][g_GameManager.shotType][2];
+    enemy->ctx.intVars[1] = g_ShotTypeValues[g_GameManager.character][g_GameManager.shotType][0];
+    enemy->ctx.intVars[2] = g_ShotTypeValues[g_GameManager.character][g_GameManager.shotType][1];
+    enemy->ctx.intVars[3] = g_ShotTypeValues[g_GameManager.character][g_GameManager.shotType][2];
 }
 
 // The angle from the player to `pos`, turned by a quarter turn and by
@@ -1550,7 +1550,7 @@ inline float AngleAwayFromPlayer(D3DXVECTOR3 *pos, float offset)
 // or 52 above normal difficulty; one in four at random) into color 5 and
 // sends them off: away from the player when close, else downwards (or
 // anywhere above normal difficulty).
-void Func40c180(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptFreezeOrSendOff(Enemy *enemy, EnemyScriptInstr *instr)
 {
     Bullet *bullet;
     int i;
@@ -1639,7 +1639,7 @@ void Func40c180(Enemy *enemy, EnemyScriptInstr *instr)
 // g_EnemyScriptFuncs[5], set as the context's func: every ninth frame,
 // fires a fan of nine bullets from an arc to one side of the enemy (the
 // side alternating), on the way towards the player.
-void Func40c5b0(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptSideArcFans(Enemy *enemy, EnemyScriptInstr *instr)
 {
     int i;
     int count;
@@ -1720,7 +1720,7 @@ void Func40c5b0(Enemy *enemy, EnemyScriptInstr *instr)
 // shown, spawns pairs of sparks (effect 0x13) around it on a turning
 // circle, more often as unk_ebc counts up; frees its effects once
 // hidden.
-void Func40caf0(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptSparkCircle(Enemy *enemy, EnemyScriptInstr *instr)
 {
     D3DXVECTOR3 pos;
     float a2;
@@ -1775,7 +1775,7 @@ void Func40caf0(Enemy *enemy, EnemyScriptInstr *instr)
 // g_EnemyScriptFuncs[7]: from two rings of eight points around the enemy
 // (turning opposite ways), fires lasers (instr's second argument 0) or
 // the enemy's shooter outwards, three times.
-void Func40d040(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptTwoRingShots(Enemy *enemy, EnemyScriptInstr *instr)
 {
     BulletShooter shooter;
     D3DXVECTOR3 at[8];
@@ -1888,7 +1888,7 @@ void Func40d040(Enemy *enemy, EnemyScriptInstr *instr)
 
 // g_EnemyScriptFuncs[8]: fires one bullet in a random direction from
 // every large bullet, and stores how many in intVars[3].
-void Func40d400(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptShootFromLargeBullets(Enemy *enemy, EnemyScriptInstr *instr)
 {
     int count = 0;
     Bullet *bullet = g_BulletManager.bullets;
@@ -1922,7 +1922,7 @@ void Func40d400(Enemy *enemy, EnemyScriptInstr *instr)
 // g_EnemyScriptFuncs[9]: turns every small stopped bullet into color 2
 // and starts it accelerating away, its direction turning with its
 // distance from the enemy.
-void Func40d530(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptSwirlStoppedBullets(Enemy *enemy, EnemyScriptInstr *instr)
 {
     float base2;
     Bullet *bullet2 = g_BulletManager.bullets;
@@ -1962,9 +1962,9 @@ void Func40d530(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
-// g_EnemyScriptFuncs[10]: like Func40d530, each bullet accelerating in a
+// g_EnemyScriptFuncs[10]: like ScriptSwirlStoppedBullets, each bullet accelerating in a
 // random direction of its own.
-void Func40d770(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptScatterStoppedBullets(Enemy *enemy, EnemyScriptInstr *instr)
 {
     float base2;
     Bullet *bullet2 = g_BulletManager.bullets;
@@ -1993,16 +1993,16 @@ void Func40d770(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
-// g_EnemyScriptFuncs[11], set as the context's func: Func40caf0's sparks
+// g_EnemyScriptFuncs[11], set as the context's func: ScriptSparkCircle's sparks
 // while the enemy lives; a bomb makes it unshootable (and turns its
 // sprite to script 0x1a5) until 60 frames after the bomb ends.
-void Func40d930(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptSparksAndBombShield(Enemy *enemy, EnemyScriptInstr *instr)
 {
     if (enemy->life <= 0)
     {
         return;
     }
-    Func40caf0(enemy, instr);
+    ScriptSparkCircle(enemy, instr);
     if (g_Player.bomb.running != 0)
     {
         if (enemy->unk_e5a >= 0)
@@ -2030,7 +2030,7 @@ void Func40d930(Enemy *enemy, EnemyScriptInstr *instr)
 
 // g_EnemyScriptFuncs[12]: fires the enemy's shooter from 64 along each
 // of its first eight lasers that is active.
-void Func40daa0(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptShootFromLasers(Enemy *enemy, EnemyScriptInstr *instr)
 {
     int i;
 
@@ -2051,7 +2051,7 @@ void Func40daa0(Enemy *enemy, EnemyScriptInstr *instr)
 // points on a circle (radius floatVars[3], from angle floatVars[2])
 // around the play area's center, each aimed outwards turned by
 // floatVars[1].
-void Func40dbc0(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptArenaCircleShots(Enemy *enemy, EnemyScriptInstr *instr)
 {
     int i;
     BulletShooter sh = enemy->shooter;
@@ -2076,7 +2076,7 @@ void Func40dbc0(Enemy *enemy, EnemyScriptInstr *instr)
 // g_EnemyScriptFuncs[14]: fires the enemy's shooter every 48 along each
 // of its first eight lasers that is active, counting them in
 // intVars[3].
-void Func40dcc0(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptShootAlongLasers(Enemy *enemy, EnemyScriptInstr *instr)
 {
     float r3;
     float cs2;
@@ -2110,8 +2110,8 @@ void Func40dcc0(Enemy *enemy, EnemyScriptInstr *instr)
 // g_EnemyScriptFuncs[15]: around every large bullet, starts the small
 // stopped bullets within reach accelerating away from the enemy, bent
 // towards the large one's direction, and recolors them; then
-// Func40d930. Stores the number of large bullets in intVars[3].
-void Func40de00(Enemy *enemy, EnemyScriptInstr *instr)
+// ScriptSparksAndBombShield. Stores the number of large bullets in intVars[3].
+void ScriptBurstAroundLargeBullets(Enemy *enemy, EnemyScriptInstr *instr)
 {
     int count = 0;
     Bullet *big3 = g_BulletManager.bullets;
@@ -2160,7 +2160,7 @@ void Func40de00(Enemy *enemy, EnemyScriptInstr *instr)
             }
         }
     }
-    Func40d930(enemy, instr);
+    ScriptSparksAndBombShield(enemy, instr);
     enemy->ctx.intVars[3] = count;
 }
 
@@ -2168,7 +2168,7 @@ void Func40de00(Enemy *enemy, EnemyScriptInstr *instr)
 // after 7200 frames): with instr's second argument 0, floatVars[3] and
 // intVars2[1]; else a random x in floatVars[2] and y in floatVars[3],
 // in a box that widens as the life falls.
-void Func40e1b0(Enemy *enemy, EnemyScriptInstr *instr)
+void ScriptFollowLife(Enemy *enemy, EnemyScriptInstr *instr)
 {
     int life = enemy->life;
     float range;

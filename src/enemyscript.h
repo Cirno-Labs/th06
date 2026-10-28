@@ -115,8 +115,9 @@ struct EnemyScriptHeader
 {
     short subCount;
     short unk_02;
-    // An offset from the start of the file; Load makes it a pointer.
-    int unk_04;
+    // The enemy timeline's offset from the start of the file; Load makes
+    // it a pointer.
+    int timelineOffset;
     DWORD unk_08[0x2];
     // Then the subroutines' offsets.
 };
@@ -166,7 +167,7 @@ public:
     EnemyScriptHeader *file;
     // Points at the subroutine table in `file`.
     void **subs;
-    // The timeline, at the header's unk_04.
+    // The timeline, at the header's timelineOffset.
     EnemyTimelineEntry *timeline;
 };
 extern EnemyScripts g_EnemyScripts;
@@ -211,20 +212,21 @@ void ScriptMod(Enemy *enemy, int dst, int *a, int *b);
 // point (*x2, *y2), all float operands.
 void ScriptAngle(Enemy *enemy, int dst, float *x1, float *y1, float *x2, float *y2);
 
-// Where ResolveOperand computes its read-only values.
-extern int g_Unknown487e44;
-extern float g_Unknown487e48;
-extern float g_Unknown487e4c;
+// Where ResolveOperand computes its read-only values: the shot type
+// (character * 2 + shotType), the distance and the angle to the player.
+extern int g_ShotTypeOperand;
+extern float g_PlayerDistance;
+extern float g_PlayerAngle;
 
 // The functions scripts call or set as EnemyScriptState::func.
 extern void (*g_EnemyScriptFuncs[])(Enemy *enemy, EnemyScriptInstr *instr);
 // The bonus of each spell card.
 extern int g_SpellCardBonuses[0x40];
 
-// Func40bb80's star: its corners' angles, and where its center moves
+// ScriptStarPattern's star: its corners' angles, and where its center moves
 // from and to.
-extern float g_Unknown487edc[6];
-extern D3DXVECTOR3 g_Unknown487f5c;
-extern D3DXVECTOR3 g_Unknown487f68;
-// Three values for each character's two shot types, for Func40c100.
-extern int g_Unknown476264[2][2][3];
+extern float g_StarAngles[6];
+extern D3DXVECTOR3 g_StarFrom;
+extern D3DXVECTOR3 g_StarTo;
+// Three values for each character's two shot types, for ScriptGetShotTypeValues.
+extern int g_ShotTypeValues[2][2][3];

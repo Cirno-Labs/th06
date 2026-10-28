@@ -2,6 +2,7 @@
 // The file starting at 0x41e940. It is built with /Os: functions end with
 // `leave` instead of `mov esp, ebp; pop ebp`.
 
+#include "features.h"
 #include "unsorted.h"
 
 GdiSurface::GdiSurface()
@@ -235,8 +236,13 @@ void RenderTextToTexture(int x, int y, int width, int unk4, int fontHeight, int 
     RECT rcDst;
     IDirect3DSurface8 *dstSurface;
 
+#if FEAT_ENGLISH
+    hNewFont = CreateFontA(fontHeight * 2, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS,
+                           CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Arial");
+#else
     hNewFont = CreateFontA(fontHeight * 2, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS,
                            CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, FF_ROMAN | FIXED_PITCH, "ＭＳ ゴシック");
+#endif
     GdiSurface dib;
     g_TextSurface->GetDesc(&sd);
     dib.Create(sd.Width, sd.Height, sd.Format);

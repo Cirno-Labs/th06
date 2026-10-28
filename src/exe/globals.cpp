@@ -13,6 +13,7 @@
 #include "effect.h"
 #include "enemy.h"
 #include "enemyscript.h"
+#include "features.h"
 #include "gamemanager.h"
 #include "item.h"
 #include "mainmenu.h"
@@ -122,3 +123,7 @@ VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
 
 // mainmenu.cpp
 MainMenu g_MainMenu;
+
+#if FEAT_ENGLISH
+char *g_EnglishSpellCards;
+#endif

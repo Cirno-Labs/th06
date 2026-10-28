@@ -2,6 +2,7 @@
 // "恋符「マスタースパーク」", ...).
 
 #include "effect.h"
+#include "features.h"
 #include "gamemanager.h"
 #include "item.h"
 #include "player.h"
@@ -27,7 +28,11 @@ void UpdateReimuABomb(Player *player)
     }
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
+#if FEAT_ENGLISH
+        g_Gui.ShowBombName(0x4a1, EN_BOMB_REIMU_A);
+#else
         g_Gui.ShowBombName(0x4a1, "霊符「夢想封印」");
+#endif
         player->bomb.duration = 300;
         player->stateTimer.Set(360);
         for (i = 0; i < 8; i++)
@@ -221,7 +226,11 @@ void UpdateReimuBBomb(Player *player)
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
         g_ItemManager.CollectAll();
+#if FEAT_ENGLISH
+        g_Gui.ShowBombName(0x4a3, EN_BOMB_REIMU_B);
+#else
         g_Gui.ShowBombName(0x4a3, "夢符「封魔陣」");
+#endif
         player->bomb.duration = 140;
         player->stateTimer.Set(200);
         for (sprite = player->bomb.sprites, i = 0; i < 4; i++, sprite++)
@@ -307,7 +316,11 @@ void UpdateMarisaABomb(Player *player)
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
         g_ItemManager.CollectAll();
+#if FEAT_ENGLISH
+        g_Gui.ShowBombName(0x4a3, EN_BOMB_MARISA_A);
+#else
         g_Gui.ShowBombName(0x4a3, "魔符「スターダストレヴァリエ」");
+#endif
         player->bomb.duration = 250;
         player->stateTimer.Set(300);
         for (sprite = player->bomb.sprites, i = 0; i < 8; i++, sprite++)
@@ -400,7 +413,11 @@ void UpdateMarisaBBomb(Player *player)
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
         g_ItemManager.CollectAll();
+#if FEAT_ENGLISH
+        g_Gui.ShowBombName(0x4a1, EN_BOMB_MARISA_B);
+#else
         g_Gui.ShowBombName(0x4a1, "恋符「マスタースパーク」");
+#endif
         player->bomb.duration = 300;
         player->stateTimer.Set(360);
         for (sprite = player->bomb.sprites, i = 0; i < 4; i++, sprite++)

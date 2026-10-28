@@ -8,6 +8,14 @@
 #include "stage.h"
 #include "unsorted.h"
 
+#if FEAT_ENGLISH
+#define CONFIG_FILE "th06e.cfg"
+#define WINDOW_TITLE EN_WINDOW_TITLE
+#else
+#define CONFIG_FILE "東方紅魔郷.cfg"
+#define WINDOW_TITLE "東方紅魔郷　～ the Embodiment of Scarlet Devil"
+#endif
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     HRESULT resetResult;
@@ -24,7 +32,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         return 1;
     }
     g_App.hInstance = hInstance;
-    if (g_App.LoadConfig("東方紅魔郷.cfg") != 0)
+    if (g_App.LoadConfig(CONFIG_FILE) != 0)
     {
         g_Log.Flush();
         return -1;
@@ -119,7 +127,7 @@ stop:
         }
         goto restart;
     }
-    WriteToFile("東方紅魔郷.cfg", &g_App.cfg, sizeof(GameConfig));
+    WriteToFile(CONFIG_FILE, &g_App.cfg, sizeof(GameConfig));
     SystemParametersInfoA(SPI_SETSCREENSAVEACTIVE, g_GameWindow.screenSaveActive, NULL, SPIF_SENDCHANGE);
     SystemParametersInfoA(SPI_SETLOWPOWERACTIVE, g_GameWindow.lowPowerActive, NULL, SPIF_SENDCHANGE);
     SystemParametersInfoA(SPI_SETPOWEROFFACTIVE, g_GameWindow.powerOffActive, NULL, SPIF_SENDCHANGE);
@@ -333,14 +341,14 @@ void CreateGameWindow(HINSTANCE instance)
     {
         width = 640;
         height = 480;
-        g_GameWindow.hwnd = CreateWindowExA(0, "BASE", "東方紅魔郷　～ the Embodiment of Scarlet Devil", WS_OVERLAPPEDWINDOW, 0,
+        g_GameWindow.hwnd = CreateWindowExA(0, "BASE", WINDOW_TITLE, WS_OVERLAPPEDWINDOW, 0,
                                  0, width, height, NULL, NULL, instance, NULL);
     }
     else
     {
         width = GetSystemMetrics(SM_CXDLGFRAME) * 2 + 640;
         height = GetSystemMetrics(SM_CYDLGFRAME) * 2 + 480 + GetSystemMetrics(SM_CYCAPTION);
-        g_GameWindow.hwnd = CreateWindowExA(0, "BASE", "東方紅魔郷　～ the Embodiment of Scarlet Devil",
+        g_GameWindow.hwnd = CreateWindowExA(0, "BASE", WINDOW_TITLE,
                                  WS_VISIBLE | WS_SYSMENU | WS_MINIMIZEBOX, CW_USEDEFAULT, CW_USEDEFAULT, width, height,
                                  NULL, NULL, instance, NULL);
     }

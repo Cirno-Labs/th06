@@ -2,6 +2,7 @@
 // Part of the /Os file starting at 0x42333b.
 
 #include "musicscreen.h"
+#include "features.h"
 
 int MusicScreen::RegisterChain()
 {
@@ -72,6 +73,16 @@ int MusicScreen::UpdateList()
         // only when the line runs past the first half.
         for (i = 0; i < 0x10; i++)
         {
+#if FEAT_ENGLISH
+            // Both halves get the whole line, the second shifted left.
+            if (i % 2 != 0)
+            {
+                this->comment[i].spriteData->startX = ENGLISH_SECOND_HALF_X;
+            }
+            this->comment[i].flags.visible = 1;
+            g_SpriteEngine->RenderText(&this->comment[i], 0xffe0c0, 0x300000, this->tunes[this->playing].comment[i / 2]);
+            this->comment[i].spriteData->startX = 0.0f;
+#else
             memset(line, 0, sizeof(line));
             if (i % 2 == 0 || strlen(this->tunes[this->playing].comment[i / 2]) > 0x20)
             {
@@ -86,6 +97,7 @@ int MusicScreen::UpdateList()
             {
                 this->comment[i].flags.visible = 0;
             }
+#endif
             this->comment[i].pos.x = (i % 2) * 248.0f + 96.0f;
             this->comment[i].pos.y = 320.0f + (i / 2) * 16;
             this->comment[i].pos.z = 0.0f;
@@ -322,6 +334,15 @@ done:
     for (i = 0; i < 0x10; i++)
     {
         g_SpriteEngine->InitSprite(&screen->comment[i], i + 0x708);
+#if FEAT_ENGLISH
+        if (i % 2 != 0)
+        {
+            screen->comment[i].spriteData->startX = ENGLISH_SECOND_HALF_X;
+        }
+        screen->comment[i].flags.visible = 1;
+        g_SpriteEngine->RenderText(&screen->comment[i], 0xffe0c0, 0x300000, screen->tunes[screen->playing].comment[i / 2]);
+        screen->comment[i].spriteData->startX = 0.0f;
+#else
         memset(str, 0, sizeof(str));
         if (i % 2 == 0 || strlen(screen->tunes[screen->playing].comment[i / 2]) > 0x20)
         {
@@ -336,6 +357,7 @@ done:
         {
             screen->comment[i].flags.visible = 0;
         }
+#endif
         screen->comment[i].pos.x = (i % 2) * 248.0f + 96.0f;
         screen->comment[i].pos.y = 320.0f + (i / 2) * 16;
         screen->comment[i].pos.z = 0.0f;

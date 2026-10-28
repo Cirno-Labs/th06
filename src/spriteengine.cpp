@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "features.h"
 #include "sprite.h"
 #include "unsorted.h"
 
@@ -1215,6 +1216,11 @@ done:
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text)
 {
+#if FEAT_ENGLISH
+    // One size for all the English text.
+    fontHeight = 15;
+    unk6 = 15;
+#else
     if (fontHeight <= 0)
     {
         fontHeight = 15;
@@ -1223,13 +1229,19 @@ void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int 
     {
         unk6 = 15;
     }
+#endif
     RenderTextToTexture(x, y, width, unk4, fontHeight, unk6, textColor, shadowColor, text, this->textures[textureIndex]);
 }
 
 void SpriteEngine::RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...)
 {
     va_list args;
+#if FEAT_ENGLISH
+    // English lines are longer.
+    char buf[0x60];
+#else
     char buf[64];
+#endif
     int fontW;
 
     fontW = sprite->fontWidth;
@@ -1246,6 +1258,19 @@ void SpriteEngine::RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shado
 void SpriteEngine::RenderTextRightAligned(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...)
 {
     va_list args;
+#if FEAT_ENGLISH
+    // The English patch draws this text as RenderText does, from the left:
+    // its strings start with the spaces that align them.
+    char buf[0x60];
+
+    va_start(args, fmt);
+    vsprintf(buf, fmt, args);
+    va_end(args);
+    this->RenderTextToTextureIndex(vm->spriteData->sourceFileIndex, vm->spriteData->startX, vm->spriteData->startY,
+                                   vm->spriteData->textureWidth, vm->spriteData->textureHeight, vm->fontWidth,
+                                   vm->fontHeight, color, shadowColor, buf);
+    vm->flags.shown = 1;
+#else
     int xPos;
     char buf[64];
     int fontW;
@@ -1263,6 +1288,7 @@ void SpriteEngine::RenderTextRightAligned(Sprite *vm, D3DCOLOR color, D3DCOLOR s
                                    vm->spriteData->textureWidth, vm->spriteData->textureHeight, fontW, vm->fontHeight,
                                    color, shadowColor, buf);
     vm->flags.shown = 1;
+#endif
 }
 
 void SpriteEngine::RenderTextCentered(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...)

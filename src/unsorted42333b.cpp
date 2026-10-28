@@ -243,10 +243,17 @@ int App::AddedCallback(App *arg)
         arg->archives[i] = NULL;
     }
     g_Archives = arg->archives;
+#if FEAT_ENGLISH
+    if (arg->LoadArchive(0, "th06e_IN.dat") != 0)
+#else
     if (arg->LoadArchive(0, "紅魔郷IN.dat") != 0)
+#endif
     {
         return -1;
     }
+#if FEAT_ENGLISH
+    g_EnglishSpellCards = (char *)LoadFileData("spellcards.eng", 0);
+#endif
     // Shows the logo for two frames.
     g_SpriteEngine->LoadSurface(0, "data/title/th06logo.jpg");
     g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
@@ -278,7 +285,11 @@ int App::AddedCallback(App *arg)
     g_SpriteEngine->CreateQuad();
     CreateTextSurface();
     arg->ReleaseArchive(0);
+#if FEAT_ENGLISH
+    if (g_App.LoadArchive(1, "th06e_MD.dat") != 0)
+#else
     if (g_App.LoadArchive(1, "紅魔郷MD.dat") != 0)
+#endif
     {
         return -1;
     }

@@ -20,7 +20,7 @@ import os, subprocess, sys, time
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GAME = os.path.join(ROOT, "build/game")
 SHOTS = os.path.join(ROOT, "build/shots")
-TITLE = "東方紅魔郷"
+TITLE = "Embodiment of Scarlet Devil"  # in the Japanese and the English title
 
 
 def free_display():

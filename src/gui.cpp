@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "ascii.h"
+#include "features.h"
 #include "gamemanager.h"
 #include "stage.h"
 #include "unsorted.h"
@@ -193,18 +194,35 @@ void Gui::ShowBombName(int sprite, char *name)
     g_SpriteEngine->SetSprite(&this->impl->bombPortrait, sprite);
     g_SpriteEngine->StartScript(&this->impl->bombName, 0x706);
     g_SpriteEngine->RenderText(&this->impl->bombName, 0xf0f0ff, 0, name);
+#if FEAT_ENGLISH
+    this->bombNameWidth = strlen(name) * 12 / 2.0f + 16.0f;
+#else
     this->bombNameWidth = strlen(name) * 15 / 2.0f + 16.0f;
+#endif
     g_App.redrawFrames = 3;
     g_SoundPlayer.QueueSound(14, 0);
 }
 
 void Gui::ShowSpellCardName(int sprite, char *text)
 {
+#if FEAT_ENGLISH
+    char *start;
+
+#endif
     g_SpriteEngine->StartScript(&this->impl->spellPortrait, 0x4a3);
     g_SpriteEngine->SetSprite(&this->impl->spellPortrait, sprite + 0x4a8);
     g_SpriteEngine->StartScript(&this->impl->spellName, 0x707);
     g_SpriteEngine->RenderTextRightAligned(&this->impl->spellName, 0xfff0f0, 0, text);
+#if FEAT_ENGLISH
+    // The name is right-aligned with spaces: measured from after the
+    // first character that isn't one.
+    for (start = text; *start++ == ' ';)
+    {
+    }
+    this->spellNameWidth = strlen(start) * 13 / 2.0f + 24.0f;
+#else
     this->spellNameWidth = strlen(text) * 15 / 2.0f + 16.0f;
+#endif
     g_SoundPlayer.QueueSound(14, 0);
 }
 
@@ -397,10 +415,20 @@ int Gui::LoadResources()
     this->impl->spellName.fontHeight = 15;
     g_SpriteEngine->StartScript(&this->impl->stageName, 0x700);
     g_SpriteEngine->StartScript(&this->impl->songName, 0x701);
+#if FEAT_ENGLISH
+    // Centered with spaces in the stage file.
+    g_SpriteEngine->RenderText(&this->impl->stageName, 0xe0ffff, 0, g_Stage.data->name);
+#else
     g_SpriteEngine->RenderTextCentered(&this->impl->stageName, 0xe0ffff, 0, g_Stage.data->name);
+#endif
     this->impl->songName.fontWidth = 16;
     this->impl->songName.fontHeight = 16;
+#if FEAT_ENGLISH
+    // The song names start with "BGM: " instead.
+    g_SpriteEngine->RenderTextRightAligned(&this->impl->songName, 0xe0ffff, 0, "%s", g_Stage.data->songNames[0]);
+#else
     g_SpriteEngine->RenderTextRightAligned(&this->impl->songName, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[0]);
+#endif
     this->impl->msg.scriptIndex = -1;
     this->impl->stageClearShown = 0;
     this->impl->bonusPopup.shown = 0;
@@ -554,7 +582,11 @@ int GuiImpl::RunMsg()
             g_SpriteEngine->StartScript(&this->songName, 0x701);
             this->songName.fontWidth = 16;
             this->songName.fontHeight = 16;
+#if FEAT_ENGLISH
+            g_SpriteEngine->RenderTextRightAligned(&this->songName, 0xe0ffff, 0, "%s", g_Stage.data->songNames[this->msg.instr->i]);
+#else
             g_SpriteEngine->RenderTextRightAligned(&this->songName, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[this->msg.instr->i]);
+#endif
             if (g_App.PlayMidi(this->msg.instr->i) != 0)
             {
                 g_App.PlayMusic(g_Stage.data->songPaths[this->msg.instr->i]);

@@ -126,6 +126,28 @@ low. Frame skip is off and the frame rate shown is measured at each
 present. `src/exe/framecap.cpp` has the limiter; the changes to the game
 are under `#if FEAT_FRAME_CAP`.
 
+`english` is the static English patch, `th06e.exe` from Touhou Wiki's
+English patch v0.8 for 1.02h (`th06_english_patch_0.8.exe`, linked from
+<https://en.touhouwiki.net/wiki/Embodiment_of_Scarlet_Devil/English_patch>).
+Its text is not in this repository. `tools/english.py` unpacks the
+installer (with 7z, without running it), applies the patch's data to
+your game and writes `orig/th06e/`: the `th06e_XX.DAT` archives
+(translated dialogue, stage and song titles, endings, images and
+`spellcards.eng`), the patched exe for its icons and `strings.txt`, the
+exe's English strings, which `tools/build.py` turns into
+`build/feat/english.h`:
+
+```sh
+python3 -I tools/english.py th06_english_patch_0.8.exe
+FEAT=english just exe
+```
+
+The game then reads `th06e_XX.dat` and `th06e.cfg`, draws its text in
+Arial (under Wine, map Arial to an installed font such as Nimbus Sans in
+`HKCU\Software\Wine\Fonts\Replacements` if it has none), takes spell
+card names from `spellcards.eng` and lays out the longer English lines
+as the patch does.
+
 ### Hooking
 
 The decompiled code runs inside the original game. `tools/patch_exe.py` adds
@@ -146,8 +168,10 @@ in `symbols.csv` too, so the game and the new code share one heap.
 orig/     your game files (not tracked) and their checksums
 src/      decompiled source; src/dll/ is the hook DLL's own code,
           src/exe/ the game's data and globals for the standalone exe
+          and its optional features' code
 config/   symbols.csv: address, size, name and mangled symbol
-tools/    build, compare, exe patcher, symbol seeding, Ghidra scripts
+tools/    build, compare, exe patcher, symbol seeding, Ghidra scripts,
+          the English patch's data (english.py, pbg3.py)
 build/    outputs; build/game/ is a runnable copy of the patched game
 ```
 

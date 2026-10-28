@@ -7,6 +7,7 @@
 #include "effect.h"
 #include "enemy.h"
 #include "enemyscript.h"
+#include "features.h"
 #include "player.h"
 #include "replay.h"
 #include "screeneffect.h"
@@ -252,8 +253,13 @@ int GameManager::AddedCallback(GameManager *mgr)
             break;
         }
     }
+#if FEAT_ENGLISH
+    g_App.LoadArchive(4, "th06e_CM.dat");
+    g_App.LoadArchive(2, "th06e_ST.dat");
+#else
     g_App.LoadArchive(4, "紅魔郷CM.dat");
     g_App.LoadArchive(2, "紅魔郷ST.dat");
+#endif
     if (g_GameManager.isInReplay == 1)
     {
         if (ReplayManager::RegisterChain(1, g_GameManager.replayFile) != 0)

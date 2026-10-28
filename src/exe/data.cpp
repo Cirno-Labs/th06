@@ -10,6 +10,7 @@
 #include "effect.h"
 #include "enemy.h"
 #include "enemyscript.h"
+#include "features.h"
 #include "gamemanager.h"
 #include "item.h"
 #include "mainmenu.h"
@@ -545,10 +546,17 @@ ShotTable g_ShotTable3[9] = {
 };
 char *g_NameAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ.,:;･@abcdefghijklmnopqrstuvwxyz+-/*=%0123456789(){}[]<>#!?'\"$      --";
 char *g_ShotNames[6] = {
+#if FEAT_ENGLISH
+    EN_SHOT_REIMU_A,
+    EN_SHOT_REIMU_B,
+    EN_SHOT_MARISA_A,
+    EN_SHOT_MARISA_B,
+#else
     "博麗 霊夢 (霊)",
     "博麗 霊夢 (夢)",
     "霧雨 魔理沙 (魔)",
     "霧雨 魔理沙 (恋)",
+#endif
     "冴月 麟 (花)",
     "冴月 麟 (風)",
 };

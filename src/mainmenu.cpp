@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "ascii.h"
+#include "features.h"
 #include "gamemanager.h"
 #include "mainmenu.h"
 #include "screeneffect.h"
@@ -1857,7 +1858,11 @@ int LoadTitleResources(MainMenu *menu)
 {
     int i;
 
+#if FEAT_ENGLISH
+    g_App.LoadArchive(3, "th06e_TL.dat");
+#else
     g_App.LoadArchive(3, "紅魔郷TL.dat");
+#endif
     for (i = 0x1b; i <= 0x24; i++)
     {
         g_SpriteEngine->ReleaseAnm(i);

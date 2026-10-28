@@ -5,6 +5,7 @@
 #include <stdarg.h>
 
 #include "unsorted.h"
+#include "features.h"
 
 void DebugPrint(const char *fmt, ...)
 {
@@ -389,8 +390,13 @@ void TextFont::Create(IDirect3DDevice8 *device, int width, int height)
     HGDIOBJ oldFont = NULL;
 
     dc = CreateCompatibleDC(NULL);
+#if FEAT_ENGLISH
+    font = CreateFontA(height, width, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS,
+                       CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Arial");
+#else
     font = CreateFontA(height, width, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS,
                        CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "ＭＳ ゴシック");
+#endif
     if (font == NULL)
     {
         return;

@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "ending.h"
+#include "features.h"
 #include "gamemanager.h"
 #include "unsorted.h"
 
@@ -115,6 +116,9 @@ int Ending::RunScript()
     int sprite2;
     int lineLen3 = 0;
     char text3[0x26];
+#if FEAT_ENGLISH
+    Sprite *sprite;
+#endif
 
     memset(text3, 0, sizeof(text3));
     if (this->waitTimer > 0)
@@ -273,6 +277,9 @@ int Ending::RunScript()
                 g_SpriteEngine->StartScript(&this->sprites[half + this->line * 2], half + this->line * 2 + 0x708);
                 g_SpriteEngine->RenderText(&this->sprites[half + this->line * 2], this->textColor, 0xc0d0d0, text3);
             }
+#if FEAT_ENGLISH
+        endOfLine:
+#endif
             while (*this->cursor == '\n' || *this->cursor == '\0' || *this->cursor == '\r')
             {
                 this->cursor++;
@@ -290,6 +297,27 @@ int Ending::RunScript()
             this->line++;
             goto done;
         default:
+#if FEAT_ENGLISH
+            // The whole line goes into both sprites of the line, the second
+            // shifted left so the text continues there.
+            for (half = 0; half < 2; half++)
+            {
+                sprite = &this->sprites[half + this->line * 2];
+                g_SpriteEngine->StartScript(sprite, half + this->line * 2 + 0x708);
+                if (half != 0)
+                {
+                    sprite->spriteData->startX = ENGLISH_SECOND_HALF_X;
+                }
+                g_SpriteEngine->RenderText(sprite, this->textColor, 0xc0d0d0, this->cursor);
+            }
+            half = 0;
+            sprite->spriteData->startX = 0.0f;
+            while (*this->cursor != '\0')
+            {
+                this->cursor++;
+            }
+            goto endOfLine;
+#endif
             text3[lineLen3] = this->cursor[0];
             text3[lineLen3 + 1] = this->cursor[1];
             lineLen3 += 2;
@@ -420,7 +448,11 @@ int Ending::AddedCallback(Ending *ending)
 
     g_GameManager.isGameCleared = 1;
     g_App.hideFps = 1;
+#if FEAT_ENGLISH
+    g_App.LoadArchive(5, "th06e_ED.dat");
+#else
     g_App.LoadArchive(5, "紅魔郷ED.dat");
+#endif
     g_SpriteEngine->LoadAnm(0x2c, "data/staff01.anm", 0x600);
     g_SpriteEngine->LoadAnm(0x2d, "data/staff02.anm", 0x607);
     g_SpriteEngine->LoadAnm(0x2e, "data/staff03.anm", 0x60e);

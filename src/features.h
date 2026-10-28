@@ -27,3 +27,20 @@ extern WORD g_FrameCapButtons;
 int FrameCapFps(float *fps);
 #endif
 
+#if FEAT_ENGLISH
+// The static English patch (th06e.exe, Touhou Wiki's v0.8 for 1.02h): its
+// strings come from build/feat/english.h, which tools/build.py generates
+// from tools/english.py's output; its data from th06e_*.dat.
+#include "english.h"
+
+// spellcards.eng from th06e_IN.dat: 0x50-byte names by spell card number,
+// as the spell card list on the result screen shows them, then from
+// 0x1400 the same names after spaces that right-align them when a boss
+// declares one.
+extern char *g_EnglishSpellCards;
+#define ENGLISH_SPELL_CARD(index) (g_EnglishSpellCards + (index) * 0x50)
+#define ENGLISH_BOSS_SPELL_CARD(index) (g_EnglishSpellCards + 0x1400 + (index) * 0x50)
+// Lines too long for one sprite go whole into both sprites of a line, the
+// second one's texture moved left by this much so the text continues.
+#define ENGLISH_SECOND_HALF_X -247.0f
+#endif

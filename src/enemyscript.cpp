@@ -2,6 +2,7 @@
 
 #include "enemy.h"
 #include "enemyscript.h"
+#include "features.h"
 #include "gamemanager.h"
 #include "item.h"
 #include "player.h"
@@ -711,7 +712,11 @@ restart:
             Catk *rec;
             int len;
             int sum;
+#if FEAT_ENGLISH
+            g_Gui.ShowSpellCardName(instr->args.s[0], ENGLISH_BOSS_SPELL_CARD(instr->args.s[1]));
+#else
             g_Gui.ShowSpellCardName(instr->args.s[0], (char *)&instr->args.i[1]);
+#endif
             g_EnemyManager.spellCardCapture = 1;
             g_EnemyManager.spellCardActive = 1;
             g_EnemyManager.spellCardIndex = instr->args.s[1];

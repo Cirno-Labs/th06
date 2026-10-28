@@ -8,6 +8,7 @@
 #include <time.h>
 
 #include "ascii.h"
+#include "features.h"
 #include "gamemanager.h"
 #include "resultscreen.h"
 #include "unsorted.h"
@@ -1369,11 +1370,19 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                 }
                 if (g_GameManager.catks[i].attempts == 0)
                 {
+#if FEAT_ENGLISH
+                    g_SpriteEngine->RenderText(&screen->textSprites[i % 10], 0xffffff, 0, EN_UNKNOWN_NAME);
+#else
                     g_SpriteEngine->RenderText(&screen->textSprites[i % 10], 0xffffff, 0, "？？？？？");
+#endif
                 }
                 else
                 {
+#if FEAT_ENGLISH
+                    g_SpriteEngine->RenderText(&screen->textSprites[i % 10], 0xffffff, 0, ENGLISH_SPELL_CARD(i));
+#else
                     g_SpriteEngine->RenderText(&screen->textSprites[i % 10], 0xffffff, 0, g_GameManager.catks[i].name);
+#endif
                 }
             }
         }

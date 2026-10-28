@@ -652,6 +652,11 @@ public:
     BOOL Func4195a2();
     // Frees impl->msgFile, if there is one.
     void FreeMsgFile();
+    // Sets the boss's life bar, as a fraction of its maximum.
+    void SetBossHealth(float health)
+    {
+        this->bossHealth = health;
+    }
     void Func4195bf();
 
     GuiFlags flags;
@@ -662,7 +667,9 @@ public:
     DWORD unk_10[0x4];
     BYTE unk_20;
     BYTE unk_21[0x3];
-    DWORD unk_24[0x2];
+    // The boss's life as a fraction of its maximum, for its bar.
+    float bossHealth;
+    DWORD unk_28;
 };
 ASSERT_SIZE(Gui, 0x2c);
 extern Gui g_Gui;

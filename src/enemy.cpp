@@ -1,6 +1,9 @@
 // The file with EnemyManager.
 
 #include "enemy.h"
+#include "gamemanager.h"
+#include "item.h"
+#include "player.h"
 #include "sprite.h"
 #include "unsorted.h"
 
@@ -129,6 +132,226 @@ void Enemy::Move()
     }
     this->pos.y += g_Unknown6c6d18.frameAdvance * this->velocity.y;
     this->pos.z += g_Unknown6c6d18.frameAdvance * this->velocity.z;
+}
+
+int EnemyManager::OnUpdate(EnemyManager *mgr)
+{
+    int bomb = 0;
+    int hurt;
+    int i;
+    D3DXVECTOR3 size;
+    int k;
+    int lifeBefore;
+    Enemy *em;
+
+    mgr->Func411530();
+    em = mgr->enemies;
+    mgr->enemyCount = 0;
+    for (i = 0; i < 0x100; i++, em++)
+    {
+        if (!em->flags.active)
+        {
+            continue;
+        }
+        mgr->enemyCount++;
+        em->Move();
+        em->ClampPos();
+        if (em->flags.onScreen == 0 &&
+            g_GameManager.Func41b5e1(em->pos.x, em->pos.y, em->sprite.spriteData->width,
+                                     em->sprite.spriteData->height) != 0)
+        {
+            em->flags.onScreen = 1;
+        }
+        if (em->flags.onScreen == 1 &&
+            g_GameManager.Func41b5e1(em->pos.x, em->pos.y, em->sprite.spriteData->width,
+                                     em->sprite.spriteData->height) == 0)
+        {
+            em->flags.active = 0;
+            em->Func4121b0();
+            continue;
+        }
+        if (em->unk_ea8 >= 0)
+        {
+            em->Func411da0();
+        }
+        if (em->unk_eb0 >= 0)
+        {
+            em->Func411f40();
+        }
+        if (g_EnemyScripts.Func4074a0(em) == -1)
+        {
+            em->flags.active = 0;
+            em->Func4121b0();
+            continue;
+        }
+        em->ClampPos();
+        em->sprite.color = em->color;
+        g_SpriteEngine->Step(&em->sprite);
+        em->color = em->sprite.color;
+        for (k = 0; k < 8; k++)
+        {
+            if (em->sprites[k].scriptIndex >= 0 && g_SpriteEngine->Step(&em->sprites[k]) != 0)
+            {
+                em->sprites[k].scriptIndex = -1;
+            }
+        }
+        bomb = 0;
+        if (em->flags.onScreen && !em->flags.hidden)
+        {
+            lifeBefore = em->life;
+            if (em->flags.unk9 && em->flags.unk8)
+            {
+                size = em->hitboxSize / 1.5f;
+                if (g_Player.CheckHit(&em->pos, &size) == 1 && em->flags.unk8 && !em->flags.unk11)
+                {
+                    em->life -= 10;
+                }
+            }
+            if (em->flags.unk8)
+            {
+                hurt = g_Player.CalcDamage(&em->pos, &em->hitboxSize, &bomb);
+                if (hurt >= 70)
+                {
+                    hurt = 70;
+                }
+                g_GameManager.score = hurt / 5 * 10 + g_GameManager.score;
+                if (mgr->unk_ee5c8 != 0)
+                {
+                    if (bomb == 0)
+                    {
+                        if (hurt > 7)
+                        {
+                            hurt /= 7;
+                        }
+                        else if (hurt != 0)
+                        {
+                            hurt = 1;
+                        }
+                    }
+                    else if (mgr->unk_ee5d4 != 0)
+                    {
+                        if (hurt > 3)
+                        {
+                            hurt /= 3;
+                        }
+                        else if (hurt != 0)
+                        {
+                            hurt = 1;
+                        }
+                    }
+                    else
+                    {
+                        hurt = 0;
+                    }
+                }
+                if (em->flags.unk12)
+                {
+                    em->life -= hurt;
+                }
+                if (g_Player.unk_0a1c.y < em->pos.y)
+                {
+                    g_Player.unk_0a1c = em->pos;
+                }
+            }
+            if (em->life <= 0 && em->flags.unk8)
+            {
+                em->unk_ea8 = -1;
+                em->unk_eb0 = -1;
+                switch (em->flags.unk13)
+                {
+                case 3:
+                    em->life = 1;
+                    em->flags.unk12 = 0;
+                    em->flags.unk13 = 0;
+                    g_Gui.unk_20 = 0;
+                    g_EffectManager.SpawnEffect(em->deathEffect, &em->pos, 1, 0xffffffff);
+                    g_EffectManager.SpawnEffect(em->deathEffect, &em->pos, 1, 0xffffffff);
+                    g_EffectManager.SpawnEffect(em->deathEffect, &em->pos, 1, 0xffffffff);
+                    break;
+                case 1:
+                    g_GameManager.AddScore(em->score);
+                    em->flags.unk8 = 0;
+                    goto dead;
+                case 0:
+                    g_GameManager.AddScore(em->score);
+                    em->flags.active = 0;
+                dead:
+                    if (em->flags.unk11)
+                    {
+                        g_Gui.unk_20 = 0;
+                        ReleaseEnemyEffects(em);
+                    }
+                case 2:
+                    if (em->unk_e3f >= 0)
+                    {
+                        g_EffectManager.SpawnEffect(em->unk_e3d + 4, &em->pos, 3, 0xffffffff);
+                        g_ItemManager.SpawnItem(&em->pos, em->unk_e3f, bomb);
+                    }
+                    else if (em->unk_e3f == -1)
+                    {
+                        if (mgr->unk_ee5b8 % 3 == 0)
+                        {
+                            g_EffectManager.SpawnEffect(em->unk_e3d + 4, &em->pos, 6, 0xffffffff);
+                            g_ItemManager.SpawnItem(&em->pos, g_EnemyItemDrops[mgr->unk_ee5ba], bomb);
+                            mgr->unk_ee5ba++;
+                            if (mgr->unk_ee5ba >= 0x20)
+                            {
+                                mgr->unk_ee5ba = 0;
+                            }
+                        }
+                        mgr->unk_ee5b8++;
+                    }
+                    if (em->flags.unk11 && g_EnemyManager.unk_ee5c8 == 0)
+                    {
+                        g_BulletManager.ClearAllWithBonus(0x3200, 0);
+                    }
+                    em->life = 0;
+                    break;
+                }
+                g_Unknown6d3f50.QueueSound(i % 2 + 2, 0);
+                g_EffectManager.SpawnEffect(em->deathEffect, &em->pos, 1, 0xffffffff);
+                g_EffectManager.SpawnEffect(em->unk_e3d + 4, &em->pos, 4, 0xffffffff);
+                if (em->deathSub >= 0)
+                {
+                    em->unk_cd4 = -0.5f;
+                    em->unk_cd8 = 0.5f;
+                    em->unk_cdc = 0;
+                    em->unk_cde = 0;
+                    em->unk_ce0 = 0;
+                    em->unk_ce2 = 0;
+                    em->unk_c3c = 0;
+                    g_EnemyScripts.StartSub(&em->ctx, em->deathSub);
+                    em->deathSub = -1;
+                }
+            }
+            if (em->flags.unk11 && !g_Gui.Func4195a2())
+            {
+                g_Gui.SetBossHealth((float)em->life / (float)em->maxLife);
+            }
+            if (em->hitFlashTimer != 0)
+            {
+                em->hitFlashTimer--;
+                em->sprite.flags.colorOp = 0;
+            }
+            else if (lifeBefore > em->life)
+            {
+                g_Unknown6d3f50.QueueSound(0x14, 0);
+                em->sprite.flags.colorOp = 1;
+                em->hitFlashTimer = 4;
+            }
+            else
+            {
+                em->sprite.flags.colorOp = 0;
+            }
+        }
+        MoveEnemyEffects(em);
+        if (g_GameManager.unk_002c == 0)
+        {
+            em->unk_cf0.Tick();
+        }
+    }
+    mgr->unk_ee5e0.Tick();
+    return 1;
 }
 
 void MoveEnemyEffects(Enemy *enemy)

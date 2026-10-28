@@ -108,9 +108,9 @@ address,size,name,symbol
 0x00411240,327,Enemy::Enemy,??0Enemy@@QAE@XZ
 0x00411390,290,EnemyManager::Spawn,?Spawn@EnemyManager@@QAEPAUEnemy@@FPAUD3DXVECTOR3@@FDH@Z
 0x004114c0,110,ReleaseEnemyEffects,?ReleaseEnemyEffects@@YAXPAUEnemy@@@Z
-0x00411530,2099,Func411530,
-0x00411da0,412,Func411da0,
-0x00411f40,623,Func411f40,
+0x00411530,2099,EnemyManager::Func411530,?Func411530@EnemyManager@@QAEXXZ
+0x00411da0,412,Enemy::Func411da0,?Func411da0@Enemy@@QAEXXZ
+0x00411f40,623,Enemy::Func411f40,?Func411f40@Enemy@@QAEXXZ
 0x004121b0,132,Enemy::Func4121b0,?Func4121b0@Enemy@@QAEXXZ
 0x00412240,217,Enemy::ClampPos,?ClampPos@Enemy@@QAEXXZ
 0x00412320,192,EnemyManager::RegisterChain,?RegisterChain@EnemyManager@@SAHPAD0@Z
@@ -1553,6 +1553,7 @@ address,size,name,symbol
 0x0046fed0,,GUID_NULL,_GUID_NULL
 0x004760e0,,g_StageFiles,?g_StageFiles@@3PAUStageFiles@@A
 0x00476298,,g_EffectInfos,?g_EffectInfos@@3PAUEffectInfo@@A
+0x00476338,,g_EnemyItemDrops,?g_EnemyItemDrops@@3PAEA
 0x00476358,,g_Unknown476358,?g_Unknown476358@@3PAKA
 0x004763c8,,g_Unknown4763c8,?g_Unknown4763c8@@3PAKA
 0x00476438,,g_Unknown476438,?g_Unknown476438@@3PAKA

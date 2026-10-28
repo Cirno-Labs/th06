@@ -23,10 +23,18 @@ struct EnemyFlags
     unsigned char mirrored : 1;
     // In use: EnemyManager::Spawn takes the first enemy without it.
     unsigned char active : 1;
+    // Can be shot and killed.
     unsigned char unk8 : 1;
-    unsigned char unk9 : 2;
+    // Touching the player costs it 10 life.
+    unsigned char unk9 : 1;
+    // Has been inside the play area; leaving it again removes the
+    // enemy.
+    unsigned char onScreen : 1;
+    // A boss: its life shows in the interface's bar.
     unsigned char unk11 : 1;
+    // Takes the player's shots' damage.
     unsigned char unk12 : 1;
+    // What dying does, in EnemyManager::OnUpdate.
     unsigned char unk13 : 3;
     // Keeps the position within lowerBound and upperBound.
     unsigned char clampPos : 1;
@@ -53,9 +61,15 @@ struct Enemy
     EnemyScriptState ctx;
     // Contexts saved by calls.
     EnemyScriptState savedCtx[8];
-    DWORD unk_c3c[0xc];
+    DWORD unk_c3c;
+    DWORD unk_c40;
+    // The subroutine the script runs when the enemy dies; negative for
+    // none.
+    int deathSub;
+    DWORD unk_c48[0x9];
     D3DXVECTOR3 pos;
-    DWORD unk_c78[0x3];
+    // The size of the enemy's hitbox.
+    D3DXVECTOR3 hitboxSize;
     D3DXVECTOR3 velocity;
     // Movement with moveMode 1.
     float angle;
@@ -69,11 +83,17 @@ struct Enemy
     D3DXVECTOR3 moveStart;
     Timer moveTimer;
     int moveDuration;
-    DWORD unk_cd4[0x4];
+    float unk_cd4;
+    float unk_cd8;
+    short unk_cdc;
+    short unk_cde;
+    short unk_ce0;
+    short unk_ce2;
     // Script operand -10024.
     int life;
     int maxLife;
     int score;
+    // Counts the frames, unless the game is paused.
     Timer unk_cf0;
     // The sprite's color when spawned.
     D3DCOLOR color;
@@ -82,10 +102,16 @@ struct Enemy
     Timer unk_d58;
     BulletShooter laserShooter;
     DWORD unk_db8[0x21];
-    BYTE unk_e3c[0x3];
+    // The effects the enemy's death spawns.
+    BYTE deathEffect;
+    BYTE unk_e3d;
+    BYTE unk_e3e;
     // Passed to EnemyManager::Spawn.
     char unk_e3f;
-    DWORD unk_e40;
+    BYTE unk_e40;
+    // Counts down the frames the sprite flashes for after a hit.
+    BYTE hitFlashTimer;
+    BYTE unk_e42[0x2];
     Timer unk_e44;
     EnemyFlags flags;
     DWORD unk_e54[0x3];
@@ -96,10 +122,15 @@ struct Enemy
     Effect *effects[12];
     int effectCount;
     float unk_ea4;
-    DWORD unk_ea8[0x5];
+    int unk_ea8;
+    DWORD unk_eac;
+    int unk_eb0;
+    DWORD unk_eb4[0x2];
     Timer unk_ebc;
 
     void Func4121b0();
+    void Func411da0();
+    void Func411f40();
     // Keeps the position within the bounds, with flags.clampPos.
     void ClampPos();
     // Moves by the velocity, mirrored with flags.mirrored.
@@ -122,6 +153,7 @@ public:
 
     // Sets everything up for a stage.
     void Initialize();
+    void Func411530();
 
     // Initializes, remembers the stage's two enemy sprite files and adds
     // the update element (priority 9) and the draw element (priority 6).
@@ -154,7 +186,9 @@ public:
     // Below 3 and below 8.
     WORD unk_ee5b8;
     WORD unk_ee5ba;
-    DWORD unk_ee5bc[0x2];
+    // Counts the enemies in use, each frame.
+    int enemyCount;
+    DWORD unk_ee5c0;
     int unk_ee5c4;
     int unk_ee5c8;
     DWORD unk_ee5cc[0x2];
@@ -165,6 +199,8 @@ public:
 };
 ASSERT_SIZE(EnemyManager, 0xee5ec);
 extern EnemyManager g_EnemyManager;
+// The items enemies without their own drop, every third one, in turn.
+extern BYTE g_EnemyItemDrops[0x20];
 
 // EnemyManager's statically allocated chain elements.
 extern ChainElem g_EnemyCalcChain;

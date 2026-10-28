@@ -29,7 +29,7 @@ void UpdateReimuABomb(Player *player)
     {
         g_Gui.ShowBombName(0x4a1, "霊符「夢想封印」");
         player->bomb.duration = 300;
-        player->unk_75b4.Set(360);
+        player->stateTimer.Set(360);
         for (i = 0; i < 8; i++)
         {
             player->bomb.partActive[i] = 0;
@@ -63,7 +63,7 @@ void UpdateReimuABomb(Player *player)
             }
         }
     }
-    player->unk_09e0 = 3;
+    player->playerState = 3;
     for (i = 0; i < 8; i++)
     {
         if (player->bomb.partActive[i] == 0)
@@ -74,9 +74,9 @@ void UpdateReimuABomb(Player *player)
         {
             if (player->bomb.timer.HasTicked())
             {
-                if (player->unk_0a1c.x > -100.0f)
+                if (player->homingTarget.x > -100.0f)
                 {
-                    aim = player->unk_0a1c;
+                    aim = player->homingTarget;
                 }
                 else
                 {
@@ -223,7 +223,7 @@ void UpdateReimuBBomb(Player *player)
         g_ItemManager.CollectAll();
         g_Gui.ShowBombName(0x4a3, "夢符「封魔陣」");
         player->bomb.duration = 140;
-        player->unk_75b4.Set(200);
+        player->stateTimer.Set(200);
         for (sprite = player->bomb.sprites, i = 0; i < 4; i++, sprite++)
         {
             g_SpriteEngine->Func4051b0(sprite, i + 0x489);
@@ -271,7 +271,7 @@ void UpdateReimuBBomb(Player *player)
             }
         }
     }
-    player->unk_09e0 = 3;
+    player->playerState = 3;
     player->bomb.timer.Tick();
 }
 
@@ -309,7 +309,7 @@ void UpdateMarisaABomb(Player *player)
         g_ItemManager.CollectAll();
         g_Gui.ShowBombName(0x4a3, "魔符「スターダストレヴァリエ」");
         player->bomb.duration = 250;
-        player->unk_75b4.Set(300);
+        player->stateTimer.Set(300);
         for (sprite = player->bomb.sprites, i = 0; i < 8; i++, sprite++)
         {
             g_SpriteEngine->Func4051b0(sprite, i % 3 + 0x405);
@@ -341,7 +341,7 @@ void UpdateMarisaABomb(Player *player)
             g_SpriteEngine->Step(&player->bomb.sprites[i]);
         }
     }
-    player->unk_09e0 = 3;
+    player->playerState = 3;
     player->bomb.timer.Tick();
 }
 
@@ -402,7 +402,7 @@ void UpdateMarisaBBomb(Player *player)
         g_ItemManager.CollectAll();
         g_Gui.ShowBombName(0x4a1, "恋符「マスタースパーク」");
         player->bomb.duration = 300;
-        player->unk_75b4.Set(360);
+        player->stateTimer.Set(360);
         for (sprite = player->bomb.sprites, i = 0; i < 4; i++, sprite++)
         {
             g_SpriteEngine->Func4051b0(sprite, i + 0x408);
@@ -439,7 +439,7 @@ void UpdateMarisaBBomb(Player *player)
         g_SpriteEngine->Step(&player->bomb.sprites[2]);
         g_SpriteEngine->Step(&player->bomb.sprites[3]);
     }
-    player->unk_09e0 = 3;
+    player->playerState = 3;
     player->bomb.timer.Tick();
 }
 

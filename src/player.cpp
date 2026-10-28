@@ -37,7 +37,7 @@ int FireShot(Player *player, PlayerBullet *bullet, int index, int frame, ShotTab
             bullet->laserIndex = laser;
             bullet->option = sd->option;
             bullet->velocity.z = sd->offsetX;
-            bullet->unk_134 = sd->offsetY;
+            bullet->laserOffsetY = sd->offsetY;
             goto fire;
         }
     }
@@ -274,7 +274,7 @@ int Player::CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     {
         return 0;
     }
-    if (this->unk_09e0 != 0)
+    if (this->playerState != 0)
     {
         return 1;
     }
@@ -311,7 +311,7 @@ int Player::CheckGraze(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
             return 2;
         }
     }
-    if (this->unk_09e0 == 2 || this->unk_09e0 == 1)
+    if (this->playerState == 2 || this->playerState == 1)
     {
         return 0;
     }
@@ -329,7 +329,7 @@ int Player::TouchesGrazeBox(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     D3DXVECTOR3 start;
     D3DXVECTOR3 end;
 
-    if (this->unk_09e0 != 0 && this->unk_09e0 != 3)
+    if (this->playerState != 0 && this->playerState != 3)
     {
         return 0;
     }
@@ -375,7 +375,7 @@ int Player::CheckLaserHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, D3DXVECTOR3 *orig
     {
         return 0;
     }
-    if (this->unk_09e0 == 2 || this->unk_09e0 == 1)
+    if (this->playerState == 2 || this->playerState == 1)
     {
         return 0;
     }
@@ -383,7 +383,7 @@ int Player::CheckLaserHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, D3DXVECTOR3 *orig
     return 2;
 
 hit:
-    if (this->unk_09e0 != 0)
+    if (this->playerState != 0)
     {
         return 0;
     }
@@ -421,8 +421,8 @@ void Player::Die()
     g_EnemyManager.spellCardCapture = 0;
     g_EffectManager.SpawnEffect(0xc, &this->position, 1, 0xff4040ff);
     g_EffectManager.SpawnEffect(6, &this->position, 16, 0xffffffff);
-    this->unk_09e0 = 2;
-    this->unk_75b4.Set(0);
+    this->playerState = 2;
+    this->stateTimer.Set(0);
     g_SoundPlayer.QueueSound(4, 0);
     g_GameManager.deaths++;
     for (i = 0; i < 2; i++)
@@ -744,7 +744,7 @@ int Player::RegisterChain(BYTE unk)
     Player *player = &g_Player;
 
     memset(player, 0, sizeof(Player));
-    player->unk_75b4.Set(0);
+    player->stateTimer.Set(0);
     player->unk_09e1 = unk;
     player->calcChain = g_Chain.CreateElem((ChainCallback)Player::OnUpdate);
     player->drawChain = g_Chain.CreateElem((ChainCallback)Player::OnDraw);
@@ -785,7 +785,7 @@ int Player::OnUpdate(Player *player)
     {
         player->bomb.update(player);
     }
-    else if (!g_Gui.IsMsgRunning() && player->unk_09d8 != 0 && g_GameManager.bombs > 0 && WAS_PRESSED(2) &&
+    else if (!g_Gui.IsMsgRunning() && player->deathbombFrames != 0 && g_GameManager.bombs > 0 && WAS_PRESSED(2) &&
              player->bomb.update != NULL)
     {
         g_GameManager.bombsUsed++;
@@ -799,12 +799,12 @@ int Player::OnUpdate(Player *player)
         g_GameManager.SubSubRank(200);
         g_EnemyManager.spellCardBombed = g_EnemyManager.spellCardActive;
     }
-    if (player->unk_09e0 == 2)
+    if (player->playerState == 2)
     {
-        if (player->unk_09d8 != 0)
+        if (player->deathbombFrames != 0)
         {
-            player->unk_09d8--;
-            if (player->unk_09d8 == 0)
+            player->deathbombFrames--;
+            if (player->deathbombFrames == 0)
             {
                 g_GameManager.powerItemCombo = 0;
                 if (g_GameManager.lives > 0)
@@ -841,20 +841,20 @@ int Player::OnUpdate(Player *player)
         }
         else
         {
-            progress = player->unk_75b4.AsFloat() / 30.0f;
+            progress = player->stateTimer.AsFloat() / 30.0f;
             player->sprite.scaleY = 3.0f * progress + 1.0f;
             player->sprite.scaleX = 1.0f - 1.0f * progress;
-            player->sprite.color = (int)(255.0f - player->unk_75b4.AsFloat() * 255.0f / 30.0f) << 24 | 0xffffff;
+            player->sprite.color = (int)(255.0f - player->stateTimer.AsFloat() * 255.0f / 30.0f) << 24 | 0xffffff;
             player->sprite.flags.blendMode = 1;
             player->velocityX = 0.0f;
             player->velocityY = 0.0f;
-            if (player->unk_75b4.AsFrames() >= 30)
+            if (player->stateTimer.AsFrames() >= 30)
             {
-                player->unk_09e0 = 1;
+                player->playerState = 1;
                 player->position.x = g_GameManager.arena[2] / 2.0f;
                 player->position.y = g_GameManager.arena[3] - 64.0f;
                 player->position.z = 0.2f;
-                player->unk_75b4.Set(0);
+                player->stateTimer.Set(0);
                 player->sprite.scaleX = 3.0f;
                 player->sprite.scaleY = 3.0f;
                 g_SpriteEngine->StartScript(&player->sprite, 0x400);
@@ -880,45 +880,45 @@ int Player::OnUpdate(Player *player)
             }
         }
     }
-    else if (player->unk_09e0 == 1)
+    else if (player->playerState == 1)
     {
     respawning:
-        player->unk_09dc = 90;
-        progress2 = 1.0f - player->unk_75b4.AsFloat() / 30.0f;
+        player->respawnClearFrames = 90;
+        progress2 = 1.0f - player->stateTimer.AsFloat() / 30.0f;
         player->sprite.scaleY = 2.0f * progress2 + 1.0f;
         player->sprite.scaleX = 1.0f - 1.0f * progress2;
         player->sprite.flags.blendMode = 1;
         player->moveScaleY = 1.0f;
         player->moveScaleX = 1.0f;
-        player->sprite.color = player->unk_75b4.AsFrames() * 255 / 30 << 24 | 0xffffff;
-        player->unk_09d8 = 0;
-        if (player->unk_75b4.AsFrames() >= 30)
+        player->sprite.color = player->stateTimer.AsFrames() * 255 / 30 << 24 | 0xffffff;
+        player->deathbombFrames = 0;
+        if (player->stateTimer.AsFrames() >= 30)
         {
-            player->unk_09e0 = 3;
+            player->playerState = 3;
             player->sprite.scaleX = 1.0f;
             player->sprite.scaleY = 1.0f;
             player->sprite.color = 0xffffffff;
             player->sprite.flags.blendMode = 0;
-            player->unk_75b4.Set(240);
-            player->unk_09d8 = 6;
+            player->stateTimer.Set(240);
+            player->deathbombFrames = 6;
         }
     }
-    if (player->unk_09dc != 0)
+    if (player->respawnClearFrames != 0)
     {
-        player->unk_09dc--;
+        player->respawnClearFrames--;
         g_BulletManager.ClearAll(0);
     }
-    if (player->unk_09e0 == 3)
+    if (player->playerState == 3)
     {
-        player->unk_75b4.Sub(1);
-        if (player->unk_75b4.AsFrames() <= 0)
+        player->stateTimer.Sub(1);
+        if (player->stateTimer.AsFrames() <= 0)
         {
-            player->unk_09e0 = 0;
-            player->unk_75b4.Set(0);
+            player->playerState = 0;
+            player->stateTimer.Set(0);
             player->sprite.flags.colorOp = 0;
             player->sprite.color = 0xffffffff;
         }
-        else if (player->unk_75b4.AsFrames() % 8 < 2)
+        else if (player->stateTimer.AsFrames() % 8 < 2)
         {
             player->sprite.flags.colorOp = 1;
             player->sprite.color = 0xff404040;
@@ -931,9 +931,9 @@ int Player::OnUpdate(Player *player)
     }
     else
     {
-        player->unk_75b4.Tick();
+        player->stateTimer.Tick();
     }
-    if (player->unk_09e0 != 2 && player->unk_09e0 != 1)
+    if (player->playerState != 2 && player->playerState != 1)
     {
         player->HandleInput();
     }
@@ -944,7 +944,7 @@ int Player::OnUpdate(Player *player)
         g_SpriteEngine->Step(&player->optionSprites[0]);
         g_SpriteEngine->Step(&player->optionSprites[1]);
     }
-    player->unk_0a1c = D3DXVECTOR3(-999.0f, -999.0f, 0.0f);
+    player->homingTarget = D3DXVECTOR3(-999.0f, -999.0f, 0.0f);
     Player::UpdateFiring(player);
     return 1;
 }
@@ -976,10 +976,10 @@ void Player::UpdateBullets(Player *player)
         case 1:
             if (bullet->state == 1)
             {
-                if (player->unk_0a1c.x > -100.0f && bullet->timer.AsFrames() < 40 && bullet->timer.HasTicked())
+                if (player->homingTarget.x > -100.0f && bullet->timer.AsFrames() < 40 && bullet->timer.HasTicked())
                 {
-                    x = player->unk_0a1c.x - bullet->pos.x;
-                    y = player->unk_0a1c.y - bullet->pos.y;
+                    x = player->homingTarget.x - bullet->pos.x;
+                    y = player->homingTarget.y - bullet->pos.y;
                     len = sqrtf(x * x + y * y) / (bullet->speed / 4.0f);
                     if (len < 1.0f)
                     {
@@ -1059,7 +1059,7 @@ int Player::UpdateFiring(Player *player)
         Player::FireShots(player, player->fireTimer.AsFrames());
     }
     player->fireTimer.Tick();
-    if (player->fireTimer.AsFrames() >= 30 || player->unk_09e0 == 2 || player->unk_09e0 == 1)
+    if (player->fireTimer.AsFrames() >= 30 || player->playerState == 2 || player->playerState == 1)
     {
         player->fireTimer.Set(-1);
     }
@@ -1132,7 +1132,7 @@ int Player::OnDraw(Player *player)
     if (!g_GameManager.isInContinueMenu)
     {
         g_SpriteEngine->Draw(&player->sprite);
-        if (player->optionState && (player->unk_09e0 == 0 || player->unk_09e0 == 3))
+        if (player->optionState && (player->playerState == 0 || player->playerState == 3))
         {
             player->optionSprites[0].pos = player->optionPos[0];
             player->optionSprites[1].pos = player->optionPos[1];
@@ -1231,8 +1231,8 @@ int Player::AddedCallback(Player *player)
     player->shotTypeInfo.speedDiagonalFocused = player->shotTypeInfo.speedFocused / sqrtf(2.0f);
     player->fire = player->shotTypeInfo.fire;
     player->fireFocused = player->shotTypeInfo.fireFocused;
-    player->unk_09e0 = 1;
-    player->unk_75b4.Set(120);
+    player->playerState = 1;
+    player->stateTimer.Set(120);
     player->optionState = 0;
     g_SpriteEngine->StartScript(&player->optionSprites[0], 0x480);
     g_SpriteEngine->StartScript(&player->optionSprites[1], 0x481);
@@ -1251,6 +1251,6 @@ int Player::AddedCallback(Player *player)
     }
     player->moveScaleY = 1.0f;
     player->moveScaleX = 1.0f;
-    player->unk_09d8 = 8;
+    player->deathbombFrames = 8;
     return 0;
 }

@@ -16,9 +16,9 @@ struct PlayerBullet
     D3DXVECTOR3 pos;
     D3DXVECTOR3 size;
     // A laser keeps its offset from its option in velocity.z and
-    // unk_134.
+    // laserOffsetY.
     D3DXVECTOR3 velocity;
-    float unk_134;
+    float laserOffsetY;
     float speed;
     // The direction it flies in.
     float angle;
@@ -26,7 +26,7 @@ struct PlayerBullet
     short damage;
     // 0 unused, 1 flying, 2 hit (drawn by DrawHitBullets).
     short state;
-    // How it moves: 1 homing on unk_0a1c, 2 accelerating up, 3 a laser
+    // How it moves: 1 homing on homingTarget, 2 accelerating up, 3 a laser
     // kept on an option.
     short type;
     // A laser's: its entry in laserTimers, and its option, from 1.
@@ -209,12 +209,12 @@ public:
     float moveScaleX;
     float moveScaleY;
     // While the player dies: frames left to bomb, as a deathbomb.
-    int unk_09d8;
+    int deathbombFrames;
     // Frames left of clearing all bullets after a respawn.
-    int unk_09dc;
+    int respawnClearFrames;
     // 0 normally, 1 respawning, 2 dying, 3 invulnerable (the bombs set
     // it every frame).
-    char unk_09e0;
+    char playerState;
     // RegisterChain's argument.
     BYTE unk_09e1;
     // The options: 0 none (power below 8), 1 out, 2 sliding in while
@@ -241,14 +241,14 @@ public:
     WORD unk_0a1a;
     // What Reimu A's orbs home in on; x is -100 or less when there is
     // nothing.
-    D3DXVECTOR3 unk_0a1c;
+    D3DXVECTOR3 homingTarget;
     PlayerBullet bullets[0x50];
     // Runs while firing: -1 when idle, set going by StartFiring and
     // stopped after 30 frames.
     Timer fireTimer;
     // Counts the death and respawn; the invulnerability counts down
     // (set to 360 frames when a bomb starts).
-    Timer unk_75b4;
+    Timer stateTimer;
     // Copies of shotTypeInfo's.
     int (*fire)(Player *player, PlayerBullet *bullet, int index, int frame);
     int (*fireFocused)(Player *player, PlayerBullet *bullet, int index, int frame);
@@ -263,7 +263,7 @@ ASSERT_SIZE(Player, 0x98f0);
 // Reimu A's bomb update callback: ends the bomb after its duration;
 // otherwise starts it (the spell card name, 300 frames), launches an orb
 // every 16 frames from frame 76 to 172, steers the live orbs towards
-// unk_0a1c or the player, keeping their hitboxes and bullet clearing
+// homingTarget or the player, keeping their hitboxes and bullet clearing
 // on them, and bursts each after 100 hits or in the bomb's last 30
 // frames.
 void UpdateReimuABomb(Player *player);

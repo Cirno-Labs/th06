@@ -595,9 +595,9 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 {
                     em->life -= hurt;
                 }
-                if (g_Player.unk_0a1c.y < em->pos.y)
+                if (g_Player.homingTarget.y < em->pos.y)
                 {
-                    g_Player.unk_0a1c = em->pos;
+                    g_Player.homingTarget = em->pos;
                 }
             }
             if (em->life <= 0 && em->flags.unk8)

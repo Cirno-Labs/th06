@@ -361,13 +361,13 @@ restart:
             bs->sprite = bulletArgs->sprite;
             bs->aimMode = instr->opcode - 67;
             bs->count1 = *ResolveOperand(enemy, &bulletArgs->count1, NULL);
-            bs->count1 += RankLerp(enemy->unk_cdc, enemy->unk_cde);
+            bs->count1 += RankLerp(enemy->rankCount1Low, enemy->rankCount1High);
             if (bs->count1 <= 0)
             {
                 bs->count1 = 1;
             }
             bs->count2 = *ResolveOperand(enemy, &bulletArgs->count2, NULL);
-            bs->count2 += RankLerp(enemy->unk_ce0, enemy->unk_ce2);
+            bs->count2 += RankLerp(enemy->rankCount2Low, enemy->rankCount2High);
             if (bs->count2 <= 0)
             {
                 bs->count2 = 1;
@@ -378,7 +378,7 @@ restart:
             bs->speed1 = *ResolveFloatOperand(enemy, &bulletArgs->speed1, NULL);
             if (bs->speed1 != 0.0f)
             {
-                bs->speed1 += RankLerpF(enemy->unk_cd4, enemy->unk_cd8);
+                bs->speed1 += RankLerpF(enemy->rankSpeedLow, enemy->rankSpeedHigh);
                 if (bs->speed1 < 0.3f)
                 {
                     bs->speed1 = 0.3f;
@@ -386,7 +386,7 @@ restart:
             }
             bs->angle2 = *ResolveFloatOperand(enemy, &bulletArgs->angle2, NULL);
             bs->speed2 = *ResolveFloatOperand(enemy, &bulletArgs->speed2, NULL);
-            bs->speed2 += RankLerpF(enemy->unk_cd4, enemy->unk_cd8) / 2.0f;
+            bs->speed2 += RankLerpF(enemy->rankSpeedLow, enemy->rankSpeedHigh) / 2.0f;
             if (bs->speed2 < 0.3f)
             {
                 bs->speed2 = 0.3f;
@@ -532,12 +532,12 @@ restart:
                 g_Gui.bossPresent = 1;
                 g_Gui.bossHealth = 1.0f;
                 enemy->flags.unk11 = 1;
-                enemy->unk_e40 = instr->args.i[0];
+                enemy->bossIndex = instr->args.i[0];
             }
             else
             {
                 g_Gui.bossPresent = 0;
-                g_EnemyManager.bosses[enemy->unk_e40] = NULL;
+                g_EnemyManager.bosses[enemy->bossIndex] = NULL;
                 enemy->flags.unk11 = 0;
             }
             break;
@@ -546,7 +546,7 @@ restart:
             EnemyScriptArgs *effectArgs = &instr->args;
             enemy->effects[enemy->effectCount] = g_EffectManager.SpawnEffect(0xd, &enemy->pos, 1, g_Unknown476438[effectArgs->i[0]]);
             enemy->effects[enemy->effectCount]->unk_140 = *(D3DXVECTOR3 *)&effectArgs->f[1];
-            enemy->unk_ea4 = effectArgs->f[4];
+            enemy->effectRadius = effectArgs->f[4];
             enemy->effectCount++;
             break;
         }
@@ -657,11 +657,11 @@ restart:
             }
             break;
         case 98:
-            enemy->unk_e54 = instr->args.s[0];
-            enemy->unk_e56 = instr->args.s[1];
-            enemy->unk_e58 = instr->args.s[2];
-            enemy->unk_e5a = instr->args.s[3];
-            enemy->unk_e5c = instr->args.s[4];
+            enemy->turnStill = instr->args.s[0];
+            enemy->turnStillFromLeft = instr->args.s[1];
+            enemy->turnStillFromRight = instr->args.s[2];
+            enemy->turnLeft = instr->args.s[3];
+            enemy->turnRight = instr->args.s[4];
             enemy->flags.spriteDirection = 0xff;
             break;
         case 103:
@@ -719,12 +719,12 @@ restart:
             g_BulletManager.ClearAllToItems();
             g_Stage.unk_080 = 1;
             g_Stage.unk_084 = 0;
-            enemy->unk_cd4 = -0.5f;
-            enemy->unk_cd8 = 0.5f;
-            enemy->unk_cdc = 0;
-            enemy->unk_cde = 0;
-            enemy->unk_ce0 = 0;
-            enemy->unk_ce2 = 0;
+            enemy->rankSpeedLow = -0.5f;
+            enemy->rankSpeedHigh = 0.5f;
+            enemy->rankCount1Low = 0;
+            enemy->rankCount1High = 0;
+            enemy->rankCount2Low = 0;
+            enemy->rankCount2High = 0;
             rec = &g_GameManager.catks[g_EnemyManager.spellCardIndex];
             sum = 0;
             if (g_GameManager.isInReplay == 0)
@@ -782,7 +782,7 @@ restart:
             g_Stage.unk_080 = 0;
             break;
         case 112:
-            enemy->unk_cf0.Set(instr->args.i[0]);
+            enemy->callbackTimer.Set(instr->args.i[0]);
             break;
         case 113:
             enemy->lifeCallbackLife = instr->args.i[0];
@@ -792,7 +792,7 @@ restart:
             break;
         case 115:
             enemy->timerCallbackTime = instr->args.i[0];
-            enemy->unk_cf0.Set(0);
+            enemy->callbackTimer.Set(0);
             break;
         case 116:
             enemy->timerCallbackSub = instr->args.i[0];
@@ -908,19 +908,19 @@ restart:
             enemy->flags.unk18 = instr->args.i[0];
             break;
         case 131:
-            enemy->unk_cd4 = params->f[0];
-            enemy->unk_cd8 = params->f[1];
-            enemy->unk_cdc = params->i[2];
-            enemy->unk_cde = params->i[3];
-            enemy->unk_ce0 = params->i[4];
-            enemy->unk_ce2 = params->i[5];
+            enemy->rankSpeedLow = params->f[0];
+            enemy->rankSpeedHigh = params->f[1];
+            enemy->rankCount1Low = params->i[2];
+            enemy->rankCount1High = params->i[3];
+            enemy->rankCount2Low = params->i[4];
+            enemy->rankCount2High = params->i[5];
             break;
         case 132:
             enemy->flags.hidden = instr->args.i[0];
             break;
         case 133:
             enemy->timerCallbackSub = enemy->deathSub;
-            enemy->unk_cf0.Set(0);
+            enemy->callbackTimer.Set(0);
             break;
         case 135:
             enemy->flags.unk20 = instr->args.i[0];
@@ -989,7 +989,7 @@ restart:
                 enemy->shootTimer.Set(0);
             }
         }
-        if (enemy->unk_e5a >= 0)
+        if (enemy->turnLeft >= 0)
         {
             int dir = 0;
             if (enemy->velocity.x < 0.0f)
@@ -1007,22 +1007,22 @@ restart:
                 case 0:
                     if (enemy->flags.spriteDirection == 0xff)
                     {
-                        g_SpriteEngine->StartScript(&enemy->sprite, enemy->unk_e54 + 0x100);
+                        g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnStill + 0x100);
                     }
                     else if (enemy->flags.spriteDirection == 1)
                     {
-                        g_SpriteEngine->StartScript(&enemy->sprite, enemy->unk_e56 + 0x100);
+                        g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnStillFromLeft + 0x100);
                     }
                     else
                     {
-                        g_SpriteEngine->StartScript(&enemy->sprite, enemy->unk_e58 + 0x100);
+                        g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnStillFromRight + 0x100);
                     }
                     break;
                 case 1:
-                    g_SpriteEngine->StartScript(&enemy->sprite, enemy->unk_e5a + 0x100);
+                    g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnLeft + 0x100);
                     break;
                 case 2:
-                    g_SpriteEngine->StartScript(&enemy->sprite, enemy->unk_e5c + 0x100);
+                    g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnRight + 0x100);
                     break;
                 }
                 enemy->flags.spriteDirection = dir;
@@ -1178,7 +1178,7 @@ int *ResolveOperand(Enemy *enemy, int *operand, int *type)
         {
             *type = 0;
         }
-        return &enemy->unk_cf0.current;
+        return &enemy->callbackTimer.current;
     case -10023:
     {
         D3DXVECTOR3 diff = g_Player.position - enemy->pos;
@@ -1733,20 +1733,20 @@ void ScriptSparkCircle(Enemy *enemy, EnemyScriptInstr *instr)
         ReleaseEnemyEffects(enemy);
         return;
     }
-    enemy->unk_eb8 += 0.017453292f;
-    if (enemy->unk_eb8 >= 0.7853982f)
+    enemy->sparkAngle += 0.017453292f;
+    if (enemy->sparkAngle >= 0.7853982f)
     {
-        enemy->unk_eb8 -= 1.5707964f;
+        enemy->sparkAngle -= 1.5707964f;
     }
-    if (enemy->unk_ebc.HasTicked())
+    if (enemy->sparkTimer.HasTicked())
     {
-        if (enemy->unk_ebc > 120 || (enemy->unk_ebc > 60 && enemy->unk_ebc.current % 2 == 0) ||
-            (enemy->unk_ebc > 30 && enemy->unk_ebc.current % 4 == 0) || enemy->unk_ebc.current % 8 == 0)
+        if (enemy->sparkTimer > 120 || (enemy->sparkTimer > 60 && enemy->sparkTimer.current % 2 == 0) ||
+            (enemy->sparkTimer > 30 && enemy->sparkTimer.current % 4 == 0) || enemy->sparkTimer.current % 8 == 0)
         {
-            k = enemy->unk_ebc.current % 16;
+            k = enemy->sparkTimer.current % 16;
             k = g_Rng.GetRandomU16InRange(k / 2) + k / 2;
             r = k * 160.0f / 16.0f + 32.0f;
-            a2 = enemy->unk_eb8 - k * 3.1415927f / 40.0f;
+            a2 = enemy->sparkAngle - k * 3.1415927f / 40.0f;
             if (r < -0.7853982f)
             {
                 r += 1.5707964f;
@@ -1769,7 +1769,7 @@ void ScriptSparkCircle(Enemy *enemy, EnemyScriptInstr *instr)
             effect->unk_128 = -effect->unk_11c / 120.0f;
         }
     }
-    enemy->unk_ebc.Tick();
+    enemy->sparkTimer.Tick();
 }
 
 // g_EnemyScriptFuncs[7]: from two rings of eight points around the enemy
@@ -2005,23 +2005,23 @@ void ScriptSparksAndBombShield(Enemy *enemy, EnemyScriptInstr *instr)
     ScriptSparkCircle(enemy, instr);
     if (g_Player.bomb.running != 0)
     {
-        if (enemy->unk_e5a >= 0)
+        if (enemy->turnLeft >= 0)
         {
             g_SpriteEngine->StartScript(&enemy->sprite, 0x1a5);
-            enemy->unk_e5a = -1;
+            enemy->turnLeft = -1;
         }
         enemy->flags.unk8 = 0;
-        enemy->unk_e44.Set(60);
+        enemy->shieldTimer.Set(60);
     }
-    else if (enemy->unk_e44 > 0)
+    else if (enemy->shieldTimer > 0)
     {
-        enemy->unk_e44.Sub(1);
-        if (enemy->unk_e44 == 0)
+        enemy->shieldTimer.Sub(1);
+        if (enemy->shieldTimer == 0)
         {
-            if (enemy->unk_e5a < 0)
+            if (enemy->turnLeft < 0)
             {
                 g_SpriteEngine->StartScript(&enemy->sprite, 0x1a0);
-                enemy->unk_e5a = 0xa1;
+                enemy->turnLeft = 0xa1;
             }
             enemy->flags.unk8 = 1;
         }
@@ -2173,7 +2173,7 @@ void ScriptFollowLife(Enemy *enemy, EnemyScriptInstr *instr)
     int life = enemy->life;
     float range;
 
-    if (enemy->unk_cf0 >= 7200)
+    if (enemy->callbackTimer >= 7200)
     {
         life = 0;
     }

@@ -797,7 +797,7 @@ int Player::OnUpdate(Player *player)
         player->bomb.update(player);
         g_EnemyManager.spellCardCapture = 0;
         g_GameManager.SubSubRank(200);
-        g_EnemyManager.unk_ee5d4 = g_EnemyManager.spellCardActive;
+        g_EnemyManager.spellCardBombed = g_EnemyManager.spellCardActive;
     }
     if (player->unk_09e0 == 2)
     {

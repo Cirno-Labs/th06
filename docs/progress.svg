@@ -61,10 +61,10 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">97.24% (458)</tspan> · <tspan class="decompiled">2.55% (12)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">0.21% (1)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">97.45% (459)</tspan> · <tspan class="decompiled">2.34% (11)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">0.21% (1)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="726.38" height="6" x="0" y="0" class="named"/>
-<rect width="19.03" height="6" x="726.38" y="0" class="decompiled"/>
+<rect width="727.97" height="6" x="0" y="0" class="named"/>
+<rect width="17.45" height="6" x="727.97" y="0" class="decompiled"/>
 <rect width="1.59" height="6" x="745.41" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
@@ -180,7 +180,7 @@
 <rect width="12" height="12" x="135" y="30" class="named"><title>0x00411530 EnemyManager::RunTimeline (2099 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="30" class="named"><title>0x00411da0 Enemy::CheckLifeCallback (412 bytes)</title></rect>
 <rect width="12" height="12" x="165" y="30" class="named"><title>0x00411f40 Enemy::CheckTimerCallback (623 bytes)</title></rect>
-<rect width="12" height="12" x="180" y="30" class="decompiled"><title>0x004121b0 Enemy::Func4121b0 (132 bytes)</title></rect>
+<rect width="12" height="12" x="180" y="30" class="named"><title>0x004121b0 Enemy::Despawn (132 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="30" class="named"><title>0x00412240 Enemy::ClampPos (217 bytes)</title></rect>
 <rect width="12" height="12" x="210" y="30" class="named"><title>0x00412320 EnemyManager::RegisterChain (192 bytes)</title></rect>
 <rect width="12" height="12" x="225" y="30" class="named"><title>0x004123e0 EnemyManager::OnUpdate (2655 bytes)</title></rect>
@@ -543,10 +543,10 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">98.07%</tspan> · <tspan class="decompiled">1.80%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">0.13%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">98.13%</tspan> · <tspan class="decompiled">1.75%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">0.13%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="732.58" height="6" x="0" y="0" class="named"/>
-<rect width="13.47" height="6" x="732.58" y="0" class="decompiled"/>
+<rect width="733" height="6" x="0" y="0" class="named"/>
+<rect width="13.06" height="6" x="733" y="0" class="decompiled"/>
 <rect width="0.95" height="6" x="746.05" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
@@ -856,7 +856,7 @@
 <rect width="5.53" height="4.69" x="670.77" y="130.28" class="named"><title>0x0042fee0 ScreenEffect::OnDrawScreen (136 bytes)</title></rect>
 <rect width="5.53" height="4.52" x="670.77" y="137.96" class="named"><title>0x0041e0c0 ResetKeyboard (133 bytes)</title></rect>
 <rect width="5.53" height="4.52" x="670.77" y="145.48" class="named"><title>0x004311e0 SoundPlayer::QueueSound (133 bytes)</title></rect>
-<rect width="5.05" height="4.91" x="679.30" y="73.92" class="decompiled"><title>0x004121b0 Enemy::Func4121b0 (132 bytes)</title></rect>
+<rect width="5.05" height="4.91" x="679.30" y="73.92" class="named"><title>0x004121b0 Enemy::Despawn (132 bytes)</title></rect>
 <rect width="4.98" height="4.91" x="687.35" y="73.92" class="named"><title>0x004220b0 MidiPlayer::FreeTracks (131 bytes)</title></rect>
 <rect width="4.92" height="4.91" x="695.33" y="73.92" class="named"><title>0x0041b5e1 GameManager::IsInPlayArea (130 bytes)</title></rect>
 <rect width="4.92" height="4.91" x="703.25" y="73.92" class="named"><title>0x004242f3 App::ReleaseArchive (130 bytes)</title></rect>

@@ -96,19 +96,21 @@ struct Enemy
     D3DXVECTOR3 moveStart;
     Timer moveTimer;
     int moveDuration;
-    // How the shots' speed and counts grow with the rank.
-    float unk_cd4;
-    float unk_cd8;
-    short unk_cdc;
-    short unk_cde;
-    short unk_ce0;
-    short unk_ce2;
+    // How the shots' speed and counts grow with the rank: what is added
+    // at the lowest rank and at the highest.
+    float rankSpeedLow;
+    float rankSpeedHigh;
+    short rankCount1Low;
+    short rankCount1High;
+    short rankCount2Low;
+    short rankCount2High;
     // Script operand -10024.
     int life;
     int maxLife;
     int score;
-    // Counts the frames, unless the game is paused.
-    Timer unk_cf0;
+    // Counts the frames, unless the game is frozen, for the timer
+    // callback; the boss timer shows what is left of it.
+    Timer callbackTimer;
     // The sprite's color when spawned.
     D3DCOLOR color;
     BulletShooter shooter;
@@ -123,22 +125,27 @@ struct Enemy
     BYTE deathEffect;
     BYTE unk_e3d;
     BYTE unk_e3e;
-    // Passed to EnemyManager::Spawn.
-    char unk_e3f;
-    BYTE unk_e40;
+    // The item dropped on death, from EnemyManager::Spawn: -1 for one of
+    // g_EnemyItemDrops every third enemy, below that none.
+    char item;
+    // The enemy's slot in EnemyManager::bosses, while it is one.
+    BYTE bossIndex;
     // Counts down the frames the sprite flashes for after a hit.
     BYTE hitFlashTimer;
     BYTE unk_e42[0x2];
-    Timer unk_e44;
+    // Counts down the 60 frames after a bomb that ScriptSparksAndBombShield
+    // keeps the enemy unshootable.
+    Timer shieldTimer;
     EnemyFlags flags;
-    // The sprite scripts (+ 0x100) for turning: unk_e54 to none from
-    // none, unk_e56 from left, unk_e58 from right; unk_e5a to left and
-    // unk_e5c to right. Negative unk_e5a: no turning.
-    short unk_e54;
-    short unk_e56;
-    short unk_e58;
-    short unk_e5a;
-    short unk_e5c;
+    // The sprite scripts (+ 0x100) for turning: turnStill to none at
+    // first, turnStillFromLeft from left, turnStillFromRight from right;
+    // turnLeft to left and turnRight to right. Negative turnLeft: no
+    // turning.
+    short turnStill;
+    short turnStillFromLeft;
+    short turnStillFromRight;
+    short turnLeft;
+    short turnRight;
     short unk_e5e;
     // The bounds of the position, with flags.clampPos.
     float lowerBound[2];
@@ -146,25 +153,30 @@ struct Enemy
     // Effects that follow the enemy.
     Effect *effects[12];
     int effectCount;
-    float unk_ea4;
+    // How far the effects following the enemy widen.
+    float effectRadius;
     // When the life falls below lifeCallbackLife, the script runs
     // lifeCallbackSub; -1 for none.
     int lifeCallbackLife;
     int lifeCallbackSub;
-    // When unk_cf0 reaches timerCallbackTime, the script runs
+    // When callbackTimer reaches timerCallbackTime, the script runs
     // timerCallbackSub; -1 for none.
     int timerCallbackTime;
     int timerCallbackSub;
-    // The angle ScriptSparkCircle turns its sparks by, and its frame count.
-    float unk_eb8;
-    Timer unk_ebc;
+    // The angle ScriptSparkCircle turns its sparks by, and its frame
+    // count.
+    float sparkAngle;
+    Timer sparkTimer;
 
-    void Func4121b0();
+    // After the enemy leaves the play area or its script ends: frees it
+    // (flags.unk13 0) or makes it unshootable, hides the boss's bar if it
+    // is the boss and releases its effects.
+    void Despawn();
     // Once the life falls below lifeCallbackLife: sets it to that,
     // starts lifeCallbackSub, makes the death subroutine the timer
     // callback's and clears the other enemies. Returns 1 then, else 0.
     int CheckLifeCallback();
-    // Once unk_cf0 reaches timerCallbackTime: restores the life from
+    // Once callbackTimer reaches timerCallbackTime: restores the life from
     // lifeCallbackLife, starts timerCallbackSub, makes the death
     // subroutine the next, ends the spell card and clears the bullets
     // (unless flags.unk20) and the other enemies. Returns 1 then, else 0.
@@ -177,7 +189,7 @@ struct Enemy
 ASSERT_SIZE(Enemy, 0xec8);
 
 // Moves the effects following `enemy` with it, widening them up to
-// unk_ea4 and turning them.
+// effectRadius and turning them.
 void MoveEnemyEffects(Enemy *enemy);
 // Releases the effects following `enemy`.
 void ReleaseEnemyEffects(Enemy *enemy);
@@ -203,7 +215,7 @@ public:
     static int OnUpdate(EnemyManager *mgr);
     static int OnDraw(EnemyManager *mgr);
     // Loads the enemy sprites (either path may be NULL) and picks
-    // unk_ee5b8 and unk_ee5ba at random. Returns 0, or -1 if loading
+    // dropCounter and dropIndex at random. Returns 0, or -1 if loading
     // fails.
     static int AddedCallback(EnemyManager *mgr);
     // Frees the enemy sprites. Returns 0.
@@ -215,7 +227,7 @@ public:
     // subroutine `sub` and running its first frame. `life` and `score`
     // replace the script's when not negative. Returns the enemy, or the
     // last one if all are in use.
-    Enemy *Spawn(int sub, D3DXVECTOR3 *pos, short life, short unk_e3f, int score);
+    Enemy *Spawn(int sub, D3DXVECTOR3 *pos, short life, short item, int score);
 
     // The stage's two enemy sprite files.
     char *anmPath;
@@ -225,9 +237,10 @@ public:
     Enemy enemies[0x101];
     // Enemies the timeline refers to.
     Enemy *bosses[0x8];
-    // Below 3 and below 8.
-    WORD unk_ee5b8;
-    WORD unk_ee5ba;
+    // Counts the enemies dropping one of g_EnemyItemDrops (every third
+    // does), and the next of them; start below 3 and below 8.
+    WORD dropCounter;
+    WORD dropIndex;
     // Counts the enemies in use, each frame.
     int enemyCount;
     DWORD unk_ee5c0;
@@ -237,7 +250,9 @@ public:
     int spellCardActive;
     int spellCardBonus;
     int spellCardIndex;
-    int unk_ee5d4;
+    // Set when the player bombs during a spell card: the boss takes a
+    // third of the damage.
+    int spellCardBombed;
     DWORD unk_ee5d8;
     // The next timeline entry, and the timeline's frame count.
     EnemyTimelineEntry *timelinePos;

@@ -111,7 +111,7 @@ address,size,name,symbol
 0x00411530,2099,EnemyManager::RunTimeline,?RunTimeline@EnemyManager@@QAEXXZ
 0x00411da0,412,Enemy::CheckLifeCallback,?CheckLifeCallback@Enemy@@QAEHXZ
 0x00411f40,623,Enemy::CheckTimerCallback,?CheckTimerCallback@Enemy@@QAEHXZ
-0x004121b0,132,Enemy::Func4121b0,?Func4121b0@Enemy@@QAEXXZ
+0x004121b0,132,Enemy::Despawn,?Despawn@Enemy@@QAEXXZ
 0x00412240,217,Enemy::ClampPos,?ClampPos@Enemy@@QAEXXZ
 0x00412320,192,EnemyManager::RegisterChain,?RegisterChain@EnemyManager@@SAHPAD0@Z
 0x004123e0,2655,EnemyManager::OnUpdate,?OnUpdate@EnemyManager@@SAHPAV1@@Z

@@ -35,7 +35,7 @@ void EnemyManager::Initialize()
         enemy->sprites[i].scriptIndex = -1;
     }
     enemy->flags.active = 1;
-    enemy->unk_cf0.Set(0);
+    enemy->callbackTimer.Set(0);
     enemy->flags.unk8 = 1;
     enemy->flags.unk9 = 1;
     enemy->flags.onScreen = 0;
@@ -58,9 +58,9 @@ void EnemyManager::Initialize()
     enemy->shootInterval = 0;
     enemy->shootTimer.Set(0);
     enemy->shootOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-    enemy->unk_e5a = -1;
-    enemy->unk_e5c = -1;
-    enemy->unk_e54 = -1;
+    enemy->turnLeft = -1;
+    enemy->turnRight = -1;
+    enemy->turnStill = -1;
     enemy->flags.unk12 = 1;
     enemy->flags.unk13 = 0;
     enemy->deathSub = -1;
@@ -72,8 +72,8 @@ void EnemyManager::Initialize()
     enemy->laserIndex = 0;
     enemy->hitFlashTimer = 0;
     enemy->flags.rotateSprite = 0;
-    enemy->unk_cd4 = -0.5f;
-    enemy->unk_cd8 = 0.5f;
+    enemy->rankSpeedLow = -0.5f;
+    enemy->rankSpeedHigh = 0.5f;
 }
 
 EnemyManager::EnemyManager()
@@ -81,7 +81,7 @@ EnemyManager::EnemyManager()
     this->Initialize();
 }
 
-Enemy *EnemyManager::Spawn(int sub, D3DXVECTOR3 *pos, short life, short unk_e3f, int score)
+Enemy *EnemyManager::Spawn(int sub, D3DXVECTOR3 *pos, short life, short item, int score)
 {
     Enemy *enemy;
     int i;
@@ -102,7 +102,7 @@ Enemy *EnemyManager::Spawn(int sub, D3DXVECTOR3 *pos, short life, short unk_e3f,
         g_EnemyScripts.StartSub(&enemy->ctx, sub);
         g_EnemyScripts.RunEnemy(enemy);
         enemy->color = enemy->sprite.color;
-        enemy->unk_e3f = unk_e3f;
+        enemy->item = item;
         if (life >= 0)
         {
             enemy->life = life;
@@ -331,12 +331,12 @@ int Enemy::CheckLifeCallback()
         g_EnemyScripts.StartSub(&this->ctx, this->lifeCallbackSub);
         this->lifeCallbackLife = -1;
         this->timerCallbackSub = this->deathSub;
-        this->unk_cd4 = -0.5f;
-        this->unk_cd8 = 0.5f;
-        this->unk_cdc = 0;
-        this->unk_cde = 0;
-        this->unk_ce0 = 0;
-        this->unk_ce2 = 0;
+        this->rankSpeedLow = -0.5f;
+        this->rankSpeedHigh = 0.5f;
+        this->rankCount1Low = 0;
+        this->rankCount1High = 0;
+        this->rankCount2Low = 0;
+        this->rankCount2High = 0;
         this->stackDepth = 0;
         for (it = g_EnemyManager.enemies, i = 0; i < 0x100; i++, it++)
         {
@@ -370,9 +370,9 @@ int Enemy::CheckTimerCallback()
 
     if (this->flags.unk11)
     {
-        g_Gui.SetBossTimer((this->timerCallbackTime - this->unk_cf0.AsFrames()) / 60);
+        g_Gui.SetBossTimer((this->timerCallbackTime - this->callbackTimer.AsFrames()) / 60);
     }
-    if (this->unk_cf0 >= this->timerCallbackTime)
+    if (this->callbackTimer >= this->timerCallbackTime)
     {
         if (this->lifeCallbackLife > 0)
         {
@@ -382,7 +382,7 @@ int Enemy::CheckTimerCallback()
         g_EnemyScripts.StartSub(&this->ctx, this->timerCallbackSub);
         this->timerCallbackTime = -1;
         this->timerCallbackSub = this->deathSub;
-        this->unk_cf0.Set(0);
+        this->callbackTimer.Set(0);
         if (!this->flags.unk20)
         {
             g_EnemyManager.spellCardCapture = 0;
@@ -409,12 +409,12 @@ int Enemy::CheckTimerCallback()
                 it->deathSub = -1;
             }
         }
-        this->unk_cd4 = -0.5f;
-        this->unk_cd8 = 0.5f;
-        this->unk_cdc = 0;
-        this->unk_cde = 0;
-        this->unk_ce0 = 0;
-        this->unk_ce2 = 0;
+        this->rankSpeedLow = -0.5f;
+        this->rankSpeedHigh = 0.5f;
+        this->rankCount1Low = 0;
+        this->rankCount1High = 0;
+        this->rankCount2Low = 0;
+        this->rankCount2High = 0;
         this->stackDepth = 0;
         return 1;
     }
@@ -424,7 +424,7 @@ int Enemy::CheckTimerCallback()
     }
 }
 
-void Enemy::Func4121b0()
+void Enemy::Despawn()
 {
     if (this->flags.unk13 == 0)
     {
@@ -514,7 +514,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                                      em->sprite.spriteData->height) == 0)
         {
             em->flags.active = 0;
-            em->Func4121b0();
+            em->Despawn();
             continue;
         }
         if (em->lifeCallbackLife >= 0)
@@ -528,7 +528,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         if (g_EnemyScripts.RunEnemy(em) == -1)
         {
             em->flags.active = 0;
-            em->Func4121b0();
+            em->Despawn();
             continue;
         }
         em->ClampPos();
@@ -575,7 +575,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                             hurt = 1;
                         }
                     }
-                    else if (mgr->unk_ee5d4 != 0)
+                    else if (mgr->spellCardBombed != 0)
                     {
                         if (hurt > 3)
                         {
@@ -629,24 +629,24 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                         ReleaseEnemyEffects(em);
                     }
                 case 2:
-                    if (em->unk_e3f >= 0)
+                    if (em->item >= 0)
                     {
                         g_EffectManager.SpawnEffect(em->unk_e3d + 4, &em->pos, 3, 0xffffffff);
-                        g_ItemManager.SpawnItem(&em->pos, em->unk_e3f, bomb);
+                        g_ItemManager.SpawnItem(&em->pos, em->item, bomb);
                     }
-                    else if (em->unk_e3f == -1)
+                    else if (em->item == -1)
                     {
-                        if (mgr->unk_ee5b8 % 3 == 0)
+                        if (mgr->dropCounter % 3 == 0)
                         {
                             g_EffectManager.SpawnEffect(em->unk_e3d + 4, &em->pos, 6, 0xffffffff);
-                            g_ItemManager.SpawnItem(&em->pos, g_EnemyItemDrops[mgr->unk_ee5ba], bomb);
-                            mgr->unk_ee5ba++;
-                            if (mgr->unk_ee5ba >= 0x20)
+                            g_ItemManager.SpawnItem(&em->pos, g_EnemyItemDrops[mgr->dropIndex], bomb);
+                            mgr->dropIndex++;
+                            if (mgr->dropIndex >= 0x20)
                             {
-                                mgr->unk_ee5ba = 0;
+                                mgr->dropIndex = 0;
                             }
                         }
-                        mgr->unk_ee5b8++;
+                        mgr->dropCounter++;
                     }
                     if (em->flags.unk11 && g_EnemyManager.spellCardActive == 0)
                     {
@@ -660,12 +660,12 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 g_EffectManager.SpawnEffect(em->unk_e3d + 4, &em->pos, 4, 0xffffffff);
                 if (em->deathSub >= 0)
                 {
-                    em->unk_cd4 = -0.5f;
-                    em->unk_cd8 = 0.5f;
-                    em->unk_cdc = 0;
-                    em->unk_cde = 0;
-                    em->unk_ce0 = 0;
-                    em->unk_ce2 = 0;
+                    em->rankSpeedLow = -0.5f;
+                    em->rankSpeedHigh = 0.5f;
+                    em->rankCount1Low = 0;
+                    em->rankCount1High = 0;
+                    em->rankCount2Low = 0;
+                    em->rankCount2High = 0;
                     em->stackDepth = 0;
                     g_EnemyScripts.StartSub(&em->ctx, em->deathSub);
                     em->deathSub = -1;
@@ -694,7 +694,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         MoveEnemyEffects(em);
         if (g_GameManager.isFrozen == 0)
         {
-            em->unk_cf0.Tick();
+            em->callbackTimer.Tick();
         }
     }
     mgr->timelineTime.Tick();
@@ -714,7 +714,7 @@ void MoveEnemyEffects(Enemy *enemy)
             continue;
         }
         eff->unk_134 = enemy->pos;
-        if (eff->unk_15c < enemy->unk_ea4)
+        if (eff->unk_15c < enemy->effectRadius)
         {
             eff->unk_15c += 0.3f;
         }
@@ -812,8 +812,8 @@ int EnemyManager::AddedCallback(EnemyManager *mgr)
     {
         return -1;
     }
-    mgr->unk_ee5b8 = g_Rng.GetRandomU16InRange(3);
-    mgr->unk_ee5ba = g_Rng.GetRandomU16InRange(8);
+    mgr->dropCounter = g_Rng.GetRandomU16InRange(3);
+    mgr->dropIndex = g_Rng.GetRandomU16InRange(8);
     mgr->spellCardActive = 0;
     mgr->timelinePos = NULL;
     return 0;

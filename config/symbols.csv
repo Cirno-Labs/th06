@@ -238,7 +238,7 @@ address,size,name,symbol
 0x00421420,1241,Func421420,
 0x00421900,77,CheckSingleInstance,?CheckSingleInstance@@YAHXZ
 0x00421950,126,Unknown69d998::Flush,?Flush@Unknown69d998@@QAEXXZ
-0x004219d0,104,Func4219d0,
+0x004219d0,104,SpriteEngine::ReleaseSurfaces,?ReleaseSurfaces@SpriteEngine@@QAEXXZ
 0x00421a40,94,Func421a40,
 0x00421aa0,33,MidiDevice::MidiDevice,??0MidiDevice@@QAE@XZ
 0x00421ad0,19,MidiDevice::~MidiDevice,??1MidiDevice@@QAE@XZ

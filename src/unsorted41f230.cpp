@@ -46,3 +46,17 @@ void Unknown69d998::Flush()
         fclose(file);
     }
 }
+
+void SpriteEngine::ReleaseSurfaces()
+{
+    int i;
+
+    for (i = 0; i < 0x20; i++)
+    {
+        if (this->surfaces[i] != NULL)
+        {
+            this->surfaces[i]->Release();
+            this->surfaces[i] = NULL;
+        }
+    }
+}

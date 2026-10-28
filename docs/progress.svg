@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.64% (328)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">20.81% (98)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.85% (329)</tspan> · <tspan class="decompiled">9.55% (45)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">20.59% (97)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="520.20" height="6" x="0" y="0" class="named"/>
-<rect width="71.37" height="6" x="520.20" y="0" class="decompiled"/>
-<rect width="155.43" height="6" x="591.57" y="0" class="todo"/>
+<rect width="521.79" height="6" x="0" y="0" class="named"/>
+<rect width="71.37" height="6" x="521.79" y="0" class="decompiled"/>
+<rect width="153.84" height="6" x="593.16" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -307,7 +307,7 @@
 <rect width="12" height="12" x="540" y="60" class="todo"><title>0x00421420 Func421420 (1241 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="60" class="named"><title>0x00421900 CheckSingleInstance (77 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="60" class="decompiled"><title>0x00421950 Unknown69d998::Flush (126 bytes)</title></rect>
-<rect width="12" height="12" x="585" y="60" class="todo"><title>0x004219d0 Func4219d0 (104 bytes)</title></rect>
+<rect width="12" height="12" x="585" y="60" class="named"><title>0x004219d0 SpriteEngine::ReleaseSurfaces (104 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="60" class="todo"><title>0x00421a40 Func421a40 (94 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="60" class="named"><title>0x00421aa0 MidiDevice::MidiDevice (33 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="60" class="named"><title>0x00421ad0 MidiDevice::~MidiDevice (19 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">55.48%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">39.65%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">55.53%</tspan> · <tspan class="decompiled">4.87%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">39.61%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="414.46" height="6" x="0" y="0" class="named"/>
-<rect width="36.35" height="6" x="414.46" y="0" class="decompiled"/>
-<rect width="296.19" height="6" x="450.81" y="0" class="todo"/>
+<rect width="414.78" height="6" x="0" y="0" class="named"/>
+<rect width="36.35" height="6" x="414.78" y="0" class="decompiled"/>
+<rect width="295.87" height="6" x="451.13" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -894,7 +894,7 @@
 <rect width="4.14" height="4.30" x="686.49" y="97.12" class="named"><title>0x00425d97 MusicScreen::DeletedCallback (108 bytes)</title></rect>
 <rect width="4.14" height="4.16" x="686.49" y="104.42" class="named"><title>0x00423801 EnumAxesCallback (106 bytes)</title></rect>
 <rect width="4.14" height="4.03" x="686.49" y="111.58" class="named"><title>0x00403720 Sprite::Sprite (104 bytes)</title></rect>
-<rect width="4.14" height="4.03" x="686.49" y="118.61" class="todo"><title>0x004219d0 Func4219d0 (104 bytes)</title></rect>
+<rect width="4.14" height="4.03" x="686.49" y="118.61" class="named"><title>0x004219d0 SpriteEngine::ReleaseSurfaces (104 bytes)</title></rect>
 <rect width="4.14" height="3.89" x="686.49" y="125.63" class="named"><title>0x004045e0 Stage::DeletedCallback (102 bytes)</title></rect>
 <rect width="4.14" height="3.89" x="686.49" y="132.53" class="named"><title>0x0042f790 ClearViewport (102 bytes)</title></rect>
 <rect width="4.14" height="3.82" x="686.49" y="139.42" class="named"><title>0x0040e2d0 EffectManager::EffectManager (101 bytes)</title></rect>

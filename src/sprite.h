@@ -354,6 +354,9 @@ public:
     // Like CopySurfaceToBackBuffer, for the `width` by `height` rectangle
     // at (`left`, `top`).
     void CopySurfaceRectToBackBuffer(int surface, int x, int y, int left, int top, int width, int height);
+    // Releases the loaded surfaces (not their backups), before the
+    // device is reset.
+    void ReleaseSurfaces();
     // RenderTextToTexture into texture `textureIndex`, with sizes of 0 or
     // less taken as 15.
     void RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight, int unk6,

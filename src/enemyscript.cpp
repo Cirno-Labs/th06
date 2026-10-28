@@ -465,7 +465,7 @@ restart:
             shooter->exInts[1] = laserArgs->i[8];
             shooter->exInts[2] = laserArgs->i[9];
             shooter->exInts[3] = laserArgs->i[10];
-            shooter->unk_40 = laserArgs->i[11];
+            shooter->laserEndHitFrames = laserArgs->i[11];
             shooter->flags = laserArgs->i[12];
             if (instr->opcode == 86)
             {
@@ -544,7 +544,7 @@ restart:
         case 102:
         {
             EnemyScriptArgs *effectArgs = &instr->args;
-            enemy->effects[enemy->effectCount] = g_EffectManager.SpawnEffect(0xd, &enemy->pos, 1, g_Unknown476438[effectArgs->i[0]]);
+            enemy->effects[enemy->effectCount] = g_EffectManager.SpawnEffect(0xd, &enemy->pos, 1, g_EffectColors[effectArgs->i[0]]);
             enemy->effects[enemy->effectCount]->unk_140 = *(D3DXVECTOR3 *)&effectArgs->f[1];
             enemy->effectRadius = effectArgs->f[4];
             enemy->effectCount++;
@@ -1445,7 +1445,7 @@ void ScriptFreezeBullets(Enemy *enemy, EnemyScriptInstr *instr)
             break;
         case 1:
             bullet->flags |= 0x10;
-            bullet->unk_5a8 = 220;
+            bullet->exDuration = 220;
             bullet->timer.Set(0);
             SinCosScale(&bullet->accel, g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f, 0.01f);
             break;
@@ -1867,7 +1867,7 @@ void ScriptTwoRingShots(Enemy *enemy, EnemyScriptInstr *instr)
                     shooter.exInts[1] = 90 - k * 16;
                     shooter.exInts[2] = 16;
                     shooter.exInts[3] = 50;
-                    shooter.unk_40 = 16;
+                    shooter.laserEndHitFrames = 16;
                     shooter.flags = 2;
                     shooter.aimMode = 1;
                     g_BulletManager.SpawnLaser(&shooter);
@@ -1946,7 +1946,7 @@ void ScriptSwirlStoppedBullets(Enemy *enemy, EnemyScriptInstr *instr)
             g_SpriteEngine->SetSprite(&bullet2->sprites.sprite0, bullet2->sprites.sprite0.unk_0b2 + bullet2->color);
             bullet2->speed = 0.01f;
             bullet2->timer.Set(0);
-            bullet2->unk_5a8 = 120;
+            bullet2->exDuration = 120;
             dist = (enemy->pos.x - bullet2->pos.x) * (enemy->pos.x - bullet2->pos.x) +
                    (enemy->pos.y - bullet2->pos.y) * (enemy->pos.y - bullet2->pos.y);
             if (dist > 0.1f)
@@ -1987,7 +1987,7 @@ void ScriptScatterStoppedBullets(Enemy *enemy, EnemyScriptInstr *instr)
             g_SpriteEngine->SetSprite(&bullet2->sprites.sprite0, bullet2->sprites.sprite0.unk_0b2 + bullet2->color);
             bullet2->speed = 0.01f;
             bullet2->timer.Set(0);
-            bullet2->unk_5a8 = 120;
+            bullet2->exDuration = 120;
             SinCosScale(&bullet2->accel, g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f, 0.01f);
         }
     }
@@ -2149,7 +2149,7 @@ void ScriptBurstAroundLargeBullets(Enemy *enemy, EnemyScriptInstr *instr)
                         sm2->flags |= 0x10;
                         sm2->speed = 0.01f;
                         sm2->timer.Set(0);
-                        sm2->unk_5a8 = 120;
+                        sm2->exDuration = 120;
                         theta = atan2f(sm2->pos.y - enemy->pos.y, sm2->pos.x - enemy->pos.x);
                         sm2->angle = (theta - bigAngle) * 2.2f + bigAngle;
                         SinCosScale(&sm2->accel, sm2->angle, 0.01f);

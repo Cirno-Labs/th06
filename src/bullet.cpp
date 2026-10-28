@@ -86,15 +86,15 @@ Laser *BulletManager::SpawnLaser(BulletShooter *shooter)
         laser->timer.Set(0);
         laser->startOffset = shooter->exFloats[0];
         laser->endOffset = shooter->exFloats[1];
-        laser->unk_238 = shooter->exFloats[2];
+        laser->maxLength = shooter->exFloats[2];
         laser->width = shooter->exFloats[3];
         laser->speed = shooter->speed1;
-        laser->unk_244 = shooter->exInts[0];
-        laser->unk_24c = shooter->exInts[1];
-        laser->unk_250 = shooter->exInts[2];
-        laser->unk_248 = shooter->exInts[3];
-        laser->unk_254 = shooter->unk_40;
-        if (laser->unk_244 == 0)
+        laser->startFrames = shooter->exInts[0];
+        laser->durationFrames = shooter->exInts[1];
+        laser->endFrames = shooter->exInts[2];
+        laser->hitStartFrame = shooter->exInts[3];
+        laser->endHitFrames = shooter->laserEndHitFrames;
+        if (laser->startFrames == 0)
         {
             laser->state = 1;
         }
@@ -113,11 +113,11 @@ int BulletManager::RegisterChain(char *anmPath)
 
     if (!g_App.cfg.flags.unk0)
     {
-        g_Unknown476438 = g_Unknown476358;
+        g_EffectColors = g_EffectColorsFull;
     }
     else
     {
-        g_Unknown476438 = g_Unknown4763c8;
+        g_EffectColors = g_EffectColorsPale;
     }
     mgr->Reset();
     mgr->anmPath = anmPath;
@@ -293,47 +293,47 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
         }
         if (shooter->exInts[0] > 0)
         {
-            cur->unk_5a8 = shooter->exInts[0];
+            cur->exDuration = shooter->exInts[0];
         }
         else
         {
-            cur->unk_5a8 = 99999;
+            cur->exDuration = 99999;
         }
         cur->accel.z = 0.0f;
     }
     else if (cur->flags & 0x20)
     {
-        cur->unk_588 = shooter->exFloats[0];
-        cur->unk_594 = shooter->exFloats[1];
-        cur->unk_5a8 = shooter->exInts[0];
+        cur->accelSpeed = shooter->exFloats[0];
+        cur->angularVelocity = shooter->exFloats[1];
+        cur->exDuration = shooter->exInts[0];
     }
     if (cur->flags & 0x1c0)
     {
-        cur->unk_598 = shooter->exFloats[0];
+        cur->turnAngle = shooter->exFloats[0];
         if (shooter->exFloats[1] >= 0.0f)
         {
-            cur->unk_58c = shooter->exFloats[1];
+            cur->turnSpeed = shooter->exFloats[1];
         }
         else
         {
-            cur->unk_58c = v;
+            cur->turnSpeed = v;
         }
-        cur->unk_5ac = shooter->exInts[0];
-        cur->unk_5b4 = shooter->exInts[1];
-        cur->unk_5b0 = 0;
+        cur->turnInterval = shooter->exInts[0];
+        cur->maxTurns = shooter->exInts[1];
+        cur->turnCount = 0;
     }
     if (cur->flags & 0xc00)
     {
         if (shooter->exFloats[0] >= 0.0f)
         {
-            cur->unk_58c = shooter->exFloats[0];
+            cur->turnSpeed = shooter->exFloats[0];
         }
         else
         {
-            cur->unk_58c = v;
+            cur->turnSpeed = v;
         }
-        cur->unk_5b4 = shooter->exInts[0];
-        cur->unk_5b0 = 0;
+        cur->maxTurns = shooter->exInts[0];
+        cur->turnCount = 0;
     }
     return 0;
 }
@@ -390,7 +390,7 @@ void BulletManager::ClearAll(int toItems)
                 }
             }
         }
-        beam->unk_254 = 0;
+        beam->endHitFrames = 0;
     }
 }
 
@@ -462,7 +462,7 @@ int BulletManager::ClearAllWithBonus(int maxBonus, int toItems)
                 }
             }
         }
-        beam->unk_254 = 0;
+        beam->endHitFrames = 0;
     }
     g_GameManager.score += totalBonus;
     if (totalBonus != 0)
@@ -540,7 +540,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                 }
                 else if (bullet->flags & 0x10)
                 {
-                    if (bullet->timer >= bullet->unk_5a8)
+                    if (bullet->timer >= bullet->exDuration)
                     {
                         bullet->flags &= ~0x10;
                     }
@@ -552,71 +552,71 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                 }
                 else if (bullet->flags & 0x20)
                 {
-                    if (bullet->timer >= bullet->unk_5a8)
+                    if (bullet->timer >= bullet->exDuration)
                     {
                         bullet->flags &= ~0x20;
                     }
                     else
                     {
-                        bullet->angle = AddNormalizeAngle(bullet->angle, g_App.frameAdvance * bullet->unk_594);
-                        bullet->speed = g_App.frameAdvance * bullet->unk_588 + bullet->speed;
+                        bullet->angle = AddNormalizeAngle(bullet->angle, g_App.frameAdvance * bullet->angularVelocity);
+                        bullet->speed = g_App.frameAdvance * bullet->accelSpeed + bullet->speed;
                         SinCosScale(&bullet->velocity, bullet->angle, bullet->speed);
                     }
                 }
                 if (bullet->flags & 0x40)
                 {
-                    if (bullet->timer >= bullet->unk_5ac * (bullet->unk_5b0 + 1))
+                    if (bullet->timer >= bullet->turnInterval * (bullet->turnCount + 1))
                     {
-                        bullet->unk_5b0++;
-                        if (bullet->unk_5b0 >= bullet->unk_5b4)
+                        bullet->turnCount++;
+                        if (bullet->turnCount >= bullet->maxTurns)
                         {
                             bullet->flags &= ~0x40;
                         }
-                        bullet->angle += bullet->unk_598;
-                        bullet->speed = bullet->unk_58c;
+                        bullet->angle += bullet->turnAngle;
+                        bullet->speed = bullet->turnSpeed;
                         speed7 = bullet->speed;
                     }
                     else
                     {
-                        speed7 = bullet->speed - (bullet->timer.AsFloat() - bullet->unk_5ac * bullet->unk_5b0) * bullet->speed / bullet->unk_5ac;
+                        speed7 = bullet->speed - (bullet->timer.AsFloat() - bullet->turnInterval * bullet->turnCount) * bullet->speed / bullet->turnInterval;
                     }
                     SinCosScale(&bullet->velocity, bullet->angle, speed7);
                 }
                 else if (bullet->flags & 0x100)
                 {
-                    if (bullet->timer >= bullet->unk_5ac * (bullet->unk_5b0 + 1))
+                    if (bullet->timer >= bullet->turnInterval * (bullet->turnCount + 1))
                     {
-                        bullet->unk_5b0++;
-                        if (bullet->unk_5b0 >= bullet->unk_5b4)
+                        bullet->turnCount++;
+                        if (bullet->turnCount >= bullet->maxTurns)
                         {
                             bullet->flags &= ~0x100;
                         }
-                        bullet->angle = bullet->unk_598;
-                        bullet->speed = bullet->unk_58c;
+                        bullet->angle = bullet->turnAngle;
+                        bullet->speed = bullet->turnSpeed;
                         speed7 = bullet->speed;
                     }
                     else
                     {
-                        speed7 = bullet->speed - (bullet->timer.AsFloat() - bullet->unk_5ac * bullet->unk_5b0) * bullet->speed / bullet->unk_5ac;
+                        speed7 = bullet->speed - (bullet->timer.AsFloat() - bullet->turnInterval * bullet->turnCount) * bullet->speed / bullet->turnInterval;
                     }
                     SinCosScale(&bullet->velocity, bullet->angle, speed7);
                 }
                 else if (bullet->flags & 0x80)
                 {
-                    if (bullet->timer >= bullet->unk_5ac * (bullet->unk_5b0 + 1))
+                    if (bullet->timer >= bullet->turnInterval * (bullet->turnCount + 1))
                     {
-                        bullet->unk_5b0++;
-                        if (bullet->unk_5b0 >= bullet->unk_5b4)
+                        bullet->turnCount++;
+                        if (bullet->turnCount >= bullet->maxTurns)
                         {
                             bullet->flags &= ~0x80;
                         }
-                        bullet->angle = g_Player.AngleFrom(&bullet->pos) + bullet->unk_598;
-                        bullet->speed = bullet->unk_58c;
+                        bullet->angle = g_Player.AngleFrom(&bullet->pos) + bullet->turnAngle;
+                        bullet->speed = bullet->turnSpeed;
                         speed7 = bullet->speed;
                     }
                     else
                     {
-                        speed7 = bullet->speed - (bullet->timer.AsFloat() - bullet->unk_5ac * bullet->unk_5b0) * bullet->speed / bullet->unk_5ac;
+                        speed7 = bullet->speed - (bullet->timer.AsFloat() - bullet->turnInterval * bullet->turnCount) * bullet->speed / bullet->turnInterval;
                     }
                     SinCosScale(&bullet->velocity, bullet->angle, speed7);
                 }
@@ -633,11 +633,11 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                         {
                             bullet->angle = -bullet->angle;
                         }
-                        bullet->speed = bullet->unk_58c;
+                        bullet->speed = bullet->turnSpeed;
                         speed7 = bullet->speed;
                         SinCosScale(&bullet->velocity, bullet->angle, speed7);
-                        bullet->unk_5b0++;
-                        if (bullet->unk_5b0 >= bullet->unk_5b4)
+                        bullet->turnCount++;
+                        if (bullet->turnCount >= bullet->maxTurns)
                         {
                             bullet->flags &= ~0x400;
                         }
@@ -656,11 +656,11 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                         {
                             bullet->angle = -bullet->angle;
                         }
-                        bullet->speed = bullet->unk_58c;
+                        bullet->speed = bullet->turnSpeed;
                         speed7 = bullet->speed;
                         SinCosScale(&bullet->velocity, bullet->angle, speed7);
-                        bullet->unk_5b0++;
-                        if (bullet->unk_5b0 >= bullet->unk_5b4)
+                        bullet->turnCount++;
+                        if (bullet->turnCount >= bullet->maxTurns)
                         {
                             bullet->flags &= ~0x800;
                         }
@@ -734,9 +734,9 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             continue;
         }
         las->endOffset = g_App.frameAdvance * las->speed + las->endOffset;
-        if (las->endOffset - las->startOffset > las->unk_238)
+        if (las->endOffset - las->startOffset > las->maxLength)
         {
-            las->startOffset = las->endOffset - las->unk_238;
+            las->startOffset = las->endOffset - las->maxLength;
         }
         if (las->startOffset < 0.0f)
         {
@@ -755,7 +755,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
         case 0:
             if (las->flags & 1)
             {
-                alpha4 = las->timer.AsFloat() * 255.0f / las->unk_244;
+                alpha4 = las->timer.AsFloat() * 255.0f / las->startFrames;
                 if (alpha4 > 0xff)
                 {
                     alpha4 = 0xff;
@@ -764,10 +764,10 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             }
             else
             {
-                fadeTime6 = las->unk_244 > 30 ? 30 : las->unk_244;
-                if (las->unk_244 - fadeTime6 < las->timer.AsFrames())
+                fadeTime6 = las->startFrames > 30 ? 30 : las->startFrames;
+                if (las->startFrames - fadeTime6 < las->timer.AsFrames())
                 {
-                    scale3 = las->timer.AsFloat() * las->width / las->unk_244;
+                    scale3 = las->timer.AsFloat() * las->width / las->startFrames;
                 }
                 else
                 {
@@ -776,11 +776,11 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                 las->sprite0.scaleX = scale3 / 16.0f;
                 extent5.x = scale3 / 2.0f;
             }
-            if (las->timer >= las->unk_248)
+            if (las->timer >= las->hitStartFrame)
             {
                 g_Player.CheckLaserHit(&center2, &extent5, &las->pos, las->angle, las->timer.AsFrames() % 12 == 0);
             }
-            if (las->timer < las->unk_244)
+            if (las->timer < las->startFrames)
             {
                 break;
             }
@@ -788,13 +788,13 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             las->state++;
         case 1:
             g_Player.CheckLaserHit(&center2, &extent5, &las->pos, las->angle, las->timer.AsFrames() % 12 == 0);
-            if (las->timer < las->unk_24c)
+            if (las->timer < las->durationFrames)
             {
                 break;
             }
             las->timer.Set(0);
             las->state++;
-            if (las->unk_250 == 0)
+            if (las->endFrames == 0)
             {
                 las->active = 0;
                 continue;
@@ -802,24 +802,24 @@ int BulletManager::OnUpdate(BulletManager *mgr)
         case 2:
             if (las->flags & 1)
             {
-                alpha4 = las->timer.AsFloat() * 255.0f / las->unk_244;
+                alpha4 = las->timer.AsFloat() * 255.0f / las->startFrames;
                 if (alpha4 > 0xff)
                 {
                     alpha4 = 0xff;
                 }
                 las->sprite0.color = alpha4 << 24;
             }
-            else if (las->unk_250 > 0)
+            else if (las->endFrames > 0)
             {
-                scale3 = las->width - las->timer.AsFloat() * las->width / las->unk_250;
+                scale3 = las->width - las->timer.AsFloat() * las->width / las->endFrames;
                 las->sprite0.scaleX = scale3 / 16.0f;
                 extent5.x = scale3 / 2.0f;
             }
-            if (las->timer < las->unk_254)
+            if (las->timer < las->endHitFrames)
             {
                 g_Player.CheckLaserHit(&center2, &extent5, &las->pos, las->angle, las->timer.AsFrames() % 12 == 0);
             }
-            if (las->timer < las->unk_250)
+            if (las->timer < las->endFrames)
             {
                 break;
             }
@@ -943,7 +943,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
             }
             if (bullet2->sprites.height > 16)
             {
-                Func416c50(bullet2);
+                DrawBulletRotated(bullet2);
             }
         }
         bullet2 = mgr->bullets;
@@ -955,7 +955,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
             }
             if (bullet2->sprites.height == 16 && (bullet2->sprites.sprite0.scriptIndex == 0x201 || bullet2->sprites.sprite0.scriptIndex == 0x203))
             {
-                Func416c50(bullet2);
+                DrawBulletRotated(bullet2);
             }
         }
         bullet2 = mgr->bullets;
@@ -967,7 +967,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
             }
             if (bullet2->sprites.height == 16 && bullet2->sprites.sprite0.scriptIndex != 0x201 && bullet2->sprites.sprite0.scriptIndex != 0x203)
             {
-                Func416c50(bullet2);
+                DrawBulletRotated(bullet2);
             }
         }
         bullet2 = mgr->bullets;
@@ -979,7 +979,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
             }
             if (bullet2->sprites.height == 8)
             {
-                Func416c50(bullet2);
+                DrawBulletRotated(bullet2);
             }
         }
     }
@@ -1019,7 +1019,7 @@ void DrawBullet(Bullet *bullet)
     g_SpriteEngine->Draw3DRounded(sprite);
 }
 
-void Func416c50(Bullet *bullet)
+void DrawBulletRotated(Bullet *bullet)
 {
     Sprite *sprite;
 

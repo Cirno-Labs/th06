@@ -134,7 +134,7 @@ address,size,name,symbol
 0x004149d0,6928,BulletManager::OnUpdate,?OnUpdate@BulletManager@@SAHPAV1@@Z
 0x00416500,1607,BulletManager::OnDraw,?OnDraw@BulletManager@@SAHPAV1@@Z
 0x00416b50,234,DrawBullet,?DrawBullet@@YAXPAUBullet@@@Z
-0x00416c50,244,Func416c50,?Func416c50@@YAXPAUBullet@@@Z
+0x00416c50,244,DrawBulletRotated,?DrawBulletRotated@@YAXPAUBullet@@@Z
 0x00416d60,1289,BulletManager::AddedCallback,?AddedCallback@BulletManager@@SAHPAV1@@Z
 0x00417270,49,BulletManager::DeletedCallback,?DeletedCallback@BulletManager@@SAHPAV1@@Z
 0x004172b0,35,BulletManager::RemoveChain,?RemoveChain@BulletManager@@SAXXZ
@@ -1575,9 +1575,9 @@ address,size,name,symbol
 0x00476264,,g_ShotTypeValues,?g_ShotTypeValues@@3PAY112HA
 0x00476298,,g_EffectInfos,?g_EffectInfos@@3PAUEffectInfo@@A
 0x00476338,,g_EnemyItemDrops,?g_EnemyItemDrops@@3PAEA
-0x00476358,,g_Unknown476358,?g_Unknown476358@@3PAKA
-0x004763c8,,g_Unknown4763c8,?g_Unknown4763c8@@3PAKA
-0x00476438,,g_Unknown476438,?g_Unknown476438@@3PAKA
+0x00476358,,g_EffectColorsFull,?g_EffectColorsFull@@3PAKA
+0x004763c8,,g_EffectColorsPale,?g_EffectColorsPale@@3PAKA
+0x00476438,,g_EffectColors,?g_EffectColors@@3PAKA
 0x00476440,,g_BulletColorOffsets16,?g_BulletColorOffsets16@@3PAHA
 0x00476480,,g_BulletColorOffsets32,?g_BulletColorOffsets32@@3PAHA
 0x004764a0,,g_BossTimerColors,?g_BossTimerColors@@3PAKA

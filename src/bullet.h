@@ -36,16 +36,25 @@ struct Bullet
     // Added to the velocity (flag 0x10).
     D3DXVECTOR3 accel;
     float speed;
-    float unk_588;
-    float unk_58c;
+    // Added to the speed a frame (flag 0x20).
+    float accelSpeed;
+    // The speed after each turn (flags 0x40 to 0x100) or bounce (0x400,
+    // 0x800).
+    float turnSpeed;
     float angle;
-    float unk_594;
-    float unk_598;
+    // Added to the angle a frame (flag 0x20).
+    float angularVelocity;
+    // The angle each turn adds, or sets (from the player's direction with
+    // 0x80).
+    float turnAngle;
     Timer timer;
-    int unk_5a8;
-    int unk_5ac;
-    int unk_5b0;
-    int unk_5b4;
+    // How long flags 0x10 and 0x20 last.
+    int exDuration;
+    // The frames between turns, the turns made and how many there are
+    // (also the bounces).
+    int turnInterval;
+    int turnCount;
+    int maxTurns;
     // BulletShooter::flags.
     WORD flags;
     short color;
@@ -83,7 +92,8 @@ struct BulletShooter
     // Extra values for the flags' behaviors.
     float exFloats[4];
     int exInts[4];
-    DWORD unk_40;
+    // Laser::endHitFrames.
+    DWORD laserEndHitFrames;
     short count1;
     short count2;
     WORD aimMode;
@@ -111,14 +121,19 @@ struct Laser
     float angle;
     float startOffset;
     float endOffset;
-    float unk_238;
+    // The beam is cut to this length.
+    float maxLength;
     float width;
     float speed;
-    int unk_244;
-    int unk_248;
-    int unk_24c;
-    int unk_250;
-    int unk_254;
+    // How long each state lasts: starting (state 0), firing (1) and
+    // ending (2); 0 frames of ending removes it at once.
+    int startFrames;
+    // When the starting beam begins to hit.
+    int hitStartFrame;
+    int durationFrames;
+    int endFrames;
+    // How long the ending beam still hits.
+    int endHitFrames;
     int active;
     Timer timer;
     // BulletShooter::flags and color.
@@ -159,7 +174,7 @@ public:
     // through g_Gui.ShowBonusPopup. Returns the total.
     int ClearAllWithBonus(int maxBonus, int toItems);
 
-    // Resets, remembers `unk`, picks g_Unknown476438's table by option
+    // Resets, remembers `unk`, picks g_EffectColors's table by option
     // bit 0, and adds the update element (priority 0xb) and the draw
     // element (priority 9). Returns 0, or -1 if adding fails.
     static int RegisterChain(char *anmPath);
@@ -189,16 +204,20 @@ ASSERT_SIZE(BulletManager, 0xf5c18);
 extern BulletManager g_BulletManager;
 
 // Draws a bullet with the sprite for its state (spawning effects, fading
-// out), turned along its angle where the sprite asks for it; Func416c50
-// places it in the play area.
+// out), turned along its angle where the sprite asks for it.
+// DrawBulletRotated places it in the play area and draws it through
+// SpriteEngine::DrawRotated instead, for bullets over 16 high without
+// hardware T&L.
 void DrawBullet(Bullet *bullet);
-void Func416c50(Bullet *bullet);
+void DrawBulletRotated(Bullet *bullet);
 
-// Two tables; BulletManager::RegisterChain points g_Unknown476438 at the
-// first while option bit 0 is clear, otherwise at the second.
-extern DWORD g_Unknown476358[0x1c];
-extern DWORD g_Unknown4763c8[0x1c];
-extern DWORD *g_Unknown476438;
+// The colors of effect 0xd by index, as enemy scripts spawn it: full
+// colors, or pale ones. BulletManager::RegisterChain points
+// g_EffectColors at the first while option bit 0 is clear, otherwise at
+// the second.
+extern DWORD g_EffectColorsFull[0x1c];
+extern DWORD g_EffectColorsPale[0x1c];
+extern DWORD *g_EffectColors;
 
 // BulletManager's statically allocated chain elements.
 extern ChainElem g_BulletCalcChain;

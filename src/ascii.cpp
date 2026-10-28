@@ -813,3 +813,22 @@ void AsciiText::AddPopup2(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
     popup->pos = *pos;
     this->nextPopup2++;
 }
+
+// Resets the sprite: no rotation, a scale of 1, no interpolations, white,
+// the identity matrix, flags unk0 and visible.
+void Sprite::Initialize()
+{
+    this->rotationX = this->rotationY = this->rotationZ = this->rotationSpeedX = this->rotationSpeedY =
+        this->rotationSpeedZ = this->scaleTargetY = this->scaleTargetX = this->uvScrollX = this->uvScrollY = 0.0f;
+    this->scaleY = this->scaleX = 1.0f;
+    this->alphaInterpTime = this->scaleInterpTime = 0;
+    this->color = 0xffffffff;
+    D3DXMatrixIdentity(&this->matrix);
+    // A 16-bit store: the flags' low half set to unk0 | visible, the rest
+    // kept.
+    *(WORD *)&this->flags = 3;
+    this->autoRotate = 0;
+    this->pendingInterrupt = 0;
+    this->posInterpTime = 0;
+    this->scriptTime.Initialize();
+}

@@ -50,6 +50,16 @@ public:
     // the others half transparent. Where colors are not blended
     // (HasFlag0Or8), it picks the sprites for those states instead.
     void HighlightOption(Sprite *vm, int row, int value, int current);
+    // The options screen: highlights the entries (rows 0 to 4 lives,
+    // bombs, colors, music, sounds; 5 the window mode; 6 the defaults,
+    // 7 the key configuration, 8 quit), and after 32 frames changes the
+    // setting at the cursor with left and right (sound 12; the music
+    // restarts on a change of mode), moves to quit on cancel, and on a
+    // confirm resets the settings (6), opens the key configuration with
+    // a copy of g_ControllerMapping (7, state 5) or goes back (8, state
+    // 2). Returns 1 when leaving with a changed display setting, after
+    // setting the scene to 5; else 0.
+    int UpdateOptions();
     // In the replay menu (states 13 to 15), lists the page of 15 replays
     // around the cursor (unk_81e8), the one at the cursor highlighted, and
     // in state 15 the picked replay's slowdown and the score each stage
@@ -81,7 +91,13 @@ public:
     // The button mapping the options screen edits.
     ControllerMapping controllerMapping;
     short unk_822e;
-    DWORD unk_8230;
+    // The options screen's pending settings: cfg.colorMode16Bits as it
+    // was when the screen opened, and the windowed mode and frame skip,
+    // applied (by restarting, scene 5) when leaving if any changed.
+    BYTE unk_8230;
+    BYTE unk_8231;
+    BYTE unk_8232;
+    BYTE unk_8233;
     // The update element (priority 2, with the added and deleted
     // callbacks) and the draw element (priority 0), created by
     // SetUpTitleScene; DeletedCallback removes the draw element.

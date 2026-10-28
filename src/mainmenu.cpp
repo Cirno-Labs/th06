@@ -336,6 +336,225 @@ void MainMenu::HighlightOption(Sprite *vm, int row, int value, int current)
     }
 }
 
+int MainMenu::UpdateOptions()
+{
+    int i;
+    Sprite *vm;
+
+    MoveMenuCursor(this, 9);
+    vm = &this->sprites[8];
+    for (i = 0; i < 9; i++)
+    {
+        if (i >= 5 && i <= 7)
+        {
+            this->HighlightOption(&this->sprites[i + 0x43], i, i, this->cursor);
+        }
+        else
+        {
+            this->HighlightOption(vm, i, i, this->cursor);
+            vm++;
+        }
+    }
+    for (i = 0; i < 5; i++, vm++)
+    {
+        this->HighlightOption(vm, 0, i, g_Unknown6c6d18.cfg.lives);
+    }
+    for (i = 0; i < 4; i++, vm++)
+    {
+        this->HighlightOption(vm, 1, i, g_Unknown6c6d18.cfg.bombs);
+    }
+    for (i = 0; i < 2; i++, vm++)
+    {
+        this->HighlightOption(vm, 2, i, g_Unknown6c6d18.cfg.colorMode16Bits);
+    }
+    for (i = 0; i < 2; i++, vm++)
+    {
+        this->HighlightOption(vm, 4, i, g_Unknown6c6d18.cfg.playSounds);
+    }
+    vm = &this->sprites[0x4d];
+    for (i = 0; i < 3; i++, vm++)
+    {
+        this->HighlightOption(vm, 3, i, g_Unknown6c6d18.cfg.musicMode);
+    }
+    vm = &this->sprites[0x4b];
+    for (i = 0; i < 2; i++, vm++)
+    {
+        this->HighlightOption(vm, 5, i, this->unk_8231);
+    }
+    if (this->unk_81f4 >= 0x20)
+    {
+        if (WAS_PRESSED_OR_HELD(0x40))
+        {
+            switch (this->cursor)
+            {
+            case 0:
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                if (g_Unknown6c6d18.cfg.lives <= 0)
+                {
+                    g_Unknown6c6d18.cfg.lives = 5;
+                }
+                g_Unknown6c6d18.cfg.lives = g_Unknown6c6d18.cfg.lives - 1;
+                break;
+            case 1:
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                if (g_Unknown6c6d18.cfg.bombs <= 0)
+                {
+                    g_Unknown6c6d18.cfg.bombs = 4;
+                }
+                g_Unknown6c6d18.cfg.bombs = g_Unknown6c6d18.cfg.bombs - 1;
+                break;
+            case 2:
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                if (g_Unknown6c6d18.cfg.colorMode16Bits <= 0)
+                {
+                    g_Unknown6c6d18.cfg.colorMode16Bits = 2;
+                }
+                g_Unknown6c6d18.cfg.colorMode16Bits = g_Unknown6c6d18.cfg.colorMode16Bits - 1;
+                break;
+            case 3:
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_Unknown6c6d18.StopMusic();
+                if (g_Unknown6c6d18.cfg.musicMode <= 0)
+                {
+                    g_Unknown6c6d18.cfg.musicMode = 3;
+                }
+                g_Unknown6c6d18.cfg.musicMode = g_Unknown6c6d18.cfg.musicMode - 1;
+                g_Unknown6c6d18.LoadMusic("bgm/th06_01.mid");
+                g_Unknown6c6d18.PlayMusic("bgm/th06_01.mid");
+                break;
+            case 4:
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                if (g_Unknown6c6d18.cfg.playSounds <= 0)
+                {
+                    g_Unknown6c6d18.cfg.playSounds = 2;
+                }
+                g_Unknown6c6d18.cfg.playSounds = g_Unknown6c6d18.cfg.playSounds - 1;
+                break;
+            case 5:
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                if (this->unk_8231 <= 0)
+                {
+                    this->unk_8231 = 2;
+                }
+                this->unk_8231 = this->unk_8231 - 1;
+                break;
+            }
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            this->cursor = 8;
+            g_Unknown6d3f50.QueueSound(0xb, 0);
+        }
+        if (WAS_PRESSED_OR_HELD(0x80))
+        {
+            switch (this->cursor)
+            {
+            case 0:
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_Unknown6c6d18.cfg.lives = g_Unknown6c6d18.cfg.lives + 1;
+                if (g_Unknown6c6d18.cfg.lives >= 5)
+                {
+                    g_Unknown6c6d18.cfg.lives = 0;
+                }
+                break;
+            case 1:
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_Unknown6c6d18.cfg.bombs = g_Unknown6c6d18.cfg.bombs + 1;
+                if (g_Unknown6c6d18.cfg.bombs >= 4)
+                {
+                    g_Unknown6c6d18.cfg.bombs = 0;
+                }
+                break;
+            case 2:
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_Unknown6c6d18.cfg.colorMode16Bits = g_Unknown6c6d18.cfg.colorMode16Bits + 1;
+                if (g_Unknown6c6d18.cfg.colorMode16Bits >= 2)
+                {
+                    g_Unknown6c6d18.cfg.colorMode16Bits = 0;
+                }
+                break;
+            case 3:
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_Unknown6c6d18.StopMusic();
+                g_Unknown6c6d18.cfg.musicMode = g_Unknown6c6d18.cfg.musicMode + 1;
+                if (g_Unknown6c6d18.cfg.musicMode >= 3)
+                {
+                    g_Unknown6c6d18.cfg.musicMode = 0;
+                }
+                g_Unknown6c6d18.LoadMusic("bgm/th06_01.mid");
+                g_Unknown6c6d18.PlayMusic("bgm/th06_01.mid");
+                break;
+            case 4:
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                g_Unknown6c6d18.cfg.playSounds = g_Unknown6c6d18.cfg.playSounds + 1;
+                if (g_Unknown6c6d18.cfg.playSounds >= 2)
+                {
+                    g_Unknown6c6d18.cfg.playSounds = 0;
+                }
+                break;
+            case 5:
+                g_Unknown6d3f50.QueueSound(0xc, 0);
+                this->unk_8231 = this->unk_8231 + 1;
+                if (this->unk_8231 >= 2)
+                {
+                    this->unk_8231 = 0;
+                }
+                break;
+            }
+        }
+        if (WAS_PRESSED(0x1001))
+        {
+            switch (this->cursor)
+            {
+            case 7:
+                this->unk_81f0 = 5;
+                this->unk_81f4 = 0;
+                for (i = 0; i < 0x7a; i++)
+                {
+                    this->sprites[i].pendingInterrupt = 5;
+                }
+                this->cursor = 0;
+                g_Unknown6d3f50.QueueSound(10, 0);
+                this->controllerMapping = g_ControllerMapping;
+                g_ControllerMapping.unk_00[4] = -1;
+                g_ControllerMapping.unk_00[5] = -1;
+                break;
+            case 6:
+                g_Unknown6c6d18.StopMusic();
+                g_Unknown6c6d18.cfg.lives = 2;
+                g_Unknown6c6d18.cfg.bombs = 3;
+                g_Unknown6c6d18.cfg.musicMode = 1;
+                g_Unknown6c6d18.cfg.playSounds = 1;
+                g_Unknown6c6d18.cfg.unk_1d = 1;
+                g_Unknown6c6d18.cfg.windowed = 0;
+                g_Unknown6c6d18.cfg.frameSkip = 0;
+                g_Unknown6c6d18.LoadMusic("bgm/th06_01.mid");
+                g_Unknown6c6d18.PlayMusic("bgm/th06_01.mid");
+                break;
+            case 8:
+                this->unk_81f0 = 2;
+                this->unk_81f4 = 0;
+                for (i = 0; i < 0x7a; i++)
+                {
+                    this->sprites[i].pendingInterrupt = 2;
+                }
+                this->cursor = 6;
+                g_Unknown6d3f50.QueueSound(0xb, 0);
+                if (this->unk_8230 != g_Unknown6c6d18.cfg.colorMode16Bits ||
+                    this->unk_8231 != g_Unknown6c6d18.cfg.windowed || this->unk_8232 != g_Unknown6c6d18.cfg.frameSkip)
+                {
+                    g_Unknown6c6d18.cfg.frameSkip = this->unk_8232;
+                    g_Unknown6c6d18.cfg.windowed = this->unk_8231;
+                    g_Unknown6c6d18.scene = 5;
+                    return 1;
+                }
+                break;
+            }
+        }
+    }
+    return 0;
+}
+
 int MainMenu::DrawPracticeScores()
 {
     int i;

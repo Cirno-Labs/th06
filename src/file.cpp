@@ -131,3 +131,12 @@ int File::Seek(DWORD offset, DWORD origin)
     SetFilePointer(this->handle, offset, NULL, origin);
     return 1;
 }
+
+DWORD File::Tell()
+{
+    if (this->handle == INVALID_HANDLE_VALUE)
+    {
+        return 0;
+    }
+    return SetFilePointer(this->handle, 0, NULL, FILE_CURRENT);
+}

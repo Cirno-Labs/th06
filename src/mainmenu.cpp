@@ -93,11 +93,11 @@ int MainMenu::OnUpdate(MainMenu *menu)
             g_GameManager.unk_001c = 1;
             g_GameManager.unk_1824 = 1;
             g_GameManager.demoFrames = 0;
-            g_Unknown6c6d18.gameSpeed = 1.0f;
+            g_App.gameSpeed = 1.0f;
             strcpy(g_GameManager.replayFile, "data/demo/demo00.rpy");
             g_GameManager.stage = 3;
             g_GameManager.difficulty = 3;
-            g_Unknown6c6d18.scene = 2;
+            g_App.scene = 2;
             return 0;
         }
         break;
@@ -226,7 +226,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                     menu->cursor = 7;
                     g_Unknown6d3f50.QueueSound(0xb, 0);
                     g_ControllerMapping = menu->controllerMapping;
-                    g_Unknown6c6d18.cfg.controllerMapping = menu->controllerMapping;
+                    g_App.cfg.controllerMapping = menu->controllerMapping;
                     break;
                 }
             }
@@ -238,7 +238,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             if (LoadSelectResources(menu) != 0)
             {
                 LogPrintf(&g_Unknown69d998, "セレクト画面の読み込みに失敗\n");
-                g_Unknown6c6d18.scene = 4;
+                g_App.scene = 4;
                 return 0;
             }
             menu->unk_81f0 = 7;
@@ -251,7 +251,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 {
                     menu->sprites[i].pendingInterrupt = 6;
                 }
-                menu->cursor = g_Unknown6c6d18.cfg.unk_1d;
+                menu->cursor = g_App.cfg.defaultDifficulty;
             }
             else
             {
@@ -282,7 +282,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             {
                 if (i != menu->cursor)
                 {
-                    if (!g_Unknown6c6d18.cfg.flags.unk0)
+                    if (!g_App.cfg.flags.unk0)
                     {
                         text3->color = 0x60000000;
                     }
@@ -295,7 +295,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 }
                 else
                 {
-                    if (!g_Unknown6c6d18.cfg.flags.unk0)
+                    if (!g_App.cfg.flags.unk0)
                     {
                         text3->color = 0xff000000;
                     }
@@ -316,7 +316,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             }
             for (i = 4; i < 5; i++, text3++)
             {
-                if (!g_Unknown6c6d18.cfg.flags.unk0)
+                if (!g_App.cfg.flags.unk0)
                 {
                     text3->color = 0xff000000;
                 }
@@ -338,7 +338,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             g_Unknown6d3f50.QueueSound(0xb, 0);
             if (g_GameManager.difficulty < 4)
             {
-                g_Unknown6c6d18.cfg.unk_1d = menu->cursor;
+                g_App.cfg.defaultDifficulty = menu->cursor;
                 if (!g_GameManager.unk_1823)
                 {
                     menu->cursor = 0;
@@ -385,7 +385,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                     menu->cursor = 1 - g_GameManager.character;
                 }
             }
-            g_Unknown6c6d18.cfg.unk_1d = g_GameManager.difficulty;
+            g_App.cfg.defaultDifficulty = g_GameManager.difficulty;
             for (text3 = &menu->sprites[0x56], i = 0; i < 2; i++, text3 += 2)
             {
                 if (i != menu->cursor)
@@ -483,7 +483,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
                 {
                     menu->sprites[i].pendingInterrupt = 6;
                 }
-                menu->cursor = g_Unknown6c6d18.cfg.unk_1d;
+                menu->cursor = g_App.cfg.defaultDifficulty;
             }
             else
             {
@@ -554,7 +554,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             text3->flags.unk0 = 1;
             if (i != menu->cursor)
             {
-                if (!g_Unknown6c6d18.cfg.flags.unk0)
+                if (!g_App.cfg.flags.unk0)
                 {
                     text3->color = 0xa0000000;
                 }
@@ -566,7 +566,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
             }
             else
             {
-                if (!g_Unknown6c6d18.cfg.flags.unk0)
+                if (!g_App.cfg.flags.unk0)
                 {
                     text3->color = 0xff202020;
                 }
@@ -626,14 +626,14 @@ int MainMenu::OnUpdate(MainMenu *menu)
                     g_GameManager.stage = 6;
                 }
             start:
-                g_GameManager.lives = g_Unknown6c6d18.cfg.lives;
-                g_GameManager.bombs = g_Unknown6c6d18.cfg.bombs;
+                g_GameManager.lives = g_App.cfg.lives;
+                g_GameManager.bombs = g_App.cfg.bombs;
                 if (g_GameManager.difficulty == 4 || g_GameManager.unk_1823)
                 {
                     g_GameManager.lives = 2;
                     g_GameManager.bombs = 3;
                 }
-                g_Unknown6c6d18.scene = 2;
+                g_App.scene = 2;
                 g_Unknown6d3f50.QueueSound(10, 0);
                 g_GameManager.unk_001c = 0;
                 {
@@ -694,9 +694,9 @@ int MainMenu::OnUpdate(MainMenu *menu)
                         speed = 1.0f;
                     }
                     DebugPrint2("Reflesh Rate = %f\n", 60.0f / speed);
-                    g_Unknown6c6d18.gameSpeed = speed;
+                    g_App.gameSpeed = speed;
                 }
-                g_Unknown6c6d18.StopMusic();
+                g_App.StopMusic();
                 return 0;
             }
             menu->unk_81f0 = 17;
@@ -802,21 +802,21 @@ int MainMenu::OnUpdate(MainMenu *menu)
     case 4:
         if (menu->unk_81f4 >= 60)
         {
-            g_Unknown6c6d18.scene = 4;
+            g_App.scene = 4;
             return 0;
         }
         break;
     case 10:
         if (menu->unk_81f4 >= 60)
         {
-            g_Unknown6c6d18.scene = 6;
+            g_App.scene = 6;
             return 0;
         }
         break;
     case 16:
         if (menu->unk_81f4 >= 60)
         {
-            g_Unknown6c6d18.scene = 9;
+            g_App.scene = 9;
             return 0;
         }
         break;
@@ -909,7 +909,7 @@ void HighlightMenuEntry(Sprite *vm, int index, int cursor, D3DCOLOR selectedColo
 {
     if (index == cursor)
     {
-        if (!g_Unknown6c6d18.HasFlag0Or8())
+        if (!g_App.HasFlag0Or8())
         {
             vm->color = selectedColor;
         }
@@ -922,7 +922,7 @@ void HighlightMenuEntry(Sprite *vm, int index, int cursor, D3DCOLOR selectedColo
     }
     else
     {
-        if (!g_Unknown6c6d18.HasFlag0Or8())
+        if (!g_App.HasFlag0Or8())
         {
             vm->color = color;
         }
@@ -942,24 +942,24 @@ int MainMenu::Func4378a2()
 
     if (LoadTitleResources(this) != 0)
     {
-        g_Unknown6c6d18.scene = 4;
+        g_App.scene = 4;
         return -1;
     }
-    if (g_Unknown6c6d18.unk_400 > 0)
+    if (g_App.startTime > 0)
     {
         current = timeGetTime();
-        while (current - g_Unknown6c6d18.unk_400 >= 0 && current - g_Unknown6c6d18.unk_400 < 3000)
+        while (current - g_App.startTime >= 0 && current - g_App.startTime < 3000)
         {
             current = timeGetTime();
         }
-        g_Unknown6c6d18.unk_400 = 0;
-        g_Unknown6c6d18.PlayMusic("bgm/th06_01.mid");
+        g_App.startTime = 0;
+        g_App.PlayMusic("bgm/th06_01.mid");
     }
     for (i = 0; i < 0x7a; i++)
     {
         this->sprites[i].pendingInterrupt = 1;
         this->sprites[i].flags.colorOp = 1;
-        if (!g_Unknown6c6d18.cfg.flags.unk0)
+        if (!g_App.cfg.flags.unk0)
         {
             this->sprites[i].color = 0xff000000;
         }
@@ -991,7 +991,7 @@ int MainMenu::Func4379e4()
     {
         this->sprites[i].pendingInterrupt = 2;
     }
-    if (!g_Unknown6c6d18.cfg.flags.unk0)
+    if (!g_App.cfg.flags.unk0)
     {
         this->sprites[this->cursor].color = 0xffff0000;
     }
@@ -1039,9 +1039,9 @@ int MainMenu::UpdateTitleMenu()
             {
                 g_GameManager.difficulty = 1;
             }
-            if (g_Unknown6c6d18.cfg.unk_1d >= 4)
+            if (g_App.cfg.defaultDifficulty >= 4)
             {
-                g_Unknown6c6d18.cfg.unk_1d = 1;
+                g_App.cfg.defaultDifficulty = 1;
             }
             this->unk_81f4 = 0;
             this->unk_81fc = 0x40000000;
@@ -1084,9 +1084,9 @@ int MainMenu::UpdateTitleMenu()
             {
                 g_GameManager.difficulty = 1;
             }
-            if (g_Unknown6c6d18.cfg.unk_1d >= 4)
+            if (g_App.cfg.defaultDifficulty >= 4)
             {
-                g_Unknown6c6d18.cfg.unk_1d = 1;
+                g_App.cfg.defaultDifficulty = 1;
             }
             this->unk_81f4 = 0;
             this->unk_81fc = 0x40000000;
@@ -1139,9 +1139,9 @@ int MainMenu::UpdateTitleMenu()
                 this->sprites[i].pendingInterrupt = 3;
             }
             this->cursor = 0;
-            this->unk_8230 = g_Unknown6c6d18.cfg.colorMode16Bits;
-            this->unk_8231 = g_Unknown6c6d18.cfg.windowed;
-            this->unk_8232 = g_Unknown6c6d18.cfg.frameSkip;
+            this->unk_8230 = g_App.cfg.colorMode16Bits;
+            this->unk_8231 = g_App.cfg.windowed;
+            this->unk_8232 = g_App.cfg.frameSkip;
             g_Unknown6d3f50.QueueSound(10, 0);
             break;
             case 7:
@@ -1192,7 +1192,7 @@ int MainMenu::UpdateReplayMenu()
             if (LoadReplayMenuResources(this) != 0)
             {
                 LogPrintf(&g_Unknown69d998, "セレクト画面の読み込みに失敗\n");
-                g_Unknown6c6d18.scene = 4;
+                g_App.scene = 4;
                 return 0;
             }
             replayCount = 0;
@@ -1346,7 +1346,7 @@ int MainMenu::UpdateReplayMenu()
         if (WAS_PRESSED(0x1001) && &this->unk_10edc[this->cursor].stages[1] != NULL)
         {
             g_GameManager.unk_001c = 1;
-            g_Unknown6c6d18.gameSpeed = 1.0f;
+            g_App.gameSpeed = 1.0f;
             strcpy(g_GameManager.replayFile, this->replayPaths[this->unk_81e8]);
             g_GameManager.difficulty = this->unk_10edc->difficulty;
             g_GameManager.character = this->unk_10edc->shotType / 2;
@@ -1361,7 +1361,7 @@ int MainMenu::UpdateReplayMenu()
             MemFree(this->unk_10edc);
             this->unk_10edc = NULL;
             g_GameManager.stage = this->cursor;
-            g_Unknown6c6d18.scene = 2;
+            g_App.scene = 2;
             return 1;
         }
         if (WAS_PRESSED(0xa))
@@ -1403,7 +1403,7 @@ int MainMenu::DrawReplayMenu()
             break;
         }
         text++;
-        if (!g_Unknown6c6d18.HasFlag0Or8())
+        if (!g_App.HasFlag0Or8())
         {
             if (i == this->unk_81e8)
             {
@@ -1441,7 +1441,7 @@ int MainMenu::DrawReplayMenu()
         for (i = 0; i < 7; i++)
         {
             text++;
-            if (!g_Unknown6c6d18.HasFlag0Or8())
+            if (!g_App.HasFlag0Or8())
             {
                 if (i == this->cursor)
                 {
@@ -1483,7 +1483,7 @@ void MainMenu::HighlightOption(Sprite *vm, int row, int value, int current)
 {
     if (value != current)
     {
-        if (!g_Unknown6c6d18.HasFlag0Or8())
+        if (!g_App.HasFlag0Or8())
         {
             vm->color = 0x80202050;
         }
@@ -1497,7 +1497,7 @@ void MainMenu::HighlightOption(Sprite *vm, int row, int value, int current)
     }
     else
     {
-        if (!g_Unknown6c6d18.HasFlag0Or8())
+        if (!g_App.HasFlag0Or8())
         {
             vm->color = 0x800000ff;
         }
@@ -1513,7 +1513,7 @@ void MainMenu::HighlightOption(Sprite *vm, int row, int value, int current)
     }
     if (row != this->cursor)
     {
-        if (!g_Unknown6c6d18.cfg.flags.unk0)
+        if (!g_App.cfg.flags.unk0)
         {
             vm->color = vm->color & 0xffffff | 0x80000000;
         }
@@ -1525,7 +1525,7 @@ void MainMenu::HighlightOption(Sprite *vm, int row, int value, int current)
     }
     else
     {
-        if (!g_Unknown6c6d18.cfg.flags.unk0)
+        if (!g_App.cfg.flags.unk0)
         {
             vm->color = vm->color & 0xffffff | 0xff000000;
         }
@@ -1558,24 +1558,24 @@ int MainMenu::UpdateOptions()
     }
     for (i = 0; i < 5; i++, vm++)
     {
-        this->HighlightOption(vm, 0, i, g_Unknown6c6d18.cfg.lives);
+        this->HighlightOption(vm, 0, i, g_App.cfg.lives);
     }
     for (i = 0; i < 4; i++, vm++)
     {
-        this->HighlightOption(vm, 1, i, g_Unknown6c6d18.cfg.bombs);
+        this->HighlightOption(vm, 1, i, g_App.cfg.bombs);
     }
     for (i = 0; i < 2; i++, vm++)
     {
-        this->HighlightOption(vm, 2, i, g_Unknown6c6d18.cfg.colorMode16Bits);
+        this->HighlightOption(vm, 2, i, g_App.cfg.colorMode16Bits);
     }
     for (i = 0; i < 2; i++, vm++)
     {
-        this->HighlightOption(vm, 4, i, g_Unknown6c6d18.cfg.playSounds);
+        this->HighlightOption(vm, 4, i, g_App.cfg.playSounds);
     }
     vm = &this->sprites[0x4d];
     for (i = 0; i < 3; i++, vm++)
     {
-        this->HighlightOption(vm, 3, i, g_Unknown6c6d18.cfg.musicMode);
+        this->HighlightOption(vm, 3, i, g_App.cfg.musicMode);
     }
     vm = &this->sprites[0x4b];
     for (i = 0; i < 2; i++, vm++)
@@ -1590,46 +1590,46 @@ int MainMenu::UpdateOptions()
             {
             case 0:
                 g_Unknown6d3f50.QueueSound(0xc, 0);
-                if (g_Unknown6c6d18.cfg.lives <= 0)
+                if (g_App.cfg.lives <= 0)
                 {
-                    g_Unknown6c6d18.cfg.lives = 5;
+                    g_App.cfg.lives = 5;
                 }
-                g_Unknown6c6d18.cfg.lives = g_Unknown6c6d18.cfg.lives - 1;
+                g_App.cfg.lives = g_App.cfg.lives - 1;
                 break;
             case 1:
                 g_Unknown6d3f50.QueueSound(0xc, 0);
-                if (g_Unknown6c6d18.cfg.bombs <= 0)
+                if (g_App.cfg.bombs <= 0)
                 {
-                    g_Unknown6c6d18.cfg.bombs = 4;
+                    g_App.cfg.bombs = 4;
                 }
-                g_Unknown6c6d18.cfg.bombs = g_Unknown6c6d18.cfg.bombs - 1;
+                g_App.cfg.bombs = g_App.cfg.bombs - 1;
                 break;
             case 2:
                 g_Unknown6d3f50.QueueSound(0xc, 0);
-                if (g_Unknown6c6d18.cfg.colorMode16Bits <= 0)
+                if (g_App.cfg.colorMode16Bits <= 0)
                 {
-                    g_Unknown6c6d18.cfg.colorMode16Bits = 2;
+                    g_App.cfg.colorMode16Bits = 2;
                 }
-                g_Unknown6c6d18.cfg.colorMode16Bits = g_Unknown6c6d18.cfg.colorMode16Bits - 1;
+                g_App.cfg.colorMode16Bits = g_App.cfg.colorMode16Bits - 1;
                 break;
             case 3:
                 g_Unknown6d3f50.QueueSound(0xc, 0);
-                g_Unknown6c6d18.StopMusic();
-                if (g_Unknown6c6d18.cfg.musicMode <= 0)
+                g_App.StopMusic();
+                if (g_App.cfg.musicMode <= 0)
                 {
-                    g_Unknown6c6d18.cfg.musicMode = 3;
+                    g_App.cfg.musicMode = 3;
                 }
-                g_Unknown6c6d18.cfg.musicMode = g_Unknown6c6d18.cfg.musicMode - 1;
-                g_Unknown6c6d18.LoadMusic("bgm/th06_01.mid");
-                g_Unknown6c6d18.PlayMusic("bgm/th06_01.mid");
+                g_App.cfg.musicMode = g_App.cfg.musicMode - 1;
+                g_App.LoadMusic("bgm/th06_01.mid");
+                g_App.PlayMusic("bgm/th06_01.mid");
                 break;
             case 4:
                 g_Unknown6d3f50.QueueSound(0xc, 0);
-                if (g_Unknown6c6d18.cfg.playSounds <= 0)
+                if (g_App.cfg.playSounds <= 0)
                 {
-                    g_Unknown6c6d18.cfg.playSounds = 2;
+                    g_App.cfg.playSounds = 2;
                 }
-                g_Unknown6c6d18.cfg.playSounds = g_Unknown6c6d18.cfg.playSounds - 1;
+                g_App.cfg.playSounds = g_App.cfg.playSounds - 1;
                 break;
             case 5:
                 g_Unknown6d3f50.QueueSound(0xc, 0);
@@ -1652,45 +1652,45 @@ int MainMenu::UpdateOptions()
             {
             case 0:
                 g_Unknown6d3f50.QueueSound(0xc, 0);
-                g_Unknown6c6d18.cfg.lives = g_Unknown6c6d18.cfg.lives + 1;
-                if (g_Unknown6c6d18.cfg.lives >= 5)
+                g_App.cfg.lives = g_App.cfg.lives + 1;
+                if (g_App.cfg.lives >= 5)
                 {
-                    g_Unknown6c6d18.cfg.lives = 0;
+                    g_App.cfg.lives = 0;
                 }
                 break;
             case 1:
                 g_Unknown6d3f50.QueueSound(0xc, 0);
-                g_Unknown6c6d18.cfg.bombs = g_Unknown6c6d18.cfg.bombs + 1;
-                if (g_Unknown6c6d18.cfg.bombs >= 4)
+                g_App.cfg.bombs = g_App.cfg.bombs + 1;
+                if (g_App.cfg.bombs >= 4)
                 {
-                    g_Unknown6c6d18.cfg.bombs = 0;
+                    g_App.cfg.bombs = 0;
                 }
                 break;
             case 2:
                 g_Unknown6d3f50.QueueSound(0xc, 0);
-                g_Unknown6c6d18.cfg.colorMode16Bits = g_Unknown6c6d18.cfg.colorMode16Bits + 1;
-                if (g_Unknown6c6d18.cfg.colorMode16Bits >= 2)
+                g_App.cfg.colorMode16Bits = g_App.cfg.colorMode16Bits + 1;
+                if (g_App.cfg.colorMode16Bits >= 2)
                 {
-                    g_Unknown6c6d18.cfg.colorMode16Bits = 0;
+                    g_App.cfg.colorMode16Bits = 0;
                 }
                 break;
             case 3:
                 g_Unknown6d3f50.QueueSound(0xc, 0);
-                g_Unknown6c6d18.StopMusic();
-                g_Unknown6c6d18.cfg.musicMode = g_Unknown6c6d18.cfg.musicMode + 1;
-                if (g_Unknown6c6d18.cfg.musicMode >= 3)
+                g_App.StopMusic();
+                g_App.cfg.musicMode = g_App.cfg.musicMode + 1;
+                if (g_App.cfg.musicMode >= 3)
                 {
-                    g_Unknown6c6d18.cfg.musicMode = 0;
+                    g_App.cfg.musicMode = 0;
                 }
-                g_Unknown6c6d18.LoadMusic("bgm/th06_01.mid");
-                g_Unknown6c6d18.PlayMusic("bgm/th06_01.mid");
+                g_App.LoadMusic("bgm/th06_01.mid");
+                g_App.PlayMusic("bgm/th06_01.mid");
                 break;
             case 4:
                 g_Unknown6d3f50.QueueSound(0xc, 0);
-                g_Unknown6c6d18.cfg.playSounds = g_Unknown6c6d18.cfg.playSounds + 1;
-                if (g_Unknown6c6d18.cfg.playSounds >= 2)
+                g_App.cfg.playSounds = g_App.cfg.playSounds + 1;
+                if (g_App.cfg.playSounds >= 2)
                 {
-                    g_Unknown6c6d18.cfg.playSounds = 0;
+                    g_App.cfg.playSounds = 0;
                 }
                 break;
             case 5:
@@ -1721,16 +1721,16 @@ int MainMenu::UpdateOptions()
                 g_ControllerMapping.downButton = -1;
                 break;
             case 6:
-                g_Unknown6c6d18.StopMusic();
-                g_Unknown6c6d18.cfg.lives = 2;
-                g_Unknown6c6d18.cfg.bombs = 3;
-                g_Unknown6c6d18.cfg.musicMode = 1;
-                g_Unknown6c6d18.cfg.playSounds = 1;
-                g_Unknown6c6d18.cfg.unk_1d = 1;
-                g_Unknown6c6d18.cfg.windowed = 0;
-                g_Unknown6c6d18.cfg.frameSkip = 0;
-                g_Unknown6c6d18.LoadMusic("bgm/th06_01.mid");
-                g_Unknown6c6d18.PlayMusic("bgm/th06_01.mid");
+                g_App.StopMusic();
+                g_App.cfg.lives = 2;
+                g_App.cfg.bombs = 3;
+                g_App.cfg.musicMode = 1;
+                g_App.cfg.playSounds = 1;
+                g_App.cfg.defaultDifficulty = 1;
+                g_App.cfg.windowed = 0;
+                g_App.cfg.frameSkip = 0;
+                g_App.LoadMusic("bgm/th06_01.mid");
+                g_App.PlayMusic("bgm/th06_01.mid");
                 break;
             case 8:
                 this->unk_81f0 = 2;
@@ -1741,12 +1741,12 @@ int MainMenu::UpdateOptions()
                 }
                 this->cursor = 6;
                 g_Unknown6d3f50.QueueSound(0xb, 0);
-                if (this->unk_8230 != g_Unknown6c6d18.cfg.colorMode16Bits ||
-                    this->unk_8231 != g_Unknown6c6d18.cfg.windowed || this->unk_8232 != g_Unknown6c6d18.cfg.frameSkip)
+                if (this->unk_8230 != g_App.cfg.colorMode16Bits ||
+                    this->unk_8231 != g_App.cfg.windowed || this->unk_8232 != g_App.cfg.frameSkip)
                 {
-                    g_Unknown6c6d18.cfg.frameSkip = this->unk_8232;
-                    g_Unknown6c6d18.cfg.windowed = this->unk_8231;
-                    g_Unknown6c6d18.scene = 5;
+                    g_App.cfg.frameSkip = this->unk_8232;
+                    g_App.cfg.windowed = this->unk_8231;
+                    g_App.scene = 5;
                     return 1;
                 }
                 break;
@@ -1857,7 +1857,7 @@ int LoadTitleResources(MainMenu *menu)
 {
     int i;
 
-    g_Unknown6c6d18.LoadArchive(3, "紅魔郷TL.dat");
+    g_App.LoadArchive(3, "紅魔郷TL.dat");
     for (i = 0x1b; i <= 0x24; i++)
     {
         g_SpriteEngine->ReleaseAnm(i);
@@ -1954,7 +1954,7 @@ int LoadSelectResources(MainMenu *menu)
         g_SpriteEngine->Func4051b0(vm, i);
         vm->flags.unk0 = 0;
         vm->flags.colorOp = 1;
-        if (!g_Unknown6c6d18.cfg.flags.unk0)
+        if (!g_App.cfg.flags.unk0)
         {
             vm->color = 0xff000000;
         }
@@ -1991,7 +1991,7 @@ int LoadReplayMenuResources(MainMenu *menu)
         g_SpriteEngine->Func4051b0(vm, i);
         vm->flags.unk0 = 0;
         vm->flags.colorOp = 1;
-        if (!g_Unknown6c6d18.cfg.flags.unk0)
+        if (!g_App.cfg.flags.unk0)
         {
             vm->color = 0xff000000;
         }
@@ -2012,9 +2012,9 @@ int SetUpTitleScene(int unk)
 
     memset(menu, 0, sizeof(MainMenu));
     g_GameManager.unk_181f = 0;
-    DebugPrint2("Debug : title 開始 VRAM = %d\n", g_Unknown6c6d18.d3dDevice->GetAvailableTextureMem());
+    DebugPrint2("Debug : title 開始 VRAM = %d\n", g_App.d3dDevice->GetAvailableTextureMem());
     menu->unk_81f0 = unk != 0 ? 12 : 0;
-    g_Unknown6c6d18.gameSpeed = 0.0f;
+    g_App.gameSpeed = 0.0f;
     menu->calcChain = g_Chain.CreateElem((ChainCallback)MainMenu::OnUpdate);
     menu->calcChain->arg = menu;
     menu->calcChain->addedCallback = (ChainCallback)MainMenu::AddedCallback;
@@ -2039,11 +2039,11 @@ int MainMenu::AddedCallback(MainMenu *menu)
 
     if (!g_GameManager.unk_1824)
     {
-        g_Unknown6c6d18.LoadMusic("bgm/th06_01.mid");
+        g_App.LoadMusic("bgm/th06_01.mid");
     }
     g_SpriteEngine->ClearMenuScripts();
     menu->unk_81e4 = 0;
-    switch (g_Unknown6c6d18.prevScene)
+    switch (g_App.prevScene)
     {
     case 2:
     case 3:
@@ -2065,7 +2065,7 @@ int MainMenu::AddedCallback(MainMenu *menu)
         menu->cursor = 2;
     }
     g_GameManager.unk_1823 = 0;
-    if (!g_Unknown6c6d18.cfg.flags.unk0)
+    if (!g_App.cfg.flags.unk0)
     {
         menu->unk_8208 = 0x80004000;
         menu->unk_8204 = 0xff008000;
@@ -2087,9 +2087,9 @@ int MainMenu::AddedCallback(MainMenu *menu)
     ReleaseScoreDat(scoreDat);
     if (!g_GameManager.unk_1824)
     {
-        if (g_Unknown6c6d18.unk_400 == 0)
+        if (g_App.startTime == 0)
         {
-            g_Unknown6c6d18.PlayMusic("bgm/th06_01.mid");
+            g_App.PlayMusic("bgm/th06_01.mid");
             ScreenEffect::StartEffect(0, 120, 0xffffff, 0, 0);
         }
         else
@@ -2106,7 +2106,7 @@ int MainMenu::DeletedCallback(MainMenu *menu)
 {
     int i;
 
-    g_Unknown6c6d18.d3dDevice->ResourceManagerDiscardBytes(0);
+    g_App.d3dDevice->ResourceManagerDiscardBytes(0);
     Func43a70a();
     for (i = 0x1b; i <= 0x24; i++)
     {

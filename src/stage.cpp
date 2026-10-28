@@ -76,9 +76,9 @@ int Stage::AddedCallback(Stage *stage)
     stage->offsetFadeFrames = 1;
     stage->offsetFadeTime.Set(0);
     stage->unk_2a8 = 0;
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
     return 0;
 }
 
@@ -142,9 +142,9 @@ int Stage::OnUpdate(Stage *stage)
                 stage->fog.farPlane = cmd->args.z;
                 if (stage->fogFadeFrames == 0)
                 {
-                    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
-                    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
-                    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
+                    g_App.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
+                    g_App.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
+                    g_App.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
                 }
                 stage->scriptIndex++;
                 stage->fogTarget = stage->fog;
@@ -230,9 +230,9 @@ int Stage::OnUpdate(Stage *stage)
         }
         stage->fog.nearPlane = (stage->fogTarget.nearPlane - stage->fogStart.nearPlane) * fogT + stage->fogStart.nearPlane;
         stage->fog.farPlane = (stage->fogTarget.farPlane - stage->fogStart.farPlane) * fogT + stage->fogStart.farPlane;
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
+        g_App.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
+        g_App.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
+        g_App.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
         if (stage->fogFadeTime >= stage->fogFadeFrames)
         {
             stage->fogFadeFrames = 0;
@@ -260,10 +260,10 @@ int Stage::OnDraw(Stage *stage)
     if (stage->fogColorChanged)
     {
         stage->fogColorChanged = 0;
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
+        g_App.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
     }
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
     if (stage->unk_080 <= 1 && !g_Gui.Func4172d3())
     {
         stage->DrawLayer(0);
@@ -294,20 +294,20 @@ int Stage::OnDraw2(Stage *stage)
     }
     if (stage->unk_080 >= 1)
     {
-        if (stage->unk_084 <= g_Unknown6c6d18.cfg.frameSkip)
+        if (stage->unk_084 <= g_App.cfg.frameSkip)
         {
             g_SpriteEngine->StartScript(&stage->unk_088, 0x2b3);
         }
         g_SpriteEngine->DrawRotated(&stage->unk_088);
     }
-    g_Unknown6c6d18.viewport.MinZ = 0.0f;
-    g_Unknown6c6d18.viewport.MaxZ = 0.5f;
+    g_App.viewport.MinZ = 0.0f;
+    g_App.viewport.MaxZ = 0.5f;
     SetupFixedCamera(0.0f);
-    g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+    g_App.d3dDevice->SetViewport(&g_App.viewport);
     fog = 1000.0f;
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&fog);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&fog);
     fog = 2000.0f;
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&fog);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&fog);
     return 1;
 }
 
@@ -400,8 +400,8 @@ int Stage::StepObjects()
 
 // Whether the projected point shows on screen vertically.
 #define IN_VIEWPORT_Y(v)                                                                                    \
-    ((v).y >= (float)g_Unknown6c6d18.viewport.Y &&                                                          \
-     (v).y <= (float)(g_Unknown6c6d18.viewport.Y + g_Unknown6c6d18.viewport.Height))
+    ((v).y >= (float)g_App.viewport.Y &&                                                          \
+     (v).y <= (float)(g_App.viewport.Y + g_App.viewport.Height))
 
 int Stage::DrawLayer(int layer)
 {
@@ -435,29 +435,29 @@ int Stage::DrawLayer(int layer)
             mat._41 = objData->pos.x + placement->pos.x - this->cameraPos.x;
             mat._42 = -(objData->pos.y + placement->pos.y - this->cameraPos.y);
             mat._43 = objData->pos.z + placement->pos.z - this->cameraPos.z + objData->size.z;
-            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
-                            &g_Unknown6c6d18.viewMatrix, &mat);
+            D3DXVec3Project(&scrPos, &objOrigin, &g_App.viewport, &g_App.projectionMatrix,
+                            &g_App.viewMatrix, &mat);
             if (IN_VIEWPORT_Y(scrPos))
             {
                 goto render;
             }
             mat._42 -= objData->size.y;
-            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
-                            &g_Unknown6c6d18.viewMatrix, &mat);
+            D3DXVec3Project(&scrPos, &objOrigin, &g_App.viewport, &g_App.projectionMatrix,
+                            &g_App.viewMatrix, &mat);
             if (IN_VIEWPORT_Y(scrPos))
             {
                 goto render;
             }
             mat._43 -= objData->size.z;
-            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
-                            &g_Unknown6c6d18.viewMatrix, &mat);
+            D3DXVec3Project(&scrPos, &objOrigin, &g_App.viewport, &g_App.projectionMatrix,
+                            &g_App.viewMatrix, &mat);
             if (IN_VIEWPORT_Y(scrPos))
             {
                 goto render;
             }
             mat._42 += objData->size.y;
-            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
-                            &g_Unknown6c6d18.viewMatrix, &mat);
+            D3DXVec3Project(&scrPos, &objOrigin, &g_App.viewport, &g_App.projectionMatrix,
+                            &g_App.viewMatrix, &mat);
             if (IN_VIEWPORT_Y(scrPos))
             {
                 goto render;
@@ -465,29 +465,29 @@ int Stage::DrawLayer(int layer)
             mat._41 = objData->pos.x + placement->pos.x - this->cameraPos.x + objData->size.x;
             mat._42 = -(objData->pos.y + placement->pos.y - this->cameraPos.y);
             mat._43 = objData->pos.z + placement->pos.z - this->cameraPos.z + objData->size.z;
-            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
-                            &g_Unknown6c6d18.viewMatrix, &mat);
+            D3DXVec3Project(&scrPos, &objOrigin, &g_App.viewport, &g_App.projectionMatrix,
+                            &g_App.viewMatrix, &mat);
             if (IN_VIEWPORT_Y(scrPos))
             {
                 goto render;
             }
             mat._42 -= objData->size.y;
-            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
-                            &g_Unknown6c6d18.viewMatrix, &mat);
+            D3DXVec3Project(&scrPos, &objOrigin, &g_App.viewport, &g_App.projectionMatrix,
+                            &g_App.viewMatrix, &mat);
             if (IN_VIEWPORT_Y(scrPos))
             {
                 goto render;
             }
             mat._43 -= objData->size.z;
-            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
-                            &g_Unknown6c6d18.viewMatrix, &mat);
+            D3DXVec3Project(&scrPos, &objOrigin, &g_App.viewport, &g_App.projectionMatrix,
+                            &g_App.viewMatrix, &mat);
             if (IN_VIEWPORT_Y(scrPos))
             {
                 goto render;
             }
             mat._42 += objData->size.y;
-            D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport, &g_Unknown6c6d18.projectionMatrix,
-                            &g_Unknown6c6d18.viewMatrix, &mat);
+            D3DXVec3Project(&scrPos, &objOrigin, &g_App.viewport, &g_App.projectionMatrix,
+                            &g_App.viewMatrix, &mat);
             if (IN_VIEWPORT_Y(scrPos))
             {
                 goto render;
@@ -528,11 +528,11 @@ int Stage::DrawLayer(int layer)
                         mat._41 = spr->pos.x;
                         mat._42 = -spr->pos.y;
                         mat._43 = spr->pos.z;
-                        D3DXVec3Project(&scrPos, &objOrigin, &g_Unknown6c6d18.viewport,
-                                        &g_Unknown6c6d18.projectionMatrix, &g_Unknown6c6d18.viewMatrix, &mat);
+                        D3DXVec3Project(&scrPos, &objOrigin, &g_App.viewport,
+                                        &g_App.projectionMatrix, &g_App.viewMatrix, &mat);
                         mat._41 += width * spr->scaleX;
-                        D3DXVec3Project(&screenRight, &objOrigin, &g_Unknown6c6d18.viewport,
-                                        &g_Unknown6c6d18.projectionMatrix, &g_Unknown6c6d18.viewMatrix, &mat);
+                        D3DXVec3Project(&screenRight, &objOrigin, &g_App.viewport,
+                                        &g_App.projectionMatrix, &g_App.viewMatrix, &mat);
                         spr->scaleX = (screenRight.x - scrPos.x) / width;
                         spr->scaleY = spr->scaleX;
                         spr->pos = scrPos;

@@ -616,7 +616,7 @@ int ResultScreen::HandleReplaySaving()
             {
                 interrupt = 0xc;
             }
-            else if (g_Unknown6c6d18.gameSpeed < 0.99f)
+            else if (g_App.gameSpeed < 0.99f)
             {
                 interrupt = 0xd;
             }
@@ -1037,7 +1037,7 @@ int ResultScreen::DrawStatistics()
         cursorPos.y += 22.0f;
         g_AsciiText.AddFormat(&cursorPos, "%9d", g_GameManager.spellCardsCaptured);
         rating += g_GameManager.spellCardsCaptured * g_SpellCardRatings[g_GameManager.difficulty];
-        slowdown = (g_Unknown6c6d18.unk_1b4 / g_Unknown6c6d18.unk_1b8 - 0.5f) * 2.0f;
+        slowdown = (g_App.achievedFrames / g_App.expectedFrames - 0.5f) * 2.0f;
         if (slowdown < 0.0f)
         {
             slowdown = 0.0f;
@@ -1123,7 +1123,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
     switch (screen->state)
     {
     case 0x11:
-        g_Unknown6c6d18.scene = 1;
+        g_App.scene = 1;
         return 0;
     case 0:
         if (screen->frame == 0)
@@ -1133,7 +1133,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
             {
                 sprite->pendingInterrupt = 1;
                 sprite->flags.colorOp = 1;
-                if (!g_Unknown6c6d18.cfg.flags.unk0)
+                if (!g_App.cfg.flags.unk0)
                 {
                     sprite->color = sprite->color & 0xff000000;
                 }
@@ -1147,7 +1147,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
             {
                 if (i == screen->cursor)
                 {
-                    if (!g_Unknown6c6d18.cfg.flags.unk0)
+                    if (!g_App.cfg.flags.unk0)
                     {
                         sprite->color = 0xff505050;
                     }
@@ -1159,7 +1159,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                 }
                 else
                 {
-                    if (!g_Unknown6c6d18.cfg.flags.unk0)
+                    if (!g_App.cfg.flags.unk0)
                     {
                         sprite->color = 0xb0000000;
                     }
@@ -1184,7 +1184,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
         {
             if (i == screen->cursor)
             {
-                if (!g_Unknown6c6d18.cfg.flags.unk0)
+                if (!g_App.cfg.flags.unk0)
                 {
                     sprite->color = 0xff505050;
                 }
@@ -1196,7 +1196,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
             }
             else
             {
-                if (!g_Unknown6c6d18.cfg.flags.unk0)
+                if (!g_App.cfg.flags.unk0)
                 {
                     sprite->color = 0xb0000000;
                 }
@@ -1263,7 +1263,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
         {
             break;
         }
-        g_Unknown6c6d18.scene = 1;
+        g_App.scene = 1;
         return 0;
     case 7:
         if ((g_Buttons & 4) || (g_Buttons & 0x100))
@@ -1445,11 +1445,11 @@ int ResultScreen::OnDraw(ResultScreen *screen)
     D3DXVECTOR3 charPos;
 
     sprite = screen->sprites;
-    g_Unknown6c6d18.viewport.X = 0;
-    g_Unknown6c6d18.viewport.Y = 0;
-    g_Unknown6c6d18.viewport.Width = 640;
-    g_Unknown6c6d18.viewport.Height = 480;
-    g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+    g_App.viewport.X = 0;
+    g_App.viewport.Y = 0;
+    g_App.viewport.Width = 640;
+    g_App.viewport.Height = 480;
+    g_App.d3dDevice->SetViewport(&g_App.viewport);
     g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
     for (i = 0; i < 0x26; i++, sprite++)
     {

@@ -126,11 +126,11 @@ int ReplayManager::RegisterChain(int mode, char *path)
 {
     ReplayManager *replay;
 
-    if (g_Unknown6c6d18.gameSpeed < 0.99f && mode == 0)
+    if (g_App.gameSpeed < 0.99f && mode == 0)
     {
         return 0;
     }
-    g_Unknown6c6d18.gameSpeed = 1.0f;
+    g_App.gameSpeed = 1.0f;
     if (g_ReplayManager == NULL)
     {
         replay = new ReplayManager;
@@ -344,7 +344,7 @@ void SaveReplay(char *path, char *name)
                 }
                 DebugPrint("%s write ...\n", path);
                 hX.score = g_GameManager.unk_0000;
-                slowdown2 = (g_Unknown6c6d18.unk_1b4 / g_Unknown6c6d18.unk_1b8 - 0.5f) * 2.0f;
+                slowdown2 = (g_App.achievedFrames / g_App.expectedFrames - 0.5f) * 2.0f;
                 if (slowdown2 < 0.0f)
                 {
                     slowdown2 = 0.0f;

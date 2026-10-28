@@ -90,7 +90,7 @@ public:
     static int RecordOnUpdate(ReplayManager *replay);
     // The update callback while playing: while g_GameManager.unk_1821 is
     // set, puts the recorded buttons for the frame into g_Buttons (with
-    // key repeat as in Unknown6c6d18::OnUpdate) and counts the frame.
+    // key repeat as in App::OnUpdate) and counts the frame.
     // Returns 1.
     static int PlayOnUpdate(ReplayManager *replay);
     // The second update callback while playing: while

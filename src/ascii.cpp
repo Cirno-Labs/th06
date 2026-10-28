@@ -52,7 +52,7 @@ int Unknown4010e0::UpdatePauseMenu()
         }
         this->unk_000++;
         this->unk_004 = 0;
-        if (g_Unknown6c6d18.lockableBackBuffer)
+        if (g_App.lockableBackBuffer)
         {
             g_SpriteEngine->SetPendingCopy(3, 0x20, 0x10, 0x180, 0x1c0);
             g_SpriteEngine->StartScript(&this->unk_668, 0x718);
@@ -189,7 +189,7 @@ int Unknown4010e0::UpdatePauseMenu()
         {
             this->unk_000 = 0;
             g_GameManager.unk_181f = 0;
-            g_Unknown6c6d18.scene = 1;
+            g_App.scene = 1;
             for (i = 0; i < 6; i++)
             {
                 this->unk_008[i].ClearUnk0();
@@ -201,7 +201,7 @@ int Unknown4010e0::UpdatePauseMenu()
     {
         g_SpriteEngine->Step(&this->unk_008[i]);
     }
-    if (g_Unknown6c6d18.lockableBackBuffer)
+    if (g_App.lockableBackBuffer)
     {
         g_SpriteEngine->Step(&this->unk_668);
     }
@@ -215,12 +215,12 @@ void Unknown4010e0::Func402740()
 
     if (g_GameManager.unk_181f)
     {
-        g_Unknown6c6d18.viewport.X = g_GameManager.arena[0];
-        g_Unknown6c6d18.viewport.Y = g_GameManager.arena[1];
-        g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
-        g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
-        g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
-        if (g_Unknown6c6d18.lockableBackBuffer && this->unk_000 != 0)
+        g_App.viewport.X = g_GameManager.arena[0];
+        g_App.viewport.Y = g_GameManager.arena[1];
+        g_App.viewport.Width = g_GameManager.arena[2];
+        g_App.viewport.Height = g_GameManager.arena[3];
+        g_App.d3dDevice->SetViewport(&g_App.viewport);
+        if (g_App.lockableBackBuffer && this->unk_000 != 0)
         {
             Sprite sprite = this->unk_668;
 
@@ -245,20 +245,20 @@ int Unknown4010e0::UpdateContinueMenu()
     {
         g_GameManager.unk_1820 = 0;
         g_GameManager.unk_0000 = g_GameManager.score;
-        g_Unknown6c6d18.scene = 7;
+        g_App.scene = 7;
         return 1;
     }
     if (g_GameManager.unk_001c)
     {
         g_GameManager.unk_1820 = 0;
-        g_Unknown6c6d18.scene = 8;
+        g_App.scene = 8;
         g_GameManager.unk_0000 = g_GameManager.score;
         return 1;
     }
     if (g_GameManager.continuesUsed >= 3 || g_GameManager.difficulty >= 4)
     {
         g_GameManager.unk_1820 = 0;
-        g_Unknown6c6d18.scene = 7;
+        g_App.scene = 7;
         g_GameManager.unk_0000 = g_GameManager.score;
         return 1;
     }
@@ -279,7 +279,7 @@ int Unknown4010e0::UpdateContinueMenu()
                 }
                 this->unk_008[i].pendingInterrupt = 1;
             }
-            if (g_Unknown6c6d18.lockableBackBuffer)
+            if (g_App.lockableBackBuffer)
             {
                 g_SpriteEngine->SetPendingCopy(3, 0x20, 0x10, 0x180, 0x1c0);
                 g_SpriteEngine->StartScript(&this->unk_668, 0x718);
@@ -353,7 +353,7 @@ int Unknown4010e0::UpdateContinueMenu()
             this->unk_000 = 0;
             this->unk_004 = 0;
             g_GameManager.unk_1820 = 0;
-            g_Unknown6c6d18.scene = 7;
+            g_App.scene = 7;
             for (i = 0; i < 4; i++)
             {
                 this->unk_008[i].ClearUnk0();
@@ -376,8 +376,8 @@ int Unknown4010e0::UpdateContinueMenu()
             g_GameManager.unk_0000 = g_GameManager.continuesUsed;
             g_GameManager.unk_0008 = 0;
             g_GameManager.score = g_GameManager.unk_0000;
-            g_GameManager.lives = g_Unknown6c6d18.unk_14c.lives;
-            g_GameManager.bombs = g_Unknown6c6d18.unk_14c.bombs;
+            g_GameManager.lives = g_App.startCfg.lives;
+            g_GameManager.bombs = g_App.startCfg.bombs;
             g_GameManager.graze = 0;
             g_GameManager.pointItems = 0;
             g_GameManager.power = 0;
@@ -394,7 +394,7 @@ int Unknown4010e0::UpdateContinueMenu()
     {
         g_SpriteEngine->Step(&this->unk_008[i]);
     }
-    if (g_Unknown6c6d18.lockableBackBuffer)
+    if (g_App.lockableBackBuffer)
     {
         g_SpriteEngine->Step(&this->unk_668);
     }
@@ -408,12 +408,12 @@ void Unknown4010e0::Func403060()
 
     if (g_GameManager.unk_1820)
     {
-        g_Unknown6c6d18.viewport.X = g_GameManager.arena[0];
-        g_Unknown6c6d18.viewport.Y = g_GameManager.arena[1];
-        g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
-        g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
-        g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
-        if (g_Unknown6c6d18.lockableBackBuffer && (this->unk_000 != 0 || this->unk_004 > 2))
+        g_App.viewport.X = g_GameManager.arena[0];
+        g_App.viewport.Y = g_GameManager.arena[1];
+        g_App.viewport.Width = g_GameManager.arena[2];
+        g_App.viewport.Height = g_GameManager.arena[3];
+        g_App.d3dDevice->SetViewport(&g_App.viewport);
+        if (g_App.lockableBackBuffer && (this->unk_000 != 0 || this->unk_004 > 2))
         {
             g_SpriteEngine->Draw(&this->unk_668);
         }
@@ -447,7 +447,7 @@ int AsciiText::OnUpdate(AsciiText *text)
             {
                 continue;
             }
-            entry->pos.y -= 0.5f * g_Unknown6c6d18.frameAdvance;
+            entry->pos.y -= 0.5f * g_App.frameAdvance;
             entry->timer.Tick();
             if ((entry->timer.current > 60) != 0)
             {
@@ -511,19 +511,19 @@ void AsciiText::DrawStrings()
             clipped = string->unk_5c;
             if (clipped != 0)
             {
-                g_Unknown6c6d18.viewport.X = g_GameManager.arena[0];
-                g_Unknown6c6d18.viewport.Y = g_GameManager.arena[1];
-                g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
-                g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
-                g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+                g_App.viewport.X = g_GameManager.arena[0];
+                g_App.viewport.Y = g_GameManager.arena[1];
+                g_App.viewport.Width = g_GameManager.arena[2];
+                g_App.viewport.Height = g_GameManager.arena[3];
+                g_App.d3dDevice->SetViewport(&g_App.viewport);
             }
             else
             {
-                g_Unknown6c6d18.viewport.X = 0;
-                g_Unknown6c6d18.viewport.Y = 0;
-                g_Unknown6c6d18.viewport.Width = 640;
-                g_Unknown6c6d18.viewport.Height = 480;
-                g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+                g_App.viewport.X = 0;
+                g_App.viewport.Y = 0;
+                g_App.viewport.Width = 640;
+                g_App.viewport.Height = 480;
+                g_App.d3dDevice->SetViewport(&g_App.viewport);
             }
         }
         while (*c != 0)
@@ -568,7 +568,7 @@ int AsciiText::OnDraw(AsciiText *text)
 
 int AsciiText::OnDraw2(AsciiText *text)
 {
-    if (g_Unknown6c6d18.hardwareTnL)
+    if (g_App.hardwareTnL)
     {
         text->DrawPopups();
     }
@@ -605,11 +605,11 @@ void AsciiText::DrawPopups()
     BYTE *digitPtr;
     D3DXVECTOR3 unused;
 
-    g_Unknown6c6d18.viewport.X = g_GameManager.arena[0];
-    g_Unknown6c6d18.viewport.Y = g_GameManager.arena[1];
-    g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
-    g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
-    g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+    g_App.viewport.X = g_GameManager.arena[0];
+    g_App.viewport.Y = g_GameManager.arena[1];
+    g_App.viewport.Width = g_GameManager.arena[2];
+    g_App.viewport.Height = g_GameManager.arena[3];
+    g_App.d3dDevice->SetViewport(&g_App.viewport);
     for (i = 0; i < 0x203; i++, p++)
     {
         if (!p->active)
@@ -650,11 +650,11 @@ void AsciiText::DrawPopups2()
     BYTE *digitPtr;
     D3DXVECTOR3 unused;
 
-    g_Unknown6c6d18.viewport.X = g_GameManager.arena[0];
-    g_Unknown6c6d18.viewport.Y = g_GameManager.arena[1];
-    g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
-    g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
-    g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+    g_App.viewport.X = g_GameManager.arena[0];
+    g_App.viewport.Y = g_GameManager.arena[1];
+    g_App.viewport.Width = g_GameManager.arena[2];
+    g_App.viewport.Height = g_GameManager.arena[3];
+    g_App.d3dDevice->SetViewport(&g_App.viewport);
     for (i = 0; i < 0x203; i++, p++)
     {
         if (!p->active)
@@ -717,7 +717,7 @@ void AsciiText::AddString(D3DXVECTOR3 *pos, char *text)
     str->scaleX = this->scaleX;
     str->scaleY = this->scaleY;
     str->unk_5c = this->unk_6230;
-    if (g_Unknown6c6d18.HasFlag0Or8())
+    if (g_App.HasFlag0Or8())
     {
         str->unk_58 = this->unk_6234;
     }

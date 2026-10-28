@@ -226,7 +226,7 @@ int Unknown6d3f50::LoadBgm(char *path)
     {
         return -1;
     }
-    if (!g_Unknown6c6d18.cfg.playSounds)
+    if (!g_App.cfg.playSounds)
     {
         return -1;
     }
@@ -255,7 +255,7 @@ int Unknown6d3f50::LoadBgm(char *path)
     dwNotifySize = nSamplesPerSec * 2 * nBlockAlign / 4;
     dwNotifySize -= dwNotifySize % nBlockAlign;
     this->notifyEvent = CreateEventA(NULL, FALSE, FALSE, NULL);
-    this->notifyThread = CreateThread(NULL, 0, BgmNotificationProc, g_Unknown6c6d18.hwnd, 0, &this->notifyThreadId);
+    this->notifyThread = CreateThread(NULL, 0, BgmNotificationProc, g_App.hwnd, 0, &this->notifyThreadId);
     hr = this->manager->CreateStreaming(&this->bgm, path, DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GETCURRENTPOSITION2,
                                         GUID_NULL, 4, dwNotifySize, this->notifyEvent);
     if (hr < 0)
@@ -279,7 +279,7 @@ int Unknown6d3f50::LoadBgmLoop(char *path)
     {
         return -1;
     }
-    if (!g_Unknown6c6d18.cfg.playSounds)
+    if (!g_App.cfg.playSounds)
     {
         return -1;
     }
@@ -423,7 +423,7 @@ void Unknown6d3f50::PlayQueuedSounds()
     {
         return;
     }
-    if (!g_Unknown6c6d18.cfg.playSounds)
+    if (!g_App.cfg.playSounds)
     {
         return;
     }

@@ -208,12 +208,12 @@ int Ending::RunScript()
                 }
                 break;
             case 'm':
-                g_Unknown6c6d18.PlayMusic(this->cursor + 1);
+                g_App.PlayMusic(this->cursor + 1);
                 break;
             case 'M':
                 this->cursor++;
                 secs4 = this->ReadInt();
-                g_Unknown6c6d18.FadeOutMusic(secs4);
+                g_App.FadeOutMusic(secs4);
                 break;
             case 's':
                 this->cursor++;
@@ -419,8 +419,8 @@ int Ending::AddedCallback(Ending *ending)
     int unused = g_GameManager.character * 2 + g_GameManager.shotType;
 
     g_GameManager.unk_1822 = 1;
-    g_Unknown6c6d18.unk_19c = 1;
-    g_Unknown6c6d18.LoadArchive(5, "紅魔郷ED.dat");
+    g_App.hideFps = 1;
+    g_App.LoadArchive(5, "紅魔郷ED.dat");
     g_SpriteEngine->LoadAnm(0x2c, "data/staff01.anm", 0x600);
     g_SpriteEngine->LoadAnm(0x2d, "data/staff02.anm", 0x607);
     g_SpriteEngine->LoadAnm(0x2e, "data/staff03.anm", 0x60e);
@@ -507,14 +507,14 @@ int Ending::DeletedCallback(Ending *ending)
     g_SpriteEngine->ReleaseAnm(0x2c);
     g_SpriteEngine->ReleaseAnm(0x2d);
     g_SpriteEngine->ReleaseAnm(0x2e);
-    g_Unknown6c6d18.scene = 7;
+    g_App.scene = 7;
     g_SpriteEngine->ReleaseSurface(0);
     MemFree(ending->file);
     g_Chain.Remove(ending->drawChain);
     ending->drawChain = NULL;
     delete ending;
     ending = NULL;
-    g_Unknown6c6d18.unk_19c = 0;
-    g_Unknown6c6d18.ReleaseArchive(5);
+    g_App.hideFps = 0;
+    g_App.ReleaseArchive(5);
     return 0;
 }

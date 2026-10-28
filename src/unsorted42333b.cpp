@@ -12,23 +12,23 @@
 #include "timer.h"
 #include "unsorted.h"
 
-int Unknown6c6d18::RegisterChain()
+int App::RegisterChain()
 {
-    Unknown6c6d18 *game = &g_Unknown6c6d18;
+    App *game = &g_App;
     ChainElem *elem;
 
     game->curScene = 0;
     game->scene = -1;
     game->frames = 0;
-    elem = g_Chain.CreateElem((ChainCallback)Unknown6c6d18::OnUpdate);
+    elem = g_Chain.CreateElem((ChainCallback)App::OnUpdate);
     elem->arg = game;
-    elem->addedCallback = (ChainCallback)Unknown6c6d18::AddedCallback;
-    elem->deletedCallback = (ChainCallback)Unknown6c6d18::DeletedCallback;
+    elem->addedCallback = (ChainCallback)App::AddedCallback;
+    elem->deletedCallback = (ChainCallback)App::DeletedCallback;
     if (g_Chain.AddToCalcChain(elem, 0) != 0)
     {
         return -1;
     }
-    elem = g_Chain.CreateElem((ChainCallback)Unknown6c6d18::OnDraw);
+    elem = g_Chain.CreateElem((ChainCallback)App::OnDraw);
     elem->arg = game;
     g_Chain.AddToDrawChain(elem, 0xe);
     return 0;
@@ -38,7 +38,7 @@ int Unknown6c6d18::RegisterChain()
 // down the old one, before the chain runs the scene's own callbacks.
 // Returns 4 when a scene fails to set up (or the game is to quit), 5
 // for scene 5, otherwise 1.
-int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
+int App::OnUpdate(App *arg)
 {
     if (g_Unknown6d3f50.bgm != NULL)
     {
@@ -74,7 +74,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
         case 0:
         title:
             arg->scene = 1;
-            g_Unknown6c6d18.d3dDevice->ResourceManagerDiscardBytes(0);
+            g_App.d3dDevice->ResourceManagerDiscardBytes(0);
             if (SetUpTitleScene(0) != 0)
             {
                 return 4;
@@ -159,7 +159,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
                 arg->scene = 0;
                 SaveReplay(0, NULL);
                 arg->scene = 1;
-                g_Unknown6c6d18.d3dDevice->ResourceManagerDiscardBytes(0);
+                g_App.d3dDevice->ResourceManagerDiscardBytes(0);
                 if (SetUpTitleScene(1) != 0)
                 {
                     return 4;
@@ -218,7 +218,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
     return 1;
 }
 
-int Unknown6c6d18::OnDraw(Unknown6c6d18 *arg)
+int App::OnDraw(App *arg)
 {
     g_SpriteEngine->ClearVertexFormat();
     g_SpriteEngine->ClearSpriteData();
@@ -230,7 +230,7 @@ int Unknown6c6d18::OnDraw(Unknown6c6d18 *arg)
     return 1;
 }
 
-int Unknown6c6d18::AddedCallback(Unknown6c6d18 *arg)
+int App::AddedCallback(App *arg)
 {
     int i;
 
@@ -246,17 +246,17 @@ int Unknown6c6d18::AddedCallback(Unknown6c6d18 *arg)
     // Shows the logo for two frames.
     g_SpriteEngine->LoadSurface(0, "data/title/th06logo.jpg");
     g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
-    if (FAILED(g_Unknown6c6d18.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+    if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
     {
-        g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);
+        g_App.d3dDevice->Reset(&g_App.presentParams);
     }
     g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
-    if (FAILED(g_Unknown6c6d18.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+    if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
     {
-        g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);
+        g_App.d3dDevice->Reset(&g_App.presentParams);
     }
     g_SpriteEngine->ReleaseSurface(0);
-    arg->unk_400 = timeGetTime();
+    arg->startTime = timeGetTime();
     InitDirectInput(arg);
     arg->midi = new MidiPlayer();
     g_Rng.SetSeed(timeGetTime());
@@ -270,18 +270,18 @@ int Unknown6c6d18::AddedCallback(Unknown6c6d18 *arg)
         LogPrintf(&g_Unknown69d998, "error : 文字の初期化に失敗しました\n");
         return -1;
     }
-    arg->unk_198 = 0;
+    arg->redrawFrames = 0;
     g_SpriteEngine->CreateQuad();
     CreateTextSurface();
     arg->ReleaseArchive(0);
-    if (g_Unknown6c6d18.LoadArchive(1, "紅魔郷MD.dat") != 0)
+    if (g_App.LoadArchive(1, "紅魔郷MD.dat") != 0)
     {
         return -1;
     }
     return 0;
 }
 
-int InitDirectInput(Unknown6c6d18 *game)
+int InitDirectInput(App *game)
 {
     HINSTANCE hInst = (HINSTANCE)GetWindowLongA(game->hwnd, GWL_HINSTANCE);
 
@@ -342,8 +342,8 @@ int InitDirectInput(Unknown6c6d18 *game)
     {
         game->joystick->SetDataFormat(&c_dfDIJoystick2);
         game->joystick->SetCooperativeLevel(game->hwnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
-        g_Unknown6c6d18.joystickCaps.dwSize = sizeof(DIDEVCAPS);
-        game->joystick->GetCapabilities(&g_Unknown6c6d18.joystickCaps);
+        g_App.joystickCaps.dwSize = sizeof(DIDEVCAPS);
+        game->joystick->GetCapabilities(&g_App.joystickCaps);
         game->joystick->EnumObjects(EnumAxesCallback, NULL, DIDFT_ALL);
         LogPrintf(&g_Unknown69d998, "有効なパッドを発見しました\n");
     }
@@ -364,7 +364,7 @@ BOOL CALLBACK EnumAxesCallback(const DIDEVICEOBJECTINSTANCE *pdidoi, VOID *pCont
         diprg.lMin = -1000;
         diprg.lMax = +1000;
 
-        if (FAILED(g_Unknown6c6d18.joystick->SetProperty(DIPROP_RANGE, &diprg.diph)))
+        if (FAILED(g_App.joystick->SetProperty(DIPROP_RANGE, &diprg.diph)))
         {
             return DIENUM_STOP;
         }
@@ -376,9 +376,9 @@ BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE *pdidInstance, VOID *
 {
     HRESULT hr;
 
-    if (g_Unknown6c6d18.joystick == NULL)
+    if (g_App.joystick == NULL)
     {
-        hr = g_Unknown6c6d18.dinput->CreateDevice(pdidInstance->guidInstance, &g_Unknown6c6d18.joystick, NULL);
+        hr = g_App.dinput->CreateDevice(pdidInstance->guidInstance, &g_App.joystick, NULL);
         if (FAILED(hr))
         {
             return DIENUM_CONTINUE;
@@ -389,7 +389,7 @@ BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE *pdidInstance, VOID *
 
 // Ends with the DirectX 8 SDK Joystick sample's FreeDirectInput, for
 // both devices.
-int Unknown6c6d18::DeletedCallback(Unknown6c6d18 *arg)
+int App::DeletedCallback(App *arg)
 {
     int i;
 
@@ -447,7 +447,7 @@ void DrawFps()
     D3DXVECTOR3 pos;
 
     now = timeGetTime();
-    frames += 1 + g_Unknown6c6d18.cfg.frameSkip;
+    frames += 1 + g_App.cfg.frameSkip;
     if (now - lastTime >= 500)
     {
         duration = (now - lastTime) / 1000.0f;
@@ -457,27 +457,27 @@ void DrawFps()
         sprintf(fpsText, "%.02ffps", fps);
         if (g_GameManager.unk_1821)
         {
-            target = 60.0f / g_Unknown6c6d18.gameSpeed;
-            g_Unknown6c6d18.unk_1b8 += target;
+            target = 60.0f / g_App.gameSpeed;
+            g_App.expectedFrames += target;
             if (target * 0.9f < fps)
             {
-                g_Unknown6c6d18.unk_1b4 += target;
+                g_App.achievedFrames += target;
             }
             else if (target * 0.7f < fps)
             {
-                g_Unknown6c6d18.unk_1b4 += target * 0.8f;
+                g_App.achievedFrames += target * 0.8f;
             }
             else if (target * 0.5f < fps)
             {
-                g_Unknown6c6d18.unk_1b4 += target * 0.6f;
+                g_App.achievedFrames += target * 0.6f;
             }
             else
             {
-                g_Unknown6c6d18.unk_1b4 += target * 0.5f;
+                g_App.achievedFrames += target * 0.5f;
             }
         }
     }
-    if (g_Unknown6c6d18.unk_19c == 0)
+    if (g_App.hideFps == 0)
     {
         pos.x = 512.0f;
         pos.y = 464.0f;
@@ -504,7 +504,7 @@ void Timer::Initialize()
 
 void Timer::Add(int frames)
 {
-    if (g_Unknown6c6d18.gameSpeed > 0.99f)
+    if (g_App.gameSpeed > 0.99f)
     {
         this->current += frames;
     }
@@ -515,7 +515,7 @@ void Timer::Add(int frames)
     else
     {
         this->previous = this->current;
-        this->subFrame += g_Unknown6c6d18.frameAdvance * frames;
+        this->subFrame += g_App.frameAdvance * frames;
         while (this->subFrame >= 1.0f)
         {
             this->current++;
@@ -526,7 +526,7 @@ void Timer::Add(int frames)
 
 void Timer::Sub(int frames)
 {
-    if (g_Unknown6c6d18.gameSpeed > 0.99f)
+    if (g_App.gameSpeed > 0.99f)
     {
         this->current -= frames;
     }
@@ -537,7 +537,7 @@ void Timer::Sub(int frames)
     else
     {
         this->previous = this->current;
-        this->subFrame -= g_Unknown6c6d18.frameAdvance * frames;
+        this->subFrame -= g_App.frameAdvance * frames;
         while (this->subFrame < 0.0f)
         {
             this->current--;
@@ -546,7 +546,7 @@ void Timer::Sub(int frames)
     }
 }
 
-void Unknown6c6d18::TickTimer(int *frames, float *subFrame)
+void App::TickTimer(int *frames, float *subFrame)
 {
     if (this->gameSpeed <= 0.99f)
     {
@@ -563,7 +563,7 @@ void Unknown6c6d18::TickTimer(int *frames, float *subFrame)
     }
 }
 
-void Unknown6c6d18::ReleaseArchive(int index)
+void App::ReleaseArchive(int index)
 {
     if (this->archives[index] == NULL)
     {
@@ -574,7 +574,7 @@ void Unknown6c6d18::ReleaseArchive(int index)
     this->archives[index] = NULL;
 }
 
-int Unknown6c6d18::LoadArchive(int index, char *path)
+int App::LoadArchive(int index, char *path)
 {
     int idx;
     char name[0x80];
@@ -610,36 +610,36 @@ int Unknown6c6d18::LoadArchive(int index, char *path)
 { \
     FILE *wav; \
  \
-    g_Unknown6c6d18.cfg.lives = 2; \
-    g_Unknown6c6d18.cfg.bombs = 3; \
-    g_Unknown6c6d18.cfg.colorMode16Bits = 0xff; \
-    g_Unknown6c6d18.cfg.version = 0x102; \
-    g_Unknown6c6d18.cfg.padThresholdX = 600; \
-    g_Unknown6c6d18.cfg.padThresholdY = 600; \
+    g_App.cfg.lives = 2; \
+    g_App.cfg.bombs = 3; \
+    g_App.cfg.colorMode16Bits = 0xff; \
+    g_App.cfg.version = 0x102; \
+    g_App.cfg.padThresholdX = 600; \
+    g_App.cfg.padThresholdY = 600; \
     wav = fopen("bgm/th06_01.wav", "rb"); \
     if (wav != NULL) \
     { \
-        g_Unknown6c6d18.cfg.musicMode = 1; \
+        g_App.cfg.musicMode = 1; \
         fclose(wav); \
     } \
     else \
     { \
-        g_Unknown6c6d18.cfg.musicMode = 2; \
+        g_App.cfg.musicMode = 2; \
         DebugPrint2("wave データが無いので、midi にします\n"); \
     } \
-    g_Unknown6c6d18.cfg.playSounds = 1; \
-    g_Unknown6c6d18.cfg.unk_1d = 1; \
-    g_Unknown6c6d18.cfg.windowed = 0; \
-    g_Unknown6c6d18.cfg.frameSkip = 0; \
-    g_Unknown6c6d18.cfg.controllerMapping = g_ControllerMapping; \
+    g_App.cfg.playSounds = 1; \
+    g_App.cfg.defaultDifficulty = 1; \
+    g_App.cfg.windowed = 0; \
+    g_App.cfg.frameSkip = 0; \
+    g_App.cfg.controllerMapping = g_ControllerMapping; \
 }
 
-int Unknown6c6d18::LoadConfig(char *path)
+int App::LoadConfig(char *path)
 {
     GameConfig *file;
 
-    memset(&g_Unknown6c6d18.cfg, 0, sizeof(GameConfig));
-    g_Unknown6c6d18.cfg.flags.unk0 = 1;
+    memset(&g_App.cfg, 0, sizeof(GameConfig));
+    g_App.cfg.flags.unk0 = 1;
     file = (GameConfig *)LoadFileData(path, 1);
     if (file == NULL)
     {
@@ -648,19 +648,19 @@ int Unknown6c6d18::LoadConfig(char *path)
     }
     else
     {
-        g_Unknown6c6d18.cfg = *file;
-        if (g_Unknown6c6d18.cfg.lives >= 5 || g_Unknown6c6d18.cfg.bombs >= 4 ||
-            g_Unknown6c6d18.cfg.colorMode16Bits >= 2 || g_Unknown6c6d18.cfg.musicMode >= 3 ||
-            g_Unknown6c6d18.cfg.unk_1d >= 5 || g_Unknown6c6d18.cfg.playSounds >= 2 ||
-            g_Unknown6c6d18.cfg.windowed >= 2 || g_Unknown6c6d18.cfg.frameSkip >= 3 ||
-            g_Unknown6c6d18.cfg.version != 0x102 || g_FileSize != sizeof(GameConfig))
+        g_App.cfg = *file;
+        if (g_App.cfg.lives >= 5 || g_App.cfg.bombs >= 4 ||
+            g_App.cfg.colorMode16Bits >= 2 || g_App.cfg.musicMode >= 3 ||
+            g_App.cfg.defaultDifficulty >= 5 || g_App.cfg.playSounds >= 2 ||
+            g_App.cfg.windowed >= 2 || g_App.cfg.frameSkip >= 3 ||
+            g_App.cfg.version != 0x102 || g_FileSize != sizeof(GameConfig))
         {
             SET_DEFAULT_CONFIG();
-            memset(&g_Unknown6c6d18.cfg.flags, 0, sizeof(GameConfigFlags));
-            g_Unknown6c6d18.cfg.flags.unk0 = 1;
+            memset(&g_App.cfg.flags, 0, sizeof(GameConfigFlags));
+            g_App.cfg.flags.unk0 = 1;
             LogPrintf(&g_Unknown69d998, "コンフィグデータが破壊されていたので再初期化しました\n");
         }
-        g_ControllerMapping = g_Unknown6c6d18.cfg.controllerMapping;
+        g_ControllerMapping = g_App.cfg.controllerMapping;
         free(file);
     }
     if (this->cfg.flags.noVertexBuffer)
@@ -713,7 +713,7 @@ int Unknown6c6d18::LoadConfig(char *path)
     {
         LogPrintf(&g_Unknown69d998, "パッド、キーボードの入力に DirectInput を使用しません\n");
     }
-    if (WriteToFile(path, &g_Unknown6c6d18.cfg, sizeof(GameConfig)) != 0)
+    if (WriteToFile(path, &g_App.cfg, sizeof(GameConfig)) != 0)
     {
         LogError(&g_Unknown69d998, "ファイルが書き出せません %s\n", path);
         LogError(&g_Unknown69d998, "フォルダが書込み禁止属性になっているか、ディスクがいっぱいいっぱいになってませんか？\n");
@@ -722,26 +722,26 @@ int Unknown6c6d18::LoadConfig(char *path)
     return 0;
 }
 
-int Unknown6c6d18::LoadMidi(int slot, char *path)
+int App::LoadMidi(int slot, char *path)
 {
-    if (g_Unknown6c6d18.cfg.musicMode == 2)
+    if (g_App.cfg.musicMode == 2)
     {
-        if (g_Unknown6c6d18.midi != NULL)
+        if (g_App.midi != NULL)
         {
-            g_Unknown6c6d18.midi->LoadFile(slot, path);
+            g_App.midi->LoadFile(slot, path);
         }
         return 0;
     }
     return 1;
 }
 
-int Unknown6c6d18::PlayMidi(int slot)
+int App::PlayMidi(int slot)
 {
-    if (g_Unknown6c6d18.cfg.musicMode == 2)
+    if (g_App.cfg.musicMode == 2)
     {
-        if (g_Unknown6c6d18.midi != NULL)
+        if (g_App.midi != NULL)
         {
-            MidiPlayer *midi = g_Unknown6c6d18.midi;
+            MidiPlayer *midi = g_App.midi;
             midi->Stop();
             midi->ParseFile(slot);
             midi->Play();
@@ -751,12 +751,12 @@ int Unknown6c6d18::PlayMidi(int slot)
     return 1;
 }
 
-int Unknown6c6d18::LoadMusic(char *path)
+int App::LoadMusic(char *path)
 {
-    if (g_Unknown6c6d18.cfg.musicMode == 2)
+    if (g_App.cfg.musicMode == 2)
     {
     }
-    else if (g_Unknown6c6d18.cfg.musicMode == 1)
+    else if (g_App.cfg.musicMode == 1)
     {
     }
     else
@@ -766,20 +766,20 @@ int Unknown6c6d18::LoadMusic(char *path)
     return 0;
 }
 
-int Unknown6c6d18::PlayMusic(char *path)
+int App::PlayMusic(char *path)
 {
     char *dot;
     char posFile[256];
     char wavFile[256];
 
-    if (g_Unknown6c6d18.cfg.musicMode == 2)
+    if (g_App.cfg.musicMode == 2)
     {
-        if (g_Unknown6c6d18.midi != NULL)
+        if (g_App.midi != NULL)
         {
-            g_Unknown6c6d18.midi->Restart(path);
+            g_App.midi->Restart(path);
         }
     }
-    else if (g_Unknown6c6d18.cfg.musicMode == 1)
+    else if (g_App.cfg.musicMode == 1)
     {
         strcpy(wavFile, path);
         strcpy(posFile, path);
@@ -808,16 +808,16 @@ int Unknown6c6d18::PlayMusic(char *path)
     return 0;
 }
 
-int Unknown6c6d18::StopMusic()
+int App::StopMusic()
 {
-    if (g_Unknown6c6d18.cfg.musicMode == 2)
+    if (g_App.cfg.musicMode == 2)
     {
-        if (g_Unknown6c6d18.midi != NULL)
+        if (g_App.midi != NULL)
         {
-            g_Unknown6c6d18.midi->Stop();
+            g_App.midi->Stop();
         }
     }
-    else if (g_Unknown6c6d18.cfg.musicMode == 1)
+    else if (g_App.cfg.musicMode == 1)
     {
         g_Unknown6d3f50.StopBgm();
     }
@@ -828,7 +828,7 @@ int Unknown6c6d18::StopMusic()
     return 0;
 }
 
-int Unknown6c6d18::FadeOutMusic(float seconds)
+int App::FadeOutMusic(float seconds)
 {
     // Never used, but the original's frame has room for three dwords
     // besides `this`.
@@ -836,14 +836,14 @@ int Unknown6c6d18::FadeOutMusic(float seconds)
     int unused2;
     int unused3;
 
-    if (g_Unknown6c6d18.cfg.musicMode == 2)
+    if (g_App.cfg.musicMode == 2)
     {
-        if (g_Unknown6c6d18.midi != NULL)
+        if (g_App.midi != NULL)
         {
-            g_Unknown6c6d18.midi->FadeOut(1000.0f * seconds);
+            g_App.midi->FadeOut(1000.0f * seconds);
         }
     }
-    else if (g_Unknown6c6d18.cfg.musicMode == 1)
+    else if (g_App.cfg.musicMode == 1)
     {
         // The wave fade counts frames, so it is stretched while the
         // game runs slow.

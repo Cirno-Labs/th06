@@ -22,7 +22,7 @@ GdiSurface::~GdiSurface()
 
 void CreateTextSurface()
 {
-    g_Unknown6c6d18.d3dDevice->CreateImageSurface(640, 64, D3DFMT_A1R5G5B5, &g_TextSurface);
+    g_App.d3dDevice->CreateImageSurface(640, 64, D3DFMT_A1R5G5B5, &g_TextSurface);
 }
 
 void ReleaseTextSurface()

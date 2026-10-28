@@ -16,7 +16,7 @@ struct MusicTune
         memset(this, 0, sizeof(MusicTune));
     }
 
-    // The MIDI file; Unknown6c6d18::PlayMusic finds the wave files from it.
+    // The MIDI file; App::PlayMusic finds the wave files from it.
     char path[0x40];
     char title[0x22];
     // The comment shown for the tune, 8 lines. The screen splits each

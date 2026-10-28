@@ -43,7 +43,7 @@ public:
     int UpdatePauseMenu();
     // Draws, while g_GameManager.unk_181f is set, inside the viewport given
     // by g_GameManager.arena: unk_668 without z writes if
-    // g_Unknown6c6d18.lockableBackBuffer is set and unk_000 is nonzero,
+    // g_App.lockableBackBuffer is set and unk_000 is nonzero,
     // then those of the six sprites with flag 0.
     void Func402740();
     // The continue menu, while g_GameManager.unk_1820 is set; leaves at
@@ -96,7 +96,7 @@ public:
     // if adding fails.
     static int RegisterChain();
     // The second draw element's callback (priority 10): draws the
-    // popups with DrawPopups while g_Unknown6c6d18.hardwareTnL is set, otherwise
+    // popups with DrawPopups while g_App.hardwareTnL is set, otherwise
     // with DrawPopups2. Returns 1.
     static int OnDraw2(AsciiText *text);
     // The first draw element's callback (priority 0xf): draws the queued

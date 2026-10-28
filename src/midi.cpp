@@ -38,7 +38,7 @@ int MidiDevice::Open(UINT deviceId)
         }
     }
     this->deviceId = deviceId;
-    return midiOutOpen(&this->handle, deviceId, (DWORD_PTR)g_Unknown6c6d18.hwnd, 0, CALLBACK_WINDOW) != MMSYSERR_NOERROR;
+    return midiOutOpen(&this->handle, deviceId, (DWORD_PTR)g_App.hwnd, 0, CALLBACK_WINDOW) != MMSYSERR_NOERROR;
 }
 
 int MidiDevice::SendLongMsg(LPMIDIHDR header)
@@ -191,7 +191,7 @@ MidiPlayer::~MidiPlayer()
 
 int MidiPlayer::LoadFile(int slot, char *path)
 {
-    if (g_Unknown6c6d18.cfg.musicMode != 2)
+    if (g_App.cfg.musicMode != 2)
     {
         return 0;
     }

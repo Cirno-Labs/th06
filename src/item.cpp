@@ -111,7 +111,7 @@ void ItemManager::UpdateItems()
                 }
             }
         move:
-            entry->pos += entry->velocity * g_Unknown6c6d18.frameAdvance;
+            entry->pos += entry->velocity * g_App.frameAdvance;
             if (g_GameManager.arena[3] + 16.0f <= entry->pos.y)
             {
                 entry->active = 0;
@@ -120,7 +120,7 @@ void ItemManager::UpdateItems()
             }
             if (entry->velocity.y < 3.0f)
             {
-                entry->velocity.y += 0.03f * g_Unknown6c6d18.frameAdvance;
+                entry->velocity.y += 0.03f * g_App.frameAdvance;
             }
             else
             {

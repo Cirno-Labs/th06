@@ -24,8 +24,8 @@ int Func40e360(Effect *effect)
         effect->unk_11c.z = 0.0f;
         effect->unk_128 = -effect->unk_11c / 19.0f;
     }
-    effect->pos += effect->unk_11c * g_Unknown6c6d18.frameAdvance;
-    effect->unk_11c += effect->unk_128 * g_Unknown6c6d18.frameAdvance;
+    effect->pos += effect->unk_11c * g_App.frameAdvance;
+    effect->unk_11c += effect->unk_128 * g_App.frameAdvance;
     return 1;
 }
 
@@ -39,16 +39,16 @@ int Func40e5b0(Effect *effect)
         effect->unk_11c.z = 0.0f;
         effect->unk_128 = -effect->unk_11c / 20.0f;
     }
-    effect->pos += effect->unk_11c * g_Unknown6c6d18.frameAdvance;
-    effect->unk_11c += effect->unk_128 * g_Unknown6c6d18.frameAdvance;
+    effect->pos += effect->unk_11c * g_App.frameAdvance;
+    effect->unk_11c += effect->unk_128 * g_App.frameAdvance;
     return 1;
 }
 
 // An effect update: moves by unk_11c, which changes by unk_128.
 int Func40e810(Effect *effect)
 {
-    effect->pos += effect->unk_11c * g_Unknown6c6d18.frameAdvance;
-    effect->unk_11c += effect->unk_128 * g_Unknown6c6d18.frameAdvance;
+    effect->pos += effect->unk_11c * g_App.frameAdvance;
+    effect->unk_11c += effect->unk_128 * g_App.frameAdvance;
     return 1;
 }
 

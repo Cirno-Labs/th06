@@ -138,8 +138,8 @@ void UpdateReimuABomb(Player *player)
                 }
             }
         }
-        player->bomb.partPos[i].x += g_Unknown6c6d18.frameAdvance * player->bomb.partVelocity[i].x;
-        player->bomb.partPos[i].y += g_Unknown6c6d18.frameAdvance * player->bomb.partVelocity[i].y;
+        player->bomb.partPos[i].x += g_App.frameAdvance * player->bomb.partVelocity[i].x;
+        player->bomb.partPos[i].y += g_App.frameAdvance * player->bomb.partVelocity[i].y;
         g_SpriteEngine->Step(&player->bomb.sprites[i * 4]);
         g_SpriteEngine->Step(&player->bomb.sprites[i * 4 + 1]);
         g_SpriteEngine->Step(&player->bomb.sprites[i * 4 + 2]);
@@ -326,7 +326,7 @@ void UpdateMarisaABomb(Player *player)
     {
         for (i = 0; i < 8; i++)
         {
-            player->bomb.partPos[i] += player->bomb.partVelocity[i] * g_Unknown6c6d18.frameAdvance;
+            player->bomb.partPos[i] += player->bomb.partVelocity[i] * g_App.frameAdvance;
             if (player->bomb.timer.HasTicked() && player->bomb.timer.AsFrames() % 3 != 0)
             {
                 player->bulletClearAreas[i][0] = player->bomb.partPos[i].x;

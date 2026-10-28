@@ -70,14 +70,14 @@ void SpriteEngine::CreateQuad()
     g_DiffuseQuadXyz[2].uv.y = this->quad[2].uv.y;
     g_DiffuseQuadXyz[3].uv.x = this->quad[3].uv.x;
     g_DiffuseQuadXyz[3].uv.y = this->quad[3].uv.y;
-    if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+    if (!g_App.cfg.flags.noVertexBuffer)
     {
-        g_Unknown6c6d18.d3dDevice->CreateVertexBuffer(sizeof(this->quad), 0, D3DFVF_XYZ | D3DFVF_TEX1, D3DPOOL_MANAGED,
+        g_App.d3dDevice->CreateVertexBuffer(sizeof(this->quad), 0, D3DFVF_XYZ | D3DFVF_TEX1, D3DPOOL_MANAGED,
                                                       &this->vertexBuffer);
         this->vertexBuffer->Lock(0, 0, (BYTE **)&data, 0);
         memcpy(data, this->quad, sizeof(this->quad));
         this->vertexBuffer->Unlock();
-        g_Unknown6c6d18.d3dDevice->SetStreamSource(0, g_SpriteEngine->vertexBuffer, sizeof(VertexTex1Xyz));
+        g_App.d3dDevice->SetStreamSource(0, g_SpriteEngine->vertexBuffer, sizeof(VertexTex1Xyz));
     }
 }
 
@@ -89,7 +89,7 @@ int SpriteEngine::LoadTexture(int index, char *path, int format, D3DCOLOR colorK
     {
         return -1;
     }
-    if (g_Unknown6c6d18.cfg.flags.force16BitTextures)
+    if (g_App.cfg.flags.force16BitTextures)
     {
         if (g_TextureFormats[format] == D3DFMT_A8R8G8B8 || g_TextureFormats[format] == D3DFMT_UNKNOWN)
         {
@@ -100,7 +100,7 @@ int SpriteEngine::LoadTexture(int index, char *path, int format, D3DCOLOR colorK
             format = 3;
         }
     }
-    if (D3DXCreateTextureFromFileInMemoryEx(g_Unknown6c6d18.d3dDevice, this->textureFiles[index], g_FileSize, 0, 0, 0, 0,
+    if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, this->textureFiles[index], g_FileSize, 0, 0, 0, 0,
                                             g_TextureFormats[format], D3DPOOL_MANAGED, D3DX_FILTER_LINEAR,
                                             D3DX_DEFAULT, colorKey, NULL, NULL, &this->textures[index]) != D3D_OK)
     {
@@ -151,7 +151,7 @@ int SpriteEngine::LoadTextureAlpha(int index, char *path, int format, D3DCOLOR c
         LogError(&g_Unknown69d998, "error : イメージがαを持っていません\n");
         goto fail;
     }
-    if (D3DXCreateTextureFromFileInMemoryEx(g_Unknown6c6d18.d3dDevice, fileData, g_FileSize, 0, 0, 0, 0, desc.Format,
+    if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, fileData, g_FileSize, 0, 0, 0, 0, desc.Format,
                                             D3DPOOL_SYSTEMMEM, D3DX_FILTER_LINEAR, D3DX_DEFAULT, colorKey, NULL, NULL,
                                             &srcTexture) != D3D_OK)
     {
@@ -244,7 +244,7 @@ fail:
 
 int SpriteEngine::CreateTexture(int index, int width, int height, int format)
 {
-    D3DXCreateTexture(g_Unknown6c6d18.d3dDevice, width, height, 1, 0, g_TextureFormats[format], D3DPOOL_MANAGED,
+    D3DXCreateTexture(g_App.d3dDevice, width, height, 1, 0, g_TextureFormats[format], D3DPOOL_MANAGED,
                       &this->textures[index]);
     return 0;
 }
@@ -404,32 +404,32 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
         this->blendMode = vm->flags.blendMode;
         if (this->blendMode == 0)
         {
-            g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+            g_App.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
         }
         else
         {
-            g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+            g_App.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
         }
     }
-    if (!g_Unknown6c6d18.cfg.flags.unk0 && !g_Unknown6c6d18.cfg.flags.noColorBlending &&
+    if (!g_App.cfg.flags.unk0 && !g_App.cfg.flags.noColorBlending &&
         this->colorOp != vm->flags.colorOp)
     {
         this->colorOp = vm->flags.colorOp;
         if (this->colorOp == 0)
         {
-            g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+            g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
         }
         else
         {
-            g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_ADD);
+            g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_ADD);
         }
     }
-    if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+    if (!g_App.cfg.flags.noVertexBuffer)
     {
         if (this->currentColor != vm->color)
         {
             this->currentColor = vm->color;
-            g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_TEXTUREFACTOR, this->currentColor);
+            g_App.d3dDevice->SetRenderState(D3DRS_TEXTUREFACTOR, this->currentColor);
         }
     }
     else
@@ -443,16 +443,16 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
         g_DiffuseQuadXyz[2].diffuse = vm->color;
         g_DiffuseQuadXyz[3].diffuse = vm->color;
     }
-    if (!g_Unknown6c6d18.cfg.flags.noDepthTest && this->zWriteDisabled != vm->flags.zWriteDisabled)
+    if (!g_App.cfg.flags.noDepthTest && this->zWriteDisabled != vm->flags.zWriteDisabled)
     {
         this->zWriteDisabled = vm->flags.zWriteDisabled;
         if (this->zWriteDisabled == 0)
         {
-            g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+            g_App.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
         }
         else
         {
-            g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+            g_App.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
         }
     }
 }
@@ -496,25 +496,25 @@ int SpriteEngine::DrawQuad(Sprite *vm, int roundToPixel)
         if (this->currentTexture != this->textures[vm->spriteData->sourceFileIndex])
         {
             this->currentTexture = this->textures[vm->spriteData->sourceFileIndex];
-            g_Unknown6c6d18.d3dDevice->SetTexture(0, this->currentTexture);
+            g_App.d3dDevice->SetTexture(0, this->currentTexture);
         }
     }
     if (this->vertexFormat != 2)
     {
-        if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+        if (!g_App.cfg.flags.noVertexBuffer)
         {
-            g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_TEX1);
+            g_App.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_TEX1);
         }
         else
         {
-            g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+            g_App.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
         }
         this->vertexFormat = 2;
     }
     this->SetRenderStateForSprite(vm);
-    if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+    if (!g_App.cfg.flags.noVertexBuffer)
     {
-        g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad, sizeof(g_Quad[0]));
+        g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad, sizeof(g_Quad[0]));
     }
     else
     {
@@ -526,7 +526,7 @@ int SpriteEngine::DrawQuad(Sprite *vm, int roundToPixel)
         g_DiffuseQuad[1].uv.x = g_DiffuseQuad[3].uv.x = vm->spriteData->uvEndX + vm->uvScrollX;
         g_DiffuseQuad[0].uv.y = g_DiffuseQuad[1].uv.y = vm->spriteData->uvStartY + vm->uvScrollY;
         g_DiffuseQuad[2].uv.y = g_DiffuseQuad[3].uv.y = vm->spriteData->uvEndY + vm->uvScrollY;
-        g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_DiffuseQuad, sizeof(g_DiffuseQuad[0]));
+        g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_DiffuseQuad, sizeof(g_DiffuseQuad[0]));
     }
     return 0;
 }
@@ -734,41 +734,41 @@ int SpriteEngine::Draw3D(Sprite *vm)
         worldMatrix._42 = -vm->pos.y - fabsf(vm->spriteData->height * vm->scaleY / 2.0f);
     }
     worldMatrix._43 = vm->pos.z;
-    g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_WORLD, &worldMatrix);
+    g_App.d3dDevice->SetTransform(D3DTS_WORLD, &worldMatrix);
     if (this->currentSpriteData != vm->spriteData)
     {
         this->currentSpriteData = vm->spriteData;
         textureMatrix = vm->matrix;
         textureMatrix._31 = vm->spriteData->uvStartX + vm->uvScrollX;
         textureMatrix._32 = vm->spriteData->uvStartY + vm->uvScrollY;
-        g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_TEXTURE0, &textureMatrix);
+        g_App.d3dDevice->SetTransform(D3DTS_TEXTURE0, &textureMatrix);
         if (this->currentTexture != this->textures[vm->spriteData->sourceFileIndex])
         {
             this->currentTexture = this->textures[vm->spriteData->sourceFileIndex];
-            g_Unknown6c6d18.d3dDevice->SetTexture(0, this->currentTexture);
+            g_App.d3dDevice->SetTexture(0, this->currentTexture);
         }
     }
     if (this->vertexFormat != 3)
     {
-        if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+        if (!g_App.cfg.flags.noVertexBuffer)
         {
-            g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZ | D3DFVF_TEX1);
-            g_Unknown6c6d18.d3dDevice->SetStreamSource(0, this->vertexBuffer, sizeof(VertexTex1Xyz));
+            g_App.d3dDevice->SetVertexShader(D3DFVF_XYZ | D3DFVF_TEX1);
+            g_App.d3dDevice->SetStreamSource(0, this->vertexBuffer, sizeof(VertexTex1Xyz));
         }
         else
         {
-            g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+            g_App.d3dDevice->SetVertexShader(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
         }
         this->vertexFormat = 3;
     }
     this->SetRenderStateForSprite(vm);
-    if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+    if (!g_App.cfg.flags.noVertexBuffer)
     {
-        g_Unknown6c6d18.d3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+        g_App.d3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
     }
     else
     {
-        g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_DiffuseQuadXyz, sizeof(g_DiffuseQuadXyz[0]));
+        g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_DiffuseQuadXyz, sizeof(g_DiffuseQuadXyz[0]));
     }
     return 0;
 }
@@ -809,41 +809,41 @@ int SpriteEngine::Draw3DRounded(Sprite *vm)
     worldMatrix._43 = vm->pos.z;
     worldMatrix._11 *= vm->scaleX;
     worldMatrix._22 = -vm->scaleY * worldMatrix._22;
-    g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_WORLD, &worldMatrix);
+    g_App.d3dDevice->SetTransform(D3DTS_WORLD, &worldMatrix);
     if (this->currentSpriteData != vm->spriteData)
     {
         this->currentSpriteData = vm->spriteData;
         textureMatrix = vm->matrix;
         textureMatrix._31 = vm->spriteData->uvStartX + vm->uvScrollX;
         textureMatrix._32 = vm->spriteData->uvStartY + vm->uvScrollY;
-        g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_TEXTURE0, &textureMatrix);
+        g_App.d3dDevice->SetTransform(D3DTS_TEXTURE0, &textureMatrix);
         if (this->currentTexture != this->textures[vm->spriteData->sourceFileIndex])
         {
             this->currentTexture = this->textures[vm->spriteData->sourceFileIndex];
-            g_Unknown6c6d18.d3dDevice->SetTexture(0, this->currentTexture);
+            g_App.d3dDevice->SetTexture(0, this->currentTexture);
         }
         if (this->vertexFormat != 3)
         {
-            if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+            if (!g_App.cfg.flags.noVertexBuffer)
             {
-                g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZ | D3DFVF_TEX1);
-                g_Unknown6c6d18.d3dDevice->SetStreamSource(0, this->vertexBuffer, sizeof(VertexTex1Xyz));
+                g_App.d3dDevice->SetVertexShader(D3DFVF_XYZ | D3DFVF_TEX1);
+                g_App.d3dDevice->SetStreamSource(0, this->vertexBuffer, sizeof(VertexTex1Xyz));
             }
             else
             {
-                g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+                g_App.d3dDevice->SetVertexShader(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
             }
             this->vertexFormat = 3;
         }
     }
     this->SetRenderStateForSprite(vm);
-    if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+    if (!g_App.cfg.flags.noVertexBuffer)
     {
-        g_Unknown6c6d18.d3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+        g_App.d3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
     }
     else
     {
-        g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_DiffuseQuadXyz, sizeof(g_DiffuseQuadXyz[0]));
+        g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_DiffuseQuadXyz, sizeof(g_DiffuseQuadXyz[0]));
     }
     return 0;
 }
@@ -1093,15 +1093,15 @@ int SpriteEngine::Step(Sprite *vm)
 done:
     if (vm->rotationSpeedX != 0.0f)
     {
-        vm->rotationX = AddNormalizeAngle(vm->rotationX, g_Unknown6c6d18.frameAdvance * vm->rotationSpeedX);
+        vm->rotationX = AddNormalizeAngle(vm->rotationX, g_App.frameAdvance * vm->rotationSpeedX);
     }
     if (vm->rotationSpeedY != 0.0f)
     {
-        vm->rotationY = AddNormalizeAngle(vm->rotationY, g_Unknown6c6d18.frameAdvance * vm->rotationSpeedY);
+        vm->rotationY = AddNormalizeAngle(vm->rotationY, g_App.frameAdvance * vm->rotationSpeedY);
     }
     if (vm->rotationSpeedZ != 0.0f)
     {
-        vm->rotationZ = AddNormalizeAngle(vm->rotationZ, g_Unknown6c6d18.frameAdvance * vm->rotationSpeedZ);
+        vm->rotationZ = AddNormalizeAngle(vm->rotationZ, g_App.frameAdvance * vm->rotationSpeedZ);
     }
     if (vm->scaleInterpTime > 0)
     {
@@ -1134,8 +1134,8 @@ done:
     }
     else
     {
-        vm->scaleY += g_Unknown6c6d18.frameAdvance * vm->scaleTargetY;
-        vm->scaleX += g_Unknown6c6d18.frameAdvance * vm->scaleTargetX;
+        vm->scaleY += g_App.frameAdvance * vm->scaleTargetY;
+        vm->scaleX += g_App.frameAdvance * vm->scaleTargetX;
     }
     if (vm->alphaInterpTime > 0)
     {
@@ -1302,7 +1302,7 @@ int SpriteEngine::LoadSurface(int surface, char *path)
         LogError(&g_Unknown69d998, "%sが読み込めないです。\n", path);
         return -1;
     }
-    if (g_Unknown6c6d18.d3dDevice->CreateImageSurface(640, 1024, g_Unknown6c6d18.presentParams.BackBufferFormat,
+    if (g_App.d3dDevice->CreateImageSurface(640, 1024, g_App.presentParams.BackBufferFormat,
                                                      &srcSurface) != D3D_OK)
     {
         return -1;
@@ -1312,19 +1312,19 @@ int SpriteEngine::LoadSurface(int surface, char *path)
     {
         goto fail;
     }
-    if (g_Unknown6c6d18.d3dDevice->CreateRenderTarget(
+    if (g_App.d3dDevice->CreateRenderTarget(
             this->surfaceInfos[surface].Width, this->surfaceInfos[surface].Height,
-            g_Unknown6c6d18.presentParams.BackBufferFormat, D3DMULTISAMPLE_NONE, TRUE, &this->surfaces[surface]) != D3D_OK &&
-        g_Unknown6c6d18.d3dDevice->CreateImageSurface(this->surfaceInfos[surface].Width,
+            g_App.presentParams.BackBufferFormat, D3DMULTISAMPLE_NONE, TRUE, &this->surfaces[surface]) != D3D_OK &&
+        g_App.d3dDevice->CreateImageSurface(this->surfaceInfos[surface].Width,
                                                      this->surfaceInfos[surface].Height,
-                                                     g_Unknown6c6d18.presentParams.BackBufferFormat,
+                                                     g_App.presentParams.BackBufferFormat,
                                                      &this->surfaces[surface]) != D3D_OK)
     {
         goto fail;
     }
-    if (g_Unknown6c6d18.d3dDevice->CreateImageSurface(this->surfaceInfos[surface].Width,
+    if (g_App.d3dDevice->CreateImageSurface(this->surfaceInfos[surface].Width,
                                                      this->surfaceInfos[surface].Height,
-                                                     g_Unknown6c6d18.presentParams.BackBufferFormat,
+                                                     g_App.presentParams.BackBufferFormat,
                                                      &this->surfacesBackup[surface]) != D3D_OK)
     {
         goto fail;
@@ -1381,19 +1381,19 @@ void SpriteEngine::CopySurfaceToBackBuffer(int surface, int left, int top, int x
     {
         return;
     }
-    if (g_Unknown6c6d18.d3dDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &backBuffer) != D3D_OK)
+    if (g_App.d3dDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &backBuffer) != D3D_OK)
     {
         return;
     }
     if (this->surfaces[surface] == NULL)
     {
-        if (g_Unknown6c6d18.d3dDevice->CreateRenderTarget(
+        if (g_App.d3dDevice->CreateRenderTarget(
                 this->surfaceInfos[surface].Width, this->surfaceInfos[surface].Height,
-                g_Unknown6c6d18.presentParams.BackBufferFormat, D3DMULTISAMPLE_NONE, TRUE,
+                g_App.presentParams.BackBufferFormat, D3DMULTISAMPLE_NONE, TRUE,
                 &this->surfaces[surface]) != D3D_OK &&
-            g_Unknown6c6d18.d3dDevice->CreateImageSurface(this->surfaceInfos[surface].Width,
+            g_App.d3dDevice->CreateImageSurface(this->surfaceInfos[surface].Width,
                                                          this->surfaceInfos[surface].Height,
-                                                         g_Unknown6c6d18.presentParams.BackBufferFormat,
+                                                         g_App.presentParams.BackBufferFormat,
                                                          &this->surfaces[surface]) != D3D_OK)
         {
             backBuffer->Release();
@@ -1412,7 +1412,7 @@ void SpriteEngine::CopySurfaceToBackBuffer(int surface, int left, int top, int x
     rect.bottom = this->surfaceInfos[surface].Height;
     point.x = x;
     point.y = y;
-    g_Unknown6c6d18.d3dDevice->CopyRects(this->surfaces[surface], &rect, 1, backBuffer, &point);
+    g_App.d3dDevice->CopyRects(this->surfaces[surface], &rect, 1, backBuffer, &point);
     backBuffer->Release();
 }
 
@@ -1426,19 +1426,19 @@ void SpriteEngine::CopySurfaceRectToBackBuffer(int surface, int x, int y, int le
     {
         return;
     }
-    if (g_Unknown6c6d18.d3dDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &backBuffer) != D3D_OK)
+    if (g_App.d3dDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &backBuffer) != D3D_OK)
     {
         return;
     }
     if (this->surfaces[surface] == NULL)
     {
-        if (g_Unknown6c6d18.d3dDevice->CreateRenderTarget(
+        if (g_App.d3dDevice->CreateRenderTarget(
                 this->surfaceInfos[surface].Width, this->surfaceInfos[surface].Height,
-                g_Unknown6c6d18.presentParams.BackBufferFormat, D3DMULTISAMPLE_NONE, TRUE,
+                g_App.presentParams.BackBufferFormat, D3DMULTISAMPLE_NONE, TRUE,
                 &this->surfaces[surface]) != D3D_OK &&
-            g_Unknown6c6d18.d3dDevice->CreateImageSurface(this->surfaceInfos[surface].Width,
+            g_App.d3dDevice->CreateImageSurface(this->surfaceInfos[surface].Width,
                                                          this->surfaceInfos[surface].Height,
-                                                         g_Unknown6c6d18.presentParams.BackBufferFormat,
+                                                         g_App.presentParams.BackBufferFormat,
                                                          &this->surfaces[surface]) != D3D_OK)
         {
             backBuffer->Release();
@@ -1457,7 +1457,7 @@ void SpriteEngine::CopySurfaceRectToBackBuffer(int surface, int x, int y, int le
     rect.bottom = top + height;
     point.x = x;
     point.y = y;
-    g_Unknown6c6d18.d3dDevice->CopyRects(this->surfaces[surface], &rect, 1, backBuffer, &point);
+    g_App.d3dDevice->CopyRects(this->surfaces[surface], &rect, 1, backBuffer, &point);
     backBuffer->Release();
 }
 
@@ -1471,7 +1471,7 @@ void SpriteEngine::CopyBackBufferToTexture(int texture, int left, int top, int w
     {
         return;
     }
-    if (g_Unknown6c6d18.d3dDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &backBuffer) != D3D_OK)
+    if (g_App.d3dDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &backBuffer) != D3D_OK)
     {
         return;
     }

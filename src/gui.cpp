@@ -69,7 +69,7 @@ int Gui::OnDraw(Gui *gui)
     D3DXVECTOR3 cursor;
     char buf[32];
 
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+    g_App.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
     if (gui->impl->stageClearShown != 0)
     {
         cursor.x = 74.0f;
@@ -131,7 +131,7 @@ int Gui::OnDraw(Gui *gui)
         cursor.y += 16.0f;
         if (g_GameManager.difficulty < 4 && !g_GameManager.unk_1823)
         {
-            switch (g_Unknown6c6d18.unk_14c.lives)
+            switch (g_App.startCfg.lives)
             {
             case 3:
                 g_AsciiText.color = 0xffff8080;
@@ -183,7 +183,7 @@ int Gui::OnDraw(Gui *gui)
         g_AsciiText.color = 0xffffffff;
     }
     g_AsciiText.unk_6230 = 0;
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+    g_App.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
     return 1;
 }
 
@@ -194,7 +194,7 @@ void Gui::ShowBombName(int sprite, char *name)
     g_SpriteEngine->StartScript(&this->impl->unk_1fe4, 0x706);
     g_SpriteEngine->RenderText(&this->impl->unk_1fe4, 0xf0f0ff, 0, name);
     this->unk_08 = strlen(name) * 15 / 2.0f + 16.0f;
-    g_Unknown6c6d18.unk_198 = 3;
+    g_App.redrawFrames = 3;
     g_Unknown6d3f50.QueueSound(14, 0);
 }
 
@@ -212,7 +212,7 @@ int Gui::LoadResources()
 {
     int i;
 
-    if ((g_Unknown6c6d18.scene != 3) != 0)
+    if ((g_App.scene != 3) != 0)
     {
         memset(this->impl, 0, sizeof(GuiImpl));
         if (g_SpriteEngine->LoadAnm(0xd, "data/front.anm", 0x600) != 0)
@@ -366,7 +366,7 @@ int Gui::LoadResources()
         }
         break;
     }
-    if ((g_Unknown6c6d18.scene != 3) != 0)
+    if ((g_App.scene != 3) != 0)
     {
         for (i = 0; i < 0x1a; i++)
         {
@@ -446,7 +446,7 @@ void Gui::FreeMsgFile()
 void Gui::StartMsg(int index)
 {
     this->impl->StartMsgScript(index);
-    g_Unknown6c6d18.unk_198 = 3;
+    g_App.redrawFrames = 3;
 }
 
 void GuiImpl::StartMsgScript(int index)
@@ -555,9 +555,9 @@ int GuiImpl::RunMsg()
             this->unk_1cb4.unk_10c = 16;
             this->unk_1cb4.unk_10d = 16;
             g_SpriteEngine->RenderTextRightAligned(&this->unk_1cb4, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[this->msg.instr->i]);
-            if (g_Unknown6c6d18.PlayMidi(this->msg.instr->i) != 0)
+            if (g_App.PlayMidi(this->msg.instr->i) != 0)
             {
-                g_Unknown6c6d18.PlayMusic(g_Stage.data->songPaths[this->msg.instr->i]);
+                g_App.PlayMusic(g_Stage.data->songPaths[this->msg.instr->i]);
             }
             break;
         case 8:
@@ -580,19 +580,19 @@ int GuiImpl::RunMsg()
         case 10:
             goto stepSprites;
         case 12:
-            g_Unknown6c6d18.FadeOutMusic(4.0f);
+            g_App.FadeOutMusic(4.0f);
             break;
         case 11:
             g_GameManager.unk_0000 = g_GameManager.score;
             if (g_GameManager.unk_1823)
             {
                 g_GameManager.unk_0000 = g_GameManager.score;
-                g_Unknown6c6d18.scene = 7;
+                g_App.scene = 7;
                 goto stepSprites;
             }
             if (g_GameManager.stage < 5 || (g_GameManager.difficulty != 0 && g_GameManager.stage == 5))
             {
-                g_Unknown6c6d18.scene = 3;
+                g_App.scene = 3;
             }
             else if (g_GameManager.unk_001c == 0)
             {
@@ -600,14 +600,14 @@ int GuiImpl::RunMsg()
                 {
                     g_GameManager.unk_1822 = 1;
                     g_GameManager.unk_0000 = g_GameManager.score;
-                    g_Unknown6c6d18.scene = 7;
+                    g_App.scene = 7;
                     goto stepSprites;
                 }
-                g_Unknown6c6d18.scene = 10;
+                g_App.scene = 10;
             }
             else
             {
-                g_Unknown6c6d18.scene = 8;
+                g_App.scene = 8;
             }
             goto stepSprites;
         case 13:
@@ -661,30 +661,30 @@ int GuiImpl::DrawMsg()
     vertices[0].w = vertices[1].w = vertices[2].w = vertices[3].w = 1.0f;
     g_SpriteEngine->Draw(&this->msg.portraits[0]);
     g_SpriteEngine->Draw(&this->msg.portraits[1]);
-    if (!g_Unknown6c6d18.cfg.flags.noColorBlending)
+    if (!g_App.cfg.flags.noColorBlending)
     {
-        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
-        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+        g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+        g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
     }
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
-    if (!g_Unknown6c6d18.cfg.flags.noDepthTest)
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+    if (!g_App.cfg.flags.noDepthTest)
     {
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+        g_App.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
     }
-    g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
-    g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertices, sizeof(VertexDiffuseXyzrwh));
+    g_App.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+    g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertices, sizeof(VertexDiffuseXyzrwh));
     g_SpriteEngine->ClearVertexFormat();
     g_SpriteEngine->ClearColorOp();
     g_SpriteEngine->ClearBlendMode();
     g_SpriteEngine->ClearZWrite();
-    if (!g_Unknown6c6d18.cfg.flags.noColorBlending)
+    if (!g_App.cfg.flags.noColorBlending)
     {
-        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
-        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+        g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+        g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
     }
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
     g_SpriteEngine->Draw(&this->msg.text[0]);
     g_SpriteEngine->Draw(&this->msg.text[1]);
     g_SpriteEngine->Draw(&this->msg.unk_45c[0]);
@@ -867,7 +867,7 @@ void Gui::UpdateInterface()
             bonus -= bonus % 10;
             break;
         }
-        switch (g_Unknown6c6d18.unk_14c.lives)
+        switch (g_App.startCfg.lives)
         {
         case 3:
             bonus = bonus * 5 / 10;
@@ -937,14 +937,14 @@ void Gui::DrawHud()
         g_AsciiText.color = 0xffffffff;
         this->unk_1c = this->bossTimer;
     }
-    g_Unknown6c6d18.viewport.X = 0;
-    g_Unknown6c6d18.viewport.Y = 0;
-    g_Unknown6c6d18.viewport.Width = 640;
-    g_Unknown6c6d18.viewport.Height = 480;
-    g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+    g_App.viewport.X = 0;
+    g_App.viewport.Y = 0;
+    g_App.viewport.Width = 640;
+    g_App.viewport.Height = 480;
+    g_App.d3dDevice->SetViewport(&g_App.viewport);
     vm = &this->impl->unk_0000[6];
-    if (!g_Unknown6c6d18.cfg.flags.noFrameItems &&
-        (vm->scriptPos != NULL || g_Unknown6c6d18.unk_198 != 0 || g_Unknown6c6d18.ClearsBackBuffer()))
+    if (!g_App.cfg.flags.noFrameItems &&
+        (vm->scriptPos != NULL || g_App.redrawFrames != 0 || g_App.ClearsBackBuffer()))
     {
         for (y = 0.0f; y < 464.0f; y += 32.0f)
         {
@@ -990,7 +990,7 @@ void Gui::DrawHud()
         this->flags.pointsChanged = 2;
         this->flags.powerChanged = 2;
     }
-    if (!g_Unknown6c6d18.cfg.flags.noFrameItems)
+    if (!g_App.cfg.flags.noFrameItems)
     {
         vm = &this->impl->unk_0000[0x16];
         xx = 496.0f;
@@ -1028,7 +1028,7 @@ void Gui::DrawHud()
         vm->pos = D3DXVECTOR3(0.0f, 464.0f, 0.49f);
         g_SpriteEngine->Draw(vm);
     }
-    if (this->flags.livesChanged || g_Unknown6c6d18.cfg.flags.noFrameItems)
+    if (this->flags.livesChanged || g_App.cfg.flags.noFrameItems)
     {
         vm = &this->impl->unk_0000[0x10];
         for (idx = 0, xx = 496.0f; idx < g_GameManager.lives; idx++, xx += 16.0f)
@@ -1037,7 +1037,7 @@ void Gui::DrawHud()
             g_SpriteEngine->Draw(vm);
         }
     }
-    if (this->flags.bombsChanged || g_Unknown6c6d18.cfg.flags.noFrameItems)
+    if (this->flags.bombsChanged || g_App.cfg.flags.noFrameItems)
     {
         vm = &this->impl->unk_0000[0x11];
         for (idx = 0, xx = 496.0f; idx < g_GameManager.bombs; idx++, xx += 16.0f)
@@ -1046,7 +1046,7 @@ void Gui::DrawHud()
             g_SpriteEngine->Draw(vm);
         }
     }
-    if (this->flags.powerChanged || g_Unknown6c6d18.cfg.flags.noFrameItems)
+    if (this->flags.powerChanged || g_App.cfg.flags.noFrameItems)
     {
         VertexDiffuseXyzrwh vertices[4];
 
@@ -1059,31 +1059,31 @@ void Gui::DrawHud()
             vertices[0].diffuse = vertices[2].diffuse = 0xe0e0e0ff;
             vertices[1].diffuse = vertices[3].diffuse = 0x80e0e0ff;
             vertices[0].w = vertices[1].w = vertices[2].w = vertices[3].w = 1.0f;
-            if (!g_Unknown6c6d18.cfg.flags.noColorBlending)
+            if (!g_App.cfg.flags.noColorBlending)
             {
-                g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
-                g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+                g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+                g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
             }
-            g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
-            g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
-            if (!g_Unknown6c6d18.cfg.flags.noDepthTest)
+            g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+            g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+            if (!g_App.cfg.flags.noDepthTest)
             {
-                g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
-                g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+                g_App.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+                g_App.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
             }
-            g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
-            g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertices, sizeof(VertexDiffuseXyzrwh));
+            g_App.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+            g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertices, sizeof(VertexDiffuseXyzrwh));
             g_SpriteEngine->ClearVertexFormat();
             g_SpriteEngine->ClearColorOp();
             g_SpriteEngine->ClearBlendMode();
             g_SpriteEngine->ClearZWrite();
-            if (!g_Unknown6c6d18.cfg.flags.noColorBlending)
+            if (!g_App.cfg.flags.noColorBlending)
             {
-                g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
-                g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+                g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+                g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
             }
-            g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-            g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+            g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+            g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
             if (g_GameManager.power >= 128)
             {
                 vm = &this->impl->unk_0000[0x12];
@@ -1104,12 +1104,12 @@ void Gui::DrawHud()
         g_AsciiText.AddFormat(&scorePos, "%.9d", g_GameManager.unk_0000);
         scorePos = D3DXVECTOR3(496.0f, 58.0f, 0.0f);
         g_AsciiText.AddFormat(&scorePos, "%.9d", g_GameManager.highScore);
-        if (this->flags.grazeChanged || g_Unknown6c6d18.cfg.flags.noFrameItems)
+        if (this->flags.grazeChanged || g_App.cfg.flags.noFrameItems)
         {
             scorePos = D3DXVECTOR3(496.0f, 206.0f, 0.0f);
             g_AsciiText.AddFormat(&scorePos, "%d", g_GameManager.graze);
         }
-        if (this->flags.pointsChanged || g_Unknown6c6d18.cfg.flags.noFrameItems)
+        if (this->flags.pointsChanged || g_App.cfg.flags.noFrameItems)
         {
             scorePos = D3DXVECTOR3(496.0f, 226.0f, 0.0f);
             g_AsciiText.AddFormat(&scorePos, "%d", g_GameManager.pointItems);
@@ -1204,11 +1204,11 @@ void Gui::DrawBanners()
     }
     if (this->impl->unk_2424.spriteIndex >= 0)
     {
-        g_Unknown6c6d18.viewport.X = g_GameManager.arena[0];
-        g_Unknown6c6d18.viewport.Y = g_GameManager.arena[1];
-        g_Unknown6c6d18.viewport.Width = g_GameManager.arena[2];
-        g_Unknown6c6d18.viewport.Height = g_GameManager.arena[3];
-        g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+        g_App.viewport.X = g_GameManager.arena[0];
+        g_App.viewport.Y = g_GameManager.arena[1];
+        g_App.viewport.Width = g_GameManager.arena[2];
+        g_App.viewport.Height = g_GameManager.arena[3];
+        g_App.d3dDevice->SetViewport(&g_App.viewport);
         g_SpriteEngine->Draw(&this->impl->unk_2424);
     }
 }
@@ -1219,7 +1219,7 @@ int Gui::DeletedCallback(Gui *gui)
     g_SpriteEngine->ReleaseAnm(0x13);
     g_SpriteEngine->ReleaseAnm(0x14);
     gui->FreeMsgFile();
-    if ((g_Unknown6c6d18.scene != 3) != 0)
+    if ((g_App.scene != 3) != 0)
     {
         g_SpriteEngine->ReleaseAnm(0xd);
         g_SpriteEngine->ReleaseAnm(0xe);
@@ -1236,7 +1236,7 @@ int Gui::RegisterChain()
 {
     Gui *gui = &g_Gui;
 
-    if ((g_Unknown6c6d18.scene != 3) != 0)
+    if ((g_App.scene != 3) != 0)
     {
         memset(gui, 0, sizeof(Gui));
         gui->impl = new GuiImpl;
@@ -1258,6 +1258,6 @@ int Gui::RegisterChain()
 int Timer::NextTick()
 {
     this->previous = this->current;
-    g_Unknown6c6d18.TickTimer(&this->current, &this->subFrame);
+    g_App.TickTimer(&this->current, &this->subFrame);
     return this->current;
 }

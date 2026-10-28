@@ -96,7 +96,7 @@ int FireShotType3(Player *player, PlayerBullet *bullet, int index, int frame)
 
 int Player::DeletedCallback(Player *player)
 {
-    if ((g_Unknown6c6d18.scene != 3) != 0)
+    if ((g_App.scene != 3) != 0)
     {
         g_SpriteEngine->ReleaseAnm(5);
     }
@@ -592,8 +592,8 @@ int Player::HandleInput()
     }
     this->velocityX = deltaX;
     this->velocityY = deltaY;
-    this->position[0] += deltaX * this->moveScaleX * g_Unknown6c6d18.frameAdvance;
-    this->position[1] += deltaY * this->moveScaleY * g_Unknown6c6d18.frameAdvance;
+    this->position[0] += deltaX * this->moveScaleX * g_App.frameAdvance;
+    this->position[1] += deltaY * this->moveScaleY * g_App.frameAdvance;
     if (this->position.x < g_GameManager.playerArea[0])
     {
         this->position.x = g_GameManager.playerArea[0];
@@ -868,7 +868,7 @@ int Player::OnUpdate(Player *player)
                     g_Gui.flags.livesChanged = 2;
                     if (g_GameManager.difficulty < 4 && g_GameManager.unk_1823 == 0)
                     {
-                        g_GameManager.bombs = g_Unknown6c6d18.unk_14c.bombs;
+                        g_GameManager.bombs = g_App.startCfg.bombs;
                     }
                     else
                     {
@@ -1030,8 +1030,8 @@ void Player::UpdateBullets(Player *player)
             bullet->size.y = bullet->pos.y * 2.0f;
             break;
         }
-        bullet->sprite.pos.x = bullet->pos[0] += g_Unknown6c6d18.frameAdvance * bullet->velocity.x;
-        bullet->sprite.pos.y = bullet->pos[1] += g_Unknown6c6d18.frameAdvance * bullet->velocity.y;
+        bullet->sprite.pos.x = bullet->pos[0] += g_App.frameAdvance * bullet->velocity.x;
+        bullet->sprite.pos.y = bullet->pos[1] += g_App.frameAdvance * bullet->velocity.y;
         bullet->sprite.pos.z = bullet->pos.z;
         if (bullet->type != 3 &&
             !g_GameManager.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprite.spriteData->width,
@@ -1196,14 +1196,14 @@ int Player::AddedCallback(Player *player)
     switch (g_GameManager.character)
     {
     case 0:
-        if ((g_Unknown6c6d18.scene != 3) != 0 && g_SpriteEngine->LoadAnm(5, "data/player00.anm", 0x400) != 0)
+        if ((g_App.scene != 3) != 0 && g_SpriteEngine->LoadAnm(5, "data/player00.anm", 0x400) != 0)
         {
             return -1;
         }
         g_SpriteEngine->StartScript(&player->sprite, 0x400);
         break;
     case 1:
-        if ((g_Unknown6c6d18.scene != 3) != 0 && g_SpriteEngine->LoadAnm(5, "data/player01.anm", 0x400) != 0)
+        if ((g_App.scene != 3) != 0 && g_SpriteEngine->LoadAnm(5, "data/player01.anm", 0x400) != 0)
         {
             return -1;
         }

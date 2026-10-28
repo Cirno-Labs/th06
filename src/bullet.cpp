@@ -19,7 +19,7 @@ void BulletManager::Reset()
 
 int BulletManager::DeletedCallback(BulletManager *mgr)
 {
-    if ((g_Unknown6c6d18.scene != 3) != 0)
+    if ((g_App.scene != 3) != 0)
     {
         g_SpriteEngine->ReleaseAnm(6);
         g_SpriteEngine->ReleaseAnm(7);
@@ -111,7 +111,7 @@ int BulletManager::RegisterChain(char *anmPath)
 {
     BulletManager *mgr = &g_BulletManager;
 
-    if (!g_Unknown6c6d18.cfg.flags.unk0)
+    if (!g_App.cfg.flags.unk0)
     {
         g_Unknown476438 = g_Unknown476358;
     }
@@ -501,21 +501,21 @@ int BulletManager::OnUpdate(BulletManager *mgr)
         switch (bullet->state)
         {
         case 2:
-            bullet->pos += bullet->velocity / 2.0f * g_Unknown6c6d18.frameAdvance;
+            bullet->pos += bullet->velocity / 2.0f * g_App.frameAdvance;
             if (g_SpriteEngine->Step(&bullet->sprites.sprite1) == 0)
             {
                 break;
             }
             goto spawned;
         case 3:
-            bullet->pos += bullet->velocity / 2.5f * g_Unknown6c6d18.frameAdvance;
+            bullet->pos += bullet->velocity / 2.5f * g_App.frameAdvance;
             if (g_SpriteEngine->Step(&bullet->sprites.sprite2) == 0)
             {
                 break;
             }
             goto spawned;
         case 4:
-            bullet->pos += bullet->velocity / 3.0f * g_Unknown6c6d18.frameAdvance;
+            bullet->pos += bullet->velocity / 3.0f * g_App.frameAdvance;
             if (g_SpriteEngine->Step(&bullet->sprites.sprite3) == 0)
             {
                 break;
@@ -546,7 +546,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                     }
                     else
                     {
-                        bullet->velocity += bullet->accel * g_Unknown6c6d18.frameAdvance;
+                        bullet->velocity += bullet->accel * g_App.frameAdvance;
                         bullet->angle = atan2f(bullet->velocity.y, bullet->velocity.x);
                     }
                 }
@@ -558,8 +558,8 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                     }
                     else
                     {
-                        bullet->angle = AddNormalizeAngle(bullet->angle, g_Unknown6c6d18.frameAdvance * bullet->unk_594);
-                        bullet->speed = g_Unknown6c6d18.frameAdvance * bullet->unk_588 + bullet->speed;
+                        bullet->angle = AddNormalizeAngle(bullet->angle, g_App.frameAdvance * bullet->unk_594);
+                        bullet->speed = g_App.frameAdvance * bullet->unk_588 + bullet->speed;
                         SinCosScale(&bullet->velocity, bullet->angle, bullet->speed);
                     }
                 }
@@ -667,7 +667,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                     }
                 }
             }
-            bullet->pos += bullet->velocity * g_Unknown6c6d18.frameAdvance;
+            bullet->pos += bullet->velocity * g_App.frameAdvance;
             if (!g_GameManager.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
             {
                 if (!(bullet->flags & 0x40) && !(bullet->flags & 0x100) && !(bullet->flags & 0x80) && !(bullet->flags & 0x400) && !(bullet->flags & 0x800) && bullet->outsideFrames == 0)
@@ -716,7 +716,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             g_SpriteEngine->Step(&bullet->sprites.sprite0);
             break;
         case 5:
-            bullet->pos += bullet->velocity / 2.0f * g_Unknown6c6d18.frameAdvance;
+            bullet->pos += bullet->velocity / 2.0f * g_App.frameAdvance;
             if (g_SpriteEngine->Step(&bullet->sprites.sprite4) != 0)
             {
                 memset(bullet, 0, sizeof(Bullet));
@@ -733,7 +733,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
         {
             continue;
         }
-        las->endOffset = g_Unknown6c6d18.frameAdvance * las->speed + las->endOffset;
+        las->endOffset = g_App.frameAdvance * las->speed + las->endOffset;
         if (las->endOffset - las->startOffset > las->unk_238)
         {
             las->startOffset = las->endOffset - las->unk_238;
@@ -847,7 +847,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
     Bullet *blt;
     Bullet *bullet2;
 
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+    g_App.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
     laser = mgr->lasers;
     for (i = 0; i < 0x40; i++, laser++)
     {
@@ -881,7 +881,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
         }
     }
     g_ItemManager.DrawItems();
-    if (g_Unknown6c6d18.hardwareTnL)
+    if (g_App.hardwareTnL)
     {
         blt = mgr->bullets;
         for (i = 0; i < 0x280; i++, blt++)
@@ -983,7 +983,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
             }
         }
     }
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+    g_App.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
     return 1;
 }
 
@@ -1055,7 +1055,7 @@ int BulletManager::AddedCallback(BulletManager *mgr)
 {
     int i;
 
-    if ((g_Unknown6c6d18.scene != 3) != 0)
+    if ((g_App.scene != 3) != 0)
     {
         if (g_SpriteEngine->LoadAnm(6, "data/etama3.anm", 0x200) != 0)
         {

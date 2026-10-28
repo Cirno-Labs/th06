@@ -67,7 +67,7 @@ int MusicScreen::UpdateList()
     if (WAS_PRESSED(0x1001))
     {
         this->playing = this->cursor;
-        g_Unknown6c6d18.PlayMusic(this->tunes[this->playing].path);
+        g_App.PlayMusic(this->tunes[this->playing].path);
         // Each comment line takes two sprites, one per half; the second
         // only when the line runs past the first half.
         for (i = 0; i < 0x10; i++)
@@ -94,7 +94,7 @@ int MusicScreen::UpdateList()
     }
     if (WAS_PRESSED(0xa))
     {
-        g_Unknown6c6d18.scene = 1;
+        g_App.scene = 1;
         return 1;
     }
     return 0;

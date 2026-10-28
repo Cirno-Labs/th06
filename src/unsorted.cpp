@@ -106,7 +106,7 @@ WORD ReadJoystick(WORD buttons)
     HRESULT hr;
     DIJOYSTATE2 state;
 
-    if (g_Unknown6c6d18.joystick == NULL)
+    if (g_App.joystick == NULL)
     {
         memset(&joyInfo, 0, sizeof(joyInfo));
         joyInfo.dwSize = sizeof(joyInfo);
@@ -139,13 +139,13 @@ WORD ReadJoystick(WORD buttons)
         {
             g_ShotHeldFrames = 0;
         }
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.bombButton, 2, joyInfo.dwButtons);
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.menuButton, 8, joyInfo.dwButtons);
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.upButton, 0x10, joyInfo.dwButtons);
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.downButton, 0x20, joyInfo.dwButtons);
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.leftButton, 0x40, joyInfo.dwButtons);
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.rightButton, 0x80, joyInfo.dwButtons);
-        SetButtonFromJoystick(&buttons, g_Unknown6c6d18.cfg.controllerMapping.skipButton, 0x100, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_App.cfg.controllerMapping.bombButton, 2, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_App.cfg.controllerMapping.menuButton, 8, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_App.cfg.controllerMapping.upButton, 0x10, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_App.cfg.controllerMapping.downButton, 0x20, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_App.cfg.controllerMapping.leftButton, 0x40, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_App.cfg.controllerMapping.rightButton, 0x80, joyInfo.dwButtons);
+        SetButtonFromJoystick(&buttons, g_App.cfg.controllerMapping.skipButton, 0x100, joyInfo.dwButtons);
         margin = (g_JoyCaps.wXmax - g_JoyCaps.wXmin) / 2 / 2;
         buttons |= ((g_JoyCaps.wXmin + g_JoyCaps.wXmax) / 2 + margin < joyInfo.dwXpos) ? 0x80 : 0;
         buttons |= (joyInfo.dwXpos < (g_JoyCaps.wXmin + g_JoyCaps.wXmax) / 2 - margin) ? 0x40 : 0;
@@ -156,16 +156,16 @@ WORD ReadJoystick(WORD buttons)
     }
     else
     {
-        hr = g_Unknown6c6d18.joystick->Poll();
+        hr = g_App.joystick->Poll();
         if (FAILED(hr))
         {
             int retries = 0;
 
             DebugPrint("error : DIERR_INPUTLOST\n");
-            hr = g_Unknown6c6d18.joystick->Acquire();
+            hr = g_App.joystick->Acquire();
             while (hr == DIERR_INPUTLOST)
             {
-                hr = g_Unknown6c6d18.joystick->Acquire();
+                hr = g_App.joystick->Acquire();
                 DebugPrint("error : DIERR_INPUTLOST %d\n", retries);
                 retries++;
                 if (retries >= 400)
@@ -176,15 +176,15 @@ WORD ReadJoystick(WORD buttons)
             return buttons;
         }
         memset(&state, 0, sizeof(state));
-        hr = g_Unknown6c6d18.joystick->GetDeviceState(sizeof(DIJOYSTATE2), &state);
+        hr = g_App.joystick->GetDeviceState(sizeof(DIJOYSTATE2), &state);
         if (FAILED(hr))
         {
             return buttons;
         }
-        diFire = SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.shootButton, 1, state.rgbButtons);
+        diFire = SetButtonFromDirectInput(&buttons, g_App.cfg.controllerMapping.shootButton, 1, state.rgbButtons);
         if (g_ControllerMapping.shootButton != g_ControllerMapping.focusButton)
         {
-            SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.focusButton, 4, state.rgbButtons);
+            SetButtonFromDirectInput(&buttons, g_App.cfg.controllerMapping.focusButton, 4, state.rgbButtons);
         }
         else if (diFire)
         {
@@ -205,17 +205,17 @@ WORD ReadJoystick(WORD buttons)
         {
             g_ShotHeldFrames = 0;
         }
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.bombButton, 2, state.rgbButtons);
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.menuButton, 8, state.rgbButtons);
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.upButton, 0x10, state.rgbButtons);
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.downButton, 0x20, state.rgbButtons);
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.leftButton, 0x40, state.rgbButtons);
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.rightButton, 0x80, state.rgbButtons);
-        SetButtonFromDirectInput(&buttons, g_Unknown6c6d18.cfg.controllerMapping.skipButton, 0x100, state.rgbButtons);
-        buttons |= (state.lX > g_Unknown6c6d18.cfg.padThresholdX) ? 0x80 : 0;
-        buttons |= (state.lX < -g_Unknown6c6d18.cfg.padThresholdX) ? 0x40 : 0;
-        buttons |= (state.lY > g_Unknown6c6d18.cfg.padThresholdY) ? 0x20 : 0;
-        buttons |= (state.lY < -g_Unknown6c6d18.cfg.padThresholdY) ? 0x10 : 0;
+        SetButtonFromDirectInput(&buttons, g_App.cfg.controllerMapping.bombButton, 2, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_App.cfg.controllerMapping.menuButton, 8, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_App.cfg.controllerMapping.upButton, 0x10, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_App.cfg.controllerMapping.downButton, 0x20, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_App.cfg.controllerMapping.leftButton, 0x40, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_App.cfg.controllerMapping.rightButton, 0x80, state.rgbButtons);
+        SetButtonFromDirectInput(&buttons, g_App.cfg.controllerMapping.skipButton, 0x100, state.rgbButtons);
+        buttons |= (state.lX > g_App.cfg.padThresholdX) ? 0x80 : 0;
+        buttons |= (state.lX < -g_App.cfg.padThresholdX) ? 0x40 : 0;
+        buttons |= (state.lY > g_App.cfg.padThresholdY) ? 0x20 : 0;
+        buttons |= (state.lY < -g_App.cfg.padThresholdY) ? 0x10 : 0;
         return buttons;
     }
 }
@@ -250,7 +250,7 @@ BYTE *GetPadButtons()
     DIJOYSTATE2 state;
 
     memset(g_PadButtons, 0, sizeof(g_PadButtons));
-    if (g_Unknown6c6d18.joystick == NULL)
+    if (g_App.joystick == NULL)
     {
         memset(&joyInfo, 0, sizeof(joyInfo));
         joyInfo.dwSize = sizeof(joyInfo);
@@ -271,16 +271,16 @@ BYTE *GetPadButtons()
     }
     else
     {
-        hr = g_Unknown6c6d18.joystick->Poll();
+        hr = g_App.joystick->Poll();
         if (FAILED(hr))
         {
             int retries = 0;
 
             DebugPrint("error : DIERR_INPUTLOST\n");
-            hr = g_Unknown6c6d18.joystick->Acquire();
+            hr = g_App.joystick->Acquire();
             while (hr == DIERR_INPUTLOST)
             {
-                hr = g_Unknown6c6d18.joystick->Acquire();
+                hr = g_App.joystick->Acquire();
                 DebugPrint("error : DIERR_INPUTLOST %d\n", retries);
                 retries++;
                 if (retries >= 400)
@@ -290,7 +290,7 @@ BYTE *GetPadButtons()
             }
             return g_PadButtons;
         }
-        g_Unknown6c6d18.joystick->GetDeviceState(sizeof(DIJOYSTATE2), &state);
+        g_App.joystick->GetDeviceState(sizeof(DIJOYSTATE2), &state);
         if (FAILED(hr))
         {
             return g_PadButtons;
@@ -308,7 +308,7 @@ WORD ReadButtons()
     WORD buttons = 0;
     BYTE keyState[0x100];
 
-    if (g_Unknown6c6d18.keyboard == NULL)
+    if (g_App.keyboard == NULL)
     {
         GetKeyboardState(keyState);
         KEY(VK_UP, 0x10);
@@ -335,11 +335,11 @@ WORD ReadButtons()
     }
     else
     {
-        HRESULT hr = g_Unknown6c6d18.keyboard->GetDeviceState(sizeof(keyState), keyState);
+        HRESULT hr = g_App.keyboard->GetDeviceState(sizeof(keyState), keyState);
         buttons = 0;
         if (hr == DIERR_INPUTLOST)
         {
-            g_Unknown6c6d18.keyboard->Acquire();
+            g_App.keyboard->Acquire();
             return ReadJoystick(buttons);
         }
         KEY(DIK_UP, 0x10);

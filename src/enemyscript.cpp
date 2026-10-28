@@ -932,8 +932,8 @@ restart:
     switch (enemy->flags.moveMode)
     {
     case 1:
-        enemy->angle = AddNormalizeAngle(enemy->angle, g_Unknown6c6d18.frameAdvance * enemy->angularVelocity);
-        enemy->speed = g_Unknown6c6d18.frameAdvance * enemy->acceleration + enemy->speed;
+        enemy->angle = AddNormalizeAngle(enemy->angle, g_App.frameAdvance * enemy->angularVelocity);
+        enemy->speed = g_App.frameAdvance * enemy->acceleration + enemy->speed;
         SinCosScale(&enemy->velocity, enemy->angle, enemy->speed);
         enemy->velocity.z = 0.0f;
         break;

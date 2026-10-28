@@ -471,14 +471,14 @@ void Enemy::Move()
 {
     if (!this->flags.mirrored)
     {
-        this->pos.x += g_Unknown6c6d18.frameAdvance * this->velocity.x;
+        this->pos.x += g_App.frameAdvance * this->velocity.x;
     }
     else
     {
-        this->pos.x -= g_Unknown6c6d18.frameAdvance * this->velocity.x;
+        this->pos.x -= g_App.frameAdvance * this->velocity.x;
     }
-    this->pos.y += g_Unknown6c6d18.frameAdvance * this->velocity.y;
-    this->pos.z += g_Unknown6c6d18.frameAdvance * this->velocity.z;
+    this->pos.y += g_App.frameAdvance * this->velocity.y;
+    this->pos.z += g_App.frameAdvance * this->velocity.z;
 }
 
 int EnemyManager::OnUpdate(EnemyManager *mgr)

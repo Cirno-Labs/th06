@@ -32,7 +32,7 @@ struct Timer
     {
         this->Add(frames);
     }
-    // Advances by one frame through Unknown6c6d18::TickTimer. Inline;
+    // Advances by one frame through App::TickTimer. Inline;
     // defined in unsorted.h.
     void Tick();
     // Tick, out of line in the Gui file, returning the new count.

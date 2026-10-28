@@ -42,7 +42,7 @@ int GameManager::OnUpdate(GameManager *mgr)
     {
         if (WAS_PRESSED(0xffff))
         {
-            g_Unknown6c6d18.scene = 1;
+            g_App.scene = 1;
         }
         mgr->demoFrames++;
         if (mgr->demoFrames == 3600)
@@ -51,7 +51,7 @@ int GameManager::OnUpdate(GameManager *mgr)
         }
         if (mgr->demoFrames >= 3720)
         {
-            g_Unknown6c6d18.scene = 1;
+            g_App.scene = 1;
         }
     }
     if (!mgr->unk_1820 && !mgr->unk_181f && !mgr->unk_1824 && WAS_PRESSED(8))
@@ -61,18 +61,18 @@ int GameManager::OnUpdate(GameManager *mgr)
         g_GameManager.arena[1] = 16.0f;
         g_GameManager.arena[2] = 384.0f;
         g_GameManager.arena[3] = 448.0f;
-        g_Unknown6c6d18.unk_198 = 3;
+        g_App.redrawFrames = 3;
     }
     mgr->unk_1821 = !mgr->unk_1820 && !mgr->unk_181f ? 1 : 0;
-    g_Unknown6c6d18.viewport.X = mgr->arena[0];
-    g_Unknown6c6d18.viewport.Y = mgr->arena[1];
-    g_Unknown6c6d18.viewport.Width = mgr->arena[2];
-    g_Unknown6c6d18.viewport.Height = mgr->arena[3];
-    g_Unknown6c6d18.viewport.MinZ = 0.5f;
-    g_Unknown6c6d18.viewport.MaxZ = 1.0f;
+    g_App.viewport.X = mgr->arena[0];
+    g_App.viewport.Y = mgr->arena[1];
+    g_App.viewport.Width = mgr->arena[2];
+    g_App.viewport.Height = mgr->arena[3];
+    g_App.viewport.MinZ = 0.5f;
+    g_App.viewport.MaxZ = 1.0f;
     SetupCamera(0.0f);
-    g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
-    g_Unknown6c6d18.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, g_Stage.fog.color, 1.0f, 0);
+    g_App.d3dDevice->SetViewport(&g_App.viewport);
+    g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, g_Stage.fog.color, 1.0f, 0);
     if (mgr->unk_181f == 1 || mgr->unk_181f == 2 || mgr->unk_1820)
     {
         return 3;
@@ -149,11 +149,11 @@ int GameManager::AddedCallback(GameManager *mgr)
     ScoreDat *data;
     int shot2;
 
-    g_Unknown6c6d18.d3dDevice->ResourceManagerDiscardBytes(0);
-    if (g_Unknown6c6d18.scene != 3)
+    g_App.d3dDevice->ResourceManagerDiscardBytes(0);
+    if (g_App.scene != 3)
     {
-        g_Unknown6c6d18.unk_14c.bombs = g_GameManager.bombs;
-        g_Unknown6c6d18.unk_14c.lives = g_GameManager.lives;
+        g_App.startCfg.bombs = g_GameManager.bombs;
+        g_App.startCfg.lives = g_GameManager.lives;
         mgr->arena[0] = 32.0f;
         mgr->arena[1] = 16.0f;
         mgr->arena[2] = 384.0f;
@@ -252,8 +252,8 @@ int GameManager::AddedCallback(GameManager *mgr)
             break;
         }
     }
-    g_Unknown6c6d18.LoadArchive(4, "紅魔郷CM.dat");
-    g_Unknown6c6d18.LoadArchive(2, "紅魔郷ST.dat");
+    g_App.LoadArchive(4, "紅魔郷CM.dat");
+    g_App.LoadArchive(2, "紅魔郷ST.dat");
     if (g_GameManager.unk_001c == 1)
     {
         if (ReplayManager::RegisterChain(1, g_GameManager.replayFile) != 0)
@@ -310,15 +310,15 @@ int GameManager::AddedCallback(GameManager *mgr)
     }
     if (!g_GameManager.unk_1824)
     {
-        g_Unknown6c6d18.LoadMidi(1, g_Stage.data->songPaths[1]);
-        g_Unknown6c6d18.PlayMusic(g_Stage.data->songPaths[0]);
+        g_App.LoadMidi(1, g_Stage.data->songPaths[1]);
+        g_App.PlayMusic(g_Stage.data->songPaths[0]);
     }
     mgr->unk_1820 = 0;
     mgr->unk_1821 = 1;
-    if (g_Unknown6c6d18.scene != 3)
+    if (g_App.scene != 3)
     {
-        g_Unknown6c6d18.unk_1b4 = 0.0f;
-        g_Unknown6c6d18.unk_1b8 = 0.0f;
+        g_App.achievedFrames = 0.0f;
+        g_App.expectedFrames = 0.0f;
     }
     mgr->unk_002c = 0;
     mgr->score = 0;
@@ -326,9 +326,9 @@ int GameManager::AddedCallback(GameManager *mgr)
     g_AsciiText.Initialize();
     if (failed)
     {
-        g_Unknown6c6d18.scene = 1;
+        g_App.scene = 1;
     }
-    g_Unknown6c6d18.unk_198 = 3;
+    g_App.redrawFrames = 3;
     return 0;
 }
 
@@ -353,10 +353,10 @@ int GameManager::RegisterChain()
 
 int GameManager::DeletedCallback(GameManager *mgr)
 {
-    g_Unknown6c6d18.d3dDevice->ResourceManagerDiscardBytes(0);
+    g_App.d3dDevice->ResourceManagerDiscardBytes(0);
     if (!g_GameManager.unk_1824)
     {
-        g_Unknown6c6d18.StopMusic();
+        g_App.StopMusic();
     }
     Stage::RemoveChain();
     BulletManager::RemoveChain();
@@ -385,20 +385,20 @@ void SetupFixedCamera(float extraFar)
     float fovAngle;
     float zDist;
 
-    midX = (float)g_Unknown6c6d18.viewport.Width / 2.0f;
-    halfHeight = (float)g_Unknown6c6d18.viewport.Height / 2.0f;
-    aspectXY = (float)g_Unknown6c6d18.viewport.Width / (float)g_Unknown6c6d18.viewport.Height;
+    midX = (float)g_App.viewport.Width / 2.0f;
+    halfHeight = (float)g_App.viewport.Height / 2.0f;
+    aspectXY = (float)g_App.viewport.Width / (float)g_App.viewport.Height;
     fovAngle = 0.5235988f;
     zDist = halfHeight / tanf(fovAngle / 2.0f);
     {
         D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
         D3DXVECTOR3 lookAt(midX, -halfHeight, 0.0f);
         D3DXVECTOR3 from(midX, -halfHeight, -zDist);
-        D3DXMatrixLookAtLH(&g_Unknown6c6d18.viewMatrix, &from, &lookAt, &up);
+        D3DXMatrixLookAtLH(&g_App.viewMatrix, &from, &lookAt, &up);
         g_Camera.distance = fabsf(zDist);
-        D3DXMatrixPerspectiveFovLH(&g_Unknown6c6d18.projectionMatrix, fovAngle, aspectXY, 100.0f, 10000.0f + extraFar);
-        g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_VIEW, &g_Unknown6c6d18.viewMatrix);
-        g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_Unknown6c6d18.projectionMatrix);
+        D3DXMatrixPerspectiveFovLH(&g_App.projectionMatrix, fovAngle, aspectXY, 100.0f, 10000.0f + extraFar);
+        g_App.d3dDevice->SetTransform(D3DTS_VIEW, &g_App.viewMatrix);
+        g_App.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_App.projectionMatrix);
     }
 }
 
@@ -410,9 +410,9 @@ void SetupCamera(float extraFar)
     float fovAngle;
     float zDist;
 
-    midX = (float)g_Unknown6c6d18.viewport.Width / 2.0f;
-    halfHeight = (float)g_Unknown6c6d18.viewport.Height / 2.0f;
-    aspectXY = (float)g_Unknown6c6d18.viewport.Width / (float)g_Unknown6c6d18.viewport.Height;
+    midX = (float)g_App.viewport.Width / 2.0f;
+    halfHeight = (float)g_App.viewport.Height / 2.0f;
+    aspectXY = (float)g_App.viewport.Width / (float)g_App.viewport.Height;
     fovAngle = 0.5235988f;
     zDist = halfHeight / tanf(fovAngle / 2.0f);
     // A block of its own: its vectors come after the floats on the stack.
@@ -420,11 +420,11 @@ void SetupCamera(float extraFar)
         D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
         D3DXVECTOR3 lookAt(midX + g_Camera.offsetX, -halfHeight + g_Camera.offsetY, 0.0f);
         D3DXVECTOR3 from(midX, -halfHeight, -zDist * g_Camera.zoom);
-        D3DXMatrixLookAtLH(&g_Unknown6c6d18.viewMatrix, &from, &lookAt, &up);
+        D3DXMatrixLookAtLH(&g_App.viewMatrix, &from, &lookAt, &up);
         g_Camera.distance = fabsf(zDist);
-        D3DXMatrixPerspectiveFovLH(&g_Unknown6c6d18.projectionMatrix, fovAngle, aspectXY, 100.0f, 10000.0f + extraFar);
-        g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_VIEW, &g_Unknown6c6d18.viewMatrix);
-        g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_Unknown6c6d18.projectionMatrix);
+        D3DXMatrixPerspectiveFovLH(&g_App.projectionMatrix, fovAngle, aspectXY, 100.0f, 10000.0f + extraFar);
+        g_App.d3dDevice->SetTransform(D3DTS_VIEW, &g_App.viewMatrix);
+        g_App.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_App.projectionMatrix);
     }
 }
 

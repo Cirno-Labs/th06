@@ -19,8 +19,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         g_Unknown69d998.Flush();
         return 1;
     }
-    g_Unknown6c6d18.hInstance = hInstance;
-    if (g_Unknown6c6d18.LoadConfig("東方紅魔郷.cfg") != 0)
+    g_App.hInstance = hInstance;
+    if (g_App.LoadConfig("東方紅魔郷.cfg") != 0)
     {
         g_Unknown69d998.Flush();
         return -1;
@@ -47,11 +47,11 @@ restart:
     InitJoystick();
     ResetKeyboard();
     g_SpriteEngine = new SpriteEngine();
-    if (Unknown6c6d18::RegisterChain() != 0)
+    if (App::RegisterChain() != 0)
     {
         goto stop;
     }
-    if (g_Unknown6c6d18.cfg.windowed == 0)
+    if (g_App.cfg.windowed == 0)
     {
         ShowCursor(FALSE);
     }
@@ -65,7 +65,7 @@ restart:
         }
         else
         {
-            testResult = g_Unknown6c6d18.d3dDevice->TestCooperativeLevel();
+            testResult = g_App.d3dDevice->TestCooperativeLevel();
             if (testResult == D3D_OK)
             {
                 renderResult = g_GameWindow.RunFrame();
@@ -77,13 +77,13 @@ restart:
             else if (testResult == D3DERR_DEVICENOTRESET)
             {
                 g_SpriteEngine->ReleaseSurfaces();
-                resetResult = g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);
+                resetResult = g_App.d3dDevice->Reset(&g_App.presentParams);
                 if (resetResult != 0)
                 {
                     goto stop;
                 }
                 SetDefaultRenderStates();
-                g_Unknown6c6d18.unk_198 = 3;
+                g_App.redrawFrames = 3;
             }
         }
     }
@@ -92,10 +92,10 @@ stop:
     g_Unknown6d3f50.Release();
     delete g_SpriteEngine;
     g_SpriteEngine = NULL;
-    if (g_Unknown6c6d18.d3dDevice != NULL)
+    if (g_App.d3dDevice != NULL)
     {
-        g_Unknown6c6d18.d3dDevice->Release();
-        g_Unknown6c6d18.d3dDevice = NULL;
+        g_App.d3dDevice->Release();
+        g_App.d3dDevice = NULL;
     }
     ShowWindow(g_GameWindow.hwnd, SW_HIDE);
     MoveWindow(g_GameWindow.hwnd, 0, 0, 0, 0, FALSE);
@@ -105,20 +105,20 @@ stop:
         g_Unknown69d998.cursor = g_Unknown69d998.buffer;
         *g_Unknown69d998.cursor = '\0';
         LogPrintf(&g_Unknown69d998, "再起動を要するオプションが変更されたので再起動します\n");
-        if (g_Unknown6c6d18.cfg.windowed == 0)
+        if (g_App.cfg.windowed == 0)
         {
             ShowCursor(TRUE);
         }
         goto restart;
     }
-    WriteToFile("東方紅魔郷.cfg", &g_Unknown6c6d18.cfg, sizeof(GameConfig));
+    WriteToFile("東方紅魔郷.cfg", &g_App.cfg, sizeof(GameConfig));
     SystemParametersInfoA(SPI_SETSCREENSAVEACTIVE, g_GameWindow.screenSaveActive, NULL, SPIF_SENDCHANGE);
     SystemParametersInfoA(SPI_SETLOWPOWERACTIVE, g_GameWindow.lowPowerActive, NULL, SPIF_SENDCHANGE);
     SystemParametersInfoA(SPI_SETPOWEROFFACTIVE, g_GameWindow.powerOffActive, NULL, SPIF_SENDCHANGE);
-    if (g_Unknown6c6d18.d3d != NULL)
+    if (g_App.d3d != NULL)
     {
-        g_Unknown6c6d18.d3d->Release();
-        g_Unknown6c6d18.d3d = NULL;
+        g_App.d3d->Release();
+        g_App.d3d = NULL;
     }
     ShowCursor(TRUE);
     g_Unknown69d998.Flush();
@@ -143,9 +143,9 @@ int GameWindow::RunFrame()
     if (this->curFrame == 0)
     {
     loop:
-        if (g_Unknown6c6d18.cfg.frameSkip <= this->curFrame)
+        if (g_App.cfg.frameSkip <= this->curFrame)
         {
-            if (g_Unknown6c6d18.ClearsBackBuffer())
+            if (g_App.ClearsBackBuffer())
             {
                 viewport.X = 0;
                 viewport.Y = 0;
@@ -153,21 +153,21 @@ int GameWindow::RunFrame()
                 viewport.Height = 480;
                 viewport.MinZ = 0.0f;
                 viewport.MaxZ = 1.0f;
-                g_Unknown6c6d18.d3dDevice->SetViewport(&viewport);
-                g_Unknown6c6d18.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, g_Stage.fog.color, 1.0f,
+                g_App.d3dDevice->SetViewport(&viewport);
+                g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, g_Stage.fog.color, 1.0f,
                                                  0);
-                g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+                g_App.d3dDevice->SetViewport(&g_App.viewport);
             }
-            g_Unknown6c6d18.d3dDevice->BeginScene();
+            g_App.d3dDevice->BeginScene();
             g_Chain.RunDrawChain();
-            g_Unknown6c6d18.d3dDevice->EndScene();
-            g_Unknown6c6d18.d3dDevice->SetTexture(0, NULL);
+            g_App.d3dDevice->EndScene();
+            g_App.d3dDevice->SetTexture(0, NULL);
         }
-        g_Unknown6c6d18.viewport.X = 0;
-        g_Unknown6c6d18.viewport.Y = 0;
-        g_Unknown6c6d18.viewport.Width = 640;
-        g_Unknown6c6d18.viewport.Height = 480;
-        g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+        g_App.viewport.X = 0;
+        g_App.viewport.Y = 0;
+        g_App.viewport.Width = 640;
+        g_App.viewport.Height = 480;
+        g_App.d3dDevice->SetViewport(&g_App.viewport);
         res = g_Chain.RunCalcChain();
         g_Unknown6d3f50.PlayQueuedSounds();
         if (res == 0)
@@ -180,9 +180,9 @@ int GameWindow::RunFrame()
         }
         this->curFrame++;
     }
-    if ((g_Unknown6c6d18.cfg.windowed != 0 || g_Unknown6c6d18.UsesPresentImmediate()) && this->curFrame != 0)
+    if ((g_App.cfg.windowed != 0 || g_App.UsesPresentImmediate()) && this->curFrame != 0)
     {
-        g_Unknown6c6d18.gameSpeed = 1.0f;
+        g_App.gameSpeed = 1.0f;
         timeBeginPeriod(1);
         now = timeGetTime();
         if (now < s_lastFrameTime)
@@ -198,35 +198,35 @@ int GameWindow::RunFrame()
                 s_lastFrameTime += 1000.0 / 60.0;
                 delta -= 1000.0 / 60.0;
             } while (delta >= 1000.0 / 60.0);
-            if (g_Unknown6c6d18.cfg.frameSkip < this->curFrame)
+            if (g_App.cfg.frameSkip < this->curFrame)
             {
                 goto present;
             }
             goto loop;
         }
     }
-    if (g_Unknown6c6d18.cfg.windowed == 0 && !g_Unknown6c6d18.UsesPresentImmediate())
+    if (g_App.cfg.windowed == 0 && !g_App.UsesPresentImmediate())
     {
-        if (g_Unknown6c6d18.cfg.frameSkip >= this->curFrame)
+        if (g_App.cfg.frameSkip >= this->curFrame)
         {
             PresentFrame();
             goto loop;
         }
     present:
         PresentFrame();
-        if (g_Unknown6c6d18.gameSpeed == 0.0f)
+        if (g_App.gameSpeed == 0.0f)
         {
             if (s_frames >= 2)
             {
                 timeBeginPeriod(1);
                 time2 = timeGetTime();
-                if (time2 < g_Unknown6c6d18.unk_1a4)
+                if (time2 < g_App.lastFrameTime)
                 {
-                    g_Unknown6c6d18.unk_1a4 = time2;
+                    g_App.lastFrameTime = time2;
                 }
-                ratio2 = time2 - g_Unknown6c6d18.unk_1a4;
+                ratio2 = time2 - g_App.lastFrameTime;
                 ratio2 = ratio2 * 60.0 / 2.0 / 1000.0;
-                ratio2 /= g_Unknown6c6d18.cfg.frameSkip + 1;
+                ratio2 /= g_App.cfg.frameSkip + 1;
                 if (ratio2 >= 0.865)
                 {
                     ratio2 = 1.0;
@@ -239,15 +239,15 @@ int GameWindow::RunFrame()
                 {
                     ratio2 = 0.5;
                 }
-                g_Unknown6c6d18.frameAdvance = ratio2;
-                g_Unknown6c6d18.unk_1a4 = time2;
+                g_App.frameAdvance = ratio2;
+                g_App.lastFrameTime = time2;
                 timeEndPeriod(1);
                 s_frames = 0;
             }
         }
         else
         {
-            g_Unknown6c6d18.frameAdvance = g_Unknown6c6d18.gameSpeed;
+            g_App.frameAdvance = g_App.gameSpeed;
         }
         this->curFrame = 0;
         s_frames++;
@@ -257,24 +257,24 @@ int GameWindow::RunFrame()
 
 void PresentFrame()
 {
-    if (g_Unknown6c6d18.d3dDevice->Present(NULL, NULL, NULL, NULL) < 0)
+    if (g_App.d3dDevice->Present(NULL, NULL, NULL, NULL) < 0)
     {
         g_SpriteEngine->ReleaseSurfaces();
-        g_Unknown6c6d18.d3dDevice->Reset(&g_Unknown6c6d18.presentParams);
+        g_App.d3dDevice->Reset(&g_App.presentParams);
         SetDefaultRenderStates();
-        g_Unknown6c6d18.unk_198 = 2;
+        g_App.redrawFrames = 2;
     }
     g_SpriteEngine->DoPendingCopy();
-    if (g_Unknown6c6d18.unk_198 != 0)
+    if (g_App.redrawFrames != 0)
     {
-        g_Unknown6c6d18.unk_198--;
+        g_App.redrawFrames--;
     }
 }
 
 int CreateD3d()
 {
-    g_Unknown6c6d18.d3d = Direct3DCreate8(D3D_SDK_VERSION);
-    if (g_Unknown6c6d18.d3d == NULL)
+    g_App.d3d = Direct3DCreate8(D3D_SDK_VERSION);
+    if (g_App.d3d == NULL)
     {
         LogError(&g_Unknown69d998, "Direct3D オブジェクトは何故か作成出来なかった\n");
         return 1;
@@ -297,7 +297,7 @@ void CreateGameWindow(HINSTANCE instance)
     g_GameWindow.isAppInactive = 0;
     wc.lpszClassName = "BASE";
     RegisterClassA(&wc);
-    if (g_Unknown6c6d18.cfg.windowed == 0)
+    if (g_App.cfg.windowed == 0)
     {
         width = 640;
         height = 480;
@@ -312,7 +312,7 @@ void CreateGameWindow(HINSTANCE instance)
                                  WS_VISIBLE | WS_SYSMENU | WS_MINIMIZEBOX, CW_USEDEFAULT, CW_USEDEFAULT, width, height,
                                  NULL, NULL, instance, NULL);
     }
-    g_Unknown6c6d18.hwnd = g_GameWindow.hwnd;
+    g_App.hwnd = g_GameWindow.hwnd;
 }
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -320,9 +320,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     switch (msg)
     {
     case MM_MOM_DONE:
-        if (g_Unknown6c6d18.midi != NULL)
+        if (g_App.midi != NULL)
         {
-            g_Unknown6c6d18.midi->ReleaseHeader((LPMIDIHDR)lParam);
+            g_App.midi->ReleaseHeader((LPMIDIHDR)lParam);
         }
         break;
     case WM_ACTIVATEAPP:
@@ -337,7 +337,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_SETCURSOR:
-        if (g_Unknown6c6d18.cfg.windowed == 0)
+        if (g_App.cfg.windowed == 0)
         {
             if (g_GameWindow.isAppInactive != 0)
             {
@@ -375,30 +375,30 @@ int InitD3dDevice()
     bool checkTextureFormat2 = true;
 
     memset(&params3, 0, sizeof(params3));
-    g_Unknown6c6d18.d3d->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &displayMode2);
-    if (g_Unknown6c6d18.cfg.windowed == 0)
+    g_App.d3d->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &displayMode2);
+    if (g_App.cfg.windowed == 0)
     {
-        if (g_Unknown6c6d18.cfg.flags.force16BitTextures == 1)
+        if (g_App.cfg.flags.force16BitTextures == 1)
         {
             params3.BackBufferFormat = D3DFMT_R5G6B5;
-            g_Unknown6c6d18.cfg.colorMode16Bits = 1;
+            g_App.cfg.colorMode16Bits = 1;
         }
-        else if (g_Unknown6c6d18.cfg.colorMode16Bits == 0xff)
+        else if (g_App.cfg.colorMode16Bits == 0xff)
         {
             if (displayMode2.Format == D3DFMT_X8R8G8B8 || displayMode2.Format == D3DFMT_A8R8G8B8)
             {
                 params3.BackBufferFormat = D3DFMT_X8R8G8B8;
-                g_Unknown6c6d18.cfg.colorMode16Bits = 0;
+                g_App.cfg.colorMode16Bits = 0;
                 LogPrintf(&g_Unknown69d998, "初回起動、画面を 32Bits で初期化しました\n");
             }
             else
             {
                 params3.BackBufferFormat = D3DFMT_R5G6B5;
-                g_Unknown6c6d18.cfg.colorMode16Bits = 1;
+                g_App.cfg.colorMode16Bits = 1;
                 LogPrintf(&g_Unknown69d998, "初回起動、画面を 16Bits で初期化しました\n");
             }
         }
-        else if (g_Unknown6c6d18.cfg.colorMode16Bits == 0)
+        else if (g_App.cfg.colorMode16Bits == 0)
         {
             params3.BackBufferFormat = D3DFMT_X8R8G8B8;
         }
@@ -406,7 +406,7 @@ int InitD3dDevice()
         {
             params3.BackBufferFormat = D3DFMT_R5G6B5;
         }
-        if (g_Unknown6c6d18.cfg.flags.force60Fps == 0)
+        if (g_App.cfg.flags.force60Fps == 0)
         {
             params3.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_ONE;
         }
@@ -416,7 +416,7 @@ int InitD3dDevice()
             params3.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_ONE;
             LogPrintf(&g_Unknown69d998, "リフレッシュレートを60Hzに変更します\n");
         }
-        if (g_Unknown6c6d18.cfg.frameSkip == 0)
+        if (g_App.cfg.frameSkip == 0)
         {
             params3.SwapEffect = D3DSWAPEFFECT_FLIP;
         }
@@ -436,33 +436,33 @@ int InitD3dDevice()
     params3.EnableAutoDepthStencil = TRUE;
     params3.AutoDepthStencilFormat = D3DFMT_D16;
     params3.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
-    g_Unknown6c6d18.lockableBackBuffer = 1;
-    memcpy(&g_Unknown6c6d18.presentParams, &params3, sizeof(params3));
+    g_App.lockableBackBuffer = 1;
+    memcpy(&g_App.presentParams, &params3, sizeof(params3));
 retry:
-    if (g_Unknown6c6d18.cfg.flags.referenceRasterizer)
+    if (g_App.cfg.flags.referenceRasterizer)
     {
         goto reference;
     }
-    if (g_Unknown6c6d18.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_GameWindow.hwnd,
+    if (g_App.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_GameWindow.hwnd,
                                           D3DCREATE_HARDWARE_VERTEXPROCESSING, &params3,
-                                          &g_Unknown6c6d18.d3dDevice) < 0)
+                                          &g_App.d3dDevice) < 0)
     {
         LogPrintf(&g_Unknown69d998, "T&L HAL は使用できないようです\n");
-        if (g_Unknown6c6d18.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_GameWindow.hwnd,
+        if (g_App.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_GameWindow.hwnd,
                                               D3DCREATE_SOFTWARE_VERTEXPROCESSING, &params3,
-                                              &g_Unknown6c6d18.d3dDevice) < 0)
+                                              &g_App.d3dDevice) < 0)
         {
             LogPrintf(&g_Unknown69d998, "HAL も使用できないようです\n");
         reference:
-            if (g_Unknown6c6d18.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, g_GameWindow.hwnd,
+            if (g_App.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, g_GameWindow.hwnd,
                                                   D3DCREATE_SOFTWARE_VERTEXPROCESSING, &params3,
-                                                  &g_Unknown6c6d18.d3dDevice) < 0)
+                                                  &g_App.d3dDevice) < 0)
             {
-                if (g_Unknown6c6d18.cfg.flags.force60Fps && g_Unknown6c6d18.presentImmediate == 0)
+                if (g_App.cfg.flags.force60Fps && g_App.presentImmediate == 0)
                 {
                     LogPrintf(&g_Unknown69d998, "リフレッシュレートが変更できません、vsync 非同期に変更します\n");
                     params3.FullScreen_RefreshRateInHz = 0;
-                    g_Unknown6c6d18.presentImmediate = 1;
+                    g_App.presentImmediate = 1;
                     params3.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
                     goto retry;
                 }
@@ -470,34 +470,34 @@ retry:
                 {
                     LogPrintf(&g_Unknown69d998, "バックバッファをロック不可能にしてみます\n");
                     params3.Flags = 0;
-                    g_Unknown6c6d18.lockableBackBuffer = 0;
+                    g_App.lockableBackBuffer = 0;
                     goto retry;
                 }
                 LogError(&g_Unknown69d998, "Direct3D の初期化に失敗、これではゲームは出来ません\n");
-                if (g_Unknown6c6d18.d3d != NULL)
+                if (g_App.d3d != NULL)
                 {
-                    g_Unknown6c6d18.d3d->Release();
-                    g_Unknown6c6d18.d3d = NULL;
+                    g_App.d3d->Release();
+                    g_App.d3d = NULL;
                 }
                 return 1;
             }
             else
             {
                 LogPrintf(&g_Unknown69d998, "REF で動作しますが、重すぎて恐らくゲームになりません...\n");
-                g_Unknown6c6d18.hardwareTnL = 0;
+                g_App.hardwareTnL = 0;
                 checkTextureFormat2 = false;
             }
         }
         else
         {
             LogPrintf(&g_Unknown69d998, "HAL で動作します\n");
-            g_Unknown6c6d18.hardwareTnL = 0;
+            g_App.hardwareTnL = 0;
         }
     }
     else
     {
         LogPrintf(&g_Unknown69d998, "T&L HAL で動作しま～す\n");
-        g_Unknown6c6d18.hardwareTnL = 1;
+        g_App.hardwareTnL = 1;
     }
     halfWidth = 320.0f;
     halfHeight4 = 240.0f;
@@ -508,43 +508,43 @@ retry:
         D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
         D3DXVECTOR3 lookAt(halfWidth, -halfHeight4, 0.0f);
         D3DXVECTOR3 from(halfWidth, -halfHeight4, -dist);
-        D3DXMatrixLookAtLH(&g_Unknown6c6d18.viewMatrix, &from, &lookAt, &up);
-        D3DXMatrixPerspectiveFovLH(&g_Unknown6c6d18.projectionMatrix, fovAngle, aspectXY, 100.0f, 10000.0f);
+        D3DXMatrixLookAtLH(&g_App.viewMatrix, &from, &lookAt, &up);
+        D3DXMatrixPerspectiveFovLH(&g_App.projectionMatrix, fovAngle, aspectXY, 100.0f, 10000.0f);
     }
-    g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_VIEW, &g_Unknown6c6d18.viewMatrix);
-    g_Unknown6c6d18.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_Unknown6c6d18.projectionMatrix);
-    g_Unknown6c6d18.d3dDevice->GetViewport(&g_Unknown6c6d18.viewport);
-    g_Unknown6c6d18.d3dDevice->GetDeviceCaps(&g_Unknown6c6d18.caps);
-    if (g_Unknown6c6d18.cfg.flags.unk0 == 0 && (g_Unknown6c6d18.caps.TextureOpCaps & D3DTEXOPCAPS_ADD) == 0)
+    g_App.d3dDevice->SetTransform(D3DTS_VIEW, &g_App.viewMatrix);
+    g_App.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_App.projectionMatrix);
+    g_App.d3dDevice->GetViewport(&g_App.viewport);
+    g_App.d3dDevice->GetDeviceCaps(&g_App.caps);
+    if (g_App.cfg.flags.unk0 == 0 && (g_App.caps.TextureOpCaps & D3DTEXOPCAPS_ADD) == 0)
     {
         LogPrintf(&g_Unknown69d998, "D3DTEXOPCAPS_ADD をサポートしていません、色加算エミュレートモードで動作します\n");
-        g_Unknown6c6d18.cfg.flags.unk0 = 1;
+        g_App.cfg.flags.unk0 = 1;
     }
-    if (g_Unknown6c6d18.UsesPresentImmediate() &&
-        (g_Unknown6c6d18.caps.PresentationIntervals & D3DPRESENT_INTERVAL_IMMEDIATE) == 0)
+    if (g_App.UsesPresentImmediate() &&
+        (g_App.caps.PresentationIntervals & D3DPRESENT_INTERVAL_IMMEDIATE) == 0)
     {
         LogPrintf(&g_Unknown69d998, "ビデオカードが非同期フリップをサポートしていません、Force60Frameで動作できません\n");
-        g_Unknown6c6d18.cfg.flags.force60Fps = 0;
+        g_App.cfg.flags.force60Fps = 0;
     }
-    if (g_Unknown6c6d18.cfg.flags.force16BitTextures == 0 && checkTextureFormat2)
+    if (g_App.cfg.flags.force16BitTextures == 0 && checkTextureFormat2)
     {
-        if (g_Unknown6c6d18.d3d->CheckDeviceFormat(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, params3.BackBufferFormat,
+        if (g_App.d3d->CheckDeviceFormat(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, params3.BackBufferFormat,
                                                    0, D3DRTYPE_TEXTURE, D3DFMT_A8R8G8B8) == D3D_OK)
         {
-            g_Unknown6c6d18.hasA8R8G8B8Textures = 1;
+            g_App.hasA8R8G8B8Textures = 1;
         }
         else
         {
-            g_Unknown6c6d18.hasA8R8G8B8Textures = 0;
-            g_Unknown6c6d18.cfg.flags.force16BitTextures = 1;
+            g_App.hasA8R8G8B8Textures = 0;
+            g_App.cfg.flags.force16BitTextures = 1;
             LogPrintf(&g_Unknown69d998, "D3DFMT_A8R8G8B8 をサポートしていません、減色モードで動作します\n");
         }
     }
     SetDefaultRenderStates();
     ClearViewport(0);
     g_GameWindow.isClosing = 0;
-    g_Unknown6c6d18.unk_1a4 = 0;
-    g_Unknown6c6d18.gameSpeed = 0.0f;
+    g_App.lastFrameTime = 0;
+    g_App.gameSpeed = 0.0f;
     return 0;
 }
 
@@ -553,95 +553,95 @@ void SetDefaultRenderStates()
     float fogDist;
     float fogDensity;
 
-    if (g_Unknown6c6d18.cfg.flags.noDepthTest == 0)
+    if (g_App.cfg.flags.noDepthTest == 0)
     {
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+        g_App.d3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
     }
     else
     {
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
+        g_App.d3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
     }
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-    if (g_Unknown6c6d18.cfg.flags.noGouraudShading == 0)
+    g_App.d3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+    g_App.d3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    g_App.d3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+    if (g_App.cfg.flags.noGouraudShading == 0)
     {
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
-    }
-    else
-    {
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_FLAT);
-    }
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-    if (g_Unknown6c6d18.cfg.flags.noDepthTest == 0)
-    {
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+        g_App.d3dDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
     }
     else
     {
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+        g_App.d3dDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_FLAT);
     }
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ALPHAREF, 4);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
-    if (g_Unknown6c6d18.cfg.flags.noFog == 0)
+    g_App.d3dDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    g_App.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+    if (g_App.cfg.flags.noDepthTest == 0)
     {
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
+        g_App.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
     }
     else
     {
-        g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+        g_App.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+    }
+    g_App.d3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+    g_App.d3dDevice->SetRenderState(D3DRS_ALPHAREF, 4);
+    g_App.d3dDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
+    if (g_App.cfg.flags.noFog == 0)
+    {
+        g_App.d3dDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
+    }
+    else
+    {
+        g_App.d3dDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
     }
     fogDensity = 1.0f;
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGDENSITY, *(DWORD *)&fogDensity);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, 0xffa0a0a0);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGDENSITY, *(DWORD *)&fogDensity);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, 0xffa0a0a0);
     fogDist = 1000.0f;
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&fogDist);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&fogDist);
     fogDist = 5000.0f;
-    g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&fogDist);
-    if (g_Unknown6c6d18.cfg.flags.noColorBlending == 0)
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&fogDist);
+    if (g_App.cfg.flags.noColorBlending == 0)
     {
-        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+        g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
     }
     else
     {
-        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+        g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
     }
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-    if (g_Unknown6c6d18.cfg.flags.noVertexBuffer == 0)
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+    if (g_App.cfg.flags.noVertexBuffer == 0)
     {
-        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
+        g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
     }
     else
     {
-        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
+        g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
     }
-    if (g_Unknown6c6d18.cfg.flags.noColorBlending == 0)
+    if (g_App.cfg.flags.noColorBlending == 0)
     {
-        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+        g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
     }
     else
     {
-        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+        g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
     }
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-    if (g_Unknown6c6d18.cfg.flags.noVertexBuffer == 0)
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+    if (g_App.cfg.flags.noVertexBuffer == 0)
     {
-        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR);
+        g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR);
     }
     else
     {
-        g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+        g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
     }
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_MIPFILTER, D3DTEXF_NONE);
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ADDRESSW, D3DTADDRESS_CLAMP);
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
-    g_Unknown6c6d18.d3dDevice->SetTextureStageState(0, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_MIPFILTER, D3DTEXF_NONE);
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ADDRESSW, D3DTADDRESS_CLAMP);
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
     if (g_SpriteEngine != NULL)
     {
         g_SpriteEngine->ClearBlendMode();

@@ -31,9 +31,9 @@ void SetDefaultRenderStates();
 // created.
 int InitD3dDevice();
 // Presents the frame. If that fails, resets the device (the surfaces
-// are released first and the states set again) and has unk_198 count
-// 2 frames; then does the SpriteEngine's pending copy and counts
-// unk_198 down.
+// are released first and the states set again) and has redrawFrames
+// count 2 frames; then does the SpriteEngine's pending copy and counts
+// redrawFrames down.
 void PresentFrame();
 
 // The game's window and the main loop's state.
@@ -46,7 +46,7 @@ struct GameWindow
     // the game is not the active app.
     int RunFrame();
 
-    // The window, also kept in g_Unknown6c6d18.hwnd.
+    // The window, also kept in g_App.hwnd.
     HWND hwnd;
     // Set when the window gets WM_CLOSE: the main loop ends.
     int isClosing;
@@ -235,8 +235,9 @@ struct GameConfig
     BYTE musicMode;
     // Whether sound effects play. 1, at most 1.
     BYTE playSounds;
-    // 1, at most 4.
-    BYTE unk_1d;
+    // The difficulty the menu starts on, the last one picked. 1, at most
+    // 4.
+    BYTE defaultDifficulty;
     // Whether the game runs in a window rather than full screen. 0, at
     // most 1.
     BYTE windowed;
@@ -256,9 +257,9 @@ ASSERT_SIZE(GameConfig, 0x38);
 // the file cannot be opened, -2 if writing fails.
 int WriteToFile(char *path, void *data, int size);
 
-// The global at 0x6c6d18: the window, settings and game speed. Larger
-// than its known fields.
-class Unknown6c6d18
+// The application, at 0x6c6d18: the window, device, input, settings,
+// scenes, music, archives and game speed. Larger than its known fields.
+class App
 {
 public:
     // Advances a frame counter split into whole frames and the fraction
@@ -317,12 +318,12 @@ public:
     static int RegisterChain();
     // The main update chain callback and its added and deleted
     // callbacks.
-    static int OnUpdate(Unknown6c6d18 *arg);
-    static int AddedCallback(Unknown6c6d18 *arg);
-    static int DeletedCallback(Unknown6c6d18 *arg);
+    static int OnUpdate(App *arg);
+    static int AddedCallback(App *arg);
+    static int DeletedCallback(App *arg);
     // The draw chain callback: resets the cached device state and draws
     // the frame rate. Returns 1.
-    static int OnDraw(Unknown6c6d18 *arg);
+    static int OnDraw(App *arg);
 
     // Whether the 60 frame mode presents without waiting for vsync.
     BOOL UsesPresentImmediate()
@@ -355,9 +356,11 @@ public:
     D3DPRESENT_PARAMETERS presentParams;
     // Loaded from and saved to "東方紅魔郷.cfg" by LoadConfig.
     GameConfig cfg;
-    // Another copy of the configuration; Player::OnUpdate refills the
-    // bombs from it.
-    GameConfig unk_14c;
+    // Another copy of the configuration, of which the lives and bombs
+    // count: set from the game's when a stage starts (outside the demo),
+    // read back on a continue; Player::OnUpdate refills the bombs from
+    // it and the Gui's penalty line reads its lives.
+    GameConfig startCfg;
     // Counts OnUpdate's calls.
     int frames;
     // The scene set up; OnUpdate switches it to `scene` when they
@@ -371,15 +374,20 @@ public:
     // The scene before `curScene`.
     int prevScene;
     unsigned char unk_194[0x4];
-    int unk_198;
-    // DrawFps shows the frame rate while it is 0.
-    int unk_19c;
+    // Frames left in which the Gui draws the items around the play area
+    // even though the back buffer is kept: set to 3 when a stage starts,
+    // on pausing, by Gui messages and after a device reset (2 when
+    // presenting fails); counted down by PresentFrame.
+    int redrawFrames;
+    // DrawFps shows the frame rate while it is 0; the ending sets it.
+    int hideFps;
     // Set when the 60 frame mode presents without waiting for vsync
     // (D3DPRESENT_INTERVAL_IMMEDIATE), because the refresh rate could
     // not be set to 60 Hz. Cleared by LoadConfig when the 60 frame mode
     // is forced.
     int presentImmediate;
-    DWORD unk_1a4;
+    // timeGetTime() when RunFrame last measured the frame rate.
+    DWORD lastFrameTime;
     // The part of a frame a Timer advances per frame while the game runs
     // slower than full speed. Movement per frame is scaled by it too.
     float frameAdvance;
@@ -389,10 +397,12 @@ public:
     // Plays music in MIDI mode; may be NULL.
     MidiPlayer *midi;
     // While g_GameManager.unk_1821 is set, DrawFps adds up every half
-    // second the frames there should have been (unk_1b8) and a share of
-    // them that shrinks as the frame rate drops (unk_1b4).
-    float unk_1b4;
-    float unk_1b8;
+    // second the frames there should have been (expectedFrames) and a
+    // share of them that shrinks as the frame rate drops
+    // (achievedFrames); the result screen and replays show the slowdown
+    // from them.
+    float achievedFrames;
+    float expectedFrames;
     // The open data archives; NULL where none is open.
     DatArchive *archives[0x10];
     // The paths the archives were opened from.
@@ -407,16 +417,17 @@ public:
     BYTE hasA8R8G8B8Textures;
     unsigned char unk_3ff[0x1];
     // timeGetTime() when AddedCallback ran.
-    DWORD unk_400;
+    // The title screen waits until 3 s after it to start the music.
+    DWORD startTime;
     // The device's capabilities.
     D3DCAPS8 caps;
 };
-extern Unknown6c6d18 g_Unknown6c6d18;
+extern App g_App;
 
 inline void Timer::Tick()
 {
     this->previous = this->current;
-    g_Unknown6c6d18.TickTimer(&this->current, &this->subFrame);
+    g_App.TickTimer(&this->current, &this->subFrame);
 }
 
 // The buttons held this frame and the frame before, as bits: 0x10 up,
@@ -497,19 +508,19 @@ public:
 };
 extern Rng g_Rng;
 
-// Points at Unknown6c6d18::archives.
+// Points at App::archives.
 extern DatArchive **g_Archives;
 
 // Sets up DirectInput like the DirectX 8 SDK's Keyboard and Joystick
 // samples: the keyboard, then the first joystick found, if any. Returns
 // 0, or -1 if DirectInput is off or the keyboard fails.
-int InitDirectInput(Unknown6c6d18 *game);
+int InitDirectInput(App *game);
 
 
-// Creates g_Unknown6c6d18.d3d. Returns 0, or 1 after logging an error.
+// Creates g_App.d3d. Returns 0, or 1 after logging an error.
 int CreateD3d();
 
-// Scene set-up functions Unknown6c6d18::OnUpdate calls. They return
+// Scene set-up functions App::OnUpdate calls. They return
 // nonzero on failure.
 // Zeroes g_MainMenu and adds its elements; `unk` starts it in state
 // 12 instead of 0.
@@ -837,12 +848,12 @@ public:
     static int DeletedCallback(Gui *gui);
 
     // Runs impl->StartMsgScript(`index`) and sets
-    // g_Unknown6c6d18.unk_198 to 3.
+    // g_App.redrawFrames to 3.
     void StartMsg(int index);
     // Whether impl->unk_2424 shows a sprite and has flag 13.
     BOOL Func4172d3();
     // Shows the player's bomb, spell card `name`, with sprite `sprite`
-    // (scripts 0x4a1 and 0x706), sets g_Unknown6c6d18.unk_198 to 3 and
+    // (scripts 0x4a1 and 0x706), sets g_App.redrawFrames to 3 and
     // plays sound 14.
     void ShowBombName(int sprite, char *name);
     // Shows sprite `sprite` + 0x4a8 with `text` (scripts 0x4a3 and 0x707)

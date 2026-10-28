@@ -1113,6 +1113,36 @@ int ResultScreen::RegisterChain(int unk)
     return 0;
 }
 
+int ResultScreen::DeletedCallback(ResultScreen *screen)
+{
+    int i;
+    int j;
+
+    if (screen->scoreDat != NULL)
+    {
+        SaveScoreDat(screen);
+        ReleaseScoreDat(screen->scoreDat);
+    }
+    screen->scoreDat = NULL;
+    for (i = 0; i < 5; i++)
+    {
+        for (j = 0; j < 4; j++)
+        {
+            screen->ReleaseScores(i, j);
+        }
+    }
+    g_SpriteEngine->ReleaseAnm(0x25);
+    g_SpriteEngine->ReleaseAnm(0x26);
+    g_SpriteEngine->ReleaseAnm(0x27);
+    g_SpriteEngine->ReleaseAnm(0x28);
+    g_SpriteEngine->ReleaseSurface(0);
+    g_Chain.Remove(screen->drawChain);
+    screen->drawChain = NULL;
+    delete screen;
+    screen = NULL;
+    return 0;
+}
+
 void MoveCursorVertical(ResultScreen *screen, int count)
 {
     if (WAS_PRESSED_OR_HELD(0x10))

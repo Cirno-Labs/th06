@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">66.88% (315)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">23.78% (112)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">67.09% (316)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">23.57% (111)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="499.59" height="6" x="0" y="0" class="named"/>
-<rect width="69.78" height="6" x="499.59" y="0" class="decompiled"/>
-<rect width="177.63" height="6" x="569.37" y="0" class="todo"/>
+<rect width="501.17" height="6" x="0" y="0" class="named"/>
+<rect width="69.78" height="6" x="501.17" y="0" class="decompiled"/>
+<rect width="176.04" height="6" x="570.96" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -433,7 +433,7 @@
 <rect width="12" height="12" x="180" y="105" class="todo"><title>0x0042d98e ResultScreen::OnUpdate (2744 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="105" class="todo"><title>0x0042e446 ResultScreen::OnDraw (3098 bytes)</title></rect>
 <rect width="12" height="12" x="210" y="105" class="todo"><title>0x0042f060 ResultScreen::AddedCallback (1372 bytes)</title></rect>
-<rect width="12" height="12" x="225" y="105" class="todo"><title>0x0042f5bc ResultScreen::DeletedCallback (264 bytes)</title></rect>
+<rect width="12" height="12" x="225" y="105" class="named"><title>0x0042f5bc ResultScreen::DeletedCallback (264 bytes)</title></rect>
 <rect width="12" height="12" x="240" y="105" class="named"><title>0x0042f6c4 DebugPrint2 (5 bytes)</title></rect>
 <rect width="12" height="12" x="255" y="105" class="todo"><title>0x0042f6d0 Func42f6d0 (184 bytes)</title></rect>
 <rect width="12" height="12" x="270" y="105" class="todo"><title>0x0042f790 Func42f790 (102 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">51.17%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">44.02%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">51.28%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">43.91%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="382.21" height="6" x="0" y="0" class="named"/>
-<rect width="35.95" height="6" x="382.21" y="0" class="decompiled"/>
-<rect width="328.84" height="6" x="418.16" y="0" class="todo"/>
+<rect width="383.04" height="6" x="0" y="0" class="named"/>
+<rect width="35.95" height="6" x="383.04" y="0" class="decompiled"/>
+<rect width="328.01" height="6" x="418.99" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -756,7 +756,7 @@
 <rect width="8.47" height="8.35" x="620.06" y="141.65" class="named"><title>0x00413450 BulletManager::BulletManager (270 bytes)</title></rect>
 <rect width="8.23" height="8.60" x="631.53" y="24.95" class="named"><title>0x00429820 Player::FireShots (270 bytes)</title></rect>
 <rect width="8.14" height="8.60" x="642.75" y="24.95" class="named"><title>0x00429710 Player::UpdateFiring (268 bytes)</title></rect>
-<rect width="7.98" height="8.60" x="653.90" y="24.95" class="todo"><title>0x0042f5bc ResultScreen::DeletedCallback (264 bytes)</title></rect>
+<rect width="7.98" height="8.60" x="653.90" y="24.95" class="named"><title>0x0042f5bc ResultScreen::DeletedCallback (264 bytes)</title></rect>
 <rect width="7.77" height="8.60" x="664.88" y="24.95" class="named"><title>0x0042d18f MoveCursorHorizontal (259 bytes)</title></rect>
 <rect width="7.69" height="8.60" x="675.65" y="24.95" class="named"><title>0x00401140 AsciiText::OnUpdate (257 bytes)</title></rect>
 <rect width="7.69" height="8.60" x="686.33" y="24.95" class="named"><title>0x00404860 Stage::StepObjects (257 bytes)</title></rect>

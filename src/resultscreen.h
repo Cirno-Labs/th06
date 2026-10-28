@@ -198,6 +198,10 @@ public:
         memset(this, 0, sizeof(ResultScreen));
         this->cursor = 1;
     }
+    ~ResultScreen()
+    {
+        MemFree(this->scoreDat);
+    }
 
     // Allocates the screen and adds it to the chains (update priority
     // 0xd, draw 0xc). With `unk` set, it starts in state 9, or 0x11 when
@@ -206,6 +210,9 @@ public:
     static int OnUpdate(ResultScreen *screen);
     static int OnDraw(ResultScreen *screen);
     static int AddedCallback(ResultScreen *screen);
+    // Saves and frees the score file, empties the lists, releases ANMs
+    // 0x25 to 0x28 and surface 0, removes the draw element and deletes
+    // the screen. Returns 0.
     static int DeletedCallback(ResultScreen *screen);
     // Frees the entries of the high score list for `difficulty` and
     // `shot` (0 to 4 and 0 to 3).

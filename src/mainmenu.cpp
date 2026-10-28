@@ -273,6 +273,75 @@ int LoadTitleResources(MainMenu *menu)
     return 0;
 }
 
+int LoadSelectResources(MainMenu *menu)
+{
+    int i;
+    Sprite *vm;
+
+    for (i = 0x15; i <= 0x1a; i++)
+    {
+        g_SpriteEngine->ReleaseAnm(i);
+    }
+    if (g_SpriteEngine->LoadSurface(0, "data/title/select00.jpg") != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x1b, "data/select01.anm", 0x150) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x1c, "data/select02.anm", 0x153) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x1d, "data/select03.anm", 0x15a) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x1e, "data/select04.anm", 0x15c) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x1f, "data/select05.anm", 0x155) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x20, "data/slpl00a.anm", 0x156) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x21, "data/slpl00b.anm", 0x157) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x22, "data/slpl01a.anm", 0x158) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x23, "data/slpl01b.anm", 0x159) != 0)
+    {
+        return -1;
+    }
+    for (vm = &menu->sprites[0x50], i = 0x150; i <= 0x15f; i++, vm++)
+    {
+        g_SpriteEngine->Func4051b0(vm, i);
+        vm->flags.unk0 = 0;
+        vm->flags.colorOp = 1;
+        if (!g_Unknown6c6d18.cfg.flags.unk0)
+        {
+            vm->color = 0xff000000;
+        }
+        else
+        {
+            vm->color = 0xffffffff;
+        }
+        vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        vm->unk_0b2 = vm->spriteIndex;
+        vm->flags.zWriteDisabled = 1;
+    }
+    return 0;
+}
+
 int LoadReplayMenuResources(MainMenu *menu)
 {
     int i;

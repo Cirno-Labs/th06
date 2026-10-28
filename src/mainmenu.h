@@ -108,3 +108,9 @@ int LoadTitleResources(MainMenu *menu);
 // starting scripts 0x160 to 0x179 on sprites 0x60 on. Returns 0, or -1
 // if a file fails to load.
 int LoadReplayMenuResources(MainMenu *menu);
+
+// Frees the title's sprites (slots 0x15 to 0x1a) and loads the
+// difficulty and character select's background and sprites (slots 0x1b
+// to 0x23), starting scripts 0x150 to 0x15f on sprites 0x50 on. Returns
+// 0, or -1 if a file fails to load.
+int LoadSelectResources(MainMenu *menu);

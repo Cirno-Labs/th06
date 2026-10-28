@@ -434,7 +434,7 @@ address,size,name,symbol
 0x00439965,369,MainMenu::DrawPracticeScores,?DrawPracticeScores@MainMenu@@QAEHXZ
 0x00439ad6,714,MainMenu::OnDraw,?OnDraw@MainMenu@@SAHPAV1@@Z
 0x00439da0,488,LoadTitleResources,?LoadTitleResources@@YAHPAVMainMenu@@@Z
-0x00439f88,612,Func439f88,
+0x00439f88,612,LoadSelectResources,?LoadSelectResources@@YAHPAVMainMenu@@@Z
 0x0043a1ec,332,LoadReplayMenuResources,?LoadReplayMenuResources@@YAHPAVMainMenu@@@Z
 0x0043a338,300,SetUpTitleScene,?SetUpTitleScene@@YAHH@Z
 0x0043a464,501,MainMenu::AddedCallback,?AddedCallback@MainMenu@@SAHPAV1@@Z

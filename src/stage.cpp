@@ -532,7 +532,7 @@ int Stage::DrawLayer(int layer)
                         spr->scaleX = (screenRight.x - scrPos.x) / width;
                         spr->scaleY = spr->scaleX;
                         spr->pos = scrPos;
-                        g_SpriteEngine->Func432fa0(spr);
+                        g_SpriteEngine->DrawNoRound(spr);
                     }
                     else
                     {

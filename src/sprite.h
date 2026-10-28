@@ -285,7 +285,8 @@ public:
         this->SetScript(vm, this->scripts[script]);
     }
     int Func433150(Sprite *sprite);
-    int Func432fa0(Sprite *sprite);
+    // Draw without snapping the corners to pixel centers.
+    int DrawNoRound(Sprite *vm);
     int Func433590(Sprite *sprite);
     // Frees the ANM file loaded into `slot` and clears its scripts.
     void ReleaseAnm(int slot);

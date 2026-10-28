@@ -606,3 +606,45 @@ int SpriteEngine::DrawRotated(Sprite *vm)
     }
     return this->DrawQuad(vm, 0);
 }
+
+int SpriteEngine::DrawNoRound(Sprite *vm)
+{
+    float w;
+    float h;
+
+    if (!vm->flags.unk0)
+    {
+        return -1;
+    }
+    if (!vm->flags.visible)
+    {
+        return -1;
+    }
+    if (vm->color == 0)
+    {
+        return -1;
+    }
+    w = vm->spriteData->width * vm->scaleX / 2.0f;
+    h = vm->spriteData->height * vm->scaleY / 2.0f;
+    if ((vm->flags.anchor & 1) == 0)
+    {
+        g_Quad[0].pos.x = g_Quad[2].pos.x = vm->pos.x - w;
+        g_Quad[1].pos.x = g_Quad[3].pos.x = w + vm->pos.x;
+    }
+    else
+    {
+        g_Quad[0].pos.x = g_Quad[2].pos.x = vm->pos.x;
+        g_Quad[1].pos.x = g_Quad[3].pos.x = w + vm->pos.x + w;
+    }
+    if ((vm->flags.anchor & 2) == 0)
+    {
+        g_Quad[0].pos.y = g_Quad[1].pos.y = vm->pos.y - h;
+        g_Quad[2].pos.y = g_Quad[3].pos.y = h + vm->pos.y;
+    }
+    else
+    {
+        g_Quad[0].pos.y = g_Quad[1].pos.y = vm->pos.y;
+        g_Quad[2].pos.y = g_Quad[3].pos.y = h + vm->pos.y + h;
+    }
+    return this->DrawQuad(vm, 0);
+}

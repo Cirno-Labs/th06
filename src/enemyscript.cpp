@@ -2072,3 +2072,37 @@ void Func40dbc0(Enemy *enemy, EnemyScriptInstr *instr)
     }
     enemy->ctx.intVars[3]++;
 }
+
+// g_EnemyScriptFuncs[14]: fires the enemy's shooter every 48 along each
+// of its first eight lasers that is active, counting them in
+// intVars[3].
+void Func40dcc0(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    float r3;
+    float cs2;
+    Laser *l2;
+    float sn3;
+    int i2;
+    D3DXVECTOR3 pos;
+
+    enemy->ctx.intVars[3] = 0;
+    for (i2 = 0; i2 < 8; i2++)
+    {
+        if (enemy->lasers[i2] != NULL && enemy->lasers[i2]->active)
+        {
+            l2 = enemy->lasers[i2];
+            r3 = l2->startOffset;
+            SinCos(&sn3, &cs2, l2->angle);
+            while (l2->endOffset > r3)
+            {
+                pos.x = cs2 * r3 + l2->pos.x;
+                pos.y = sn3 * r3 + l2->pos.y;
+                pos.z = 0.0f;
+                enemy->shooter.pos = pos;
+                g_BulletManager.FirePattern(&enemy->shooter);
+                r3 += 48.0f;
+            }
+            enemy->ctx.intVars[3]++;
+        }
+    }
+}

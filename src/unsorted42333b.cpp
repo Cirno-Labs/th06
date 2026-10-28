@@ -711,7 +711,7 @@ int Unknown6c6d18::LoadConfig(char *path)
     {
         Func41e4d0(&g_Unknown69d998, "パッド、キーボードの入力に DirectInput を使用しません\n");
     }
-    if (Func41e460(path, &g_Unknown6c6d18.cfg, sizeof(GameConfig)) != 0)
+    if (WriteToFile(path, &g_Unknown6c6d18.cfg, sizeof(GameConfig)) != 0)
     {
         Func41e620(&g_Unknown69d998, "ファイルが書き出せません %s\n", path);
         Func41e620(&g_Unknown69d998, "フォルダが書込み禁止属性になっているか、ディスクがいっぱいいっぱいになってませんか？\n");

@@ -261,9 +261,9 @@ struct GameConfig
 };
 ASSERT_SIZE(GameConfig, 0x38);
 
-// Writes `size` bytes of `data` to the file at `path`. Returns nonzero on
-// failure.
-int Func41e460(char *path, void *data, int size);
+// Writes `size` bytes of `data` to the file at `path`. Returns 0, -1 if
+// the file cannot be opened, -2 if writing fails.
+int WriteToFile(char *path, void *data, int size);
 
 // The global at 0x6c6d18: the window, settings and game speed. Larger
 // than its known fields.

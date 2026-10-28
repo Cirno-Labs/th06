@@ -402,7 +402,7 @@ void SaveScoreDat(ResultScreen *screen)
         p24++;
         m--;
     }
-    Func41e460("score.dat", buf, size0);
+    WriteToFile("score.dat", buf, size0);
     free(buf);
 }
 

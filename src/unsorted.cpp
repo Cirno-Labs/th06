@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdio.h>
 
 #include "unsorted.h"
 
@@ -409,4 +410,22 @@ void Unknown41e150::Release()
         this->font->Release();
         this->font = NULL;
     }
+}
+
+int WriteToFile(char *path, void *data, int size)
+{
+    FILE *file;
+
+    file = fopen(path, "wb");
+    if (file == NULL)
+    {
+        return -1;
+    }
+    if (fwrite(data, 1, size, file) != size)
+    {
+        fclose(file);
+        return -2;
+    }
+    fclose(file);
+    return 0;
 }

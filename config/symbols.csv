@@ -203,7 +203,7 @@ address,size,name,symbol
 0x0041e210,75,Unknown41e150::Draw,?Draw@Unknown41e150@@QAEHPADHHK@Z
 0x0041e260,48,Unknown41e150::Release,?Release@Unknown41e150@@QAEXXZ
 0x0041e290,456,Func41e290,?Func41e290@@YAPAXPADH@Z
-0x0041e460,99,Func41e460,?Func41e460@@YAHPADPAXH@Z
+0x0041e460,99,WriteToFile,?WriteToFile@@YAHPADPAXH@Z
 0x0041e4d0,331,Func41e4d0,?Func41e4d0@@YAHPAVUnknown69d998@@PBDZZ
 0x0041e620,341,Func41e620,?Func41e620@@YAHPAVUnknown69d998@@PBDZZ
 0x0041e780,99,Rng::GetRandomU16,?GetRandomU16@Rng@@QAEGXZ
@@ -1011,7 +1011,7 @@ address,size,name,symbol
 0x0045ca0b,19,_fopen,_fopen
 0x0045ca20,45,_strrchr,
 0x0045ca4d,263,__fwrite_lk,
-0x0045cb54,66,_fwrite,_fwrite
+0x0045cb54,66,fwrite,_fwrite
 0x0045cb96,10,Func45cb96,
 0x0045cba0,139,_strlen,_strlen
 0x0045cc30,96,_memset,_memset

@@ -111,7 +111,7 @@ stop:
         }
         goto restart;
     }
-    Func41e460("東方紅魔郷.cfg", &g_Unknown6c6d18.cfg, sizeof(GameConfig));
+    WriteToFile("東方紅魔郷.cfg", &g_Unknown6c6d18.cfg, sizeof(GameConfig));
     SystemParametersInfoA(SPI_SETSCREENSAVEACTIVE, g_GameWindow.screenSaveActive, NULL, SPIF_SENDCHANGE);
     SystemParametersInfoA(SPI_SETLOWPOWERACTIVE, g_GameWindow.lowPowerActive, NULL, SPIF_SENDCHANGE);
     SystemParametersInfoA(SPI_SETPOWEROFFACTIVE, g_GameWindow.powerOffActive, NULL, SPIF_SENDCHANGE);

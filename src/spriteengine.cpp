@@ -390,7 +390,7 @@ void SpriteEngine::SetScript(Sprite *vm, void *script)
     vm->scriptStart = (AnmInstr *)script;
     vm->scriptPos = vm->scriptStart;
     vm->scriptTime.Set(0);
-    vm->flags.unk0 = 0;
+    vm->flags.shown = 0;
     if (script != NULL)
     {
         this->Step(vm);
@@ -536,7 +536,7 @@ int SpriteEngine::Draw(Sprite *vm)
     float w;
     float h;
 
-    if (!vm->flags.unk0)
+    if (!vm->flags.shown)
     {
         return -1;
     }
@@ -593,7 +593,7 @@ int SpriteEngine::DrawRotated(Sprite *vm)
     {
         return this->Draw(vm);
     }
-    if (!vm->flags.unk0)
+    if (!vm->flags.shown)
     {
         return -1;
     }
@@ -644,7 +644,7 @@ int SpriteEngine::DrawNoRound(Sprite *vm)
     float w;
     float h;
 
-    if (!vm->flags.unk0)
+    if (!vm->flags.shown)
     {
         return -1;
     }
@@ -687,7 +687,7 @@ int SpriteEngine::Draw3D(Sprite *vm)
     D3DXMATRIX rotationMatrix;
     D3DXMATRIX worldMatrix;
 
-    if (!vm->flags.unk0)
+    if (!vm->flags.shown)
     {
         return -1;
     }
@@ -779,7 +779,7 @@ int SpriteEngine::Draw3DRounded(Sprite *vm)
     D3DXMATRIX rotationMatrix;
     D3DXMATRIX worldMatrix;
 
-    if (!vm->flags.unk0)
+    if (!vm->flags.shown)
     {
         return -1;
     }
@@ -865,12 +865,12 @@ int SpriteEngine::Step(Sprite *vm)
         switch (curInstr->opcode)
         {
         case 0:
-            vm->flags.unk0 = 0;
+            vm->flags.shown = 0;
         case 15:
             vm->scriptPos = NULL;
             return 1;
         case 1:
-            vm->flags.unk0 = 1;
+            vm->flags.shown = 1;
             this->SetSprite(vm, curInstr->args[0] + this->scriptSpriteOffsets[vm->scriptIndex]);
             vm->spriteTime = vm->scriptTime.AsFrames();
             break;
@@ -878,7 +878,7 @@ int SpriteEngine::Step(Sprite *vm)
         {
             int *spriteArgs;
 
-            vm->flags.unk0 = 1;
+            vm->flags.shown = 1;
             spriteArgs = curInstr->args;
             this->SetSprite(vm, spriteArgs[0] + g_Rng.GetRandomU16InRange(*(WORD *)&spriteArgs[1]) +
                                     this->scriptSpriteOffsets[vm->scriptIndex]);
@@ -1012,7 +1012,7 @@ int SpriteEngine::Step(Sprite *vm)
             vm->posInterpTimer.Set(0);
             break;
         case 24:
-            vm->flags.unk0 = 0;
+            vm->flags.shown = 0;
         case 21:
         {
             AnmInstr *fallback;
@@ -1049,11 +1049,11 @@ int SpriteEngine::Step(Sprite *vm)
             curInstr = (AnmInstr *)((BYTE *)curInstr + 4 + curInstr->argsSize);
             vm->scriptPos = curInstr;
             vm->scriptTime.Set(vm->scriptPos->time);
-            vm->flags.unk0 = 1;
+            vm->flags.shown = 1;
             continue;
         }
         case 29:
-            vm->flags.unk0 = curInstr->args[0];
+            vm->flags.shown = curInstr->args[0];
             break;
         case 23:
             vm->flags.anchor = 3;
@@ -1240,7 +1240,7 @@ void SpriteEngine::RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shado
                                    sprite->spriteData->startY, sprite->spriteData->textureWidth,
                                    sprite->spriteData->textureHeight, fontW, sprite->fontHeight, textColor, shadowColor,
                                    buf);
-    sprite->flags.unk0 = 1;
+    sprite->flags.shown = 1;
 }
 
 void SpriteEngine::RenderTextRightAligned(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...)
@@ -1262,7 +1262,7 @@ void SpriteEngine::RenderTextRightAligned(Sprite *vm, D3DCOLOR color, D3DCOLOR s
     this->RenderTextToTextureIndex(vm->spriteData->sourceFileIndex, xPos, vm->spriteData->startY,
                                    vm->spriteData->textureWidth, vm->spriteData->textureHeight, fontW, vm->fontHeight,
                                    color, shadowColor, buf);
-    vm->flags.unk0 = 1;
+    vm->flags.shown = 1;
 }
 
 void SpriteEngine::RenderTextCentered(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...)
@@ -1284,7 +1284,7 @@ void SpriteEngine::RenderTextCentered(Sprite *vm, D3DCOLOR color, D3DCOLOR shado
     this->RenderTextToTextureIndex(vm->spriteData->sourceFileIndex, xPos, vm->spriteData->startY,
                                    vm->spriteData->textureWidth, vm->spriteData->textureHeight, fontW, vm->fontHeight,
                                    color, shadowColor, buf);
-    vm->flags.unk0 = 1;
+    vm->flags.shown = 1;
 }
 
 int SpriteEngine::LoadSurface(int surface, char *path)

@@ -19,7 +19,7 @@ int PauseMenu::UpdatePauseMenu()
         this->state = 3;
         for (i = 0; i < 6; i++)
         {
-            if (this->sprites[i].flags.unk0)
+            if (this->sprites[i].flags.shown)
             {
                 this->sprites[i].pendingInterrupt = 2;
             }
@@ -32,7 +32,7 @@ int PauseMenu::UpdatePauseMenu()
         this->state = 6;
         for (i = 0; i < 6; i++)
         {
-            if (this->sprites[i].flags.unk0)
+            if (this->sprites[i].flags.shown)
             {
                 this->sprites[i].pendingInterrupt = 2;
             }
@@ -124,7 +124,7 @@ int PauseMenu::UpdatePauseMenu()
             g_GameManager.isPaused = 0;
             for (i = 0; i < 6; i++)
             {
-                this->sprites[i].ClearUnk0();
+                this->sprites[i].ClearShown();
             }
         }
         break;
@@ -192,7 +192,7 @@ int PauseMenu::UpdatePauseMenu()
             g_App.scene = 1;
             for (i = 0; i < 6; i++)
             {
-                this->sprites[i].ClearUnk0();
+                this->sprites[i].ClearShown();
             }
         }
         break;
@@ -229,7 +229,7 @@ void PauseMenu::DrawPauseMenu()
         }
         for (i = 0; i < 6; i++)
         {
-            if (this->sprites[i].flags.unk0)
+            if (this->sprites[i].flags.shown)
             {
                 g_SpriteEngine->Draw(&this->sprites[i]);
             }
@@ -356,7 +356,7 @@ int PauseMenu::UpdateContinueMenu()
             g_App.scene = 7;
             for (i = 0; i < 4; i++)
             {
-                this->sprites[i].ClearUnk0();
+                this->sprites[i].ClearShown();
             }
             g_GameManager.guiScore = g_GameManager.score;
             return 0;
@@ -370,7 +370,7 @@ int PauseMenu::UpdateContinueMenu()
             g_GameManager.isInContinueMenu = 0;
             for (i = 0; i < 4; i++)
             {
-                this->sprites[i].ClearUnk0();
+                this->sprites[i].ClearShown();
             }
             g_GameManager.continuesUsed++;
             g_GameManager.guiScore = g_GameManager.continuesUsed;
@@ -426,7 +426,7 @@ void PauseMenu::DrawContinueMenu()
         }
         for (i = 0; i < 4; i++)
         {
-            if (this->sprites[i].flags.unk0)
+            if (this->sprites[i].flags.shown)
             {
                 g_SpriteEngine->Draw(&this->sprites[i]);
             }
@@ -497,7 +497,7 @@ void AsciiText::DrawStrings()
     D3DXVECTOR3 pos;
 
     string = this->strings;
-    this->glyph.flags.unk0 = 1;
+    this->glyph.flags.shown = 1;
     this->glyph.flags.anchor = 3;
     for (idx = 0; idx < this->stringCount; idx++, string++)
     {

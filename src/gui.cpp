@@ -387,10 +387,10 @@ int Gui::LoadResources()
     this->impl->bombName.scriptPos = NULL;
     this->impl->spellPortrait.scriptPos = NULL;
     this->impl->spellName.scriptPos = NULL;
-    this->impl->bombPortrait.flags.unk0 = 0;
-    this->impl->bombName.flags.unk0 = 0;
-    this->impl->spellPortrait.flags.unk0 = 0;
-    this->impl->spellName.flags.unk0 = 0;
+    this->impl->bombPortrait.flags.shown = 0;
+    this->impl->bombName.flags.shown = 0;
+    this->impl->spellPortrait.flags.shown = 0;
+    this->impl->spellName.flags.shown = 0;
     this->impl->bombName.fontWidth = 15;
     this->impl->bombName.fontHeight = 15;
     this->impl->spellName.fontWidth = 15;
@@ -1141,7 +1141,7 @@ void Gui::DrawBanners()
 {
     D3DXVECTOR3 pos;
 
-    if (this->impl->stageName.flags.unk0)
+    if (this->impl->stageName.flags.shown)
     {
         pos.x = 168.0f;
         pos.y = 198.0f;
@@ -1174,19 +1174,19 @@ void Gui::DrawBanners()
         }
         g_AsciiText.color = 0xffffffff;
     }
-    if (this->impl->songName.flags.unk0 && !g_GameManager.isInDemo)
+    if (this->impl->songName.flags.shown && !g_GameManager.isInDemo)
     {
         g_SpriteEngine->Draw3DRounded(&this->impl->songName);
     }
-    if (this->impl->bombPortrait.flags.unk0)
+    if (this->impl->bombPortrait.flags.shown)
     {
         g_SpriteEngine->Draw(&this->impl->bombPortrait);
     }
-    if (this->impl->spellPortrait.flags.unk0)
+    if (this->impl->spellPortrait.flags.shown)
     {
         g_SpriteEngine->Draw(&this->impl->spellPortrait);
     }
-    if (this->impl->bombName.flags.unk0)
+    if (this->impl->bombName.flags.shown)
     {
         this->impl->bombNameBar.pos = this->impl->bombName.pos;
         this->impl->bombNameBar.pos.x += this->bombNameWidth * 16.0f / 15.0f / 2.0f + -128.0f - 16.0f;
@@ -1194,7 +1194,7 @@ void Gui::DrawBanners()
         g_SpriteEngine->Draw(&this->impl->bombNameBar);
         g_SpriteEngine->Draw(&this->impl->bombName);
     }
-    if (this->impl->spellName.flags.unk0)
+    if (this->impl->spellName.flags.shown)
     {
         this->impl->spellNameBar.pos = this->impl->spellName.pos;
         this->impl->spellNameBar.pos.x += 128.0f - this->spellNameWidth * 16.0f / 15.0f / 2.0f;

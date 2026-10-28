@@ -68,9 +68,10 @@ ASSERT_SIZE(SpriteData, 0x38);
 // Sprite's flags, a bitfield.
 struct SpriteFlags
 {
-    // SpriteEngine::Draw skips the sprite without it; RenderText sets
-    // it.
-    unsigned int unk0 : 1;
+    // Set by the script as it shows a sprite (instructions 1, 16, 29)
+    // and by RenderText, cleared as it ends or hides it (0, 24, 29);
+    // SpriteEngine::Draw skips the sprite without it.
+    unsigned int shown : 1;
     // Shows the sprite.
     unsigned int visible : 1;
     // Selects SpriteEngine::Draw's D3DRS_DESTBLEND.
@@ -121,9 +122,9 @@ public:
 
     // Resets the sprite's state, keeping its texture.
     void Initialize();
-    void ClearUnk0()
+    void ClearShown()
     {
-        this->flags.unk0 = 0;
+        this->flags.shown = 0;
     }
     // Whether the sprite shows a sprite whose texture is loaded.
     __forceinline BOOL HasTexture();

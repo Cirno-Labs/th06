@@ -551,7 +551,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
         for (text3 = &menu->sprites[g_GameManager.character * 2 + 0x5c], i = 0; i < 2; i++, text3++)
         {
             text3->flags.colorOp = 1;
-            text3->flags.unk0 = 1;
+            text3->flags.shown = 1;
             if (i != menu->cursor)
             {
                 if (!g_App.cfg.flags.unk0)
@@ -1889,7 +1889,7 @@ int LoadTitleResources(MainMenu *menu)
     for (i = 0; i < 0x50; i++)
     {
         g_SpriteEngine->StartScriptAtOrigin(&menu->sprites[i], i + 0x100);
-        menu->sprites[i].flags.unk0 = 0;
+        menu->sprites[i].flags.shown = 0;
         menu->sprites[i].baseSpriteIndex = menu->sprites[i].spriteIndex;
         menu->sprites[i].flags.zWriteDisabled = 1;
     }
@@ -1952,7 +1952,7 @@ int LoadSelectResources(MainMenu *menu)
     for (vm = &menu->sprites[0x50], i = 0x150; i <= 0x15f; i++, vm++)
     {
         g_SpriteEngine->StartScriptAtOrigin(vm, i);
-        vm->flags.unk0 = 0;
+        vm->flags.shown = 0;
         vm->flags.colorOp = 1;
         if (!g_App.cfg.flags.unk0)
         {
@@ -1989,7 +1989,7 @@ int LoadReplayMenuResources(MainMenu *menu)
     for (vm = &menu->sprites[0x60], i = 0x160; i <= 0x179; i++, vm++)
     {
         g_SpriteEngine->StartScriptAtOrigin(vm, i);
-        vm->flags.unk0 = 0;
+        vm->flags.shown = 0;
         vm->flags.colorOp = 1;
         if (!g_App.cfg.flags.unk0)
         {

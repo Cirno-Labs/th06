@@ -836,6 +836,13 @@ public:
     static int AddedCallback(Gui *gui);
     // Removes the update element and the draw element.
     static void RemoveChain();
+    // Unless the scene is 3, zeroes the interface and allocates impl;
+    // then adds the update element (priority 12) and the draw element
+    // (priority 11). Returns 0, or -1 if adding fails.
+    static int RegisterChain();
+    // Frees the stage's portraits and message file and, unless the
+    // scene is 3, the interface's sprites and impl. Returns 0.
+    static int DeletedCallback(Gui *gui);
 
     // Runs impl->StartMsgScript(`index`) and sets
     // g_Unknown6c6d18.unk_198 to 3.

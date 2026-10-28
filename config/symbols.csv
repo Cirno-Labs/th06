@@ -162,7 +162,7 @@ address,size,name,symbol
 0x00419c99,4442,Gui::DrawHud,?DrawHud@Gui@@QAEXXZ
 0x0041adf3,945,Gui::DrawBanners,?DrawBanners@Gui@@QAEXXZ
 0x0041b1a4,13,Gui::AddedCallback,?AddedCallback@Gui@@SAHPAV1@@Z
-0x0041b1b1,161,Func41b1b1,
+0x0041b1b1,161,Gui::DeletedCallback,?DeletedCallback@Gui@@SAHPAV1@@Z
 0x0041b252,249,Func41b252,
 0x0041b34b,377,Func41b34b,
 0x0041b4c4,200,Func41b4c4,

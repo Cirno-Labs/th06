@@ -1213,6 +1213,25 @@ void Gui::DrawBanners()
     }
 }
 
+int Gui::DeletedCallback(Gui *gui)
+{
+    g_SpriteEngine->ReleaseAnm(0x12);
+    g_SpriteEngine->ReleaseAnm(0x13);
+    g_SpriteEngine->ReleaseAnm(0x14);
+    gui->FreeMsgFile();
+    if ((g_Unknown6c6d18.scene != 3) != 0)
+    {
+        g_SpriteEngine->ReleaseAnm(0xd);
+        g_SpriteEngine->ReleaseAnm(0xe);
+        g_SpriteEngine->ReleaseAnm(0xf);
+        g_SpriteEngine->ReleaseAnm(0x10);
+        g_SpriteEngine->ReleaseAnm(0x11);
+        delete gui->impl;
+        gui->impl = NULL;
+    }
+    return 0;
+}
+
 int Timer::NextTick()
 {
     this->previous = this->current;

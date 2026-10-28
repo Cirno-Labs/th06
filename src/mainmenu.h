@@ -76,3 +76,9 @@ void HighlightMenuEntry(Sprite *vm, int index, int cursor, D3DCOLOR selectedColo
 // ("data/title/title00.jpg") and starts scripts 0x100 to 0x14f on the
 // first 0x50 sprites. Returns 0, or -1 if a file fails to load.
 int LoadTitleResources(MainMenu *menu);
+
+// Frees the title's sprites (slots 0x15 to 0x1a) and loads the replay
+// menu's background ("data/title/select00.jpg") and sprites (slot 0x24),
+// starting scripts 0x160 to 0x179 on sprites 0x60 on. Returns 0, or -1
+// if a file fails to load.
+int LoadReplayMenuResources(MainMenu *menu);

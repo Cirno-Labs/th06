@@ -230,6 +230,43 @@ int LoadTitleResources(MainMenu *menu)
     return 0;
 }
 
+int LoadReplayMenuResources(MainMenu *menu)
+{
+    int i;
+    Sprite *vm;
+
+    for (i = 0x15; i <= 0x1a; i++)
+    {
+        g_SpriteEngine->ReleaseAnm(i);
+    }
+    if (g_SpriteEngine->LoadSurface(0, "data/title/select00.jpg") != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x24, "data/replay00.anm", 0x160) != 0)
+    {
+        return -1;
+    }
+    for (vm = &menu->sprites[0x60], i = 0x160; i <= 0x179; i++, vm++)
+    {
+        g_SpriteEngine->Func4051b0(vm, i);
+        vm->flags.unk0 = 0;
+        vm->flags.colorOp = 1;
+        if (!g_Unknown6c6d18.cfg.flags.unk0)
+        {
+            vm->color = 0xff000000;
+        }
+        else
+        {
+            vm->color = 0xffffffff;
+        }
+        vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        vm->unk_0b2 = vm->spriteIndex;
+        vm->flags.zWriteDisabled = 1;
+    }
+    return 0;
+}
+
 int MainMenu::DeletedCallback(MainMenu *menu)
 {
     int i;

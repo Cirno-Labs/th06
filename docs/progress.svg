@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">82.17% (387)</tspan> · <tspan class="decompiled">15.50% (73)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">2.34% (11)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">82.38% (388)</tspan> · <tspan class="decompiled">15.50% (73)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">2.12% (10)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="613.78" height="6" x="0" y="0" class="named"/>
-<rect width="115.78" height="6" x="613.78" y="0" class="decompiled"/>
-<rect width="17.45" height="6" x="729.55" y="0" class="todo"/>
+<rect width="615.36" height="6" x="0" y="0" class="named"/>
+<rect width="115.78" height="6" x="615.36" y="0" class="decompiled"/>
+<rect width="15.86" height="6" x="731.14" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -244,7 +244,7 @@
 <rect width="12" height="12" x="345" y="45" class="named"><title>0x0041bb02 GameManager::AddedCallback (1781 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="45" class="named"><title>0x0041c1f7 GameManager::DeletedCallback (114 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="45" class="named"><title>0x0041c269 GameManager::RemoveChain (35 bytes)</title></rect>
-<rect width="12" height="12" x="390" y="45" class="todo"><title>0x0041c28c Func41c28c (359 bytes)</title></rect>
+<rect width="12" height="12" x="390" y="45" class="named"><title>0x0041c28c SetupFixedCamera (359 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="45" class="named"><title>0x0041c3f3 SetupCamera (395 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="45" class="named"><title>0x0041c57e GameManager::AddSubRank (124 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="45" class="named"><title>0x0041c5fa GameManager::SubSubRank (124 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">85.62%</tspan> · <tspan class="decompiled">13.16%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">1.22%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">85.77%</tspan> · <tspan class="decompiled">13.16%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">1.07%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="639.57" height="6" x="0" y="0" class="named"/>
-<rect width="98.31" height="6" x="639.57" y="0" class="decompiled"/>
-<rect width="9.12" height="6" x="737.88" y="0" class="todo"/>
+<rect width="640.70" height="6" x="0" y="0" class="named"/>
+<rect width="98.31" height="6" x="640.70" y="0" class="decompiled"/>
+<rect width="7.99" height="6" x="739.01" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="named"><title>0x004074a0 EnemyScripts::RunEnemy (13572 bytes)</title></rect>
@@ -709,7 +709,7 @@
 <rect width="10.18" height="10.90" x="595.10" y="98.67" class="named"><title>0x0041cde0 Chain::Remove (380 bytes)</title></rect>
 <rect width="10.18" height="10.79" x="595.10" y="112.57" class="todo"><title>0x0041b34b Func41b34b (377 bytes)</title></rect>
 <rect width="10.18" height="10.50" x="595.10" y="126.37" class="named"><title>0x00439965 MainMenu::DrawPracticeScores (369 bytes)</title></rect>
-<rect width="10.18" height="10.13" x="595.10" y="139.87" class="todo"><title>0x0041c28c Func41c28c (359 bytes)</title></rect>
+<rect width="10.18" height="10.13" x="595.10" y="139.87" class="named"><title>0x0041c28c SetupFixedCamera (359 bytes)</title></rect>
 <rect width="10.43" height="9.85" x="608.28" y="0" class="named"><title>0x0040ad10 ScriptMovePos (358 bytes)</title></rect>
 <rect width="10.36" height="9.85" x="621.71" y="0" class="decompiled"><title>0x0040d930 Func40d930 (356 bytes)</title></rect>
 <rect width="10.21" height="9.85" x="635.07" y="0" class="decompiled"><title>0x00423ddf Unknown6c6d18::DeletedCallback (352 bytes)</title></rect>

@@ -175,7 +175,7 @@ address,size,name,symbol
 0x0041bb02,1781,GameManager::AddedCallback,?AddedCallback@GameManager@@SAHPAV1@@Z
 0x0041c1f7,114,GameManager::DeletedCallback,?DeletedCallback@GameManager@@SAHPAV1@@Z
 0x0041c269,35,GameManager::RemoveChain,?RemoveChain@GameManager@@SAXXZ
-0x0041c28c,359,Func41c28c,?Func41c28c@@YAXH@Z
+0x0041c28c,359,SetupFixedCamera,?SetupFixedCamera@@YAXM@Z
 0x0041c3f3,395,SetupCamera,?SetupCamera@@YAXM@Z
 0x0041c57e,124,GameManager::AddSubRank,?AddSubRank@GameManager@@QAEXH@Z
 0x0041c5fa,124,GameManager::SubSubRank,?SubSubRank@GameManager@@QAEXH@Z

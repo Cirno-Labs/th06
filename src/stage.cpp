@@ -298,7 +298,7 @@ int Stage::OnDraw2(Stage *stage)
     }
     g_Unknown6c6d18.viewport.MinZ = 0.0f;
     g_Unknown6c6d18.viewport.MaxZ = 0.5f;
-    Func41c28c(0);
+    SetupFixedCamera(0.0f);
     g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
     fog = 1000.0f;
     g_Unknown6c6d18.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&fog);

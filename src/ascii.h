@@ -106,7 +106,7 @@ public:
         this->color = 0xffffffff;
         this->scaleX = 1.0f;
         this->scaleY = 1.0f;
-        this->unk_0110.flags.unk8 = 3;
+        this->unk_0110.flags.anchor = 3;
         g_SpriteEngine->InitSprite(&this->unk_0110, 0);
         g_SpriteEngine->InitSprite(&this->unk_0000, 0x20);
         this->unk_0110.pos.z = 0.1f;

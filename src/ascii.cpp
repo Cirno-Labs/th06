@@ -134,7 +134,7 @@ void AsciiText::DrawStrings()
 
     string = this->strings;
     this->unk_0000.flags.unk0 = 1;
-    this->unk_0000.flags.unk8 = 3;
+    this->unk_0000.flags.anchor = 3;
     for (idx = 0; idx < this->stringCount; idx++, string++)
     {
         this->unk_0000.pos = string->pos;

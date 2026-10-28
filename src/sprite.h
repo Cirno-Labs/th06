@@ -79,8 +79,10 @@ struct SpriteFlags
     unsigned int colorOp : 1;
     unsigned int unk4 : 2;
     unsigned int unk6 : 2;
-    // Set to 3 throughout the music screen.
-    unsigned int unk8 : 2;
+    // Bit 0 anchors the sprite's left edge at its position instead of
+    // centering it, bit 1 its top edge. Set to 3 throughout the music
+    // screen.
+    unsigned int anchor : 2;
     unsigned int unk10 : 2;
     // Turns D3DRS_ZWRITEENABLE off while drawing.
     unsigned int zWriteDisabled : 1;
@@ -244,8 +246,9 @@ public:
     void SetRenderStateForSprite(Sprite *vm);
     // Runs a sprite's script for one frame.
     int Step(Sprite *vm);
-    // Draws a sprite if it is shown.
-    int Draw(Sprite *sprite);
+    // Draws a sprite if it is shown, flat at its position, scaled and
+    // anchored. Returns 0, or -1 when not shown.
+    int Draw(Sprite *vm);
     // Rotates (`x`, `y`) by the angle with sine `sine` and cosine
     // `cosine`, clockwise on screen, then moves it by (`cx`, `cy`); stores
     // the result in out[0] and out[1].

@@ -44,6 +44,14 @@ int Func40e5b0(Effect *effect)
     return 1;
 }
 
+// An effect update: moves by unk_11c, which changes by unk_128.
+int Func40e810(Effect *effect)
+{
+    effect->pos += effect->unk_11c * g_Unknown6c6d18.frameAdvance;
+    effect->unk_11c += effect->unk_128 * g_Unknown6c6d18.frameAdvance;
+    return 1;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

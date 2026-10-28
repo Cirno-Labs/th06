@@ -80,7 +80,7 @@ address,size,name,symbol
 0x0040e1b0,276,Func40e1b0,?Func40e1b0@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040e2d0,101,EffectManager::EffectManager,??0EffectManager@@QAE@XZ
 0x0040e340,25,EffectManager::Reset,?Reset@EffectManager@@QAEXXZ
-0x0040e360,589,Func40e360,
+0x0040e360,589,Func40e360,?Func40e360@@YAHPAUEffect@@@Z
 0x0040e5b0,601,Func40e5b0,
 0x0040e810,271,Func40e810,
 0x0040e920,737,Func40e920,

@@ -111,7 +111,10 @@ public:
     // SpriteEngine::Draw scales the sprite's height and width by these.
     float scaleY;
     float scaleX;
-    DWORD unk_020[0x4];
+    DWORD unk_020[0x2];
+    // Added to the sprite's texture coordinates.
+    float uvScrollX;
+    float uvScrollY;
     // Counts the frames since the script started.
     Timer scriptTime;
     // Set to the identity by Initialize.
@@ -231,6 +234,10 @@ public:
     // Releases the vertex buffer, if there is one.
     void ReleaseVertexBuffer();
 
+    // Draws `vm` as a screen-space quad from g_Quad's corners, with
+    // `vm`'s z, sprite and render state; snaps the corners to pixel
+    // centers when `roundToPixel` is set. Returns 0.
+    int DrawQuad(Sprite *vm, int roundToPixel);
     // Sets the blend mode, color operation, color and z writes `vm`
     // wants on the device, those that changed since the last sprite and
     // that the configuration allows.
@@ -317,7 +324,7 @@ public:
     // Sprite flag bit 12 as last set: D3DRS_ZWRITEENABLE off.
     BYTE zWriteDisabled;
     // The sprite entry whose texture coordinates are in the vertices.
-    void *currentSpriteData;
+    SpriteData *currentSpriteData;
     // Created with IDirect3DDevice8::CreateVertexBuffer and set as the
     // stream source.
     IDirect3DVertexBuffer8 *vertexBuffer;
@@ -345,6 +352,8 @@ struct VertexTex1Xyzrwh
     float w;
     D3DXVECTOR2 uv;
 };
+// 0.5f, the float constant the game's hand-written assembly reads.
+extern float g_Half;
 // A quad of each, set up by SpriteEngine's constructor.
 extern VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
 extern VertexTex1Xyzrwh g_Quad[4];

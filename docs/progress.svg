@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">59.45% (280)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">31.21% (147)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">59.66% (281)</tspan> · <tspan class="decompiled">9.34% (44)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">31% (146)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="444.08" height="6" x="0" y="0" class="named"/>
-<rect width="69.78" height="6" x="444.08" y="0" class="decompiled"/>
-<rect width="233.14" height="6" x="513.86" y="0" class="todo"/>
+<rect width="445.66" height="6" x="0" y="0" class="named"/>
+<rect width="69.78" height="6" x="445.66" y="0" class="decompiled"/>
+<rect width="231.55" height="6" x="515.45" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -471,7 +471,7 @@
 <rect width="12" height="12" x="0" y="120" class="todo"><title>0x004323a0 SpriteEngine::SetSprite (144 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="120" class="named"><title>0x00432430 SpriteEngine::SetScript (151 bytes)</title></rect>
 <rect width="12" height="12" x="30" y="120" class="named"><title>0x004324d0 SpriteEngine::SetRenderStateForSprite (598 bytes)</title></rect>
-<rect width="12" height="12" x="45" y="120" class="todo"><title>0x00432730 Func432730 (915 bytes)</title></rect>
+<rect width="12" height="12" x="45" y="120" class="named"><title>0x00432730 SpriteEngine::DrawQuad (915 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="120" class="todo"><title>0x00432ad0 SpriteEngine::Draw (431 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="120" class="named"><title>0x00432c80 SpriteEngine::RotatePoint (60 bytes)</title></rect>
 <rect width="12" height="12" x="90" y="120" class="todo"><title>0x00432cc0 SpriteEngine::Func432cc0 (727 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">38.36%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">56.83%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">38.74%</tspan> · <tspan class="decompiled">4.81%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">56.44%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="286.53" height="6" x="0" y="0" class="named"/>
-<rect width="35.95" height="6" x="286.53" y="0" class="decompiled"/>
-<rect width="424.51" height="6" x="322.49" y="0" class="todo"/>
+<rect width="289.41" height="6" x="0" y="0" class="named"/>
+<rect width="35.95" height="6" x="289.41" y="0" class="decompiled"/>
+<rect width="421.64" height="6" x="325.36" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="todo"><title>0x004074a0 EnemyScripts::Func4074a0 (13572 bytes)</title></rect>
@@ -615,7 +615,7 @@
 <rect width="18.05" height="18.65" x="422.81" y="88.15" class="todo"><title>0x0041adf3 Func41adf3 (945 bytes)</title></rect>
 <rect width="18.05" height="18.61" x="422.81" y="109.81" class="todo"><title>0x00420330 Func420330 (943 bytes)</title></rect>
 <rect width="18.05" height="18.59" x="422.81" y="131.41" class="todo"><title>0x0040de00 Func40de00 (942 bytes)</title></rect>
-<rect width="16.42" height="19.72" x="443.86" y="0" class="todo"><title>0x00432730 Func432730 (915 bytes)</title></rect>
+<rect width="16.42" height="19.72" x="443.86" y="0" class="named"><title>0x00432730 SpriteEngine::DrawQuad (915 bytes)</title></rect>
 <rect width="16.42" height="19.57" x="443.86" y="22.72" class="named"><title>0x00424ead MusicScreen::UpdateList (909 bytes)</title></rect>
 <rect width="16.42" height="19.03" x="443.86" y="45.30" class="named"><title>0x0043b560 CStreamingSound::HandleWaveStreamNotification (887 bytes)</title></rect>
 <rect width="16.42" height="18.75" x="443.86" y="67.32" class="named"><title>0x0040afb0 ResolveOperand (876 bytes)</title></rect>

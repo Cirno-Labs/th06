@@ -402,7 +402,7 @@ address,size,name,symbol
 0x004323a0,144,SpriteEngine::SetSprite,?SetSprite@SpriteEngine@@QAEHPAVSprite@@H@Z
 0x00432430,151,SpriteEngine::SetScript,?SetScript@SpriteEngine@@QAEXPAVSprite@@PAX@Z
 0x004324d0,598,SpriteEngine::SetRenderStateForSprite,?SetRenderStateForSprite@SpriteEngine@@QAEXPAVSprite@@@Z
-0x00432730,915,Func432730,
+0x00432730,915,SpriteEngine::DrawQuad,?DrawQuad@SpriteEngine@@QAEHPAVSprite@@H@Z
 0x00432ad0,431,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00432c80,60,SpriteEngine::RotatePoint,?RotatePoint@SpriteEngine@@QAEXPAMMMMMMM@Z
 0x00432cc0,727,SpriteEngine::Func432cc0,?Func432cc0@SpriteEngine@@QAEHPAVSprite@@@Z
@@ -1542,6 +1542,7 @@ address,size,name,symbol
 0x0046b564,4,MmTimer::`vftable',??_7MmTimer@@6B@
 0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
 0x0046c220,,g_TextureFormats,?g_TextureFormats@@3PAW4_D3DFORMAT@@A
+0x0046c2f0,,g_Half,?g_Half@@3MA
 0x0046c680,4,CSound::`vftable',??_7CSound@@6B@
 0x0046c69c,4,CStreamingSound::`vftable',??_7CStreamingSound@@6B@
 0x0046cdfc,,c_dfDIJoystick2,_c_dfDIJoystick2

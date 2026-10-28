@@ -425,6 +425,80 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
     }
 }
 
+int SpriteEngine::DrawQuad(Sprite *vm, int roundToPixel)
+{
+    if (roundToPixel)
+    {
+        __asm
+        {
+            fld dword ptr [g_Quad + 0x00]
+            frndint
+            fsub g_Half
+            fld dword ptr [g_Quad + 0x18]
+            frndint
+            fsub g_Half
+            fld dword ptr [g_Quad + 0x04]
+            frndint
+            fsub g_Half
+            fld dword ptr [g_Quad + 0x34]
+            frndint
+            fsub g_Half
+            fst dword ptr [g_Quad + 0x34]
+            fstp dword ptr [g_Quad + 0x4c]
+            fst dword ptr [g_Quad + 0x04]
+            fstp dword ptr [g_Quad + 0x1c]
+            fst dword ptr [g_Quad + 0x18]
+            fstp dword ptr [g_Quad + 0x48]
+            fst dword ptr [g_Quad + 0x00]
+            fstp dword ptr [g_Quad + 0x30]
+        }
+    }
+    g_Quad[0].pos.z = g_Quad[1].pos.z = g_Quad[2].pos.z = g_Quad[3].pos.z = vm->pos.z;
+    if (this->currentSpriteData != vm->spriteData)
+    {
+        this->currentSpriteData = vm->spriteData;
+        g_Quad[0].uv.x = g_Quad[2].uv.x = vm->spriteData->uvStartX + vm->uvScrollX;
+        g_Quad[1].uv.x = g_Quad[3].uv.x = vm->spriteData->uvEndX + vm->uvScrollX;
+        g_Quad[0].uv.y = g_Quad[1].uv.y = vm->spriteData->uvStartY + vm->uvScrollY;
+        g_Quad[2].uv.y = g_Quad[3].uv.y = vm->spriteData->uvEndY + vm->uvScrollY;
+        if (this->currentTexture != this->textures[vm->spriteData->sourceFileIndex])
+        {
+            this->currentTexture = this->textures[vm->spriteData->sourceFileIndex];
+            g_Unknown6c6d18.d3dDevice->SetTexture(0, this->currentTexture);
+        }
+    }
+    if (this->vertexFormat != 2)
+    {
+        if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+        {
+            g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_TEX1);
+        }
+        else
+        {
+            g_Unknown6c6d18.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+        }
+        this->vertexFormat = 2;
+    }
+    this->SetRenderStateForSprite(vm);
+    if (!g_Unknown6c6d18.cfg.flags.noVertexBuffer)
+    {
+        g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad, sizeof(g_Quad[0]));
+    }
+    else
+    {
+        g_DiffuseQuad[0].pos = g_Quad[0].pos;
+        g_DiffuseQuad[1].pos = g_Quad[1].pos;
+        g_DiffuseQuad[2].pos = g_Quad[2].pos;
+        g_DiffuseQuad[3].pos = g_Quad[3].pos;
+        g_DiffuseQuad[0].uv.x = g_DiffuseQuad[2].uv.x = vm->spriteData->uvStartX + vm->uvScrollX;
+        g_DiffuseQuad[1].uv.x = g_DiffuseQuad[3].uv.x = vm->spriteData->uvEndX + vm->uvScrollX;
+        g_DiffuseQuad[0].uv.y = g_DiffuseQuad[1].uv.y = vm->spriteData->uvStartY + vm->uvScrollY;
+        g_DiffuseQuad[2].uv.y = g_DiffuseQuad[3].uv.y = vm->spriteData->uvEndY + vm->uvScrollY;
+        g_Unknown6c6d18.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_DiffuseQuad, sizeof(g_DiffuseQuad[0]));
+    }
+    return 0;
+}
+
 void SpriteEngine::RotatePoint(float *out, float sine, float cosine, float x, float y, float cx, float cy)
 {
     out[0] = sine * y + cosine * x + cx;

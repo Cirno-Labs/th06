@@ -1232,6 +1232,29 @@ int Gui::DeletedCallback(Gui *gui)
     return 0;
 }
 
+int Gui::RegisterChain()
+{
+    Gui *gui = &g_Gui;
+
+    if ((g_Unknown6c6d18.scene != 3) != 0)
+    {
+        memset(gui, 0, sizeof(Gui));
+        gui->impl = new GuiImpl;
+    }
+    g_GuiCalcChain.SetCallback((ChainCallback)Gui::OnUpdate);
+    g_GuiCalcChain.addedCallback = (ChainCallback)Gui::AddedCallback;
+    g_GuiCalcChain.deletedCallback = (ChainCallback)Gui::DeletedCallback;
+    g_GuiCalcChain.arg = gui;
+    if (g_Chain.AddToCalcChain(&g_GuiCalcChain, 12) != 0)
+    {
+        return -1;
+    }
+    g_GuiDrawChain.SetCallback((ChainCallback)Gui::OnDraw);
+    g_GuiDrawChain.arg = gui;
+    g_Chain.AddToDrawChain(&g_GuiDrawChain, 11);
+    return 0;
+}
+
 int Timer::NextTick()
 {
     this->previous = this->current;

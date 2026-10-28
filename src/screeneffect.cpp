@@ -17,6 +17,18 @@ void ClearScreen(D3DCOLOR color)
     }
 }
 
+void ClearViewport(D3DCOLOR color)
+{
+    g_Unknown6c6d18.viewport.X = 0;
+    g_Unknown6c6d18.viewport.Y = 0;
+    g_Unknown6c6d18.viewport.Width = 640;
+    g_Unknown6c6d18.viewport.Height = 480;
+    g_Unknown6c6d18.viewport.MinZ = 0.0f;
+    g_Unknown6c6d18.viewport.MaxZ = 1.0f;
+    g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+    ClearScreen(color);
+}
+
 int ScreenEffect::OnDrawPlayArea(ScreenEffect *effect)
 {
     float area[4];

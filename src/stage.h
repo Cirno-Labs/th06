@@ -92,6 +92,9 @@ struct StageData
 class Stage
 {
 public:
+    // Constructs the members, for g_Stage's static initialization.
+    Stage();
+
     // Zeroes the stage, remembers `stage` and adds the update element
     // (priority 6) and the draw elements (priorities 3 and 4). Returns 0,
     // or -1 if adding fails.
@@ -157,7 +160,7 @@ public:
     int unk_080;
     int unk_084;
     Sprite unk_088;
-    DWORD unk_198[0x44];
+    Sprite unk_198;
     // Lets the script past opcode 5; cleared when it does.
     BYTE unk_2a8;
     BYTE unk_2a9[0x3];

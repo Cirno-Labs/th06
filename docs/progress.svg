@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">82.59% (389)</tspan> · <tspan class="decompiled">15.50% (73)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">1.91% (9)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">82.80% (390)</tspan> · <tspan class="decompiled">15.50% (73)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">1.70% (8)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="616.95" height="6" x="0" y="0" class="named"/>
-<rect width="115.78" height="6" x="616.95" y="0" class="decompiled"/>
-<rect width="14.27" height="6" x="732.73" y="0" class="todo"/>
+<rect width="618.54" height="6" x="0" y="0" class="named"/>
+<rect width="115.78" height="6" x="618.54" y="0" class="decompiled"/>
+<rect width="12.69" height="6" x="734.31" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (224 bytes)</title></rect>
@@ -92,7 +92,7 @@
 <rect width="12" height="12" x="315" y="0" class="todo"><title>0x00403580 Sprite::Initialize (238 bytes)</title></rect>
 <rect width="12" height="12" x="330" y="0" class="named"><title>0x00403670 D3DXMatrixIdentity (167 bytes)</title></rect>
 <rect width="12" height="12" x="345" y="0" class="named"><title>0x00403720 Sprite::Sprite (104 bytes)</title></rect>
-<rect width="12" height="12" x="360" y="0" class="todo"><title>0x00403790 Func403790 (114 bytes)</title></rect>
+<rect width="12" height="12" x="360" y="0" class="named"><title>0x00403790 Stage::Stage (114 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="0" class="named"><title>0x00403810 Stage::OnUpdate (2204 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="0" class="named"><title>0x004040d0 Stage::OnDraw (162 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="0" class="named"><title>0x00404180 Stage::OnDraw2 (384 bytes)</title></rect>
@@ -543,11 +543,11 @@
 </g>
 <g transform="translate(0 321)">
 <text x="0" y="7.50">東方紅魔郷 1.02h progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">85.83%</tspan> · <tspan class="decompiled">13.16%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">1.01%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">85.88%</tspan> · <tspan class="decompiled">13.16%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">0.96%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="641.15" height="6" x="0" y="0" class="named"/>
-<rect width="98.31" height="6" x="641.15" y="0" class="decompiled"/>
-<rect width="7.54" height="6" x="739.46" y="0" class="todo"/>
+<rect width="641.51" height="6" x="0" y="0" class="named"/>
+<rect width="98.31" height="6" x="641.51" y="0" class="decompiled"/>
+<rect width="7.18" height="6" x="739.82" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="63.34" height="95.67" x="0" y="0" class="named"><title>0x004074a0 EnemyScripts::RunEnemy (13572 bytes)</title></rect>
@@ -882,7 +882,7 @@
 <rect width="4.19" height="4.85" x="679.30" y="129.73" class="named"><title>0x0041d600 SetButtonFromJoystick (117 bytes)</title></rect>
 <rect width="4.19" height="4.71" x="679.30" y="137.57" class="named"><title>0x0040f4d0 Ending::ReadInt (115 bytes)</title></rect>
 <rect width="4.19" height="4.71" x="679.30" y="145.29" class="named"><title>0x00421c90 MmTimer::Start (115 bytes)</title></rect>
-<rect width="4.20" height="4.63" x="686.49" y="89.49" class="todo"><title>0x00403790 Func403790 (114 bytes)</title></rect>
+<rect width="4.20" height="4.63" x="686.49" y="89.49" class="named"><title>0x00403790 Stage::Stage (114 bytes)</title></rect>
 <rect width="4.20" height="4.63" x="693.70" y="89.49" class="named"><title>0x0041c1f7 GameManager::DeletedCallback (114 bytes)</title></rect>
 <rect width="4.20" height="4.63" x="700.90" y="89.49" class="named"><title>0x0041e992 GdiSurface::Release (114 bytes)</title></rect>
 <rect width="4.08" height="4.63" x="708.10" y="89.49" class="named"><title>0x0043a736 GameManager::IsExtraUnlocked (112 bytes)</title></rect>

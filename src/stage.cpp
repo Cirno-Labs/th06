@@ -1,7 +1,11 @@
-// The file with Stage, from 0x403810.
+// The file with Stage, from 0x403790.
 
 #include "stage.h"
 #include "unsorted.h"
+
+Stage::Stage()
+{
+}
 
 void Stage::RemoveChain()
 {

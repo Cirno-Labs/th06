@@ -14,7 +14,10 @@ class MainMenu
 public:
     // The update element's callback.
     static int OnUpdate(MainMenu *menu);
-    // The update element's added callback.
+    // The update element's added callback: loads the title music, puts
+    // the cursor on the entry the previous scene came from, sets the
+    // colors, reloads the clears and practice scores from "score.dat"
+    // and fades in (playing the music the first time). Returns 0.
     static int AddedCallback(MainMenu *menu);
     // The draw element's callback.
     static int OnDraw(MainMenu *menu);
@@ -39,14 +42,19 @@ public:
     Sprite sprites[0x7a];
     // The selected entry.
     int cursor;
-    DWORD unk_81a4[0x13];
+    DWORD unk_81a4[0x10];
+    int unk_81e4;
+    DWORD unk_81e8[0x2];
     int unk_81f0;
     // Counts the frames in the current state (unk_81f0).
     int unk_81f4;
     DWORD unk_81f8;
     int unk_81fc;
     D3DCOLOR unk_8200;
-    DWORD unk_8204[0x2];
+    // The colors HighlightMenuEntry gives the selected entry and the
+    // others.
+    D3DCOLOR unk_8204;
+    D3DCOLOR unk_8208;
     int unk_820c;
     int unk_8210;
     DWORD unk_8214[0x2];
@@ -61,7 +69,8 @@ public:
     ChainElem *drawChain;
     DWORD unk_823c[0x2328];
     void *unk_10edc;
-    DWORD unk_10ee0[0x13];
+    DWORD unk_10ee0[0x12];
+    int unk_10f28;
     int unk_10f2c;
     int unk_10f30;
 };

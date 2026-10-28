@@ -3,6 +3,7 @@
 
 #include "gamemanager.h"
 #include "mainmenu.h"
+#include "screeneffect.h"
 #include "unsorted.h"
 
 MainMenu::MainMenu()
@@ -292,6 +293,75 @@ int SetUpTitleScene(int unk)
     menu->unk_10f30 = 0;
     menu->unk_81f4 = 60;
     menu->unk_10f2c = 0;
+    return 0;
+}
+
+int MainMenu::AddedCallback(MainMenu *menu)
+{
+    ScoreDat *scoreDat;
+
+    if (!g_GameManager.unk_1824)
+    {
+        g_Unknown6c6d18.LoadMusic("bgm/th06_01.mid");
+    }
+    g_SpriteEngine->ClearMenuScripts();
+    menu->unk_81e4 = 0;
+    switch (g_Unknown6c6d18.prevScene)
+    {
+    case 2:
+    case 3:
+    case 7:
+        menu->cursor = g_GameManager.difficulty == 4;
+        break;
+    case 6:
+        menu->cursor = 4;
+        break;
+    case 9:
+        menu->cursor = 5;
+        break;
+    default:
+        menu->cursor = 0;
+        break;
+    }
+    if (g_GameManager.unk_1823)
+    {
+        menu->cursor = 2;
+    }
+    g_GameManager.unk_1823 = 0;
+    if (!g_Unknown6c6d18.cfg.flags.unk0)
+    {
+        menu->unk_8208 = 0x80004000;
+        menu->unk_8204 = 0xff008000;
+    }
+    else
+    {
+        menu->unk_8208 = 0x80ffffff;
+        menu->unk_8204 = 0xffffffff;
+    }
+    menu->unk_81fc = 0;
+    menu->unk_8200 = 0x40000000;
+    menu->unk_820c = 0;
+    menu->unk_8210 = 0;
+    menu->unk_10f28 = 0x10;
+    menu->unk_10edc = NULL;
+    scoreDat = LoadScoreDat("score.dat");
+    LoadClears(scoreDat, g_GameManager.clrds);
+    LoadPracticeScores(scoreDat, &g_GameManager.pscrs[0][0][0]);
+    ReleaseScoreDat(scoreDat);
+    if (!g_GameManager.unk_1824)
+    {
+        if (g_Unknown6c6d18.unk_400 == 0)
+        {
+            g_Unknown6c6d18.PlayMusic("bgm/th06_01.mid");
+            ScreenEffect::StartEffect(0, 120, 0xffffff, 0, 0);
+        }
+        else
+        {
+            ScreenEffect::StartEffect(0, 200, 0xffffff, 0, 0);
+        }
+    }
+    g_GameManager.unk_1824 = 0;
+    g_GameManager.demoFrames = 0;
     return 0;
 }
 

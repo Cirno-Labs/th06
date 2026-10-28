@@ -8,8 +8,106 @@
 #include "enemyscript.h"
 #include "player.h"
 #include "replay.h"
+#include "screeneffect.h"
 #include "stage.h"
 #include "unsorted.h"
+
+int GameManager::OnUpdate(GameManager *mgr)
+{
+    unsigned int step;
+
+    if (mgr->unk_1824)
+    {
+        if (WAS_PRESSED(0xffff))
+        {
+            g_Unknown6c6d18.scene = 1;
+        }
+        mgr->demoFrames++;
+        if (mgr->demoFrames == 3600)
+        {
+            ScreenEffect::StartEffect(2, 120, 0, 0, 0);
+        }
+        if (mgr->demoFrames >= 3720)
+        {
+            g_Unknown6c6d18.scene = 1;
+        }
+    }
+    if (!mgr->unk_1820 && !mgr->unk_181f && !mgr->unk_1824 && WAS_PRESSED(8))
+    {
+        mgr->unk_181f = 1;
+        g_GameManager.arena[0] = 32.0f;
+        g_GameManager.arena[1] = 16.0f;
+        g_GameManager.arena[2] = 384.0f;
+        g_GameManager.arena[3] = 448.0f;
+        g_Unknown6c6d18.unk_198 = 3;
+    }
+    mgr->unk_1821 = !mgr->unk_1820 && !mgr->unk_181f ? 1 : 0;
+    g_Unknown6c6d18.viewport.X = mgr->arena[0];
+    g_Unknown6c6d18.viewport.Y = mgr->arena[1];
+    g_Unknown6c6d18.viewport.Width = mgr->arena[2];
+    g_Unknown6c6d18.viewport.Height = mgr->arena[3];
+    g_Unknown6c6d18.viewport.MinZ = 0.5f;
+    g_Unknown6c6d18.viewport.MaxZ = 1.0f;
+    SetupCamera(0.0f);
+    g_Unknown6c6d18.d3dDevice->SetViewport(&g_Unknown6c6d18.viewport);
+    g_Unknown6c6d18.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, g_Stage.fog.color, 1.0f, 0);
+    if (mgr->unk_181f == 1 || mgr->unk_181f == 2 || mgr->unk_1820)
+    {
+        return 3;
+    }
+    if (mgr->score >= 1000000000)
+    {
+        mgr->score = 999999990;
+    }
+    if (mgr->unk_0000 != mgr->score)
+    {
+        if (mgr->score < mgr->unk_0000)
+        {
+            mgr->score = mgr->unk_0000;
+        }
+        step = (mgr->score - mgr->unk_0000) >> 5;
+        if (step >= 0x1343e)
+        {
+            step = 0x1343e;
+        }
+        else if (step < 10)
+        {
+            step = 10;
+        }
+        step -= step % 10;
+        if (mgr->unk_0008 < step)
+        {
+            mgr->unk_0008 = step;
+        }
+        if (mgr->unk_0000 + mgr->unk_0008 > mgr->score)
+        {
+            mgr->unk_0008 = mgr->score - mgr->unk_0000;
+        }
+        mgr->unk_0000 += mgr->unk_0008;
+        if (mgr->unk_0000 >= mgr->score)
+        {
+            mgr->unk_0008 = 0;
+            mgr->unk_0000 = mgr->score;
+        }
+        if (mgr->unk_181c >= 0 && g_ExtendScores[mgr->unk_181c] <= mgr->unk_0000)
+        {
+            if (mgr->lives < 8)
+            {
+                mgr->lives++;
+                g_Unknown6d3f50.QueueSound(0x1c, 0);
+            }
+            g_Gui.flags.livesChanged = 2;
+            mgr->unk_181c++;
+            g_GameManager.AddSubRank(200);
+        }
+        if (mgr->highScore < mgr->unk_0000)
+        {
+            mgr->highScore = mgr->unk_0000;
+        }
+    }
+    mgr->unk_1a30++;
+    return 1;
+}
 
 int GameManager::OnDraw(GameManager *mgr)
 {

@@ -33,6 +33,10 @@ public:
     // Adds the update element (priority 4) and the draw element
     // (priority 2). Returns 0, or -1 if adding fails.
     static int RegisterChain();
+    // The update element's callback: ends a demo on a key press or after
+    // 3720 frames, opens the pause menu, sets up the viewport and the
+    // camera, counts the shown score up to the score, and gives a life
+    // at each of g_ExtendScores. Returns 3 while paused, else 1.
     static int OnUpdate(GameManager *mgr);
     // Loads the scores and sets the game up.
     static int AddedCallback(GameManager *mgr);
@@ -48,7 +52,8 @@ public:
     // The score shown, and the score, which it counts up to.
     unsigned int unk_0000;
     unsigned int score;
-    DWORD unk_0008;
+    // How far unk_0000 moves towards score a frame.
+    unsigned int unk_0008;
     // The high score shown.
     unsigned int highScore;
     int difficulty;
@@ -84,7 +89,8 @@ public:
     // Lives and bombs left.
     char lives;
     char bombs;
-    BYTE unk_181c;
+    // The next of g_ExtendScores to reach; -1 once there are no more.
+    char unk_181c;
     // The replay header keeps character * 2 + shotType.
     BYTE character;
     BYTE shotType;
@@ -96,7 +102,9 @@ public:
     BYTE unk_1823;
     BYTE unk_1824;
     BYTE unk_1825[0x3];
-    DWORD unk_1828[0x81];
+    // Counts a demo's frames: it fades out at 3600 and ends at 3720.
+    int demoFrames;
+    DWORD unk_182c[0x80];
     WORD unk_1a2c;
     WORD unk_1a2e;
     int unk_1a30;
@@ -120,6 +128,8 @@ public:
 };
 ASSERT_SIZE(GameManager, 0x1a80);
 extern GameManager g_GameManager;
+// The scores giving an extra life, in order (0x4764b0).
+extern unsigned int g_ExtendScores[];
 
 // The 3D camera the stage backgrounds are seen through (0x69d6fc).
 struct Camera

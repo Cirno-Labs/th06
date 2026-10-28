@@ -1565,6 +1565,7 @@ address,size,name,symbol
 0x00476440,,g_BulletColorOffsets16,?g_BulletColorOffsets16@@3PAHA
 0x00476480,,g_BulletColorOffsets32,?g_BulletColorOffsets32@@3PAHA
 0x004764a0,,g_BossTimerColors,?g_BossTimerColors@@3PAKA
+0x004764b0,,g_ExtendScores,?g_ExtendScores@@3PAIA
 0x004765a0,,g_ControllerMapping,?g_ControllerMapping@@3UControllerMapping@@A
 0x004765b8,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
 0x00476660,,g_PowerItemBonus,?g_PowerItemBonus@@3PAHA

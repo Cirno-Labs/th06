@@ -507,7 +507,11 @@ void ResetKeyboard();
 // half second, at the bottom right.
 void DrawFps();
 
-void Func42ab30(int unk1, char *unk2);
+// Ends the replay being recorded: unless `path` is NULL, saves it there
+// under `name`, with the date and the slowdown, checksummed and
+// encrypted; then frees its stages. Removes its update element either
+// way.
+void SaveReplay(char *path, char *name);
 // Releases g_TextSurface, if there is one.
 void ReleaseTextSurface();
 

@@ -1,5 +1,9 @@
 // The file with ReplayManager, around 0x42a140.
 
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+
 #include "replay.h"
 #include "gamemanager.h"
 #include "unsorted.h"
@@ -303,4 +307,120 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
         g_GameManager.unk_0000 = g_GameManager.score = replay->data->stages[g_GameManager.stage - 1]->unk_00;
     }
     return 0;
+}
+
+void SaveReplay(char *path, char *name)
+{
+    int i;
+    ReplayManager *replayTmp;
+    float slowdown2;
+    ReplayHeader hX;
+    int offset;
+    FILE *f2;
+    int j1;
+    int checksum;
+    BYTE *bpCur;
+    BYTE kbVal;
+    int k1;
+    BYTE *dp2;
+
+    if (g_ReplayManager != NULL)
+    {
+        replayTmp = g_ReplayManager;
+        if (replayTmp->GetMode() == 0)
+        {
+            if (path != NULL)
+            {
+                hX = *replayTmp->data;
+                ReplayManager::EndStage();
+                offset = sizeof(ReplayHeader);
+                for (i = 0; i < 7; i++)
+                {
+                    if (replayTmp->data->stages[i + 1] != NULL)
+                    {
+                        hX.stages[i + 1] = (ReplayStage *)offset;
+                        offset += (int)replayTmp->cursors[i + 1] - (int)replayTmp->data->stages[i + 1];
+                    }
+                }
+                DebugPrint("%s write ...\n", path);
+                hX.score = g_GameManager.unk_0000;
+                slowdown2 = (g_Unknown6c6d18.unk_1b4 / g_Unknown6c6d18.unk_1b8 - 0.5f) * 2.0f;
+                if (slowdown2 < 0.0f)
+                {
+                    slowdown2 = 0.0f;
+                }
+                else if (slowdown2 >= 1.0f)
+                {
+                    slowdown2 = 1.0f;
+                }
+                hX.slowdown = (1.0f - slowdown2) * 100.0f;
+                hX.slowdown2 = hX.slowdown + 1.12f;
+                *(float *)&hX.stages[0] = hX.slowdown + 2.34f;
+                replayTmp->data->stages[g_GameManager.stage]->unk_00 = g_GameManager.score;
+                strcpy(hX.name, name);
+                _strdate(hX.date);
+                hX.key = g_Rng.GetRandomU16InRange(128) + 64;
+                hX.unk_0f = g_Rng.GetRandomU16InRange(256);
+                hX.unk_0c[0] = g_Rng.GetRandomU16InRange(256);
+                hX.unk_0c[1] = g_Rng.GetRandomU16InRange(256);
+                bpCur = &hX.key;
+                checksum = 0x3f000318;
+                for (i = 0; i < sizeof(ReplayHeader) - 0xe; i++, bpCur++)
+                {
+                    checksum += *bpCur;
+                }
+                for (i = 0; i < 7; i++)
+                {
+                    if (replayTmp->data->stages[i + 1] != NULL)
+                    {
+                        bpCur = (BYTE *)replayTmp->data->stages[i + 1];
+                        for (j1 = 0; j1 < (int)replayTmp->cursors[i + 1] - (int)replayTmp->data->stages[i + 1]; j1++, bpCur++)
+                        {
+                            checksum += *bpCur;
+                        }
+                    }
+                }
+                hX.checksum = checksum;
+                dp2 = &hX.unk_0f;
+                kbVal = hX.key;
+                for (i = 0; i < sizeof(ReplayHeader) - 0xf; i++, dp2++)
+                {
+                    *dp2 += kbVal;
+                    kbVal += 7;
+                }
+                for (i = 0; i < 7; i++)
+                {
+                    if (replayTmp->data->stages[i + 1] != NULL)
+                    {
+                        dp2 = (BYTE *)replayTmp->data->stages[i + 1];
+                        for (k1 = 0; k1 < (int)replayTmp->cursors[i + 1] - (int)replayTmp->data->stages[i + 1]; k1++, dp2++)
+                        {
+                            *dp2 += kbVal;
+                            kbVal += 7;
+                        }
+                    }
+                }
+                f2 = fopen(path, "wb");
+                fwrite(&hX, sizeof(ReplayHeader), 1, f2);
+                for (i = 0; i < 7; i++)
+                {
+                    if (replayTmp->data->stages[i + 1] != NULL)
+                    {
+                        fwrite(replayTmp->data->stages[i + 1], 1,
+                               (int)replayTmp->cursors[i + 1] - (int)replayTmp->data->stages[i + 1], f2);
+                    }
+                }
+                fclose(f2);
+            }
+            for (i = 0; i < 7; i++)
+            {
+                if (g_ReplayManager->data->stages[i + 1] != NULL)
+                {
+                    DebugPrint("Replay Size %d\n", (int)replayTmp->cursors[i + 1] - (int)replayTmp->data->stages[i + 1]);
+                    MemFree(g_ReplayManager->data->stages[i + 1]);
+                }
+            }
+        }
+        g_Chain.Remove(g_ReplayManager->calcChain);
+    }
 }

@@ -130,7 +130,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
             toTitle:
                 GameManager::RemoveChain();
                 arg->scene = 0;
-                Func42ab30(0, NULL);
+                SaveReplay(0, NULL);
                 goto title;
             case 7:
                 GameManager::RemoveChain();
@@ -154,7 +154,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
             case 8:
                 GameManager::RemoveChain();
                 arg->scene = 0;
-                Func42ab30(0, NULL);
+                SaveReplay(0, NULL);
                 arg->scene = 1;
                 g_Unknown6c6d18.d3dDevice->ResourceManagerDiscardBytes(0);
                 if (Func43a338(1) != 0)
@@ -175,11 +175,11 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
             switch (arg->scene)
             {
             case 4:
-                Func42ab30(0, NULL);
+                SaveReplay(0, NULL);
                 return 4;
             case 1:
                 arg->scene = 0;
-                Func42ab30(0, NULL);
+                SaveReplay(0, NULL);
                 goto title;
             }
             break;
@@ -404,7 +404,7 @@ int Unknown6c6d18::DeletedCallback(Unknown6c6d18 *arg)
         delete arg->midi;
         arg->midi = NULL;
     }
-    Func42ab30(0, NULL);
+    SaveReplay(0, NULL);
     ReleaseTextSurface();
     if (arg->keyboard)
     {

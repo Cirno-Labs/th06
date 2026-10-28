@@ -341,7 +341,7 @@ address,size,name,symbol
 0x0042a840,469,ReplayManager::PlayAddedCallback,?PlayAddedCallback@ReplayManager@@SAHPAV1@@Z
 0x0042aa20,140,ReplayManager::DeletedCallback,?DeletedCallback@ReplayManager@@SAHPAV1@@Z
 0x0042aab0,123,ReplayManager::EndStage,?EndStage@ReplayManager@@SAXXZ
-0x0042ab30,1449,Func42ab30,?Func42ab30@@YAXHPAD@Z
+0x0042ab30,1449,SaveReplay,?SaveReplay@@YAXPAD0@Z
 0x0042b0d9,423,Func42b0d9,
 0x0042b280,294,Func42b280,
 0x0042b3a6,145,InsertScore,?InsertScore@@YAHPAUListNode@@PAUHscr@@@Z
@@ -1011,7 +1011,7 @@ address,size,name,symbol
 0x0045ca0b,19,_fopen,_fopen
 0x0045ca20,45,_strrchr,
 0x0045ca4d,263,__fwrite_lk,
-0x0045cb54,66,_fwrite,
+0x0045cb54,66,_fwrite,_fwrite
 0x0045cb96,10,Func45cb96,
 0x0045cba0,139,_strlen,_strlen
 0x0045cc30,96,_memset,_memset
@@ -1021,7 +1021,7 @@ address,size,name,symbol
 0x0045d361,10,Func45d361,
 0x0045d370,104,__aulldiv,__aulldiv
 0x0045d3e0,52,__allmul,__allmul
-0x0045d414,112,Func45d414,
+0x0045d414,112,_strdate,__strdate
 0x0045d490,7,Func45d490,
 0x0045d4a0,232,Func45d4a0,
 0x0045d588,44,Func45d588,

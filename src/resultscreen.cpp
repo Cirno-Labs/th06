@@ -1,6 +1,6 @@
 // cflags: /Os -/Oi
-// The /Os file from 0x42ab30 to 0x42f6c9, with the result screen: the
-// replay writer, the score file and its sorted lists.
+// The /Os file from 0x42b0d9 to 0x42f6c9, with the result screen: the
+// score file and its sorted lists.
 
 #include "resultscreen.h"
 #include "unsorted.h"

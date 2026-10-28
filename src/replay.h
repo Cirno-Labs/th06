@@ -49,9 +49,19 @@ struct ReplayHeader
     BYTE unk_0c[0x2];
     // The bytes after it are stored minus key, key + 7, key + 14, ...
     BYTE key;
-    BYTE unk_0f[0xa];
-    char name[0x17];
-    // Indexed by stage; malloc'd, 0x69780 bytes each.
+    BYTE unk_0f;
+    // The date it was saved (_strdate), and the player's name.
+    char date[9];
+    char name[9];
+    BYTE unk_22[0x2];
+    int score;
+    // How far the game ran below full speed, in percent, stored three
+    // times: plus 1.12, as is, and (in stages[0], which no stage uses)
+    // plus 2.34.
+    float slowdown2;
+    float slowdown;
+    // Indexed by stage; malloc'd, 0x69780 bytes each. In the file, the
+    // offsets of the stages' data.
     ReplayStage *stages[8];
 };
 
@@ -62,6 +72,12 @@ class ReplayManager
 public:
     ReplayManager()
     {
+    }
+
+    // 0 when recording, 1 when playing.
+    int GetMode()
+    {
+        return this->mode;
     }
 
     // Ends the current stage's record with an entry at the current frame

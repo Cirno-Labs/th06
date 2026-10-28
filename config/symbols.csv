@@ -1,6 +1,6 @@
 address,size,name,symbol
 0x00401000,224,AsciiText::AsciiText,??0AsciiText@@QAE@XZ
-0x004010e0,87,Unknown4010e0::Unknown4010e0,??0Unknown4010e0@@QAE@XZ
+0x004010e0,87,PauseMenu::PauseMenu,??0PauseMenu@@QAE@XZ
 0x00401140,257,AsciiText::OnUpdate,?OnUpdate@AsciiText@@SAHPAV1@@Z
 0x00401250,59,AsciiText::OnDraw,?OnDraw@AsciiText@@SAHPAV1@@Z
 0x00401290,39,AsciiText::OnDraw2,?OnDraw2@AsciiText@@SAHPAV1@@Z
@@ -14,10 +14,10 @@ address,size,name,symbol
 0x004016b0,641,AsciiText::DrawStrings,?DrawStrings@AsciiText@@QAEXXZ
 0x00401940,284,AsciiText::AddPopup,?AddPopup@AsciiText@@QAEXPAUD3DXVECTOR3@@HK@Z
 0x00401a60,286,AsciiText::AddPopup2,?AddPopup2@AsciiText@@QAEXPAUD3DXVECTOR3@@HK@Z
-0x00401b80,2973,Unknown4010e0::UpdatePauseMenu,?UpdatePauseMenu@Unknown4010e0@@QAEHXZ
-0x00402740,294,Unknown4010e0::Func402740,?Func402740@Unknown4010e0@@QAEXXZ
-0x00402870,1998,Unknown4010e0::UpdateContinueMenu,?UpdateContinueMenu@Unknown4010e0@@QAEHXZ
-0x00403060,380,Unknown4010e0::Func403060,?Func403060@Unknown4010e0@@QAEXXZ
+0x00401b80,2973,PauseMenu::UpdatePauseMenu,?UpdatePauseMenu@PauseMenu@@QAEHXZ
+0x00402740,294,PauseMenu::DrawPauseMenu,?DrawPauseMenu@PauseMenu@@QAEXXZ
+0x00402870,1998,PauseMenu::UpdateContinueMenu,?UpdateContinueMenu@PauseMenu@@QAEHXZ
+0x00403060,380,PauseMenu::DrawContinueMenu,?DrawContinueMenu@PauseMenu@@QAEXXZ
 0x004031e0,460,AsciiText::DrawPopups,?DrawPopups@AsciiText@@QAEXXZ
 0x004033b0,460,AsciiText::DrawPopups2,?DrawPopups2@AsciiText@@QAEXXZ
 0x00403580,238,Sprite::Initialize,?Initialize@Sprite@@QAEXXZ

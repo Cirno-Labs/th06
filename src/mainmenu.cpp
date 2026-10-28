@@ -1416,7 +1416,7 @@ int MainMenu::DrawReplayMenu()
         }
         else
         {
-            g_AsciiText.SetUnk6234(i == this->unk_81e8);
+            g_AsciiText.SetHighlight(i == this->unk_81e8);
             if (i == this->unk_81e8)
             {
                 g_AsciiText.SetColor(0xffffffff);
@@ -1433,7 +1433,7 @@ int MainMenu::DrawReplayMenu()
     if (this->unk_81f0 == 15 && this->unk_10edc != NULL)
     {
         g_AsciiText.SetColor(0xffffffff);
-        g_AsciiText.SetUnk6234(0);
+        g_AsciiText.SetHighlight(0);
         text = &this->sprites[0x61];
         g_AsciiText.AddFormat(&text->pos, "       %2.3f%%", this->unk_10edc->slowdown);
         text = &this->sprites[0x72];
@@ -1454,7 +1454,7 @@ int MainMenu::DrawReplayMenu()
             }
             else
             {
-                g_AsciiText.SetUnk6234(i == this->cursor);
+                g_AsciiText.SetHighlight(i == this->cursor);
                 if (i == this->cursor)
                 {
                     g_AsciiText.SetColor(0xffffffff);
@@ -1475,7 +1475,7 @@ int MainMenu::DrawReplayMenu()
         }
     }
     g_AsciiText.SetColor(0xffffffff);
-    g_AsciiText.SetUnk6234(0);
+    g_AsciiText.SetHighlight(0);
     return 0;
 }
 

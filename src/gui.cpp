@@ -152,7 +152,7 @@ int Gui::OnDraw(Gui *gui)
     gui->impl->DrawMsg();
     gui->DrawBanners();
     gui->DrawHud();
-    g_AsciiText.unk_6230 = 1;
+    g_AsciiText.inArena = 1;
     if (gui->impl->bonusPopup.shown)
     {
         g_AsciiText.color = 0xffffff80;
@@ -182,7 +182,7 @@ int Gui::OnDraw(Gui *gui)
         g_AsciiText.scaleY = 1.0f;
         g_AsciiText.color = 0xffffffff;
     }
-    g_AsciiText.unk_6230 = 0;
+    g_AsciiText.inArena = 0;
     g_App.d3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
     return 1;
 }

@@ -10,206 +10,206 @@ AsciiText::AsciiText()
 {
 }
 
-int Unknown4010e0::UpdatePauseMenu()
+int PauseMenu::UpdatePauseMenu()
 {
     int i;
 
     if (WAS_PRESSED(8))
     {
-        this->unk_000 = 3;
+        this->state = 3;
         for (i = 0; i < 6; i++)
         {
-            if (this->unk_008[i].flags.unk0)
+            if (this->sprites[i].flags.unk0)
             {
-                this->unk_008[i].pendingInterrupt = 2;
+                this->sprites[i].pendingInterrupt = 2;
             }
         }
-        this->unk_004 = 0;
-        this->unk_668.pendingInterrupt = 1;
+        this->stateFrames = 0;
+        this->background.pendingInterrupt = 1;
     }
     if (WAS_PRESSED(0x200))
     {
-        this->unk_000 = 6;
+        this->state = 6;
         for (i = 0; i < 6; i++)
         {
-            if (this->unk_008[i].flags.unk0)
+            if (this->sprites[i].flags.unk0)
             {
-                this->unk_008[i].pendingInterrupt = 2;
+                this->sprites[i].pendingInterrupt = 2;
             }
         }
-        this->unk_004 = 0;
+        this->stateFrames = 0;
     }
-    switch (this->unk_000)
+    switch (this->state)
     {
     case 0:
         for (i = 0; i < 6; i++)
         {
-            g_SpriteEngine->StartScript(&this->unk_008[i], i + 2);
+            g_SpriteEngine->StartScript(&this->sprites[i], i + 2);
         }
         for (i = 0; i < 3; i++)
         {
-            this->unk_008[i].pendingInterrupt = 1;
+            this->sprites[i].pendingInterrupt = 1;
         }
-        this->unk_000++;
-        this->unk_004 = 0;
+        this->state++;
+        this->stateFrames = 0;
         if (g_App.lockableBackBuffer)
         {
             g_SpriteEngine->SetPendingCopy(3, 0x20, 0x10, 0x180, 0x1c0);
-            g_SpriteEngine->StartScript(&this->unk_668, 0x718);
-            this->unk_668.pos.x = 32.0f;
-            this->unk_668.pos.y = 16.0f;
-            this->unk_668.pos.z = 0.0f;
+            g_SpriteEngine->StartScript(&this->background, 0x718);
+            this->background.pos.x = 32.0f;
+            this->background.pos.y = 16.0f;
+            this->background.pos.z = 0.0f;
         }
     case 1:
-        this->unk_008[1].color = 0xffff8080;
-        this->unk_008[2].color = 0x80808080;
-        this->unk_008[1].scaleY = 1.7f;
-        this->unk_008[1].scaleX = 1.7f;
-        this->unk_008[2].scaleY = 1.5f;
-        this->unk_008[2].scaleX = 1.5f;
-        this->unk_008[1].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
-        this->unk_008[2].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        if (this->unk_004 >= 4)
+        this->sprites[1].color = 0xffff8080;
+        this->sprites[2].color = 0x80808080;
+        this->sprites[1].scaleY = 1.7f;
+        this->sprites[1].scaleX = 1.7f;
+        this->sprites[2].scaleY = 1.5f;
+        this->sprites[2].scaleX = 1.5f;
+        this->sprites[1].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        this->sprites[2].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        if (this->stateFrames >= 4)
         {
             if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
             {
-                this->unk_000 = 2;
+                this->state = 2;
             }
             if (WAS_PRESSED(1))
             {
                 for (i = 0; i < 3; i++)
                 {
-                    this->unk_008[i].pendingInterrupt = 2;
+                    this->sprites[i].pendingInterrupt = 2;
                 }
-                this->unk_000 = 3;
-                this->unk_004 = 0;
-                this->unk_668.pendingInterrupt = 1;
+                this->state = 3;
+                this->stateFrames = 0;
+                this->background.pendingInterrupt = 1;
             }
         }
         break;
     case 2:
-        this->unk_008[1].color = 0x80808080;
-        this->unk_008[2].color = 0xffff8080;
-        this->unk_008[1].scaleY = 1.5f;
-        this->unk_008[1].scaleX = 1.5f;
-        this->unk_008[2].scaleY = 1.7f;
-        this->unk_008[2].scaleX = 1.7f;
-        this->unk_008[1].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        this->unk_008[2].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
-        if (this->unk_004 >= 4)
+        this->sprites[1].color = 0x80808080;
+        this->sprites[2].color = 0xffff8080;
+        this->sprites[1].scaleY = 1.5f;
+        this->sprites[1].scaleX = 1.5f;
+        this->sprites[2].scaleY = 1.7f;
+        this->sprites[2].scaleX = 1.7f;
+        this->sprites[1].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        this->sprites[2].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        if (this->stateFrames >= 4)
         {
             if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
             {
-                this->unk_000 = 1;
+                this->state = 1;
             }
             if (WAS_PRESSED(1))
             {
                 for (i = 0; i < 3; i++)
                 {
-                    this->unk_008[i].pendingInterrupt = 2;
+                    this->sprites[i].pendingInterrupt = 2;
                 }
                 for (i = 3; i < 6; i++)
                 {
-                    this->unk_008[i].pendingInterrupt = 1;
+                    this->sprites[i].pendingInterrupt = 1;
                 }
-                this->unk_000 = 5;
-                this->unk_004 = 0;
+                this->state = 5;
+                this->stateFrames = 0;
             }
         }
         break;
     case 3:
-        if (this->unk_004 >= 20)
+        if (this->stateFrames >= 20)
         {
-            this->unk_000 = 0;
+            this->state = 0;
             g_GameManager.unk_181f = 0;
             for (i = 0; i < 6; i++)
             {
-                this->unk_008[i].ClearUnk0();
+                this->sprites[i].ClearUnk0();
             }
         }
         break;
     case 4:
-        this->unk_008[4].color = 0xffff8080;
-        this->unk_008[5].color = 0x80808080;
-        this->unk_008[4].scaleY = 1.7f;
-        this->unk_008[4].scaleX = 1.7f;
-        this->unk_008[5].scaleY = 1.5f;
-        this->unk_008[5].scaleX = 1.5f;
-        this->unk_008[4].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
-        this->unk_008[5].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        if (this->unk_004 >= 4)
+        this->sprites[4].color = 0xffff8080;
+        this->sprites[5].color = 0x80808080;
+        this->sprites[4].scaleY = 1.7f;
+        this->sprites[4].scaleX = 1.7f;
+        this->sprites[5].scaleY = 1.5f;
+        this->sprites[5].scaleX = 1.5f;
+        this->sprites[4].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        this->sprites[5].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        if (this->stateFrames >= 4)
         {
             if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
             {
-                this->unk_000 = 5;
+                this->state = 5;
             }
             if (WAS_PRESSED(1))
             {
                 for (i = 3; i < 6; i++)
                 {
-                    this->unk_008[i].pendingInterrupt = 2;
+                    this->sprites[i].pendingInterrupt = 2;
                 }
-                this->unk_000 = 6;
-                this->unk_004 = 0;
+                this->state = 6;
+                this->stateFrames = 0;
             }
         }
         break;
     case 5:
-        this->unk_008[4].color = 0x80808080;
-        this->unk_008[5].color = 0xffff8080;
-        this->unk_008[4].scaleY = 1.5f;
-        this->unk_008[4].scaleX = 1.5f;
-        this->unk_008[5].scaleY = 1.7f;
-        this->unk_008[5].scaleX = 1.7f;
-        this->unk_008[4].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        this->unk_008[5].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
-        if (this->unk_004 >= 4)
+        this->sprites[4].color = 0x80808080;
+        this->sprites[5].color = 0xffff8080;
+        this->sprites[4].scaleY = 1.5f;
+        this->sprites[4].scaleX = 1.5f;
+        this->sprites[5].scaleY = 1.7f;
+        this->sprites[5].scaleX = 1.7f;
+        this->sprites[4].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        this->sprites[5].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        if (this->stateFrames >= 4)
         {
             if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
             {
-                this->unk_000 = 4;
+                this->state = 4;
             }
             if (WAS_PRESSED(1))
             {
                 for (i = 0; i < 3; i++)
                 {
-                    this->unk_008[i].pendingInterrupt = 1;
+                    this->sprites[i].pendingInterrupt = 1;
                 }
                 for (i = 3; i < 6; i++)
                 {
-                    this->unk_008[i].pendingInterrupt = 2;
+                    this->sprites[i].pendingInterrupt = 2;
                 }
-                this->unk_000 = 2;
-                this->unk_004 = 0;
+                this->state = 2;
+                this->stateFrames = 0;
             }
         }
         break;
     case 6:
-        if (this->unk_004 >= 20)
+        if (this->stateFrames >= 20)
         {
-            this->unk_000 = 0;
+            this->state = 0;
             g_GameManager.unk_181f = 0;
             g_App.scene = 1;
             for (i = 0; i < 6; i++)
             {
-                this->unk_008[i].ClearUnk0();
+                this->sprites[i].ClearUnk0();
             }
         }
         break;
     }
     for (i = 0; i < 6; i++)
     {
-        g_SpriteEngine->Step(&this->unk_008[i]);
+        g_SpriteEngine->Step(&this->sprites[i]);
     }
     if (g_App.lockableBackBuffer)
     {
-        g_SpriteEngine->Step(&this->unk_668);
+        g_SpriteEngine->Step(&this->background);
     }
-    this->unk_004++;
+    this->stateFrames++;
     return 0;
 }
 
-void Unknown4010e0::Func402740()
+void PauseMenu::DrawPauseMenu()
 {
     int i;
 
@@ -220,24 +220,24 @@ void Unknown4010e0::Func402740()
         g_App.viewport.Width = g_GameManager.arena[2];
         g_App.viewport.Height = g_GameManager.arena[3];
         g_App.d3dDevice->SetViewport(&g_App.viewport);
-        if (g_App.lockableBackBuffer && this->unk_000 != 0)
+        if (g_App.lockableBackBuffer && this->state != 0)
         {
-            Sprite sprite = this->unk_668;
+            Sprite sprite = this->background;
 
             sprite.flags.zWriteDisabled = 1;
             g_SpriteEngine->Draw(&sprite);
         }
         for (i = 0; i < 6; i++)
         {
-            if (this->unk_008[i].flags.unk0)
+            if (this->sprites[i].flags.unk0)
             {
-                g_SpriteEngine->Draw(&this->unk_008[i]);
+                g_SpriteEngine->Draw(&this->sprites[i]);
             }
         }
     }
 }
 
-int Unknown4010e0::UpdateContinueMenu()
+int PauseMenu::UpdateContinueMenu()
 {
     int i;
 
@@ -262,115 +262,115 @@ int Unknown4010e0::UpdateContinueMenu()
         g_GameManager.unk_0000 = g_GameManager.score;
         return 1;
     }
-    switch (this->unk_000)
+    switch (this->state)
     {
     case 0:
-        if (this->unk_004 == 0)
+        if (this->stateFrames == 0)
         {
             for (i = 0; i < 4; i++)
             {
                 if (i < 2)
                 {
-                    g_SpriteEngine->StartScript(&this->unk_008[i], i + 8);
+                    g_SpriteEngine->StartScript(&this->sprites[i], i + 8);
                 }
                 else
                 {
-                    g_SpriteEngine->StartScript(&this->unk_008[i], i + 4);
+                    g_SpriteEngine->StartScript(&this->sprites[i], i + 4);
                 }
-                this->unk_008[i].pendingInterrupt = 1;
+                this->sprites[i].pendingInterrupt = 1;
             }
             if (g_App.lockableBackBuffer)
             {
                 g_SpriteEngine->SetPendingCopy(3, 0x20, 0x10, 0x180, 0x1c0);
-                g_SpriteEngine->StartScript(&this->unk_668, 0x718);
-                this->unk_668.pos.x = 32.0f;
-                this->unk_668.pos.y = 16.0f;
-                this->unk_668.pos.z = 0.0f;
+                g_SpriteEngine->StartScript(&this->background, 0x718);
+                this->background.pos.x = 32.0f;
+                this->background.pos.y = 16.0f;
+                this->background.pos.z = 0.0f;
             }
         }
-        if (this->unk_004 > 8)
+        if (this->stateFrames > 8)
         {
             break;
         }
-        this->unk_000 += 2;
-        this->unk_004 = 0;
+        this->state += 2;
+        this->stateFrames = 0;
     case 1:
-        this->unk_008[2].color = 0xffff8080;
-        this->unk_008[3].color = 0x80808080;
-        this->unk_008[2].scaleY = 1.7f;
-        this->unk_008[2].scaleX = 1.7f;
-        this->unk_008[3].scaleY = 1.5f;
-        this->unk_008[3].scaleX = 1.5f;
-        this->unk_008[2].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
-        this->unk_008[3].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        if (this->unk_004 >= 4)
+        this->sprites[2].color = 0xffff8080;
+        this->sprites[3].color = 0x80808080;
+        this->sprites[2].scaleY = 1.7f;
+        this->sprites[2].scaleX = 1.7f;
+        this->sprites[3].scaleY = 1.5f;
+        this->sprites[3].scaleX = 1.5f;
+        this->sprites[2].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        this->sprites[3].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        if (this->stateFrames >= 4)
         {
             if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
             {
-                this->unk_000 = 2;
+                this->state = 2;
             }
             if (WAS_PRESSED(1))
             {
                 for (i = 0; i < 4; i++)
                 {
-                    this->unk_008[i].pendingInterrupt = 2;
+                    this->sprites[i].pendingInterrupt = 2;
                 }
-                this->unk_000 = 3;
-                this->unk_668.pendingInterrupt = 1;
-                this->unk_004 = 0;
+                this->state = 3;
+                this->background.pendingInterrupt = 1;
+                this->stateFrames = 0;
             }
         }
         break;
     case 2:
-        this->unk_008[3].color = 0xffff8080;
-        this->unk_008[2].color = 0x80808080;
-        this->unk_008[2].scaleY = 1.5f;
-        this->unk_008[2].scaleX = 1.5f;
-        this->unk_008[3].scaleY = 1.7f;
-        this->unk_008[3].scaleX = 1.7f;
-        this->unk_008[3].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
-        this->unk_008[2].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        if (this->unk_004 >= 30)
+        this->sprites[3].color = 0xffff8080;
+        this->sprites[2].color = 0x80808080;
+        this->sprites[2].scaleY = 1.5f;
+        this->sprites[2].scaleX = 1.5f;
+        this->sprites[3].scaleY = 1.7f;
+        this->sprites[3].scaleX = 1.7f;
+        this->sprites[3].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        this->sprites[2].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        if (this->stateFrames >= 30)
         {
             if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
             {
-                this->unk_000 = 1;
+                this->state = 1;
             }
             if (WAS_PRESSED(1))
             {
                 for (i = 0; i < 4; i++)
                 {
-                    this->unk_008[i].pendingInterrupt = 2;
+                    this->sprites[i].pendingInterrupt = 2;
                 }
-                this->unk_000 = 4;
-                this->unk_004 = 0;
+                this->state = 4;
+                this->stateFrames = 0;
             }
         }
         break;
     case 4:
-        if (this->unk_004 >= 20)
+        if (this->stateFrames >= 20)
         {
-            this->unk_000 = 0;
-            this->unk_004 = 0;
+            this->state = 0;
+            this->stateFrames = 0;
             g_GameManager.unk_1820 = 0;
             g_App.scene = 7;
             for (i = 0; i < 4; i++)
             {
-                this->unk_008[i].ClearUnk0();
+                this->sprites[i].ClearUnk0();
             }
             g_GameManager.unk_0000 = g_GameManager.score;
             return 0;
         }
         break;
     case 3:
-        if (this->unk_004 >= 30)
+        if (this->stateFrames >= 30)
         {
-            this->unk_000 = 0;
-            this->unk_004 = 0;
+            this->state = 0;
+            this->stateFrames = 0;
             g_GameManager.unk_1820 = 0;
             for (i = 0; i < 4; i++)
             {
-                this->unk_008[i].ClearUnk0();
+                this->sprites[i].ClearUnk0();
             }
             g_GameManager.continuesUsed++;
             g_GameManager.unk_0000 = g_GameManager.continuesUsed;
@@ -392,17 +392,17 @@ int Unknown4010e0::UpdateContinueMenu()
     }
     for (i = 0; i < 4; i++)
     {
-        g_SpriteEngine->Step(&this->unk_008[i]);
+        g_SpriteEngine->Step(&this->sprites[i]);
     }
     if (g_App.lockableBackBuffer)
     {
-        g_SpriteEngine->Step(&this->unk_668);
+        g_SpriteEngine->Step(&this->background);
     }
-    this->unk_004++;
+    this->stateFrames++;
     return 0;
 }
 
-void Unknown4010e0::Func403060()
+void PauseMenu::DrawContinueMenu()
 {
     int i;
 
@@ -413,22 +413,22 @@ void Unknown4010e0::Func403060()
         g_App.viewport.Width = g_GameManager.arena[2];
         g_App.viewport.Height = g_GameManager.arena[3];
         g_App.d3dDevice->SetViewport(&g_App.viewport);
-        if (g_App.lockableBackBuffer && (this->unk_000 != 0 || this->unk_004 > 2))
+        if (g_App.lockableBackBuffer && (this->state != 0 || this->stateFrames > 2))
         {
-            g_SpriteEngine->Draw(&this->unk_668);
+            g_SpriteEngine->Draw(&this->background);
         }
-        if (this->unk_000 == 1 || this->unk_000 == 2)
+        if (this->state == 1 || this->state == 2)
         {
-            this->unk_008[4] = this->unk_008[1];
-            this->unk_008[4].pos.x += 8.0f * this->unk_008[4].scaleX;
-            this->unk_008[4].spriteData = &g_SpriteEngine->sprites[0x1e - g_GameManager.continuesUsed];
-            g_SpriteEngine->Draw(&this->unk_008[4]);
+            this->sprites[4] = this->sprites[1];
+            this->sprites[4].pos.x += 8.0f * this->sprites[4].scaleX;
+            this->sprites[4].spriteData = &g_SpriteEngine->sprites[0x1e - g_GameManager.continuesUsed];
+            g_SpriteEngine->Draw(&this->sprites[4]);
         }
         for (i = 0; i < 4; i++)
         {
-            if (this->unk_008[i].flags.unk0)
+            if (this->sprites[i].flags.unk0)
             {
-                g_SpriteEngine->Draw(&this->unk_008[i]);
+                g_SpriteEngine->Draw(&this->sprites[i]);
             }
         }
     }
@@ -457,11 +457,11 @@ int AsciiText::OnUpdate(AsciiText *text)
     }
     else if (g_GameManager.unk_181f)
     {
-        text->unk_6244.UpdatePauseMenu();
+        text->pauseMenu.UpdatePauseMenu();
     }
     if (g_GameManager.unk_1820)
     {
-        text->unk_69bc.UpdateContinueMenu();
+        text->continueMenu.UpdateContinueMenu();
     }
     return 1;
 }
@@ -497,18 +497,18 @@ void AsciiText::DrawStrings()
     D3DXVECTOR3 pos;
 
     string = this->strings;
-    this->unk_0000.flags.unk0 = 1;
-    this->unk_0000.flags.anchor = 3;
+    this->glyph.flags.unk0 = 1;
+    this->glyph.flags.anchor = 3;
     for (idx = 0; idx < this->stringCount; idx++, string++)
     {
-        this->unk_0000.pos = string->pos;
+        this->glyph.pos = string->pos;
         c = (BYTE *)string->text;
-        this->unk_0000.scaleX = string->scaleX;
-        this->unk_0000.scaleY = string->scaleY;
+        this->glyph.scaleX = string->scaleX;
+        this->glyph.scaleY = string->scaleY;
         advance = 14.0f * string->scaleX;
-        if (clipped != string->unk_5c)
+        if (clipped != string->inArena)
         {
-            clipped = string->unk_5c;
+            clipped = string->inArena;
             if (clipped != 0)
             {
                 g_App.viewport.X = g_GameManager.arena[0];
@@ -530,27 +530,27 @@ void AsciiText::DrawStrings()
         {
             if (*c == '\n')
             {
-                this->unk_0000.pos.y += 16.0f * string->scaleY;
-                this->unk_0000.pos.x = string->pos.x;
+                this->glyph.pos.y += 16.0f * string->scaleY;
+                this->glyph.pos.x = string->pos.x;
             }
             else if (*c == ' ')
             {
-                this->unk_0000.pos.x += advance;
+                this->glyph.pos.x += advance;
             }
             else
             {
-                if (string->unk_58 == 0)
+                if (string->highlight == 0)
                 {
-                    this->unk_0000.spriteData = &g_SpriteEngine->sprites[*c - 0x15];
-                    this->unk_0000.color = string->color;
+                    this->glyph.spriteData = &g_SpriteEngine->sprites[*c - 0x15];
+                    this->glyph.color = string->color;
                 }
                 else
                 {
-                    this->unk_0000.spriteData = &g_SpriteEngine->sprites[*c + 0x61];
-                    this->unk_0000.color = 0xffffffff;
+                    this->glyph.spriteData = &g_SpriteEngine->sprites[*c + 0x61];
+                    this->glyph.color = 0xffffffff;
                 }
-                g_SpriteEngine->Draw(&this->unk_0000);
-                this->unk_0000.pos.x += advance;
+                g_SpriteEngine->Draw(&this->glyph);
+                this->glyph.pos.x += advance;
             }
             c++;
         }
@@ -561,8 +561,8 @@ int AsciiText::OnDraw(AsciiText *text)
 {
     text->DrawStrings();
     text->stringCount = 0;
-    text->unk_6244.Func402740();
-    text->unk_69bc.Func403060();
+    text->pauseMenu.DrawPauseMenu();
+    text->continueMenu.DrawContinueMenu();
     return 1;
 }
 
@@ -616,27 +616,27 @@ void AsciiText::DrawPopups()
         {
             continue;
         }
-        this->unk_0110.pos.x = p->pos.x - (p->digitCount << 2);
-        this->unk_0110.pos.y = p->pos.y;
-        this->unk_0110.color = p->color;
+        this->digit.pos.x = p->pos.x - (p->digitCount << 2);
+        this->digit.pos.y = p->pos.y;
+        this->digit.color = p->color;
         digitPtr = p->digits + p->digitCount - 1;
         for (count = p->digitCount; count > 0; count--)
         {
-            this->unk_0110.spriteData = &g_SpriteEngine->sprites[*digitPtr];
+            this->digit.spriteData = &g_SpriteEngine->sprites[*digitPtr];
             if (*digitPtr >= 10)
             {
                 // The minus sign, stretched.
-                this->unk_0110.matrix._11 = 0.1875f;
-                this->unk_0110.matrix._22 = 0.03125f;
-                g_SpriteEngine->Draw3DRounded(&this->unk_0110);
-                this->unk_0110.matrix._11 = 0.03125f;
-                this->unk_0110.matrix._22 = 0.03125f;
+                this->digit.matrix._11 = 0.1875f;
+                this->digit.matrix._22 = 0.03125f;
+                g_SpriteEngine->Draw3DRounded(&this->digit);
+                this->digit.matrix._11 = 0.03125f;
+                this->digit.matrix._22 = 0.03125f;
             }
             else
             {
-                g_SpriteEngine->Draw3DRounded(&this->unk_0110);
+                g_SpriteEngine->Draw3DRounded(&this->digit);
             }
-            this->unk_0110.pos.x += 8.0f;
+            this->digit.pos.x += 8.0f;
             digitPtr--;
         }
     }
@@ -661,27 +661,27 @@ void AsciiText::DrawPopups2()
         {
             continue;
         }
-        this->unk_0110.pos.x = p->pos.x - (p->digitCount << 2);
-        this->unk_0110.pos.y = p->pos.y;
-        this->unk_0110.color = p->color;
+        this->digit.pos.x = p->pos.x - (p->digitCount << 2);
+        this->digit.pos.y = p->pos.y;
+        this->digit.color = p->color;
         digitPtr = p->digits + p->digitCount - 1;
         for (count = p->digitCount; count > 0; count--)
         {
-            this->unk_0110.spriteData = &g_SpriteEngine->sprites[*digitPtr];
+            this->digit.spriteData = &g_SpriteEngine->sprites[*digitPtr];
             if (*digitPtr >= 10)
             {
                 // The minus sign, stretched.
-                this->unk_0110.matrix._11 = 0.1875f;
-                this->unk_0110.matrix._22 = 0.03125f;
-                g_SpriteEngine->Draw(&this->unk_0110);
-                this->unk_0110.matrix._11 = 0.03125f;
-                this->unk_0110.matrix._22 = 0.03125f;
+                this->digit.matrix._11 = 0.1875f;
+                this->digit.matrix._22 = 0.03125f;
+                g_SpriteEngine->Draw(&this->digit);
+                this->digit.matrix._11 = 0.03125f;
+                this->digit.matrix._22 = 0.03125f;
             }
             else
             {
-                g_SpriteEngine->Draw3DRounded(&this->unk_0110);
+                g_SpriteEngine->Draw3DRounded(&this->digit);
             }
-            this->unk_0110.pos.x += 8.0f;
+            this->digit.pos.x += 8.0f;
             digitPtr--;
         }
     }
@@ -716,14 +716,14 @@ void AsciiText::AddString(D3DXVECTOR3 *pos, char *text)
     str->color = this->color;
     str->scaleX = this->scaleX;
     str->scaleY = this->scaleY;
-    str->unk_5c = this->unk_6230;
+    str->inArena = this->inArena;
     if (g_App.HasFlag0Or8())
     {
-        str->unk_58 = this->unk_6234;
+        str->highlight = this->highlight;
     }
     else
     {
-        str->unk_58 = 0;
+        str->highlight = 0;
     }
 }
 

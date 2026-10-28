@@ -17,57 +17,63 @@ struct AsciiString
     D3DCOLOR color;
     float scaleX;
     float scaleY;
-    int unk_58;
-    int unk_5c;
+    // Drawn with the second glyph set (asciis.anm), in white.
+    int highlight;
+    // Drawn inside the play area's viewport.
+    int inArena;
 };
 ASSERT_SIZE(AsciiString, 0x60);
 
 // A part of AsciiText, twice: at 0x6244 and 0x69bc, the pause and the
 // continue menus. Its inline constructor is too large to expand: emitted
 // at 0x4010e0, and AsciiText's constructor reserves slots for it.
-// AsciiText::OnDraw runs Func402740 on the first and Func403060 on the
-// second.
-class Unknown4010e0
+// AsciiText::OnDraw runs DrawPauseMenu on the first and DrawContinueMenu
+// on the second.
+class PauseMenu
 {
 public:
-    Unknown4010e0()
+    PauseMenu()
     {
     }
 
-    // The pause menu, while g_GameManager.unk_181f is set. unk_000 is the
-    // state: 0 starts the menu's scripts (and a copy of the play area
-    // into texture 3 for unk_668's background), 1 and 2 have resume or
-    // quit selected, 4 and 5 the no and yes of quitting; 3 resumes and 6
-    // returns to the title (scene 1) after 20 frames. The pause button
-    // resumes and 0x200 quits from any state. Returns 0.
+    // The pause menu, while g_GameManager.unk_181f is set. `state`: 0
+    // starts the menu's scripts (and a copy of the play area into texture
+    // 3 for the background), 1 and 2 have resume or quit selected, 4 and
+    // 5 the no and yes of quitting; 3 resumes and 6 returns to the title
+    // (scene 1) after 20 frames. The pause button resumes and 0x200 quits
+    // from any state. Returns 0.
     int UpdatePauseMenu();
     // Draws, while g_GameManager.unk_181f is set, inside the viewport given
-    // by g_GameManager.arena: unk_668 without z writes if
-    // g_App.lockableBackBuffer is set and unk_000 is nonzero,
+    // by g_GameManager.arena: the background without z writes if
+    // g_App.lockableBackBuffer is set and state is nonzero,
     // then those of the six sprites with flag 0.
-    void Func402740();
+    void DrawPauseMenu();
     // The continue menu, while g_GameManager.unk_1820 is set; leaves at
     // once (scene 7, or 8 in a replay; returns 1) in practice, replays,
-    // after 3 continues or on Extra. unk_000 is the state: 0 starts the
-    // scripts (and the play area's copy as in UpdatePauseMenu), 1 and 2
+    // after 3 continues or on Extra. `state`: 0 starts the scripts
+    // (and the play area's copy as in UpdatePauseMenu), 1 and 2
     // have yes or no selected; 3 continues after 30 frames, refilling
     // lives and bombs and resetting the score to the continues used; 4
     // gives up (scene 7) after 20. Returns 0 then.
     int UpdateContinueMenu();
-    // Draws, while g_GameManager.unk_1820 is set, inside the viewport given
-    // by g_GameManager.arena: unk_668 if lockableBackBuffer is set and unk_000
-    // is nonzero or unk_004 above 2, then, when unk_000 is 1 or 2, a copy
-    // of sprite 1 as sprite 4, shifted right and showing sprite entry
-    // 0x1e - g_GameManager.continuesUsed, then those of the first four sprites
-    // with flag 0.
-    void Func403060();
+    // Draws, while g_GameManager.unk_1820 is set, inside the viewport
+    // given by g_GameManager.arena: the background if lockableBackBuffer
+    // is set and state is nonzero or stateFrames above 2, then, when state
+    // is 1 or 2, a copy of sprite 1 as sprite 4, shifted right and showing
+    // sprite entry 0x1e - g_GameManager.continuesUsed, then those of the
+    // first four sprites with flag 0.
+    void DrawContinueMenu();
 
-    int unk_000;
-    int unk_004;
-    Sprite unk_008[6];
-    Sprite unk_668;
+    int state;
+    // Frames since the state changed.
+    int stateFrames;
+    // The menu's lines: the title and two choices, then the confirmation's
+    // (the continue menu uses the first four).
+    Sprite sprites[6];
+    // The copy of the play area behind the menu.
+    Sprite background;
 };
-ASSERT_SIZE(Unknown4010e0, 0x778);
+ASSERT_SIZE(PauseMenu, 0x778);
 
 // A number rising from where something scored, one of AsciiText's
 // 0x203: AddPopup uses 0x200 of them, AddPopup2 the other 3. OnUpdate
@@ -102,10 +108,11 @@ public:
     // The first draw element's callback (priority 0xf): draws the queued
     // strings and empties the queue. Returns 1.
     static int OnDraw(AsciiText *text);
-    // Draws the queued strings with unk_0000, glyph by glyph: 14 pixels a
-    // glyph and 16 a line, times the string's scale. Strings with unk_5c
-    // set are drawn inside the viewport given by g_GameManager.arena, the
-    // others in the whole 640x480 screen; those with unk_58 set use the
+    // Draws the queued strings with `glyph`, character by character: 14
+    // pixels a glyph and 16 a line, times the string's scale. Strings
+    // with inArena set are drawn inside the viewport given by
+    // g_GameManager.arena, the others in the whole 640x480 screen; those
+    // with highlight set use the
     // second glyph set, in white.
     void DrawStrings();
     // The update element's callback: moves the active popups along, unless
@@ -124,13 +131,13 @@ public:
         this->color = 0xffffffff;
         this->scaleX = 1.0f;
         this->scaleY = 1.0f;
-        this->unk_0110.flags.anchor = 3;
-        g_SpriteEngine->InitSprite(&this->unk_0110, 0);
-        g_SpriteEngine->InitSprite(&this->unk_0000, 0x20);
-        this->unk_0110.pos.z = 0.1f;
-        this->unk_6234 = 0;
+        this->digit.flags.anchor = 3;
+        g_SpriteEngine->InitSprite(&this->digit, 0);
+        g_SpriteEngine->InitSprite(&this->glyph, 0x20);
+        this->digit.pos.z = 0.1f;
+        this->highlight = 0;
     }
-    // Draws the active popups digit by digit with unk_0110, inside the
+    // Draws the active popups digit by digit with digit, inside the
     // viewport given by g_GameManager.arena, through
     // SpriteEngine::Draw3DRounded.
     void DrawPopups();
@@ -149,9 +156,9 @@ public:
     {
         this->color = color;
     }
-    void SetUnk6234(int unk)
+    void SetHighlight(int highlight)
     {
-        this->unk_6234 = unk;
+        this->highlight = highlight;
     }
     // Queues a string at `pos` in the current color. Up to 256 strings
     // a frame; more are dropped.
@@ -165,8 +172,10 @@ public:
     // AddPopup's.
     void AddPopup2(D3DXVECTOR3 *pos, int value, D3DCOLOR color);
 
-    Sprite unk_0000;
-    Sprite unk_0110;
+    // The glyph DrawStrings draws each character with.
+    Sprite glyph;
+    // The digit the popups are drawn with.
+    Sprite digit;
     AsciiString strings[0x100];
     // How many strings are queued.
     int stringCount;
@@ -174,15 +183,19 @@ public:
     D3DCOLOR color;
     float scaleX;
     float scaleY;
-    int unk_6230;
-    int unk_6234;
+    // The strings queued next are drawn inside the play area: set while
+    // the Gui queues its own.
+    int inArena;
+    // The strings queued next are highlighted (if HasFlag0Or8): the menus
+    // set it for the line selected.
+    int highlight;
     // The popup AddPopup uses next.
     int nextPopup;
     // The one of the last three popups AddPopup2 uses next.
     int nextPopup2;
     unsigned char unk_6240[0x4];
-    Unknown4010e0 unk_6244;
-    Unknown4010e0 unk_69bc;
+    PauseMenu pauseMenu;
+    PauseMenu continueMenu;
     AsciiPopup popups[0x203];
 };
 ASSERT_SIZE(AsciiText, 0xc1ac);

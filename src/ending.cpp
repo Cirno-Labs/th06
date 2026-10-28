@@ -365,3 +365,28 @@ inline Ending::Ending()
     this->scrollY = 0.0f;
     this->scrollSpeed = 0.0f;
 }
+
+int Ending::OnUpdate(Ending *ending)
+{
+    int i;
+    int extra = 0;
+
+loop:
+    if (ending->RunScript() != 0)
+    {
+        return 0;
+    }
+    for (i = 0; i < 0x10; i++)
+    {
+        if (ending->sprites[i].scriptIndex != 0)
+        {
+            g_SpriteEngine->Step(&ending->sprites[i]);
+        }
+    }
+    if (ending->canSkip != 0 && (g_Buttons & 0x100) != 0 && extra < 4)
+    {
+        extra++;
+        goto loop;
+    }
+    return 1;
+}

@@ -46,7 +46,7 @@ public:
     static int OnDraw(GameManager *mgr);
 
     // The score shown, and the score, which it counts up to.
-    int unk_0000;
+    unsigned int unk_0000;
     unsigned int score;
     DWORD unk_0008[0x2];
     int difficulty;
@@ -58,7 +58,8 @@ public:
     int deaths;
     // Counts the bombs used.
     int bombsUsed;
-    DWORD unk_0028;
+    // Spell cards captured.
+    int spellCardsCaptured;
     // Gui::OnUpdate skips the interface's update while it is set.
     char unk_002c;
     BYTE unk_002d[0x3];
@@ -73,7 +74,8 @@ public:
     // Point items collected.
     WORD pointItems;
     WORD pointItemsTotal;
-    BYTE unk_1818;
+    // Continues used; a replay of a continued game cannot be saved.
+    BYTE continuesUsed;
     // Power items collected in a row at full power, up to 30.
     char powerItemCombo;
     // Lives and bombs left.
@@ -102,7 +104,10 @@ public:
     float arena[4];
     // Where the player may move: x, y, width and height.
     float playerArea[4];
-    DWORD unk_1a5c[0x5];
+    DWORD unk_1a5c[0x4];
+    // Counts the frames the stages' enemy timelines ran outside boss
+    // fights; the result screen shows it as a share of the game.
+    int progressFrames;
     // A level from minRank to maxRank, moved in hundredths through
     // subRank by AddSubRank and SubSubRank.
     int rank;

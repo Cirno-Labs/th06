@@ -42,7 +42,7 @@ public:
     // by g_GameManager.arena: unk_668 if g_Unknown6c7115 is set and unk_000
     // is nonzero or unk_004 above 2, then, when unk_000 is 1 or 2, a copy
     // of sprite 1 as sprite 4, shifted right and showing sprite entry
-    // 0x1e - g_GameManager.unk_1818, then those of the first four sprites
+    // 0x1e - g_GameManager.continuesUsed, then those of the first four sprites
     // with flag 0.
     void Func403060();
 

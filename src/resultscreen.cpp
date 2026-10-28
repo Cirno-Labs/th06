@@ -7,6 +7,7 @@
 #include <string.h>
 #include <time.h>
 
+#include "ascii.h"
 #include "gamemanager.h"
 #include "resultscreen.h"
 #include "unsorted.h"
@@ -611,7 +612,7 @@ int ResultScreen::HandleReplaySaving()
     case 10:
         if (this->frame == 60)
         {
-            if (g_GameManager.unk_1818)
+            if (g_GameManager.continuesUsed)
             {
                 interrupt = 0xc;
             }
@@ -968,6 +969,111 @@ int ResultScreen::WaitAfterNameEntry()
             this->frame = 59;
             this->state = 10;
         }
+        break;
+    }
+    return 0;
+}
+
+int ResultScreen::DrawStatistics()
+{
+    Sprite *spr;
+    D3DXVECTOR3 cursorPos;
+    float progress;
+    float rating;
+    float slowdown;
+
+    switch (this->state)
+    {
+    case 0xf:
+    case 0x10:
+        spr = &this->sprites[0x25];
+        {
+            D3DCOLOR color = spr->color;
+
+            g_AsciiText.color = color;
+        }
+        rating = 0.0f;
+        progress = g_GameManager.difficulty < 4 ? g_GameManager.progressFrames / 89500.0f
+                                                : g_GameManager.progressFrames / 39600.0f;
+        cursorPos = spr->pos;
+        cursorPos.x += 224.0f;
+        cursorPos.y += 32.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", g_GameManager.unk_0000);
+        if (g_GameManager.unk_0000 < 2000000)
+        {
+            rating -= 20.0f;
+        }
+        else if (g_GameManager.unk_0000 < 200000000)
+        {
+            rating += (g_GameManager.unk_0000 - 2000000) / 198000000.0f * 60.0f - 20.0f;
+        }
+        else
+        {
+            rating += 40.0f;
+        }
+        cursorPos.y += 22.0f;
+        g_AsciiText.AddString(&cursorPos, g_DifficultyNames[g_GameManager.difficulty]);
+        rating += g_DifficultyRatings[g_GameManager.difficulty];
+        cursorPos.y += 22.0f;
+        if (g_GameManager.difficulty == 0 || !g_GameManager.unk_1822)
+        {
+            g_AsciiText.AddFormat(&cursorPos, "    %3.2f%%", progress * 100.0f);
+            rating += progress * 70.0f;
+        }
+        else
+        {
+            g_AsciiText.AddFormat(&cursorPos, "      100%%");
+            rating += 70.0f;
+        }
+        cursorPos.y += 22.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", g_GameManager.continuesUsed);
+        rating -= g_GameManager.continuesUsed * 10.0f;
+        cursorPos.y += 22.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", g_GameManager.deaths);
+        rating -= g_GameManager.deaths * 5.0f - 10.0f;
+        cursorPos.y += 22.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", g_GameManager.bombsUsed);
+        rating -= g_GameManager.bombsUsed * 2.0f - 10.0f;
+        cursorPos.y += 22.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", g_GameManager.spellCardsCaptured);
+        rating += g_GameManager.spellCardsCaptured * g_SpellCardRatings[g_GameManager.difficulty];
+        slowdown = (g_Unknown6c6d18.unk_1b4 / g_Unknown6c6d18.unk_1b8 - 0.5f) * 2.0f;
+        if (slowdown < 0.0f)
+        {
+            slowdown = 0.0f;
+        }
+        else if (slowdown >= 1.0f)
+        {
+            slowdown = 1.0f;
+        }
+        slowdown = (1.0f - slowdown) * 100.0f;
+        cursorPos.y += 22.0f;
+        g_AsciiText.AddFormat(&cursorPos, "    %3.2f%%", slowdown);
+        if (slowdown < 50.0f)
+        {
+            rating -= 70.0f * slowdown / 100.0f;
+        }
+        else
+        {
+            rating = -999.0f;
+        }
+        if (g_GameManager.pointItemsTotal < 800)
+        {
+            rating += 0.01f * g_GameManager.pointItemsTotal;
+        }
+        else
+        {
+            rating += 8.0f;
+        }
+        if (g_GameManager.grazeTotal < 5000)
+        {
+            rating += 0.0025f * g_GameManager.grazeTotal;
+        }
+        else
+        {
+            rating += 12.5f;
+        }
+        g_AsciiText.color = 0xffffffff;
         break;
     }
     return 0;

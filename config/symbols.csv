@@ -358,7 +358,7 @@ address,size,name,symbol
 0x0042d0a4,235,MoveCursorVertical,?MoveCursorVertical@@YAXPAVResultScreen@@H@Z
 0x0042d18f,259,MoveCursorHorizontal,?MoveCursorHorizontal@@YAHPAVResultScreen@@H@Z
 0x0042d292,200,ResultScreen::WaitAfterNameEntry,?WaitAfterNameEntry@ResultScreen@@QAEHXZ
-0x0042d35a,1049,Func42d35a,
+0x0042d35a,1049,ResultScreen::DrawStatistics,?DrawStatistics@ResultScreen@@QAEHXZ
 0x0042d773,302,Func42d773,?Func42d773@@YAHH@Z
 0x0042d8a1,237,Func42d8a1,
 0x0042d98e,2744,Func42d98e,
@@ -1541,6 +1541,7 @@ address,size,name,symbol
 0x0046a6e8,,g_BulletTypeScripts,?g_BulletTypeScripts@@3PAY04HA
 0x0046b564,4,MmTimer::`vftable',??_7MmTimer@@6B@
 0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
+0x0046bca4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
 0x0046c220,,g_TextureFormats,?g_TextureFormats@@3PAW4_D3DFORMAT@@A
 0x0046c2f0,,g_Half,?g_Half@@3MA
 0x0046c680,4,CSound::`vftable',??_7CSound@@6B@
@@ -1571,6 +1572,8 @@ address,size,name,symbol
 0x00478468,,g_ShotTable3,?g_ShotTable3@@3UShotTable@@A
 0x004784d4,,g_NameAlphabet,?g_NameAlphabet@@3PADA
 0x004784d8,,g_ShotNames,?g_ShotNames@@3PAPADA
+0x004784f0,,g_SpellCardRatings,?g_SpellCardRatings@@3PAMA
+0x00478504,,g_DifficultyNames,?g_DifficultyNames@@3PAPADA
 0x00478528,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A
 0x00478628,,g_SoundPaths,?g_SoundPaths@@3PAPADA
 0x0047a630,4,__security_cookie,___security_cookie

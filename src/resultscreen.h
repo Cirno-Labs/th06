@@ -168,7 +168,14 @@ int MoveCursorHorizontal(class ResultScreen *screen, int count);
 extern char *g_NameAlphabet;
 // Each character's two shot types' names ("博麗 霊夢 (霊)", ...), by
 // character * 2 + shotType.
-extern char *g_ShotNames[8];
+extern char *g_ShotNames[6];
+
+// The difficulties' names ("     Easy", ...), right-aligned.
+extern char *g_DifficultyNames[5];
+// By difficulty: what the result screen's rating starts from, and what
+// each spell card captured adds to it.
+extern float g_DifficultyRatings[5];
+extern float g_SpellCardRatings[5];
 
 // The result screen's scene object (0x56b0 bytes, set up by Func42d773).
 class ResultScreen
@@ -196,6 +203,11 @@ public:
     // After a name is entered (state 15), waits for the shot button, then
     // (state 16) moves on to the replay saving prompt. Returns 0.
     int WaitAfterNameEntry();
+    // In states 15 and 16, shows the game's statistics next to sprite
+    // 0x25: score, difficulty, progress, continues, deaths, bombs, spell
+    // cards and slowdown. It also works out a rating from them that it
+    // never shows. Returns 0.
+    int DrawStatistics();
 
     // The score file, as LoadScoreDat loaded it.
     ScoreDat *scoreDat;

@@ -316,7 +316,7 @@ void EnemyManager::RunTimeline()
     }
     if (!g_Gui.Func4195a2())
     {
-        g_GameManager.unk_1a5c[4]++;
+        g_GameManager.progressFrames++;
     }
 }
 

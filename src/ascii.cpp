@@ -57,7 +57,7 @@ void Unknown4010e0::Func403060()
         {
             this->unk_008[4] = this->unk_008[1];
             this->unk_008[4].pos.x += 8.0f * this->unk_008[4].scaleX;
-            this->unk_008[4].spriteData = &g_SpriteEngine->sprites[0x1e - g_GameManager.unk_1818];
+            this->unk_008[4].spriteData = &g_SpriteEngine->sprites[0x1e - g_GameManager.continuesUsed];
             g_SpriteEngine->Draw(&this->unk_008[4]);
         }
         for (i = 0; i < 4; i++)

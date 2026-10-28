@@ -1,6 +1,7 @@
-// cflags: /Os
+// cflags: /Os -/Oi
 // The /Os file from 0x43575d to 0x43a7a6, with the title menu.
 
+#include "gamemanager.h"
 #include "mainmenu.h"
 #include "unsorted.h"
 
@@ -267,6 +268,33 @@ int LoadReplayMenuResources(MainMenu *menu)
     return 0;
 }
 
+int SetUpTitleScene(int unk)
+{
+    MainMenu *menu = &g_MainMenu;
+
+    memset(menu, 0, sizeof(MainMenu));
+    g_GameManager.unk_181f = 0;
+    DebugPrint2("Debug : title 開始 VRAM = %d\n", g_Unknown6c6d18.d3dDevice->GetAvailableTextureMem());
+    menu->unk_81f0 = unk != 0 ? 12 : 0;
+    g_Unknown6c6d18.gameSpeed = 0.0f;
+    menu->calcChain = g_Chain.CreateElem((ChainCallback)MainMenu::OnUpdate);
+    menu->calcChain->arg = menu;
+    menu->calcChain->addedCallback = (ChainCallback)MainMenu::AddedCallback;
+    menu->calcChain->deletedCallback = (ChainCallback)MainMenu::DeletedCallback;
+    menu->unk_81f4 = 0;
+    if (g_Chain.AddToCalcChain(menu->calcChain, 2) != 0)
+    {
+        return -1;
+    }
+    menu->drawChain = g_Chain.CreateElem((ChainCallback)MainMenu::OnDraw);
+    menu->drawChain->arg = menu;
+    g_Chain.AddToDrawChain(menu->drawChain, 0);
+    menu->unk_10f30 = 0;
+    menu->unk_81f4 = 60;
+    menu->unk_10f2c = 0;
+    return 0;
+}
+
 int MainMenu::DeletedCallback(MainMenu *menu)
 {
     int i;
@@ -279,8 +307,8 @@ int MainMenu::DeletedCallback(MainMenu *menu)
     }
     g_SpriteEngine->ReleaseSurface(0);
     g_SpriteEngine->ClearMenuScripts();
-    g_Chain.Remove(menu->calcChain);
-    menu->calcChain = NULL;
+    g_Chain.Remove(menu->drawChain);
+    menu->drawChain = NULL;
     MemFree(menu->unk_10edc);
     return 0;
 }

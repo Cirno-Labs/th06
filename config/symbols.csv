@@ -420,7 +420,7 @@ address,size,name,symbol
 0x004354c0,424,SpriteEngine::CopySurfaceRectToBackBuffer,?CopySurfaceRectToBackBuffer@SpriteEngine@@QAEXHHHHHHH@Z
 0x00435670,237,SpriteEngine::CopyBackBufferToTexture,?CopyBackBufferToTexture@SpriteEngine@@QAEXHHHHH@Z
 0x0043575d,66,MainMenu::MainMenu,??0MainMenu@@QAE@XZ
-0x0043579f,7473,Func43579f,
+0x0043579f,7473,MainMenu::OnUpdate,?OnUpdate@MainMenu@@SAHPAV1@@Z
 0x0043753c,310,MoveMenuCursor,?MoveMenuCursor@@YAHPAVMainMenu@@H@Z
 0x00437672,305,ReassignButton,?ReassignButton@@YAXPAVMainMenu@@FFH@Z
 0x004377a3,255,HighlightMenuEntry,?HighlightMenuEntry@@YAXPAVSprite@@HHKKH@Z
@@ -432,12 +432,12 @@ address,size,name,symbol
 0x00438ef8,575,Func438ef8,
 0x00439137,2094,Func439137,
 0x00439965,369,Func439965,
-0x00439ad6,714,Func439ad6,
+0x00439ad6,714,MainMenu::OnDraw,?OnDraw@MainMenu@@SAHPAV1@@Z
 0x00439da0,488,LoadTitleResources,?LoadTitleResources@@YAHPAVMainMenu@@@Z
 0x00439f88,612,Func439f88,
 0x0043a1ec,332,LoadReplayMenuResources,?LoadReplayMenuResources@@YAHPAVMainMenu@@@Z
-0x0043a338,300,Func43a338,?Func43a338@@YAHH@Z
-0x0043a464,501,Func43a464,
+0x0043a338,300,SetUpTitleScene,?SetUpTitleScene@@YAHH@Z
+0x0043a464,501,MainMenu::AddedCallback,?AddedCallback@MainMenu@@SAHPAV1@@Z
 0x0043a659,177,MainMenu::DeletedCallback,?DeletedCallback@MainMenu@@SAHPAV1@@Z
 0x0043a70a,44,Func43a70a,?Func43a70a@@YAXXZ
 0x0043a736,112,Func43a736,
@@ -1643,3 +1643,4 @@ address,size,name,symbol
 0x006d4590,,g_DiffuseQuad,?g_DiffuseQuad@@3PAUVertexTex1DiffuseXyzrwh@@A
 0x006d4600,,g_Quad,?g_Quad@@3PAUVertexTex1Xyzrwh@@A
 0x006d4660,,g_DiffuseQuadXyz,?g_DiffuseQuadXyz@@3PAUVertexTex1DiffuseXyz@@A
+0x006d46c0,,g_MainMenu,?g_MainMenu@@3VMainMenu@@A

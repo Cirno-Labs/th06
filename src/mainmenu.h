@@ -12,7 +12,13 @@
 class MainMenu
 {
 public:
-    // Never called: the scene set-up (Func43a338) zeroes the menu with
+    // The update element's callback.
+    static int OnUpdate(MainMenu *menu);
+    // The update element's added callback.
+    static int AddedCallback(MainMenu *menu);
+    // The draw element's callback.
+    static int OnDraw(MainMenu *menu);
+    // Never called: the scene set-up (SetUpTitleScene) zeroes the menu with
     // memset instead.
     MainMenu();
 
@@ -47,13 +53,20 @@ public:
     // The button mapping the options screen edits.
     ControllerMapping controllerMapping;
     short unk_822e;
-    DWORD unk_8230[0x2];
+    DWORD unk_8230;
+    // The update element (priority 2, with the added and deleted
+    // callbacks) and the draw element (priority 0), created by
+    // SetUpTitleScene; DeletedCallback removes the draw element.
     ChainElem *calcChain;
+    ChainElem *drawChain;
     DWORD unk_823c[0x2328];
     void *unk_10edc;
-    DWORD unk_10ee0[0x15];
+    DWORD unk_10ee0[0x13];
+    int unk_10f2c;
+    int unk_10f30;
 };
 ASSERT_SIZE(MainMenu, 0x10f34);
+extern MainMenu g_MainMenu;
 
 // Moves the menu's cursor up or down (wrapping among `count` entries)
 // when up or down is pressed or repeats, with sound 12. Returns -1 for

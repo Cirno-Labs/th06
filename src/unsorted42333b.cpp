@@ -74,7 +74,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
         title:
             arg->scene = 1;
             g_Unknown6c6d18.d3dDevice->ResourceManagerDiscardBytes(0);
-            if (Func43a338(0) != 0)
+            if (SetUpTitleScene(0) != 0)
             {
                 return 4;
             }
@@ -159,7 +159,7 @@ int Unknown6c6d18::OnUpdate(Unknown6c6d18 *arg)
                 SaveReplay(0, NULL);
                 arg->scene = 1;
                 g_Unknown6c6d18.d3dDevice->ResourceManagerDiscardBytes(0);
-                if (Func43a338(1) != 0)
+                if (SetUpTitleScene(1) != 0)
                 {
                     return 4;
                 }

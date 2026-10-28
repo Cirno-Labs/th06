@@ -7,6 +7,7 @@
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 
+#include "archive.h"
 #include "ascii.h"
 #include "sprite.h"
 #include "dsutil.h"
@@ -159,32 +160,7 @@ extern SoundInfo g_SoundInfos[0x20];
 // The sound files LoadSounds loads, by index.
 extern char *g_SoundPaths[];
 
-// One of the game's data archives (紅魔郷*.DAT). Its code, from
-// 0x43c8d0, is built with optimization like the libraries after the
-// game's code.
-class DatArchive
-{
-public:
-    DatArchive();
-    // Calls Release.
-    ~DatArchive();
-
-    // Opens the archive at `path` and reads its entry table. Returns
-    // nonzero on success.
-    int Open(char *path);
-    // Returns the index of the entry named `name`, or -1.
-    int FindEntry(char *name);
-    // Decodes entry `entry` (named `name`) into a malloc'd buffer.
-    void *Decode(int entry, char *name);
-    // The decoded size of entry `entry`.
-    int GetEntrySize(int entry);
-
-    // Closes the archive and frees its entry table. Returns 1.
-    int Release();
-
-    unsigned char unk_00[0x14];
-};
-ASSERT_SIZE(DatArchive, 0x14);
+// DatArchive is in archive.h.
 
 // The pad buttons assigned to the game's actions, -1 where none is.
 // Named fields rather than an array: a local copy (MainMenu::OnUpdate's

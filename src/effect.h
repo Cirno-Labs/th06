@@ -13,7 +13,8 @@ struct Effect
 {
     Sprite sprite;
     D3DXVECTOR3 pos;
-    DWORD unk_11c[0x6];
+    D3DXVECTOR3 unk_11c;
+    D3DXVECTOR3 unk_128;
     // For an effect following an enemy: the enemy's position, and its
     // radius and angle around it.
     D3DXVECTOR3 unk_134;

@@ -67,7 +67,7 @@ address,size,name,symbol
 0x0040c100,117,Func40c100,?Func40c100@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040c180,1066,Func40c180,?Func40c180@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040c5b0,1331,Func40c5b0,?Func40c5b0@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x0040caf0,1360,Func40caf0,
+0x0040caf0,1360,Func40caf0,?Func40caf0@@YAXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040d040,955,Func40d040,
 0x0040d400,293,Func40d400,
 0x0040d530,568,Func40d530,

@@ -1715,3 +1715,59 @@ void Func40c5b0(Enemy *enemy, EnemyScriptInstr *instr)
     }
     enemy->ctx.intVars[2]++;
 }
+
+// g_EnemyScriptFuncs[6], set as the context's func: while the enemy is
+// shown, spawns pairs of sparks (effect 0x13) around it on a turning
+// circle, more often as unk_ebc counts up; frees its effects once
+// hidden.
+void Func40caf0(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    D3DXVECTOR3 pos;
+    float a2;
+    float r;
+    int k;
+    Effect *effect;
+
+    if (enemy->flags.hidden)
+    {
+        ReleaseEnemyEffects(enemy);
+        return;
+    }
+    enemy->unk_eb8 += 0.017453292f;
+    if (enemy->unk_eb8 >= 0.7853982f)
+    {
+        enemy->unk_eb8 -= 1.5707964f;
+    }
+    if (enemy->unk_ebc.HasTicked())
+    {
+        if (enemy->unk_ebc > 120 || (enemy->unk_ebc > 60 && enemy->unk_ebc.current % 2 == 0) ||
+            (enemy->unk_ebc > 30 && enemy->unk_ebc.current % 4 == 0) || enemy->unk_ebc.current % 8 == 0)
+        {
+            k = enemy->unk_ebc.current % 16;
+            k = g_Rng.GetRandomU16InRange(k / 2) + k / 2;
+            r = k * 160.0f / 16.0f + 32.0f;
+            a2 = enemy->unk_eb8 - k * 3.1415927f / 40.0f;
+            if (r < -0.7853982f)
+            {
+                r += 1.5707964f;
+            }
+            pos = enemy->pos;
+            pos.x += cosf(a2) * r;
+            pos.y += sinf(a2) * r;
+            effect = g_EffectManager.SpawnEffect(0x13, &pos, 1, 0xff3030ff);
+            effect->unk_11c.x = (g_Rng.GetRandomF32ZeroToOne() * 40.0f - 20.0f) / 60.0f;
+            effect->unk_11c.y = 8.0f * k / 60.0f - 0.26666668f;
+            effect->unk_11c.z = 0.0f;
+            effect->unk_128 = -effect->unk_11c / 120.0f;
+            pos = enemy->pos;
+            pos.x -= cosf(a2) * r;
+            pos.y += sinf(a2) * r;
+            effect = g_EffectManager.SpawnEffect(0x13, &pos, 1, 0xff3030ff);
+            effect->unk_11c.x = (g_Rng.GetRandomF32ZeroToOne() * 40.0f - 20.0f) / 60.0f;
+            effect->unk_11c.y = 8.0f * k / 60.0f - 0.26666668f;
+            effect->unk_11c.z = 0.0f;
+            effect->unk_128 = -effect->unk_11c / 120.0f;
+        }
+    }
+    enemy->unk_ebc.Tick();
+}

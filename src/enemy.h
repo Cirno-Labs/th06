@@ -155,7 +155,8 @@ struct Enemy
     // timerCallbackSub; -1 for none.
     int timerCallbackTime;
     int timerCallbackSub;
-    DWORD unk_eb8;
+    // The angle Func40caf0 turns its sparks by, and its frame count.
+    float unk_eb8;
     Timer unk_ebc;
 
     void Func4121b0();

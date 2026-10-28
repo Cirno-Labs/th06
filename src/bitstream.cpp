@@ -81,3 +81,15 @@ int BitStream::ReadString(char *buffer, DWORD maxLength)
     }
     return 0;
 }
+
+int FileBitStream::Open(char *path)
+{
+    this->Close();
+    this->Reset();
+    if (!this->File::Open(path, "r"))
+    {
+        return 0;
+    }
+    this->size = GetFileSize(this->handle, NULL);
+    return 1;
+}

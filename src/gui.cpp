@@ -64,7 +64,7 @@ void Gui::Func417bfd(int sprite, char *text)
     g_SpriteEngine->StartScript(&this->impl->unk_1ed4, 0x4a3);
     g_SpriteEngine->SetSprite(&this->impl->unk_1ed4, sprite + 0x4a8);
     g_SpriteEngine->StartScript(&this->impl->unk_20f4, 0x707);
-    g_SpriteEngine->Func434c40(&this->impl->unk_20f4, 0xfff0f0, 0, text);
+    g_SpriteEngine->RenderTextRightAligned(&this->impl->unk_20f4, 0xfff0f0, 0, text);
     this->unk_0c = strlen(text) * 15 / 2.0f + 16.0f;
     g_Unknown6d3f50.QueueSound(14, 0);
 }

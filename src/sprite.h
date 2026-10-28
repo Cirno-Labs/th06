@@ -230,9 +230,10 @@ public:
         this->SetSprite(vm, sprite);
     }
 
-    // Writes printf-style text in `color` with shadow `shadowColor` into
-    // `vm`'s texture.
-    void Func434c40(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...);
+    // Like RenderText, after clearing the sprite's texture with a space,
+    // aligned to the sprite's right edge. A character takes
+    // (unk_10c + 1) / 2 pixels.
+    void RenderTextRightAligned(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...);
 
     // Releases the vertex buffer, if there is one.
     void ReleaseVertexBuffer();

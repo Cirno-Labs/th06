@@ -83,3 +83,22 @@ int File::Write(void *buffer, DWORD size, DWORD *written)
     }
     return WriteFile(this->handle, buffer, size, written, NULL);
 }
+
+int File::ReadByte()
+{
+    BYTE c;
+    DWORD read;
+
+    if (!this->Read(&c, 1, &read))
+    {
+        return -1;
+    }
+    else if (read == 0)
+    {
+        return -1;
+    }
+    else
+    {
+        return c;
+    }
+}

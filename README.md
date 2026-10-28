@@ -18,14 +18,16 @@ our own analysis or, for library code, from the libraries themselves.
 
 ## Status
 
-The toolchain and workflow are up and decompilation has started.
-The workflow was proven on the 0.13 trial (one function matched and
-hooked) before switching the target to retail 1.02h.
+509 of the game's 511 functions are decompiled and match the original,
+240,230 of 241,285 bytes (99.56%). The two that don't match yet are
+`DatArchive::Decode` and `ResultScreen::RegisterChain`. Every function
+is decompiled, so the standalone exe (`just exe`) is the whole game,
+built from source.
 
 Ghidra finds 1383 functions. The game code is compiled without
 optimization, so its functions start with `push ebp; mov ebp, esp`; the
 statically linked D3DX8 and CRT code is optimized. That puts the game
-code at `0x401000`–`0x43c2f0`: 471 functions, about 238 KB. Ghidra's
+code at `0x401000`–`0x43d158`, with the archive code last. Ghidra's
 function ID recognizes the CRT from about `0x45b000` on.
 
 ```sh

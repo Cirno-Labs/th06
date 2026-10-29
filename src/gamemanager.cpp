@@ -141,6 +141,25 @@ int GameManager::OnDraw(GameManager *mgr)
     return 1;
 }
 
+int GameManager::RegisterChain()
+{
+    GameManager *mgr = &g_GameManager;
+
+    g_GameManagerCalcChain.SetCallback((ChainCallback)GameManager::OnUpdate);
+    g_GameManagerCalcChain.addedCallback = (ChainCallback)GameManager::AddedCallback;
+    g_GameManagerCalcChain.deletedCallback = (ChainCallback)GameManager::DeletedCallback;
+    g_GameManagerCalcChain.arg = mgr;
+    mgr->stageFrames = 0;
+    if (g_Chain.AddToCalcChain(&g_GameManagerCalcChain, 4) != 0)
+    {
+        return -1;
+    }
+    g_GameManagerDrawChain.SetCallback((ChainCallback)GameManager::OnDraw);
+    g_GameManagerDrawChain.arg = mgr;
+    g_Chain.AddToDrawChain(&g_GameManagerDrawChain, 2);
+    return 0;
+}
+
 int GameManager::AddedCallback(GameManager *mgr)
 {
     BOOL failed = FALSE;
@@ -338,25 +357,6 @@ int GameManager::AddedCallback(GameManager *mgr)
     return 0;
 }
 
-int GameManager::RegisterChain()
-{
-    GameManager *mgr = &g_GameManager;
-
-    g_GameManagerCalcChain.SetCallback((ChainCallback)GameManager::OnUpdate);
-    g_GameManagerCalcChain.addedCallback = (ChainCallback)GameManager::AddedCallback;
-    g_GameManagerCalcChain.deletedCallback = (ChainCallback)GameManager::DeletedCallback;
-    g_GameManagerCalcChain.arg = mgr;
-    mgr->stageFrames = 0;
-    if (g_Chain.AddToCalcChain(&g_GameManagerCalcChain, 4) != 0)
-    {
-        return -1;
-    }
-    g_GameManagerDrawChain.SetCallback((ChainCallback)GameManager::OnDraw);
-    g_GameManagerDrawChain.arg = mgr;
-    g_Chain.AddToDrawChain(&g_GameManagerDrawChain, 2);
-    return 0;
-}
-
 int GameManager::DeletedCallback(GameManager *mgr)
 {
     g_App.d3dDevice->ResourceManagerDiscardBytes(0);
@@ -434,15 +434,6 @@ void SetupCamera(float extraFar)
     }
 }
 
-GameManager::GameManager()
-{
-    memset(this, 0, sizeof(GameManager));
-    this->arena[0] = 32.0f;
-    this->arena[1] = 16.0f;
-    this->arena[2] = 384.0f;
-    this->arena[3] = 448.0f;
-}
-
 void GameManager::AddSubRank(int amount)
 {
     this->subRank += amount;
@@ -469,4 +460,13 @@ void GameManager::SubSubRank(int amount)
     {
         this->rank = this->minRank;
     }
+}
+
+GameManager::GameManager()
+{
+    memset(this, 0, sizeof(GameManager));
+    this->arena[0] = 32.0f;
+    this->arena[1] = 16.0f;
+    this->arena[2] = 384.0f;
+    this->arena[3] = 448.0f;
 }

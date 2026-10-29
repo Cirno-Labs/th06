@@ -10,6 +10,43 @@
 // The game's data, as the original defines it here. The DLL build uses
 // the original's copies instead.
 #ifdef TH06_EXE
+DWORD g_EffectColorsFull[0x1c] = {
+    0xff000000, 0xff303030, 0xff606060, 0xff500000,
+    0xff900000, 0xffff2020, 0xff400040, 0xff800080,
+    0xffff30ff, 0xff000050, 0xff000090, 0xff2020ff,
+    0xff203060, 0xff304090, 0xff3080ff, 0xff005000,
+    0xff009000, 0xff20ff20, 0xff206000, 0xff409010,
+    0xff80ff20, 0xff505000, 0xff909000, 0xffffff20,
+    0xff603000, 0xff904010, 0xfff08020, 0xffffffff,
+};
+
+DWORD g_EffectColorsPale[0x1c] = {
+    0xfff0f0f0, 0xfff0f0f0, 0xffffffff, 0xffffe0e0,
+    0xffffe0e0, 0xffffe0e0, 0xffffe0ff, 0xffffe0ff,
+    0xffffe0ff, 0xffe0e0ff, 0xffe0e0ff, 0xffe0e0ff,
+    0xffe0ffff, 0xffe0ffff, 0xffe0ffff, 0xffe0ffe0,
+    0xffe0ffe0, 0xffe0ffe0, 0xffe0ffe0, 0xffe0ffe0,
+    0xffe0ffe0, 0xffffffe0, 0xffffffe0, 0xffffffe0,
+    0xffffe0e0, 0xffffe0e0, 0xffffe0e0, 0xffffffff,
+};
+
+DWORD *g_EffectColors = g_EffectColorsFull;
+
+int g_BulletColorOffsets16[16] = {
+    0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 0,
+};
+
+// Only the first eight are the table; the original reads on into
+// g_BossTimerColors and g_ExtendScores, so those values follow.
+int g_BulletColorOffsets32[16] = {
+    0, 1, 1, 2, 2, 3, 4, 0,
+    10539263, 10518783, 14713024, 16728128, 10000000, 20000000, 40000000, 60000000,
+};
+#endif // TH06_EXE
+
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
 const int g_BulletTypeScripts[10][5] = {
     {512, 526, 527, 528, 523},
     {513, 529, 530, 531, 524},

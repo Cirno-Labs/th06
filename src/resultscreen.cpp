@@ -13,6 +13,32 @@
 #include "resultscreen.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+char *g_NameAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ.,:;･@abcdefghijklmnopqrstuvwxyz+-/*=%0123456789(){}[]<>#!?'\"$      --";
+
+char *g_ShotNames[6] = {
+#if FEAT_ENGLISH
+    EN_SHOT_REIMU_A,
+    EN_SHOT_REIMU_B,
+    EN_SHOT_MARISA_A,
+    EN_SHOT_MARISA_B,
+#else
+    "博麗 霊夢 (霊)",
+    "博麗 霊夢 (夢)",
+    "霧雨 魔理沙 (魔)",
+    "霧雨 魔理沙 (恋)",
+#endif
+    "冴月 麟 (花)",
+    "冴月 麟 (風)",
+};
+
+float g_SpellCardRatings[5] = {
+    1.0f, 1.5f, 1.5f, 2.0f, 2.5f,
+};
+#endif // TH06_EXE
+
 ScoreDat *LoadScoreDat(char *path)
 {
     ScoreDat *dat;
@@ -1025,8 +1051,16 @@ int ResultScreen::WaitAfterNameEntry()
 int ResultScreen::DrawStatistics()
 {
 #ifdef TH06_EXE
+    // The original's are statics of this function.
     static const float g_DifficultyRatings[5] = {
         -30.0f, -10.0f, 20.0f, 30.0f, 30.0f,
+    };
+    static char *g_DifficultyNames[5] = {
+        "     Easy",
+        "   Normal",
+        "     Hard",
+        "  Lunatic",
+        "    Extra",
     };
 #endif // TH06_EXE
     Sprite *spr;
@@ -1487,6 +1521,15 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
 
 int ResultScreen::OnDraw(ResultScreen *screen)
 {
+#ifdef TH06_EXE
+    // The original's is a static of this function.
+    static char *g_ShotTypeNames[4] = {
+        "ReimuA ",
+        "ReimuB ",
+        "MarisaA",
+        "MarisaB",
+    };
+#endif // TH06_EXE
     char str[2];
     D3DXVECTOR3 unused_;
     float shift;

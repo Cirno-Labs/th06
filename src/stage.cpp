@@ -240,6 +240,19 @@ int Stage::OnDraw2(Stage *stage)
 
 int Stage::AddedCallback(Stage *stage)
 {
+#ifdef TH06_EXE
+    // The original's are statics of this function.
+    static StageFiles g_StageFiles[8] = {
+        {"dummy", "dummy"},
+        {"data/stg1bg.anm", "data/stage1.std"},
+        {"data/stg2bg.anm", "data/stage2.std"},
+        {"data/stg3bg.anm", "data/stage3.std"},
+        {"data/stg4bg.anm", "data/stage4.std"},
+        {"data/stg5bg.anm", "data/stage5.std"},
+        {"data/stg6bg.anm", "data/stage6.std"},
+        {"data/stg7bg.anm", "data/stage7.std"},
+    };
+#endif // TH06_EXE
     stage->scriptTime.Set(0);
     stage->scriptIndex = 0;
     stage->cameraPos.x = 0.0f;

@@ -10,6 +10,14 @@
 #include "stage.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+D3DCOLOR g_BossTimerColors[4] = {
+    0x00a0d0ff, 0x00a080ff, 0x00e080c0, 0x00ff4040,
+};
+#endif // TH06_EXE
+
 BOOL Gui::IsLoadingShown()
 {
     return this->impl->loading.spriteIndex >= 0 && this->impl->loading.flags.stopped;

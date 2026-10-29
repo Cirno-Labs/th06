@@ -9,6 +9,65 @@
 #include "stage.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+// Defined below; only this table names them.
+void ScriptFreezeBullets(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptShootFromRandomPoint(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptStarPattern(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptGetShotTypeValues(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptFreezeOrSendOff(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptSideArcFans(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptSparkCircle(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptTwoRingShots(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptShootFromLargeBullets(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptSwirlStoppedBullets(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptSparksAndBombShield(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptScatterStoppedBullets(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptShootFromLasers(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptArenaCircleShots(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptShootAlongLasers(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptBurstAroundLargeBullets(Enemy *enemy, EnemyScriptInstr *instr);
+void ScriptFollowLife(Enemy *enemy, EnemyScriptInstr *instr);
+
+int g_SpellCardBonuses[0x40] = {
+    200000, 200000, 200000, 200000, 200000, 200000, 200000, 250000,
+    250000, 250000, 250000, 250000, 250000, 250000, 300000, 300000,
+    300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000,
+    300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000,
+    400000, 400000, 400000, 400000, 400000, 400000, 400000, 400000,
+    500000, 500000, 500000, 500000, 500000, 500000, 600000, 600000,
+    600000, 600000, 600000, 700000, 700000, 700000, 700000, 700000,
+    700000, 700000, 700000, 700000, 700000, 700000, 700000, 700000,
+};
+
+void (*g_EnemyScriptFuncs[])(Enemy *enemy, EnemyScriptInstr *instr) = {
+    ScriptFreezeBullets,
+    ScriptShootFromRandomPoint,
+    ScriptStarPattern,
+    ScriptGetShotTypeValues,
+    ScriptFreezeOrSendOff,
+    ScriptSideArcFans,
+    ScriptSparkCircle,
+    ScriptTwoRingShots,
+    ScriptShootFromLargeBullets,
+    ScriptSwirlStoppedBullets,
+    ScriptSparksAndBombShield,
+    ScriptScatterStoppedBullets,
+    ScriptShootFromLasers,
+    ScriptArenaCircleShots,
+    ScriptShootAlongLasers,
+    ScriptBurstAroundLargeBullets,
+    ScriptFollowLife,
+};
+
+int g_ShotTypeValues[2][2][3] = {
+    {{0, 3, 1}, {2, 3, 4}},
+    {{1, 4, 0}, {4, 2, 3}},
+};
+#endif // TH06_EXE
+
 // D3DXVec3Length's body, but the game's own inline: the original has its
 // out-of-line copy after ScriptAngle, where it is defined below, not after
 // ResolveOperand, its only caller (an inline comes out after its first

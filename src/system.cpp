@@ -15,6 +15,8 @@
 #include "features.h"
 
 #ifdef TH06_EXE
+ControllerMapping g_ControllerMapping = {0, 1, 2, 4, -1, -1, -1, -1, 3};
+
 // Constructed and never used.
 TextFont g_TextFont;
 

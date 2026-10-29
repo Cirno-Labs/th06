@@ -3,6 +3,50 @@
 
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+SoundInfo g_SoundInfos[0x20] = {
+    {0, -1500, 0}, {0, -2000, 0}, {1, -1200, 5}, {1, -1400, 5},
+    {2, -1000, 100}, {3, -500, 100}, {4, -500, 100}, {5, -1700, 50},
+    {6, -1700, 50}, {7, -1700, 50}, {8, -1000, 100}, {9, -1000, 100},
+    {10, -1900, 10}, {11, -1200, 10}, {12, -900, 100}, {5, -1500, 50},
+    {13, -900, 50}, {14, -900, 50}, {15, -600, 100}, {16, -400, 100},
+    {17, -1100, 0}, {18, -900, 0}, {5, -1800, 20}, {6, -1800, 20},
+    {7, -1800, 20}, {19, -300, 50}, {20, -600, 50}, {21, -800, 50},
+    {22, -100, 140}, {23, -500, 100}, {24, -1000, 20}, {25, -1000, 90},
+};
+
+char *g_SoundPaths[] = {
+    "data/wav/plst00.wav",
+    "data/wav/enep00.wav",
+    "data/wav/pldead00.wav",
+    "data/wav/power0.wav",
+    "data/wav/power1.wav",
+    "data/wav/tan00.wav",
+    "data/wav/tan01.wav",
+    "data/wav/tan02.wav",
+    "data/wav/ok00.wav",
+    "data/wav/cancel00.wav",
+    "data/wav/select00.wav",
+    "data/wav/gun00.wav",
+    "data/wav/cat00.wav",
+    "data/wav/lazer00.wav",
+    "data/wav/lazer01.wav",
+    "data/wav/enep01.wav",
+    "data/wav/nep00.wav",
+    "data/wav/damage00.wav",
+    "data/wav/item00.wav",
+    "data/wav/kira00.wav",
+    "data/wav/kira01.wav",
+    "data/wav/kira02.wav",
+    "data/wav/extend.wav",
+    "data/wav/timeout.wav",
+    "data/wav/graze.wav",
+    "data/wav/powerup.wav",
+};
+#endif // TH06_EXE
+
 char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size);
 
 // Spins until `ms` milliseconds have passed, or the clock wraps.

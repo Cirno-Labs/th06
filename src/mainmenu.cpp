@@ -12,6 +12,12 @@
 #include "screeneffect.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+short g_LastPressedKey = 32;
+#endif // TH06_EXE
+
 MainMenu::MainMenu()
 {
 }
@@ -1390,6 +1396,31 @@ int MainMenu::UpdateReplayMenu()
 
 int MainMenu::DrawReplayMenu()
 {
+#ifdef TH06_EXE
+    // The original's are statics of this function.
+    static char *g_MenuStageNames[7] = {
+        "Stage1",
+        "Stage2",
+        "Stage3",
+        "Stage4",
+        "Stage5",
+        "Stage6",
+        "Extra ",
+    };
+    static char *g_MenuShotTypeNames[4] = {
+        "ReimuA ",
+        "ReimuB ",
+        "MarisaA",
+        "MarisaB",
+    };
+    static char *g_MenuDifficultyNames[5] = {
+        "Easy   ",
+        "Normal ",
+        "Hard   ",
+        "Lunatic",
+        "Extra  ",
+    };
+#endif // TH06_EXE
     Sprite *text;
     int i;
     int top;

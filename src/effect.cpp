@@ -140,6 +140,33 @@ int EffectUpdateConvergeSlow(Effect *effect)
     return 1;
 }
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+EffectInfo g_EffectInfos[] = {
+    {669, NULL},
+    {670, NULL},
+    {671, NULL},
+    {672, EffectUpdateDriftFast},
+    {675, EffectUpdateDrift},
+    {676, EffectUpdateDrift},
+    {677, EffectUpdateDrift},
+    {678, EffectUpdateDrift},
+    {679, EffectUpdateDrift},
+    {680, EffectUpdateDrift},
+    {681, EffectUpdateDrift},
+    {682, EffectUpdateDrift},
+    {683, NULL},
+    {684, EffectUpdateOrbit},
+    {684, EffectUpdateOrbit},
+    {684, EffectUpdateOrbit},
+    {691, NULL},
+    {673, EffectUpdateConverge},
+    {674, EffectUpdateConvergeSlow},
+    {685, EffectUpdateMove},
+};
+#endif // TH06_EXE
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

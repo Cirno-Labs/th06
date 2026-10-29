@@ -14,6 +14,14 @@
 #include "stage.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+unsigned int g_ExtendScores[] = {
+    10000000, 20000000, 40000000, 60000000, 1900000000,
+};
+#endif // TH06_EXE
+
 BOOL GameManager::IsInPlayArea(float x, float y, float width, float height)
 {
     if (x + width / 2.0f < 0.0f)
@@ -162,6 +170,43 @@ int GameManager::RegisterChain()
 
 int GameManager::AddedCallback(GameManager *mgr)
 {
+#ifdef TH06_EXE
+    // The original's are statics of this function.
+    static char *g_EclPaths[8] = {
+        "dummy",
+        "data/ecldata1.ecl",
+        "data/ecldata2.ecl",
+        "data/ecldata3.ecl",
+        "data/ecldata4.ecl",
+        "data/ecldata5.ecl",
+        "data/ecldata6.ecl",
+        "data/ecldata7.ecl",
+    };
+    static EnemyAnmPaths g_EnemyAnmPaths[8] = {
+        {"dummy", "dummy"},
+        {"data/stg1enm.anm", "data/stg1enm2.anm"},
+        {"data/stg2enm.anm", "data/stg2enm2.anm"},
+        {"data/stg3enm.anm", NULL},
+        {"data/stg4enm.anm", NULL},
+        {"data/stg5enm.anm", "data/stg5enm2.anm"},
+        {"data/stg6enm.anm", "data/stg6enm2.anm"},
+        {"data/stg7enm.anm", "data/stg7enm2.anm"},
+    };
+    static RankSettings g_ReplayRanks[5] = {
+        {16, 12, 20},
+        {16, 10, 32},
+        {16, 10, 32},
+        {16, 10, 32},
+        {16, 14, 18},
+    };
+    static RankSettings g_Ranks[5] = {
+        {16, 12, 20},
+        {16, 10, 32},
+        {16, 10, 32},
+        {16, 10, 32},
+        {16, 14, 18},
+    };
+#endif // TH06_EXE
     BOOL failed = FALSE;
     Catk *catk2;
     int index2;

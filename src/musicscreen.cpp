@@ -4,26 +4,6 @@
 #include "musicscreen.h"
 #include "features.h"
 
-int MusicScreen::RegisterChain()
-{
-    static MusicScreen g_MusicScreen;
-    MusicScreen *screen = &g_MusicScreen;
-
-    memset(screen, 0, sizeof(MusicScreen));
-    screen->calcChain = g_Chain.CreateElem((ChainCallback)MusicScreen::OnUpdate);
-    screen->calcChain->arg = screen;
-    screen->calcChain->addedCallback = (ChainCallback)MusicScreen::AddedCallback;
-    screen->calcChain->deletedCallback = (ChainCallback)MusicScreen::DeletedCallback;
-    if (g_Chain.AddToCalcChain(screen->calcChain, 2) != 0)
-    {
-        return -1;
-    }
-    screen->drawChain = g_Chain.CreateElem((ChainCallback)MusicScreen::OnDraw);
-    screen->drawChain->arg = screen;
-    g_Chain.AddToDrawChain(screen->drawChain, 0);
-    return 0;
-}
-
 int MusicScreen::UpdateIntro()
 {
     if (this->stateFrames >= 8)
@@ -112,6 +92,26 @@ int MusicScreen::UpdateList()
     return 0;
 }
 
+int MusicScreen::RegisterChain()
+{
+    static MusicScreen g_MusicScreen;
+    MusicScreen *screen = &g_MusicScreen;
+
+    memset(screen, 0, sizeof(MusicScreen));
+    screen->calcChain = g_Chain.CreateElem((ChainCallback)MusicScreen::OnUpdate);
+    screen->calcChain->arg = screen;
+    screen->calcChain->addedCallback = (ChainCallback)MusicScreen::AddedCallback;
+    screen->calcChain->deletedCallback = (ChainCallback)MusicScreen::DeletedCallback;
+    if (g_Chain.AddToCalcChain(screen->calcChain, 2) != 0)
+    {
+        return -1;
+    }
+    screen->drawChain = g_Chain.CreateElem((ChainCallback)MusicScreen::OnDraw);
+    screen->drawChain->arg = screen;
+    g_Chain.AddToDrawChain(screen->drawChain, 0);
+    return 0;
+}
+
 int MusicScreen::OnUpdate(MusicScreen *screen)
 {
     int oldState = screen->state;
@@ -188,19 +188,6 @@ int MusicScreen::OnDraw(MusicScreen *screen)
     }
     g_AsciiText.color = 0xffffffff;
     return 1;
-}
-
-int MusicScreen::DeletedCallback(MusicScreen *screen)
-{
-    delete screen->tunes;
-    screen->tunes = NULL;
-    g_SpriteEngine->ReleaseSurface(0);
-    g_SpriteEngine->ReleaseAnm(0x29);
-    g_SpriteEngine->ReleaseAnm(0x2a);
-    g_SpriteEngine->ReleaseAnm(0x2b);
-    g_Chain.Remove(screen->drawChain);
-    screen->drawChain = NULL;
-    return 0;
 }
 
 // musiccmt.txt lists the tunes. Each starts with a line "@path", then
@@ -364,5 +351,18 @@ done:
         screen->comment[i].flags.anchor = 3;
     }
     free(data);
+    return 0;
+}
+
+int MusicScreen::DeletedCallback(MusicScreen *screen)
+{
+    delete screen->tunes;
+    screen->tunes = NULL;
+    g_SpriteEngine->ReleaseSurface(0);
+    g_SpriteEngine->ReleaseAnm(0x29);
+    g_SpriteEngine->ReleaseAnm(0x2a);
+    g_SpriteEngine->ReleaseAnm(0x2b);
+    g_Chain.Remove(screen->drawChain);
+    screen->drawChain = NULL;
     return 0;
 }

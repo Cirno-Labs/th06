@@ -16,7 +16,7 @@ project = "th06_102h"
 functions = "build/functions_102h.csv"
 
 [build]
-cflags = ["/Od", "/Ob1", "/G5", "/GX", "/Op", "/Oi", "/GS", "/Gy", "/GF"]
+cflags = ["/MT", "/Od", "/Ob1", "/G5", "/GX", "/Op", "/Oi", "/GS", "/Gy", "/GF"]
 hook = "scripts/build_hook.py"  # the English feature
 
 [exe]

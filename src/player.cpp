@@ -94,25 +94,6 @@ int FireShotType3(Player *player, PlayerBullet *bullet, int index, int frame)
     return FireShot(player, bullet, index, frame, g_ShotTable3);
 }
 
-int Player::DeletedCallback(Player *player)
-{
-    if ((g_App.scene != 3) != 0)
-    {
-        g_SpriteEngine->ReleaseAnm(5);
-    }
-    return 0;
-}
-
-void Player::RemoveChain()
-{
-    g_Chain.Remove(g_Player.calcChain);
-    g_Player.calcChain = NULL;
-    g_Chain.Remove(g_Player.drawChain);
-    g_Player.drawChain = NULL;
-    g_Chain.Remove(g_Player.drawChain2);
-    g_Player.drawChain2 = NULL;
-}
-
 // The corners of a `size` box centred on `pos`.
 inline void GetBox(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, D3DXVECTOR3 &min, D3DXVECTOR3 &max)
 {
@@ -1113,12 +1094,6 @@ void Player::FireShots(Player *player, int frame)
     }
 }
 
-int Player::OnDraw2(Player *player)
-{
-    Player::DrawHitBullets(player);
-    return 1;
-}
-
 int Player::OnDraw(Player *player)
 {
     Player::DrawBullets(player);
@@ -1166,6 +1141,12 @@ void Player::DrawBullets(Player *player)
         }
         g_SpriteEngine->Draw3DRounded(&bullet->sprite);
     }
+}
+
+int Player::OnDraw2(Player *player)
+{
+    Player::DrawHitBullets(player);
+    return 1;
 }
 
 void Player::DrawHitBullets(Player *player)
@@ -1253,4 +1234,23 @@ int Player::AddedCallback(Player *player)
     player->moveScaleX = 1.0f;
     player->deathbombFrames = 8;
     return 0;
+}
+
+int Player::DeletedCallback(Player *player)
+{
+    if ((g_App.scene != 3) != 0)
+    {
+        g_SpriteEngine->ReleaseAnm(5);
+    }
+    return 0;
+}
+
+void Player::RemoveChain()
+{
+    g_Chain.Remove(g_Player.calcChain);
+    g_Player.calcChain = NULL;
+    g_Chain.Remove(g_Player.drawChain);
+    g_Player.drawChain = NULL;
+    g_Chain.Remove(g_Player.drawChain2);
+    g_Player.drawChain2 = NULL;
 }

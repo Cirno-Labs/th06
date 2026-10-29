@@ -345,7 +345,7 @@ int FireShotType2(Player *player, PlayerBullet *bullet, int index, int frame);
 int FireShotType3(Player *player, PlayerBullet *bullet, int index, int frame);
 
 // By character * 2 + shot type.
-extern ShotTypeInfo g_ShotTypes[4];
+extern ShotTypeInfo g_ShotTypes[5];
 extern BombInfo g_Bombs[4];
 
 // Their shot tables: one per power level, FireShot takes the first whose

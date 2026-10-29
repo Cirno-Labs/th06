@@ -109,7 +109,7 @@ extern const int g_BulletTypeScripts[10][5];
 
 // Sprite offsets by color, for bullets up to 16 and up to 32 high.
 extern int g_BulletColorOffsets16[16];
-extern int g_BulletColorOffsets32[16];
+extern int g_BulletColorOffsets32[8];
 
 // One enemy laser: a beam from `pos` along `angle`, between startOffset
 // and endOffset.

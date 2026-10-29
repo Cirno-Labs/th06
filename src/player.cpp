@@ -11,6 +11,9 @@
 // The game's data, as the original defines it here. The DLL build uses
 // the original's copies instead.
 #ifdef TH06_EXE
+// 8 bytes nothing refers to: unknown.
+int g_UnusedPlayerData[2] = {1, 0};
+
 BombInfo g_Bombs[4] = {
     {UpdateReimuABomb, DrawReimuABomb},
     {UpdateReimuBBomb, DrawReimuBBomb},
@@ -18,11 +21,13 @@ BombInfo g_Bombs[4] = {
     {UpdateMarisaBBomb, DrawMarisaBBomb},
 };
 
-ShotTypeInfo g_ShotTypes[4] = {
+ShotTypeInfo g_ShotTypes[5] = {
     {4.0f, 2.0f, 4.0f, 2.0f, FireShotType0, FireShotType0},
     {4.0f, 2.0f, 4.0f, 2.0f, FireShotType1, FireShotType1},
     {5.0f, 2.5f, 5.0f, 2.5f, FireShotType2, FireShotType2},
     {5.0f, 2.5f, 5.0f, 2.5f, FireShotType3, FireShotType3},
+    // A fifth that nothing reads.
+    {4.0f, 2.0f, 4.0f, 2.0f, NULL, NULL},
 };
 
 static ShotData s_Shots0_0[1] = {

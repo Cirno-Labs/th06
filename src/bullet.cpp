@@ -36,11 +36,10 @@ int g_BulletColorOffsets16[16] = {
     0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 0,
 };
 
-// Only the first eight are the table; the original reads on into
-// g_BossTimerColors and g_ExtendScores, so those values follow.
-int g_BulletColorOffsets32[16] = {
+// Eight entries: for colors 8 to 15 the game reads on into
+// g_BossTimerColors and g_ExtendScores, which follow it in .data.
+int g_BulletColorOffsets32[8] = {
     0, 1, 1, 2, 2, 3, 4, 0,
-    10539263, 10518783, 14713024, 16728128, 10000000, 20000000, 40000000, 60000000,
 };
 
 ChainElem g_BulletChainCalc;

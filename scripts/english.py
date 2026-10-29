@@ -1,6 +1,6 @@
 """Builds the English patch's files for the standalone exe's FEAT_ENGLISH.
 
-    python3 -I tools/english.py INSTALLER [GAME [OUT]]
+    python3 -I scripts/english.py INSTALLER [GAME [OUT]]
 
 INSTALLER is the Touhou Wiki English patch v0.8 for 1.02h,
 th06_english_patch_0.8.exe (an NSIS installer). GAME is the original

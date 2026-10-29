@@ -30,7 +30,7 @@ int FrameCapFps(float *fps);
 #if FEAT_ENGLISH
 // The static English patch (th06e.exe, Touhou Wiki's v0.8 for 1.02h): its
 // strings come from build/feat/english.h, which tools/build.py generates
-// from tools/english.py's output; its data from th06e_*.dat.
+// from scripts/english.py's output; its data from th06e_*.dat.
 #include "english.h"
 
 // spellcards.eng from th06e_IN.dat: 0x50-byte names by spell card number,

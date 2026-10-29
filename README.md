@@ -141,7 +141,7 @@ are under `#if FEAT_FRAME_CAP`.
 `english` is the static English patch, `th06e.exe` from Touhou Wiki's
 English patch v0.8 for 1.02h (`th06_english_patch_0.8.exe`, linked from
 <https://en.touhouwiki.net/wiki/Embodiment_of_Scarlet_Devil/English_patch>).
-Its text is not in this repository. `tools/english.py` unpacks the
+Its text is not in this repository. `scripts/english.py` unpacks the
 installer (with 7z, without running it), applies the patch's data to
 your game and writes `orig/th06e/`: the `th06e_XX.DAT` archives
 (translated dialogue, stage and song titles, endings, images and
@@ -150,7 +150,7 @@ exe's English strings, which `tools/build.py` turns into
 `build/feat/english.h`:
 
 ```sh
-python3 -I tools/english.py th06_english_patch_0.8.exe
+python3 -I scripts/english.py th06_english_patch_0.8.exe
 FEAT=english just exe
 ```
 
@@ -182,8 +182,8 @@ src/      decompiled source; src/dll/ is the hook DLL's own code,
           src/exe/ the game's data and globals for the standalone exe
           and its optional features' code
 config/   symbols.csv: address, size, name and mangled symbol
-tools/    build, compare, exe patcher, symbol seeding, Ghidra scripts,
-          the English patch's data (english.py, pbg3.py)
+tools/    build, compare, exe patcher, symbol seeding, Ghidra scripts
+scripts/  the English patch's data (english.py, pbg3.py)
 build/    outputs; build/game/ is a runnable copy of the patched game
 ```
 

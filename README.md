@@ -18,9 +18,9 @@ our own analysis or, for library code, from the libraries themselves.
 
 ## Status
 
-509 of the game's 511 functions are decompiled and match the original,
-240,230 of 241,285 bytes (99.56%). The two that don't match yet are
-`DatArchive::Decode` and `ResultScreen::RegisterChain`. Every function
+510 of the game's 511 functions are decompiled and match the original,
+240,532 of 241,285 bytes (99.69%). The one that doesn't match yet is
+`DatArchive::Decode`. Every function
 is decompiled, so the standalone exe (`just exe`) is the whole game,
 built from source.
 

@@ -23,3 +23,10 @@ inline void *MemAlloc(int size)
 {
     return malloc(size);
 }
+
+// Passes a new'd object through, as a release build's no-op allocation
+// tracker would.
+inline void *MemTrack(void *p)
+{
+    return p;
+}

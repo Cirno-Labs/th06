@@ -1080,13 +1080,9 @@ int ResultScreen::DrawStatistics()
     return 0;
 }
 
-// Not matching: the original reserves 0x44 bytes for the inlined
-// constructor's slots, this 0x54. Without the Sprite at 0x39a0 the frames
-// agree, but the constructor needs it; wrapping it in a struct makes
-// both frames bigger.
 int ResultScreen::RegisterChain(int unk)
 {
-    ResultScreen *screen = new ResultScreen;
+    ResultScreen *screen = (ResultScreen *)MemTrack(new ResultScreen);
 
     DebugPrint2("counat = %d\n", g_GameManager.progressFrames);
     screen->calcChain = g_Chain.CreateElem((ChainCallback)ResultScreen::OnUpdate);

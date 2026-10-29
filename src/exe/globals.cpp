@@ -3,9 +3,9 @@
 //
 // They are defined in the order the original constructs them (its
 // initializers run file by file in link order), so constructors and the
-// destructors registered with atexit run in the same order. The original
-// also constructs a few globals that no game code uses (a Timer and three
-// ChainElems); they are left out. Its unused TextFont is in chain.cpp.
+// destructors registered with atexit run in the same order. The globals
+// named g_Unused* are constructed by the original but used by no code;
+// its unused TextFont and g_UnusedGlobal are in chain.cpp.
 
 #include "ascii.h"
 #include "bullet.h"
@@ -21,6 +21,7 @@
 #include "replay.h"
 #include "sprite.h"
 #include "stage.h"
+#include "timer.h"
 #include "unsorted.h"
 
 // ascii.cpp
@@ -34,6 +35,7 @@ Stage g_Stage;
 ChainElem g_StageCalcChain;
 ChainElem g_StageDrawChain;
 ChainElem g_StageDrawChain2;
+ChainElem g_UnusedChain;
 
 // enemyscript.cpp
 EnemyScripts g_EnemyScripts;
@@ -101,6 +103,8 @@ IDirect3DSurface8 *g_TextSurface;
 
 // item.cpp
 ItemManager g_ItemManager;
+ChainElem g_UnusedChain2;
+ChainElem g_UnusedChain3;
 
 // The main window and the game object (zeroed by an inline constructor in
 // the original, as static storage is anyway).
@@ -110,6 +114,7 @@ App g_App;
 
 // player.cpp
 Player g_Player;
+Timer g_UnusedTimer;
 
 // replay.cpp, sound.cpp
 ReplayManager *g_ReplayManager;

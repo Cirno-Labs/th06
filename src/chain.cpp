@@ -6,6 +6,21 @@
 #ifdef TH06_EXE
 // Constructed and never used.
 TextFont g_TextFont;
+
+// Zeroed and destroyed, and never used either; its type is unknown.
+struct UnusedGlobal
+{
+    UnusedGlobal()
+    {
+        this->unk_0 = 0;
+    }
+    ~UnusedGlobal()
+    {
+    }
+
+    DWORD unk_0;
+};
+UnusedGlobal g_UnusedGlobal;
 #endif
 
 Chain::~Chain()

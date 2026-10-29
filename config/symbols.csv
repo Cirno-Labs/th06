@@ -1624,6 +1624,7 @@ address,size,name,symbol
 0x00487edc,,g_StarAngles,?g_StarAngles@@3PAMA
 0x00487f5c,,g_StarFrom,?g_StarFrom@@3UD3DXVECTOR3@@A
 0x00487f68,,g_StarTo,?g_StarTo@@3UD3DXVECTOR3@@A
+0x00487fbc,,g_UnusedChain,?g_UnusedChain@@3UChainElem@@A
 0x00487fe0,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x004b7964,,g_EffectCalcChain,?g_EffectCalcChain@@3UChainElem@@A
 0x004b7984,,g_EffectDrawChain,?g_EffectDrawChain@@3UChainElem@@A
@@ -1652,14 +1653,18 @@ address,size,name,symbol
 0x0069d918,,g_Chain,?g_Chain@@3VChain@@A
 0x0069d998,,g_Log,?g_Log@@3VLog@@A
 0x0069e1a0,,g_TextFont,?g_TextFont@@3VTextFont@@A
+0x0069e1a8,,g_UnusedGlobal,?g_UnusedGlobal@@3UUnusedGlobal@@A
 0x0069e1b0,,g_PadButtons,?g_PadButtons@@3PAEA
 0x0069e230,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
+0x0069e248,,g_UnusedChain3,?g_UnusedChain3@@3UChainElem@@A
 0x0069e268,,g_ItemManager,?g_ItemManager@@3VItemManager@@A
+0x006c6bb4,,g_UnusedChain2,?g_UnusedChain2@@3UChainElem@@A
 0x006c6bd4,,g_GameWindow,?g_GameWindow@@3UGameWindow@@A
 0x006c6c00,,g_AppMutex,?g_AppMutex@@3PAXA
 0x006c6d18,,g_App,?g_App@@3VApp@@A
 0x006ca628,,g_Player,?g_Player@@3VPlayer@@A
 0x006d3f18,,g_ReplayManager,?g_ReplayManager@@3PAVReplayManager@@A
+0x006d3f40,,g_UnusedTimer,?g_UnusedTimer@@3UTimer@@A
 0x006d3f50,,g_SoundPlayer,?g_SoundPlayer@@3VSoundPlayer@@A
 0x006d4588,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A
 0x006d4590,,g_DiffuseQuad,?g_DiffuseQuad@@3PAUVertexTex1DiffuseXyzrwh@@A

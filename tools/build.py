@@ -15,7 +15,11 @@ calls and reads the original game.
 
 The standalone exe links src/ without src/dll/ but with src/exe/ (the
 game's data and global objects, which the DLL takes from the original)
-against the real libraries, plus the original's resources.
+against the real libraries, plus the original's resources. Its objects
+are compiled with /DTH06_EXE=1 into their own directory, build/obj_exe
+(build/obj_<features> with FEAT): `#ifdef TH06_EXE` guards the game's
+globals that src/ defines in the files that own them, so the DLL binds
+the original's.
 """
 import collections, csv, glob, json, os, struct, subprocess, sys
 
@@ -23,6 +27,7 @@ import coff
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OBJ = "build/obj"
+OBJ_EXE = "build/obj_exe"  # the vanilla standalone exe's
 SJIS = "build/src"  # src/ converted to Shift-JIS
 DLL = "build/th06.dll"
 EXE = "build/th06.exe"
@@ -118,12 +123,16 @@ def compile_all(target=DLL, feats=()):
 
     Sources are UTF-8, but the game's strings are Shift-JIS and MSVC 7
     copies string bytes as they are, so each file is converted first.
-    Objects with features go to their own directory, build/obj_<features>.
+    The exe's objects go to their own directory, build/obj_exe, or
+    build/obj_<features> with features, and see TH06_EXE.
     An object is rebuilt when its source or any header is newer, or when
     its flags changed: each object directory's flags.json records them.
     """
-    obj_dir = "_".join([OBJ, *feats])
-    defines = ["/D%s=1" % FEATURES[f] for f in feats]
+    if target == DLL:
+        obj_dir, defines = OBJ, []
+    else:
+        obj_dir = "_".join([OBJ, *feats]) if feats else OBJ_EXE
+        defines = ["/DTH06_EXE=1"] + ["/D%s=1" % FEATURES[f] for f in feats]
     if "english" in feats:
         generate_english_header()
         defines.append("/I" + win(GENERATED))

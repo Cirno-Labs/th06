@@ -122,8 +122,10 @@ FEAT=frame_cap,english just exe wait:15 shot:title
 
 `tools/build.py` passes `/DFEAT_<NAME>=1` for each one, to the exe build
 only, and keeps their objects in `build/obj_<features>/`. Without `FEAT`
-the exe is the vanilla game. The DLL and `just compare` always build the
-vanilla code.
+the exe is the vanilla game, with its objects in `build/obj_exe/`. The
+DLL and `just compare` always build the vanilla code. (The exe's objects
+also see `TH06_EXE`, which guards the globals the DLL takes from the
+original.)
 
 `frame_cap` is VsyncPatch (`vpatch_th06.dll`, rev4, from
 `VsyncPatch.zip` at <https://maribelhearn.com/faq/eosd>) with the

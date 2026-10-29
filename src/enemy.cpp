@@ -9,19 +9,6 @@
 #include "sprite.h"
 #include "unsorted.h"
 
-int EnemyManager::DeletedCallback(EnemyManager *mgr)
-{
-    g_SpriteEngine->ReleaseAnm(9);
-    g_SpriteEngine->ReleaseAnm(8);
-    return 0;
-}
-
-void EnemyManager::RemoveChain()
-{
-    g_Chain.Remove(&g_EnemyCalcChain);
-    g_Chain.Remove(&g_EnemyDrawChain);
-}
-
 void EnemyManager::Initialize()
 {
     int i;
@@ -467,18 +454,28 @@ void Enemy::ClampPos()
     }
 }
 
-void Enemy::Move()
+int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
 {
-    if (!this->flags.mirrored)
+    EnemyManager *mgr = &g_EnemyManager;
+
+    mgr->Initialize();
+    mgr->anmPath = anmPath;
+    mgr->anmPath2 = anmPath2;
+    g_EnemyCalcChain.SetCallback((ChainCallback)EnemyManager::OnUpdate);
+    g_EnemyCalcChain.addedCallback = (ChainCallback)EnemyManager::AddedCallback;
+    g_EnemyCalcChain.deletedCallback = (ChainCallback)EnemyManager::DeletedCallback;
+    g_EnemyCalcChain.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_EnemyCalcChain, 9) != 0)
     {
-        this->pos.x += g_App.frameAdvance * this->velocity.x;
+        return -1;
     }
-    else
+    g_EnemyDrawChain.SetCallback((ChainCallback)EnemyManager::OnDraw);
+    g_EnemyDrawChain.arg = mgr;
+    if (g_Chain.AddToDrawChain(&g_EnemyDrawChain, 6) != 0)
     {
-        this->pos.x -= g_App.frameAdvance * this->velocity.x;
+        return -1;
     }
-    this->pos.y += g_App.frameAdvance * this->velocity.y;
-    this->pos.z += g_App.frameAdvance * this->velocity.z;
+    return 0;
 }
 
 int EnemyManager::OnUpdate(EnemyManager *mgr)
@@ -722,30 +719,6 @@ void MoveEnemyEffects(Enemy *enemy)
     }
 }
 
-int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
-{
-    EnemyManager *mgr = &g_EnemyManager;
-
-    mgr->Initialize();
-    mgr->anmPath = anmPath;
-    mgr->anmPath2 = anmPath2;
-    g_EnemyCalcChain.SetCallback((ChainCallback)EnemyManager::OnUpdate);
-    g_EnemyCalcChain.addedCallback = (ChainCallback)EnemyManager::AddedCallback;
-    g_EnemyCalcChain.deletedCallback = (ChainCallback)EnemyManager::DeletedCallback;
-    g_EnemyCalcChain.arg = mgr;
-    if (g_Chain.AddToCalcChain(&g_EnemyCalcChain, 9) != 0)
-    {
-        return -1;
-    }
-    g_EnemyDrawChain.SetCallback((ChainCallback)EnemyManager::OnDraw);
-    g_EnemyDrawChain.arg = mgr;
-    if (g_Chain.AddToDrawChain(&g_EnemyDrawChain, 6) != 0)
-    {
-        return -1;
-    }
-    return 0;
-}
-
 int EnemyManager::OnDraw(EnemyManager *mgr)
 {
     int i;
@@ -817,4 +790,31 @@ int EnemyManager::AddedCallback(EnemyManager *mgr)
     mgr->spellCardActive = 0;
     mgr->timelinePos = NULL;
     return 0;
+}
+
+int EnemyManager::DeletedCallback(EnemyManager *mgr)
+{
+    g_SpriteEngine->ReleaseAnm(9);
+    g_SpriteEngine->ReleaseAnm(8);
+    return 0;
+}
+
+void EnemyManager::RemoveChain()
+{
+    g_Chain.Remove(&g_EnemyCalcChain);
+    g_Chain.Remove(&g_EnemyDrawChain);
+}
+
+void Enemy::Move()
+{
+    if (!this->flags.mirrored)
+    {
+        this->pos.x += g_App.frameAdvance * this->velocity.x;
+    }
+    else
+    {
+        this->pos.x -= g_App.frameAdvance * this->velocity.x;
+    }
+    this->pos.y += g_App.frameAdvance * this->velocity.y;
+    this->pos.z += g_App.frameAdvance * this->velocity.z;
 }

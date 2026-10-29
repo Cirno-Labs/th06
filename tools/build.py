@@ -271,7 +271,8 @@ def link_exe(objs, feats=()):
     rsrc.write_res(res, rsrc.resources(image))
     # Objects and libraries in the original's order: its code and import
     # table put DirectInput first, D3DX8 after the import thunks and the
-    # CRT last.
+    # CRT last. uuid's GUID_NULL comes before the CRT's .rdata, and its
+    # objects before the CRT's in the Rich header.
     objs = link_order(objs, read_symbols())
     # /OPT:REF and /OPT:ICF as the IDE's release configuration sets them.
     # Without an explicit /OPT:ICF the linker still folds functions, but
@@ -279,7 +280,7 @@ def link_exe(objs, feats=()):
     tool("link", "/SUBSYSTEM:WINDOWS", "/FIXED", "/OPT:REF", "/OPT:ICF",
          "/NODEFAULTLIB:libc.lib", "/MAP:" + win(EXE_MAP), "/OUT:" + win(EXE), *map(win, objs), win(res),
          "dinput8.lib", "dsound.lib", "d3d8.lib", "d3dx8.lib", "dxguid.lib",
-         "winmm.lib", "kernel32.lib", "user32.lib", "gdi32.lib", "libcmt.lib")
+         "winmm.lib", "kernel32.lib", "user32.lib", "gdi32.lib", "uuid.lib", "libcmt.lib")
     copy_header_fields(ORIGINAL, EXE)
     print("linked", EXE)
 

@@ -73,6 +73,16 @@ bool GdiSurface::Create(int width, int height, int format)
     return false;
 }
 
+#ifdef TH06_EXE
+// Unused: the original's object also referenced strlen before memset,
+// from code /OPT:REF dropped. It decides where libcmt's strlen.obj
+// lands: before memset.obj, as in the original.
+size_t UnusedTextLength(char *text)
+{
+    return strlen(text);
+}
+#endif // TH06_EXE
+
 bool GdiSurface::CreateInFormat(int width, int height, int format)
 {
     int widthBytes;
@@ -226,6 +236,18 @@ bool GdiSurface::CopyToSurface(IDirect3DSurface8 *surface)
     surface->UnlockRect();
     return true;
 }
+
+#ifdef TH06_EXE
+// Unused: the original's object also referenced memmove and threw, from
+// code /OPT:REF dropped. libcmt's memmove.obj then comes right after
+// memcpy.obj, and throw.obj (whose code is dropped too, but not its
+// four bytes of .data) pulls unhandld.obj in right after write.obj.
+void UnusedMoveBits(void *dst, void *src, size_t size)
+{
+    memmove(dst, src, size);
+    throw;
+}
+#endif // TH06_EXE
 
 void CreateTextSurface()
 {

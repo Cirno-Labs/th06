@@ -9,6 +9,14 @@
 #include "stage.h"
 #include "unsorted.h"
 
+// D3DXVec3Length's body, but the game's own inline: the original has its
+// out-of-line copy after ScriptAngle, where it is defined below, not after
+// ResolveOperand, its only caller (an inline comes out after its first
+// caller or its definition, whichever is later). Declared inline here, so
+// ResolveOperand still reserves the stack slot of an inline call /Ob1
+// gives up on.
+inline float Vec3Length(const D3DXVECTOR3 *v);
+
 int EnemyScripts::Load(char *path)
 {
     int i;
@@ -1236,7 +1244,7 @@ int *ResolveOperand(Enemy *enemy, int *operand, int *type)
     case -10023:
     {
         D3DXVECTOR3 diff = g_Player.position - enemy->pos;
-        g_PlayerDistance = D3DXVec3Length(&diff);
+        g_PlayerDistance = Vec3Length(&diff);
         if (type != NULL)
         {
             *type = 2;
@@ -1422,6 +1430,11 @@ void ScriptAngle(Enemy *enemy, int dst, float *fromX, float *fromY, float *toX, 
         by = ResolveFloatOperand(enemy, toY, NULL);
         *resPtr = atan2f(*by - *y1, *x2 - *x1);
     }
+}
+
+inline float Vec3Length(const D3DXVECTOR3 *v)
+{
+    return sqrtf(v->x * v->x + v->y * v->y + v->z * v->z);
 }
 
 // g_EnemyScriptFuncs[0]: turns every flying bullet into color 15, then

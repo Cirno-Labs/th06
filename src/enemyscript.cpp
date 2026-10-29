@@ -1043,6 +1043,55 @@ restart:
     return 0;
 }
 
+void ScriptMoveAngle(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    EnemyMoveAngleArgs *args;
+    float angle;
+
+    args = &instr->args.moveAngle;
+    angle = *ResolveFloatOperand(enemy, &args->angle, NULL);
+    enemy->moveDelta.x = cosf(angle) * args->speed * (float)args->duration / 2.0f;
+    enemy->moveDelta.y = sinf(angle) * args->speed * (float)args->duration / 2.0f;
+    enemy->moveDelta.z = 0.0f;
+    enemy->moveStart = enemy->pos;
+    enemy->moveDuration = args->duration;
+    enemy->moveTimer.Set(enemy->moveDuration);
+    enemy->flags.moveMode = 2;
+}
+
+void ScriptMovePos(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    EnemyMovePosArgs *args;
+    D3DXVECTOR3 target;
+
+    args = &instr->args.movePos;
+    target.x = *ResolveFloatOperand(enemy, &args->x, NULL);
+    target.y = *ResolveFloatOperand(enemy, &args->y, NULL);
+    target.z = *ResolveFloatOperand(enemy, &args->z, NULL);
+    enemy->moveDelta = target - enemy->pos;
+    enemy->moveStart = enemy->pos;
+    enemy->moveDuration = args->duration;
+    enemy->moveTimer.Set(enemy->moveDuration);
+    enemy->flags.moveMode = 2;
+    enemy->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+}
+
+void ScriptMoveTime(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    EnemyMoveTimeArgs *args;
+    float angle;
+
+    args = &instr->args.moveTime;
+    angle = *ResolveFloatOperand(enemy, &enemy->angle, NULL);
+    enemy->moveDelta.x = cosf(angle) * enemy->speed * (float)args->duration / 2.0f;
+    enemy->moveDelta.y = sinf(angle) * enemy->speed * (float)args->duration / 2.0f;
+    enemy->moveDelta.z = 0.0f;
+    enemy->moveStart = enemy->pos;
+    enemy->moveDuration = args->duration;
+    enemy->moveTimer.Set(enemy->moveDuration);
+    enemy->flags.moveMode = 2;
+}
+
 int *ResolveOperand(Enemy *enemy, int *operand, int *type)
 {
     if (type != NULL)
@@ -1241,55 +1290,6 @@ void ScriptSet(Enemy *enemy, int dst, int *src)
     {
         *(float *)dstPtr = *(float *)rhs;
     }
-}
-
-void ScriptMoveAngle(Enemy *enemy, EnemyScriptInstr *instr)
-{
-    EnemyMoveAngleArgs *args;
-    float angle;
-
-    args = &instr->args.moveAngle;
-    angle = *ResolveFloatOperand(enemy, &args->angle, NULL);
-    enemy->moveDelta.x = cosf(angle) * args->speed * (float)args->duration / 2.0f;
-    enemy->moveDelta.y = sinf(angle) * args->speed * (float)args->duration / 2.0f;
-    enemy->moveDelta.z = 0.0f;
-    enemy->moveStart = enemy->pos;
-    enemy->moveDuration = args->duration;
-    enemy->moveTimer.Set(enemy->moveDuration);
-    enemy->flags.moveMode = 2;
-}
-
-void ScriptMovePos(Enemy *enemy, EnemyScriptInstr *instr)
-{
-    EnemyMovePosArgs *args;
-    D3DXVECTOR3 target;
-
-    args = &instr->args.movePos;
-    target.x = *ResolveFloatOperand(enemy, &args->x, NULL);
-    target.y = *ResolveFloatOperand(enemy, &args->y, NULL);
-    target.z = *ResolveFloatOperand(enemy, &args->z, NULL);
-    enemy->moveDelta = target - enemy->pos;
-    enemy->moveStart = enemy->pos;
-    enemy->moveDuration = args->duration;
-    enemy->moveTimer.Set(enemy->moveDuration);
-    enemy->flags.moveMode = 2;
-    enemy->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-}
-
-void ScriptMoveTime(Enemy *enemy, EnemyScriptInstr *instr)
-{
-    EnemyMoveTimeArgs *args;
-    float angle;
-
-    args = &instr->args.moveTime;
-    angle = *ResolveFloatOperand(enemy, &enemy->angle, NULL);
-    enemy->moveDelta.x = cosf(angle) * enemy->speed * (float)args->duration / 2.0f;
-    enemy->moveDelta.y = sinf(angle) * enemy->speed * (float)args->duration / 2.0f;
-    enemy->moveDelta.z = 0.0f;
-    enemy->moveStart = enemy->pos;
-    enemy->moveDuration = args->duration;
-    enemy->moveTimer.Set(enemy->moveDuration);
-    enemy->flags.moveMode = 2;
 }
 
 void ScriptAdd(Enemy *enemy, int dst, int *a, int *b)

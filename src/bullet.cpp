@@ -7,134 +7,6 @@
 #include "player.h"
 #include "unsorted.h"
 
-BulletManager::BulletManager()
-{
-    this->Reset();
-}
-
-void BulletManager::Reset()
-{
-    memset(this, 0, sizeof(BulletManager));
-}
-
-int BulletManager::DeletedCallback(BulletManager *mgr)
-{
-    if ((g_App.scene != 3) != 0)
-    {
-        g_SpriteEngine->ReleaseAnm(6);
-        g_SpriteEngine->ReleaseAnm(7);
-    }
-    return 0;
-}
-
-void BulletManager::RemoveChain()
-{
-    g_Chain.Remove(&g_BulletCalcChain);
-    g_Chain.Remove(&g_BulletDrawChain);
-}
-
-int BulletManager::FirePattern(BulletShooter *shooter)
-{
-    int col;
-    float playerAngle;
-    int row;
-
-    playerAngle = g_Player.AngleFrom(&shooter->pos);
-    for (row = 0; row < shooter->count2; row++)
-    {
-        for (col = 0; col < shooter->count1; col++)
-        {
-            if (this->SpawnBullet(shooter, col, row, playerAngle))
-            {
-                goto done;
-            }
-        }
-    }
-done:
-    if (shooter->flags & 0x200)
-    {
-        g_SoundPlayer.QueueSound(shooter->sound, 0);
-    }
-    return 0;
-}
-
-Laser *BulletManager::SpawnLaser(BulletShooter *shooter)
-{
-    int i;
-    Laser *laser;
-
-    laser = this->lasers;
-    for (i = 0; i < 0x40; i++, laser++)
-    {
-        if (laser->active != 0)
-        {
-            continue;
-        }
-        g_SpriteEngine->StartScript(&laser->sprite0, shooter->sprite + 0x209);
-        g_SpriteEngine->SetSprite(&laser->sprite0, laser->sprite0.spriteIndex + shooter->color);
-        g_SpriteEngine->InitSprite(&laser->sprite1, g_BulletColorOffsets16[shooter->color] + 0x28c);
-        laser->sprite1.flags.blendMode = 1;
-        laser->pos = shooter->pos;
-        laser->color = shooter->color;
-        laser->active = 1;
-        laser->angle = shooter->angle1;
-        if (shooter->aimMode == 0)
-        {
-            laser->angle += g_Player.AngleFrom(&shooter->pos);
-        }
-        laser->flags = shooter->flags;
-        laser->timer.Set(0);
-        laser->startOffset = shooter->exFloats[0];
-        laser->endOffset = shooter->exFloats[1];
-        laser->maxLength = shooter->exFloats[2];
-        laser->width = shooter->exFloats[3];
-        laser->speed = shooter->speed1;
-        laser->startFrames = shooter->exInts[0];
-        laser->durationFrames = shooter->exInts[1];
-        laser->endFrames = shooter->exInts[2];
-        laser->hitStartFrame = shooter->exInts[3];
-        laser->endHitFrames = shooter->laserEndHitFrames;
-        if (laser->startFrames == 0)
-        {
-            laser->state = 1;
-        }
-        else
-        {
-            laser->state = 0;
-        }
-        break;
-    }
-    return laser;
-}
-
-int BulletManager::RegisterChain(char *anmPath)
-{
-    BulletManager *mgr = &g_BulletManager;
-
-    if (!g_App.cfg.flags.emulateColorAdd)
-    {
-        g_EffectColors = g_EffectColorsFull;
-    }
-    else
-    {
-        g_EffectColors = g_EffectColorsPale;
-    }
-    mgr->Reset();
-    mgr->anmPath = anmPath;
-    g_BulletCalcChain.SetCallback((ChainCallback)BulletManager::OnUpdate);
-    g_BulletCalcChain.addedCallback = (ChainCallback)BulletManager::AddedCallback;
-    g_BulletCalcChain.deletedCallback = (ChainCallback)BulletManager::DeletedCallback;
-    g_BulletCalcChain.arg = mgr;
-    if (g_Chain.AddToCalcChain(&g_BulletCalcChain, 0xb) != 0)
-    {
-        return -1;
-    }
-    g_BulletDrawChain.SetCallback((ChainCallback)BulletManager::OnDraw);
-    g_BulletDrawChain.arg = mgr;
-    g_Chain.AddToDrawChain(&g_BulletDrawChain, 9);
-    return 0;
-}
-
 // Picks `spr`'s sprite for `cur`'s color by the bullet's size.
 #define SET_BULLET_SPRITE(spr)                                                                   \
     if (cur->sprites.sprite0.spriteData->height <= 16.0f)                                     \
@@ -156,6 +28,16 @@ int BulletManager::RegisterChain(char *anmPath)
     {                                                                                            \
         g_SpriteEngine->SetSprite(&(spr), (spr).spriteIndex + shooter->color);                   \
     }
+
+void BulletManager::Reset()
+{
+    memset(this, 0, sizeof(BulletManager));
+}
+
+BulletManager::BulletManager()
+{
+    this->Reset();
+}
 
 int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float aimAngle)
 {
@@ -470,6 +352,108 @@ int BulletManager::ClearAllWithBonus(int maxBonus, int toItems)
         g_Gui.ShowBonusPopup(totalBonus);
     }
     return totalBonus;
+}
+
+int BulletManager::FirePattern(BulletShooter *shooter)
+{
+    int col;
+    float playerAngle;
+    int row;
+
+    playerAngle = g_Player.AngleFrom(&shooter->pos);
+    for (row = 0; row < shooter->count2; row++)
+    {
+        for (col = 0; col < shooter->count1; col++)
+        {
+            if (this->SpawnBullet(shooter, col, row, playerAngle))
+            {
+                goto done;
+            }
+        }
+    }
+done:
+    if (shooter->flags & 0x200)
+    {
+        g_SoundPlayer.QueueSound(shooter->sound, 0);
+    }
+    return 0;
+}
+
+Laser *BulletManager::SpawnLaser(BulletShooter *shooter)
+{
+    int i;
+    Laser *laser;
+
+    laser = this->lasers;
+    for (i = 0; i < 0x40; i++, laser++)
+    {
+        if (laser->active != 0)
+        {
+            continue;
+        }
+        g_SpriteEngine->StartScript(&laser->sprite0, shooter->sprite + 0x209);
+        g_SpriteEngine->SetSprite(&laser->sprite0, laser->sprite0.spriteIndex + shooter->color);
+        g_SpriteEngine->InitSprite(&laser->sprite1, g_BulletColorOffsets16[shooter->color] + 0x28c);
+        laser->sprite1.flags.blendMode = 1;
+        laser->pos = shooter->pos;
+        laser->color = shooter->color;
+        laser->active = 1;
+        laser->angle = shooter->angle1;
+        if (shooter->aimMode == 0)
+        {
+            laser->angle += g_Player.AngleFrom(&shooter->pos);
+        }
+        laser->flags = shooter->flags;
+        laser->timer.Set(0);
+        laser->startOffset = shooter->exFloats[0];
+        laser->endOffset = shooter->exFloats[1];
+        laser->maxLength = shooter->exFloats[2];
+        laser->width = shooter->exFloats[3];
+        laser->speed = shooter->speed1;
+        laser->startFrames = shooter->exInts[0];
+        laser->durationFrames = shooter->exInts[1];
+        laser->endFrames = shooter->exInts[2];
+        laser->hitStartFrame = shooter->exInts[3];
+        laser->endHitFrames = shooter->laserEndHitFrames;
+        if (laser->startFrames == 0)
+        {
+            laser->state = 1;
+        }
+        else
+        {
+            laser->state = 0;
+        }
+        break;
+    }
+    return laser;
+}
+
+int BulletManager::RegisterChain(char *anmPath)
+{
+    BulletManager *mgr = &g_BulletManager;
+
+    if (!g_App.cfg.flags.emulateColorAdd)
+    {
+        g_EffectColors = g_EffectColorsFull;
+    }
+    else
+    {
+        g_EffectColors = g_EffectColorsPale;
+    }
+    mgr->Reset();
+    mgr->anmPath = anmPath;
+    g_BulletCalcChain.SetCallback((ChainCallback)BulletManager::OnUpdate);
+    g_BulletCalcChain.addedCallback = (ChainCallback)BulletManager::AddedCallback;
+    g_BulletCalcChain.deletedCallback = (ChainCallback)BulletManager::DeletedCallback;
+    g_BulletCalcChain.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_BulletCalcChain, 0xb) != 0)
+    {
+        return -1;
+    }
+    g_BulletDrawChain.SetCallback((ChainCallback)BulletManager::OnDraw);
+    g_BulletDrawChain.arg = mgr;
+    g_Chain.AddToDrawChain(&g_BulletDrawChain, 9);
+    return 0;
 }
 
 int BulletManager::OnUpdate(BulletManager *mgr)
@@ -1126,4 +1110,20 @@ int BulletManager::AddedCallback(BulletManager *mgr)
     }
     memset(&g_ItemManager, 0, sizeof(ItemManager));
     return 0;
+}
+
+int BulletManager::DeletedCallback(BulletManager *mgr)
+{
+    if ((g_App.scene != 3) != 0)
+    {
+        g_SpriteEngine->ReleaseAnm(6);
+        g_SpriteEngine->ReleaseAnm(7);
+    }
+    return 0;
+}
+
+void BulletManager::RemoveChain()
+{
+    g_Chain.Remove(&g_BulletCalcChain);
+    g_Chain.Remove(&g_BulletDrawChain);
 }

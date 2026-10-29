@@ -26,6 +26,7 @@ OBJ = "build/obj"
 SJIS = "build/src"  # src/ converted to Shift-JIS
 DLL = "build/th06.dll"
 EXE = "build/th06.exe"
+EXE_MAP = "build/th06_exe.map"  # the DLL's map is build/th06.map
 ORIGINAL = "build/th06_102h.exe"
 CFLAGS = ["/Od", "/Ob1", "/G5", "/GX", "/Op", "/Oi", "/GS", "/Gy", "/GF"]
 GLUE_PREFIX = "dll_"  # objects from src/dll/, the DLL's own code
@@ -273,7 +274,7 @@ def link_exe(objs, feats=()):
     # CRT last.
     objs = link_order(objs, read_symbols())
     tool("link", "/SUBSYSTEM:WINDOWS", "/FIXED", "/NODEFAULTLIB:libc.lib",
-         "/MAP:" + win(EXE[:-4] + ".map"), "/OUT:" + win(EXE), *map(win, objs), win(res),
+         "/MAP:" + win(EXE_MAP), "/OUT:" + win(EXE), *map(win, objs), win(res),
          "dinput8.lib", "dsound.lib", "d3d8.lib", "d3dx8.lib", "dxguid.lib",
          "winmm.lib", "kernel32.lib", "user32.lib", "gdi32.lib", "libcmt.lib")
     copy_header_fields(ORIGINAL, EXE)

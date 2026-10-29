@@ -1245,6 +1245,11 @@ void Gui::DrawBanners()
     }
 }
 
+int Gui::AddedCallback(Gui *gui)
+{
+    return gui->LoadResources();
+}
+
 int Gui::DeletedCallback(Gui *gui)
 {
     g_SpriteEngine->ReleaseAnm(0x12);
@@ -1285,6 +1290,12 @@ int Gui::RegisterChain()
     g_GuiDrawChain.arg = gui;
     g_Chain.AddToDrawChain(&g_GuiDrawChain, 11);
     return 0;
+}
+
+void Gui::RemoveChain()
+{
+    g_Chain.Remove(&g_GuiCalcChain);
+    g_Chain.Remove(&g_GuiDrawChain);
 }
 
 int Timer::NextTick()

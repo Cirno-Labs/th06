@@ -19,17 +19,6 @@ SpriteEngine::~SpriteEngine()
 {
 }
 
-int Gui::AddedCallback(Gui *gui)
-{
-    return gui->LoadResources();
-}
-
-void Gui::RemoveChain()
-{
-    g_Chain.Remove(&g_GuiCalcChain);
-    g_Chain.Remove(&g_GuiDrawChain);
-}
-
 WORD Rng::GetRandomU16()
 {
     WORD a;

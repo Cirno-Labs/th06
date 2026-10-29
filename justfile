@@ -50,6 +50,11 @@ decompile *addrs:
 progress: build _orig
     python3 tools/render_progress.py
 
+# Use tools/hooks/: commit messages must be 50/72, without type
+# prefixes or trailers
+hooks:
+    git config core.hooksPath tools/hooks
+
 # Remove build outputs (keeps the Ghidra project)
 clean:
     rm -rf build/obj build/src build/game build/th06.* build/th06_exe.*

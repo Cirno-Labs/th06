@@ -33,5 +33,8 @@ libs = ["dinput8.lib", "dsound.lib", "d3d8.lib", "d3dx8.lib", "dxguid.lib", "win
 frame_cap = "FEAT_FRAME_CAP"
 english = "FEAT_ENGLISH"
 
+[exe.feature_sources]
+frame_cap = ["src/exe/framecap.cpp"]
+
 [psdk]
 libs = ["Gdi32.Lib", "Kernel32.Lib", "User32.Lib", "Uuid.Lib", "WinMM.Lib"]

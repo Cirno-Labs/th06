@@ -1,85 +1,12 @@
 // The file with Stage, from 0x403790.
 
+// StartScriptAtOrigin is defined at the end (see sprite.h).
+#define STARTSCRIPTATORIGIN_LATE
 #include "stage.h"
 #include "unsorted.h"
 
 Stage::Stage()
 {
-}
-
-void Stage::RemoveChain()
-{
-    g_Chain.Remove(&g_StageCalcChain);
-    g_Chain.Remove(&g_StageDrawChain);
-    g_Chain.Remove(&g_StageDrawChain2);
-}
-
-int Stage::RegisterChain(int stage)
-{
-    Stage *s = &g_Stage;
-
-    memset(s, 0, sizeof(Stage));
-    s->data = NULL;
-    s->timer.Set(0);
-    s->stage = stage;
-    g_StageCalcChain.SetCallback((ChainCallback)Stage::OnUpdate);
-    g_StageCalcChain.addedCallback = (ChainCallback)Stage::AddedCallback;
-    g_StageCalcChain.deletedCallback = (ChainCallback)Stage::DeletedCallback;
-    g_StageCalcChain.arg = s;
-    if (g_Chain.AddToCalcChain(&g_StageCalcChain, 6) != 0)
-    {
-        return -1;
-    }
-    g_StageDrawChain.SetCallback((ChainCallback)Stage::OnDraw);
-    g_StageDrawChain.arg = s;
-    g_Chain.AddToDrawChain(&g_StageDrawChain, 3);
-    g_StageDrawChain2.SetCallback((ChainCallback)Stage::OnDraw2);
-    g_StageDrawChain2.arg = s;
-    g_Chain.AddToDrawChain(&g_StageDrawChain2, 4);
-    return 0;
-}
-
-int Stage::DeletedCallback(Stage *stage)
-{
-    g_SpriteEngine->ReleaseAnm(4);
-    if (stage->sprites != NULL)
-    {
-        MemFree(stage->sprites);
-        stage->sprites = NULL;
-    }
-    if (stage->data != NULL)
-    {
-        MemFree(stage->data);
-        stage->data = NULL;
-    }
-    return 0;
-}
-
-int Stage::AddedCallback(Stage *stage)
-{
-    stage->scriptTime.Set(0);
-    stage->scriptIndex = 0;
-    stage->cameraPos.x = 0.0f;
-    stage->cameraPos.y = 0.0f;
-    stage->cameraPos.z = 0.0f;
-    stage->spellCardState = 0;
-    stage->fogFadeFrames = 0;
-    if (stage->Load(g_StageFiles[g_GameManager.stage].anmPath, g_StageFiles[g_GameManager.stage].dataPath) != 0)
-    {
-        return -1;
-    }
-    stage->fog.color = 0xff000000;
-    stage->fog.nearPlane = 200.0f;
-    stage->fog.farPlane = 500.0f;
-    stage->offsetTo = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
-    stage->offsetFrom = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
-    stage->offsetFadeFrames = 1;
-    stage->offsetFadeTime.Set(0);
-    stage->scriptResume = 0;
-    g_App.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
-    g_App.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
-    g_App.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
-    return 0;
 }
 
 int Stage::OnUpdate(Stage *stage)
@@ -309,6 +236,81 @@ int Stage::OnDraw2(Stage *stage)
     fog = 2000.0f;
     g_App.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&fog);
     return 1;
+}
+
+int Stage::AddedCallback(Stage *stage)
+{
+    stage->scriptTime.Set(0);
+    stage->scriptIndex = 0;
+    stage->cameraPos.x = 0.0f;
+    stage->cameraPos.y = 0.0f;
+    stage->cameraPos.z = 0.0f;
+    stage->spellCardState = 0;
+    stage->fogFadeFrames = 0;
+    if (stage->Load(g_StageFiles[g_GameManager.stage].anmPath, g_StageFiles[g_GameManager.stage].dataPath) != 0)
+    {
+        return -1;
+    }
+    stage->fog.color = 0xff000000;
+    stage->fog.nearPlane = 200.0f;
+    stage->fog.farPlane = 500.0f;
+    stage->offsetTo = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+    stage->offsetFrom = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+    stage->offsetFadeFrames = 1;
+    stage->offsetFadeTime.Set(0);
+    stage->scriptResume = 0;
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
+    g_App.d3dDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
+    return 0;
+}
+
+int Stage::RegisterChain(int stage)
+{
+    Stage *s = &g_Stage;
+
+    memset(s, 0, sizeof(Stage));
+    s->data = NULL;
+    s->timer.Set(0);
+    s->stage = stage;
+    g_StageCalcChain.SetCallback((ChainCallback)Stage::OnUpdate);
+    g_StageCalcChain.addedCallback = (ChainCallback)Stage::AddedCallback;
+    g_StageCalcChain.deletedCallback = (ChainCallback)Stage::DeletedCallback;
+    g_StageCalcChain.arg = s;
+    if (g_Chain.AddToCalcChain(&g_StageCalcChain, 6) != 0)
+    {
+        return -1;
+    }
+    g_StageDrawChain.SetCallback((ChainCallback)Stage::OnDraw);
+    g_StageDrawChain.arg = s;
+    g_Chain.AddToDrawChain(&g_StageDrawChain, 3);
+    g_StageDrawChain2.SetCallback((ChainCallback)Stage::OnDraw2);
+    g_StageDrawChain2.arg = s;
+    g_Chain.AddToDrawChain(&g_StageDrawChain2, 4);
+    return 0;
+}
+
+int Stage::DeletedCallback(Stage *stage)
+{
+    g_SpriteEngine->ReleaseAnm(4);
+    if (stage->sprites != NULL)
+    {
+        MemFree(stage->sprites);
+        stage->sprites = NULL;
+    }
+    if (stage->data != NULL)
+    {
+        MemFree(stage->data);
+        stage->data = NULL;
+    }
+    return 0;
+}
+
+void Stage::RemoveChain()
+{
+    g_Chain.Remove(&g_StageCalcChain);
+    g_Chain.Remove(&g_StageDrawChain);
+    g_Chain.Remove(&g_StageDrawChain2);
 }
 
 int Stage::Load(char *anmPath, char *dataPath)
@@ -552,4 +554,15 @@ int Stage::DrawLayer(int layer)
         placement++;
     }
     return 0;
+}
+
+// The copy the other objects' calls bind to, last in the object.
+inline void SpriteEngine::StartScriptAtOrigin(Sprite *vm, int script)
+{
+    vm->scriptIndex = script;
+    vm->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    vm->fontHeight = 15;
+    vm->fontWidth = 15;
+    this->SetScript(vm, this->scripts[script]);
 }

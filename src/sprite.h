@@ -360,17 +360,8 @@ public:
     // g_TextureFormats[`format`]. Returns 0.
     int CreateTexture(int index, int width, int height, int format);
     // Like StartScript, after zeroing the position and posOffset and
-    // setting fontWidth and fontHeight to 15. Inline, but not expanded: its
-    // copy is the stage file's.
-    void StartScriptAtOrigin(Sprite *vm, int script)
-    {
-        vm->scriptIndex = script;
-        vm->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        vm->fontHeight = 15;
-        vm->fontWidth = 15;
-        this->SetScript(vm, this->scripts[script]);
-    }
+    // setting fontWidth and fontHeight to 15.
+    void StartScriptAtOrigin(Sprite *vm, int script);
     // Draws `vm` in 3D: its matrix scaled, rotated about x, y and z and
     // moved to its position (y up), with its sprite through the texture
     // matrix. Returns 0, or -1 when not shown.
@@ -463,6 +454,21 @@ public:
     int pendingCopyHeight;
 };
 ASSERT_SIZE(SpriteEngine, 0x2112c);
+
+// Inline, but not expanded: its copy is the stage file's, which is last
+// in stage.obj. stage.cpp defines STARTSCRIPTATORIGIN_LATE and the copy
+// at its end (see Sprite()).
+#ifndef STARTSCRIPTATORIGIN_LATE
+inline void SpriteEngine::StartScriptAtOrigin(Sprite *vm, int script)
+{
+    vm->scriptIndex = script;
+    vm->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    vm->fontHeight = 15;
+    vm->fontWidth = 15;
+    this->SetScript(vm, this->scripts[script]);
+}
+#endif
 extern SpriteEngine *g_SpriteEngine;
 
 inline BOOL Sprite::HasTexture()

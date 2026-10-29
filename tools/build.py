@@ -273,8 +273,11 @@ def link_exe(objs, feats=()):
     # table put DirectInput first, D3DX8 after the import thunks and the
     # CRT last.
     objs = link_order(objs, read_symbols())
-    tool("link", "/SUBSYSTEM:WINDOWS", "/FIXED", "/NODEFAULTLIB:libc.lib",
-         "/MAP:" + win(EXE_MAP), "/OUT:" + win(EXE), *map(win, objs), win(res),
+    # /OPT:REF and /OPT:ICF as the IDE's release configuration sets them.
+    # Without an explicit /OPT:ICF the linker still folds functions, but
+    # not identical read-only data.
+    tool("link", "/SUBSYSTEM:WINDOWS", "/FIXED", "/OPT:REF", "/OPT:ICF",
+         "/NODEFAULTLIB:libc.lib", "/MAP:" + win(EXE_MAP), "/OUT:" + win(EXE), *map(win, objs), win(res),
          "dinput8.lib", "dsound.lib", "d3d8.lib", "d3dx8.lib", "dxguid.lib",
          "winmm.lib", "kernel32.lib", "user32.lib", "gdi32.lib", "libcmt.lib")
     copy_header_fields(ORIGINAL, EXE)

@@ -18,10 +18,8 @@ our own analysis or, for library code, from the libraries themselves.
 
 ## Status
 
-510 of the game's 511 functions are decompiled and match the original,
-240,532 of 241,285 bytes (99.69%). The one that doesn't match yet is
-`DatArchive::Decode`. Every function
-is decompiled, so the standalone exe (`just exe`) is the whole game,
+All 511 of the game's functions are decompiled and match the original,
+all 241,285 bytes. The standalone exe (`just exe`) is the whole game,
 built from source.
 
 Ghidra finds 1383 functions. The game code is compiled without

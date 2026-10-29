@@ -163,14 +163,12 @@ int DatArchive::Open(char *path)
     return this->ReadTable();
 }
 
-// Not matching: the logic is the original's, the optimizer's register and
-// stack slot choices differ.
 // The encoded data's next byte, zero past its end, added to `checksum`
 // (as FileBitStream reads them).
 #define FETCH_BYTE() \
     { \
         currentByte = *cursor; \
-        if (cursor - data >= size) \
+        if (cursor - data >= inSize) \
         { \
             currentByte = 0; \
         } \
@@ -200,7 +198,7 @@ int DatArchive::Open(char *path)
 #define READ_BITS(value, bits) \
     { \
         DWORD bitMask = 1 << ((bits) - 1); \
-        DWORD result = 0; \
+        value = 0; \
         while (bitMask != 0) \
         { \
             if (mask == 0x80) \
@@ -209,7 +207,7 @@ int DatArchive::Open(char *path)
             } \
             if (mask & currentByte) \
             { \
-                result |= bitMask; \
+                value |= bitMask; \
             } \
             bitMask >>= 1; \
             mask >>= 1; \
@@ -218,7 +216,6 @@ int DatArchive::Open(char *path)
                 mask = 0x80; \
             } \
         } \
-        value = result; \
     }
 
 void *DatArchive::Decode(int entry, char *name)
@@ -239,6 +236,7 @@ void *DatArchive::Decode(int entry, char *name)
     DWORD offset;
     DWORD c;
     int i;
+    int inSize;
 
     if (entry >= this->numEntries)
     {
@@ -264,8 +262,12 @@ void *DatArchive::Decode(int entry, char *name)
     cursor = data;
     mask = 0x80;
     checksum = 0;
+    inSize = size;
     dictionaryPos = 1;
-    memset(dictionary, 0, sizeof(dictionary));
+    for (i = 0; i < 0x2000; i++)
+    {
+        dictionary[i] = 0;
+    }
     for (;;)
     {
         READ_BIT(bit);
@@ -278,7 +280,8 @@ void *DatArchive::Decode(int entry, char *name)
         }
         else
         {
-            READ_BITS(offset, 13);
+            READ_BITS(value, 13);
+            offset = value;
             if (offset == 0)
             {
                 break;

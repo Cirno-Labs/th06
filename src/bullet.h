@@ -105,7 +105,7 @@ struct BulletShooter
 ASSERT_SIZE(BulletShooter, 0x54);
 
 // The scripts of each bullet type's five sprites.
-extern int g_BulletTypeScripts[10][5];
+extern const int g_BulletTypeScripts[10][5];
 
 // Sprite offsets by color, for bullets up to 16 and up to 32 high.
 extern int g_BulletColorOffsets16[16];

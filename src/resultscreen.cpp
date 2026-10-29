@@ -1024,6 +1024,11 @@ int ResultScreen::WaitAfterNameEntry()
 
 int ResultScreen::DrawStatistics()
 {
+#ifdef TH06_EXE
+    static const float g_DifficultyRatings[5] = {
+        -30.0f, -10.0f, 20.0f, 30.0f, 30.0f,
+    };
+#endif // TH06_EXE
     Sprite *spr;
     D3DXVECTOR3 cursorPos;
     float progress;

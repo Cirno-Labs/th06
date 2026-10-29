@@ -1551,13 +1551,13 @@ address,size,name,symbol
 0x0046a264,4,midiOutGetNumDevs,__imp__midiOutGetNumDevs@0
 0x0046a268,4,mmioAdvance,__imp__mmioAdvance@12
 0x0046a270,4,Direct3DCreate8,__imp__Direct3DCreate8@4
-0x0046a6e8,,g_BulletTypeScripts,?g_BulletTypeScripts@@3PAY04HA
+0x0046a6e8,,g_BulletTypeScripts,?g_BulletTypeScripts@@3QAY04$$CBHA
 0x0046afac,12,TextFont::`vftable',??_7TextFont@@6B@
 0x0046b564,4,MmTimer::`vftable',??_7MmTimer@@6B@
 0x0046b568,4,MidiPlayer::`vftable',??_7MidiPlayer@@6B@
-0x0046bca4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
-0x0046c220,,g_TextureFormats,?g_TextureFormats@@3PAW4_D3DFORMAT@@A
-0x0046c2f0,,g_Half,?g_Half@@3MA
+0x0046bca4,,g_DifficultyRatings,?g_DifficultyRatings@@3QBMB
+0x0046c220,,g_TextureFormats,?g_TextureFormats@@3QBW4_D3DFORMAT@@B
+0x0046c2f0,,g_Half,?g_Half@@3MB
 0x0046c680,4,CSound::`vftable',??_7CSound@@6B@
 0x0046c69c,4,CStreamingSound::`vftable',??_7CStreamingSound@@6B@
 0x0046cb7c,32,BitStream::`vftable',??_7BitStream@@6B@

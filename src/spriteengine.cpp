@@ -8,6 +8,14 @@
 #include "sprite.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+const D3DFORMAT g_TextureFormats[] = {
+    D3DFMT_UNKNOWN, D3DFMT_A8R8G8B8, D3DFMT_A1R5G5B5, D3DFMT_R5G6B5, D3DFMT_R8G8B8, D3DFMT_A4R4G4B4,
+};
+#endif // TH06_EXE
+
 SpriteEngine::SpriteEngine()
 {
     int i;
@@ -460,6 +468,13 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
 
 int SpriteEngine::DrawQuad(Sprite *vm, int roundToPixel)
 {
+#ifdef TH06_EXE
+    // The original reads the compiler's own 0.5f constant, which inline
+    // asm can't name. A static constant is a COMDAT among this function's
+    // literals, which /OPT:ICF folds with __real@3f000000, keeping this
+    // copy as the original does.
+    static const float g_Half = 0.5f;
+#endif // TH06_EXE
     if (roundToPixel)
     {
         __asm

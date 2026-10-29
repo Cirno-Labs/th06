@@ -200,9 +200,10 @@ extern char *g_ShotNames[6];
 extern char *g_ShotTypeNames[4];
 // The difficulties' names ("     Easy", ...), right-aligned.
 extern char *g_DifficultyNames[5];
-// By difficulty: what the result screen's rating starts from, and what
-// each spell card captured adds to it.
-extern float g_DifficultyRatings[5];
+// By difficulty: what the result screen's rating starts from (a static
+// of DrawStatistics in the exe), and what each spell card captured adds
+// to it.
+extern const float g_DifficultyRatings[5];
 extern float g_SpellCardRatings[5];
 
 // The result screen's scene object (0x56b0 bytes, set up by

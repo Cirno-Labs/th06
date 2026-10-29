@@ -7,6 +7,23 @@
 #include "player.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+const int g_BulletTypeScripts[10][5] = {
+    {512, 526, 527, 528, 523},
+    {513, 529, 530, 531, 524},
+    {514, 529, 530, 531, 524},
+    {515, 529, 530, 531, 524},
+    {516, 529, 530, 531, 524},
+    {517, 529, 530, 531, 524},
+    {518, 532, 532, 532, 525},
+    {519, 532, 532, 532, 525},
+    {520, 532, 532, 532, 525},
+    {666, 668, 668, 668, 667},
+};
+#endif // TH06_EXE
+
 // Picks `spr`'s sprite for `cur`'s color by the bullet's size.
 #define SET_BULLET_SPRITE(spr)                                                                   \
     if (cur->sprites.sprite0.spriteData->height <= 16.0f)                                     \

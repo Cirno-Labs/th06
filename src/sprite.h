@@ -519,7 +519,7 @@ inline float Rint(float f)
 }
 
 // 0.5f, the float constant the game's hand-written assembly reads.
-extern float g_Half;
+extern const float g_Half;
 // A quad of each, set up by SpriteEngine's constructor.
 extern VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
 extern VertexTex1Xyzrwh g_Quad[4];
@@ -535,4 +535,4 @@ extern VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
 
 // The texture formats ANM files choose from: unknown (the surface's own),
 // A8R8G8B8, A1R5G5B5, R5G6B5, R8G8B8 and A4R4G4B4.
-extern D3DFORMAT g_TextureFormats[];
+extern const D3DFORMAT g_TextureFormats[];

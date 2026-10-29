@@ -1,8 +1,7 @@
 // The game's initialized data: tables of strings, script numbers, colors,
 // shot patterns and sounds. Built into the standalone exe only: the DLL
 // build uses the original's copies, which the original code shares.
-// Values are the 1.02h exe's initial bytes; tables the original keeps in
-// .rdata are marked.
+// Values are the 1.02h exe's initial bytes.
 
 #include <d3d8.h>
 
@@ -45,28 +44,6 @@ int EffectUpdateOrbit(Effect *effect);
 int EffectUpdateConverge(Effect *effect);
 int EffectUpdateConvergeSlow(Effect *effect);
 
-// .rdata in the original.
-int g_BulletTypeScripts[10][5] = {
-    {512, 526, 527, 528, 523},
-    {513, 529, 530, 531, 524},
-    {514, 529, 530, 531, 524},
-    {515, 529, 530, 531, 524},
-    {516, 529, 530, 531, 524},
-    {517, 529, 530, 531, 524},
-    {518, 532, 532, 532, 525},
-    {519, 532, 532, 532, 525},
-    {520, 532, 532, 532, 525},
-    {666, 668, 668, 668, 667},
-};
-float g_DifficultyRatings[5] = {
-    -30.0f, -10.0f, 20.0f, 30.0f, 30.0f,
-};
-D3DFORMAT g_TextureFormats[] = {
-    D3DFMT_UNKNOWN, D3DFMT_A8R8G8B8, D3DFMT_A1R5G5B5, D3DFMT_R5G6B5, D3DFMT_R8G8B8, D3DFMT_A4R4G4B4,
-};
-float g_Half = 0.5f;
-
-// .data in the original.
 StageFiles g_StageFiles[8] = {
     {"dummy", "dummy"},
     {"data/stg1bg.anm", "data/stage1.std"},

@@ -21,20 +21,6 @@ GdiSurface::~GdiSurface()
     this->Release();
 }
 
-void CreateTextSurface()
-{
-    g_App.d3dDevice->CreateImageSurface(640, 64, D3DFMT_A1R5G5B5, &g_TextSurface);
-}
-
-void ReleaseTextSurface()
-{
-    if (g_TextSurface != NULL)
-    {
-        g_TextSurface->Release();
-        g_TextSurface = NULL;
-    }
-}
-
 bool GdiSurface::Release()
 {
     if (this->hdc != NULL)
@@ -223,6 +209,20 @@ bool GdiSurface::CopyToSurface(IDirect3DSurface8 *surface)
     }
     surface->UnlockRect();
     return true;
+}
+
+void CreateTextSurface()
+{
+    g_App.d3dDevice->CreateImageSurface(640, 64, D3DFMT_A1R5G5B5, &g_TextSurface);
+}
+
+void ReleaseTextSurface()
+{
+    if (g_TextSurface != NULL)
+    {
+        g_TextSurface->Release();
+        g_TextSurface = NULL;
+    }
 }
 
 void RenderTextToTexture(int x, int y, int width, int unk4, int fontHeight, int unk6, COLORREF textColor,

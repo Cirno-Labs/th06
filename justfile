@@ -37,6 +37,10 @@ exe *steps: game
     if [ -d orig/th06e ]; then cp orig/th06e/th06e_*.DAT build/game/; fi
     if [ $# -gt 0 ]; then python3 tools/play.py --exe th06_standalone.exe "$@"; fi
 
+# Extract VS.NET 2002's Platform SDK import libraries from its install ZIP
+psdk-libs zip:
+    python3 tools/psdk_libs.py {{ zip }}
+
 # Analyze the original with headless Ghidra; add new functions to symbols.csv
 analyze: _orig
     tools/ghidra/analyze.sh

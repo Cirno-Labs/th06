@@ -60,12 +60,22 @@ Read from the Rich header (`tools/peinfo.py`):
 | MASM 7.00 | 9466 | 45 | MSVC CRT |
 | C++ compiler 13.00 | 8830 | 67 | Static libraries, probably D3DX8 |
 | Older linker objects | 8755 | 10 | Static libraries |
-| Import library 7.00 | 9210 | 8 | DirectX SDK import libraries |
+| Import library 7.00 | 9210 | 8 | Import libraries (DirectX 8 SDK, Vc7\PlatformSDK) |
 | Linker 7.00 | 9466 | | |
 
 This means Visual C++ .NET 2002 (MSVC 7.0, `cl` 13.00.9466) with the
 DirectX 8 SDK. Only the roughly 48 C++ objects at build 9466 need to be
 decompiled. The CRT and the SDK libraries are linked as-is.
+
+The import libraries for `user32`, `gdi32`, `winmm` and `kernel32` (and
+`uuid`, which supplies `GUID_NULL`) are Visual Studio .NET 2002's own
+(`Vc7\PlatformSDK\Lib`, import library build 9210 and C compiler build
+9178 in the Rich header), not a later Platform SDK's: they decide the
+import hints and the Rich header. They are not loose files on the CDs
+but sit in a cabinet inside `vs_setup.msi` on disc 1. `just psdk-libs
+ZIP` extracts them from the install media (a zip holding
+`cd1/VSPROD1.iso`) into `C:\msvc7\PlatformSDK\Lib` in the Wine prefix,
+which the build searches before `C:\psdk\Lib`.
 
 ## Workflow
 
@@ -177,8 +187,8 @@ build/    outputs; build/game/ is a runnable copy of the patched game
 
 ## Requirements
 
-- Wine (32-bit), Python 3, [just](https://github.com/casey/just),
-  binutils (`objdump`), 7-Zip
+- Wine (32-bit, with its `msidb`), Python 3,
+  [just](https://github.com/casey/just), binutils (`objdump`), 7-Zip
 - For `just run`: Xvfb, xdotool, ImageMagick, 32-bit Mesa OpenGL
   (`libgl1-mesa-dri:i386`, `libglx-mesa0:i386`) and the `ja_JP.UTF-8`
   locale, without which the game can't find its Shift-JIS named data

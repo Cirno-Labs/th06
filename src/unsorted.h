@@ -577,20 +577,29 @@ inline void SinCosScale(D3DXVECTOR3 *vec, float angle, float radius)
 }
 
 // Text drawn with a D3DX font in "ＭＳ ゴシック". Nothing calls its
-// functions directly.
+// functions directly: the original only constructs one global TextFont,
+// whose vtable keeps them (and D3DX8's font code) in the exe.
 class TextFont
 {
 public:
-    // Creates the font at `width` by `height`.
-    void Create(IDirect3DDevice8 *device, int width, int height);
-    // Draws `text` from (`x`, `y`) in `color`.
-    int Draw(char *text, int x, int y, D3DCOLOR color);
-    // Releases the font, if there is one.
-    void Release();
+    TextFont()
+    {
+        this->font = NULL;
+    }
 
-    DWORD unk_0;
+    // Creates the font at `width` by `height`.
+    virtual void Create(IDirect3DDevice8 *device, int width, int height);
+    // Draws `text` from (`x`, `y`) in `color`.
+    virtual int Draw(char *text, int x, int y, D3DCOLOR color);
+    // Releases the font, if there is one.
+    virtual void Release();
+
     ID3DXFont *font;
 };
+
+#ifdef TH06_EXE
+extern TextFont g_TextFont;
+#endif
 
 // Clears the back buffer and the depth buffer to `color` and presents,
 // twice, so both buffers of the swap chain are cleared; resets the

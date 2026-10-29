@@ -4,8 +4,8 @@
 // They are defined in the order the original constructs them (its
 // initializers run file by file in link order), so constructors and the
 // destructors registered with atexit run in the same order. The original
-// also constructs a few globals that no game code uses (a TextFont, a
-// Timer and three ChainElems); they are left out.
+// also constructs a few globals that no game code uses (a Timer and three
+// ChainElems); they are left out. Its unused TextFont is in chain.cpp.
 
 #include "ascii.h"
 #include "bullet.h"

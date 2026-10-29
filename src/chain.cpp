@@ -3,6 +3,11 @@
 #include "chain.h"
 #include "unsorted.h"
 
+#ifdef TH06_EXE
+// Constructed and never used.
+TextFont g_TextFont;
+#endif
+
 Chain::~Chain()
 {
 }

@@ -91,9 +91,7 @@ ASSERT_SIZE(File, 0xc);
 class FileBitStream : public BitStream, public File
 {
 public:
-    FileBitStream()
-    {
-    }
+    FileBitStream();
     ~FileBitStream()
     {
         this->Close();
@@ -102,11 +100,7 @@ public:
     // Opens the file at `path`. Returns nonzero on success.
     int Open(char *path);
 
-    virtual void Close()
-    {
-        this->File::Close();
-        this->Reset();
-    }
+    virtual void Close();
     virtual int ReadBit();
     virtual DWORD ReadBits(int bits);
     virtual int ReadByte();
@@ -116,6 +110,16 @@ public:
     virtual int GetLastWriteTime(FILETIME *time);
 };
 ASSERT_SIZE(FileBitStream, 0x24);
+
+// Inline (~FileBitStream expands it), but filebitstream.cpp defines
+// FBS_CLOSE_LATE and its own copy after Open, where the original has it.
+#ifndef FBS_CLOSE_LATE
+inline void FileBitStream::Close()
+{
+    this->File::Close();
+    this->Reset();
+}
+#endif
 
 // An entry of an archive's table.
 struct DatArchiveEntry

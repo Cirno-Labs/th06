@@ -80,6 +80,8 @@ which the build searches before `C:\psdk\Lib`.
 ## Workflow
 
 Everything runs headless, so it works over SSH. `just` lists the recipes.
+`tools/` is a submodule: clone with `--recursive`, or run
+`git submodule update --init tools` after cloning.
 
 1. Analyze the binary with Ghidra in headless mode (`just analyze`).
    New functions are added to `config/symbols.csv` with placeholder names
@@ -146,7 +148,7 @@ installer (with 7z, without running it), applies the patch's data to
 your game and writes `orig/th06e/`: the `th06e_XX.DAT` archives
 (translated dialogue, stage and song titles, endings, images and
 `spellcards.eng`), the patched exe for its icons and `strings.txt`, the
-exe's English strings, which `tools/build.py` turns into
+exe's English strings, which `scripts/build_hook.py` turns into
 `build/feat/english.h`:
 
 ```sh
@@ -182,8 +184,12 @@ src/      decompiled source; src/dll/ is the hook DLL's own code,
           src/exe/ the game's data and globals for the standalone exe
           and its optional features' code
 config/   symbols.csv: address, size, name and mangled symbol
-tools/    build, compare, exe patcher, symbol seeding, Ghidra scripts
-scripts/  the English patch's data (english.py, pbg3.py)
+tools/    build, compare, exe patcher, symbol seeding, Ghidra scripts:
+          the decomp-tools repository shared with th07 and th08, as a
+          git submodule (just tools-init, tools-pull, tools-push)
+project.toml  th06's settings for tools/
+scripts/  th06's own: the English patch's data (english.py, pbg3.py)
+          and the build hook that adds it to FEAT=english
 build/    outputs; build/game/ is a runnable copy of the patched game
 ```
 

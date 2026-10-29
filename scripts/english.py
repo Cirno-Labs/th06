@@ -17,7 +17,7 @@ the way its patcher does and writes:
     th06e.exe                       the patched exe (for its resources)
     strings.txt                     the exe's English strings, NAME=text
 
-tools/build.py turns strings.txt into build/feat/english.h.
+scripts/build_hook.py turns strings.txt into build/feat/english.h.
 """
 import hashlib, io, os, pickle, re, shutil, struct, subprocess, sys, tempfile, zipfile
 

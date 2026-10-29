@@ -113,12 +113,7 @@ struct AnmInstr
 class Sprite
 {
 public:
-    // Inline, but too large to expand: callers call the copy at 0x403720,
-    // and arrays of Sprites still reserve its inlined Timers' slots.
-    Sprite()
-    {
-        this->spriteIndex = -1;
-    }
+    Sprite();
 
     // Resets the sprite's state, keeping its texture.
     void Initialize();
@@ -208,6 +203,18 @@ public:
     BYTE fontHeight;
     short unk_10e;
 };
+
+// Inline, but too large to expand: callers call the copy at 0x403720,
+// and arrays of Sprites still reserve its inlined Timers' slots.
+// ascii.cpp defines SPRITE_CTOR_LATE and its own copy at its end: an
+// inline emitted out of line comes after its first caller or its
+// definition, whichever is later, and the original has it last.
+#ifndef SPRITE_CTOR_LATE
+inline Sprite::Sprite()
+{
+    this->spriteIndex = -1;
+}
+#endif
 ASSERT_SIZE(Sprite, 0x110);
 
 // An untransformed vertex with texture coordinates.

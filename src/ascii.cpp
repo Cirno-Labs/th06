@@ -1,5 +1,7 @@
 // The file starting at 0x401000: text in the ASCII font.
 
+// Sprite() is defined at the end (see sprite.h).
+#define SPRITE_CTOR_LATE
 #include <stdarg.h>
 #include <stdio.h>
 
@@ -8,6 +10,296 @@
 
 AsciiText::AsciiText()
 {
+}
+
+int AsciiText::OnUpdate(AsciiText *text)
+{
+    int i;
+    AsciiPopup *entry;
+
+    if (!g_GameManager.isPaused && !g_GameManager.isInContinueMenu)
+    {
+        for (entry = text->popups, i = 0; i < 0x203; i++, entry++)
+        {
+            if (!entry->active)
+            {
+                continue;
+            }
+            entry->pos.y -= 0.5f * g_App.frameAdvance;
+            entry->timer.Tick();
+            if ((entry->timer.current > 60) != 0)
+            {
+                entry->active = 0;
+            }
+        }
+    }
+    else if (g_GameManager.isPaused)
+    {
+        text->pauseMenu.UpdatePauseMenu();
+    }
+    if (g_GameManager.isInContinueMenu)
+    {
+        text->continueMenu.UpdateContinueMenu();
+    }
+    return 1;
+}
+
+int AsciiText::OnDraw(AsciiText *text)
+{
+    text->DrawStrings();
+    text->stringCount = 0;
+    text->pauseMenu.DrawPauseMenu();
+    text->continueMenu.DrawContinueMenu();
+    return 1;
+}
+
+int AsciiText::OnDraw2(AsciiText *text)
+{
+    if (g_App.hardwareTnL)
+    {
+        text->DrawPopups();
+    }
+    else
+    {
+        text->DrawPopups2();
+    }
+    return 1;
+}
+
+int AsciiText::RegisterChain()
+{
+    AsciiText *text = &g_AsciiText;
+
+    g_AsciiCalcChain.SetCallback((ChainCallback)AsciiText::OnUpdate);
+    g_AsciiCalcChain.addedCallback = (ChainCallback)AsciiText::AddedCallback;
+    g_AsciiCalcChain.deletedCallback = (ChainCallback)AsciiText::DeletedCallback;
+    g_AsciiCalcChain.arg = text;
+    if (g_Chain.AddToCalcChain(&g_AsciiCalcChain, 1) != 0)
+    {
+        return -1;
+    }
+    g_AsciiDrawChain.SetCallback((ChainCallback)AsciiText::OnDraw);
+    g_AsciiDrawChain.arg = text;
+    g_Chain.AddToDrawChain(&g_AsciiDrawChain, 0xf);
+    g_AsciiDrawChain2.SetCallback((ChainCallback)AsciiText::OnDraw2);
+    g_AsciiDrawChain2.arg = text;
+    g_Chain.AddToDrawChain(&g_AsciiDrawChain2, 10);
+    return 0;
+}
+
+int AsciiText::AddedCallback(AsciiText *text)
+{
+    if (g_SpriteEngine->LoadAnm(1, "data/ascii.anm", 0) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(2, "data/asciis.anm", 0x77) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(3, "data/capture.anm", 0x718) != 0)
+    {
+        return -1;
+    }
+    text->Initialize();
+    return 0;
+}
+
+int AsciiText::DeletedCallback(AsciiText *text)
+{
+    g_SpriteEngine->ReleaseAnm(1);
+    g_SpriteEngine->ReleaseAnm(2);
+    g_SpriteEngine->ReleaseAnm(3);
+    return 0;
+}
+
+void AsciiText::RemoveChain()
+{
+    g_Chain.Remove(&g_AsciiCalcChain);
+    g_Chain.Remove(&g_AsciiDrawChain);
+}
+
+void AsciiText::AddString(D3DXVECTOR3 *pos, char *text)
+{
+    AsciiString *str;
+
+    if (this->stringCount >= 0x100)
+    {
+        return;
+    }
+    str = &this->strings[this->stringCount];
+    this->stringCount++;
+    strcpy(str->text, text);
+    str->pos = *pos;
+    str->color = this->color;
+    str->scaleX = this->scaleX;
+    str->scaleY = this->scaleY;
+    str->inArena = this->inArena;
+    if (g_App.HasFlag0Or8())
+    {
+        str->highlight = this->highlight;
+    }
+    else
+    {
+        str->highlight = 0;
+    }
+}
+
+void AsciiText::AddFormat(D3DXVECTOR3 *pos, char *fmt, ...)
+{
+    char buf[0x200];
+    va_list args;
+
+    va_start(args, fmt);
+    vsprintf(buf, fmt, args);
+    this->AddString(pos, buf);
+    va_end(args);
+}
+
+void AsciiText::DrawStrings()
+{
+    float advance;
+    int idx;
+    AsciiString *string;
+    BYTE *c;
+    int clipped = 1;
+    D3DXVECTOR3 pos;
+
+    string = this->strings;
+    this->glyph.flags.shown = 1;
+    this->glyph.flags.anchor = 3;
+    for (idx = 0; idx < this->stringCount; idx++, string++)
+    {
+        this->glyph.pos = string->pos;
+        c = (BYTE *)string->text;
+        this->glyph.scaleX = string->scaleX;
+        this->glyph.scaleY = string->scaleY;
+        advance = 14.0f * string->scaleX;
+        if (clipped != string->inArena)
+        {
+            clipped = string->inArena;
+            if (clipped != 0)
+            {
+                g_App.viewport.X = g_GameManager.arena[0];
+                g_App.viewport.Y = g_GameManager.arena[1];
+                g_App.viewport.Width = g_GameManager.arena[2];
+                g_App.viewport.Height = g_GameManager.arena[3];
+                g_App.d3dDevice->SetViewport(&g_App.viewport);
+            }
+            else
+            {
+                g_App.viewport.X = 0;
+                g_App.viewport.Y = 0;
+                g_App.viewport.Width = 640;
+                g_App.viewport.Height = 480;
+                g_App.d3dDevice->SetViewport(&g_App.viewport);
+            }
+        }
+        while (*c != 0)
+        {
+            if (*c == '\n')
+            {
+                this->glyph.pos.y += 16.0f * string->scaleY;
+                this->glyph.pos.x = string->pos.x;
+            }
+            else if (*c == ' ')
+            {
+                this->glyph.pos.x += advance;
+            }
+            else
+            {
+                if (string->highlight == 0)
+                {
+                    this->glyph.spriteData = &g_SpriteEngine->sprites[*c - 0x15];
+                    this->glyph.color = string->color;
+                }
+                else
+                {
+                    this->glyph.spriteData = &g_SpriteEngine->sprites[*c + 0x61];
+                    this->glyph.color = 0xffffffff;
+                }
+                g_SpriteEngine->Draw(&this->glyph);
+                this->glyph.pos.x += advance;
+            }
+            c++;
+        }
+    }
+}
+
+void AsciiText::AddPopup(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
+{
+    AsciiPopup *popup;
+    int n;
+
+    if (this->nextPopup >= 0x200)
+    {
+        this->nextPopup = 0;
+    }
+    popup = &this->popups[this->nextPopup];
+    popup->active = 1;
+    n = 0;
+    if (value >= 0)
+    {
+        while (value != 0)
+        {
+            popup->digits[n] = value % 10;
+            n++;
+            value /= 10;
+        }
+    }
+    else
+    {
+        popup->digits[n] = 10;
+        n++;
+    }
+    if (n == 0)
+    {
+        popup->digits[n] = 0;
+        n++;
+    }
+    popup->digitCount = n;
+    popup->color = color;
+    popup->timer.Set(0);
+    popup->pos = *pos;
+    this->nextPopup++;
+}
+
+void AsciiText::AddPopup2(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
+{
+    AsciiPopup *popup;
+    int n;
+
+    if (this->nextPopup2 >= 3)
+    {
+        this->nextPopup2 = 0;
+    }
+    popup = &this->popups[this->nextPopup2 + 0x200];
+    popup->active = 1;
+    n = 0;
+    if (value >= 0)
+    {
+        while (value != 0)
+        {
+            popup->digits[n] = value % 10;
+            n++;
+            value /= 10;
+        }
+    }
+    else
+    {
+        popup->digits[n] = 10;
+        n++;
+    }
+    if (n == 0)
+    {
+        popup->digits[n] = 0;
+        n++;
+    }
+    popup->digitCount = n;
+    popup->color = color;
+    popup->timer.Set(0);
+    popup->pos = *pos;
+    this->nextPopup2++;
 }
 
 int PauseMenu::UpdatePauseMenu()
@@ -434,169 +726,6 @@ void PauseMenu::DrawContinueMenu()
     }
 }
 
-int AsciiText::OnUpdate(AsciiText *text)
-{
-    int i;
-    AsciiPopup *entry;
-
-    if (!g_GameManager.isPaused && !g_GameManager.isInContinueMenu)
-    {
-        for (entry = text->popups, i = 0; i < 0x203; i++, entry++)
-        {
-            if (!entry->active)
-            {
-                continue;
-            }
-            entry->pos.y -= 0.5f * g_App.frameAdvance;
-            entry->timer.Tick();
-            if ((entry->timer.current > 60) != 0)
-            {
-                entry->active = 0;
-            }
-        }
-    }
-    else if (g_GameManager.isPaused)
-    {
-        text->pauseMenu.UpdatePauseMenu();
-    }
-    if (g_GameManager.isInContinueMenu)
-    {
-        text->continueMenu.UpdateContinueMenu();
-    }
-    return 1;
-}
-
-int AsciiText::RegisterChain()
-{
-    AsciiText *text = &g_AsciiText;
-
-    g_AsciiCalcChain.SetCallback((ChainCallback)AsciiText::OnUpdate);
-    g_AsciiCalcChain.addedCallback = (ChainCallback)AsciiText::AddedCallback;
-    g_AsciiCalcChain.deletedCallback = (ChainCallback)AsciiText::DeletedCallback;
-    g_AsciiCalcChain.arg = text;
-    if (g_Chain.AddToCalcChain(&g_AsciiCalcChain, 1) != 0)
-    {
-        return -1;
-    }
-    g_AsciiDrawChain.SetCallback((ChainCallback)AsciiText::OnDraw);
-    g_AsciiDrawChain.arg = text;
-    g_Chain.AddToDrawChain(&g_AsciiDrawChain, 0xf);
-    g_AsciiDrawChain2.SetCallback((ChainCallback)AsciiText::OnDraw2);
-    g_AsciiDrawChain2.arg = text;
-    g_Chain.AddToDrawChain(&g_AsciiDrawChain2, 10);
-    return 0;
-}
-
-void AsciiText::DrawStrings()
-{
-    float advance;
-    int idx;
-    AsciiString *string;
-    BYTE *c;
-    int clipped = 1;
-    D3DXVECTOR3 pos;
-
-    string = this->strings;
-    this->glyph.flags.shown = 1;
-    this->glyph.flags.anchor = 3;
-    for (idx = 0; idx < this->stringCount; idx++, string++)
-    {
-        this->glyph.pos = string->pos;
-        c = (BYTE *)string->text;
-        this->glyph.scaleX = string->scaleX;
-        this->glyph.scaleY = string->scaleY;
-        advance = 14.0f * string->scaleX;
-        if (clipped != string->inArena)
-        {
-            clipped = string->inArena;
-            if (clipped != 0)
-            {
-                g_App.viewport.X = g_GameManager.arena[0];
-                g_App.viewport.Y = g_GameManager.arena[1];
-                g_App.viewport.Width = g_GameManager.arena[2];
-                g_App.viewport.Height = g_GameManager.arena[3];
-                g_App.d3dDevice->SetViewport(&g_App.viewport);
-            }
-            else
-            {
-                g_App.viewport.X = 0;
-                g_App.viewport.Y = 0;
-                g_App.viewport.Width = 640;
-                g_App.viewport.Height = 480;
-                g_App.d3dDevice->SetViewport(&g_App.viewport);
-            }
-        }
-        while (*c != 0)
-        {
-            if (*c == '\n')
-            {
-                this->glyph.pos.y += 16.0f * string->scaleY;
-                this->glyph.pos.x = string->pos.x;
-            }
-            else if (*c == ' ')
-            {
-                this->glyph.pos.x += advance;
-            }
-            else
-            {
-                if (string->highlight == 0)
-                {
-                    this->glyph.spriteData = &g_SpriteEngine->sprites[*c - 0x15];
-                    this->glyph.color = string->color;
-                }
-                else
-                {
-                    this->glyph.spriteData = &g_SpriteEngine->sprites[*c + 0x61];
-                    this->glyph.color = 0xffffffff;
-                }
-                g_SpriteEngine->Draw(&this->glyph);
-                this->glyph.pos.x += advance;
-            }
-            c++;
-        }
-    }
-}
-
-int AsciiText::OnDraw(AsciiText *text)
-{
-    text->DrawStrings();
-    text->stringCount = 0;
-    text->pauseMenu.DrawPauseMenu();
-    text->continueMenu.DrawContinueMenu();
-    return 1;
-}
-
-int AsciiText::OnDraw2(AsciiText *text)
-{
-    if (g_App.hardwareTnL)
-    {
-        text->DrawPopups();
-    }
-    else
-    {
-        text->DrawPopups2();
-    }
-    return 1;
-}
-
-int AsciiText::AddedCallback(AsciiText *text)
-{
-    if (g_SpriteEngine->LoadAnm(1, "data/ascii.anm", 0) != 0)
-    {
-        return -1;
-    }
-    if (g_SpriteEngine->LoadAnm(2, "data/asciis.anm", 0x77) != 0)
-    {
-        return -1;
-    }
-    if (g_SpriteEngine->LoadAnm(3, "data/capture.anm", 0x718) != 0)
-    {
-        return -1;
-    }
-    text->Initialize();
-    return 0;
-}
-
 void AsciiText::DrawPopups()
 {
     AsciiPopup *p = this->popups;
@@ -687,133 +816,6 @@ void AsciiText::DrawPopups2()
     }
 }
 
-int AsciiText::DeletedCallback(AsciiText *text)
-{
-    g_SpriteEngine->ReleaseAnm(1);
-    g_SpriteEngine->ReleaseAnm(2);
-    g_SpriteEngine->ReleaseAnm(3);
-    return 0;
-}
-
-void AsciiText::RemoveChain()
-{
-    g_Chain.Remove(&g_AsciiCalcChain);
-    g_Chain.Remove(&g_AsciiDrawChain);
-}
-
-void AsciiText::AddString(D3DXVECTOR3 *pos, char *text)
-{
-    AsciiString *str;
-
-    if (this->stringCount >= 0x100)
-    {
-        return;
-    }
-    str = &this->strings[this->stringCount];
-    this->stringCount++;
-    strcpy(str->text, text);
-    str->pos = *pos;
-    str->color = this->color;
-    str->scaleX = this->scaleX;
-    str->scaleY = this->scaleY;
-    str->inArena = this->inArena;
-    if (g_App.HasFlag0Or8())
-    {
-        str->highlight = this->highlight;
-    }
-    else
-    {
-        str->highlight = 0;
-    }
-}
-
-void AsciiText::AddFormat(D3DXVECTOR3 *pos, char *fmt, ...)
-{
-    char buf[0x200];
-    va_list args;
-
-    va_start(args, fmt);
-    vsprintf(buf, fmt, args);
-    this->AddString(pos, buf);
-    va_end(args);
-}
-
-void AsciiText::AddPopup(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
-{
-    AsciiPopup *popup;
-    int n;
-
-    if (this->nextPopup >= 0x200)
-    {
-        this->nextPopup = 0;
-    }
-    popup = &this->popups[this->nextPopup];
-    popup->active = 1;
-    n = 0;
-    if (value >= 0)
-    {
-        while (value != 0)
-        {
-            popup->digits[n] = value % 10;
-            n++;
-            value /= 10;
-        }
-    }
-    else
-    {
-        popup->digits[n] = 10;
-        n++;
-    }
-    if (n == 0)
-    {
-        popup->digits[n] = 0;
-        n++;
-    }
-    popup->digitCount = n;
-    popup->color = color;
-    popup->timer.Set(0);
-    popup->pos = *pos;
-    this->nextPopup++;
-}
-
-void AsciiText::AddPopup2(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
-{
-    AsciiPopup *popup;
-    int n;
-
-    if (this->nextPopup2 >= 3)
-    {
-        this->nextPopup2 = 0;
-    }
-    popup = &this->popups[this->nextPopup2 + 0x200];
-    popup->active = 1;
-    n = 0;
-    if (value >= 0)
-    {
-        while (value != 0)
-        {
-            popup->digits[n] = value % 10;
-            n++;
-            value /= 10;
-        }
-    }
-    else
-    {
-        popup->digits[n] = 10;
-        n++;
-    }
-    if (n == 0)
-    {
-        popup->digits[n] = 0;
-        n++;
-    }
-    popup->digitCount = n;
-    popup->color = color;
-    popup->timer.Set(0);
-    popup->pos = *pos;
-    this->nextPopup2++;
-}
-
 // Resets the sprite: no rotation, a scale of 1, no interpolations, white,
 // the identity matrix, flags unk0 and visible.
 void Sprite::Initialize()
@@ -831,4 +833,10 @@ void Sprite::Initialize()
     this->pendingInterrupt = 0;
     this->posInterpTime = 0;
     this->scriptTime.Initialize();
+}
+
+// The copy the other objects' calls bind to, last in the object.
+inline Sprite::Sprite()
+{
+    this->spriteIndex = -1;
 }

@@ -17,7 +17,7 @@ ChainElem g_AsciiDrawChain;
 ChainElem g_AsciiDrawChain2;
 #endif // TH06_EXE
 
-AsciiText::AsciiText()
+EXE_INLINE AsciiText::AsciiText()
 {
 }
 

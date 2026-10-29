@@ -20,7 +20,7 @@ short g_LastPressedKey = 32;
 MainMenu g_MainMenu;
 #endif // TH06_EXE
 
-MainMenu::MainMenu()
+EXE_INLINE MainMenu::MainMenu()
 {
 }
 

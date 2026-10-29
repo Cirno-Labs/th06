@@ -3,7 +3,15 @@
 #include "effect.h"
 #include "unsorted.h"
 
-EffectManager::EffectManager()
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+EffectManager g_EffectManager;
+ChainElem g_EffectCalcChain;
+ChainElem g_EffectDrawChain;
+#endif // TH06_EXE
+
+EXE_INLINE EffectManager::EffectManager()
 {
     this->Reset();
 }
@@ -166,9 +174,6 @@ EffectInfo g_EffectInfos[] = {
     {685, EffectUpdateMove},
 };
 
-EffectManager g_EffectManager;
-ChainElem g_EffectCalcChain;
-ChainElem g_EffectDrawChain;
 #endif // TH06_EXE
 
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)

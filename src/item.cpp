@@ -27,7 +27,7 @@ ChainElem g_UnusedChain2;
 ChainElem g_UnusedChain3;
 #endif // TH06_EXE
 
-ItemManager::ItemManager()
+EXE_INLINE ItemManager::ItemManager()
 {
 }
 

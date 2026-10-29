@@ -529,7 +529,7 @@ DWORD WINAPI BgmNotificationProc(LPVOID lpParameter)
     return 0;
 }
 
-SoundPlayer::SoundPlayer()
+EXE_INLINE SoundPlayer::SoundPlayer()
 {
     int i;
 

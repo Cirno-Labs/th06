@@ -14,7 +14,7 @@ ChainElem g_StageDrawChain;
 ChainElem g_StageDrawChain2;
 #endif // TH06_EXE
 
-Stage::Stage()
+EXE_INLINE Stage::Stage()
 {
 }
 

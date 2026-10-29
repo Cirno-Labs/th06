@@ -377,7 +377,7 @@ ShotTable g_ShotTable3[9] = {
 Player g_Player;
 #endif // TH06_EXE
 
-Player::Player()
+EXE_INLINE Player::Player()
 {
 }
 

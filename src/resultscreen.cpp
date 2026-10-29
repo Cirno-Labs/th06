@@ -283,6 +283,13 @@ int LoadPracticeScores(void *scoreDat, Pscr *pscrs)
     return 0;
 }
 
+void ReleaseScoreDat(ScoreDat *dat)
+{
+    FreeListNodes(dat->scores);
+    MemFree(dat->scores);
+    free(dat);
+}
+
 void SaveScoreDat(ResultScreen *screen)
 {
     ScoreDat *header;
@@ -405,13 +412,6 @@ void SaveScoreDat(ResultScreen *screen)
     }
     WriteToFile("score.dat", buf, size0);
     free(buf);
-}
-
-void ReleaseScoreDat(ScoreDat *dat)
-{
-    FreeListNodes(dat->scores);
-    MemFree(dat->scores);
-    free(dat);
 }
 
 int ResultScreen::AddScore(Hscr *entry, int difficulty, int shot)
@@ -940,6 +940,53 @@ int ResultScreen::HandleReplaySaving()
             }
         }
         break;
+    }
+    return 0;
+}
+
+void MoveCursorVertical(ResultScreen *screen, int count)
+{
+    if (WAS_PRESSED_OR_HELD(0x10))
+    {
+        screen->cursor--;
+        if (screen->cursor < 0)
+        {
+            screen->cursor += count;
+        }
+        g_SoundPlayer.QueueSound(0xc, 0);
+    }
+    if (WAS_PRESSED_OR_HELD(0x20))
+    {
+        screen->cursor++;
+        if (screen->cursor >= count)
+        {
+            screen->cursor -= count;
+        }
+        g_SoundPlayer.QueueSound(0xc, 0);
+    }
+}
+
+int MoveCursorHorizontal(ResultScreen *screen, int count)
+{
+    if (WAS_PRESSED_OR_HELD(0x40))
+    {
+        screen->cursor--;
+        if (screen->cursor < 0)
+        {
+            screen->cursor += count;
+        }
+        g_SoundPlayer.QueueSound(0xc, 0);
+        return 1;
+    }
+    if (WAS_PRESSED_OR_HELD(0x80))
+    {
+        screen->cursor++;
+        if (screen->cursor >= count)
+        {
+            screen->cursor -= count;
+        }
+        g_SoundPlayer.QueueSound(0xc, 0);
+        return 1;
     }
     return 0;
 }
@@ -1830,53 +1877,6 @@ int ResultScreen::DeletedCallback(ResultScreen *screen)
     screen->drawChain = NULL;
     delete screen;
     screen = NULL;
-    return 0;
-}
-
-void MoveCursorVertical(ResultScreen *screen, int count)
-{
-    if (WAS_PRESSED_OR_HELD(0x10))
-    {
-        screen->cursor--;
-        if (screen->cursor < 0)
-        {
-            screen->cursor += count;
-        }
-        g_SoundPlayer.QueueSound(0xc, 0);
-    }
-    if (WAS_PRESSED_OR_HELD(0x20))
-    {
-        screen->cursor++;
-        if (screen->cursor >= count)
-        {
-            screen->cursor -= count;
-        }
-        g_SoundPlayer.QueueSound(0xc, 0);
-    }
-}
-
-int MoveCursorHorizontal(ResultScreen *screen, int count)
-{
-    if (WAS_PRESSED_OR_HELD(0x40))
-    {
-        screen->cursor--;
-        if (screen->cursor < 0)
-        {
-            screen->cursor += count;
-        }
-        g_SoundPlayer.QueueSound(0xc, 0);
-        return 1;
-    }
-    if (WAS_PRESSED_OR_HELD(0x80))
-    {
-        screen->cursor++;
-        if (screen->cursor >= count)
-        {
-            screen->cursor -= count;
-        }
-        g_SoundPlayer.QueueSound(0xc, 0);
-        return 1;
-    }
     return 0;
 }
 

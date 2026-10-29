@@ -191,35 +191,47 @@ Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOL
     return tries >= 0x200 ? &this->effects[0x200] : effect;
 }
 
-int EffectManager::RegisterChain()
+int EffectManager::OnUpdate(EffectManager *mgr)
 {
-    EffectManager *mgr = &g_EffectManager;
+    Effect *eff = mgr->effects;
+    int i;
 
-    mgr->Reset();
-    g_EffectCalcChain.SetCallback((ChainCallback)EffectManager::OnUpdate);
-    g_EffectCalcChain.addedCallback = (ChainCallback)EffectManager::AddedCallback;
-    g_EffectCalcChain.deletedCallback = (ChainCallback)EffectManager::DeletedCallback;
-    g_EffectCalcChain.arg = mgr;
-    if (g_Chain.AddToCalcChain(&g_EffectCalcChain, 10) != 0)
+    mgr->activeCount = 0;
+    for (i = 0; i < 0x200; i++, eff++)
     {
-        return -1;
+        if (!eff->active)
+        {
+            continue;
+        }
+        mgr->activeCount++;
+        if (eff->update != NULL && eff->update(eff) != 1)
+        {
+            eff->active = 0;
+        }
+        if (g_SpriteEngine->Step(&eff->sprite) != 0)
+        {
+            eff->active = 0;
+        }
+        eff->timer.Tick();
     }
-    g_EffectDrawChain.SetCallback((ChainCallback)EffectManager::OnDraw);
-    g_EffectDrawChain.arg = mgr;
-    g_Chain.AddToDrawChain(&g_EffectDrawChain, 8);
-    return 0;
+    return 1;
 }
 
-int EffectManager::DeletedCallback(EffectManager *mgr)
+int EffectManager::OnDraw(EffectManager *mgr)
 {
-    g_SpriteEngine->ReleaseAnm(0xb);
-    return 0;
-}
+    Effect *eff = mgr->effects;
+    int i;
 
-void EffectManager::RemoveChain()
-{
-    g_Chain.Remove(&g_EffectCalcChain);
-    g_Chain.Remove(&g_EffectDrawChain);
+    for (i = 0; i < 0x200; i++, eff++)
+    {
+        if (!eff->active)
+        {
+            continue;
+        }
+        eff->sprite.pos = eff->pos;
+        g_SpriteEngine->Draw3D(&eff->sprite);
+    }
+    return 1;
 }
 
 int EffectManager::AddedCallback(EffectManager *mgr)
@@ -274,45 +286,33 @@ int EffectManager::AddedCallback(EffectManager *mgr)
     return 0;
 }
 
-int EffectManager::OnDraw(EffectManager *mgr)
+int EffectManager::DeletedCallback(EffectManager *mgr)
 {
-    Effect *eff = mgr->effects;
-    int i;
-
-    for (i = 0; i < 0x200; i++, eff++)
-    {
-        if (!eff->active)
-        {
-            continue;
-        }
-        eff->sprite.pos = eff->pos;
-        g_SpriteEngine->Draw3D(&eff->sprite);
-    }
-    return 1;
+    g_SpriteEngine->ReleaseAnm(0xb);
+    return 0;
 }
 
-int EffectManager::OnUpdate(EffectManager *mgr)
+int EffectManager::RegisterChain()
 {
-    Effect *eff = mgr->effects;
-    int i;
+    EffectManager *mgr = &g_EffectManager;
 
-    mgr->activeCount = 0;
-    for (i = 0; i < 0x200; i++, eff++)
+    mgr->Reset();
+    g_EffectCalcChain.SetCallback((ChainCallback)EffectManager::OnUpdate);
+    g_EffectCalcChain.addedCallback = (ChainCallback)EffectManager::AddedCallback;
+    g_EffectCalcChain.deletedCallback = (ChainCallback)EffectManager::DeletedCallback;
+    g_EffectCalcChain.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_EffectCalcChain, 10) != 0)
     {
-        if (!eff->active)
-        {
-            continue;
-        }
-        mgr->activeCount++;
-        if (eff->update != NULL && eff->update(eff) != 1)
-        {
-            eff->active = 0;
-        }
-        if (g_SpriteEngine->Step(&eff->sprite) != 0)
-        {
-            eff->active = 0;
-        }
-        eff->timer.Tick();
+        return -1;
     }
-    return 1;
+    g_EffectDrawChain.SetCallback((ChainCallback)EffectManager::OnDraw);
+    g_EffectDrawChain.arg = mgr;
+    g_Chain.AddToDrawChain(&g_EffectDrawChain, 8);
+    return 0;
+}
+
+void EffectManager::RemoveChain()
+{
+    g_Chain.Remove(&g_EffectCalcChain);
+    g_Chain.Remove(&g_EffectDrawChain);
 }

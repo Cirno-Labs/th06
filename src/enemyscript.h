@@ -227,6 +227,7 @@ void ScriptAngle(Enemy *enemy, int dst, float *x1, float *y1, float *x2, float *
 
 // Where ResolveOperand computes its read-only values: the shot type
 // (character * 2 + shotType), the distance and the angle to the player.
+// Statics of ResolveOperand in the exe.
 extern int g_ShotTypeOperand;
 extern float g_PlayerDistance;
 extern float g_PlayerAngle;

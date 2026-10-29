@@ -70,9 +70,6 @@ int g_ShotTypeValues[2][2][3] = {
 // Constructed and never used.
 ChainElem g_UnusedChain;
 EnemyScripts g_EnemyScripts;
-int g_ShotTypeOperand;
-float g_PlayerDistance;
-float g_PlayerAngle;
 #endif // TH06_EXE
 
 // D3DXVec3Length's body, but the game's own inline: the original has its
@@ -1168,6 +1165,12 @@ void ScriptMoveTime(Enemy *enemy, EnemyScriptInstr *instr)
 
 int *ResolveOperand(Enemy *enemy, int *operand, int *type)
 {
+#ifdef TH06_EXE
+    // The original's are statics of this function.
+    static int g_ShotTypeOperand;
+    static float g_PlayerDistance;
+    static float g_PlayerAngle;
+#endif // TH06_EXE
     if (type != NULL)
     {
         *type = 3;

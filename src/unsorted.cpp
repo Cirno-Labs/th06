@@ -542,7 +542,3 @@ void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle)
 void DebugPrint(const char *fmt, ...)
 {
 }
-
-SpriteEngine::~SpriteEngine()
-{
-}

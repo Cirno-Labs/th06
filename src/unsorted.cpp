@@ -7,71 +7,6 @@
 #include "unsorted.h"
 #include "features.h"
 
-void DebugPrint(const char *fmt, ...)
-{
-}
-
-void DebugPrint2(const char *fmt, ...)
-{
-}
-
-SpriteEngine::~SpriteEngine()
-{
-}
-
-WORD Rng::GetRandomU16()
-{
-    WORD a;
-
-    a = (this->seed ^ 0x9630) - 0x6553;
-    this->seed = (((a & 0xc000) >> 14) + a * 4) & 0xffff;
-    this->generated++;
-    return this->seed;
-}
-
-DWORD Rng::GetRandomU32()
-{
-    return (this->GetRandomU16() << 16) | this->GetRandomU16();
-}
-
-float Rng::GetRandomF32ZeroToOne()
-{
-    return this->GetRandomU32() / 4294967296.0f;
-}
-
-float AddNormalizeAngle(float a, float b)
-{
-    int i = 0;
-
-    a += b;
-    while (a > 3.1415927f)
-    {
-        a -= 6.2831855f;
-        if (i++ > 16)
-        {
-            break;
-        }
-    }
-    while (a < -3.1415927f)
-    {
-        a += 6.2831855f;
-        if (i++ > 16)
-        {
-            break;
-        }
-    }
-    return a;
-}
-
-void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle)
-{
-    float s = sinf(angle);
-    float c = cosf(angle);
-
-    out->x = c * in->x + s * in->y;
-    out->y = c * in->y - s * in->x;
-}
-
 WORD InitJoystick()
 {
     JOYINFOEX joyInfo;
@@ -549,4 +484,65 @@ int LogError(Log *log, const char *fmt, ...)
     va_end(args);
     log->hasError = 1;
     return (int)fmt;
+}
+
+WORD Rng::GetRandomU16()
+{
+    WORD a;
+
+    a = (this->seed ^ 0x9630) - 0x6553;
+    this->seed = (((a & 0xc000) >> 14) + a * 4) & 0xffff;
+    this->generated++;
+    return this->seed;
+}
+
+DWORD Rng::GetRandomU32()
+{
+    return (this->GetRandomU16() << 16) | this->GetRandomU16();
+}
+
+float Rng::GetRandomF32ZeroToOne()
+{
+    return this->GetRandomU32() / 4294967296.0f;
+}
+
+float AddNormalizeAngle(float a, float b)
+{
+    int i = 0;
+
+    a += b;
+    while (a > 3.1415927f)
+    {
+        a -= 6.2831855f;
+        if (i++ > 16)
+        {
+            break;
+        }
+    }
+    while (a < -3.1415927f)
+    {
+        a += 6.2831855f;
+        if (i++ > 16)
+        {
+            break;
+        }
+    }
+    return a;
+}
+
+void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle)
+{
+    float s = sinf(angle);
+    float c = cosf(angle);
+
+    out->x = c * in->x + s * in->y;
+    out->y = c * in->y - s * in->x;
+}
+
+void DebugPrint(const char *fmt, ...)
+{
+}
+
+SpriteEngine::~SpriteEngine()
+{
 }

@@ -1879,3 +1879,7 @@ int MoveCursorHorizontal(ResultScreen *screen, int count)
     }
     return 0;
 }
+
+void DebugPrint2(const char *fmt, ...)
+{
+}

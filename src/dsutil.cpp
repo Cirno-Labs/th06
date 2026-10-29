@@ -414,40 +414,6 @@ int CStreamingSound::UpdateFade()
     return 0;
 }
 
-CWaveFile::CWaveFile()
-{
-    m_pwfx = NULL;
-    m_hmmio = NULL;
-    m_dwSize = 0;
-    m_bIsReadingFromMemory = FALSE;
-    this->loopEnd = 0;
-    this->loopStart = 0;
-}
-
-DWORD CWaveFile::GetSize()
-{
-    return m_dwSize;
-}
-
-HRESULT CWaveFile::Close()
-{
-    if (m_dwFlags == WAVEFILE_READ)
-    {
-        mmioClose(m_hmmio, 0);
-        m_hmmio = NULL;
-    }
-
-    return S_OK;
-}
-
-CWaveFile::~CWaveFile()
-{
-    Close();
-
-    if (!m_bIsReadingFromMemory)
-        SAFE_DELETE_ARRAY(m_pwfx);
-}
-
 // The locked buffer's variables are renamed and declared after the restore:
 // the SDK's names and places lay the stack out differently.
 HRESULT CStreamingSound::HandleWaveStreamNotification(BOOL bLoopedPlay)
@@ -620,6 +586,24 @@ HRESULT CStreamingSound::Reset()
     return m_apDSBuffer[0]->SetCurrentPosition(0L);
 }
 
+CWaveFile::CWaveFile()
+{
+    m_pwfx = NULL;
+    m_hmmio = NULL;
+    m_dwSize = 0;
+    m_bIsReadingFromMemory = FALSE;
+    this->loopEnd = 0;
+    this->loopStart = 0;
+}
+
+CWaveFile::~CWaveFile()
+{
+    Close();
+
+    if (!m_bIsReadingFromMemory)
+        SAFE_DELETE_ARRAY(m_pwfx);
+}
+
 HRESULT CWaveFile::Open(LPTSTR strFileName, WAVEFORMATEX *pwfx, DWORD dwFlags)
 {
     HRESULT hr;
@@ -753,6 +737,11 @@ HRESULT CWaveFile::ReadMMIO()
     }
 
     return S_OK;
+}
+
+DWORD CWaveFile::GetSize()
+{
+    return m_dwSize;
 }
 
 HRESULT CWaveFile::ResetFile(bool bLoop)
@@ -915,4 +904,15 @@ HRESULT CWaveFile::Read(BYTE *pBuffer, DWORD dwSizeToRead, DWORD *pdwSizeRead)
 
         return S_OK;
     }
+}
+
+HRESULT CWaveFile::Close()
+{
+    if (m_dwFlags == WAVEFILE_READ)
+    {
+        mmioClose(m_hmmio, 0);
+        m_hmmio = NULL;
+    }
+
+    return S_OK;
 }

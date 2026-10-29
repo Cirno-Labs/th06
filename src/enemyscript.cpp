@@ -66,6 +66,16 @@ int g_ShotTypeValues[2][2][3] = {
     {{0, 3, 1}, {2, 3, 4}},
     {{1, 4, 0}, {4, 2, 3}},
 };
+
+// Constructed and never used.
+ChainElem g_UnusedChain;
+EnemyScripts g_EnemyScripts;
+int g_ShotTypeOperand;
+float g_PlayerDistance;
+float g_PlayerAngle;
+float g_StarAngles[6];
+D3DXVECTOR3 g_StarFrom;
+D3DXVECTOR3 g_StarTo;
 #endif // TH06_EXE
 
 // D3DXVec3Length's body, but the game's own inline: the original has its

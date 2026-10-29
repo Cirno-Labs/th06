@@ -16,6 +16,8 @@
 // the original's copies instead.
 #ifdef TH06_EXE
 short g_LastPressedKey = 32;
+
+MainMenu g_MainMenu;
 #endif // TH06_EXE
 
 MainMenu::MainMenu()

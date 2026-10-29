@@ -42,6 +42,10 @@ int g_BulletColorOffsets32[16] = {
     0, 1, 1, 2, 2, 3, 4, 0,
     10539263, 10518783, 14713024, 16728128, 10000000, 20000000, 40000000, 60000000,
 };
+
+ChainElem g_BulletCalcChain;
+ChainElem g_BulletDrawChain;
+BulletManager g_BulletManager;
 #endif // TH06_EXE
 
 // The game's data, as the original defines it here. The DLL build uses

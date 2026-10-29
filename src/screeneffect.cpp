@@ -7,6 +7,15 @@
 #include "sprite.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+// Constructed and never used. The original's initializers construct it
+// between g_Player and g_SoundPlayer, from an /Od object: replay.obj,
+// screeneffect.obj or sound.obj (nothing tells).
+Timer g_UnusedTimer;
+#endif // TH06_EXE
+
 void ClearScreen(D3DCOLOR color)
 {
     g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, color, 1.0f, 0);

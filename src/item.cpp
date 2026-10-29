@@ -20,6 +20,11 @@ int g_PowerItemBonus[31] = {
 int g_PowerLevels[] = {
     8, 16, 32, 48, 64, 80, 96, 128, 999,
 };
+
+ItemManager g_ItemManager;
+// Constructed and never used.
+ChainElem g_UnusedChain2;
+ChainElem g_UnusedChain3;
 #endif // TH06_EXE
 
 ItemManager::ItemManager()

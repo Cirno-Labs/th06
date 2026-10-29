@@ -8,6 +8,12 @@
 #include "stage.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+GameWindow g_GameWindow;
+#endif // TH06_EXE
+
 #if FEAT_ENGLISH
 #define CONFIG_FILE "th06e.cfg"
 #define WINDOW_TITLE EN_WINDOW_TITLE
@@ -712,6 +718,10 @@ void SetDefaultRenderStates()
 // reserves their locals' slots.
 inline int CheckSingleInstance()
 {
+#ifdef TH06_EXE
+    // The original's is a static of this function.
+    static HANDLE g_AppMutex;
+#endif // TH06_EXE
     g_AppMutex = CreateMutexA(NULL, TRUE, "Touhou Koumakyou App");
     if (g_AppMutex == NULL)
     {

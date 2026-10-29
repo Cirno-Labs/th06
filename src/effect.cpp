@@ -165,6 +165,10 @@ EffectInfo g_EffectInfos[] = {
     {674, EffectUpdateConvergeSlow},
     {685, EffectUpdateMove},
 };
+
+EffectManager g_EffectManager;
+ChainElem g_EffectCalcChain;
+ChainElem g_EffectDrawChain;
 #endif // TH06_EXE
 
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)

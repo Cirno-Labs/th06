@@ -20,6 +20,11 @@
 unsigned int g_ExtendScores[] = {
     10000000, 20000000, 40000000, 60000000, 1900000000,
 };
+
+GameManager g_GameManager;
+ChainElem g_GameManagerCalcChain;
+ChainElem g_GameManagerDrawChain;
+Camera g_Camera;
 #endif // TH06_EXE
 
 BOOL GameManager::IsInPlayArea(float x, float y, float width, float height)

@@ -267,6 +267,13 @@ int WriteToFile(char *path, void *data, int size);
 class App
 {
 public:
+    // Zeroes the application. Inline: the original runs it as g_App's
+    // static initializer.
+    App()
+    {
+        memset(this, 0, sizeof(App));
+    }
+
     // Advances a frame counter split into whole frames and the fraction
     // of a frame, like Timer::Add(1). Callers pass a Timer's `current` and
     // `subFrame` after setting its `previous`: an inlined per-frame tick.
@@ -649,9 +656,25 @@ extern int g_FileSize;
 
 // The object error messages go to, e.g. "error : MIDI File が読み込めない":
 // a text buffer written to "./log.txt" at exit.
+class Log;
+int LogPrintf(Log *log, const char *fmt, ...);
 class Log
 {
 public:
+    // Empties the buffer and logs the header line. Inline: the original
+    // runs it as g_Log's static initializer.
+    Log()
+    {
+        this->cursor = this->buffer;
+        *this->cursor = '\0';
+        this->hasError = 0;
+        LogPrintf(this, "東方動作記録 --------------------------------------------- \n");
+    }
+    // Empty, but registered with atexit for g_Log like the original's.
+    ~Log()
+    {
+    }
+
     // If anything was logged, ends the text with a line of dashes, shows
     // it in a message box if an error was logged, and writes it to
     // "./log.txt".

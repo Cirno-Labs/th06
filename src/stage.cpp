@@ -5,6 +5,15 @@
 #include "stage.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+Stage g_Stage;
+ChainElem g_StageCalcChain;
+ChainElem g_StageDrawChain;
+ChainElem g_StageDrawChain2;
+#endif // TH06_EXE
+
 Stage::Stage()
 {
 }

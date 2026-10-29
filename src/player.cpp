@@ -373,6 +373,8 @@ ShotTable g_ShotTable3[9] = {
     {5, 127, s_Shots3_7},
     {7, 999, s_Shots3_8},
 };
+
+Player g_Player;
 #endif // TH06_EXE
 
 Player::Player()

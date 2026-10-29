@@ -13,6 +13,15 @@
 #include "timer.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+App g_App;
+#if FEAT_ENGLISH
+char *g_EnglishSpellCards;
+#endif
+#endif // TH06_EXE
+
 // Updates the buttons, then sets up the scene `scene` asks for, tearing
 // down the old one, before the chain runs the scene's own callbacks.
 // Returns 4 when a scene fails to set up (or the game is to quit), 5

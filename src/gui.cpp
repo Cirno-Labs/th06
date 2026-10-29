@@ -16,6 +16,10 @@
 D3DCOLOR g_BossTimerColors[4] = {
     0x00a0d0ff, 0x00a080ff, 0x00e080c0, 0x00ff4040,
 };
+
+ChainElem g_GuiCalcChain;
+ChainElem g_GuiDrawChain;
+Gui g_Gui;
 #endif // TH06_EXE
 
 BOOL Gui::IsLoadingShown()

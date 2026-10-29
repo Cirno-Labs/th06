@@ -8,6 +8,12 @@
 #include "gamemanager.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH06_EXE
+ReplayManager *g_ReplayManager;
+#endif // TH06_EXE
+
 int ValidateReplay(void *data, int size)
 {
     int i;

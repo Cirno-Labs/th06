@@ -14,6 +14,12 @@
 const D3DFORMAT g_TextureFormats[] = {
     D3DFMT_UNKNOWN, D3DFMT_A8R8G8B8, D3DFMT_A1R5G5B5, D3DFMT_R5G6B5, D3DFMT_R8G8B8, D3DFMT_A4R4G4B4,
 };
+
+SpriteEngine *g_SpriteEngine;
+// Constructed in this order.
+VertexTex1Xyzrwh g_Quad[4];
+VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
+VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
 #endif // TH06_EXE
 
 SpriteEngine::SpriteEngine()

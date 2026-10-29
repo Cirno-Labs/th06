@@ -45,6 +45,8 @@ char *g_SoundPaths[] = {
     "data/wav/graze.wav",
     "data/wav/powerup.wav",
 };
+
+SoundPlayer g_SoundPlayer;
 #endif // TH06_EXE
 
 char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size);

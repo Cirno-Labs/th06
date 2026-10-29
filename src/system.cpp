@@ -17,6 +17,17 @@
 #ifdef TH06_EXE
 ControllerMapping g_ControllerMapping = {0, 1, 2, 4, -1, -1, -1, -1, 3};
 
+Chain g_Chain;
+Rng g_Rng;
+DatArchive **g_Archives;
+WORD g_Buttons;
+WORD g_PrevButtons;
+WORD g_ButtonRepeat;
+WORD g_ButtonFrames;
+WORD g_ShotHeldFrames;
+JOYCAPSA g_JoyCaps;
+int g_FileSize;
+
 // Constructed and never used.
 TextFont g_TextFont;
 
@@ -34,6 +45,8 @@ struct UnusedGlobal
     DWORD unk_0;
 };
 UnusedGlobal g_UnusedGlobal;
+
+Log g_Log;
 #endif
 
 Chain::~Chain()
@@ -500,6 +513,10 @@ int SetButtonFromJoystick(WORD *buttons, short button, WORD bit, DWORD joyButton
 
 BYTE *GetPadButtons()
 {
+#ifdef TH06_EXE
+    // The original's is a static of this function.
+    static BYTE g_PadButtons[0x80];
+#endif // TH06_EXE
     JOYINFOEX joyInfo;
     DWORD mask;
     DWORD button;

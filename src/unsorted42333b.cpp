@@ -13,28 +13,6 @@
 #include "timer.h"
 #include "unsorted.h"
 
-int App::RegisterChain()
-{
-    App *game = &g_App;
-    ChainElem *elem;
-
-    game->curScene = 0;
-    game->scene = -1;
-    game->frames = 0;
-    elem = g_Chain.CreateElem((ChainCallback)App::OnUpdate);
-    elem->arg = game;
-    elem->addedCallback = (ChainCallback)App::AddedCallback;
-    elem->deletedCallback = (ChainCallback)App::DeletedCallback;
-    if (g_Chain.AddToCalcChain(elem, 0) != 0)
-    {
-        return -1;
-    }
-    elem = g_Chain.CreateElem((ChainCallback)App::OnDraw);
-    elem->arg = game;
-    g_Chain.AddToDrawChain(elem, 0xe);
-    return 0;
-}
-
 // Updates the buttons, then sets up the scene `scene` asks for, tearing
 // down the old one, before the chain runs the scene's own callbacks.
 // Returns 4 when a scene fails to set up (or the game is to quit), 5
@@ -234,6 +212,50 @@ int App::OnDraw(App *arg)
     return 1;
 }
 
+BOOL CALLBACK EnumAxesCallback(const DIDEVICEOBJECTINSTANCE *pdidoi, VOID *pContext)
+{
+    HWND hDlg = (HWND)pContext;
+    DIPROPRANGE diprg;
+
+    if (pdidoi->dwType & DIDFT_AXIS)
+    {
+        diprg.diph.dwSize = sizeof(DIPROPRANGE);
+        diprg.diph.dwHeaderSize = sizeof(DIPROPHEADER);
+        diprg.diph.dwHow = DIPH_BYID;
+        diprg.diph.dwObj = pdidoi->dwType;
+        diprg.lMin = -1000;
+        diprg.lMax = +1000;
+
+        if (FAILED(g_App.joystick->SetProperty(DIPROP_RANGE, &diprg.diph)))
+        {
+            return DIENUM_STOP;
+        }
+    }
+    return DIENUM_CONTINUE;
+}
+
+int App::RegisterChain()
+{
+    App *game = &g_App;
+    ChainElem *elem;
+
+    game->curScene = 0;
+    game->scene = -1;
+    game->frames = 0;
+    elem = g_Chain.CreateElem((ChainCallback)App::OnUpdate);
+    elem->arg = game;
+    elem->addedCallback = (ChainCallback)App::AddedCallback;
+    elem->deletedCallback = (ChainCallback)App::DeletedCallback;
+    if (g_Chain.AddToCalcChain(elem, 0) != 0)
+    {
+        return -1;
+    }
+    elem = g_Chain.CreateElem((ChainCallback)App::OnDraw);
+    elem->arg = game;
+    g_Chain.AddToDrawChain(elem, 0xe);
+    return 0;
+}
+
 int App::AddedCallback(App *arg)
 {
     int i;
@@ -372,28 +394,6 @@ int InitDirectInput(App *game)
         LogPrintf(&g_Log, "有効なパッドを発見しました\n");
     }
     return 0;
-}
-
-BOOL CALLBACK EnumAxesCallback(const DIDEVICEOBJECTINSTANCE *pdidoi, VOID *pContext)
-{
-    HWND hDlg = (HWND)pContext;
-    DIPROPRANGE diprg;
-
-    if (pdidoi->dwType & DIDFT_AXIS)
-    {
-        diprg.diph.dwSize = sizeof(DIPROPRANGE);
-        diprg.diph.dwHeaderSize = sizeof(DIPROPHEADER);
-        diprg.diph.dwHow = DIPH_BYID;
-        diprg.diph.dwObj = pdidoi->dwType;
-        diprg.lMin = -1000;
-        diprg.lMax = +1000;
-
-        if (FAILED(g_App.joystick->SetProperty(DIPROP_RANGE, &diprg.diph)))
-        {
-            return DIENUM_STOP;
-        }
-    }
-    return DIENUM_CONTINUE;
 }
 
 BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE *pdidInstance, VOID *pContext)

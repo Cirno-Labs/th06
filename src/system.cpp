@@ -1,6 +1,6 @@
 // One object of the original, 0x41c6d0 to 0x41e945: the chains, the
 // input, TextFont, the file and log helpers, the RNG and the angle helpers.
-// Its .bss holds all of their globals interleaved (g_Chain and g_Rng among
+// Its .bss holds all of their globals interleaved (g_Chain and g_Random among
 // the input's), and its static initializers construct g_Chain, g_TextFont,
 // g_UnusedGlobal and g_Log in that order.
 
@@ -18,15 +18,15 @@
 ControllerMapping g_ControllerMapping = {0, 1, 2, 4, -1, -1, -1, -1, 3};
 
 Chain g_Chain;
-Rng g_Rng;
-DatArchive **g_Archives;
+Rng g_Random;
+DatArchive **g_DatArchives;
 WORD g_Buttons;
-WORD g_PrevButtons;
-WORD g_ButtonRepeat;
-WORD g_ButtonFrames;
+WORD g_LastButtons;
+WORD g_RepeatButtons;
+WORD g_ButtonHeldFrames;
 WORD g_ShotHeldFrames;
-JOYCAPSA g_JoyCaps;
-int g_FileSize;
+JOYCAPSA g_JoyDeviceCaps;
+int g_LastFileSize;
 
 // Constructed and never used.
 TextFont g_TextFont;
@@ -363,7 +363,7 @@ WORD InitJoystick()
         LogPrintf(&g_Log, "使えるパッドが存在しないようです、残念\n");
         return 1;
     }
-    joyGetDevCapsA(JOYSTICKID1, &g_JoyCaps, sizeof(g_JoyCaps));
+    joyGetDevCapsA(JOYSTICKID1, &g_JoyDeviceCaps, sizeof(g_JoyDeviceCaps));
     return 0;
 }
 
@@ -416,12 +416,12 @@ WORD ReadJoystick(WORD buttons)
         SetButtonFromJoystick(&buttons, g_App.cfg.controllerMapping.leftButton, 0x40, joyInfo.dwButtons);
         SetButtonFromJoystick(&buttons, g_App.cfg.controllerMapping.rightButton, 0x80, joyInfo.dwButtons);
         SetButtonFromJoystick(&buttons, g_App.cfg.controllerMapping.skipButton, 0x100, joyInfo.dwButtons);
-        margin = (g_JoyCaps.wXmax - g_JoyCaps.wXmin) / 2 / 2;
-        buttons |= ((g_JoyCaps.wXmin + g_JoyCaps.wXmax) / 2 + margin < joyInfo.dwXpos) ? 0x80 : 0;
-        buttons |= (joyInfo.dwXpos < (g_JoyCaps.wXmin + g_JoyCaps.wXmax) / 2 - margin) ? 0x40 : 0;
-        margin = (g_JoyCaps.wYmax - g_JoyCaps.wYmin) / 2 / 2;
-        buttons |= ((g_JoyCaps.wYmin + g_JoyCaps.wYmax) / 2 + margin < joyInfo.dwYpos) ? 0x20 : 0;
-        buttons |= (joyInfo.dwYpos < (g_JoyCaps.wYmin + g_JoyCaps.wYmax) / 2 - margin) ? 0x10 : 0;
+        margin = (g_JoyDeviceCaps.wXmax - g_JoyDeviceCaps.wXmin) / 2 / 2;
+        buttons |= ((g_JoyDeviceCaps.wXmin + g_JoyDeviceCaps.wXmax) / 2 + margin < joyInfo.dwXpos) ? 0x80 : 0;
+        buttons |= (joyInfo.dwXpos < (g_JoyDeviceCaps.wXmin + g_JoyDeviceCaps.wXmax) / 2 - margin) ? 0x40 : 0;
+        margin = (g_JoyDeviceCaps.wYmax - g_JoyDeviceCaps.wYmin) / 2 / 2;
+        buttons |= ((g_JoyDeviceCaps.wYmin + g_JoyDeviceCaps.wYmax) / 2 + margin < joyInfo.dwYpos) ? 0x20 : 0;
+        buttons |= (joyInfo.dwYpos < (g_JoyDeviceCaps.wYmin + g_JoyDeviceCaps.wYmax) / 2 - margin) ? 0x10 : 0;
         return buttons;
     }
     else
@@ -733,13 +733,13 @@ void *LoadFileData(char *path, int isExternal)
         {
             name++;
         }
-        if (g_Archives != NULL)
+        if (g_DatArchives != NULL)
         {
             for (i = 0; i < 0x10; i++)
             {
-                if (g_Archives[i] != NULL)
+                if (g_DatArchives[i] != NULL)
                 {
-                    entry = g_Archives[i]->FindEntry(name);
+                    entry = g_DatArchives[i]->FindEntry(name);
                     if (entry >= 0)
                     {
                         break;
@@ -755,8 +755,8 @@ void *LoadFileData(char *path, int isExternal)
     if (entry >= 0)
     {
         DebugPrint("%s Decode ... \n", name);
-        buffer = g_Archives[i]->Decode(entry, name);
-        g_FileSize = g_Archives[i]->GetEntrySize(entry);
+        buffer = g_DatArchives[i]->Decode(entry, name);
+        g_LastFileSize = g_DatArchives[i]->GetEntrySize(entry);
     }
     else
     {
@@ -769,7 +769,7 @@ void *LoadFileData(char *path, int isExternal)
         }
         fseek(handle, 0, SEEK_END);
         fileSize3 = ftell(handle);
-        g_FileSize = fileSize3;
+        g_LastFileSize = fileSize3;
         fseek(handle, 0, SEEK_SET);
         buffer = malloc(fileSize3);
         fread(buffer, 1, fileSize3, handle);

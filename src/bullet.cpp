@@ -43,8 +43,8 @@ int g_BulletColorOffsets32[16] = {
     10539263, 10518783, 14713024, 16728128, 10000000, 20000000, 40000000, 60000000,
 };
 
-ChainElem g_BulletCalcChain;
-ChainElem g_BulletDrawChain;
+ChainElem g_BulletChainCalc;
+ChainElem g_BulletChainDraw;
 BulletManager g_BulletManager;
 #endif // TH06_EXE
 
@@ -167,13 +167,13 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     case 6:
     {
         float angleDiff = shooter->angle1 - shooter->angle2;
-        angle = g_Rng.GetRandomF32ZeroToOne() * angleDiff + shooter->angle2;
+        angle = g_Random.GetRandomF32ZeroToOne() * angleDiff + shooter->angle2;
         break;
     }
     case 7:
     {
         float speedDiff = shooter->speed1 - shooter->speed2;
-        v = g_Rng.GetRandomF32ZeroToOne() * speedDiff + shooter->speed2;
+        v = g_Random.GetRandomF32ZeroToOne() * speedDiff + shooter->speed2;
         angle += col * 6.2831855f / shooter->count1;
         angle += row * shooter->angle2 + shooter->angle1;
         break;
@@ -181,9 +181,9 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     case 8:
     {
         float angleDiff = shooter->angle1 - shooter->angle2;
-        angle = g_Rng.GetRandomF32ZeroToOne() * angleDiff + shooter->angle2;
+        angle = g_Random.GetRandomF32ZeroToOne() * angleDiff + shooter->angle2;
         float speedDiff = shooter->speed1 - shooter->speed2;
-        v = g_Rng.GetRandomF32ZeroToOne() * speedDiff + shooter->speed2;
+        v = g_Random.GetRandomF32ZeroToOne() * speedDiff + shooter->speed2;
         break;
     }
     }
@@ -500,17 +500,17 @@ int BulletManager::RegisterChain(char *anmPath)
     }
     mgr->Reset();
     mgr->anmPath = anmPath;
-    g_BulletCalcChain.SetCallback((ChainCallback)BulletManager::OnUpdate);
-    g_BulletCalcChain.addedCallback = (ChainCallback)BulletManager::AddedCallback;
-    g_BulletCalcChain.deletedCallback = (ChainCallback)BulletManager::DeletedCallback;
-    g_BulletCalcChain.arg = mgr;
-    if (g_Chain.AddToCalcChain(&g_BulletCalcChain, 0xb) != 0)
+    g_BulletChainCalc.SetCallback((ChainCallback)BulletManager::OnUpdate);
+    g_BulletChainCalc.addedCallback = (ChainCallback)BulletManager::AddedCallback;
+    g_BulletChainCalc.deletedCallback = (ChainCallback)BulletManager::DeletedCallback;
+    g_BulletChainCalc.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_BulletChainCalc, 0xb) != 0)
     {
         return -1;
     }
-    g_BulletDrawChain.SetCallback((ChainCallback)BulletManager::OnDraw);
-    g_BulletDrawChain.arg = mgr;
-    g_Chain.AddToDrawChain(&g_BulletDrawChain, 9);
+    g_BulletChainDraw.SetCallback((ChainCallback)BulletManager::OnDraw);
+    g_BulletChainDraw.arg = mgr;
+    g_Chain.AddToDrawChain(&g_BulletChainDraw, 9);
     return 0;
 }
 
@@ -1182,6 +1182,6 @@ int BulletManager::DeletedCallback(BulletManager *mgr)
 
 void BulletManager::RemoveChain()
 {
-    g_Chain.Remove(&g_BulletCalcChain);
-    g_Chain.Remove(&g_BulletDrawChain);
+    g_Chain.Remove(&g_BulletChainCalc);
+    g_Chain.Remove(&g_BulletChainDraw);
 }

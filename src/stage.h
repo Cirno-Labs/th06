@@ -195,6 +195,6 @@ struct StageFiles
 extern StageFiles g_StageFiles[8];
 
 // Stage's statically allocated chain elements.
-extern ChainElem g_StageCalcChain;
-extern ChainElem g_StageDrawChain;
-extern ChainElem g_StageDrawChain2;
+extern ChainElem g_StageBgCalcElem;
+extern ChainElem g_StageBgDrawElem;
+extern ChainElem g_StageBgDrawElem2;

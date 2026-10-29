@@ -32,30 +32,30 @@ int App::OnUpdate(App *arg)
     {
         g_SoundPlayer.bgm->UpdateFade();
     }
-    g_PrevButtons = g_Buttons;
+    g_LastButtons = g_Buttons;
     g_Buttons = ReadButtons();
 #if FEAT_FRAME_CAP
     g_FrameCapButtons = g_Buttons;
 #endif
-    g_ButtonRepeat = 0;
-    if (g_PrevButtons == g_Buttons)
+    g_RepeatButtons = 0;
+    if (g_LastButtons == g_Buttons)
     {
-        if (g_ButtonFrames >= 30)
+        if (g_ButtonHeldFrames >= 30)
         {
-            if (g_ButtonFrames % 8 == 0)
+            if (g_ButtonHeldFrames % 8 == 0)
             {
-                g_ButtonRepeat = 1;
+                g_RepeatButtons = 1;
             }
-            if (g_ButtonFrames >= 38)
+            if (g_ButtonHeldFrames >= 38)
             {
-                g_ButtonFrames = 30;
+                g_ButtonHeldFrames = 30;
             }
         }
-        g_ButtonFrames++;
+        g_ButtonHeldFrames++;
     }
     else
     {
-        g_ButtonFrames = 0;
+        g_ButtonHeldFrames = 0;
     }
     if (arg->curScene != arg->scene)
     {
@@ -202,7 +202,7 @@ int App::OnUpdate(App *arg)
                 }
             }
         }
-        g_Buttons = g_PrevButtons = g_ButtonRepeat = 0;
+        g_Buttons = g_LastButtons = g_RepeatButtons = 0;
     }
     arg->curScene = arg->scene;
     arg->frames++;
@@ -273,7 +273,7 @@ int App::AddedCallback(App *arg)
     {
         arg->archives[i] = NULL;
     }
-    g_Archives = arg->archives;
+    g_DatArchives = arg->archives;
 #if FEAT_ENGLISH
     if (arg->LoadArchive(0, "th06e_IN.dat") != 0)
 #else
@@ -301,7 +301,7 @@ int App::AddedCallback(App *arg)
     arg->startTime = timeGetTime();
     InitDirectInput(arg);
     arg->midi = new MidiPlayer();
-    g_Rng.SetSeed(timeGetTime());
+    g_Random.SetSeed(timeGetTime());
     g_SoundPlayer.LoadSounds();
     if (g_SpriteEngine->LoadAnm(0, "data/text.anm", 0x700) != 0)
     {
@@ -692,7 +692,7 @@ int App::LoadConfig(char *path)
             g_App.cfg.colorMode16Bits >= 2 || g_App.cfg.musicMode >= 3 ||
             g_App.cfg.defaultDifficulty >= 5 || g_App.cfg.playSounds >= 2 ||
             g_App.cfg.windowed >= 2 || g_App.cfg.frameSkip >= 3 ||
-            g_App.cfg.version != 0x102 || g_FileSize != sizeof(GameConfig))
+            g_App.cfg.version != 0x102 || g_LastFileSize != sizeof(GameConfig))
         {
             SET_DEFAULT_CONFIG();
             memset(&g_App.cfg.flags, 0, sizeof(GameConfigFlags));

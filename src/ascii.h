@@ -203,6 +203,6 @@ extern AsciiText g_AsciiText;
 
 // AsciiText's chain elements, statically allocated: the update element,
 // and draw elements at priorities 0xf and 10.
-extern ChainElem g_AsciiCalcChain;
-extern ChainElem g_AsciiDrawChain;
-extern ChainElem g_AsciiDrawChain2;
+extern ChainElem g_AsciiCalcElem;
+extern ChainElem g_AsciiDrawElem;
+extern ChainElem g_AsciiDrawElem2;

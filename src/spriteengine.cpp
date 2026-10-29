@@ -17,7 +17,7 @@ const D3DFORMAT g_TextureFormats[] = {
 
 SpriteEngine *g_SpriteEngine;
 // Constructed in this order.
-VertexTex1Xyzrwh g_Quad[4];
+VertexTex1Xyzrwh g_TexQuad[4];
 VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
 VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
 #endif // TH06_EXE
@@ -32,15 +32,15 @@ SpriteEngine::SpriteEngine()
     {
         this->sprites[i].sourceFileIndex = -1;
     }
-    g_Quad[0].w = g_Quad[1].w = g_Quad[2].w = g_Quad[3].w = 1.0f;
-    g_Quad[0].uv.x = 0.0f;
-    g_Quad[0].uv.y = 0.0f;
-    g_Quad[1].uv.x = 1.0f;
-    g_Quad[1].uv.y = 0.0f;
-    g_Quad[2].uv.x = 0.0f;
-    g_Quad[2].uv.y = 1.0f;
-    g_Quad[3].uv.x = 1.0f;
-    g_Quad[3].uv.y = 1.0f;
+    g_TexQuad[0].w = g_TexQuad[1].w = g_TexQuad[2].w = g_TexQuad[3].w = 1.0f;
+    g_TexQuad[0].uv.x = 0.0f;
+    g_TexQuad[0].uv.y = 0.0f;
+    g_TexQuad[1].uv.x = 1.0f;
+    g_TexQuad[1].uv.y = 0.0f;
+    g_TexQuad[2].uv.x = 0.0f;
+    g_TexQuad[2].uv.y = 1.0f;
+    g_TexQuad[3].uv.x = 1.0f;
+    g_TexQuad[3].uv.y = 1.0f;
     g_DiffuseQuad[0].w = g_DiffuseQuad[1].w = g_DiffuseQuad[2].w = g_DiffuseQuad[3].w = 1.0f;
     g_DiffuseQuad[0].uv.x = 0.0f;
     g_DiffuseQuad[0].uv.y = 0.0f;
@@ -115,7 +115,7 @@ int SpriteEngine::LoadTexture(int index, char *path, int format, D3DCOLOR colorK
             format = 3;
         }
     }
-    if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, this->textureFiles[index], g_FileSize, 0, 0, 0, 0,
+    if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, this->textureFiles[index], g_LastFileSize, 0, 0, 0, 0,
                                             g_TextureFormats[format], D3DPOOL_MANAGED, D3DX_FILTER_LINEAR,
                                             D3DX_DEFAULT, colorKey, NULL, NULL, &this->textures[index]) != D3D_OK)
     {
@@ -166,7 +166,7 @@ int SpriteEngine::LoadTextureAlpha(int index, char *path, int format, D3DCOLOR c
         LogError(&g_Log, "error : イメージがαを持っていません\n");
         goto fail;
     }
-    if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, fileData, g_FileSize, 0, 0, 0, 0, desc.Format,
+    if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, fileData, g_LastFileSize, 0, 0, 0, 0, desc.Format,
                                             D3DPOOL_SYSTEMMEM, D3DX_FILTER_LINEAR, D3DX_DEFAULT, colorKey, NULL, NULL,
                                             &srcTexture) != D3D_OK)
     {
@@ -485,36 +485,36 @@ int SpriteEngine::DrawQuad(Sprite *vm, int roundToPixel)
     {
         __asm
         {
-            fld dword ptr [g_Quad + 0x00]
+            fld dword ptr [g_TexQuad + 0x00]
             frndint
             fsub g_Half
-            fld dword ptr [g_Quad + 0x18]
+            fld dword ptr [g_TexQuad + 0x18]
             frndint
             fsub g_Half
-            fld dword ptr [g_Quad + 0x04]
+            fld dword ptr [g_TexQuad + 0x04]
             frndint
             fsub g_Half
-            fld dword ptr [g_Quad + 0x34]
+            fld dword ptr [g_TexQuad + 0x34]
             frndint
             fsub g_Half
-            fst dword ptr [g_Quad + 0x34]
-            fstp dword ptr [g_Quad + 0x4c]
-            fst dword ptr [g_Quad + 0x04]
-            fstp dword ptr [g_Quad + 0x1c]
-            fst dword ptr [g_Quad + 0x18]
-            fstp dword ptr [g_Quad + 0x48]
-            fst dword ptr [g_Quad + 0x00]
-            fstp dword ptr [g_Quad + 0x30]
+            fst dword ptr [g_TexQuad + 0x34]
+            fstp dword ptr [g_TexQuad + 0x4c]
+            fst dword ptr [g_TexQuad + 0x04]
+            fstp dword ptr [g_TexQuad + 0x1c]
+            fst dword ptr [g_TexQuad + 0x18]
+            fstp dword ptr [g_TexQuad + 0x48]
+            fst dword ptr [g_TexQuad + 0x00]
+            fstp dword ptr [g_TexQuad + 0x30]
         }
     }
-    g_Quad[0].pos.z = g_Quad[1].pos.z = g_Quad[2].pos.z = g_Quad[3].pos.z = vm->pos.z;
+    g_TexQuad[0].pos.z = g_TexQuad[1].pos.z = g_TexQuad[2].pos.z = g_TexQuad[3].pos.z = vm->pos.z;
     if (this->currentSpriteData != vm->spriteData)
     {
         this->currentSpriteData = vm->spriteData;
-        g_Quad[0].uv.x = g_Quad[2].uv.x = vm->spriteData->uvStartX + vm->uvScrollX;
-        g_Quad[1].uv.x = g_Quad[3].uv.x = vm->spriteData->uvEndX + vm->uvScrollX;
-        g_Quad[0].uv.y = g_Quad[1].uv.y = vm->spriteData->uvStartY + vm->uvScrollY;
-        g_Quad[2].uv.y = g_Quad[3].uv.y = vm->spriteData->uvEndY + vm->uvScrollY;
+        g_TexQuad[0].uv.x = g_TexQuad[2].uv.x = vm->spriteData->uvStartX + vm->uvScrollX;
+        g_TexQuad[1].uv.x = g_TexQuad[3].uv.x = vm->spriteData->uvEndX + vm->uvScrollX;
+        g_TexQuad[0].uv.y = g_TexQuad[1].uv.y = vm->spriteData->uvStartY + vm->uvScrollY;
+        g_TexQuad[2].uv.y = g_TexQuad[3].uv.y = vm->spriteData->uvEndY + vm->uvScrollY;
         if (this->currentTexture != this->textures[vm->spriteData->sourceFileIndex])
         {
             this->currentTexture = this->textures[vm->spriteData->sourceFileIndex];
@@ -536,14 +536,14 @@ int SpriteEngine::DrawQuad(Sprite *vm, int roundToPixel)
     this->SetRenderStateForSprite(vm);
     if (!g_App.cfg.flags.noVertexBuffer)
     {
-        g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad, sizeof(g_Quad[0]));
+        g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_TexQuad, sizeof(g_TexQuad[0]));
     }
     else
     {
-        g_DiffuseQuad[0].pos = g_Quad[0].pos;
-        g_DiffuseQuad[1].pos = g_Quad[1].pos;
-        g_DiffuseQuad[2].pos = g_Quad[2].pos;
-        g_DiffuseQuad[3].pos = g_Quad[3].pos;
+        g_DiffuseQuad[0].pos = g_TexQuad[0].pos;
+        g_DiffuseQuad[1].pos = g_TexQuad[1].pos;
+        g_DiffuseQuad[2].pos = g_TexQuad[2].pos;
+        g_DiffuseQuad[3].pos = g_TexQuad[3].pos;
         g_DiffuseQuad[0].uv.x = g_DiffuseQuad[2].uv.x = vm->spriteData->uvStartX + vm->uvScrollX;
         g_DiffuseQuad[1].uv.x = g_DiffuseQuad[3].uv.x = vm->spriteData->uvEndX + vm->uvScrollX;
         g_DiffuseQuad[0].uv.y = g_DiffuseQuad[1].uv.y = vm->spriteData->uvStartY + vm->uvScrollY;
@@ -574,23 +574,23 @@ int SpriteEngine::Draw(Sprite *vm)
     h = vm->spriteData->height * vm->scaleY / 2.0f;
     if ((vm->flags.anchor & 1) == 0)
     {
-        g_Quad[0].pos.x = g_Quad[2].pos.x = vm->pos.x - w;
-        g_Quad[1].pos.x = g_Quad[3].pos.x = w + vm->pos.x;
+        g_TexQuad[0].pos.x = g_TexQuad[2].pos.x = vm->pos.x - w;
+        g_TexQuad[1].pos.x = g_TexQuad[3].pos.x = w + vm->pos.x;
     }
     else
     {
-        g_Quad[0].pos.x = g_Quad[2].pos.x = vm->pos.x;
-        g_Quad[1].pos.x = g_Quad[3].pos.x = w + vm->pos.x + w;
+        g_TexQuad[0].pos.x = g_TexQuad[2].pos.x = vm->pos.x;
+        g_TexQuad[1].pos.x = g_TexQuad[3].pos.x = w + vm->pos.x + w;
     }
     if ((vm->flags.anchor & 2) == 0)
     {
-        g_Quad[0].pos.y = g_Quad[1].pos.y = vm->pos.y - h;
-        g_Quad[2].pos.y = g_Quad[3].pos.y = h + vm->pos.y;
+        g_TexQuad[0].pos.y = g_TexQuad[1].pos.y = vm->pos.y - h;
+        g_TexQuad[2].pos.y = g_TexQuad[3].pos.y = h + vm->pos.y;
     }
     else
     {
-        g_Quad[0].pos.y = g_Quad[1].pos.y = vm->pos.y;
-        g_Quad[2].pos.y = g_Quad[3].pos.y = h + vm->pos.y + h;
+        g_TexQuad[0].pos.y = g_TexQuad[1].pos.y = vm->pos.y;
+        g_TexQuad[2].pos.y = g_TexQuad[3].pos.y = h + vm->pos.y + h;
     }
     return this->DrawQuad(vm, 1);
 }
@@ -639,24 +639,24 @@ int SpriteEngine::DrawRotated(Sprite *vm)
     y = Rint(vm->pos.y);
     w = Rint(vm->spriteData->width * vm->scaleX / 2.0f);
     h = Rint(vm->spriteData->height * vm->scaleY / 2.0f);
-    this->RotatePoint((float *)&g_Quad[0].pos, -w - 0.5f, -h - 0.5f, s, c, cx, y);
-    this->RotatePoint((float *)&g_Quad[1].pos, w - 0.5f, -h - 0.5f, s, c, cx, y);
-    this->RotatePoint((float *)&g_Quad[2].pos, -w - 0.5f, h - 0.5f, s, c, cx, y);
-    this->RotatePoint((float *)&g_Quad[3].pos, w - 0.5f, h - 0.5f, s, c, cx, y);
-    g_Quad[0].pos.z = g_Quad[1].pos.z = g_Quad[2].pos.z = g_Quad[3].pos.z = vm->pos.z;
+    this->RotatePoint((float *)&g_TexQuad[0].pos, -w - 0.5f, -h - 0.5f, s, c, cx, y);
+    this->RotatePoint((float *)&g_TexQuad[1].pos, w - 0.5f, -h - 0.5f, s, c, cx, y);
+    this->RotatePoint((float *)&g_TexQuad[2].pos, -w - 0.5f, h - 0.5f, s, c, cx, y);
+    this->RotatePoint((float *)&g_TexQuad[3].pos, w - 0.5f, h - 0.5f, s, c, cx, y);
+    g_TexQuad[0].pos.z = g_TexQuad[1].pos.z = g_TexQuad[2].pos.z = g_TexQuad[3].pos.z = vm->pos.z;
     if (vm->flags.anchor & 1)
     {
-        g_Quad[0].pos.x += w;
-        g_Quad[1].pos.x += w;
-        g_Quad[2].pos.x += w;
-        g_Quad[3].pos.x += w;
+        g_TexQuad[0].pos.x += w;
+        g_TexQuad[1].pos.x += w;
+        g_TexQuad[2].pos.x += w;
+        g_TexQuad[3].pos.x += w;
     }
     if (vm->flags.anchor & 2)
     {
-        g_Quad[0].pos.y += h;
-        g_Quad[1].pos.y += h;
-        g_Quad[2].pos.y += h;
-        g_Quad[3].pos.y += h;
+        g_TexQuad[0].pos.y += h;
+        g_TexQuad[1].pos.y += h;
+        g_TexQuad[2].pos.y += h;
+        g_TexQuad[3].pos.y += h;
     }
     return this->DrawQuad(vm, 0);
 }
@@ -682,23 +682,23 @@ int SpriteEngine::DrawNoRound(Sprite *vm)
     h = vm->spriteData->height * vm->scaleY / 2.0f;
     if ((vm->flags.anchor & 1) == 0)
     {
-        g_Quad[0].pos.x = g_Quad[2].pos.x = vm->pos.x - w;
-        g_Quad[1].pos.x = g_Quad[3].pos.x = w + vm->pos.x;
+        g_TexQuad[0].pos.x = g_TexQuad[2].pos.x = vm->pos.x - w;
+        g_TexQuad[1].pos.x = g_TexQuad[3].pos.x = w + vm->pos.x;
     }
     else
     {
-        g_Quad[0].pos.x = g_Quad[2].pos.x = vm->pos.x;
-        g_Quad[1].pos.x = g_Quad[3].pos.x = w + vm->pos.x + w;
+        g_TexQuad[0].pos.x = g_TexQuad[2].pos.x = vm->pos.x;
+        g_TexQuad[1].pos.x = g_TexQuad[3].pos.x = w + vm->pos.x + w;
     }
     if ((vm->flags.anchor & 2) == 0)
     {
-        g_Quad[0].pos.y = g_Quad[1].pos.y = vm->pos.y - h;
-        g_Quad[2].pos.y = g_Quad[3].pos.y = h + vm->pos.y;
+        g_TexQuad[0].pos.y = g_TexQuad[1].pos.y = vm->pos.y - h;
+        g_TexQuad[2].pos.y = g_TexQuad[3].pos.y = h + vm->pos.y;
     }
     else
     {
-        g_Quad[0].pos.y = g_Quad[1].pos.y = vm->pos.y;
-        g_Quad[2].pos.y = g_Quad[3].pos.y = h + vm->pos.y + h;
+        g_TexQuad[0].pos.y = g_TexQuad[1].pos.y = vm->pos.y;
+        g_TexQuad[2].pos.y = g_TexQuad[3].pos.y = h + vm->pos.y + h;
     }
     return this->DrawQuad(vm, 0);
 }
@@ -902,7 +902,7 @@ int SpriteEngine::Step(Sprite *vm)
 
             vm->flags.shown = 1;
             spriteArgs = curInstr->args;
-            this->SetSprite(vm, spriteArgs[0] + g_Rng.GetRandomU16InRange(*(WORD *)&spriteArgs[1]) +
+            this->SetSprite(vm, spriteArgs[0] + g_Random.GetRandomU16InRange(*(WORD *)&spriteArgs[1]) +
                                     this->scriptSpriteOffsets[vm->scriptIndex]);
             vm->spriteTime = vm->scriptTime.AsFrames();
             break;
@@ -1354,7 +1354,7 @@ int SpriteEngine::LoadSurface(int surface, char *path)
     {
         return -1;
     }
-    if (D3DXLoadSurfaceFromFileInMemory(srcSurface, NULL, NULL, fileData, g_FileSize, NULL, D3DX_FILTER_NONE, 0,
+    if (D3DXLoadSurfaceFromFileInMemory(srcSurface, NULL, NULL, fileData, g_LastFileSize, NULL, D3DX_FILTER_NONE, 0,
                                         &this->surfaceInfos[surface]) != D3D_OK)
     {
         goto fail;

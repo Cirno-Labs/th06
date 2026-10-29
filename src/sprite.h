@@ -320,7 +320,7 @@ public:
     // Releases the vertex buffer, if there is one.
     void ReleaseVertexBuffer();
 
-    // Draws `vm` as a screen-space quad from g_Quad's corners, with
+    // Draws `vm` as a screen-space quad from g_TexQuad's corners, with
     // `vm`'s z, sprite and render state; snaps the corners to pixel
     // centers when `roundToPixel` is set. Returns 0.
     int DrawQuad(Sprite *vm, int roundToPixel);
@@ -522,7 +522,7 @@ inline float Rint(float f)
 extern const float g_Half;
 // A quad of each, set up by SpriteEngine's constructor.
 extern VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
-extern VertexTex1Xyzrwh g_Quad[4];
+extern VertexTex1Xyzrwh g_TexQuad[4];
 // An untransformed vertex with a color and texture coordinates.
 struct VertexTex1DiffuseXyz
 {

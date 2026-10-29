@@ -1213,7 +1213,7 @@ int MainMenu::UpdateReplayMenu()
                 {
                     continue;
                 }
-                if (!ValidateReplay(data, g_FileSize))
+                if (!ValidateReplay(data, g_LastFileSize))
                 {
                     this->replays[replayCount] = *data;
                     strcpy(this->replayPaths[replayCount], path);
@@ -1234,7 +1234,7 @@ int MainMenu::UpdateReplayMenu()
                     {
                         continue;
                     }
-                    if (!ValidateReplay(data, g_FileSize))
+                    if (!ValidateReplay(data, g_LastFileSize))
                     {
                         this->replays[replayCount] = *data;
                         sprintf(this->replayPaths[replayCount], "./replay/%s", fd.cFileName);
@@ -1292,7 +1292,7 @@ int MainMenu::UpdateReplayMenu()
                 this->cursor = 0;
                 g_SoundPlayer.QueueSound(10, 0);
                 this->loadedReplay = (ReplayHeader *)LoadFileData(this->replayPaths[this->replayCursor], 1);
-                ValidateReplay(this->loadedReplay, g_FileSize);
+                ValidateReplay(this->loadedReplay, g_LastFileSize);
                 for (i = 0; i < 7; i++)
                 {
                     if (this->loadedReplay->stages[i + 1] != NULL)

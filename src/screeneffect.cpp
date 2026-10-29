@@ -220,7 +220,7 @@ int ScreenEffect::OnUpdateShake(ScreenEffect *effect)
         return 0;
     }
     shake = effect->timer.AsFloat() * (effect->shakeTo - effect->shakeFrom) / effect->duration + effect->shakeFrom;
-    switch (g_Rng.GetRandomU32InRange(3))
+    switch (g_Random.GetRandomU32InRange(3))
     {
     case 0:
         g_GameManager.arena[0] = 32.0f;
@@ -235,7 +235,7 @@ int ScreenEffect::OnUpdateShake(ScreenEffect *effect)
         g_GameManager.arena[2] = 384.0f - shake;
         break;
     }
-    switch (g_Rng.GetRandomU32InRange(3))
+    switch (g_Random.GetRandomU32InRange(3))
     {
     case 0:
         g_GameManager.arena[1] = 16.0f;

@@ -12,9 +12,9 @@
 // the original's copies instead.
 #ifdef TH06_EXE
 AsciiText g_AsciiText;
-ChainElem g_AsciiCalcChain;
-ChainElem g_AsciiDrawChain;
-ChainElem g_AsciiDrawChain2;
+ChainElem g_AsciiCalcElem;
+ChainElem g_AsciiDrawElem;
+ChainElem g_AsciiDrawElem2;
 #endif // TH06_EXE
 
 EXE_INLINE AsciiText::AsciiText()
@@ -79,20 +79,20 @@ int AsciiText::RegisterChain()
 {
     AsciiText *text = &g_AsciiText;
 
-    g_AsciiCalcChain.SetCallback((ChainCallback)AsciiText::OnUpdate);
-    g_AsciiCalcChain.addedCallback = (ChainCallback)AsciiText::AddedCallback;
-    g_AsciiCalcChain.deletedCallback = (ChainCallback)AsciiText::DeletedCallback;
-    g_AsciiCalcChain.arg = text;
-    if (g_Chain.AddToCalcChain(&g_AsciiCalcChain, 1) != 0)
+    g_AsciiCalcElem.SetCallback((ChainCallback)AsciiText::OnUpdate);
+    g_AsciiCalcElem.addedCallback = (ChainCallback)AsciiText::AddedCallback;
+    g_AsciiCalcElem.deletedCallback = (ChainCallback)AsciiText::DeletedCallback;
+    g_AsciiCalcElem.arg = text;
+    if (g_Chain.AddToCalcChain(&g_AsciiCalcElem, 1) != 0)
     {
         return -1;
     }
-    g_AsciiDrawChain.SetCallback((ChainCallback)AsciiText::OnDraw);
-    g_AsciiDrawChain.arg = text;
-    g_Chain.AddToDrawChain(&g_AsciiDrawChain, 0xf);
-    g_AsciiDrawChain2.SetCallback((ChainCallback)AsciiText::OnDraw2);
-    g_AsciiDrawChain2.arg = text;
-    g_Chain.AddToDrawChain(&g_AsciiDrawChain2, 10);
+    g_AsciiDrawElem.SetCallback((ChainCallback)AsciiText::OnDraw);
+    g_AsciiDrawElem.arg = text;
+    g_Chain.AddToDrawChain(&g_AsciiDrawElem, 0xf);
+    g_AsciiDrawElem2.SetCallback((ChainCallback)AsciiText::OnDraw2);
+    g_AsciiDrawElem2.arg = text;
+    g_Chain.AddToDrawChain(&g_AsciiDrawElem2, 10);
     return 0;
 }
 
@@ -124,8 +124,8 @@ int AsciiText::DeletedCallback(AsciiText *text)
 
 void AsciiText::RemoveChain()
 {
-    g_Chain.Remove(&g_AsciiCalcChain);
-    g_Chain.Remove(&g_AsciiDrawChain);
+    g_Chain.Remove(&g_AsciiCalcElem);
+    g_Chain.Remove(&g_AsciiDrawElem);
 }
 
 void AsciiText::AddString(D3DXVECTOR3 *pos, char *text)

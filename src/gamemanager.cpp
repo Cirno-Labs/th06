@@ -22,8 +22,8 @@ unsigned int g_ExtendScores[] = {
 };
 
 GameManager g_GameManager;
-ChainElem g_GameManagerCalcChain;
-ChainElem g_GameManagerDrawChain;
+ChainElem g_GameManagerCalcChainElem;
+ChainElem g_GameManagerDrawChainElem;
 #endif // TH06_EXE
 
 BOOL GameManager::IsInPlayArea(float x, float y, float width, float height)
@@ -157,18 +157,18 @@ int GameManager::RegisterChain()
 {
     GameManager *mgr = &g_GameManager;
 
-    g_GameManagerCalcChain.SetCallback((ChainCallback)GameManager::OnUpdate);
-    g_GameManagerCalcChain.addedCallback = (ChainCallback)GameManager::AddedCallback;
-    g_GameManagerCalcChain.deletedCallback = (ChainCallback)GameManager::DeletedCallback;
-    g_GameManagerCalcChain.arg = mgr;
+    g_GameManagerCalcChainElem.SetCallback((ChainCallback)GameManager::OnUpdate);
+    g_GameManagerCalcChainElem.addedCallback = (ChainCallback)GameManager::AddedCallback;
+    g_GameManagerCalcChainElem.deletedCallback = (ChainCallback)GameManager::DeletedCallback;
+    g_GameManagerCalcChainElem.arg = mgr;
     mgr->stageFrames = 0;
-    if (g_Chain.AddToCalcChain(&g_GameManagerCalcChain, 4) != 0)
+    if (g_Chain.AddToCalcChain(&g_GameManagerCalcChainElem, 4) != 0)
     {
         return -1;
     }
-    g_GameManagerDrawChain.SetCallback((ChainCallback)GameManager::OnDraw);
-    g_GameManagerDrawChain.arg = mgr;
-    g_Chain.AddToDrawChain(&g_GameManagerDrawChain, 2);
+    g_GameManagerDrawChainElem.SetCallback((ChainCallback)GameManager::OnDraw);
+    g_GameManagerDrawChainElem.arg = mgr;
+    g_Chain.AddToDrawChain(&g_GameManagerDrawChainElem, 2);
     return 0;
 }
 
@@ -258,7 +258,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         {
             for (m2 = 0; m2 < 0x20; m2++)
             {
-                ((WORD *)catk2)[m2] = g_Rng.GetRandomU16();
+                ((WORD *)catk2)[m2] = g_Random.GetRandomU16();
             }
             catk2->magic = 0x4b544143;
             catk2->size2 = 0x40;
@@ -341,8 +341,8 @@ int GameManager::AddedCallback(GameManager *mgr)
         mgr->minRank = g_ReplayRanks[g_GameManager.difficulty].minRank;
         mgr->maxRank = g_ReplayRanks[g_GameManager.difficulty].maxRank;
     }
-    g_Rng.generated = 0;
-    mgr->rngSeed = g_Rng.seed;
+    g_Random.generated = 0;
+    mgr->rngSeed = g_Random.seed;
     if (Stage::RegisterChain(mgr->stage) != 0)
     {
         LogPrintf(&g_Log, "error : 背景データの初期化に失敗しました\n");
@@ -428,8 +428,8 @@ int GameManager::DeletedCallback(GameManager *mgr)
 
 void GameManager::RemoveChain()
 {
-    g_Chain.Remove(&g_GameManagerCalcChain);
-    g_Chain.Remove(&g_GameManagerDrawChain);
+    g_Chain.Remove(&g_GameManagerCalcChainElem);
+    g_Chain.Remove(&g_GameManagerDrawChainElem);
 }
 
 void SetupFixedCamera(float extraFar)

@@ -17,8 +17,8 @@ D3DCOLOR g_BossTimerColors[4] = {
     0x00a0d0ff, 0x00a080ff, 0x00e080c0, 0x00ff4040,
 };
 
-ChainElem g_GuiCalcChain;
-ChainElem g_GuiDrawChain;
+ChainElem g_GuiCalcElem;
+ChainElem g_GuiDrawElem;
 Gui g_Gui;
 #endif // TH06_EXE
 
@@ -566,7 +566,7 @@ int GuiImpl::RunMsg()
             break;
         case 4:
             if ((!this->msg.skippable || !(g_Buttons & 0x100)) &&
-                (!(g_Buttons & 1) || (g_Buttons & 1) == (g_PrevButtons & 1) || this->msg.waitFrames < 8))
+                (!(g_Buttons & 1) || (g_Buttons & 1) == (g_LastButtons & 1) || this->msg.waitFrames < 8))
             {
                 if (this->msg.waitFrames >= this->msg.instr->i)
                 {
@@ -1290,24 +1290,24 @@ int Gui::RegisterChain()
         memset(gui, 0, sizeof(Gui));
         gui->impl = new GuiImpl;
     }
-    g_GuiCalcChain.SetCallback((ChainCallback)Gui::OnUpdate);
-    g_GuiCalcChain.addedCallback = (ChainCallback)Gui::AddedCallback;
-    g_GuiCalcChain.deletedCallback = (ChainCallback)Gui::DeletedCallback;
-    g_GuiCalcChain.arg = gui;
-    if (g_Chain.AddToCalcChain(&g_GuiCalcChain, 12) != 0)
+    g_GuiCalcElem.SetCallback((ChainCallback)Gui::OnUpdate);
+    g_GuiCalcElem.addedCallback = (ChainCallback)Gui::AddedCallback;
+    g_GuiCalcElem.deletedCallback = (ChainCallback)Gui::DeletedCallback;
+    g_GuiCalcElem.arg = gui;
+    if (g_Chain.AddToCalcChain(&g_GuiCalcElem, 12) != 0)
     {
         return -1;
     }
-    g_GuiDrawChain.SetCallback((ChainCallback)Gui::OnDraw);
-    g_GuiDrawChain.arg = gui;
-    g_Chain.AddToDrawChain(&g_GuiDrawChain, 11);
+    g_GuiDrawElem.SetCallback((ChainCallback)Gui::OnDraw);
+    g_GuiDrawElem.arg = gui;
+    g_Chain.AddToDrawChain(&g_GuiDrawElem, 11);
     return 0;
 }
 
 void Gui::RemoveChain()
 {
-    g_Chain.Remove(&g_GuiCalcChain);
-    g_Chain.Remove(&g_GuiDrawChain);
+    g_Chain.Remove(&g_GuiCalcElem);
+    g_Chain.Remove(&g_GuiDrawElem);
 }
 
 int Timer::NextTick()

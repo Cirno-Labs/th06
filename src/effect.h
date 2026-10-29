@@ -92,5 +92,5 @@ struct EffectInfo
 extern EffectInfo g_EffectInfos[];
 
 // EffectManager's statically allocated chain elements.
-extern ChainElem g_EffectCalcChain;
-extern ChainElem g_EffectDrawChain;
+extern ChainElem g_EffectsCalcElem;
+extern ChainElem g_EffectsDrawElem;

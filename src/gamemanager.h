@@ -138,7 +138,7 @@ public:
     int demoFrames;
     // The replay file to play (ReplayManager::RegisterChain mode 1).
     char replayFile[0x200];
-    // g_Rng's seed when the stage started; replays keep it.
+    // g_Random's seed when the stage started; replays keep it.
     WORD rngSeed;
     WORD unk_1a2e;
     // Counts OnUpdate's calls since RegisterChain.
@@ -196,5 +196,5 @@ extern char *g_EclPaths[8];
 void SetupCamera(float extraFar);
 
 // GameManager's statically allocated chain elements.
-extern ChainElem g_GameManagerCalcChain;
-extern ChainElem g_GameManagerDrawChain;
+extern ChainElem g_GameManagerCalcChainElem;
+extern ChainElem g_GameManagerDrawChainElem;

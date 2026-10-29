@@ -196,15 +196,15 @@ void EnemyManager::RunTimeline()
                     pos = args->pos;
                     if (args->pos.x <= -990.0f)
                     {
-                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[2]);
+                        pos.x = g_Random.GetRandomF32InRange(g_GameManager.playerArea[2]);
                     }
                     if (args->pos.y <= -990.0f)
                     {
-                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[3]);
+                        pos.y = g_Random.GetRandomF32InRange(g_GameManager.playerArea[3]);
                     }
                     if (args->pos.z <= -990.0f)
                     {
-                        pos.z = g_Rng.GetRandomF32InRange(800.0f);
+                        pos.z = g_Random.GetRandomF32InRange(800.0f);
                     }
                     this->Spawn(this->timelinePos->arg0, &pos, args->life, args->item, args->score);
                 }
@@ -217,15 +217,15 @@ void EnemyManager::RunTimeline()
                     pos = this->timelinePos->args.pos;
                     if (pos.x <= -990.0f)
                     {
-                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[2]);
+                        pos.x = g_Random.GetRandomF32InRange(g_GameManager.playerArea[2]);
                     }
                     if (pos.y <= -990.0f)
                     {
-                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[3]);
+                        pos.y = g_Random.GetRandomF32InRange(g_GameManager.playerArea[3]);
                     }
                     if (pos.z <= -990.0f)
                     {
-                        pos.z = g_Rng.GetRandomF32InRange(800.0f);
+                        pos.z = g_Random.GetRandomF32InRange(800.0f);
                     }
                     this->Spawn(this->timelinePos->arg0, &pos, -1, -1, -1);
                 }
@@ -239,15 +239,15 @@ void EnemyManager::RunTimeline()
                     pos = args->pos;
                     if (args->pos.x <= -990.0f)
                     {
-                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[2]);
+                        pos.x = g_Random.GetRandomF32InRange(g_GameManager.playerArea[2]);
                     }
                     if (args->pos.y <= -990.0f)
                     {
-                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[3]);
+                        pos.y = g_Random.GetRandomF32InRange(g_GameManager.playerArea[3]);
                     }
                     if (args->pos.z <= -990.0f)
                     {
-                        pos.z = g_Rng.GetRandomF32InRange(800.0f);
+                        pos.z = g_Random.GetRandomF32InRange(800.0f);
                     }
                     enemy = this->Spawn(this->timelinePos->arg0, &pos, args->life, args->item,
                                         args->score);
@@ -262,15 +262,15 @@ void EnemyManager::RunTimeline()
                     pos = this->timelinePos->args.pos;
                     if (pos.x <= -990.0f)
                     {
-                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[2]);
+                        pos.x = g_Random.GetRandomF32InRange(g_GameManager.playerArea[2]);
                     }
                     if (pos.y <= -990.0f)
                     {
-                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[3]);
+                        pos.y = g_Random.GetRandomF32InRange(g_GameManager.playerArea[3]);
                     }
                     if (pos.z <= -990.0f)
                     {
-                        pos.z = g_Rng.GetRandomF32InRange(800.0f);
+                        pos.z = g_Random.GetRandomF32InRange(800.0f);
                     }
                     enemy = this->Spawn(this->timelinePos->arg0, &pos, -1, -1, -1);
                     enemy->flags.mirrored = 1;
@@ -798,8 +798,8 @@ int EnemyManager::AddedCallback(EnemyManager *mgr)
     {
         return -1;
     }
-    mgr->dropCounter = g_Rng.GetRandomU16InRange(3);
-    mgr->dropIndex = g_Rng.GetRandomU16InRange(8);
+    mgr->dropCounter = g_Random.GetRandomU16InRange(3);
+    mgr->dropIndex = g_Random.GetRandomU16InRange(8);
     mgr->spellCardActive = 0;
     mgr->timelinePos = NULL;
     return 0;

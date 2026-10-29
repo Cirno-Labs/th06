@@ -445,24 +445,24 @@ inline void Timer::Tick()
 // The buttons held this frame and the frame before, as bits: 0x10 up,
 // 0x20 down, 0x1001 select, 0xa cancel.
 extern WORD g_Buttons;
-extern WORD g_PrevButtons;
+extern WORD g_LastButtons;
 
 // 1 on every 8th frame once the buttons have been held unchanged for 30
 // frames, for key repeat.
-extern WORD g_ButtonRepeat;
+extern WORD g_RepeatButtons;
 // How many frames the buttons have been held unchanged, kept between 30
 // and 38 once it reaches 30.
-extern WORD g_ButtonFrames;
+extern WORD g_ButtonHeldFrames;
 // Sets `bit` in `buttons` if pad button `button` (none when negative) is
 // down in DIJOYSTATE2::rgbButtons. Returns the bit set, or 0.
 int SetButtonFromDirectInput(WORD *buttons, short button, WORD bit, BYTE *rgbButtons);
 // Like SetButtonFromDirectInput, for joyGetPosEx's dwButtons.
 int SetButtonFromJoystick(WORD *buttons, short button, WORD bit, DWORD joyButtons);
-// Reads g_JoyCaps if joystick 1 answers; otherwise logs that there is
+// Reads g_JoyDeviceCaps if joystick 1 answers; otherwise logs that there is
 // no pad. Returns 0, or 1 without a pad.
 WORD InitJoystick();
 // The joystick's capabilities, from joyGetDevCaps.
-extern JOYCAPSA g_JoyCaps;
+extern JOYCAPSA g_JoyDeviceCaps;
 // How many frames the shot button has been held, up to 16, when shooting
 // and focusing share a pad button: focus counts from 8.
 extern WORD g_ShotHeldFrames;
@@ -478,9 +478,9 @@ WORD ReadJoystick(WORD buttons);
 WORD ReadButtons();
 
 // Whether any of the buttons in `mask` went down this frame.
-#define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_PrevButtons & (mask)))
+#define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_LastButtons & (mask)))
 // Also while they are held, once the repeat delay has passed.
-#define WAS_PRESSED_OR_HELD(mask) (WAS_PRESSED(mask) || ((g_Buttons & (mask)) && g_ButtonRepeat))
+#define WAS_PRESSED_OR_HELD(mask) (WAS_PRESSED(mask) || ((g_Buttons & (mask)) && g_RepeatButtons))
 
 // The game's random number generator, at 0x69d8f8.
 class Rng
@@ -518,10 +518,10 @@ public:
     // How many numbers were generated since the seed was set.
     int generated;
 };
-extern Rng g_Rng;
+extern Rng g_Random;
 
 // Points at App::archives.
-extern DatArchive **g_Archives;
+extern DatArchive **g_DatArchives;
 
 // Sets up DirectInput like the DirectX 8 SDK's Keyboard and Joystick
 // samples: the keyboard, then the first joystick found, if any. Returns
@@ -652,7 +652,7 @@ BOOL CALLBACK EnumAxesCallback(const DIDEVICEOBJECTINSTANCE *pdidoi, VOID *pCont
 // the first that has it; otherwise reads it from disk.
 void *LoadFileData(char *path, int isExternal);
 // The size of the file LoadFileData loaded last.
-extern int g_FileSize;
+extern int g_LastFileSize;
 
 // The object error messages go to, e.g. "error : MIDI File が読み込めない":
 // a text buffer written to "./log.txt" at exit.
@@ -986,8 +986,8 @@ extern Gui g_Gui;
 extern D3DCOLOR g_BossTimerColors[4];
 
 // Gui's statically allocated chain elements.
-extern ChainElem g_GuiCalcChain;
-extern ChainElem g_GuiDrawChain;
+extern ChainElem g_GuiCalcElem;
+extern ChainElem g_GuiDrawElem;
 
 // How a D3DFORMAT's pixels are laid out, for a DIB section.
 struct FormatInfo

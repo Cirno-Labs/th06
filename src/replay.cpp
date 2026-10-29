@@ -161,25 +161,25 @@ int ReplayManager::PlayOnUpdate(ReplayManager *replay)
         replay->cursors[0]++;
     }
     g_Buttons = (g_Buttons & ~0x1f7) | replay->cursors[0]->input;
-    g_ButtonRepeat = 0;
-    if (g_PrevButtons == g_Buttons)
+    g_RepeatButtons = 0;
+    if (g_LastButtons == g_Buttons)
     {
-        if (g_ButtonFrames >= 30)
+        if (g_ButtonHeldFrames >= 30)
         {
-            if (g_ButtonFrames % 8 == 0)
+            if (g_ButtonHeldFrames % 8 == 0)
             {
-                g_ButtonRepeat = 1;
+                g_RepeatButtons = 1;
             }
-            if (g_ButtonFrames >= 38)
+            if (g_ButtonHeldFrames >= 38)
             {
-                g_ButtonFrames = 30;
+                g_ButtonHeldFrames = 30;
             }
         }
-        g_ButtonFrames++;
+        g_ButtonHeldFrames++;
     }
     else
     {
-        g_ButtonFrames = 0;
+        g_ButtonHeldFrames = 0;
     }
     replay->frame++;
     return 1;
@@ -248,7 +248,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     if (replay->data == NULL)
     {
         replay->data = (ReplayHeader *)LoadFileData(replay->path, !g_GameManager.isInDemo);
-        if (ValidateReplay(replay->data, g_FileSize) != 0)
+        if (ValidateReplay(replay->data, g_LastFileSize) != 0)
         {
             return -1;
         }
@@ -269,7 +269,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     g_GameManager.shotType = replay->data->shotType % 2;
     g_GameManager.difficulty = replay->data->difficulty;
     g_GameManager.pointItemsTotal = cur->pointItemsTotal;
-    g_Rng.SetSeed(cur->rngSeed);
+    g_Random.SetSeed(cur->rngSeed);
     g_GameManager.rank = cur->rank;
     g_GameManager.lives = cur->lives;
     g_GameManager.bombs = cur->bombs;
@@ -365,10 +365,10 @@ void SaveReplay(char *path, char *name)
                 replayTmp->data->stages[g_GameManager.stage]->score = g_GameManager.score;
                 strcpy(hX.name, name);
                 _strdate(hX.date);
-                hX.key = g_Rng.GetRandomU16InRange(128) + 64;
-                hX.unk_0f = g_Rng.GetRandomU16InRange(256);
-                hX.unk_0c[0] = g_Rng.GetRandomU16InRange(256);
-                hX.unk_0c[1] = g_Rng.GetRandomU16InRange(256);
+                hX.key = g_Random.GetRandomU16InRange(128) + 64;
+                hX.unk_0f = g_Random.GetRandomU16InRange(256);
+                hX.unk_0c[0] = g_Random.GetRandomU16InRange(256);
+                hX.unk_0c[1] = g_Random.GetRandomU16InRange(256);
                 bpCur = &hX.key;
                 checksum = 0x3f000318;
                 for (i = 0; i < sizeof(ReplayHeader) - 0xe; i++, bpCur++)

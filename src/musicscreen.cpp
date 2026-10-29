@@ -226,7 +226,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
     }
     screen->tunes = new MusicTune[0x20];
     i = -1;
-    while (rp - data < g_FileSize)
+    while (rp - data < g_LastFileSize)
     {
         if (*rp == '@')
         {
@@ -238,7 +238,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
                 screen->tunes[i].path[k] = *rp;
                 rp++;
                 k++;
-                if (rp - data >= g_FileSize)
+                if (rp - data >= g_LastFileSize)
                 {
                     goto done;
                 }
@@ -246,7 +246,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
             while (*rp == '\n' || *rp == '\r')
             {
                 rp++;
-                if (rp - data >= g_FileSize)
+                if (rp - data >= g_LastFileSize)
                 {
                     goto done;
                 }
@@ -257,7 +257,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
                 screen->tunes[i].title[k] = *rp;
                 rp++;
                 k++;
-                if (rp - data >= g_FileSize)
+                if (rp - data >= g_LastFileSize)
                 {
                     goto done;
                 }
@@ -267,7 +267,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
             while (*rp == '\n' && *rp == '\r')
             {
                 rp++;
-                if (rp - data >= g_FileSize)
+                if (rp - data >= g_LastFileSize)
                 {
                     goto done;
                 }
@@ -285,7 +285,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
                     screen->tunes[i].comment[row][k] = *rp;
                     rp++;
                     k++;
-                    if (rp - data >= g_FileSize)
+                    if (rp - data >= g_LastFileSize)
                     {
                         goto done;
                     }
@@ -293,7 +293,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
                 while (*rp == '\n' || *rp == '\r')
                 {
                     rp++;
-                    if (rp - data >= g_FileSize)
+                    if (rp - data >= g_LastFileSize)
                     {
                         goto done;
                     }

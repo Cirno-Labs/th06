@@ -23,8 +23,8 @@ int g_PowerLevels[] = {
 
 ItemManager g_ItemManager;
 // Constructed and never used.
-ChainElem g_UnusedChain2;
-ChainElem g_UnusedChain3;
+ChainElem g_UnusedChainA;
+ChainElem g_UnusedChainB;
 #endif // TH06_EXE
 
 EXE_INLINE ItemManager::ItemManager()
@@ -67,8 +67,8 @@ void ItemManager::SpawnItem(D3DXVECTOR3 *pos, int type, int state)
         item->timer.Set(0);
         if (state == 2)
         {
-            item->target.x = g_Rng.GetRandomF32ZeroToOne() * 288.0f + 48.0f;
-            item->target.y = g_Rng.GetRandomF32ZeroToOne() * 192.0f - 64.0f;
+            item->target.x = g_Random.GetRandomF32ZeroToOne() * 288.0f + 48.0f;
+            item->target.y = g_Random.GetRandomF32ZeroToOne() * 192.0f - 64.0f;
             item->target.z = 0.0f;
             item->velocity = item->pos;
         }

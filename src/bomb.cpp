@@ -56,7 +56,7 @@ void UpdateReimuABomb(Player *player)
                 player->bomb.partActive[i] = 1;
                 player->bomb.partSpeed[i] = 4.0f;
                 player->bomb.partPos[i] = player->position;
-                x = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
+                x = g_Random.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
                 player->bomb.partVelocity[i].x = cosf(x) * player->bomb.partSpeed[i];
                 player->bomb.partVelocity[i].y = sinf(x) * player->bomb.partSpeed[i];
                 player->bombHitCount[i] = 0;

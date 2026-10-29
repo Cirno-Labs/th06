@@ -9,9 +9,9 @@
 // the original's copies instead.
 #ifdef TH06_EXE
 Stage g_Stage;
-ChainElem g_StageCalcChain;
-ChainElem g_StageDrawChain;
-ChainElem g_StageDrawChain2;
+ChainElem g_StageBgCalcElem;
+ChainElem g_StageBgDrawElem;
+ChainElem g_StageBgDrawElem2;
 #endif // TH06_EXE
 
 EXE_INLINE Stage::Stage()
@@ -295,20 +295,20 @@ int Stage::RegisterChain(int stage)
     s->data = NULL;
     s->timer.Set(0);
     s->stage = stage;
-    g_StageCalcChain.SetCallback((ChainCallback)Stage::OnUpdate);
-    g_StageCalcChain.addedCallback = (ChainCallback)Stage::AddedCallback;
-    g_StageCalcChain.deletedCallback = (ChainCallback)Stage::DeletedCallback;
-    g_StageCalcChain.arg = s;
-    if (g_Chain.AddToCalcChain(&g_StageCalcChain, 6) != 0)
+    g_StageBgCalcElem.SetCallback((ChainCallback)Stage::OnUpdate);
+    g_StageBgCalcElem.addedCallback = (ChainCallback)Stage::AddedCallback;
+    g_StageBgCalcElem.deletedCallback = (ChainCallback)Stage::DeletedCallback;
+    g_StageBgCalcElem.arg = s;
+    if (g_Chain.AddToCalcChain(&g_StageBgCalcElem, 6) != 0)
     {
         return -1;
     }
-    g_StageDrawChain.SetCallback((ChainCallback)Stage::OnDraw);
-    g_StageDrawChain.arg = s;
-    g_Chain.AddToDrawChain(&g_StageDrawChain, 3);
-    g_StageDrawChain2.SetCallback((ChainCallback)Stage::OnDraw2);
-    g_StageDrawChain2.arg = s;
-    g_Chain.AddToDrawChain(&g_StageDrawChain2, 4);
+    g_StageBgDrawElem.SetCallback((ChainCallback)Stage::OnDraw);
+    g_StageBgDrawElem.arg = s;
+    g_Chain.AddToDrawChain(&g_StageBgDrawElem, 3);
+    g_StageBgDrawElem2.SetCallback((ChainCallback)Stage::OnDraw2);
+    g_StageBgDrawElem2.arg = s;
+    g_Chain.AddToDrawChain(&g_StageBgDrawElem2, 4);
     return 0;
 }
 
@@ -330,9 +330,9 @@ int Stage::DeletedCallback(Stage *stage)
 
 void Stage::RemoveChain()
 {
-    g_Chain.Remove(&g_StageCalcChain);
-    g_Chain.Remove(&g_StageDrawChain);
-    g_Chain.Remove(&g_StageDrawChain2);
+    g_Chain.Remove(&g_StageBgCalcElem);
+    g_Chain.Remove(&g_StageBgDrawElem);
+    g_Chain.Remove(&g_StageBgDrawElem2);
 }
 
 int Stage::Load(char *anmPath, char *dataPath)

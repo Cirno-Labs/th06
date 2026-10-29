@@ -7,8 +7,8 @@
 // the original's copies instead.
 #ifdef TH06_EXE
 EffectManager g_EffectManager;
-ChainElem g_EffectCalcChain;
-ChainElem g_EffectDrawChain;
+ChainElem g_EffectsCalcElem;
+ChainElem g_EffectsDrawElem;
 #endif // TH06_EXE
 
 EXE_INLINE EffectManager::EffectManager()
@@ -27,8 +27,8 @@ int EffectUpdateDrift(Effect *effect)
 {
     if (effect->timer == 0 && effect->timer.HasTicked())
     {
-        effect->velocity.x = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) / 12.0f;
-        effect->velocity.y = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) / 12.0f;
+        effect->velocity.x = (g_Random.GetRandomF32ZeroToOne() * 256.0f - 128.0f) / 12.0f;
+        effect->velocity.y = (g_Random.GetRandomF32ZeroToOne() * 256.0f - 128.0f) / 12.0f;
         effect->velocity.z = 0.0f;
         effect->acceleration = -effect->velocity / 19.0f;
     }
@@ -42,8 +42,8 @@ int EffectUpdateDriftFast(Effect *effect)
 {
     if (effect->timer == 0 && effect->timer.HasTicked())
     {
-        effect->velocity.x = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
-        effect->velocity.y = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
+        effect->velocity.x = (g_Random.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
+        effect->velocity.y = (g_Random.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
         effect->velocity.z = 0.0f;
         effect->acceleration = -effect->velocity / 20.0f;
     }
@@ -120,7 +120,7 @@ int EffectUpdateConverge(Effect *effect)
     if (effect->timer == 0 && effect->timer.HasTicked())
     {
         effect->origin = effect->pos;
-        f = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+        f = g_Random.GetRandomF32InRange(6.2831855f) - 3.1415927f;
         effect->axis.x = cosf(f);
         effect->axis.y = sinf(f);
         effect->axis.z = 0.0f;
@@ -138,7 +138,7 @@ int EffectUpdateConvergeSlow(Effect *effect)
     if (effect->timer == 0 && effect->timer.HasTicked())
     {
         effect->origin = effect->pos;
-        f = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+        f = g_Random.GetRandomF32InRange(6.2831855f) - 3.1415927f;
         effect->axis.x = cosf(f);
         effect->axis.y = sinf(f);
         effect->axis.z = 0.0f;
@@ -333,22 +333,22 @@ int EffectManager::RegisterChain()
     EffectManager *mgr = &g_EffectManager;
 
     mgr->Reset();
-    g_EffectCalcChain.SetCallback((ChainCallback)EffectManager::OnUpdate);
-    g_EffectCalcChain.addedCallback = (ChainCallback)EffectManager::AddedCallback;
-    g_EffectCalcChain.deletedCallback = (ChainCallback)EffectManager::DeletedCallback;
-    g_EffectCalcChain.arg = mgr;
-    if (g_Chain.AddToCalcChain(&g_EffectCalcChain, 10) != 0)
+    g_EffectsCalcElem.SetCallback((ChainCallback)EffectManager::OnUpdate);
+    g_EffectsCalcElem.addedCallback = (ChainCallback)EffectManager::AddedCallback;
+    g_EffectsCalcElem.deletedCallback = (ChainCallback)EffectManager::DeletedCallback;
+    g_EffectsCalcElem.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_EffectsCalcElem, 10) != 0)
     {
         return -1;
     }
-    g_EffectDrawChain.SetCallback((ChainCallback)EffectManager::OnDraw);
-    g_EffectDrawChain.arg = mgr;
-    g_Chain.AddToDrawChain(&g_EffectDrawChain, 8);
+    g_EffectsDrawElem.SetCallback((ChainCallback)EffectManager::OnDraw);
+    g_EffectsDrawElem.arg = mgr;
+    g_Chain.AddToDrawChain(&g_EffectsDrawElem, 8);
     return 0;
 }
 
 void EffectManager::RemoveChain()
 {
-    g_Chain.Remove(&g_EffectCalcChain);
-    g_Chain.Remove(&g_EffectDrawChain);
+    g_Chain.Remove(&g_EffectsCalcElem);
+    g_Chain.Remove(&g_EffectsDrawElem);
 }

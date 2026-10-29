@@ -59,12 +59,12 @@ ScoreDat *LoadScoreDat(char *path)
         dat->fileSize = sizeof(ScoreDat);
         goto done;
     }
-    if (g_FileSize < sizeof(ScoreDat))
+    if (g_LastFileSize < sizeof(ScoreDat))
     {
         free(dat);
         goto fail;
     }
-    remaining = g_FileSize - 2;
+    remaining = g_LastFileSize - 2;
     checksumVal = 0;
     key = 0;
     n = 0;
@@ -414,8 +414,8 @@ void SaveScoreDat(ResultScreen *screen)
     header->dataOffset = sizeof(ScoreDat);
     header->fileSize = size0;
     header->checksum = 0;
-    header->key = g_Rng.GetRandomU16InRange(256);
-    header->unk_06 = g_Rng.GetRandomU16InRange(256);
+    header->key = g_Random.GetRandomU16InRange(256);
+    header->unk_06 = g_Random.GetRandomU16InRange(256);
     header->version = 0x10;
     for (m = 4; m < size0; m++)
     {
@@ -738,7 +738,7 @@ int ResultScreen::HandleReplaySaving()
                 {
                     continue;
                 }
-                if (ValidateReplay(replay, g_FileSize) == 0)
+                if (ValidateReplay(replay, g_LastFileSize) == 0)
                 {
                     this->replays[k] = *replay;
                 }

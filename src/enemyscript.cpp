@@ -68,7 +68,7 @@ int g_ShotTypeValues[2][2][3] = {
 };
 
 // Constructed and never used.
-ChainElem g_UnusedChain;
+ChainElem g_UnusedEclChain;
 EnemyScripts g_EnemyScripts;
 #endif // TH06_EXE
 
@@ -178,7 +178,7 @@ restart:
         case 6:
         {
             DWORD range = *ResolveOperand(enemy, &params->i[1], NULL);
-            value = g_Rng.GetRandomU32InRange(range);
+            value = g_Random.GetRandomU32InRange(range);
             ScriptSet(enemy, instr->args.i[0], &value);
             break;
         }
@@ -186,7 +186,7 @@ restart:
         {
             DWORD range = *ResolveOperand(enemy, &params->i[1], NULL);
             int low = *ResolveOperand(enemy, &params->i[2], NULL);
-            value = g_Rng.GetRandomU32InRange(range);
+            value = g_Random.GetRandomU32InRange(range);
             value += low;
             ScriptSet(enemy, instr->args.i[0], &value);
             break;
@@ -194,7 +194,7 @@ restart:
         case 8:
         {
             float range = *ResolveFloatOperand(enemy, &params->f[1], NULL);
-            f = g_Rng.GetRandomF32InRange(range);
+            f = g_Random.GetRandomF32InRange(range);
             ScriptSet(enemy, instr->args.i[0], (int *)&f);
             break;
         }
@@ -202,7 +202,7 @@ restart:
         {
             float range = *ResolveFloatOperand(enemy, &params->f[1], NULL);
             float low = *ResolveFloatOperand(enemy, &params->f[2], NULL);
-            f = g_Rng.GetRandomF32InRange(range);
+            f = g_Random.GetRandomF32InRange(range);
             f += low;
             ScriptSet(enemy, instr->args.i[0], (int *)&f);
             break;
@@ -501,7 +501,7 @@ restart:
             enemy->shootInterval += RankLerp(enemy->shootInterval / 5, -enemy->shootInterval / 5);
             if (enemy->shootInterval != 0)
             {
-                enemy->shootTimer.Set(g_Rng.GetRandomU32InRange(enemy->shootInterval));
+                enemy->shootTimer.Set(g_Random.GetRandomU32InRange(enemy->shootInterval));
             }
             break;
         case 78:
@@ -686,11 +686,11 @@ restart:
             break;
         case 49:
             vec = *(D3DXVECTOR3 *)&instr->args;
-            enemy->angle = g_Rng.GetRandomF32InRange(vec.y - vec.x) + vec.x;
+            enemy->angle = g_Random.GetRandomF32InRange(vec.y - vec.x) + vec.x;
             break;
         case 50:
             vec = *(D3DXVECTOR3 *)&instr->args;
-            enemy->angle = g_Rng.GetRandomF32InRange(vec.y - vec.x) + vec.x;
+            enemy->angle = g_Random.GetRandomF32InRange(vec.y - vec.x) + vec.x;
             if (enemy->lowerBound[0] + 96.0f > enemy->pos.x)
             {
                 if (enemy->angle > 1.5707964f)
@@ -886,8 +886,8 @@ restart:
             for (i = 0; i < instr->args.i[0]; i++)
             {
                 pos = enemy->pos;
-                pos[0] += g_Rng.GetRandomF32InRange(144.0f) - 72.0f;
-                pos[1] += g_Rng.GetRandomF32InRange(144.0f) - 72.0f;
+                pos[0] += g_Random.GetRandomF32InRange(144.0f) - 72.0f;
+                pos[1] += g_Random.GetRandomF32InRange(144.0f) - 72.0f;
                 if (g_GameManager.power < 0x80)
                 {
                     g_ItemManager.SpawnItem(&pos, i == 0 ? 2 : 0, 0);
@@ -1534,7 +1534,7 @@ void ScriptFreezeBullets(Enemy *enemy, EnemyScriptInstr *instr)
             bullet->flags |= 0x10;
             bullet->exDuration = 220;
             bullet->timer.Set(0);
-            SinCosScale(&bullet->accel, g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f, 0.01f);
+            SinCosScale(&bullet->accel, g_Random.GetRandomF32InRange(6.2831855f) - 3.1415927f, 0.01f);
             break;
         }
     }
@@ -1548,9 +1548,9 @@ void ScriptShootFromRandomPoint(Enemy *enemy, EnemyScriptInstr *instr)
     float range = instr->args.i[1];
 
     enemy->shooter.pos = enemy->pos + enemy->shootOffset;
-    enemy->shooter.pos.x = g_Rng.GetRandomF32InRange(range) + enemy->pos.x - range / 2.0f;
+    enemy->shooter.pos.x = g_Random.GetRandomF32InRange(range) + enemy->pos.x - range / 2.0f;
     range *= 0.75f;
-    enemy->shooter.pos.y = g_Rng.GetRandomF32InRange(range) + enemy->pos.y - range / 2.0f;
+    enemy->shooter.pos.y = g_Random.GetRandomF32InRange(range) + enemy->pos.y - range / 2.0f;
     g_BulletManager.FirePattern(&enemy->shooter);
 }
 
@@ -1577,7 +1577,7 @@ void ScriptStarPattern(Enemy *enemy, EnemyScriptInstr *instr)
     {
         g_EnemyScripts.star.ends[0] = enemy->pos;
         g_EnemyScripts.star.ends[1] = g_Player.position;
-        g_EnemyScripts.star.angles[0] = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+        g_EnemyScripts.star.angles[0] = g_Random.GetRandomF32InRange(6.2831855f) - 3.1415927f;
         g_EnemyScripts.star.angles[1] = AddNormalizeAngle(g_EnemyScripts.star.angles[0], 2.5132742f);
     }
     if (enemy->ctx.intVars[2] % 30 == 0)
@@ -1606,7 +1606,7 @@ void ScriptStarPattern(Enemy *enemy, EnemyScriptInstr *instr)
             from.z = 0.0f;
             enemy->shooter.pos = center2 + from;
             speed = enemy->shooter.speed1;
-            enemy->shooter.speed1 += g_Rng.GetRandomF32InRange(enemy->shooter.speed2);
+            enemy->shooter.speed1 += g_Random.GetRandomF32InRange(enemy->shooter.speed2);
             g_BulletManager.FirePattern(&enemy->shooter);
             enemy->shooter.speed1 = speed;
             enemy->shooter.angle1 -= 0.5235988f * progress2;
@@ -1663,7 +1663,7 @@ void ScriptFreezeOrSendOff(Enemy *enemy, EnemyScriptInstr *instr)
                     continue;
                 }
                 if (bullet->sprites.sprite0.spriteData != NULL && bullet->sprites.sprite0.spriteData->height >= 30.0f &&
-                    bullet->color != 5 && g_Rng.GetRandomU16() % 4 == 0)
+                    bullet->color != 5 && g_Random.GetRandomU16() % 4 == 0)
                 {
                     bullet->color = 5;
                     g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex + bullet->color);
@@ -1671,11 +1671,11 @@ void ScriptFreezeOrSendOff(Enemy *enemy, EnemyScriptInstr *instr)
                     dy = bullet->pos.y - g_Player.position.y;
                     if ((float)sqrt(dy * dy + dx2 * dx2) > 128.0f)
                     {
-                        bullet->angle = g_Rng.GetRandomF32InRange(2.3561945f) + 0.7853982f;
+                        bullet->angle = g_Random.GetRandomF32InRange(2.3561945f) + 0.7853982f;
                     }
                     else
                     {
-                        bullet->angle = AngleAwayFromPlayer(&bullet->pos, g_Rng.GetRandomF32InRange(6.2831855f));
+                        bullet->angle = AngleAwayFromPlayer(&bullet->pos, g_Random.GetRandomF32InRange(6.2831855f));
                     }
                     SinCosScale(&bullet->velocity, bullet->angle, bullet->speed);
                     count--;
@@ -1696,7 +1696,7 @@ void ScriptFreezeOrSendOff(Enemy *enemy, EnemyScriptInstr *instr)
                     continue;
                 }
                 if (bullet->sprites.sprite0.spriteData != NULL && bullet->sprites.sprite0.spriteData->height >= 30.0f &&
-                    bullet->color != 5 && g_Rng.GetRandomU16() % 4 == 0)
+                    bullet->color != 5 && g_Random.GetRandomU16() % 4 == 0)
                 {
                     bullet->color = 5;
                     g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex + bullet->color);
@@ -1704,11 +1704,11 @@ void ScriptFreezeOrSendOff(Enemy *enemy, EnemyScriptInstr *instr)
                     dy = bullet->pos.y - g_Player.position.y;
                     if ((float)sqrt(dy * dy + dx2 * dx2) > 128.0f)
                     {
-                        bullet->angle = g_Rng.GetRandomF32InRange(6.2831855f);
+                        bullet->angle = g_Random.GetRandomF32InRange(6.2831855f);
                     }
                     else
                     {
-                        bullet->angle = AngleAwayFromPlayer(&bullet->pos, g_Rng.GetRandomF32InRange(6.2831855f));
+                        bullet->angle = AngleAwayFromPlayer(&bullet->pos, g_Random.GetRandomF32InRange(6.2831855f));
                     }
                     SinCosScale(&bullet->velocity, bullet->angle, bullet->speed);
                     count--;
@@ -1831,7 +1831,7 @@ void ScriptSparkCircle(Enemy *enemy, EnemyScriptInstr *instr)
             (enemy->sparkTimer > 30 && enemy->sparkTimer.current % 4 == 0) || enemy->sparkTimer.current % 8 == 0)
         {
             k = enemy->sparkTimer.current % 16;
-            k = g_Rng.GetRandomU16InRange(k / 2) + k / 2;
+            k = g_Random.GetRandomU16InRange(k / 2) + k / 2;
             r = k * 160.0f / 16.0f + 32.0f;
             a2 = enemy->sparkAngle - k * 3.1415927f / 40.0f;
             if (r < -0.7853982f)
@@ -1842,7 +1842,7 @@ void ScriptSparkCircle(Enemy *enemy, EnemyScriptInstr *instr)
             pos.x += cosf(a2) * r;
             pos.y += sinf(a2) * r;
             effect = g_EffectManager.SpawnEffect(0x13, &pos, 1, 0xff3030ff);
-            effect->velocity.x = (g_Rng.GetRandomF32ZeroToOne() * 40.0f - 20.0f) / 60.0f;
+            effect->velocity.x = (g_Random.GetRandomF32ZeroToOne() * 40.0f - 20.0f) / 60.0f;
             effect->velocity.y = 8.0f * k / 60.0f - 0.26666668f;
             effect->velocity.z = 0.0f;
             effect->acceleration = -effect->velocity / 120.0f;
@@ -1850,7 +1850,7 @@ void ScriptSparkCircle(Enemy *enemy, EnemyScriptInstr *instr)
             pos.x -= cosf(a2) * r;
             pos.y += sinf(a2) * r;
             effect = g_EffectManager.SpawnEffect(0x13, &pos, 1, 0xff3030ff);
-            effect->velocity.x = (g_Rng.GetRandomF32ZeroToOne() * 40.0f - 20.0f) / 60.0f;
+            effect->velocity.x = (g_Random.GetRandomF32ZeroToOne() * 40.0f - 20.0f) / 60.0f;
             effect->velocity.y = 8.0f * k / 60.0f - 0.26666668f;
             effect->velocity.z = 0.0f;
             effect->acceleration = -effect->velocity / 120.0f;
@@ -1876,7 +1876,7 @@ void ScriptTwoRingShots(Enemy *enemy, EnemyScriptInstr *instr)
     int i;
 
     mode3 = instr->args.i[1];
-    origin2 = g_Rng.GetRandomF32InRange(6.2831855f);
+    origin2 = g_Random.GetRandomF32InRange(6.2831855f);
     for (half3 = 0; half3 < 2; half3++)
     {
         if (half3 == 0)
@@ -1993,7 +1993,7 @@ void ScriptShootFromLargeBullets(Enemy *enemy, EnemyScriptInstr *instr)
             shooter.pos = bullet->pos;
             shooter.sprite = 3;
             shooter.color = 1;
-            shooter.angle1 = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+            shooter.angle1 = g_Random.GetRandomF32InRange(6.2831855f) - 3.1415927f;
             shooter.speed1 = 0.0f;
             shooter.count1 = 1;
             shooter.count2 = 1;
@@ -2017,7 +2017,7 @@ void ScriptSwirlStoppedBullets(Enemy *enemy, EnemyScriptInstr *instr)
     int i;
     float dist;
 
-    base2 = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+    base2 = g_Random.GetRandomF32InRange(6.2831855f) - 3.1415927f;
     g_EffectManager.SpawnEffect(0xc, &enemy->pos, 1, 0xffffffff);
     for (i = 0; i < 0x280; i++, bullet2++)
     {
@@ -2058,7 +2058,7 @@ void ScriptScatterStoppedBullets(Enemy *enemy, EnemyScriptInstr *instr)
     BulletShooter shooter;
     int i;
 
-    base2 = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+    base2 = g_Random.GetRandomF32InRange(6.2831855f) - 3.1415927f;
     g_EffectManager.SpawnEffect(0xc, &enemy->pos, 1, 0xffffffff);
     for (i = 0; i < 0x280; i++, bullet2++)
     {
@@ -2075,7 +2075,7 @@ void ScriptScatterStoppedBullets(Enemy *enemy, EnemyScriptInstr *instr)
             bullet2->speed = 0.01f;
             bullet2->timer.Set(0);
             bullet2->exDuration = 120;
-            SinCosScale(&bullet2->accel, g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f, 0.01f);
+            SinCosScale(&bullet2->accel, g_Random.GetRandomF32InRange(6.2831855f) - 3.1415927f, 0.01f);
         }
     }
 }
@@ -2272,8 +2272,8 @@ void ScriptFollowLife(Enemy *enemy, EnemyScriptInstr *instr)
     else
     {
         range = 320.0f - life * 160.0f / 6000.0f;
-        enemy->ctx.floatVars[2] = 192.0f - range / 2.0f + g_Rng.GetRandomF32InRange(range);
+        enemy->ctx.floatVars[2] = 192.0f - range / 2.0f + g_Random.GetRandomF32InRange(range);
         range = 128.0f - life * 64.0f / 6000.0f;
-        enemy->ctx.floatVars[3] = 96.0f - range / 2.0f + g_Rng.GetRandomF32InRange(range);
+        enemy->ctx.floatVars[3] = 96.0f - range / 2.0f + g_Random.GetRandomF32InRange(range);
     }
 }

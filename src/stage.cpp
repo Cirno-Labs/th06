@@ -146,9 +146,9 @@ int Stage::OnUpdate(Stage *stage)
         }
         tmpVec = stage->offsetTo - stage->offsetFrom;
         camRatio = stage->offsetFadeTime.AsFloat() / stage->offsetFadeFrames;
-        g_Camera.offsetX = tmpVec.x * camRatio + stage->offsetFrom.x;
-        g_Camera.offsetY = tmpVec.y * camRatio + stage->offsetFrom.y;
-        g_Camera.zoom = tmpVec.z * camRatio + stage->offsetFrom.z;
+        g_GameManager.camera.offsetX = tmpVec.x * camRatio + stage->offsetFrom.x;
+        g_GameManager.camera.offsetY = tmpVec.y * camRatio + stage->offsetFrom.y;
+        g_GameManager.camera.zoom = tmpVec.z * camRatio + stage->offsetFrom.z;
     }
     if (stage->fogFadeFrames != 0)
     {

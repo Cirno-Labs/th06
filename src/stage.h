@@ -170,7 +170,7 @@ public:
     // cleared when it does.
     BYTE scriptResume;
     BYTE unk_2a9[0x3];
-    // A fade of g_Camera's offset over offsetFadeFrames, from offsetFrom
+    // A fade of g_GameManager.camera's offset over offsetFadeFrames, from offsetFrom
     // to offsetTo.
     D3DXVECTOR3 offsetFrom;
     D3DXVECTOR3 offsetTo;

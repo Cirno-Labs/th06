@@ -1621,9 +1621,6 @@ address,size,name,symbol
 0x00487e48,,g_PlayerDistance,?g_PlayerDistance@@3MA
 0x00487e4c,,g_PlayerAngle,?g_PlayerAngle@@3MA
 0x00487e50,,g_EnemyScripts,?g_EnemyScripts@@3VEnemyScripts@@A
-0x00487edc,,g_StarAngles,?g_StarAngles@@3PAMA
-0x00487f5c,,g_StarFrom,?g_StarFrom@@3UD3DXVECTOR3@@A
-0x00487f68,,g_StarTo,?g_StarTo@@3UD3DXVECTOR3@@A
 0x00487fbc,,g_UnusedChain,?g_UnusedChain@@3UChainElem@@A
 0x00487fe0,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x004b7964,,g_EffectCalcChain,?g_EffectCalcChain@@3UChainElem@@A
@@ -1638,7 +1635,6 @@ address,size,name,symbol
 0x0069bc5c,,g_GuiDrawChain,?g_GuiDrawChain@@3UChainElem@@A
 0x0069bc7c,,g_GuiCalcChain,?g_GuiCalcChain@@3UChainElem@@A
 0x0069bca0,,g_GameManager,?g_GameManager@@3VGameManager@@A
-0x0069d6fc,,g_Camera,?g_Camera@@3UCamera@@A
 0x0069d720,,g_GameManagerCalcChain,?g_GameManagerCalcChain@@3UChainElem@@A
 0x0069d740,,g_GameManagerDrawChain,?g_GameManagerDrawChain@@3UChainElem@@A
 0x0069d760,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A

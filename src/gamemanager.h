@@ -8,6 +8,18 @@
 #include "common.h"
 #include "resultscreen.h"
 
+// The 3D view of the stage, set up by SetupCamera.
+struct Camera
+{
+    // The camera's distance from the screen plane, set by SetupCamera.
+    float distance;
+    // Moves the point looked at from the center of the viewport.
+    float offsetX;
+    float offsetY;
+    // Scales the camera's distance.
+    float zoom;
+};
+
 // Runs the game in play, the global at 0x69bca0. Its added callback
 // reads "score.dat" and sets up the replay ("replay/th6_00.rpy").
 class GameManager
@@ -139,7 +151,7 @@ public:
     float arena[4];
     // Where the player may move: x, y, width and height.
     float playerArea[4];
-    DWORD unk_1a5c[0x4];
+    Camera camera;
     // Counts the frames the stages' enemy timelines ran outside boss
     // fights; the result screen shows it as a share of the game.
     int progressFrames;
@@ -177,17 +189,6 @@ extern EnemyAnmPaths g_EnemyAnmPaths[8];
 extern char *g_EclPaths[8];
 
 // The 3D camera the stage backgrounds are seen through (0x69d6fc).
-struct Camera
-{
-    // The camera's distance from the screen plane, set by SetupCamera.
-    float distance;
-    // Moves the point looked at from the center of the viewport.
-    float offsetX;
-    float offsetY;
-    // Scales the camera's distance.
-    float zoom;
-};
-extern Camera g_Camera;
 
 // Looks at the viewport's center from a distance where a 30° field of
 // view covers its height, and sets the view and projection matrices,

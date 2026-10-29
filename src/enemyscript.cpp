@@ -73,9 +73,6 @@ EnemyScripts g_EnemyScripts;
 int g_ShotTypeOperand;
 float g_PlayerDistance;
 float g_PlayerAngle;
-float g_StarAngles[6];
-D3DXVECTOR3 g_StarFrom;
-D3DXVECTOR3 g_StarTo;
 #endif // TH06_EXE
 
 // D3DXVec3Length's body, but the game's own inline: the original has its
@@ -1556,7 +1553,7 @@ void ScriptShootFromRandomPoint(Enemy *enemy, EnemyScriptInstr *instr)
 
 // g_EnemyScriptFuncs[2], set as the context's func: every sixth frame
 // until the count in intVars[2] reaches intVars[3], fires five patterns
-// from points on a star (corners g_StarAngles, radius floatVars[3])
+// from points on a star (corners g_EnemyScripts.star.angles, radius floatVars[3])
 // whose center moves from the enemy towards where the player was.
 void ScriptStarPattern(Enemy *enemy, EnemyScriptInstr *instr)
 {
@@ -1575,33 +1572,33 @@ void ScriptStarPattern(Enemy *enemy, EnemyScriptInstr *instr)
     }
     if (enemy->ctx.intVars[2] == 0)
     {
-        g_StarFrom = enemy->pos;
-        g_StarTo = g_Player.position;
-        g_StarAngles[0] = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
-        g_StarAngles[1] = AddNormalizeAngle(g_StarAngles[0], 2.5132742f);
+        g_EnemyScripts.star.ends[0] = enemy->pos;
+        g_EnemyScripts.star.ends[1] = g_Player.position;
+        g_EnemyScripts.star.angles[0] = g_Rng.GetRandomF32InRange(6.2831855f) - 3.1415927f;
+        g_EnemyScripts.star.angles[1] = AddNormalizeAngle(g_EnemyScripts.star.angles[0], 2.5132742f);
     }
     if (enemy->ctx.intVars[2] % 30 == 0)
     {
-        g_StarAngles[0] = g_StarAngles[1];
-        g_StarAngles[1] = AddNormalizeAngle(g_StarAngles[0], 2.5132742f);
-        g_StarAngles[2] = AddNormalizeAngle(g_StarAngles[1], 2.5132742f);
-        g_StarAngles[3] = AddNormalizeAngle(g_StarAngles[2], 2.5132742f);
-        g_StarAngles[4] = AddNormalizeAngle(g_StarAngles[3], 2.5132742f);
-        g_StarAngles[5] = AddNormalizeAngle(g_StarAngles[4], 2.5132742f);
+        g_EnemyScripts.star.angles[0] = g_EnemyScripts.star.angles[1];
+        g_EnemyScripts.star.angles[1] = AddNormalizeAngle(g_EnemyScripts.star.angles[0], 2.5132742f);
+        g_EnemyScripts.star.angles[2] = AddNormalizeAngle(g_EnemyScripts.star.angles[1], 2.5132742f);
+        g_EnemyScripts.star.angles[3] = AddNormalizeAngle(g_EnemyScripts.star.angles[2], 2.5132742f);
+        g_EnemyScripts.star.angles[4] = AddNormalizeAngle(g_EnemyScripts.star.angles[3], 2.5132742f);
+        g_EnemyScripts.star.angles[5] = AddNormalizeAngle(g_EnemyScripts.star.angles[4], 2.5132742f);
     }
     if (enemy->ctx.intVars[2] % 6 == 0)
     {
         progress2 = (float)enemy->ctx.intVars[2] / (float)enemy->ctx.intVars[3];
         t = progress2 * 0.1f;
-        center2 = (g_StarTo - g_StarFrom) * t + g_StarFrom;
+        center2 = (g_EnemyScripts.star.ends[1] - g_EnemyScripts.star.ends[0]) * t + g_EnemyScripts.star.ends[0];
         center2.z = 0.0f;
         progress2 += 0.5f;
         enemy->shooter.angle1 = 1.0471976f * progress2;
         for (i = 0; i < 5; i++)
         {
             t = (float)(enemy->ctx.intVars[2] % 30) / 30.0f;
-            SinCosScale(&from, g_StarAngles[i], enemy->ctx.floatVars[3]);
-            SinCosScale(&to3, g_StarAngles[i + 1], enemy->ctx.floatVars[3]);
+            SinCosScale(&from, g_EnemyScripts.star.angles[i], enemy->ctx.floatVars[3]);
+            SinCosScale(&to3, g_EnemyScripts.star.angles[i + 1], enemy->ctx.floatVars[3]);
             from = (to3 - from) * t + from;
             from.z = 0.0f;
             enemy->shooter.pos = center2 + from;

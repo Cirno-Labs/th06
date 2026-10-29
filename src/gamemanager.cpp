@@ -24,7 +24,6 @@ unsigned int g_ExtendScores[] = {
 GameManager g_GameManager;
 ChainElem g_GameManagerCalcChain;
 ChainElem g_GameManagerDrawChain;
-Camera g_Camera;
 #endif // TH06_EXE
 
 BOOL GameManager::IsInPlayArea(float x, float y, float width, float height)
@@ -451,7 +450,7 @@ void SetupFixedCamera(float extraFar)
         D3DXVECTOR3 lookAt(midX, -halfHeight, 0.0f);
         D3DXVECTOR3 from(midX, -halfHeight, -zDist);
         D3DXMatrixLookAtLH(&g_App.viewMatrix, &from, &lookAt, &up);
-        g_Camera.distance = fabsf(zDist);
+        g_GameManager.camera.distance = fabsf(zDist);
         D3DXMatrixPerspectiveFovLH(&g_App.projectionMatrix, fovAngle, aspectXY, 100.0f, 10000.0f + extraFar);
         g_App.d3dDevice->SetTransform(D3DTS_VIEW, &g_App.viewMatrix);
         g_App.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_App.projectionMatrix);
@@ -474,10 +473,10 @@ void SetupCamera(float extraFar)
     // A block of its own: its vectors come after the floats on the stack.
     {
         D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
-        D3DXVECTOR3 lookAt(midX + g_Camera.offsetX, -halfHeight + g_Camera.offsetY, 0.0f);
-        D3DXVECTOR3 from(midX, -halfHeight, -zDist * g_Camera.zoom);
+        D3DXVECTOR3 lookAt(midX + g_GameManager.camera.offsetX, -halfHeight + g_GameManager.camera.offsetY, 0.0f);
+        D3DXVECTOR3 from(midX, -halfHeight, -zDist * g_GameManager.camera.zoom);
         D3DXMatrixLookAtLH(&g_App.viewMatrix, &from, &lookAt, &up);
-        g_Camera.distance = fabsf(zDist);
+        g_GameManager.camera.distance = fabsf(zDist);
         D3DXMatrixPerspectiveFovLH(&g_App.projectionMatrix, fovAngle, aspectXY, 100.0f, 10000.0f + extraFar);
         g_App.d3dDevice->SetTransform(D3DTS_VIEW, &g_App.viewMatrix);
         g_App.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_App.projectionMatrix);

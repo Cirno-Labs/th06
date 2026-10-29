@@ -145,6 +145,18 @@ struct EnemyTimelineEntry
     EnemyTimelineArgs args;
 };
 
+// 0x160 bytes inside EnemyScripts, mostly unknown, where
+// ScriptStarPattern keeps its star: the corners' angles, and where its
+// center moves from and to, the first two of eight vectors whose (empty)
+// constructors the original's static initializer runs.
+struct EnemyScriptsStar
+{
+    BYTE unk_0[0x80];
+    float angles[6];
+    BYTE unk_98[0x68];
+    D3DXVECTOR3 ends[8];
+};
+
 // The enemy script file, the global at 0x487e50: a header, then a table
 // of subroutines. Load turns the file's offsets into pointers.
 class EnemyScripts
@@ -169,6 +181,7 @@ public:
     void **subs;
     // The timeline, at the header's timelineOffset.
     EnemyTimelineEntry *timeline;
+    EnemyScriptsStar star;
 };
 extern EnemyScripts g_EnemyScripts;
 
@@ -223,10 +236,5 @@ extern void (*g_EnemyScriptFuncs[])(Enemy *enemy, EnemyScriptInstr *instr);
 // The bonus of each spell card.
 extern int g_SpellCardBonuses[0x40];
 
-// ScriptStarPattern's star: its corners' angles, and where its center moves
-// from and to.
-extern float g_StarAngles[6];
-extern D3DXVECTOR3 g_StarFrom;
-extern D3DXVECTOR3 g_StarTo;
 // Three values for each character's two shot types, for ScriptGetShotTypeValues.
 extern int g_ShotTypeValues[2][2][3];

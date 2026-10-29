@@ -45,8 +45,6 @@ struct UnusedGlobal
     DWORD unk_0;
 };
 UnusedGlobal g_UnusedGlobal;
-
-Log g_Log;
 #endif
 
 Chain::~Chain()
@@ -795,6 +793,12 @@ int WriteToFile(char *path, void *data, int size)
     fclose(file);
     return 0;
 }
+
+#ifdef TH06_EXE
+// Defined here, after the file helpers: its constructor's header line
+// sits there among the original's literals.
+Log g_Log;
+#endif // TH06_EXE
 
 int LogPrintf(Log *log, const char *fmt, ...)
 {

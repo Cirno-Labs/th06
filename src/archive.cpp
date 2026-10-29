@@ -1,6 +1,5 @@
 // cflags: -/Od -/Op /O2 /Ob1
-// The data archives, 0x43c6e0 to 0x43ce2e: DatArchive (with
-// FileBitStream's inline destructor).
+// The data archives, 0x43c770 to 0x43ce2e: DatArchive.
 
 #include <stdlib.h>
 #include <string.h>

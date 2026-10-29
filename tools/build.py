@@ -17,7 +17,7 @@ The standalone exe links src/ without src/dll/ but with src/exe/ (the
 game's data and global objects, which the DLL takes from the original)
 against the real libraries, plus the original's resources.
 """
-import collections, csv, glob, os, struct, subprocess, sys
+import collections, csv, glob, json, os, struct, subprocess, sys
 
 import coff
 
@@ -118,6 +118,8 @@ def compile_all(target=DLL, feats=()):
     Sources are UTF-8, but the game's strings are Shift-JIS and MSVC 7
     copies string bytes as they are, so each file is converted first.
     Objects with features go to their own directory, build/obj_<features>.
+    An object is rebuilt when its source or any header is newer, or when
+    its flags changed: each object directory's flags.json records them.
     """
     obj_dir = "_".join([OBJ, *feats])
     defines = ["/D%s=1" % FEATURES[f] for f in feats]
@@ -135,16 +137,34 @@ def compile_all(target=DLL, feats=()):
                 f.write(to_sjis(text))
     headers = max((os.path.getmtime(h) for h in glob.glob("src/**/*.h", recursive=True)
                    + glob.glob(GENERATED + "/*.h")), default=0)
+    record = os.path.join(obj_dir, "flags.json")
+    try:
+        with open(record) as f:
+            built = json.load(f)
+    except (OSError, ValueError):
+        built = {}
     objs = []
     for src, obj in sources(target, obj_dir):
         rel = os.path.relpath(src, "src")
         objs.append(obj)
-        if os.path.exists(obj) and os.path.getmtime(obj) > max(os.path.getmtime(src), headers):
+        flags = file_flags(src) + defines
+        if (os.path.exists(obj) and os.path.getmtime(obj) > max(os.path.getmtime(src), headers)
+                and built.get(obj) == flags):
             continue
         print("cl", src)
-        tool("cl", "/c", *file_flags(src), *defines, "/I" + win(SJIS), "/Fo" + win(obj),
+        # A failed compile exits; drop the entry first so it is retried.
+        built.pop(obj, None)
+        save_flags(record, built)
+        tool("cl", "/c", *flags, "/I" + win(SJIS), "/Fo" + win(obj),
              win(os.path.join(SJIS, rel)))
+        built[obj] = flags
+    save_flags(record, built)
     return objs
+
+
+def save_flags(path, built):
+    with open(path, "w") as f:
+        json.dump(built, f, indent=1, sort_keys=True)
 
 
 def sources(target=DLL, obj_dir=OBJ):

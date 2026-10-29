@@ -49,79 +49,6 @@ int ValidateReplay(void *data, int size)
     return 0;
 }
 
-int ReplayManager::RecordOnUpdate(ReplayManager *replay)
-{
-    WORD input;
-
-    if (!g_GameManager.isPlaying)
-    {
-        return 1;
-    }
-    input = g_Buttons & 0x1f7;
-    if (input != replay->cursors[0]->input)
-    {
-        replay->cursors[0]++;
-        replay->cursors[g_GameManager.stage] = replay->cursors[0] + 1;
-        replay->cursors[0]->frame = replay->frame;
-        replay->cursors[0]->input = input;
-    }
-    replay->frame++;
-    return 1;
-}
-
-int ReplayManager::PlayOnUpdate(ReplayManager *replay)
-{
-    if (!g_GameManager.isPlaying)
-    {
-        return 1;
-    }
-    while (replay->frame >= (replay->cursors[0] + 1)->frame)
-    {
-        replay->cursors[0]++;
-    }
-    g_Buttons = (g_Buttons & ~0x1f7) | replay->cursors[0]->input;
-    g_ButtonRepeat = 0;
-    if (g_PrevButtons == g_Buttons)
-    {
-        if (g_ButtonFrames >= 30)
-        {
-            if (g_ButtonFrames % 8 == 0)
-            {
-                g_ButtonRepeat = 1;
-            }
-            if (g_ButtonFrames >= 38)
-            {
-                g_ButtonFrames = 30;
-            }
-        }
-        g_ButtonFrames++;
-    }
-    else
-    {
-        g_ButtonFrames = 0;
-    }
-    replay->frame++;
-    return 1;
-}
-
-int ReplayManager::PlayOnUpdate2(ReplayManager *replay)
-{
-    if (!g_GameManager.isPlaying)
-    {
-        return 1;
-    }
-    if (g_Gui.IsMsgRunning() && g_Gui.IsMsgSkippable() && replay->frame % 3 != 2)
-    {
-        return 6;
-    }
-    return 1;
-}
-
-int ReplayManager::OnDraw(ReplayManager *replay)
-{
-    return 1;
-}
-
 int ReplayManager::RegisterChain(int mode, char *path)
 {
     ReplayManager *replay;
@@ -184,36 +111,77 @@ int ReplayManager::RegisterChain(int mode, char *path)
     return 0;
 }
 
-void ReplayManager::EndStage()
+int ReplayManager::RecordOnUpdate(ReplayManager *replay)
 {
-    ReplayManager *replay = g_ReplayManager;
+    WORD input;
 
-    if (replay != NULL)
+    if (!g_GameManager.isPlaying)
+    {
+        return 1;
+    }
+    input = g_Buttons & 0x1f7;
+    if (input != replay->cursors[0]->input)
     {
         replay->cursors[0]++;
-        replay->cursors[0]->frame = replay->frame;
-        replay->cursors[0]->input = 0;
-        replay->cursors[0]++;
-        replay->cursors[0]->frame = 9999999;
-        replay->cursors[0]->input = 0;
         replay->cursors[g_GameManager.stage] = replay->cursors[0] + 1;
+        replay->cursors[0]->frame = replay->frame;
+        replay->cursors[0]->input = input;
     }
+    replay->frame++;
+    return 1;
 }
 
-int ReplayManager::DeletedCallback(ReplayManager *replay)
+int ReplayManager::PlayOnUpdate2(ReplayManager *replay)
 {
-    g_Chain.Remove(replay->drawChain);
-    replay->drawChain = NULL;
-    if (replay->calcChain2 != NULL)
+    if (!g_GameManager.isPlaying)
     {
-        g_Chain.Remove(replay->calcChain2);
-        replay->calcChain2 = NULL;
+        return 1;
     }
-    MemFree(g_ReplayManager->data);
-    delete g_ReplayManager;
-    g_ReplayManager = NULL;
-    g_ReplayManager = NULL;
-    return 0;
+    if (g_Gui.IsMsgRunning() && g_Gui.IsMsgSkippable() && replay->frame % 3 != 2)
+    {
+        return 6;
+    }
+    return 1;
+}
+
+int ReplayManager::PlayOnUpdate(ReplayManager *replay)
+{
+    if (!g_GameManager.isPlaying)
+    {
+        return 1;
+    }
+    while (replay->frame >= (replay->cursors[0] + 1)->frame)
+    {
+        replay->cursors[0]++;
+    }
+    g_Buttons = (g_Buttons & ~0x1f7) | replay->cursors[0]->input;
+    g_ButtonRepeat = 0;
+    if (g_PrevButtons == g_Buttons)
+    {
+        if (g_ButtonFrames >= 30)
+        {
+            if (g_ButtonFrames % 8 == 0)
+            {
+                g_ButtonRepeat = 1;
+            }
+            if (g_ButtonFrames >= 38)
+            {
+                g_ButtonFrames = 30;
+            }
+        }
+        g_ButtonFrames++;
+    }
+    else
+    {
+        g_ButtonFrames = 0;
+    }
+    replay->frame++;
+    return 1;
+}
+
+int ReplayManager::OnDraw(ReplayManager *replay)
+{
+    return 1;
 }
 
 int ReplayManager::RecordAddedCallback(ReplayManager *replay)
@@ -307,6 +275,38 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
         g_GameManager.guiScore = g_GameManager.score = replay->data->stages[g_GameManager.stage - 1]->score;
     }
     return 0;
+}
+
+int ReplayManager::DeletedCallback(ReplayManager *replay)
+{
+    g_Chain.Remove(replay->drawChain);
+    replay->drawChain = NULL;
+    if (replay->calcChain2 != NULL)
+    {
+        g_Chain.Remove(replay->calcChain2);
+        replay->calcChain2 = NULL;
+    }
+    MemFree(g_ReplayManager->data);
+    delete g_ReplayManager;
+    g_ReplayManager = NULL;
+    g_ReplayManager = NULL;
+    return 0;
+}
+
+void ReplayManager::EndStage()
+{
+    ReplayManager *replay = g_ReplayManager;
+
+    if (replay != NULL)
+    {
+        replay->cursors[0]++;
+        replay->cursors[0]->frame = replay->frame;
+        replay->cursors[0]->input = 0;
+        replay->cursors[0]++;
+        replay->cursors[0]->frame = 9999999;
+        replay->cursors[0]->input = 0;
+        replay->cursors[g_GameManager.stage] = replay->cursors[0] + 1;
+    }
 }
 
 void SaveReplay(char *path, char *name)

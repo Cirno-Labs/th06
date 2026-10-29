@@ -10,6 +10,9 @@
 // The game's data, as the original defines it here. The DLL build uses
 // the original's copies instead.
 #ifdef TH06_EXE
+// 0x24 bytes of .bss before g_UnusedTimer that nothing refers to: an
+// unused global of unknown type.
+BYTE g_UnusedScreenEffectData[0x24];
 // Constructed and never used. The original's initializers construct it
 // between g_Player and g_SoundPlayer, from an /Od object: replay.obj,
 // screeneffect.obj or sound.obj (nothing tells).

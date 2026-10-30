@@ -1374,9 +1374,26 @@ void ScriptSet(Enemy *enemy, int dst, int *src)
 // /OPT:ICF's sort of the code sections, so with the others marked like
 // it, it decides which of several identical D3DX8 functions the linker
 // keeps: the original's choices. Its size and its number of references
-// are what matter.
-int UnusedScriptKind()
+// are what matter (4 to 19 references, any size).
+//
+// It also mentions four KERNEL32 functions that D3DX8 uses and the game
+// doesn't: the linker then loads their import objects with the game's
+// instead of after D3DX8's members, and that is what the original's
+// import sort needs to put CreateFileA, LocalFree and IsBadReadPtr where
+// it has them. Any four of D3DX8's dropped KERNEL32 imports would do (the
+// resource and file mapping ones); these stand in.
+int UnusedScriptKind(HMODULE module, char *name, DWORD *size)
 {
+    HRSRC info;
+    HGLOBAL data;
+
+    info = FindResourceA(module, name, RT_RCDATA);
+    data = LoadResource(module, info);
+    *size = SizeofResource(module, info);
+    if (LockResource(data) == NULL)
+    {
+        return 0;
+    }
     return g_GameManager.difficulty * 8 + g_GameManager.character * 2 + g_GameManager.shotType +
            g_GameManager.continuesUsed + g_GameManager.deaths + g_GameManager.bombsUsed +
            g_GameManager.graze + g_GameManager.spellCardsCaptured;

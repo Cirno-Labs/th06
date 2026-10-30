@@ -891,7 +891,3 @@ void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle)
     out->x = c * in->x + s * in->y;
     out->y = c * in->y - s * in->x;
 }
-
-void DebugPrint(const char *fmt, ...)
-{
-}

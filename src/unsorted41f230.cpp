@@ -22,6 +22,18 @@ GameWindow g_GameWindow;
 #define WINDOW_TITLE "東方紅魔郷　～ the Embodiment of Scarlet Devil"
 #endif
 
+#ifdef TH06_EXE
+// Unused: the original's object also loaded a DLL and looked a function
+// up in it, from code /OPT:REF dropped. Mentioning GetProcAddress and
+// LoadLibraryA before WinMain's GetLastError makes the linker load their
+// import objects first among KERNEL32's, as the original's hint/name
+// table shows.
+FARPROC UnusedLoadProc(LPCSTR dll, LPCSTR name)
+{
+    return GetProcAddress(LoadLibraryA(dll), name);
+}
+#endif // TH06_EXE
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     HRESULT resetResult;

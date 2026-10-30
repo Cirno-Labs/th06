@@ -10,13 +10,17 @@
 // The game's data, as the original defines it here. The DLL build uses
 // the original's copies instead.
 #ifdef TH06_EXE
-// 0x24 bytes of .bss before g_UnusedTimer that nothing refers to: an
-// unused global of unknown type.
-BYTE g_UnusedScreenEffectData[0x24];
 // Constructed and never used. The original's initializers construct it
 // between g_Player and g_SoundPlayer, from an /Od object: replay.obj,
-// screeneffect.obj or sound.obj (nothing tells).
-Timer g_UnusedTimer;
+// screeneffect.obj or sound.obj (nothing tells). Its initializer keeps
+// the address of the Timer in a local, which the compiler only does for
+// a member at an offset: a Timer behind 0x24 bytes nothing refers to.
+struct UnusedTimer
+{
+    BYTE unk_0[0x24];
+    Timer timer;
+};
+UnusedTimer g_UnusedTimer;
 #endif // TH06_EXE
 
 void ClearScreen(D3DCOLOR color)

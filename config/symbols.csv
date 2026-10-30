@@ -1660,7 +1660,7 @@ address,size,name,symbol
 0x006c6d18,,g_App,?g_App@@3VApp@@A
 0x006ca628,,g_Player,?g_Player@@3VPlayer@@A
 0x006d3f18,,g_ReplayManager,?g_ReplayManager@@3PAVReplayManager@@A
-0x006d3f40,,g_UnusedTimer,?g_UnusedTimer@@3UTimer@@A
+0x006d3f1c,,g_UnusedTimer,?g_UnusedTimer@@3UUnusedTimer@@A
 0x006d3f50,,g_SoundPlayer,?g_SoundPlayer@@3VSoundPlayer@@A
 0x006d4588,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A
 0x006d4590,,g_DiffuseQuad,?g_DiffuseQuad@@3PAUVertexTex1DiffuseXyzrwh@@A

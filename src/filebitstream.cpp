@@ -2,13 +2,22 @@
 // FileBitStream, 0x43c410 to 0x43c76e: its own object in the original,
 // which starts with BitStream's inline destructors (/O2 emits the inline
 // functions a function needs before it). The constructor is out of
-// line; Close's copy comes after Open (see archive.h).
+// line; Close's copy comes after Open (see archive.h). The destructor is
+// out of line too and defined here, after the constructor: cl then
+// emits it at the end, between ReadByte's adjustor thunk and the scalar
+// deleting destructor, where the original has it (an inline one comes
+// after the scalar deleting destructor).
 
 #define FBS_CLOSE_LATE
 #include "archive.h"
 
 FileBitStream::FileBitStream()
 {
+}
+
+FileBitStream::~FileBitStream()
+{
+    this->Close();
 }
 
 int FileBitStream::Open(char *path)

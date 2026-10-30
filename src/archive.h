@@ -92,10 +92,7 @@ class FileBitStream : public BitStream, public File
 {
 public:
     FileBitStream();
-    ~FileBitStream()
-    {
-        this->Close();
-    }
+    ~FileBitStream();
 
     // Opens the file at `path`. Returns nonzero on success.
     int Open(char *path);

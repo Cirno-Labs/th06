@@ -363,6 +363,23 @@ int Enemy::CheckLifeCallback()
     }
 }
 
+#ifdef TH06_EXE
+// Unused (dropped by /OPT:REF), exe only. Dead code still goes into
+// /OPT:ICF's sort of the code sections, so with the others marked like
+// it, it decides which of several identical D3DX8 functions the linker
+// keeps: the original's choices. Its size and its number of references
+// are what matter.
+int UnusedEnemyMix(int a, int b)
+{
+    int mix = a * b + (a - b) * 0x300;
+    mix ^= a << 4;
+    mix += b >> 2;
+    mix = mix * 0x500 - (a & b);
+    mix |= b << 3;
+    return mix + g_GameManager.difficulty;
+}
+#endif // TH06_EXE
+
 int Enemy::CheckTimerCallback()
 {
     Enemy *it;

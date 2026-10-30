@@ -1369,6 +1369,20 @@ void ScriptSet(Enemy *enemy, int dst, int *src)
     }
 }
 
+#ifdef TH06_EXE
+// Unused (dropped by /OPT:REF), exe only. Dead code still goes into
+// /OPT:ICF's sort of the code sections, so with the others marked like
+// it, it decides which of several identical D3DX8 functions the linker
+// keeps: the original's choices. Its size and its number of references
+// are what matter.
+int UnusedScriptKind()
+{
+    return g_GameManager.difficulty * 8 + g_GameManager.character * 2 + g_GameManager.shotType +
+           g_GameManager.continuesUsed + g_GameManager.deaths + g_GameManager.bombsUsed +
+           g_GameManager.graze + g_GameManager.spellCardsCaptured;
+}
+#endif // TH06_EXE
+
 void ScriptAdd(Enemy *enemy, int dst, int *a, int *b)
 {
     int *res;

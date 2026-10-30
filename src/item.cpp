@@ -350,6 +350,18 @@ void ItemManager::CollectAll()
     }
 }
 
+#ifdef TH06_EXE
+// Unused (dropped by /OPT:REF), exe only. Dead code still goes into
+// /OPT:ICF's sort of the code sections, so with the others marked like
+// it, it decides which of several identical D3DX8 functions the linker
+// keeps: the original's choices. Its size and its number of references
+// are what matter.
+int UnusedItemMix(int a, int b)
+{
+    return (a * b + a - b) * 7 * a;
+}
+#endif // TH06_EXE
+
 void ItemManager::DrawItems()
 {
     Item *entry = this->items;

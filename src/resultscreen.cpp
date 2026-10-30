@@ -1927,7 +1927,3 @@ int ResultScreen::DeletedCallback(ResultScreen *screen)
     screen = NULL;
     return 0;
 }
-
-void DebugPrint2(const char *fmt, ...)
-{
-}

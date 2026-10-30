@@ -15,6 +15,14 @@ AsciiText g_AsciiText;
 ChainElem g_AsciiCalcElem;
 ChainElem g_AsciiDrawElem;
 ChainElem g_AsciiDrawElem2;
+
+// Unused (dropped by /OPT:REF), exe only. Its 0.0f is the game's first
+// .rdata constant, which decides which identical 0.0f /OPT:ICF keeps:
+// libcmt's L"" (a_str.obj) like the original, not stage.obj's 0.0f.
+int UnusedIsZero(float value)
+{
+    return value == 0.0f;
+}
 #endif // TH06_EXE
 
 EXE_INLINE AsciiText::AsciiText()

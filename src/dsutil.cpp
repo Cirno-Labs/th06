@@ -739,6 +739,18 @@ HRESULT CWaveFile::ReadMMIO()
     return S_OK;
 }
 
+#ifdef TH06_EXE
+// Unused: the original's object also wrote to a wave file before
+// ResetFile, from code /OPT:REF dropped (the SDK's dsutil can write wave
+// files; the game's copy only reads). The Rich header counts one more
+// WINMM import object, and the IAT order needs it in the linker's
+// import sort ahead of mmioAdvance.
+LONG UnusedWriteWave(HMMIO hmmio, char *data, LONG size)
+{
+    return mmioWrite(hmmio, data, size);
+}
+#endif // TH06_EXE
+
 DWORD CWaveFile::GetSize()
 {
     return m_dwSize;

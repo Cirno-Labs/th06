@@ -9,6 +9,31 @@ File::File()
     this->access = 0;
 }
 
+#ifdef TH06_EXE
+// Unused: the original's object also mentioned five more KERNEL32
+// functions before File::Open, from code /OPT:REF dropped. The Rich
+// header counts their import objects and the IAT order needs five more
+// KERNEL32 entries in the linker's import sort (the dropped ones are
+// still sorted). Which five is unknown; these file helpers stand in.
+BOOL UnusedReplaceFile(char *path, char *backup, char *tempDir)
+{
+    if (GetTempPathA(MAX_PATH, tempDir) == 0)
+    {
+        return FALSE;
+    }
+    if (GetFileAttributesA(path) == INVALID_FILE_ATTRIBUTES)
+    {
+        return FALSE;
+    }
+    SetFileAttributesA(path, FILE_ATTRIBUTE_NORMAL);
+    if (!CopyFileA(path, backup, FALSE))
+    {
+        return FALSE;
+    }
+    return MoveFileA(backup, path);
+}
+#endif // TH06_EXE
+
 int File::Open(char *path, char *mode)
 {
     BOOL append = FALSE;

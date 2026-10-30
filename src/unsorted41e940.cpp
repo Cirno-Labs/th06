@@ -247,6 +247,15 @@ void UnusedMoveBits(void *dst, void *src, size_t size)
     memmove(dst, src, size);
     throw;
 }
+
+// Unused: the original's object also set a DC's background mode and
+// then its text color before its first TextOutA, from code /OPT:REF
+// dropped. That order of first mention decides GDI32's IAT order.
+void UnusedSetTextStyle(HDC hdc, COLORREF color)
+{
+    SetBkMode(hdc, TRANSPARENT);
+    SetTextColor(hdc, color);
+}
 #endif // TH06_EXE
 
 void CreateTextSurface()

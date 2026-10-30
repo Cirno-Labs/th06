@@ -20,7 +20,16 @@ our own analysis or, for library code, from the libraries themselves.
 
 All 511 of the game's functions are decompiled and match the original,
 all 241,285 bytes. The standalone exe (`just exe`) is the whole game,
-built from source.
+built from source, and byte-for-byte identical to the original:
+
+```sh
+just exe && sha1sum build/th06.exe
+# e61b4f4fea3802e926ef307f45166599c3e86555, as in orig/th06_102h.sha1
+```
+
+Only the PE timestamp and checksum are copied from the original; the
+code, data, imports, resources and Rich header come out of the build.
+`just compare-exe` compares the two section by section.
 
 Ghidra finds 1383 functions. The game code is compiled without
 optimization, so its functions start with `push ebp; mov ebp, esp`; the
@@ -112,6 +121,27 @@ Everything runs headless, so it works over SSH. `just` lists the recipes.
    SDK import libraries, and carries the original's icon and header
    fields. `just exe STEPS` runs it like `just run`.
 
+### How the standalone exe matches
+
+Matching functions is not enough for the whole file: the linker's
+layout depends on things the game's surviving code doesn't show.
+
+- **Objects.** The source files are split as the original's objects
+  were: the Rich header counts them (39 game objects), and functions,
+  data and literals land in object order. Where no byte shows a
+  boundary, the split is a plausible one.
+- **Data.** Globals are defined in the files that own them. `.bss` is
+  ordered by a hash of each name, so some globals are named for their
+  slot rather than their use.
+- **Dead code.** `#ifdef TH06_EXE` blocks hold functions nothing calls.
+  `/OPT:REF` drops their code, but what they reference still steers the
+  link: the order libraries and imports are loaded, the import count
+  in the Rich header, and which copy of identical code `/OPT:ICF`
+  keeps. The original had such code too; where its contents can't be
+  recovered, the stand-ins say so. Changing the set of compiled
+  functions can re-roll the code folding, so check `just compare-exe`
+  after edits.
+
 ### Optional features
 
 The standalone exe can be built with optional features, community
@@ -127,7 +157,7 @@ only, and keeps their objects in `build/obj_<features>/`. Without `FEAT`
 the exe is the vanilla game, with its objects in `build/obj_exe/`. The
 DLL and `just compare` always build the vanilla code. (The exe's objects
 also see `TH06_EXE`, which guards the globals the DLL takes from the
-original.)
+original and the exe's dead code.)
 
 `frame_cap` is VsyncPatch (`vpatch_th06.dll`, rev4, from
 `VsyncPatch.zip` at <https://maribelhearn.com/faq/eosd>) with the
@@ -181,8 +211,7 @@ in `symbols.csv` too, so the game and the new code share one heap.
 ```
 orig/     your game files (not tracked) and their checksums
 src/      decompiled source; src/dll/ is the hook DLL's own code,
-          src/exe/ the game's data and globals for the standalone exe
-          and its optional features' code
+          src/exe/ the standalone exe's optional features' code
 config/   symbols.csv: address, size, name and mangled symbol
 tools/    build, compare, exe patcher, symbol seeding, Ghidra scripts:
           the decomp-tools repository shared with th07 and th08, as a

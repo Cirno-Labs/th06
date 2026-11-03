@@ -127,7 +127,7 @@
 <rect width="12" height="12" x="120" y="15" class="named"><title>0x0040b650 ScriptDiv (164 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="15" class="named"><title>0x0040b700 ScriptMod (202 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="15" class="named"><title>0x0040b7d0 ScriptAngle (190 bytes)</title></rect>
-<rect width="12" height="12" x="165" y="15" class="named"><title>0x0040b890 D3DXVec3Length (74 bytes)</title></rect>
+<rect width="12" height="12" x="165" y="15" class="named"><title>0x0040b890 Vec3Length (74 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="15" class="named"><title>0x0040b8e0 ScriptFreezeBullets (414 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="15" class="named"><title>0x0040ba80 ScriptShootFromRandomPoint (244 bytes)</title></rect>
 <rect width="12" height="12" x="210" y="15" class="named"><title>0x0040bb80 ScriptStarPattern (1396 bytes)</title></rect>
@@ -981,7 +981,7 @@
 <rect width="3.44" height="3.08" x="693.18" y="161.92" class="named"><title>0x0041e210 TextFont::Draw (75 bytes)</title></rect>
 <rect width="3.11" height="3.40" x="699.62" y="118.04" class="named"><title>0x00424ae4 App::PlayMidi (75 bytes)</title></rect>
 <rect width="3.11" height="3.40" x="699.62" y="124.45" class="named"><title>0x00430220 ScreenEffect::DeletedCallback (75 bytes)</title></rect>
-<rect width="3.11" height="3.32" x="699.62" y="130.85" class="named"><title>0x0040b890 D3DXVec3Length (74 bytes)</title></rect>
+<rect width="3.11" height="3.32" x="699.62" y="130.85" class="named"><title>0x0040b890 Vec3Length (74 bytes)</title></rect>
 <rect width="3.11" height="3.32" x="699.62" y="137.17" class="named"><title>0x00424d38 App::StopMusic (74 bytes)</title></rect>
 <rect width="3.11" height="3.23" x="699.62" y="143.49" class="named"><title>0x0043c3c0 BitStream::ReadString (73 bytes)</title></rect>
 <rect width="3.11" height="3.23" x="699.62" y="149.72" class="named"><title>0x0043c4a0 FileBitStream::Open (73 bytes)</title></rect>

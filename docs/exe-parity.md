@@ -1,8 +1,21 @@
-# The standalone exe
+# Executable parity
 
 `just exe` links the game from source into `build/th06.exe`, byte-for-byte
-identical to the original; `just compare-exe` compares the two section
-by section.
+identical to the original 1.02h executable: all 512,000 bytes, SHA-1
+`e61b4f4fea3802e926ef307f45166599c3e86555`, as in `orig/th06_102h.sha1`.
+
+```sh
+just check-exe            # builds the exe, then requires exact equality
+just compare              # ordinary-object function comparison
+just compare-exe          # detailed headers/sections/symbol report
+```
+
+`just check-exe` (decomp-tools' `project.py check-exe`) compares every
+byte and the file lengths. It exits nonzero on any mismatch, including
+headers, padding, tables and metadata; it does not mask addresses.
+Only the PE timestamp and checksum are copied from the original; the
+code, data, imports, resources and Rich header come out of the build.
+Replay validation is recorded in [replay parity](replay.md).
 
 ## How it matches
 

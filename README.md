@@ -118,7 +118,7 @@ Everything runs headless, so it works over SSH. `just` lists the recipes.
    original executable. It links the real D3DX8, the static CRT and the
    SDK import libraries, and carries the original's icon and header
    fields. `just exe STEPS` runs it like `just run`.
-   [`docs/standalone.md`](docs/standalone.md) has how it matches and its
+   [`docs/exe-parity.md`](docs/exe-parity.md) has how it matches and its
    optional features (`FEAT=`).
 7. Replays (`just replay`): plays `replays/` to the end in the original
    and the standalone exe and compares every calculation

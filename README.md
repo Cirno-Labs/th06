@@ -27,8 +27,9 @@ just exe && sha1sum build/th06.exe
 # e61b4f4fea3802e926ef307f45166599c3e86555, as in orig/th06_102h.sha1
 ```
 
-Only the PE timestamp and checksum are copied from the original; the
-code, data, imports, resources and Rich header come out of the build.
+Only the link timestamp is copied from the original, and the
+resources, the game's data, are taken from it; the code, data, imports,
+headers and Rich header come out of the build.
 **`just check-exe`** builds and enforces whole-file equality;
 `just compare-exe` gives the detailed report. See
 [executable parity](docs/exe-parity.md) for how it matches and the

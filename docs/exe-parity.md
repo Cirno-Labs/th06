@@ -13,8 +13,9 @@ just compare-exe          # detailed headers/sections/symbol report
 `just check-exe` (decomp-tools' `project.py check-exe`) compares every
 byte and the file lengths. It exits nonzero on any mismatch, including
 headers, padding, tables and metadata; it does not mask addresses.
-Only the PE timestamp and checksum are copied from the original; the
-code, data, imports, resources and Rich header come out of the build.
+Only the link timestamp is copied from the original, and the
+resources, the game's data, are taken from it; the code, data, imports,
+headers and Rich header come out of the build.
 Replay validation is recorded in [replay parity](replay.md).
 
 ## How it matches

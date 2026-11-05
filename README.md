@@ -29,7 +29,18 @@ just exe && sha1sum build/th06.exe
 
 Only the PE timestamp and checksum are copied from the original; the
 code, data, imports, resources and Rich header come out of the build.
-`just compare-exe` compares the two section by section.
+**`just check-exe`** builds and enforces whole-file equality;
+`just compare-exe` gives the detailed report. See
+[executable parity](docs/exe-parity.md) for how it matches and the
+exe's optional features.
+
+`just replay` uses the shared replay harness (`tools/replay/`) with
+th06's format and tracer to compare complete playback runs. See
+[replay parity](docs/replay.md) for setup, the 17-recording world
+record corpus and validation limits. Replay checks require natural
+completion and recorded stage scores as well as exact original/rebuild
+trace equality. All 17 recordings pass, and their traces match both
+original runs.
 
 Ghidra finds 1383 functions. The game code is compiled without
 optimization, so its functions start with `push ebp; mov ebp, esp`; the
@@ -120,9 +131,6 @@ Everything runs headless, so it works over SSH. `just` lists the recipes.
    fields. `just exe STEPS` runs it like `just run`.
    [`docs/exe-parity.md`](docs/exe-parity.md) has how it matches and its
    optional features (`FEAT=`).
-7. Replays (`just replay`): plays `replays/` to the end in the original
-   and the standalone exe and compares every calculation
-   ([`docs/replay.md`](docs/replay.md)).
 
 ### Hooking
 
@@ -148,8 +156,10 @@ config/   symbols.csv: address, size, name and mangled symbol
 tools/    the shared decomp-tools: build, compare, exe patcher, symbol
           seeding, Ghidra scripts, the replay harness and the just recipes
 project.toml  th06's settings for the tools: exe, flags, link order
-scripts/  th06's own: the English patch, its build hook, the replay hook
-replays/  world record replays for just replay
+scripts/  th06's own: the English patch, its build hook, the DAT
+          archive format, the replay hook, tracer and tests
+replays/  world record replays for just replay, their manifest and README
+docs/     progress image, executable and replay parity
 build/    outputs; build/game/ is a runnable copy of the patched game
 ```
 
@@ -169,7 +179,8 @@ other games' changes. Either way, commit the new `tools` pointer here.
   `ja_JP.UTF-8` locale, without which the game can't find its Shift-JIS
   named data files
 - Visual C++ .NET 2002, the Windows XP SP2 Platform SDK and the
-  DirectX 8.0 SDK (bring your own copies)
+  DirectX 8.0 SDK in the Wine prefix at `.wine/` (bring your own
+  copies)
 - Ghidra (for analysis, optional)
 
 ## Legal

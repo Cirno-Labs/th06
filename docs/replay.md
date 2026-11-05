@@ -12,7 +12,8 @@ just replay                          # every replay in replays/
 just replay replays/th6_udNoRA.rpy   # one
 python3 tools/replay/replay.py info replays/th6_udNoRA.rpy
 python3 tools/replay/replay.py run replays/th6_udNoRA.rpy --exe standalone --speed 1 --show
-python3 -m unittest scripts/test_replay.py     # the parser and the checks, no game
+python3 -m unittest scripts.test_replay        # the parser and the checks, no game
+python3 -m unittest discover -s tools/replay   # the shared harness's tests
 ```
 
 The harness is shared by the games that use decomp-tools. What every
@@ -190,7 +191,7 @@ compared too.
 - Sound effects and music being on, which could change timing but not
   logic.
 - The standalone exe is byte-identical to the original for now
-  (`just compare-exe`), so its parity is expected. The check is there for
+  (`just check-exe`), so its parity is expected. The check is there for
   when the code changes, and for feature builds (`--exe PATH=MAP`).
 
 ## The replays
@@ -199,8 +200,9 @@ compared too.
 (https://maribelhearn.com/wr) that are hosted there; the others link
 to videos only. `replay.py fetch` downloads them again and rewrites
 `replays/manifest.json`, which lists each replay's source, player, date,
-score and SHA-1. The players made the replays, and the repository keeps
-them for testing only. The hook's `WR_TABLE` picks the game's table.
+score and SHA-1 ([`replays/README.md`](../replays/README.md)). The
+players made the replays, and the repository keeps them for testing
+only. The hook's `WR_TABLE` picks the game's table.
 
 ## Provenance
 

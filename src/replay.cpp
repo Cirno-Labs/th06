@@ -162,7 +162,7 @@ int ReplayManager::PlayOnUpdate(ReplayManager *replay)
     }
     g_Buttons = (g_Buttons & ~0x1f7) | replay->cursors[0]->input;
     g_RepeatButtons = 0;
-    if (g_LastButtons == g_Buttons)
+    if (g_PreviousButtons == g_Buttons)
     {
         if (g_ButtonHeldFrames >= 30)
         {

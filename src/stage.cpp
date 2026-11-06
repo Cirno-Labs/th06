@@ -10,7 +10,7 @@
 #ifdef TH06_EXE
 Stage g_Stage;
 ChainElem g_StageBgCalcElem;
-ChainElem g_StageBgDrawElem;
+ChainElem g_StageDrawElem;
 ChainElem g_StageBgDrawElem2;
 #endif // TH06_EXE
 
@@ -303,9 +303,9 @@ int Stage::RegisterChain(int stage)
     {
         return -1;
     }
-    g_StageBgDrawElem.SetCallback((ChainCallback)Stage::OnDraw);
-    g_StageBgDrawElem.arg = s;
-    g_Chain.AddToDrawChain(&g_StageBgDrawElem, 3);
+    g_StageDrawElem.SetCallback((ChainCallback)Stage::OnDraw);
+    g_StageDrawElem.arg = s;
+    g_Chain.AddToDrawChain(&g_StageDrawElem, 3);
     g_StageBgDrawElem2.SetCallback((ChainCallback)Stage::OnDraw2);
     g_StageBgDrawElem2.arg = s;
     g_Chain.AddToDrawChain(&g_StageBgDrawElem2, 4);
@@ -331,7 +331,7 @@ int Stage::DeletedCallback(Stage *stage)
 void Stage::RemoveChain()
 {
     g_Chain.Remove(&g_StageBgCalcElem);
-    g_Chain.Remove(&g_StageBgDrawElem);
+    g_Chain.Remove(&g_StageDrawElem);
     g_Chain.Remove(&g_StageBgDrawElem2);
 }
 

@@ -43,7 +43,7 @@ int g_BulletColorOffsets32[8] = {
 };
 
 ChainElem g_BulletChainCalc;
-ChainElem g_BulletChainDraw;
+ChainElem g_BulletDrawElem;
 BulletManager g_BulletManager;
 #endif // TH06_EXE
 
@@ -507,9 +507,9 @@ int BulletManager::RegisterChain(char *anmPath)
     {
         return -1;
     }
-    g_BulletChainDraw.SetCallback((ChainCallback)BulletManager::OnDraw);
-    g_BulletChainDraw.arg = mgr;
-    g_Chain.AddToDrawChain(&g_BulletChainDraw, 9);
+    g_BulletDrawElem.SetCallback((ChainCallback)BulletManager::OnDraw);
+    g_BulletDrawElem.arg = mgr;
+    g_Chain.AddToDrawChain(&g_BulletDrawElem, 9);
     return 0;
 }
 
@@ -1182,5 +1182,5 @@ int BulletManager::DeletedCallback(BulletManager *mgr)
 void BulletManager::RemoveChain()
 {
     g_Chain.Remove(&g_BulletChainCalc);
-    g_Chain.Remove(&g_BulletChainDraw);
+    g_Chain.Remove(&g_BulletDrawElem);
 }

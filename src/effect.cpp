@@ -7,7 +7,7 @@
 // the original's copies instead.
 #ifdef TH06_EXE
 EffectManager g_EffectManager;
-ChainElem g_EffectsCalcElem;
+ChainElem g_EffectCalcElem;
 ChainElem g_EffectsDrawElem;
 #endif // TH06_EXE
 
@@ -333,11 +333,11 @@ int EffectManager::RegisterChain()
     EffectManager *mgr = &g_EffectManager;
 
     mgr->Reset();
-    g_EffectsCalcElem.SetCallback((ChainCallback)EffectManager::OnUpdate);
-    g_EffectsCalcElem.addedCallback = (ChainCallback)EffectManager::AddedCallback;
-    g_EffectsCalcElem.deletedCallback = (ChainCallback)EffectManager::DeletedCallback;
-    g_EffectsCalcElem.arg = mgr;
-    if (g_Chain.AddToCalcChain(&g_EffectsCalcElem, 10) != 0)
+    g_EffectCalcElem.SetCallback((ChainCallback)EffectManager::OnUpdate);
+    g_EffectCalcElem.addedCallback = (ChainCallback)EffectManager::AddedCallback;
+    g_EffectCalcElem.deletedCallback = (ChainCallback)EffectManager::DeletedCallback;
+    g_EffectCalcElem.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_EffectCalcElem, 10) != 0)
     {
         return -1;
     }
@@ -349,6 +349,6 @@ int EffectManager::RegisterChain()
 
 void EffectManager::RemoveChain()
 {
-    g_Chain.Remove(&g_EffectsCalcElem);
+    g_Chain.Remove(&g_EffectCalcElem);
     g_Chain.Remove(&g_EffectsDrawElem);
 }

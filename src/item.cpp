@@ -24,7 +24,7 @@ int g_PowerLevels[] = {
 ItemManager g_ItemManager;
 // Constructed and never used.
 ChainElem g_UnusedChainA;
-ChainElem g_UnusedChainB;
+ChainElem g_UnusedItemElem2;
 #endif // TH06_EXE
 
 EXE_INLINE ItemManager::ItemManager()

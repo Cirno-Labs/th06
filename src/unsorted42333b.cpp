@@ -32,13 +32,13 @@ int App::OnUpdate(App *arg)
     {
         g_SoundPlayer.bgm->UpdateFade();
     }
-    g_LastButtons = g_Buttons;
+    g_PreviousButtons = g_Buttons;
     g_Buttons = ReadButtons();
 #if FEAT_FRAME_CAP
     g_FrameCapButtons = g_Buttons;
 #endif
     g_RepeatButtons = 0;
-    if (g_LastButtons == g_Buttons)
+    if (g_PreviousButtons == g_Buttons)
     {
         if (g_ButtonHeldFrames >= 30)
         {
@@ -202,7 +202,7 @@ int App::OnUpdate(App *arg)
                 }
             }
         }
-        g_Buttons = g_LastButtons = g_RepeatButtons = 0;
+        g_Buttons = g_PreviousButtons = g_RepeatButtons = 0;
     }
     arg->curScene = arg->scene;
     arg->frames++;

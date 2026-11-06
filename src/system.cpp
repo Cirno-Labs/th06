@@ -21,7 +21,7 @@ Chain g_Chain;
 Rng g_Random;
 DatArchive **g_DatArchives;
 WORD g_Buttons;
-WORD g_LastButtons;
+WORD g_PreviousButtons;
 WORD g_RepeatButtons;
 WORD g_ButtonHeldFrames;
 WORD g_ShotHeldFrames;

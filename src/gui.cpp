@@ -566,7 +566,7 @@ int GuiImpl::RunMsg()
             break;
         case 4:
             if ((!this->msg.skippable || !(g_Buttons & 0x100)) &&
-                (!(g_Buttons & 1) || (g_Buttons & 1) == (g_LastButtons & 1) || this->msg.waitFrames < 8))
+                (!(g_Buttons & 1) || (g_Buttons & 1) == (g_PreviousButtons & 1) || this->msg.waitFrames < 8))
             {
                 if (this->msg.waitFrames >= this->msg.instr->i)
                 {

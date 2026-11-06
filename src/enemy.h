@@ -266,5 +266,5 @@ extern EnemyManager g_EnemyManager;
 extern BYTE g_EnemyItemDrops[0x20];
 
 // EnemyManager's statically allocated chain elements.
-extern ChainElem g_EnemyCalcChain;
-extern ChainElem g_EnemyDrawChain;
+extern ChainElem g_EnemyCalcElem;
+extern ChainElem g_EnemyDrawElem;

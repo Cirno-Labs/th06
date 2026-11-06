@@ -1613,7 +1613,7 @@ address,size,name,symbol
 0x0047b900,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A
 0x00487aac,,g_AsciiCalcElem,?g_AsciiCalcElem@@3UChainElem@@A
 0x00487acc,,g_AsciiDrawElem2,?g_AsciiDrawElem2@@3UChainElem@@A
-0x00487af0,,g_StageBgDrawElem,?g_StageBgDrawElem@@3UChainElem@@A
+0x00487af0,,g_StageDrawElem,?g_StageDrawElem@@3UChainElem@@A
 0x00487b10,,g_Stage,?g_Stage@@3VStage@@A
 0x00487e04,,g_StageBgDrawElem2,?g_StageBgDrawElem2@@3UChainElem@@A
 0x00487e24,,g_StageBgCalcElem,?g_StageBgCalcElem@@3UChainElem@@A
@@ -1621,14 +1621,14 @@ address,size,name,symbol
 0x00487e48,,g_PlayerDistance,?g_PlayerDistance@@3MA
 0x00487e4c,,g_PlayerAngle,?g_PlayerAngle@@3MA
 0x00487e50,,g_EnemyScripts,?g_EnemyScripts@@3VEnemyScripts@@A
-0x00487fbc,,g_UnusedEclChain,?g_UnusedEclChain@@3UChainElem@@A
+0x00487fbc,,g_UnusedEnemyScriptElem,?g_UnusedEnemyScriptElem@@3UChainElem@@A
 0x00487fe0,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
-0x004b7964,,g_EffectsCalcElem,?g_EffectsCalcElem@@3UChainElem@@A
+0x004b7964,,g_EffectCalcElem,?g_EffectCalcElem@@3UChainElem@@A
 0x004b7984,,g_EffectsDrawElem,?g_EffectsDrawElem@@3UChainElem@@A
-0x004b79a8,,g_EnemyDrawChain,?g_EnemyDrawChain@@3UChainElem@@A
+0x004b79a8,,g_EnemyDrawElem,?g_EnemyDrawElem@@3UChainElem@@A
 0x004b79c8,,g_EnemyManager,?g_EnemyManager@@3VEnemyManager@@A
-0x005a5fb4,,g_EnemyCalcChain,?g_EnemyCalcChain@@3UChainElem@@A
-0x005a5fd8,,g_BulletChainDraw,?g_BulletChainDraw@@3UChainElem@@A
+0x005a5fb4,,g_EnemyCalcElem,?g_EnemyCalcElem@@3UChainElem@@A
+0x005a5fd8,,g_BulletDrawElem,?g_BulletDrawElem@@3UChainElem@@A
 0x005a5ff8,,g_BulletManager,?g_BulletManager@@3VBulletManager@@A
 0x0069bc10,,g_BulletChainCalc,?g_BulletChainCalc@@3UChainElem@@A
 0x0069bc30,,g_Gui,?g_Gui@@3VGui@@A
@@ -1642,7 +1642,7 @@ address,size,name,symbol
 0x0069d8f8,,g_Random,?g_Random@@3VRng@@A
 0x0069d900,,g_DatArchives,?g_DatArchives@@3PAPAVDatArchive@@A
 0x0069d904,,g_Buttons,?g_Buttons@@3GA
-0x0069d908,,g_LastButtons,?g_LastButtons@@3GA
+0x0069d908,,g_PreviousButtons,?g_PreviousButtons@@3GA
 0x0069d90c,,g_RepeatButtons,?g_RepeatButtons@@3GA
 0x0069d910,,g_ButtonHeldFrames,?g_ButtonHeldFrames@@3GA
 0x0069d914,,g_LastFileSize,?g_LastFileSize@@3HA
@@ -1652,7 +1652,7 @@ address,size,name,symbol
 0x0069e1a8,,g_UnusedGlobal,?g_UnusedGlobal@@3UUnusedGlobal@@A
 0x0069e1b0,,g_PadButtons,?g_PadButtons@@3PAEA
 0x0069e230,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
-0x0069e248,,g_UnusedChainB,?g_UnusedChainB@@3UChainElem@@A
+0x0069e248,,g_UnusedItemElem2,?g_UnusedItemElem2@@3UChainElem@@A
 0x0069e268,,g_ItemManager,?g_ItemManager@@3VItemManager@@A
 0x006c6bb4,,g_UnusedChainA,?g_UnusedChainA@@3UChainElem@@A
 0x006c6bd4,,g_GameWindow,?g_GameWindow@@3UGameWindow@@A

@@ -221,4 +221,4 @@ extern DWORD *g_EffectColors;
 
 // BulletManager's statically allocated chain elements.
 extern ChainElem g_BulletChainCalc;
-extern ChainElem g_BulletChainDraw;
+extern ChainElem g_BulletDrawElem;

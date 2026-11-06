@@ -68,7 +68,7 @@ int g_ShotTypeValues[2][2][3] = {
 };
 
 // Constructed and never used.
-ChainElem g_UnusedEclChain;
+ChainElem g_UnusedEnemyScriptElem;
 EnemyScripts g_EnemyScripts;
 #endif // TH06_EXE
 

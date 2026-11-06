@@ -366,9 +366,9 @@ void SaveReplay(char *path, char *name)
                 strcpy(hX.name, name);
                 _strdate(hX.date);
                 hX.key = g_Random.GetRandomU16InRange(128) + 64;
-                hX.unk_0f = g_Random.GetRandomU16InRange(256);
-                hX.unk_0c[0] = g_Random.GetRandomU16InRange(256);
-                hX.unk_0c[1] = g_Random.GetRandomU16InRange(256);
+                hX.randomByte = g_Random.GetRandomU16InRange(256);
+                hX.randomFill[0] = g_Random.GetRandomU16InRange(256);
+                hX.randomFill[1] = g_Random.GetRandomU16InRange(256);
                 bpCur = &hX.key;
                 checksum = 0x3f000318;
                 for (i = 0; i < sizeof(ReplayHeader) - 0xe; i++, bpCur++)
@@ -387,7 +387,7 @@ void SaveReplay(char *path, char *name)
                     }
                 }
                 hX.checksum = checksum;
-                dp2 = &hX.unk_0f;
+                dp2 = &hX.randomByte;
                 kbVal = hX.key;
                 for (i = 0; i < sizeof(ReplayHeader) - 0xf; i++, dp2++)
                 {

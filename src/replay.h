@@ -49,10 +49,12 @@ struct ReplayHeader
     BYTE difficulty;
     // 0x3f000318 plus the bytes from `key` on.
     int checksum;
-    BYTE unk_0c[0x2];
+    // Random; never read.
+    BYTE randomFill[0x2];
     // The bytes after it are stored minus key, key + 7, key + 14, ...
     BYTE key;
-    BYTE unk_0f;
+    // Random, the first byte stored with the key.
+    BYTE randomByte;
     // The date it was saved (_strdate), and the player's name.
     char date[9];
     char name[9];

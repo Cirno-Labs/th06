@@ -190,7 +190,7 @@ public:
     // Starts fading the music out over `duration` ms. Returns 0.
     int FadeOut(int duration);
     // Sends every channel's volume, scaled and offset by `offset`, unless
-    // unk_2d4 is set.
+    // suppressVolume is set.
     void SendVolume(int offset);
 
     // Long messages being sent; released by ReleaseHeader.
@@ -225,7 +225,7 @@ public:
     // The volume last sent while fading, volumeScale * 128.
     int lastVolume;
     int unk_2d0;
-    int unk_2d4;
+    int suppressVolume;
     int unk_2d8;
     int unk_2dc;
     // Set while fading out.

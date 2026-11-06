@@ -41,7 +41,7 @@ MidiPlayer::MidiPlayer()
     this->volumeScale = 0.0f;
     this->lastVolume = 0;
     this->unk_2d0 = 0;
-    this->unk_2d4 = 0;
+    this->suppressVolume = 0;
     this->unk_2d8 = 0;
     this->unk_2dc = 0;
     this->fading = 0;
@@ -505,7 +505,7 @@ void MidiPlayer::SendVolume(int offset)
     int data2;
     int volume;
 
-    if (this->unk_2d4 != 0)
+    if (this->suppressVolume != 0)
     {
         return;
     }

@@ -581,7 +581,7 @@ int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
             continue;
         }
         damage += this->bombHitDamage[idx];
-        this->bombHitCount[idx] += this->bombHitDamage[idx];
+        this->bombHitDamageDealt[idx] += this->bombHitDamage[idx];
         this->hitCounter++;
         if (this->hitCounter % 4 == 0)
         {

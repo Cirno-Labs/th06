@@ -195,11 +195,11 @@ public:
     // Where the two options are.
     D3DXVECTOR3 optionPos[2];
     // The bomb's hitboxes against enemies: centres, sizes, the damage
-    // each deals and the hits each has scored.
+    // each deals per hit and the damage each has dealt so far.
     D3DXVECTOR3 bombHitPos[32];
     D3DXVECTOR3 bombHitSize[32];
     int bombHitDamage[32];
-    int bombHitCount[32];
+    int bombHitDamageDealt[32];
     // Areas that cancel bullets, as centre x and y, width and height;
     // unused while the width is a sentinel.
     float bulletClearAreas[16][4];

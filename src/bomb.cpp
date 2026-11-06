@@ -59,7 +59,7 @@ void UpdateReimuABomb(Player *player)
                 x = g_Random.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
                 player->bomb.partVelocity[i].x = cosf(x) * player->bomb.partSpeed[i];
                 player->bomb.partVelocity[i].y = sinf(x) * player->bomb.partSpeed[i];
-                player->bombHitCount[i] = 0;
+                player->bombHitDamageDealt[i] = 0;
                 for (spr = &player->bomb.sprites[i * 4], k = 0; k < 4; k++, spr++)
                 {
                     g_SpriteEngine->StartScriptAtOrigin(spr, k + 0x485);
@@ -112,7 +112,7 @@ void UpdateReimuABomb(Player *player)
                 player->bulletClearAreas[i][1] = player->bomb.partPos[i].y;
                 player->bulletClearAreas[i][2] = 48.0f;
                 player->bulletClearAreas[i][3] = 48.0f;
-                if (player->bombHitCount[i] >= 100 || player->bomb.timer >= player->bomb.duration - 30)
+                if (player->bombHitDamageDealt[i] >= 100 || player->bomb.timer >= player->bomb.duration - 30)
                 {
                     g_EffectManager.SpawnEffect(6, &player->bomb.partPos[i], 8, 0xffffffff);
                     g_EffectManager.SpawnEffect(0xc, &player->bomb.partPos[i], 1, 0xff4040ff);

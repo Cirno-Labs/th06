@@ -761,7 +761,7 @@ struct GuiMsg
     // The two lines of text.
     Sprite text[2];
     // Lines shown by opcode 8 (scripts 0x704 and 0x705).
-    Sprite unk_45c[2];
+    Sprite introLines[2];
     // The text colors and their shadows, by speaker.
     D3DCOLOR textColors[4];
     D3DCOLOR shadowColors[4];

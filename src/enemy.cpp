@@ -53,8 +53,8 @@ void EnemyManager::Initialize()
     enemy->life = 1;
     enemy->score = 100;
     enemy->deathEffect = 0;
-    enemy->unk_e3d = 0;
-    enemy->unk_e3e = 0;
+    enemy->deathEffect2 = 0;
+    enemy->deathEffect3 = 0;
     enemy->shootInterval = 0;
     enemy->shootTimer.Set(0);
     enemy->shootOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -658,14 +658,14 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 case 2:
                     if (em->item >= 0)
                     {
-                        g_EffectManager.SpawnEffect(em->unk_e3d + 4, &em->pos, 3, 0xffffffff);
+                        g_EffectManager.SpawnEffect(em->deathEffect2 + 4, &em->pos, 3, 0xffffffff);
                         g_ItemManager.SpawnItem(&em->pos, em->item, bomb);
                     }
                     else if (em->item == -1)
                     {
                         if (mgr->dropCounter % 3 == 0)
                         {
-                            g_EffectManager.SpawnEffect(em->unk_e3d + 4, &em->pos, 6, 0xffffffff);
+                            g_EffectManager.SpawnEffect(em->deathEffect2 + 4, &em->pos, 6, 0xffffffff);
                             g_ItemManager.SpawnItem(&em->pos, g_EnemyItemDrops[mgr->dropIndex], bomb);
                             mgr->dropIndex++;
                             if (mgr->dropIndex >= 0x20)
@@ -684,7 +684,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 }
                 g_SoundPlayer.QueueSound(i % 2 + 2, 0);
                 g_EffectManager.SpawnEffect(em->deathEffect, &em->pos, 1, 0xffffffff);
-                g_EffectManager.SpawnEffect(em->unk_e3d + 4, &em->pos, 4, 0xffffffff);
+                g_EffectManager.SpawnEffect(em->deathEffect2 + 4, &em->pos, 4, 0xffffffff);
                 if (em->deathSub >= 0)
                 {
                     em->rankSpeedLow = -0.5f;

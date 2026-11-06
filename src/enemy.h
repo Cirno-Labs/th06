@@ -121,10 +121,12 @@ struct Enemy
     Laser *lasers[0x20];
     // Where the next laser goes in lasers.
     int laserIndex;
-    // The effects the enemy's death spawns.
+    // The effects the enemy's death spawns, set together by instruction
+    // 100: deathEffect, and deathEffect2 + 4, which an item drop also
+    // spawns. Nothing reads deathEffect3.
     BYTE deathEffect;
-    BYTE unk_e3d;
-    BYTE unk_e3e;
+    BYTE deathEffect2;
+    BYTE deathEffect3;
     // The item dropped on death, from EnemyManager::Spawn: -1 for one of
     // g_EnemyItemDrops every third enemy, below that none.
     char item;

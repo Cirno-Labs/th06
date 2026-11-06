@@ -487,8 +487,8 @@ restart:
         {
             EnemyScriptArgs *effectArgs = &instr->args;
             enemy->deathEffect = effectArgs->b[0];
-            enemy->unk_e3d = effectArgs->b[1];
-            enemy->unk_e3e = effectArgs->b[2];
+            enemy->deathEffect2 = effectArgs->b[1];
+            enemy->deathEffect3 = effectArgs->b[2];
             break;
         }
         case 76:

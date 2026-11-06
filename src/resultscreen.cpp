@@ -415,7 +415,7 @@ void SaveScoreDat(ResultScreen *screen)
     header->fileSize = size0;
     header->checksum = 0;
     header->key = g_Random.GetRandomU16InRange(256);
-    header->unk_06 = g_Random.GetRandomU16InRange(256);
+    header->randomByte = g_Random.GetRandomU16InRange(256);
     header->version = 0x10;
     for (m = 4; m < size0; m++)
     {

@@ -126,8 +126,8 @@ public:
     // The update element (priority 2, with the added and deleted
     // callbacks) and the draw element (priority 0), created by
     // SetUpTitleScene; DeletedCallback removes the draw element.
-    ChainElem *calcChain;
-    ChainElem *drawChain;
+    ChainElem *calcElem;
+    ChainElem *drawElem;
     // The replay menu's entries: their files' paths, the numbers shown
     // for them, and the replays' headers.
     char replayPaths[60][0x200];

@@ -38,8 +38,8 @@ public:
     static int AddedCallback(Ending *ending);
     static int DeletedCallback(Ending *ending);
 
-    ChainElem *calcChain;
-    ChainElem *drawChain;
+    ChainElem *calcElem;
+    ChainElem *drawElem;
     // Where the background image (surface 0) is copied from: "@v" sets
     // the y, which "@V" scrolls back to 0 by its speed per frame.
     float scrollX;

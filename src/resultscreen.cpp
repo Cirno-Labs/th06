@@ -1171,10 +1171,10 @@ int ResultScreen::RegisterChain(int unk)
     ResultScreen *screen = (ResultScreen *)MemTrack(new ResultScreen);
 
     DebugPrint2("counat = %d\n", g_GameManager.progressFrames);
-    screen->calcChain = g_Chain.CreateElem((ChainCallback)ResultScreen::OnUpdate);
-    screen->calcChain->addedCallback = (ChainCallback)ResultScreen::AddedCallback;
-    screen->calcChain->deletedCallback = (ChainCallback)ResultScreen::DeletedCallback;
-    screen->calcChain->arg = screen;
+    screen->calcElem = g_Chain.CreateElem((ChainCallback)ResultScreen::OnUpdate);
+    screen->calcElem->addedCallback = (ChainCallback)ResultScreen::AddedCallback;
+    screen->calcElem->deletedCallback = (ChainCallback)ResultScreen::DeletedCallback;
+    screen->calcElem->arg = screen;
     if (unk != 0)
     {
         if (!g_GameManager.isInPractice)
@@ -1186,13 +1186,13 @@ int ResultScreen::RegisterChain(int unk)
             screen->state = 0x11;
         }
     }
-    if (g_Chain.AddToCalcChain(screen->calcChain, 0xd) != 0)
+    if (g_Chain.AddToCalcChain(screen->calcElem, 0xd) != 0)
     {
         return -1;
     }
-    screen->drawChain = g_Chain.CreateElem((ChainCallback)ResultScreen::OnDraw);
-    screen->drawChain->arg = screen;
-    g_Chain.AddToDrawChain(screen->drawChain, 0xc);
+    screen->drawElem = g_Chain.CreateElem((ChainCallback)ResultScreen::OnDraw);
+    screen->drawElem->arg = screen;
+    g_Chain.AddToDrawChain(screen->drawElem, 0xc);
     return 0;
 }
 
@@ -1921,8 +1921,8 @@ int ResultScreen::DeletedCallback(ResultScreen *screen)
     g_SpriteEngine->ReleaseAnm(0x27);
     g_SpriteEngine->ReleaseAnm(0x28);
     g_SpriteEngine->ReleaseSurface(0);
-    g_Chain.Remove(screen->drawChain);
-    screen->drawChain = NULL;
+    g_Chain.Remove(screen->drawElem);
+    screen->drawElem = NULL;
     delete screen;
     screen = NULL;
     return 0;

@@ -1101,20 +1101,20 @@ int Player::RegisterChain(BYTE unk)
     memset(player, 0, sizeof(Player));
     player->stateTimer.Set(0);
     player->unk_09e1 = unk;
-    player->calcChain = g_Chain.CreateElem((ChainCallback)Player::OnUpdate);
-    player->drawChain = g_Chain.CreateElem((ChainCallback)Player::OnDraw);
-    player->drawChain2 = g_Chain.CreateElem((ChainCallback)Player::OnDraw2);
-    player->calcChain->arg = player;
-    player->drawChain->arg = player;
-    player->drawChain2->arg = player;
-    player->calcChain->addedCallback = (ChainCallback)Player::AddedCallback;
-    player->calcChain->deletedCallback = (ChainCallback)Player::DeletedCallback;
-    if (g_Chain.AddToCalcChain(player->calcChain, 7) != 0)
+    player->calcElem = g_Chain.CreateElem((ChainCallback)Player::OnUpdate);
+    player->drawElem = g_Chain.CreateElem((ChainCallback)Player::OnDraw);
+    player->drawElem2 = g_Chain.CreateElem((ChainCallback)Player::OnDraw2);
+    player->calcElem->arg = player;
+    player->drawElem->arg = player;
+    player->drawElem2->arg = player;
+    player->calcElem->addedCallback = (ChainCallback)Player::AddedCallback;
+    player->calcElem->deletedCallback = (ChainCallback)Player::DeletedCallback;
+    if (g_Chain.AddToCalcChain(player->calcElem, 7) != 0)
     {
         return -1;
     }
-    g_Chain.AddToDrawChain(player->drawChain, 5);
-    g_Chain.AddToDrawChain(player->drawChain2, 7);
+    g_Chain.AddToDrawChain(player->drawElem, 5);
+    g_Chain.AddToDrawChain(player->drawElem2, 7);
     return 0;
 }
 
@@ -1621,10 +1621,10 @@ int Player::DeletedCallback(Player *player)
 
 void Player::RemoveChain()
 {
-    g_Chain.Remove(g_Player.calcChain);
-    g_Player.calcChain = NULL;
-    g_Chain.Remove(g_Player.drawChain);
-    g_Player.drawChain = NULL;
-    g_Chain.Remove(g_Player.drawChain2);
-    g_Player.drawChain2 = NULL;
+    g_Chain.Remove(g_Player.calcElem);
+    g_Player.calcElem = NULL;
+    g_Chain.Remove(g_Player.drawElem);
+    g_Player.drawElem = NULL;
+    g_Chain.Remove(g_Player.drawElem2);
+    g_Player.drawElem2 = NULL;
 }

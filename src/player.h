@@ -254,9 +254,9 @@ public:
     int (*fireFocused)(Player *player, PlayerBullet *bullet, int index, int frame);
     PlayerBomb bomb;
     // The update element and the two draw elements.
-    ChainElem *calcChain;
-    ChainElem *drawChain;
-    ChainElem *drawChain2;
+    ChainElem *calcElem;
+    ChainElem *drawElem;
+    ChainElem *drawElem2;
 };
 ASSERT_SIZE(Player, 0x98f0);
 

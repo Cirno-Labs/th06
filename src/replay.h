@@ -132,10 +132,10 @@ public:
     // [0] is the last entry written; [stage] is where that stage's
     // record ends.
     ReplayFrame *cursors[8];
-    ChainElem *calcChain;
-    ChainElem *drawChain;
+    ChainElem *calcElem;
+    ChainElem *drawElem;
     // The second update element, only when playing.
-    ChainElem *calcChain2;
+    ChainElem *calcElem2;
 };
 ASSERT_SIZE(ReplayManager, 0x74);
 extern ReplayManager *g_ReplayManager;

@@ -321,8 +321,8 @@ public:
     Hscr entry;
     // The "TH6K" chunk SaveScoreDat writes.
     Th6k th6k;
-    ChainElem *calcChain;
-    ChainElem *drawChain;
+    ChainElem *calcElem;
+    ChainElem *drawElem;
     // The headers of "./replay/th6_01.rpy" to "th6_15.rpy", where they
     // are valid.
     ReplayHeader replays[0xf];

@@ -81,7 +81,7 @@ public:
     // midiOutGetNumDevs's count, taken by the constructor.
     UINT midiOutDevs;
     DWORD unk_44;
-    // Unknown, never used: in the original's .bss g_Log follows g_Chain
+    // Unknown, never used: in the original's .bss g_Logger follows g_Chain
     // at +0x80, and nothing refers to the space in between.
     BYTE unk_48[0x38];
 };

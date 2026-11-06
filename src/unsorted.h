@@ -662,7 +662,7 @@ class Log
 {
 public:
     // Empties the buffer and logs the header line. Inline: the original
-    // runs it as g_Log's static initializer.
+    // runs it as g_Logger's static initializer.
     Log()
     {
         this->cursor = this->buffer;
@@ -670,7 +670,7 @@ public:
         this->hasError = 0;
         LogPrintf(this, "東方動作記録 --------------------------------------------- \n");
     }
-    // Empty, but registered with atexit for g_Log like the original's.
+    // Empty, but registered with atexit for g_Logger like the original's.
     ~Log()
     {
     }
@@ -686,7 +686,7 @@ public:
     // Set by LogError, the error logger.
     char hasError;
 };
-extern Log g_Log;
+extern Log g_Logger;
 
 // Logs a printf-style message to a log object.
 int LogPrintf(Log *log, const char *fmt, ...);

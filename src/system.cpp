@@ -2,7 +2,7 @@
 // input, TextFont, the file and log helpers, the RNG and the angle helpers.
 // Its .bss holds all of their globals interleaved (g_Chain and g_Random among
 // the input's), and its static initializers construct g_Chain, g_TextFont,
-// g_UnusedGlobal and g_Log in that order.
+// g_UnusedGlobal and g_Logger in that order.
 
 #include <math.h>
 #include <stdlib.h>
@@ -358,7 +358,7 @@ WORD InitJoystick()
     joyInfo.dwFlags = JOY_RETURNALL;
     if (joyGetPosEx(JOYSTICKID1, &joyInfo) != JOYERR_NOERROR)
     {
-        LogPrintf(&g_Log, "使えるパッドが存在しないようです、残念\n");
+        LogPrintf(&g_Logger, "使えるパッドが存在しないようです、残念\n");
         return 1;
     }
     joyGetDevCapsA(JOYSTICKID1, &g_JoyDeviceCaps, sizeof(g_JoyDeviceCaps));
@@ -797,5 +797,5 @@ int WriteToFile(char *path, void *data, int size)
 #ifdef TH06_EXE
 // Defined here, after the file helpers: its constructor's header line
 // sits there among the original's literals.
-Log g_Log;
+Log g_Logger;
 #endif // TH06_EXE

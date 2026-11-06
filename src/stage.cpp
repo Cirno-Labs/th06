@@ -8,10 +8,10 @@
 // The game's data, as the original defines it here. The DLL build uses
 // the original's copies instead.
 #ifdef TH06_EXE
-Stage g_Stage;
+Stage g_StageManager;
 ChainElem g_StageBgCalcElem;
 ChainElem g_StageDrawElem;
-ChainElem g_StageBgDrawElem2;
+ChainElem g_StageDrawElem2;
 #endif // TH06_EXE
 
 EXE_INLINE Stage::Stage()
@@ -289,7 +289,7 @@ int Stage::AddedCallback(Stage *stage)
 
 int Stage::RegisterChain(int stage)
 {
-    Stage *s = &g_Stage;
+    Stage *s = &g_StageManager;
 
     memset(s, 0, sizeof(Stage));
     s->data = NULL;
@@ -306,9 +306,9 @@ int Stage::RegisterChain(int stage)
     g_StageDrawElem.SetCallback((ChainCallback)Stage::OnDraw);
     g_StageDrawElem.arg = s;
     g_Chain.AddToDrawChain(&g_StageDrawElem, 3);
-    g_StageBgDrawElem2.SetCallback((ChainCallback)Stage::OnDraw2);
-    g_StageBgDrawElem2.arg = s;
-    g_Chain.AddToDrawChain(&g_StageBgDrawElem2, 4);
+    g_StageDrawElem2.SetCallback((ChainCallback)Stage::OnDraw2);
+    g_StageDrawElem2.arg = s;
+    g_Chain.AddToDrawChain(&g_StageDrawElem2, 4);
     return 0;
 }
 
@@ -332,7 +332,7 @@ void Stage::RemoveChain()
 {
     g_Chain.Remove(&g_StageBgCalcElem);
     g_Chain.Remove(&g_StageDrawElem);
-    g_Chain.Remove(&g_StageBgDrawElem2);
+    g_Chain.Remove(&g_StageDrawElem2);
 }
 
 int Stage::Load(char *anmPath, char *dataPath)
@@ -349,7 +349,7 @@ int Stage::Load(char *anmPath, char *dataPath)
     this->data = (StageData *)LoadFileData(dataPath, 0);
     if (this->data == NULL)
     {
-        LogPrintf(&g_Log, "ステージデータが見つかりません。データが壊れています\n");
+        LogPrintf(&g_Logger, "ステージデータが見つかりません。データが壊れています\n");
         return -1;
     }
     this->objectCount = this->data->objectCount;

@@ -85,7 +85,7 @@ int GameManager::OnUpdate(GameManager *mgr)
     g_App.viewport.MaxZ = 1.0f;
     SetupCamera(0.0f);
     g_App.d3dDevice->SetViewport(&g_App.viewport);
-    g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, g_Stage.fog.color, 1.0f, 0);
+    g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, g_StageManager.fog.color, 1.0f, 0);
     if (mgr->isPaused == 1 || mgr->isPaused == 2 || mgr->isInContinueMenu)
     {
         return 3;
@@ -345,37 +345,37 @@ int GameManager::AddedCallback(GameManager *mgr)
     mgr->rngSeed = g_Random.seed;
     if (Stage::RegisterChain(mgr->stage) != 0)
     {
-        LogPrintf(&g_Log, "error : 背景データの初期化に失敗しました\n");
+        LogPrintf(&g_Logger, "error : 背景データの初期化に失敗しました\n");
         return -1;
     }
     if (Player::RegisterChain(0) != 0)
     {
-        LogPrintf(&g_Log, "error : プレイヤーの初期化に失敗しました\n");
+        LogPrintf(&g_Logger, "error : プレイヤーの初期化に失敗しました\n");
         return -1;
     }
     if (BulletManager::RegisterChain("data/etama.anm") != 0)
     {
-        LogPrintf(&g_Log, "error : 敵弾の初期化に失敗しました\n");
+        LogPrintf(&g_Logger, "error : 敵弾の初期化に失敗しました\n");
         return -1;
     }
     if (EnemyManager::RegisterChain(g_EnemyAnmPaths[mgr->stage].anmPath, g_EnemyAnmPaths[mgr->stage].anmPath2) != 0)
     {
-        LogPrintf(&g_Log, "error : 敵の初期化に失敗しました\n");
+        LogPrintf(&g_Logger, "error : 敵の初期化に失敗しました\n");
         return -1;
     }
     if (g_EnemyScripts.Load(g_EclPaths[mgr->stage]) != 0)
     {
-        LogPrintf(&g_Log, "error : 敵頭脳の初期化に失敗しました\n");
+        LogPrintf(&g_Logger, "error : 敵頭脳の初期化に失敗しました\n");
         return -1;
     }
     if (EffectManager::RegisterChain() != 0)
     {
-        LogPrintf(&g_Log, "error : エフェクトの初期化に失敗しました\n");
+        LogPrintf(&g_Logger, "error : エフェクトの初期化に失敗しました\n");
         return -1;
     }
     if (Gui::RegisterChain() != 0)
     {
-        LogPrintf(&g_Log, "error : 2D表示の初期化に失敗しました\n");
+        LogPrintf(&g_Logger, "error : 2D表示の初期化に失敗しました\n");
         return -1;
     }
     if (g_GameManager.isInReplay == 0)
@@ -384,8 +384,8 @@ int GameManager::AddedCallback(GameManager *mgr)
     }
     if (!g_GameManager.isInDemo)
     {
-        g_App.LoadMidi(1, g_Stage.data->songPaths[1]);
-        g_App.PlayMusic(g_Stage.data->songPaths[0]);
+        g_App.LoadMidi(1, g_StageManager.data->songPaths[1]);
+        g_App.PlayMusic(g_StageManager.data->songPaths[0]);
     }
     mgr->isInContinueMenu = 0;
     mgr->isPlaying = 1;

@@ -429,17 +429,17 @@ int Gui::LoadResources()
     g_SpriteEngine->StartScript(&this->impl->songName, 0x701);
 #if FEAT_ENGLISH
     // Centered with spaces in the stage file.
-    g_SpriteEngine->RenderText(&this->impl->stageName, 0xe0ffff, 0, g_Stage.data->name);
+    g_SpriteEngine->RenderText(&this->impl->stageName, 0xe0ffff, 0, g_StageManager.data->name);
 #else
-    g_SpriteEngine->RenderTextCentered(&this->impl->stageName, 0xe0ffff, 0, g_Stage.data->name);
+    g_SpriteEngine->RenderTextCentered(&this->impl->stageName, 0xe0ffff, 0, g_StageManager.data->name);
 #endif
     this->impl->songName.fontWidth = 16;
     this->impl->songName.fontHeight = 16;
 #if FEAT_ENGLISH
     // The song names start with "BGM: " instead.
-    g_SpriteEngine->RenderTextRightAligned(&this->impl->songName, 0xe0ffff, 0, "%s", g_Stage.data->songNames[0]);
+    g_SpriteEngine->RenderTextRightAligned(&this->impl->songName, 0xe0ffff, 0, "%s", g_StageManager.data->songNames[0]);
 #else
-    g_SpriteEngine->RenderTextRightAligned(&this->impl->songName, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[0]);
+    g_SpriteEngine->RenderTextRightAligned(&this->impl->songName, 0xe0ffff, 0, "♪%s", g_StageManager.data->songNames[0]);
 #endif
     this->impl->msg.scriptIndex = -1;
     this->impl->stageClearShown = 0;
@@ -462,7 +462,7 @@ int Gui::LoadMsg(char *path)
     this->impl->msg.msgFile = (MsgFile *)LoadFileData(path, 0);
     if (this->impl->msg.msgFile == NULL)
     {
-        LogPrintf(&g_Log, "error : メッセージファイル %s が読み込めませんでした\n", path);
+        LogPrintf(&g_Logger, "error : メッセージファイル %s が読み込めませんでした\n", path);
         return -1;
     }
     this->impl->msg.scriptIndex = -1;
@@ -595,13 +595,13 @@ int GuiImpl::RunMsg()
             this->songName.fontWidth = 16;
             this->songName.fontHeight = 16;
 #if FEAT_ENGLISH
-            g_SpriteEngine->RenderTextRightAligned(&this->songName, 0xe0ffff, 0, "%s", g_Stage.data->songNames[this->msg.instr->i]);
+            g_SpriteEngine->RenderTextRightAligned(&this->songName, 0xe0ffff, 0, "%s", g_StageManager.data->songNames[this->msg.instr->i]);
 #else
-            g_SpriteEngine->RenderTextRightAligned(&this->songName, 0xe0ffff, 0, "♪%s", g_Stage.data->songNames[this->msg.instr->i]);
+            g_SpriteEngine->RenderTextRightAligned(&this->songName, 0xe0ffff, 0, "♪%s", g_StageManager.data->songNames[this->msg.instr->i]);
 #endif
             if (g_App.PlayMidi(this->msg.instr->i) != 0)
             {
-                g_App.PlayMusic(g_Stage.data->songPaths[this->msg.instr->i]);
+                g_App.PlayMusic(g_StageManager.data->songPaths[this->msg.instr->i]);
             }
             break;
         case 8:

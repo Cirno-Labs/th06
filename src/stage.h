@@ -92,7 +92,7 @@ struct StageData
 class Stage
 {
 public:
-    // Constructs the members, for g_Stage's static initialization.
+    // Constructs the members, for g_StageManager's static initialization.
     Stage();
 
     // Zeroes the stage, remembers `stage` and adds the update element
@@ -183,7 +183,7 @@ public:
     int keyFrame;
 };
 ASSERT_SIZE(Stage, 0x2f4);
-extern Stage g_Stage;
+extern Stage g_StageManager;
 
 // The background sprites and data file of each stage, at 0x4760e0;
 // stage 0 has "dummy" ones.
@@ -197,4 +197,4 @@ extern StageFiles g_StageFiles[8];
 // Stage's statically allocated chain elements.
 extern ChainElem g_StageBgCalcElem;
 extern ChainElem g_StageDrawElem;
-extern ChainElem g_StageBgDrawElem2;
+extern ChainElem g_StageDrawElem2;

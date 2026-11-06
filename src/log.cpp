@@ -1,4 +1,4 @@
-// The log helpers, 0x41e4d0 to 0x41e77c (g_Log is defined in system.cpp).
+// The log helpers, 0x41e4d0 to 0x41e77c (g_Logger is defined in system.cpp).
 
 #include <math.h>
 #include <stdlib.h>

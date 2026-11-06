@@ -163,7 +163,7 @@ int SpriteEngine::LoadTextureAlpha(int index, char *path, int format, D3DCOLOR c
     this->textures[index]->GetLevelDesc(0, &desc);
     if (desc.Format != D3DFMT_A8R8G8B8 && desc.Format != D3DFMT_A4R4G4B4 && desc.Format != D3DFMT_A1R5G5B5)
     {
-        LogError(&g_Log, "error : イメージがαを持っていません\n");
+        LogError(&g_Logger, "error : イメージがαを持っていません\n");
         goto fail;
     }
     if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, fileData, g_LastFileSize, 0, 0, 0, 0, desc.Format,
@@ -278,7 +278,7 @@ int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
     anmHeader = this->anmFiles[slot];
     if (anmHeader == NULL)
     {
-        LogError(&g_Log, "スプライトアニメ %s が読み込めません。データが失われてるか壊れています\n", path);
+        LogError(&g_Logger, "スプライトアニメ %s が読み込めません。データが失われてるか壊れています\n", path);
         return -1;
     }
     anmHeader->textureIndex = slot;
@@ -289,7 +289,7 @@ int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
     }
     else if (this->LoadTexture(anmHeader->textureIndex, name, anmHeader->format, anmHeader->colorKey) != 0)
     {
-        LogError(&g_Log, "テクスチャ %s が読み込めません。データが失われてるか壊れています\n", name);
+        LogError(&g_Logger, "テクスチャ %s が読み込めません。データが失われてるか壊れています\n", name);
         return -1;
     }
     if (anmHeader->alphaNameOffset != 0)
@@ -297,7 +297,7 @@ int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
         name = (char *)anmHeader + anmHeader->alphaNameOffset;
         if (this->LoadTextureAlpha(anmHeader->textureIndex, name, anmHeader->format, anmHeader->colorKey) != 0)
         {
-            LogError(&g_Log, "テクスチャ %s が読み込めません。データが失われてるか壊れています\n", name);
+            LogError(&g_Logger, "テクスチャ %s が読み込めません。データが失われてるか壊れています\n", name);
             return -1;
         }
     }
@@ -1346,7 +1346,7 @@ int SpriteEngine::LoadSurface(int surface, char *path)
     fileData = LoadFileData(path, 0);
     if (fileData == NULL)
     {
-        LogError(&g_Log, "%sが読み込めないです。\n", path);
+        LogError(&g_Logger, "%sが読み込めないです。\n", path);
         return -1;
     }
     if (g_App.d3dDevice->CreateImageSurface(640, 1024, g_App.presentParams.BackBufferFormat,

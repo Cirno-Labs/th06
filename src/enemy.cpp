@@ -17,7 +17,7 @@ BYTE g_EnemyItemDrops[0x20] = {
     1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 2,
 };
 
-ChainElem g_EnemyCalcElem;
+ChainElem g_EnemyManagerUpdate;
 ChainElem g_EnemyDrawElem;
 EnemyManager g_EnemyManager;
 #endif // TH06_EXE
@@ -491,11 +491,11 @@ int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
     mgr->Initialize();
     mgr->anmPath = anmPath;
     mgr->anmPath2 = anmPath2;
-    g_EnemyCalcElem.SetCallback((ChainCallback)EnemyManager::OnUpdate);
-    g_EnemyCalcElem.addedCallback = (ChainCallback)EnemyManager::AddedCallback;
-    g_EnemyCalcElem.deletedCallback = (ChainCallback)EnemyManager::DeletedCallback;
-    g_EnemyCalcElem.arg = mgr;
-    if (g_Chain.AddToCalcChain(&g_EnemyCalcElem, 9) != 0)
+    g_EnemyManagerUpdate.SetCallback((ChainCallback)EnemyManager::OnUpdate);
+    g_EnemyManagerUpdate.addedCallback = (ChainCallback)EnemyManager::AddedCallback;
+    g_EnemyManagerUpdate.deletedCallback = (ChainCallback)EnemyManager::DeletedCallback;
+    g_EnemyManagerUpdate.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_EnemyManagerUpdate, 9) != 0)
     {
         return -1;
     }
@@ -831,7 +831,7 @@ int EnemyManager::DeletedCallback(EnemyManager *mgr)
 
 void EnemyManager::RemoveChain()
 {
-    g_Chain.Remove(&g_EnemyCalcElem);
+    g_Chain.Remove(&g_EnemyManagerUpdate);
     g_Chain.Remove(&g_EnemyDrawElem);
 }
 

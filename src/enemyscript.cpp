@@ -87,7 +87,7 @@ int EnemyScripts::Load(char *path)
     this->file = (EnemyScriptHeader *)LoadFileData(path, 0);
     if (this->file == NULL)
     {
-        LogPrintf(&g_Log, "敵データの読み込みに失敗しました、データが壊れてるか失われています\n");
+        LogPrintf(&g_Logger, "敵データの読み込みに失敗しました、データが壊れてるか失われています\n");
         return -1;
     }
     this->file->timelineOffset += (int)this->file;
@@ -793,8 +793,8 @@ restart:
             g_EnemyManager.spellCardIndex = instr->args.s[1];
             g_EnemyManager.spellCardBonus = g_SpellCardBonuses[g_EnemyManager.spellCardIndex];
             g_BulletManager.ClearAllToItems();
-            g_Stage.spellCardState = 1;
-            g_Stage.spellCardFrames = 0;
+            g_StageManager.spellCardState = 1;
+            g_StageManager.spellCardFrames = 0;
             enemy->rankSpeedLow = -0.5f;
             enemy->rankSpeedHigh = 0.5f;
             enemy->rankCount1Low = 0;
@@ -855,7 +855,7 @@ restart:
                 }
                 g_EnemyManager.spellCardActive = 0;
             }
-            g_Stage.spellCardState = 0;
+            g_StageManager.spellCardState = 0;
             break;
         case 112:
             enemy->callbackTimer.Set(instr->args.i[0]);
@@ -922,7 +922,7 @@ restart:
             g_ItemManager.SpawnItem(&enemy->pos, instr->args.i[0], 0);
             break;
         case 125:
-            g_Stage.scriptResume = 1;
+            g_StageManager.scriptResume = 1;
             break;
         case 126:
             g_Gui.SetBossLives(instr->args.i[0]);

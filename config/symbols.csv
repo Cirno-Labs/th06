@@ -1614,8 +1614,8 @@ address,size,name,symbol
 0x00487aac,,g_AsciiCalcElem,?g_AsciiCalcElem@@3UChainElem@@A
 0x00487acc,,g_AsciiDrawElem2,?g_AsciiDrawElem2@@3UChainElem@@A
 0x00487af0,,g_StageDrawElem,?g_StageDrawElem@@3UChainElem@@A
-0x00487b10,,g_Stage,?g_Stage@@3VStage@@A
-0x00487e04,,g_StageBgDrawElem2,?g_StageBgDrawElem2@@3UChainElem@@A
+0x00487b10,,g_StageManager,?g_StageManager@@3VStage@@A
+0x00487e04,,g_StageDrawElem2,?g_StageDrawElem2@@3UChainElem@@A
 0x00487e24,,g_StageBgCalcElem,?g_StageBgCalcElem@@3UChainElem@@A
 0x00487e44,,g_ShotTypeOperand,?g_ShotTypeOperand@@3HA
 0x00487e48,,g_PlayerDistance,?g_PlayerDistance@@3MA
@@ -1627,7 +1627,7 @@ address,size,name,symbol
 0x004b7984,,g_EffectsDrawElem,?g_EffectsDrawElem@@3UChainElem@@A
 0x004b79a8,,g_EnemyDrawElem,?g_EnemyDrawElem@@3UChainElem@@A
 0x004b79c8,,g_EnemyManager,?g_EnemyManager@@3VEnemyManager@@A
-0x005a5fb4,,g_EnemyCalcElem,?g_EnemyCalcElem@@3UChainElem@@A
+0x005a5fb4,,g_EnemyManagerUpdate,?g_EnemyManagerUpdate@@3UChainElem@@A
 0x005a5fd8,,g_BulletDrawElem,?g_BulletDrawElem@@3UChainElem@@A
 0x005a5ff8,,g_BulletManager,?g_BulletManager@@3VBulletManager@@A
 0x0069bc10,,g_BulletChainCalc,?g_BulletChainCalc@@3UChainElem@@A
@@ -1647,7 +1647,7 @@ address,size,name,symbol
 0x0069d910,,g_ButtonHeldFrames,?g_ButtonHeldFrames@@3GA
 0x0069d914,,g_LastFileSize,?g_LastFileSize@@3HA
 0x0069d918,,g_Chain,?g_Chain@@3VChain@@A
-0x0069d998,,g_Log,?g_Log@@3VLog@@A
+0x0069d998,,g_Logger,?g_Logger@@3VLog@@A
 0x0069e1a0,,g_TextFont,?g_TextFont@@3VTextFont@@A
 0x0069e1a8,,g_UnusedGlobal,?g_UnusedGlobal@@3UUnusedGlobal@@A
 0x0069e1b0,,g_PadButtons,?g_PadButtons@@3PAEA

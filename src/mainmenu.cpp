@@ -246,7 +246,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
         {
             if (LoadSelectResources(menu) != 0)
             {
-                LogPrintf(&g_Log, "セレクト画面の読み込みに失敗\n");
+                LogPrintf(&g_Logger, "セレクト画面の読み込みに失敗\n");
                 g_App.scene = 4;
                 return 0;
             }
@@ -1200,7 +1200,7 @@ int MainMenu::UpdateReplayMenu()
         {
             if (LoadReplayMenuResources(this) != 0)
             {
-                LogPrintf(&g_Log, "セレクト画面の読み込みに失敗\n");
+                LogPrintf(&g_Logger, "セレクト画面の読み込みに失敗\n");
                 g_App.scene = 4;
                 return 0;
             }

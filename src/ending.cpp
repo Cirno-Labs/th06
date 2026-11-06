@@ -433,7 +433,7 @@ int Ending::OnDraw(Ending *ending)
     {
         if (ending->sprites[i].scriptIndex != 0)
         {
-            g_SpriteEngine->Draw(&ending->sprites[i]);
+            g_SpriteEngine->DrawUnrotated(&ending->sprites[i]);
         }
     }
     ending->DrawFade();

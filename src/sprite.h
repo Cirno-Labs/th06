@@ -126,7 +126,7 @@ public:
 
     // The gaps are DWORDs, not bytes: a byte array would make /GS put a
     // security cookie in functions with a Sprite local.
-    // The sprite's rotation about each axis; DrawRotated uses only z.
+    // The sprite's rotation about each axis; Draw uses only z.
     float rotationX;
     float rotationY;
     float rotationZ;
@@ -190,8 +190,8 @@ public:
     // caller's inlining budget, by the number of inline constructors in
     // them, and one fewer lets GuiImpl's reserve slots for 9 Sprites
     // rather than 8, as the original's does.
-    D3DVECTOR posInitial;
-    D3DXVECTOR3 posFinal;
+    D3DVECTOR moveStart;
+    D3DXVECTOR3 moveEnd;
     // Set instead of pos while flags.usePosOffset is set.
     D3DXVECTOR3 posOffset;
     Timer posInterpTimer;
@@ -289,7 +289,7 @@ public:
     // Has CopyBackBufferToTexture's copy done after the frame is drawn.
     void SetPendingCopy(int texture, int left, int top, int width, int height)
     {
-        this->pendingCopyTexture = texture;
+        this->pendingTexCopyTexture = texture;
         this->pendingCopyLeft = left;
         this->pendingCopyTop = top;
         this->pendingCopyWidth = width;
@@ -335,14 +335,14 @@ public:
     int Step(Sprite *vm);
     // Draws a sprite if it is shown, flat at its position, scaled and
     // anchored. Returns 0, or -1 when not shown.
-    int Draw(Sprite *vm);
+    int DrawUnrotated(Sprite *vm);
     // Rotates (`x`, `y`) by the angle with sine `sine` and cosine
     // `cosine`, clockwise on screen, then moves it by (`cx`, `cy`); stores
     // the result in out[0] and out[1].
     void RotatePoint(float *out, float x, float y, float sine, float cosine, float cx, float cy);
     // Like Draw, rotated by the sprite's rotation about its position,
     // with the position and size rounded to whole pixels.
-    int DrawRotated(Sprite *vm);
+    int Draw(Sprite *vm);
     // Loads the image file at `path` into texture `index` in the format
     // g_TextureFormats[`format`] (16 bits when forced), with `colorKey`
     // transparent. Returns 0 or -1.
@@ -447,7 +447,7 @@ public:
     // A copy of the back buffer into a texture to do after the frame is
     // drawn: CopyBackBufferToTexture's arguments, the texture -1 when
     // there is none.
-    int pendingCopyTexture;
+    int pendingTexCopyTexture;
     int pendingCopyLeft;
     int pendingCopyTop;
     int pendingCopyWidth;

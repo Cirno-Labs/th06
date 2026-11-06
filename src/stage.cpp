@@ -234,7 +234,7 @@ int Stage::OnDraw2(Stage *stage)
         {
             g_SpriteEngine->StartScript(&stage->spellCardBackground, 0x2b3);
         }
-        g_SpriteEngine->DrawRotated(&stage->spellCardBackground);
+        g_SpriteEngine->Draw(&stage->spellCardBackground);
     }
     g_App.viewport.MinZ = 0.0f;
     g_App.viewport.MaxZ = 0.5f;

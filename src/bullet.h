@@ -63,7 +63,7 @@ struct Bullet
     WORD state;
     // Counts the frames spent outside the play area by bullets that
     // bounce or change course; at 0x100 they end.
-    WORD outsideFrames;
+    WORD outOfBoundsFrames;
     BYTE unk_5c2;
     // Set once the player grazed the bullet; it is then only checked for
     // hits.
@@ -196,7 +196,7 @@ public:
     int nextBullet;
     // Counts the bullets in use, each frame.
     int bulletCount;
-    Timer unk_f5c08;
+    Timer updateTimer;
     // RegisterChain's argument, "data/etama.anm".
     char *anmPath;
 };
@@ -206,7 +206,7 @@ extern BulletManager g_BulletManager;
 // Draws a bullet with the sprite for its state (spawning effects, fading
 // out), turned along its angle where the sprite asks for it.
 // DrawBulletRotated places it in the play area and draws it through
-// SpriteEngine::DrawRotated instead, for bullets over 16 high without
+// SpriteEngine::Draw instead, for bullets over 16 high without
 // hardware T&L.
 void DrawBullet(Bullet *bullet);
 void DrawBulletRotated(Bullet *bullet);

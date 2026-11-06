@@ -1871,7 +1871,7 @@ int MainMenu::OnDraw(MainMenu *menu)
         {
             D3DXVECTOR3 savedPos = vm->pos;
             vm->pos += vm->posOffset;
-            g_SpriteEngine->DrawRotated(vm);
+            g_SpriteEngine->Draw(vm);
             vm->pos = savedPos;
         }
     }

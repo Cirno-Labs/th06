@@ -57,7 +57,7 @@ SpriteEngine::SpriteEngine()
     this->currentColor = 1;
     this->vertexFormat = 0;
     this->zWriteDisabled = 0;
-    this->pendingCopyTexture = -1;
+    this->pendingTexCopyTexture = -1;
 }
 
 void SpriteEngine::CreateQuad()
@@ -553,7 +553,7 @@ int SpriteEngine::DrawQuad(Sprite *vm, int roundToPixel)
     return 0;
 }
 
-int SpriteEngine::Draw(Sprite *vm)
+int SpriteEngine::DrawUnrotated(Sprite *vm)
 {
     float w;
     float h;
@@ -601,7 +601,7 @@ void SpriteEngine::RotatePoint(float *out, float x, float y, float sine, float c
     out[1] = -x * sine + y * cosine + cy;
 }
 
-int SpriteEngine::DrawRotated(Sprite *vm)
+int SpriteEngine::Draw(Sprite *vm)
 {
     float w;
     float h;
@@ -613,7 +613,7 @@ int SpriteEngine::DrawRotated(Sprite *vm)
 
     if (vm->rotationZ == 0.0f)
     {
-        return this->Draw(vm);
+        return this->DrawUnrotated(vm);
     }
     if (!vm->flags.shown)
     {
@@ -1022,13 +1022,13 @@ int SpriteEngine::Step(Sprite *vm)
         posInterp:
             if (!vm->flags.usePosOffset)
             {
-                vm->posInitial = vm->pos;
+                vm->moveStart = vm->pos;
             }
             else
             {
-                vm->posInitial = vm->posOffset;
+                vm->moveStart = vm->posOffset;
             }
-            vm->posFinal = D3DXVECTOR3(*(float *)&curInstr->args[0], *(float *)&curInstr->args[1],
+            vm->moveEnd = D3DXVECTOR3(*(float *)&curInstr->args[0], *(float *)&curInstr->args[1],
                                        *(float *)&curInstr->args[2]);
             vm->posInterpTime = *(short *)&curInstr->args[3];
             vm->posInterpTimer.Set(0);
@@ -1214,15 +1214,15 @@ done:
         }
         if (!vm->flags.usePosOffset)
         {
-            vm->pos.x = posT * vm->posFinal.x + (1.0f - posT) * vm->posInitial.x;
-            vm->pos.y = posT * vm->posFinal.y + (1.0f - posT) * vm->posInitial.y;
-            vm->pos.z = posT * vm->posFinal.z + (1.0f - posT) * vm->posInitial.z;
+            vm->pos.x = posT * vm->moveEnd.x + (1.0f - posT) * vm->moveStart.x;
+            vm->pos.y = posT * vm->moveEnd.y + (1.0f - posT) * vm->moveStart.y;
+            vm->pos.z = posT * vm->moveEnd.z + (1.0f - posT) * vm->moveStart.z;
         }
         else
         {
-            vm->posOffset.x = posT * vm->posFinal.x + (1.0f - posT) * vm->posInitial.x;
-            vm->posOffset.y = posT * vm->posFinal.y + (1.0f - posT) * vm->posInitial.y;
-            vm->posOffset.z = posT * vm->posFinal.z + (1.0f - posT) * vm->posInitial.z;
+            vm->posOffset.x = posT * vm->moveEnd.x + (1.0f - posT) * vm->moveStart.x;
+            vm->posOffset.y = posT * vm->moveEnd.y + (1.0f - posT) * vm->moveStart.y;
+            vm->posOffset.z = posT * vm->moveEnd.z + (1.0f - posT) * vm->moveStart.z;
         }
         if (vm->posInterpTimer.AsFrames() >= vm->posInterpTime)
         {

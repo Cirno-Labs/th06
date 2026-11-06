@@ -1555,7 +1555,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
     {
         pos3 = sprite->pos;
         sprite->pos += sprite->posOffset;
-        g_SpriteEngine->Draw(sprite);
+        g_SpriteEngine->DrawUnrotated(sprite);
         sprite->pos = pos3;
     }
     sprite = &screen->sprites[0xe];
@@ -1565,10 +1565,10 @@ int ResultScreen::OnDraw(ResultScreen *screen)
         {
             pos3 = sprite->pos;
             screen->textSprites[0].pos = pos3;
-            g_SpriteEngine->Draw(&screen->textSprites[0]);
+            g_SpriteEngine->DrawUnrotated(&screen->textSprites[0]);
             pos3[0] += 320.0f;
             screen->textSprites[1].pos = pos3;
-            g_SpriteEngine->Draw(&screen->textSprites[1]);
+            g_SpriteEngine->DrawUnrotated(&screen->textSprites[1]);
             pos3[0] -= 320.0f;
             pos3[1] += 18.0f;
             pos3[1] += 18.0f;
@@ -1689,7 +1689,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 }
                 g_AsciiText.AddFormat(&pos3, "No.%.2d", card + 1);
                 screen->textSprites[i].pos[0] += 96.0f;
-                g_SpriteEngine->Draw(&screen->textSprites[i]);
+                g_SpriteEngine->DrawUnrotated(&screen->textSprites[i]);
                 pos3[0] += 368.0f;
                 g_AsciiText.AddFormat(&pos3, "%3d/%3d", g_GameManager.catks[card].captures, g_GameManager.catks[card].attempts);
                 pos3[0] -= 368.0f;
@@ -1758,7 +1758,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
         sprite = &screen->sprites[0xf];
         for (i = 0; i < 6; i++, sprite++)
         {
-            g_SpriteEngine->Draw(sprite);
+            g_SpriteEngine->DrawUnrotated(sprite);
         }
         sprite = &screen->sprites[0x15];
         pos3 = sprite->pos;

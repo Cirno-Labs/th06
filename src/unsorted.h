@@ -970,7 +970,7 @@ public:
     // The seconds left of the boss's timer.
     int bossTimer;
     // bossTimer when DrawHud last ran: it ticks when the timer changes.
-    DWORD lastBossTimer;
+    DWORD lastDrawnBossTimer;
     // Set while a boss fight runs.
     BYTE bossPresent;
     BYTE unk_21[0x3];

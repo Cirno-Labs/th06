@@ -812,11 +812,11 @@ restart:
                     len--;
                     sum += rec->name[len];
                 }
-                if (rec->nameChecksum != (sum & 0xff))
+                if (rec->checksum != (sum & 0xff))
                 {
                     rec->captures = 0;
                     rec->attempts = 0;
-                    rec->nameChecksum = sum;
+                    rec->checksum = sum;
                 }
                 rec->bonus = g_EnemyManager.spellCardBonus;
                 if (rec->attempts < 9999)

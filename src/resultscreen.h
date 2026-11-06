@@ -57,7 +57,7 @@ struct Catk
     // The card's number, below 0x40.
     WORD index;
     // The sum of the name's characters: a new name resets the counts.
-    BYTE nameChecksum;
+    BYTE checksum;
     // The shot types (character * 2 + shot) of the last captures, the
     // latest first.
     BYTE history[0x5];

@@ -37,7 +37,7 @@ void UpdateReimuABomb(Player *player)
         player->stateTimer.Set(360);
         for (i = 0; i < 8; i++)
         {
-            player->bomb.partActive[i] = 0;
+            player->bomb.partState[i] = 0;
         }
         g_ItemManager.CollectAll();
         g_EffectManager.SpawnEffect(0xc, &player->position, 1, 0xff4040ff);
@@ -53,7 +53,7 @@ void UpdateReimuABomb(Player *player)
             i = (player->bomb.timer.AsFrames() - 60) / 16;
             if (i != 0)
             {
-                player->bomb.partActive[i] = 1;
+                player->bomb.partState[i] = 1;
                 player->bomb.partSpeed[i] = 4.0f;
                 player->bomb.partPos[i] = player->position;
                 x = g_Random.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
@@ -71,11 +71,11 @@ void UpdateReimuABomb(Player *player)
     player->playerState = 3;
     for (i = 0; i < 8; i++)
     {
-        if (player->bomb.partActive[i] == 0)
+        if (player->bomb.partState[i] == 0)
         {
             continue;
         }
-        if (player->bomb.partActive[i] == 1)
+        if (player->bomb.partState[i] == 1)
         {
             if (player->bomb.timer.HasTicked())
             {
@@ -116,7 +116,7 @@ void UpdateReimuABomb(Player *player)
                 {
                     g_EffectManager.SpawnEffect(6, &player->bomb.partPos[i], 8, 0xffffffff);
                     g_EffectManager.SpawnEffect(0xc, &player->bomb.partPos[i], 1, 0xff4040ff);
-                    player->bomb.partActive[i] = 2;
+                    player->bomb.partState[i] = 2;
                     player->bomb.sprites[i * 4].pendingInterrupt = 1;
                     player->bomb.sprites[i * 4 + 1].pendingInterrupt = 1;
                     player->bomb.sprites[i * 4 + 2].pendingInterrupt = 1;
@@ -132,14 +132,14 @@ void UpdateReimuABomb(Player *player)
                 }
             }
         }
-        else if (player->bomb.partActive[i] != 0)
+        else if (player->bomb.partState[i] != 0)
         {
             if (player->bomb.timer.HasTicked())
             {
-                player->bomb.partActive[i]++;
-                if (player->bomb.partActive[i] >= 30)
+                player->bomb.partState[i]++;
+                if (player->bomb.partState[i] >= 30)
                 {
-                    player->bomb.partActive[i] = 0;
+                    player->bomb.partState[i] = 0;
                 }
             }
         }
@@ -160,7 +160,7 @@ void UpdateReimuABomb(Player *player)
     curSprite->pos[0] += g_GameManager.arena[0];                        \
     curSprite->pos[1] += g_GameManager.arena[1];                        \
     curSprite->pos.z = 0.0f;                                            \
-    g_SpriteEngine->Draw(curSprite);                                    \
+    g_SpriteEngine->DrawUnrotated(curSprite);                                    \
     curSprite++;
 
 void DrawReimuABomb(Player *player)
@@ -172,7 +172,7 @@ void DrawReimuABomb(Player *player)
     curSprite = player->bomb.sprites;
     for (i = 0; i < 8; i++)
     {
-        if (player->bomb.partActive[i] == 0)
+        if (player->bomb.partState[i] == 0)
         {
             curSprite += 4;
             continue;
@@ -296,7 +296,7 @@ void DrawReimuBBomb(Player *player)
         curSprite->pos.x += g_GameManager.arena[0];
         curSprite->pos.y += g_GameManager.arena[1];
         curSprite->pos.z = 0.0f;
-        g_SpriteEngine->DrawRotated(curSprite);
+        g_SpriteEngine->Draw(curSprite);
     }
 }
 
@@ -373,14 +373,14 @@ void DrawMarisaABomb(Player *player)
         curSprite->pos.z = 0.0f;
         curSprite->scaleX = 3.2f;
         curSprite->scaleY = 3.2f;
-        g_SpriteEngine->DrawRotated(curSprite);
+        g_SpriteEngine->Draw(curSprite);
         curSprite->pos -= player->bomb.partVelocity[i] * 6.0f;
         curSprite->pos.x += -32.0f;
         curSprite->pos.y += -32.0f;
         curSprite->pos.z = 0.0f;
         curSprite->scaleX = 2.2f;
         curSprite->scaleY = 2.2f;
-        g_SpriteEngine->DrawRotated(curSprite);
+        g_SpriteEngine->Draw(curSprite);
         curSprite->pos -= player->bomb.partVelocity[i] * 2.0f;
         curSprite->pos.x += 64.0f;
         curSprite->pos.y += 64.0f;
@@ -391,7 +391,7 @@ void DrawMarisaABomb(Player *player)
         curSprite->pos.z = 0.0f;
         curSprite->scaleX = 1.0f;
         curSprite->scaleY = 1.0f;
-        g_SpriteEngine->DrawRotated(curSprite);
+        g_SpriteEngine->Draw(curSprite);
         curSprite++;
     }
 }
@@ -479,7 +479,7 @@ void DrawMarisaBBomb(Player *player)
         curSprite->pos.x += g_GameManager.arena[0];
         curSprite->pos.y += g_GameManager.arena[1];
         curSprite->pos.z = 0.0f;
-        g_SpriteEngine->DrawRotated(curSprite);
+        g_SpriteEngine->Draw(curSprite);
         curSprite++;
     }
 }

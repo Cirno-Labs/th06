@@ -703,8 +703,8 @@ int GuiImpl::DrawMsg()
     vertices[0].diffuse = vertices[1].diffuse = 0xd0000000;
     vertices[2].diffuse = vertices[3].diffuse = 0x90000000;
     vertices[0].w = vertices[1].w = vertices[2].w = vertices[3].w = 1.0f;
-    g_SpriteEngine->Draw(&this->msg.portraits[0]);
-    g_SpriteEngine->Draw(&this->msg.portraits[1]);
+    g_SpriteEngine->DrawUnrotated(&this->msg.portraits[0]);
+    g_SpriteEngine->DrawUnrotated(&this->msg.portraits[1]);
     if (!g_App.cfg.flags.noColorBlending)
     {
         g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -729,10 +729,10 @@ int GuiImpl::DrawMsg()
     }
     g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
     g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-    g_SpriteEngine->Draw(&this->msg.text[0]);
-    g_SpriteEngine->Draw(&this->msg.text[1]);
-    g_SpriteEngine->Draw(&this->msg.nameplates[0]);
-    g_SpriteEngine->Draw(&this->msg.nameplates[1]);
+    g_SpriteEngine->DrawUnrotated(&this->msg.text[0]);
+    g_SpriteEngine->DrawUnrotated(&this->msg.text[1]);
+    g_SpriteEngine->DrawUnrotated(&this->msg.nameplates[0]);
+    g_SpriteEngine->DrawUnrotated(&this->msg.nameplates[1]);
     return 0;
 }
 
@@ -941,14 +941,14 @@ void Gui::DrawHud()
     if (this->impl->msg.scriptIndex < 0 && this->bossPresent + this->impl->bossBarState > 0)
     {
         vm = &this->impl->sprites[0x13];
-        g_SpriteEngine->Draw(vm);
+        g_SpriteEngine->DrawUnrotated(vm);
         vm = &this->impl->sprites[0x15];
         vm->flags.anchor = 3;
         vm->scaleX = this->bossHealthShown * 288.0f / 14.0f;
         vm->pos.x = 96.0f;
         vm->pos.y = 24.0f;
         vm->pos.z = 0.0f;
-        g_SpriteEngine->Draw(vm);
+        g_SpriteEngine->DrawUnrotated(vm);
         pos.x = 80.0f;
         pos.y = 16.0f;
         pos.z = 0.0f;
@@ -973,13 +973,13 @@ void Gui::DrawHud()
         }
         g_AsciiText.SetColor(this->bossBarAlpha << 24 | c);
         clamped = this->bossTimer > 99 ? 99 : this->bossTimer;
-        if (clamped < 10 && this->lastBossTimer != this->bossTimer)
+        if (clamped < 10 && this->lastDrawnBossTimer != this->bossTimer)
         {
             g_SoundPlayer.QueueSound(0x1d, 0);
         }
         g_AsciiText.AddFormat(&pos, "%.2d", clamped);
         g_AsciiText.color = 0xffffffff;
-        this->lastBossTimer = this->bossTimer;
+        this->lastDrawnBossTimer = this->bossTimer;
     }
     g_App.viewport.X = 0;
     g_App.viewport.Y = 0;
@@ -993,41 +993,41 @@ void Gui::DrawHud()
         for (y = 0.0f; y < 464.0f; y += 32.0f)
         {
             vm->pos = D3DXVECTOR3(0.0f, y, 0.49f);
-            g_SpriteEngine->Draw(vm);
+            g_SpriteEngine->DrawUnrotated(vm);
         }
         for (xx = 416.0f; xx < 624.0f; xx += 32.0f)
         {
             for (y = 0.0f; y < 464.0f; y += 32.0f)
             {
                 vm->pos = D3DXVECTOR3(xx, y, 0.49f);
-                g_SpriteEngine->Draw(vm);
+                g_SpriteEngine->DrawUnrotated(vm);
             }
         }
         vm = &this->impl->sprites[7];
         for (xx = 32.0f; xx < 416.0f; xx += 32.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 0.0f, 0.49f);
-            g_SpriteEngine->Draw(vm);
+            g_SpriteEngine->DrawUnrotated(vm);
         }
         vm = &this->impl->sprites[8];
         for (xx = 32.0f; xx < 416.0f; xx += 32.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 464.0f, 0.49f);
-            g_SpriteEngine->Draw(vm);
+            g_SpriteEngine->DrawUnrotated(vm);
         }
-        g_SpriteEngine->DrawRotated(&this->impl->sprites[5]);
-        g_SpriteEngine->DrawRotated(&this->impl->sprites[0]);
-        g_SpriteEngine->DrawRotated(&this->impl->sprites[1]);
-        g_SpriteEngine->DrawRotated(&this->impl->sprites[3]);
-        g_SpriteEngine->DrawRotated(&this->impl->sprites[4]);
-        g_SpriteEngine->DrawRotated(&this->impl->sprites[2]);
-        g_SpriteEngine->Draw(&this->impl->sprites[9]);
-        g_SpriteEngine->Draw(&this->impl->sprites[10]);
-        g_SpriteEngine->Draw(&this->impl->sprites[11]);
-        g_SpriteEngine->Draw(&this->impl->sprites[12]);
-        g_SpriteEngine->Draw(&this->impl->sprites[13]);
-        g_SpriteEngine->Draw(&this->impl->sprites[14]);
-        g_SpriteEngine->Draw(&this->impl->sprites[15]);
+        g_SpriteEngine->Draw(&this->impl->sprites[5]);
+        g_SpriteEngine->Draw(&this->impl->sprites[0]);
+        g_SpriteEngine->Draw(&this->impl->sprites[1]);
+        g_SpriteEngine->Draw(&this->impl->sprites[3]);
+        g_SpriteEngine->Draw(&this->impl->sprites[4]);
+        g_SpriteEngine->Draw(&this->impl->sprites[2]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[9]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[10]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[11]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[12]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[13]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[14]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[15]);
         this->flags.livesChanged = 2;
         this->flags.bombsChanged = 2;
         this->flags.grazeChanged = 2;
@@ -1039,38 +1039,38 @@ void Gui::DrawHud()
         vm = &this->impl->sprites[0x16];
         xx = 496.0f;
         vm->pos = D3DXVECTOR3(xx, 58.0f, 0.49f);
-        g_SpriteEngine->Draw(vm);
+        g_SpriteEngine->DrawUnrotated(vm);
         vm->pos = D3DXVECTOR3(xx, 82.0f, 0.49f);
-        g_SpriteEngine->Draw(vm);
+        g_SpriteEngine->DrawUnrotated(vm);
         if (this->flags.livesChanged)
         {
             vm->pos = D3DXVECTOR3(xx, 122.0f, 0.49f);
-            g_SpriteEngine->Draw(vm);
+            g_SpriteEngine->DrawUnrotated(vm);
         }
         if (this->flags.bombsChanged)
         {
             vm->pos = D3DXVECTOR3(xx, 146.0f, 0.49f);
-            g_SpriteEngine->Draw(vm);
+            g_SpriteEngine->DrawUnrotated(vm);
         }
         if (this->flags.powerChanged)
         {
             vm->pos = D3DXVECTOR3(xx, 186.0f, 0.49f);
-            g_SpriteEngine->Draw(vm);
+            g_SpriteEngine->DrawUnrotated(vm);
         }
         if (this->flags.grazeChanged)
         {
             vm->pos = D3DXVECTOR3(xx, 206.0f, 0.49f);
-            g_SpriteEngine->Draw(vm);
+            g_SpriteEngine->DrawUnrotated(vm);
         }
         if (this->flags.pointsChanged)
         {
             vm->pos = D3DXVECTOR3(xx, 226.0f, 0.49f);
-            g_SpriteEngine->Draw(vm);
+            g_SpriteEngine->DrawUnrotated(vm);
         }
         vm->pos = D3DXVECTOR3(488.0f, 464.0f, 0.49f);
-        g_SpriteEngine->Draw(vm);
+        g_SpriteEngine->DrawUnrotated(vm);
         vm->pos = D3DXVECTOR3(0.0f, 464.0f, 0.49f);
-        g_SpriteEngine->Draw(vm);
+        g_SpriteEngine->DrawUnrotated(vm);
     }
     if (this->flags.livesChanged || g_App.cfg.flags.noFrameItems)
     {
@@ -1078,7 +1078,7 @@ void Gui::DrawHud()
         for (idx = 0, xx = 496.0f; idx < g_GameManager.lives; idx++, xx += 16.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 122.0f, 0.49f);
-            g_SpriteEngine->Draw(vm);
+            g_SpriteEngine->DrawUnrotated(vm);
         }
     }
     if (this->flags.bombsChanged || g_App.cfg.flags.noFrameItems)
@@ -1087,7 +1087,7 @@ void Gui::DrawHud()
         for (idx = 0, xx = 496.0f; idx < g_GameManager.bombs; idx++, xx += 16.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 146.0f, 0.49f);
-            g_SpriteEngine->Draw(vm);
+            g_SpriteEngine->DrawUnrotated(vm);
         }
     }
     if (this->flags.powerChanged || g_App.cfg.flags.noFrameItems)
@@ -1132,7 +1132,7 @@ void Gui::DrawHud()
             {
                 vm = &this->impl->sprites[0x12];
                 vm->pos = D3DXVECTOR3(496.0f, 186.0f, 0.0f);
-                g_SpriteEngine->Draw(vm);
+                g_SpriteEngine->DrawUnrotated(vm);
             }
         }
         if (g_GameManager.power < 128)
@@ -1224,27 +1224,27 @@ void Gui::DrawBanners()
     }
     if (this->impl->bombPortrait.flags.shown)
     {
-        g_SpriteEngine->Draw(&this->impl->bombPortrait);
+        g_SpriteEngine->DrawUnrotated(&this->impl->bombPortrait);
     }
     if (this->impl->spellPortrait.flags.shown)
     {
-        g_SpriteEngine->Draw(&this->impl->spellPortrait);
+        g_SpriteEngine->DrawUnrotated(&this->impl->spellPortrait);
     }
     if (this->impl->bombName.flags.shown)
     {
         this->impl->bombNameBar.pos = this->impl->bombName.pos;
         this->impl->bombNameBar.pos.x += this->bombNameWidth * 16.0f / 15.0f / 2.0f + -128.0f - 16.0f;
         this->impl->bombNameBar.scaleX = this->bombNameWidth / 14.0f;
-        g_SpriteEngine->Draw(&this->impl->bombNameBar);
-        g_SpriteEngine->Draw(&this->impl->bombName);
+        g_SpriteEngine->DrawUnrotated(&this->impl->bombNameBar);
+        g_SpriteEngine->DrawUnrotated(&this->impl->bombName);
     }
     if (this->impl->spellName.flags.shown)
     {
         this->impl->spellNameBar.pos = this->impl->spellName.pos;
         this->impl->spellNameBar.pos.x += 128.0f - this->spellNameWidth * 16.0f / 15.0f / 2.0f;
         this->impl->spellNameBar.scaleX = this->spellNameWidth / 14.0f;
-        g_SpriteEngine->Draw(&this->impl->spellNameBar);
-        g_SpriteEngine->Draw(&this->impl->spellName);
+        g_SpriteEngine->DrawUnrotated(&this->impl->spellNameBar);
+        g_SpriteEngine->DrawUnrotated(&this->impl->spellName);
     }
     if (this->impl->loading.spriteIndex >= 0)
     {
@@ -1253,7 +1253,7 @@ void Gui::DrawBanners()
         g_App.viewport.Width = g_GameManager.arena[2];
         g_App.viewport.Height = g_GameManager.arena[3];
         g_App.d3dDevice->SetViewport(&g_App.viewport);
-        g_SpriteEngine->Draw(&this->impl->loading);
+        g_SpriteEngine->DrawUnrotated(&this->impl->loading);
     }
 }
 

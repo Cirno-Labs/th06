@@ -153,7 +153,7 @@ int MusicScreen::OnDraw(MusicScreen *screen)
 
     g_SpriteEngine->ClearTexture();
     g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
-    g_SpriteEngine->Draw(&screen->unk_0024[0]);
+    g_SpriteEngine->DrawUnrotated(&screen->unk_0024[0]);
     for (i = screen->listTop; i < screen->listTop + 10; i++)
     {
         if (screen->cursor != i)
@@ -169,7 +169,7 @@ int MusicScreen::OnDraw(MusicScreen *screen)
         screen->titles[i].pos.x = 93.0f;
         screen->titles[i].pos.y = 104.0f + (i + 1 - screen->listTop) * 18 - 20.0f;
         screen->titles[i].pos.z = 0.0f;
-        g_SpriteEngine->Draw(&screen->titles[i]);
+        g_SpriteEngine->DrawUnrotated(&screen->titles[i]);
         // The number left of the title, and the arrow left of that.
         pos = screen->titles[i].pos;
         pos.x -= 60.0f;
@@ -184,7 +184,7 @@ int MusicScreen::OnDraw(MusicScreen *screen)
     i++;
     for (i = 0; i < 0x10; i++)
     {
-        g_SpriteEngine->Draw(&screen->comment[i]);
+        g_SpriteEngine->DrawUnrotated(&screen->comment[i]);
     }
     g_AsciiText.color = 0xffffffff;
     return 1;

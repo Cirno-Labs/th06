@@ -711,13 +711,13 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             bullet->pos += bullet->velocity * g_App.frameAdvance;
             if (!g_GameManager.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
             {
-                if (!(bullet->flags & 0x40) && !(bullet->flags & 0x100) && !(bullet->flags & 0x80) && !(bullet->flags & 0x400) && !(bullet->flags & 0x800) && bullet->outsideFrames == 0)
+                if (!(bullet->flags & 0x40) && !(bullet->flags & 0x100) && !(bullet->flags & 0x80) && !(bullet->flags & 0x400) && !(bullet->flags & 0x800) && bullet->outOfBoundsFrames == 0)
                 {
                     memset(bullet, 0, sizeof(Bullet));
                     continue;
                 }
-                bullet->outsideFrames++;
-                if (bullet->outsideFrames >= 0x100)
+                bullet->outOfBoundsFrames++;
+                if (bullet->outOfBoundsFrames >= 0x100)
                 {
                     memset(bullet, 0, sizeof(Bullet));
                     continue;
@@ -725,7 +725,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             }
             else
             {
-                bullet->outsideFrames = 0;
+                bullet->outOfBoundsFrames = 0;
             }
             if (bullet->grazed == 0)
             {
@@ -874,7 +874,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
         las->timer.Tick();
         g_SpriteEngine->Step(&las->sprite0);
     }
-    mgr->unk_f5c08.Tick();
+    mgr->updateTimer.Tick();
     return 1;
 }
 
@@ -1089,7 +1089,7 @@ void DrawBulletRotated(Bullet *bullet)
     {
         sprite->rotationZ = 1.5707964f - bullet->angle;
     }
-    g_SpriteEngine->DrawRotated(sprite);
+    g_SpriteEngine->Draw(sprite);
 }
 
 int BulletManager::AddedCallback(BulletManager *mgr)

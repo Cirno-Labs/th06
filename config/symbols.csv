@@ -403,9 +403,9 @@ address,size,name,symbol
 0x00432430,151,SpriteEngine::SetScript,?SetScript@SpriteEngine@@QAEXPAVSprite@@PAX@Z
 0x004324d0,598,SpriteEngine::SetRenderStateForSprite,?SetRenderStateForSprite@SpriteEngine@@QAEXPAVSprite@@@Z
 0x00432730,915,SpriteEngine::DrawQuad,?DrawQuad@SpriteEngine@@QAEHPAVSprite@@H@Z
-0x00432ad0,431,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
+0x00432ad0,431,SpriteEngine::DrawUnrotated,?DrawUnrotated@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00432c80,60,SpriteEngine::RotatePoint,?RotatePoint@SpriteEngine@@QAEXPAMMMMMMM@Z
-0x00432cc0,727,SpriteEngine::DrawRotated,?DrawRotated@SpriteEngine@@QAEHPAVSprite@@@Z
+0x00432cc0,727,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00432fa0,431,SpriteEngine::DrawNoRound,?DrawNoRound@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00433150,1086,SpriteEngine::Draw3D,?Draw3D@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00433590,975,SpriteEngine::Draw3DRounded,?Draw3DRounded@SpriteEngine@@QAEHPAVSprite@@@Z
@@ -1591,7 +1591,7 @@ address,size,name,symbol
 0x004765b8,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
 0x00476660,,g_PowerItemBonus,?g_PowerItemBonus@@3PAHA
 0x004766dc,,g_PowerLevels,?g_PowerLevels@@3PAHA
-0x00476708,,g_Bombs,?g_Bombs@@3PAUBombInfo@@A
+0x00476708,,g_BombFuncs,?g_BombFuncs@@3PAUBombFuncs@@A
 0x00476728,,g_ShotTypes,?g_ShotTypes@@3PAUShotTypeInfo@@A
 0x00476f78,,g_ShotTable0,?g_ShotTable0@@3PAUShotTable@@A
 0x00477770,,g_ShotTable1,?g_ShotTable1@@3PAUShotTable@@A

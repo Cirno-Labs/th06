@@ -488,9 +488,9 @@
 <rect width="12" height="12" x="15" y="120" class="named"><title>0x00432430 SpriteEngine::SetScript (151 bytes)</title></rect>
 <rect width="12" height="12" x="30" y="120" class="named"><title>0x004324d0 SpriteEngine::SetRenderStateForSprite (598 bytes)</title></rect>
 <rect width="12" height="12" x="45" y="120" class="named"><title>0x00432730 SpriteEngine::DrawQuad (915 bytes)</title></rect>
-<rect width="12" height="12" x="60" y="120" class="named"><title>0x00432ad0 SpriteEngine::Draw (431 bytes)</title></rect>
+<rect width="12" height="12" x="60" y="120" class="named"><title>0x00432ad0 SpriteEngine::DrawUnrotated (431 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="120" class="named"><title>0x00432c80 SpriteEngine::RotatePoint (60 bytes)</title></rect>
-<rect width="12" height="12" x="90" y="120" class="named"><title>0x00432cc0 SpriteEngine::DrawRotated (727 bytes)</title></rect>
+<rect width="12" height="12" x="90" y="120" class="named"><title>0x00432cc0 SpriteEngine::Draw (727 bytes)</title></rect>
 <rect width="12" height="12" x="105" y="120" class="named"><title>0x00432fa0 SpriteEngine::DrawNoRound (431 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="120" class="named"><title>0x00433150 SpriteEngine::Draw3D (1086 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="120" class="named"><title>0x00433590 SpriteEngine::Draw3DRounded (975 bytes)</title></rect>
@@ -680,7 +680,7 @@
 <rect width="16.54" height="16.42" x="387.21" y="145.58" class="named"><title>0x0043cb40 DatArchive::Decode (753 bytes)</title></rect>
 <rect width="16.50" height="16.11" x="406.75" y="0" class="named"><title>0x0040e920 EffectUpdateOrbit (737 bytes)</title></rect>
 <rect width="16.50" height="15.92" x="406.75" y="19.11" class="named"><title>0x00424375 App::LoadArchive (728 bytes)</title></rect>
-<rect width="16.50" height="15.90" x="406.75" y="38.03" class="named"><title>0x00432cc0 SpriteEngine::DrawRotated (727 bytes)</title></rect>
+<rect width="16.50" height="15.90" x="406.75" y="38.03" class="named"><title>0x00432cc0 SpriteEngine::Draw (727 bytes)</title></rect>
 <rect width="16.50" height="15.63" x="406.75" y="56.93" class="named"><title>0x0043a9c0 CSoundManager::CreateStreaming (715 bytes)</title></rect>
 <rect width="16.50" height="15.61" x="406.75" y="75.56" class="named"><title>0x00439ad6 MainMenu::OnDraw (714 bytes)</title></rect>
 <rect width="16.50" height="15.30" x="406.75" y="94.17" class="named"><title>0x00431660 SpriteEngine::CreateQuad (700 bytes)</title></rect>
@@ -737,7 +737,7 @@
 <rect width="13.41" height="11.72" x="492.90" y="135.64" class="named"><title>0x00404300 Stage::AddedCallback (436 bytes)</title></rect>
 <rect width="13.41" height="11.64" x="492.90" y="150.36" class="named"><title>0x00423f3f DrawFps (433 bytes)</title></rect>
 <rect width="12.74" height="12.23" x="509.31" y="0" class="named"><title>0x00426c40 Player::CheckHit (432 bytes)</title></rect>
-<rect width="12.74" height="12.20" x="509.31" y="15.23" class="named"><title>0x00432ad0 SpriteEngine::Draw (431 bytes)</title></rect>
+<rect width="12.74" height="12.20" x="509.31" y="15.23" class="named"><title>0x00432ad0 SpriteEngine::DrawUnrotated (431 bytes)</title></rect>
 <rect width="12.74" height="12.20" x="509.31" y="30.43" class="named"><title>0x00432fa0 SpriteEngine::DrawNoRound (431 bytes)</title></rect>
 <rect width="12.74" height="12.17" x="509.31" y="45.63" class="named"><title>0x0040ef50 EffectManager::SpawnEffect (430 bytes)</title></rect>
 <rect width="12.74" height="12.12" x="509.31" y="60.81" class="named"><title>0x0042fd30 ScreenEffect::StartEffect (428 bytes)</title></rect>

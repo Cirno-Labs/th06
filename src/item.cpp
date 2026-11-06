@@ -398,6 +398,6 @@ void ItemManager::DrawItems()
             entry->onScreen = 1;
             entry->sprite.color = 0xffffffff;
         }
-        g_SpriteEngine->Draw(&entry->sprite);
+        g_SpriteEngine->DrawUnrotated(&entry->sprite);
     }
 }

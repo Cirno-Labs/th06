@@ -106,7 +106,7 @@ struct EnemyScriptInstr
     BYTE unk_08;
     // The difficulties it runs on, a bit each.
     BYTE difficultyMask;
-    short unk_0a;
+    short paramMask;
     EnemyScriptArgs args;
 };
 

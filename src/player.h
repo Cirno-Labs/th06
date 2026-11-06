@@ -54,7 +54,7 @@ struct ShotTypeInfo
 ASSERT_SIZE(ShotTypeInfo, 0x18);
 
 // A shot type's bomb callbacks.
-struct BombInfo
+struct BombFuncs
 {
     void (*update)(Player *player);
     void (*draw)(Player *player);
@@ -80,7 +80,7 @@ struct PlayerBomb
     // State for up to 8 of a bomb's parts (Reimu A's orbs, ...): whether
     // each is live (Reimu A: 1 flying, then counting up to 30 after it
     // bursts), its speed, position and velocity, and four sprites each.
-    int partActive[8];
+    int partState[8];
     float partSpeed[8];
     D3DXVECTOR3 partPos[8];
     D3DXVECTOR3 partVelocity[8];
@@ -216,7 +216,7 @@ public:
     // it every frame).
     char playerState;
     // RegisterChain's argument.
-    BYTE unk_09e1;
+    BYTE registerChainArg;
     // The options: 0 none (power below 8), 1 out, 2 sliding in while
     // focusing, 3 in, 4 sliding out.
     char optionState;
@@ -346,7 +346,7 @@ int FireShotType3(Player *player, PlayerBullet *bullet, int index, int frame);
 
 // By character * 2 + shot type.
 extern ShotTypeInfo g_ShotTypes[5];
-extern BombInfo g_Bombs[4];
+extern BombFuncs g_BombFuncs[4];
 
 // Their shot tables: one per power level, FireShot takes the first whose
 // maxPower is above the player's power (the last one's is 999).

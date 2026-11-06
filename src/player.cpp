@@ -14,7 +14,7 @@
 // 8 bytes nothing refers to: unknown.
 int g_UnusedPlayerData[2] = {1, 0};
 
-BombInfo g_Bombs[4] = {
+BombFuncs g_BombFuncs[4] = {
     {UpdateReimuABomb, DrawReimuABomb},
     {UpdateReimuBBomb, DrawReimuBBomb},
     {UpdateMarisaABomb, DrawMarisaABomb},
@@ -1100,7 +1100,7 @@ int Player::RegisterChain(BYTE unk)
 
     memset(player, 0, sizeof(Player));
     player->stateTimer.Set(0);
-    player->unk_09e1 = unk;
+    player->registerChainArg = unk;
     player->calcElem = g_Chain.CreateElem((ChainCallback)Player::OnUpdate);
     player->drawElem = g_Chain.CreateElem((ChainCallback)Player::OnDraw);
     player->drawElem2 = g_Chain.CreateElem((ChainCallback)Player::OnDraw2);
@@ -1480,7 +1480,7 @@ int Player::OnDraw(Player *player)
     player->sprite.pos.z = 0.49f;
     if (!g_GameManager.isInContinueMenu)
     {
-        g_SpriteEngine->Draw(&player->sprite);
+        g_SpriteEngine->DrawUnrotated(&player->sprite);
         if (player->optionState && (player->playerState == 0 || player->playerState == 3))
         {
             player->optionSprites[0].pos = player->optionPos[0];
@@ -1491,8 +1491,8 @@ int Player::OnDraw(Player *player)
             player->optionSprites[1].pos[1] += g_GameManager.arena[1];
             player->optionSprites[0].pos.z = 0.491f;
             player->optionSprites[1].pos.z = 0.491f;
-            g_SpriteEngine->DrawRotated(&player->optionSprites[0]);
-            g_SpriteEngine->DrawRotated(&player->optionSprites[1]);
+            g_SpriteEngine->Draw(&player->optionSprites[0]);
+            g_SpriteEngine->Draw(&player->optionSprites[1]);
         }
     }
     return 1;
@@ -1597,8 +1597,8 @@ int Player::AddedCallback(Player *player)
         bullet->state = 0;
     }
     player->fireTimer.Set(-1);
-    player->bomb.update = g_Bombs[g_GameManager.character * 2 + g_GameManager.shotType].update;
-    player->bomb.draw = g_Bombs[g_GameManager.character * 2 + g_GameManager.shotType].draw;
+    player->bomb.update = g_BombFuncs[g_GameManager.character * 2 + g_GameManager.shotType].update;
+    player->bomb.draw = g_BombFuncs[g_GameManager.character * 2 + g_GameManager.shotType].draw;
     player->bomb.running = 0;
     for (i = 0; i < 2; i++)
     {

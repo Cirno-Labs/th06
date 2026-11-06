@@ -235,7 +235,7 @@ void AsciiText::DrawStrings()
                     this->glyph.spriteData = &g_SpriteEngine->sprites[*c + 0x61];
                     this->glyph.color = 0xffffffff;
                 }
-                g_SpriteEngine->Draw(&this->glyph);
+                g_SpriteEngine->DrawUnrotated(&this->glyph);
                 this->glyph.pos.x += advance;
             }
             c++;
@@ -534,13 +534,13 @@ void PauseMenu::DrawPauseMenu()
             Sprite sprite = this->background;
 
             sprite.flags.zWriteDisabled = 1;
-            g_SpriteEngine->Draw(&sprite);
+            g_SpriteEngine->DrawUnrotated(&sprite);
         }
         for (i = 0; i < 6; i++)
         {
             if (this->sprites[i].flags.shown)
             {
-                g_SpriteEngine->Draw(&this->sprites[i]);
+                g_SpriteEngine->DrawUnrotated(&this->sprites[i]);
             }
         }
     }
@@ -724,20 +724,20 @@ void PauseMenu::DrawContinueMenu()
         g_App.d3dDevice->SetViewport(&g_App.viewport);
         if (g_App.lockableBackBuffer && (this->state != 0 || this->stateFrames > 2))
         {
-            g_SpriteEngine->Draw(&this->background);
+            g_SpriteEngine->DrawUnrotated(&this->background);
         }
         if (this->state == 1 || this->state == 2)
         {
             this->sprites[4] = this->sprites[1];
             this->sprites[4].pos.x += 8.0f * this->sprites[4].scaleX;
             this->sprites[4].spriteData = &g_SpriteEngine->sprites[0x1e - g_GameManager.continuesUsed];
-            g_SpriteEngine->Draw(&this->sprites[4]);
+            g_SpriteEngine->DrawUnrotated(&this->sprites[4]);
         }
         for (i = 0; i < 4; i++)
         {
             if (this->sprites[i].flags.shown)
             {
-                g_SpriteEngine->Draw(&this->sprites[i]);
+                g_SpriteEngine->DrawUnrotated(&this->sprites[i]);
             }
         }
     }
@@ -819,7 +819,7 @@ void AsciiText::DrawPopups2()
                 // The minus sign, stretched.
                 this->digit.matrix._11 = 0.1875f;
                 this->digit.matrix._22 = 0.03125f;
-                g_SpriteEngine->Draw(&this->digit);
+                g_SpriteEngine->DrawUnrotated(&this->digit);
                 this->digit.matrix._11 = 0.03125f;
                 this->digit.matrix._22 = 0.03125f;
             }

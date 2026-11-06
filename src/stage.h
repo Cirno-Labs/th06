@@ -34,7 +34,7 @@ struct StageInstr
     // offset to fade to, 3 that fade's frames, 4 the fog fade's frames, 5
     // a wait for Stage::scriptResume.
     short opcode;
-    short unk_06;
+    short pad_06;
     D3DXVECTOR3 args;
 };
 
@@ -65,7 +65,7 @@ struct StageObject
 struct StageInstance
 {
     short id;
-    short unk_02;
+    short pad_02;
     D3DXVECTOR3 pos;
 };
 
@@ -77,7 +77,7 @@ struct StageData
     // Offsets from the start of the file: the instances and the script.
     int instancesOffset;
     int scriptOffset;
-    DWORD unk_0c;
+    DWORD pad_0c;
     // The stage's name, and its songs' names and files: Gui shows the
     // name and the first song's as the stage starts, and the dialogue
     // switches songs.
@@ -157,7 +157,7 @@ public:
     Timer fogFadeTime;
     // Makes OnDraw set the fog color again.
     char fogColorChanged;
-    char unk_07d[0x3];
+    char pad_07d[0x3];
     // Set to 1 as a spell card starts (enemy script opcode 93), 2 once
     // the background has faded in over spellCardFrames, 0 as it ends;
     // from 2 on, the stage's own layers are not drawn.
@@ -165,11 +165,11 @@ public:
     int spellCardFrames;
     // The spell card background (script 0x2b3).
     Sprite spellCardBackground;
-    Sprite unk_198;
+    Sprite pad_198;
     // Lets the script past opcode 5; set by enemy script opcode 125,
     // cleared when it does.
     BYTE scriptResume;
-    BYTE unk_2a9[0x3];
+    BYTE pad_2a9[0x3];
     // A fade of g_GameManager.camera's offset over offsetFadeFrames, from offsetFrom
     // to offsetTo.
     D3DXVECTOR3 offsetFrom;

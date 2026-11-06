@@ -87,7 +87,7 @@ struct AsciiPopup
     Timer timer;
     BYTE active;
     BYTE digitCount;
-    unsigned char unk_26[0x2];
+    unsigned char pad_26[0x2];
 };
 ASSERT_SIZE(AsciiPopup, 0x28);
 
@@ -193,7 +193,7 @@ public:
     int nextPopup;
     // The one of the last three popups AddPopup2 uses next.
     int nextPopup2;
-    unsigned char unk_6240[0x4];
+    unsigned char pad_6240[0x4];
     PauseMenu pauseMenu;
     PauseMenu continueMenu;
     AsciiPopup popups[0x203];

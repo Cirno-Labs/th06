@@ -87,7 +87,7 @@ public:
     Sprite sprites[0x7a];
     // The selected entry.
     int cursor;
-    DWORD unk_81a4[0x10];
+    DWORD pad_81a4[0x10];
     int unk_81e4;
     // The replay menu's cursor and the number of replays listed.
     int replayCursor;
@@ -112,17 +112,17 @@ public:
     int fadeFrame;
     int fadeInFrames;
     int fadeOutFrames;
-    DWORD unk_8218;
+    DWORD pad_8218;
     // The button mapping the options screen edits.
     ControllerMapping controllerMapping;
-    short unk_822e;
+    short pad_822e;
     // The options screen's pending settings: cfg.colorMode16Bits as it
     // was when the screen opened, and the windowed mode and frame skip,
     // applied (by restarting, scene 5) when leaving if any changed.
     BYTE prevColorMode16Bits;
     BYTE pendingWindowed;
     BYTE pendingFrameSkip;
-    BYTE unk_8233;
+    BYTE pad_8233;
     // The update element (priority 2, with the added and deleted
     // callbacks) and the draw element (priority 0), created by
     // SetUpTitleScene; DeletedCallback removes the draw element.
@@ -140,7 +140,7 @@ public:
     // picks the game speed when a game starts.
     int fpsCount;
     float fpsSamples[0x10];
-    DWORD unk_10f24;
+    DWORD pad_10f24;
     int unk_10f28;
     // The frames counted since fpsStartTime, a timeGetTime().
     int fpsFrames;

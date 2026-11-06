@@ -12,7 +12,7 @@ struct ReplayFrame
 {
     int frame;
     WORD input;
-    WORD unk_06;
+    WORD pad_06;
 };
 
 // Decrypts a loaded replay of `size` bytes in place and checks its
@@ -36,7 +36,7 @@ struct ReplayStage
     BYTE rank;
     // g_GameManager.powerItemCombo at the start.
     BYTE powerItemCombo;
-    BYTE unk_0d[0x3];
+    BYTE pad_0d[0x3];
     ReplayFrame frames[1];
 };
 
@@ -58,7 +58,7 @@ struct ReplayHeader
     // The date it was saved (_strdate), and the player's name.
     char date[9];
     char name[9];
-    BYTE unk_22[0x2];
+    BYTE pad_22[0x2];
     int score;
     // How far the game ran below full speed, in percent, stored three
     // times: plus 1.12, as is, and (in stages[0], which no stage uses)
@@ -126,9 +126,9 @@ public:
     // RegisterChain's arguments.
     int mode;
     char *path;
-    DWORD unk_10[0xd];
+    DWORD pad_10[0xd];
     WORD unk_44;
-    WORD unk_46;
+    WORD pad_46;
     // [0] is the last entry written; [stage] is where that stage's
     // record ends.
     ReplayFrame *cursors[8];

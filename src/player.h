@@ -32,7 +32,7 @@ struct PlayerBullet
     // A laser's: its entry in laserTimers, and its option, from 1.
     short laserIndex;
     short option;
-    short unk_156;
+    short pad_156;
 };
 ASSERT_SIZE(PlayerBullet, 0x158);
 
@@ -183,7 +183,7 @@ public:
     // The third is unused.
     Sprite optionSprites[3];
     D3DXVECTOR3 position;
-    DWORD unk_044c[0x3];
+    DWORD pad_044c[0x3];
     // The corners of the hitbox and of the graze box, and their half
     // sizes.
     D3DXVECTOR3 hitboxMin;
@@ -224,7 +224,7 @@ public:
     char focused;
     // Counts hits on enemies, to burst an effect every few.
     BYTE hitCounter;
-    BYTE unk_09e5[0x3];
+    BYTE pad_09e5[0x3];
     // Clocks the options sliding in and out.
     Timer optionTimer;
     // The shot type's, from g_ShotTypes; AddedCallback works out the
@@ -238,7 +238,7 @@ public:
     float velocityY;
     // The last frame's buttons.
     WORD prevButtons;
-    WORD unk_0a1a;
+    WORD pad_0a1a;
     // What Reimu A's orbs home in on; x is -100 or less when there is
     // nothing.
     D3DXVECTOR3 homingTarget;

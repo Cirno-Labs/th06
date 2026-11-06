@@ -44,7 +44,7 @@ public:
     int type;
     ChainElem *calcElem;
     ChainElem *drawElem;
-    DWORD unk_0c;
+    DWORD pad_0c;
     int alpha;
     // How many frames the effect lasts.
     int duration;

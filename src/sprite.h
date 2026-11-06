@@ -37,7 +37,7 @@ struct AnmFile
     int spriteOffset;
     // The file name of an image to take the alpha from, or 0.
     int alphaNameOffset;
-    DWORD unk_28[6];
+    DWORD pad_28[6];
     int spriteOffsets[1];
 };
 
@@ -95,7 +95,7 @@ struct SpriteFlags
     unsigned int zWriteDisabled : 1;
     // The script reached a stop instruction and waits for an interrupt.
     unsigned int stopped : 1;
-    unsigned int unk14 : 18;
+    unsigned int pad_14 : 18;
 };
 
 // One instruction of an ANM script.
@@ -161,7 +161,7 @@ public:
     // The interrupt label to jump to on the next Step; 0 for none.
     short pendingInterrupt;
     short posInterpTime;
-    short unk_08e;
+    short pad_08e;
     D3DXVECTOR3 pos;
     // The scales a scale interpolation started from.
     float scaleInitialY;
@@ -174,7 +174,7 @@ public:
     short baseSpriteIndex;
     // The script SpriteEngine::StartScript started.
     short scriptIndex;
-    short unk_0b6;
+    short pad_0b6;
     // The script SetScript started, and the next instruction to run;
     // NULL once the script ends.
     AnmInstr *scriptStart;
@@ -201,7 +201,7 @@ public:
     // The font size RenderText and its variants print with, in pixels.
     BYTE fontWidth;
     BYTE fontHeight;
-    short unk_10e;
+    short pad_10e;
 };
 
 // Inline, but too large to expand: callers call the copy at 0x403720,
@@ -405,7 +405,7 @@ public:
     void RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...);
 
     SpriteData sprites[0x800];
-    Sprite unk_1c000;
+    Sprite pad_1c000;
     IDirect3DTexture8 *textures[0x108];
     // The image files the textures were created from, kept loaded.
     void *textureFiles[0x100];

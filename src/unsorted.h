@@ -57,7 +57,7 @@ struct GameWindow
     int isAppInactive;
     // Frames run since the last one drawn, for the frame skip.
     BYTE curFrame;
-    unsigned char unk_11[0x3];
+    unsigned char pad_11[0x3];
     // The screen saver and power saving settings (SPI_GETSCREENSAVEACTIVE,
     // SPI_GETLOWPOWERACTIVE, SPI_GETPOWEROFFACTIVE), turned off while
     // the game runs and restored at exit.
@@ -116,7 +116,7 @@ public:
     void PlayQueuedSounds();
 
     IDirectSound8 *dsound;
-    DWORD unk_004;
+    DWORD pad_004;
     // The loaded sound files' buffers.
     IDirectSoundBuffer *soundBuffers[0x80];
     // Each sound effect's own buffer.
@@ -133,7 +133,7 @@ public:
     // The thread streaming the wave music and its ID.
     DWORD notifyThreadId;
     HANDLE notifyThread;
-    DWORD unk_61c;
+    DWORD pad_61c;
     // The sound effects to play, or -1.
     int queue[3];
     // The wave music playing; NULL when stopped.
@@ -217,7 +217,7 @@ struct GameConfigFlags
     unsigned int noFog : 1;
     // "パッド、キーボードの入力に DirectInput を使用しません"
     unsigned int noDirectInput : 1;
-    unsigned int unk12 : 20;
+    unsigned int pad_12 : 20;
 };
 
 // The configuration file's contents. The comments give LoadConfig's
@@ -225,7 +225,7 @@ struct GameConfigFlags
 struct GameConfig
 {
     ControllerMapping controllerMapping;
-    unsigned char unk_12[0x2];
+    unsigned char pad_12[0x2];
     // 0x102; LoadConfig resets a file with another.
     int version;
     // The lives and bombs to start with. 2, at most 4; 3, at most 3.
@@ -253,7 +253,7 @@ struct GameConfig
     // counts as a direction. 600 each.
     short padThresholdX;
     short padThresholdY;
-    unsigned char unk_24[0x10];
+    unsigned char pad_24[0x10];
     GameConfigFlags flags;
 };
 ASSERT_SIZE(GameConfig, 0x38);
@@ -385,7 +385,7 @@ public:
     int scene;
     // The scene before `curScene`.
     int prevScene;
-    unsigned char unk_194[0x4];
+    unsigned char pad_194[0x4];
     // Frames left in which the Gui draws the items around the play area
     // even though the back buffer is kept: set to 3 when a stage starts,
     // on pausing, by Gui messages and after a device reset (2 when
@@ -427,7 +427,7 @@ public:
     BYTE lockableBackBuffer;
     // Whether D3DFMT_A8R8G8B8 textures can be created.
     BYTE hasA8R8G8B8Textures;
-    unsigned char unk_3ff[0x1];
+    unsigned char pad_3ff[0x1];
     // timeGetTime() when AddedCallback ran.
     // The title screen waits until 3 s after it to start the music.
     DWORD startTime;
@@ -514,7 +514,7 @@ public:
     }
 
     WORD seed;
-    WORD unk_02;
+    WORD pad_02;
     // How many numbers were generated since the seed was set.
     int generated;
 };
@@ -773,7 +773,7 @@ struct GuiMsg
     // Lets the skip button (0x100) fast-forward the script; set by
     // opcode 13.
     BYTE skippable;
-    BYTE unk_6a5[0x3];
+    BYTE pad_6a5[0x3];
 };
 ASSERT_SIZE(GuiMsg, 0x6a8);
 
@@ -808,7 +808,7 @@ struct GuiImpl
     // The boss's bar (sprites[0x13]): 0 hidden, 1 appearing (script
     // 0x613), 2 shown, 3 leaving (script 0x614).
     BYTE bossBarState;
-    BYTE unk_1ba1[0x3];
+    BYTE pad_1ba1[0x3];
     // The stage's name and the song's (script 0x700 and 0x701).
     Sprite stageName;
     Sprite songName;
@@ -849,7 +849,7 @@ struct GuiFlags
     unsigned int powerChanged : 2;
     unsigned int grazeChanged : 2;
     unsigned int pointsChanged : 2;
-    unsigned int unk10 : 22;
+    unsigned int pad_10 : 22;
 };
 
 class Gui
@@ -973,7 +973,7 @@ public:
     DWORD lastDrawnBossTimer;
     // Set while a boss fight runs.
     BYTE bossPresent;
-    BYTE unk_21[0x3];
+    BYTE pad_21[0x3];
     // The boss's life as a fraction of its maximum, for its bar.
     float bossHealth;
     // The life the bar shows, following bossHealth.

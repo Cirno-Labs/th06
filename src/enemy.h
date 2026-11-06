@@ -49,7 +49,7 @@ struct EnemyFlags
     unsigned char hidden : 1;
     // CheckTimerCallback leaves the spell card and the bullets alone.
     unsigned char keepSpellCard : 1;
-    unsigned char unk21 : 3;
+    unsigned char pad_21 : 3;
     // The direction the sprite last turned to: 0 none, 1 left, 2 right,
     // 0xff not yet.
     BYTE spriteDirection;
@@ -71,7 +71,7 @@ struct Enemy
     EnemyScriptState savedCtx[8];
     // How many of savedCtx are in use.
     int stackDepth;
-    DWORD unk_c40;
+    DWORD pad_c40;
     // The subroutine the script runs when the enemy dies; negative for
     // none.
     int deathSub;
@@ -134,7 +134,7 @@ struct Enemy
     BYTE bossIndex;
     // Counts down the frames the sprite flashes for after a hit.
     BYTE hitFlashTimer;
-    BYTE unk_e42[0x2];
+    BYTE pad_e42[0x2];
     // Counts down the 60 frames after a bomb that ScriptSparksAndBombShield
     // keeps the enemy unshootable.
     Timer shieldTimer;
@@ -148,7 +148,7 @@ struct Enemy
     short turnStillFromRight;
     short turnLeft;
     short turnRight;
-    short unk_e5e;
+    short pad_e5e;
     // The bounds of the position, with flags.clampPos.
     float lowerBound[2];
     float upperBound[2];
@@ -245,7 +245,7 @@ public:
     WORD dropIndex;
     // Counts the enemies in use, each frame.
     int enemyCount;
-    DWORD unk_ee5c0;
+    DWORD pad_ee5c0;
     // Set while the spell card running can still be captured.
     int spellCardCapture;
     // 1 while a spell card runs.
@@ -255,7 +255,7 @@ public:
     // Set when the player bombs during a spell card: the boss takes a
     // third of the damage.
     int spellCardBombed;
-    DWORD unk_ee5d8;
+    DWORD pad_ee5d8;
     // The next timeline entry, and the timeline's frame count.
     EnemyTimelineEntry *timelinePos;
     Timer timelineTime;

@@ -64,7 +64,7 @@ public:
     // held.
     int lineDelay;
     int lineDelayFast;
-    unsigned char unk_1150[0x4];
+    unsigned char pad_1150[0x4];
     // The line the text goes to.
     int line;
     // "@c": the text color.

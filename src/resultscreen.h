@@ -21,7 +21,7 @@ struct Hscr
     BYTE version;
     // Set on the entry just added, which is the one being named.
     BYTE isNew;
-    BYTE unk_0a[0x2];
+    BYTE pad_0a[0x2];
     DWORD score;
     // The shot (0 to 3) and difficulty (0 to 4) of its list.
     BYTE shot;
@@ -40,7 +40,7 @@ struct Th6k
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x3];
+    BYTE pad_09[0x3];
 };
 ASSERT_SIZE(Th6k, 0xc);
 
@@ -51,7 +51,7 @@ struct Catk
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x3];
+    BYTE pad_09[0x3];
     // The bonus the card gave when last captured.
     int bonus;
     // The card's number, below 0x40.
@@ -76,13 +76,13 @@ struct Clrd
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x3];
+    BYTE pad_09[0x3];
     // By difficulty: the number of stages cleared, 99 ('c') for the
     // whole game, without continues and with.
     BYTE stagesClearedNoContinue[5];
     BYTE stagesCleared[5];
     BYTE shot;
-    BYTE unk_17;
+    BYTE pad_17;
 };
 ASSERT_SIZE(Clrd, 0x18);
 
@@ -93,12 +93,12 @@ struct Pscr
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x3];
+    BYTE pad_09[0x3];
     DWORD score;
     BYTE shot;
     BYTE difficulty;
     BYTE stage;
-    BYTE unk_13;
+    BYTE pad_13;
 };
 ASSERT_SIZE(Pscr, 0x14);
 
@@ -147,7 +147,7 @@ struct ScoreDat
     WORD version;
     // Random; never read.
     BYTE randomByte;
-    BYTE unk_07;
+    BYTE pad_07;
     // Where the chunks start.
     int dataOffset;
     // The list of the score entries read from the chunks; set up when

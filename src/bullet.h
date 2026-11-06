@@ -23,7 +23,7 @@ struct BulletTypeSprites
     D3DXVECTOR3 hitboxSize;
     BYTE unk_55c;
     BYTE height;
-    BYTE unk_55e[0x2];
+    BYTE pad_55e[0x2];
 };
 ASSERT_SIZE(BulletTypeSprites, 0x560);
 
@@ -58,7 +58,7 @@ struct Bullet
     // BulletShooter::flags.
     WORD flags;
     short color;
-    WORD unk_5bc;
+    WORD pad_5bc;
     // 0 unused; 1 flying; 2 to 4 spawning (flags 2, 4, 8); 5 fading out.
     WORD state;
     // Counts the frames spent outside the play area by bullets that
@@ -141,7 +141,7 @@ struct Laser
     short color;
     // 2 and up: ending.
     BYTE state;
-    BYTE unk_26d[0x3];
+    BYTE pad_26d[0x3];
 };
 ASSERT_SIZE(Laser, 0x270);
 

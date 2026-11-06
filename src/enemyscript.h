@@ -103,7 +103,7 @@ struct EnemyScriptInstr
     short opcode;
     // The size of the instruction, arguments included.
     short size;
-    BYTE unk_08;
+    BYTE pad_08;
     // The difficulties it runs on, a bit each.
     BYTE difficultyMask;
     short paramMask;
@@ -114,11 +114,11 @@ struct EnemyScriptInstr
 struct EnemyScriptHeader
 {
     short subCount;
-    short unk_02;
+    short pad_02;
     // The enemy timeline's offset from the start of the file; Load makes
     // it a pointer.
     int timelineOffset;
-    DWORD unk_08[0x2];
+    DWORD pad_08[0x2];
     // Then the subroutines' offsets.
 };
 
@@ -153,7 +153,7 @@ struct EnemyScriptsStar
 {
     BYTE unk_0[0x80];
     float angles[6];
-    BYTE unk_98[0x68];
+    BYTE pad_98[0x68];
     D3DXVECTOR3 ends[8];
 };
 

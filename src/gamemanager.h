@@ -94,7 +94,7 @@ public:
     // the player, the stage and the enemies' timers stop updating while
     // it is set.
     char isFrozen;
-    BYTE unk_002d[0x3];
+    BYTE pad_002d[0x3];
     // The score file's spell card, clear and practice chunks
     // (SaveScoreDat).
     Catk catks[0x40];
@@ -103,7 +103,7 @@ public:
     Pscr pscrs[4][6][4];
     // What FireShot compares the shot tables' levels with.
     WORD power;
-    WORD unk_1812;
+    WORD pad_1812;
     // Point items collected.
     WORD pointItems;
     WORD pointItemsTotal;
@@ -133,14 +133,14 @@ public:
     BYTE isInPractice;
     // The title screen's demo plays (data/demo/demo00.rpy).
     BYTE isInDemo;
-    BYTE unk_1825[0x3];
+    BYTE pad_1825[0x3];
     // Counts a demo's frames: it fades out at 3600 and ends at 3720.
     int demoFrames;
     // The replay file to play (ReplayManager::RegisterChain mode 1).
     char replayFile[0x200];
     // g_Random's seed when the stage started; replays keep it.
     WORD rngSeed;
-    WORD unk_1a2e;
+    WORD pad_1a2e;
     // Counts OnUpdate's calls since RegisterChain.
     int stageFrames;
     // The stage being played: 1 to 6, 7 for the extra stage.

@@ -207,7 +207,7 @@ public:
     // Microseconds per quarter note, from the tempo meta event; 1000000
     // after ParseFile.
     int tempo;
-    unsigned char unk_124[0x4];
+    unsigned char pad_124[0x4];
     // Timer ticks since the start.
     unsigned __int64 ticks;
     // The time, in ms, played at earlier tempos; added to the time computed
@@ -216,7 +216,7 @@ public:
     // Parsed tracks, `trackCount` of them.
     MidiTrack *tracks;
     MidiDevice device;
-    unsigned char unk_144[0x10];
+    unsigned char pad_144[0x10];
     MidiChannel channels[0x10];
     // Added to every note number.
     char transpose;

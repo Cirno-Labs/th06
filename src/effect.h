@@ -26,7 +26,7 @@ struct Effect
     float radius;
     float angle;
     Timer timer;
-    DWORD unk_170;
+    DWORD pad_170;
     // From g_EffectInfos. Called every frame while set; the effect ends when it returns
     // anything but 1.
     int (*update)(Effect *effect);
